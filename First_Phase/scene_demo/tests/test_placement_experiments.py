@@ -641,6 +641,7 @@ class _FakeDiagnosticService:
         self._sessions: dict = {}
         self._diag_condition = None
         self._model_revision = pe.SOURCE_REVISION_EXPECTED
+        self.completion_mode = kwargs.get("completion_mode", "native")
         self.submitted: list = []
         self._plans: dict = {}
         self._counter = 0
@@ -944,8 +945,17 @@ class RunTrialTests(unittest.TestCase):
             self.assertTrue(value is None or isinstance(value, str))
         self.assertEqual(
             set(metadata["source_sha256"]),
-            {"placement_experiments.py", "service.py", "catalog.py"},
+            {
+                "placement_experiments.py",
+                "service.py",
+                "catalog.py",
+                "placement_completion.py",
+            },
         )
+        # The three original digests are retained unchanged alongside the
+        # newly tracked placement_completion.py module.
+        for name in ("placement_experiments.py", "service.py", "catalog.py"):
+            self.assertIn(name, metadata["source_sha256"])
         digest = metadata["source_sha256"]["placement_experiments.py"]
         self.assertIsNotNone(digest)
         self.assertEqual(len(digest), 64)
@@ -1089,6 +1099,442 @@ class CliContractTests(unittest.TestCase):
         parser = pe._build_parser()
         with self.assertRaises(SystemExit):
             parser.parse_args(["--profiles", "not_a_profile", "--output", "/x.json", "--run-root", "/r"])
+
+
+class ContinuationConditionContractTests(unittest.TestCase):
+    """The two fixed continuation conditions and their literal oracle goals."""
+
+    def test_soup_extended_contract(self):
+        spec = pe.CONDITIONS["soup_extended"]
+        self.assertEqual(spec["scene_id"], "basket_two")
+        self.assertEqual(tuple(spec["capability_ids"]), ("soup_to_basket",))
+        self.assertEqual(spec["budget_per_subgoal"], 600)
+        self.assertEqual(spec["mode"], "single")
+        self.assertFalse(spec["native_instruction"])
+        self.assertFalse(spec["audit"])
+
+    def test_soup_retry_contract(self):
+        spec = pe.CONDITIONS["soup_retry"]
+        self.assertEqual(spec["scene_id"], "basket_two")
+        self.assertEqual(tuple(spec["capability_ids"]), ("soup_to_basket",))
+        self.assertEqual(spec["budget_per_subgoal"], 300)
+        self.assertEqual(spec["mode"], "same_goal_retry")
+        self.assertFalse(spec["native_instruction"])
+        self.assertFalse(spec["audit"])
+        # No foreign-object schedule is declared.
+        self.assertNotIn("forced_handoff_capability_ids", spec)
+
+    def test_continuation_oracle_goals_are_literal(self):
+        literal = [["in", "alphabet_soup_1", "basket_1_contain_region"]]
+        self.assertEqual(pe.FINAL_ORACLE_GOALS["soup_extended"], literal)
+        self.assertEqual(pe.FINAL_ORACLE_GOALS["soup_retry"], literal)
+        # Independent list objects, never aliases of each other.
+        self.assertIsNot(pe.FINAL_ORACLE_GOALS["soup_extended"], pe.FINAL_ORACLE_GOALS["soup_retry"])
+
+
+class _ConditionStub:
+    """A model-free service stub driving ``_run_condition``'s retry logic."""
+
+    def __init__(self, first_state="blocked", submit_error=False, timeout=False, job_ids=()):
+        self.first_state = first_state
+        self.submit_error = submit_error
+        self.timeout = timeout
+        self.job_ids = list(job_ids)
+        self.submitted: list = []
+        self.payloads: list = []
+        self.cancelled: list = []
+        self._cancelled: set = set()
+
+    def session(self, session_id):
+        return {"ok": True, "session_id": session_id, "scene_version": 0}
+
+    def submit_plan(self, payload):
+        request_id = payload["request_id"]
+        self.submitted.append(request_id)
+        self.payloads.append(dict(payload))
+        if self.submit_error and request_id.endswith("plan1"):
+            return {"ok": False, "reason": "busy", "detail": "mock submit failure"}
+        return {"ok": True}
+
+    def plan(self, request_id):
+        if request_id in self._cancelled:
+            state = "cancelled"
+        elif request_id.endswith("plan1"):
+            state = "running" if self.timeout else self.first_state
+        else:
+            state = "completed"
+        return {
+            "ok": True,
+            "request_id": request_id,
+            "state": state,
+            "plan_success": state == "completed",
+            "completed_capability_ids": [],
+            "pending_capability_ids": [],
+            "job_ids": list(self.job_ids),
+        }
+
+    def cancel(self, request_id):
+        self.cancelled.append(request_id)
+        self._cancelled.add(request_id)
+        return {"ok": True}
+
+    def override_basket_instruction(self):
+        return {"ok": True, "new": "native"}
+
+    def restore_basket_instruction(self):
+        return {"ok": True}
+
+
+class SameGoalRetryTests(unittest.TestCase):
+    def _run(self, stub, timeout=10.0):
+        return pe._run_condition(stub, "soup_retry", "sess-1", timeout, "trialkey")
+
+    def test_blocked_first_plan_submits_same_goal_second_plan(self):
+        stub = _ConditionStub(first_state="blocked")
+        result = self._run(stub)
+        self.assertTrue(result["retry_same_goal"])
+        self.assertEqual(
+            [plan["request_id"] for plan in result["plans"]],
+            ["trialkey-plan1", "trialkey-plan2"],
+        )
+        self.assertEqual(stub.submitted, ["trialkey-plan1", "trialkey-plan2"])
+        self.assertTrue(result["retry"]["retried"])
+        self.assertTrue(result["retry"]["same_goal"])
+        # Same session, same soup goal, same 300 budget for both plans.
+        self.assertEqual(len(stub.payloads), 2)
+        for payload in stub.payloads:
+            self.assertEqual(payload["session_id"], "sess-1")
+            self.assertEqual(list(payload["capability_ids"]), ["soup_to_basket"])
+            self.assertEqual(payload["budget_per_subgoal"], 300)
+        self.assertIsNone(result["forced_handoff"])
+        self.assertFalse(result["campaign_stopped"])
+
+    def test_blocked_first_plan_with_state_error_job_stops_without_retry(self):
+        # A blocked plan whose owned job reports state=="error" is operational:
+        # no same-goal second plan is submitted.
+        stub = _ConditionStub(first_state="blocked", job_ids=["job-err"])
+        evidence = {
+            "job_id": "job-err",
+            "available": True,
+            "job": {"state": "error", "ended_reason": None, "error": None},
+        }
+        with mock.patch.object(pe, "_job_evidence", return_value=evidence):
+            result = self._run(stub)
+        self.assertEqual(stub.submitted, ["trialkey-plan1"])
+        self.assertEqual(len(result["plans"]), 1)
+        self.assertFalse(result["retry"]["retried"])
+        self.assertEqual(result["retry"]["reason"], "job_error")
+        self.assertTrue(result["campaign_stopped"])
+
+    def test_blocked_first_plan_with_ended_reason_error_job_stops_without_retry(self):
+        stub = _ConditionStub(first_state="blocked", job_ids=["job-err"])
+        evidence = {
+            "job_id": "job-err",
+            "available": True,
+            "job": {"state": "completed", "ended_reason": "error", "error": None},
+        }
+        with mock.patch.object(pe, "_job_evidence", return_value=evidence):
+            result = self._run(stub)
+        self.assertEqual(stub.submitted, ["trialkey-plan1"])
+        self.assertEqual(len(result["plans"]), 1)
+        self.assertFalse(result["retry"]["retried"])
+        self.assertEqual(result["retry"]["reason"], "job_error")
+        self.assertTrue(result["campaign_stopped"])
+
+    def test_blocked_first_plan_with_truthy_job_error_stops_without_retry(self):
+        stub = _ConditionStub(first_state="blocked", job_ids=["job-err"])
+        evidence = {
+            "job_id": "job-err",
+            "available": True,
+            "job": {
+                "state": "completed",
+                "ended_reason": "budget_exhausted",
+                "error": "RuntimeError: boom",
+            },
+        }
+        with mock.patch.object(pe, "_job_evidence", return_value=evidence):
+            result = self._run(stub)
+        self.assertEqual(stub.submitted, ["trialkey-plan1"])
+        self.assertEqual(len(result["plans"]), 1)
+        self.assertFalse(result["retry"]["retried"])
+        self.assertEqual(result["retry"]["reason"], "job_error")
+        self.assertTrue(result["campaign_stopped"])
+
+    def test_completed_first_plan_skips_retry(self):
+        stub = _ConditionStub(first_state="completed")
+        result = self._run(stub)
+        self.assertTrue(result["retry_same_goal"])
+        self.assertFalse(result["retry"]["retried"])
+        self.assertEqual(stub.submitted, ["trialkey-plan1"])
+        self.assertEqual(len(result["plans"]), 1)
+
+    def test_operational_timeout_stops_without_retry(self):
+        stub = _ConditionStub(first_state="blocked", timeout=True)
+        result = self._run(stub, timeout=0.0)
+        self.assertFalse(result["retry"]["retried"])
+        self.assertEqual(result["retry"]["reason"], "operational_timeout")
+        self.assertTrue(result["campaign_stopped"])
+        self.assertEqual(stub.submitted, ["trialkey-plan1"])
+        self.assertEqual(stub.cancelled, ["trialkey-plan1"])
+
+    def test_error_and_cancelled_first_plan_stop_without_retry(self):
+        for state in ("error", "cancelled"):
+            stub = _ConditionStub(first_state=state)
+            result = self._run(stub)
+            self.assertFalse(result["retry"]["retried"], state)
+            self.assertEqual(result["retry"]["reason"], state)
+            self.assertTrue(result["campaign_stopped"])
+            self.assertEqual(stub.submitted, ["trialkey-plan1"])
+
+    def test_submit_error_stops_without_retry(self):
+        stub = _ConditionStub(submit_error=True)
+        result = self._run(stub)
+        self.assertFalse(result["retry"]["retried"])
+        self.assertEqual(result["retry"]["reason"], "submit_error")
+        self.assertTrue(result["campaign_stopped"])
+        self.assertEqual(stub.submitted, ["trialkey-plan1"])
+
+    def test_retry_uses_same_session_and_never_reseeds_rng(self):
+        stub = _ConditionStub(first_state="blocked")
+        with mock.patch.object(service, "_seed_everything") as seeded:
+            result = pe._run_condition(stub, "soup_retry", "sess-1", 10.0, "trialkey")
+        seeded.assert_not_called()
+        self.assertTrue(result["retry"]["retried"])
+        self.assertEqual({p["session_id"] for p in stub.payloads}, {"sess-1"})
+
+    def test_single_mode_never_retries(self):
+        stub = _ConditionStub(first_state="blocked")
+        result = pe._run_condition(stub, "soup_extended", "sess-1", 10.0, "trialkey")
+        self.assertFalse(result["retry_same_goal"])
+        self.assertEqual(stub.submitted, ["trialkey-plan1"])
+
+
+class OperationalJobErrorTests(unittest.TestCase):
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.run_root = Path(self._tmp.name)
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def _session(self):
+        return {
+            "session_id": "sess-1",
+            "scene_id": "basket_two",
+            "env_instance_id": 1,
+            "episode_resets": 1,
+            "policy_resets": 1,
+        }
+
+    def _condition_result(self, job_ids):
+        return {
+            "condition": "soup_retry",
+            "mode": "same_goal_retry",
+            "plans": [
+                {
+                    "request_id": "trialkey-plan1",
+                    "submitted": True,
+                    "submit_error": None,
+                    "timed_out": False,
+                    "cancel_nonterminal": False,
+                    "cancelled": False,
+                    "wall_s": 1.0,
+                    "plan": {
+                        "state": "completed",
+                        "plan_success": False,
+                        "completed_capability_ids": ["soup_to_basket"],
+                        "pending_capability_ids": [],
+                        "job_ids": list(job_ids),
+                    },
+                }
+            ],
+            "native_instruction": None,
+            "instruction_override_error": None,
+            "campaign_stopped": False,
+            "stop_reason": None,
+            "forced_handoff": None,
+            "retry_same_goal": True,
+            "retry": {"retried": False, "reason": "completed"},
+        }
+
+    def _stub(self, job_public):
+        class _Stub:
+            completion_mode = "native"
+            _sessions: dict = {}
+
+            def job(self, job_id):
+                return dict(job_public, job_id=job_id)
+
+        return _Stub()
+
+    def _build(self, job_public):
+        return pe._build_trial(
+            self._stub(job_public),
+            "fp32",
+            "soup_retry",
+            "0:0",
+            0,
+            0,
+            self._session(),
+            self._condition_result(["job-1"]),
+            {"strict_candidate": False, "predicates": {}},
+            None,
+            None,
+            1.0,
+            "trialkey",
+        )
+
+    def test_errored_job_is_operational_not_physical(self):
+        trial = self._build(
+            {
+                "state": "error",
+                "ended_reason": "error",
+                "error": "RuntimeError: boom",
+                "capability_id": "soup_to_basket",
+                "run_dir": str(self.run_root),
+            }
+        )
+        self.assertTrue(trial["job_operational_errors"])
+        self.assertTrue(any("job_error" in e for e in trial["operational_errors"]))
+        self.assertTrue(any("RuntimeError: boom" in e for e in trial["operational_errors"]))
+        self.assertFalse(trial["budget_exhausted"])
+        self.assertEqual(trial["physical_failures"], [])
+
+    def test_ended_reason_error_is_operational(self):
+        trial = self._build(
+            {
+                "state": "completed",
+                "ended_reason": "error",
+                "error": "scene died",
+                "capability_id": "soup_to_basket",
+                "run_dir": str(self.run_root),
+            }
+        )
+        self.assertTrue(trial["job_operational_errors"])
+        self.assertFalse(trial["budget_exhausted"])
+
+    def test_budget_exhausted_job_stays_a_physical_failure_with_no_errors(self):
+        trial = self._build(
+            {
+                "state": "completed",
+                "ended_reason": "budget_exhausted",
+                "error": None,
+                "capability_id": "soup_to_basket",
+                "run_dir": str(self.run_root),
+            }
+        )
+        self.assertTrue(trial["budget_exhausted"])
+        self.assertEqual(trial["job_operational_errors"], [])
+        self.assertEqual(trial["operational_errors"], [])
+
+    def test_budget_exhausted_with_truthy_error_is_operational_only(self):
+        # A completed job carrying a truthy ``job.error`` AND an
+        # ``ended_reason=="budget_exhausted"`` is an operational failure: it must
+        # never be counted simultaneously as a physical budget exhaustion.
+        trial = self._build(
+            {
+                "state": "completed",
+                "ended_reason": "budget_exhausted",
+                "error": "RuntimeError: boom",
+                "capability_id": "soup_to_basket",
+                "run_dir": str(self.run_root),
+            }
+        )
+        self.assertTrue(trial["job_operational_errors"])
+        self.assertIn("RuntimeError: boom", " ".join(trial["job_operational_errors"]))
+        self.assertFalse(trial["budget_exhausted"])
+        self.assertEqual(trial["physical_failures"], [])
+
+    def test_campaign_stops_on_job_operational_error(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "screening.json"
+            args = pe._build_parser().parse_args(
+                [
+                    "--profiles", "baseline_bf16", "fp32",
+                    "--conditions", "soup_retry",
+                    "--pairs", "0:0",
+                    "--output", str(output),
+                    "--run-root", str(Path(tmp) / "runs"),
+                ]
+            )
+            calls = {"n": 0}
+
+            def _trial(*positional, **keywords):  # noqa: ARG001
+                calls["n"] += 1
+                return {
+                    "trial_id": "t%d" % calls["n"],
+                    "profile": "x",
+                    "condition": "soup_retry",
+                    "pair": "0:0",
+                    "errors": ["job_error: boom"],
+                    "operational_errors": ["job_error: boom"],
+                    "job_operational_errors": ["job_error: boom"],
+                    "null_metrics": [],
+                }
+
+            with mock.patch.object(pe, "DiagnosticService", _FakeDiagnosticService), mock.patch.object(
+                pe, "_git_rev_parse", lambda cwd=None: "sha"
+            ), mock.patch.object(pe, "_run_trial", side_effect=_trial):
+                rc = pe._run_campaign(args)
+
+            self.assertEqual(rc, 1)  # an operational job error is fatal
+            self.assertEqual(calls["n"], 1)  # stopped after the first trial
+            report = json.loads(output.read_text(encoding="utf-8"))
+            self.assertIsNotNone(report["metadata"]["fatal_error"])
+            self.assertEqual(report["aggregate"]["n_trials"], 1)
+
+
+class CompletionModeMetadataTests(unittest.TestCase):
+    def test_trial_records_completion_mode(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run_root = Path(tmp)
+            fake = _FakeDiagnosticService(run_root=run_root, completion_mode="release_verified")
+            trial = pe._run_trial(
+                fake,
+                "fp32",
+                "soup_retry",
+                "0:0",
+                10.0,
+                pe.SOURCE_REVISION_EXPECTED,
+                "sha",
+                run_root,
+            )
+            self.assertEqual(trial["completion_mode"], "release_verified")
+            self.assertTrue(trial["retry_same_goal"])
+
+    def test_campaign_metadata_records_completion_mode_and_source_hash(self):
+        args = pe._build_parser().parse_args(
+            [
+                "--profiles", "fp32",
+                "--conditions", "soup_extended",
+                "--pairs", "0:0",
+                "--output", "/tmp/placement_report.json",
+                "--run-root", "/tmp/placement_runs",
+                "--completion-mode", "release_verified",
+            ]
+        )
+        report = pe._campaign_report(
+            args, [], pe.SOURCE_REVISION_EXPECTED, "sha", time.monotonic(), None
+        )
+        self.assertEqual(report["metadata"]["completion_mode"], "release_verified")
+        self.assertEqual(
+            set(report["metadata"]["source_sha256"]),
+            {
+                "placement_experiments.py",
+                "service.py",
+                "catalog.py",
+                "placement_completion.py",
+            },
+        )
+
+    def test_completion_mode_cli_defaults_to_native(self):
+        parser = pe._build_parser()
+        args = parser.parse_args(["--output", "/x.json", "--run-root", "/r"])
+        self.assertEqual(args.completion_mode, "native")
+        with self.assertRaises(SystemExit):
+            parser.parse_args(
+                ["--completion-mode", "bogus", "--output", "/x.json", "--run-root", "/r"]
+            )
 
 
 if __name__ == "__main__":

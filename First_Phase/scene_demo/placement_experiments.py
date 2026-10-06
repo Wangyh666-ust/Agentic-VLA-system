@@ -177,6 +177,24 @@ CONDITIONS = _freeze(
             "mode": "single",
             "native_instruction": False,
         },
+        "soup_extended": {
+            "scene_id": "basket_two",
+            "capability_ids": ["soup_to_basket"],
+            "budget_per_subgoal": 600,
+            "audit": False,
+            "mode": "single",
+            "native_instruction": False,
+        },
+        "soup_retry": {
+            "scene_id": "basket_two",
+            "capability_ids": ["soup_to_basket"],
+            "budget_per_subgoal": 300,
+            "audit": False,
+            # Fixed same-goal continuation: a SECOND plan in the SAME session
+            # only when the first plan blocks without an operational timeout.
+            "mode": "same_goal_retry",
+            "native_instruction": False,
+        },
     }
 )
 
@@ -193,6 +211,10 @@ FINAL_ORACLE_GOALS: dict[str, list[list[str]]] = {
     "basket_split": [list(_SOUP_GOAL), list(_SAUCE_GOAL)],
     "basket_forced_handoff": [list(_SOUP_GOAL), list(_SAUCE_GOAL)],
     "bowl_control": [list(_BOWL_GOAL)],
+    # Literally written, independent oracle goals for the fixed continuation
+    # conditions; they are NEVER derived from the submitted capability schedule.
+    "soup_extended": [["in", "alphabet_soup_1", "basket_1_contain_region"]],
+    "soup_retry": [["in", "alphabet_soup_1", "basket_1_contain_region"]],
 }
 
 # --- small helpers -----------------------------------------------------------
@@ -284,10 +306,15 @@ def _native_task_instruction(env: Any) -> str | None:
 
 
 def _source_sha256() -> dict[str, str | None]:
-    """SHA-256 of the *exact bytes* of the three campaign source files."""
+    """SHA-256 of the *exact bytes* of the campaign source files."""
 
     digests: dict[str, str | None] = {}
-    for name in ("placement_experiments.py", "service.py", "catalog.py"):
+    for name in (
+        "placement_experiments.py",
+        "service.py",
+        "catalog.py",
+        "placement_completion.py",
+    ):
         try:
             digests[name] = hashlib.sha256((_HERE / name).read_bytes()).hexdigest()
         except Exception:  # noqa: BLE001 - an absent/unreadable file is recorded as unknown
@@ -726,8 +753,8 @@ class DiagnosticService(service.SceneService):
       implementation unchanged.
     """
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
+    def __init__(self, *args: Any, completion_mode: str = "native", **kwargs: Any) -> None:
+        super().__init__(*args, completion_mode=completion_mode, **kwargs)
         self._diag_profile: Any = PROFILES["baseline_bf16"]
         self._diag_profile_name: str = "baseline_bf16"
         self._diag_condition: str | None = None
@@ -1186,6 +1213,8 @@ def _run_condition(
         "campaign_stopped": False,
         "stop_reason": None,
         "forced_handoff": None,
+        "retry_same_goal": spec["mode"] == "same_goal_retry",
+        "retry": None,
     }
 
     override_active = False
@@ -1233,6 +1262,81 @@ def _run_condition(
                 "first_plan_timed_out": first["timed_out"],
                 "second_plan_state": (second.get("plan") or {}).get("state"),
                 "note": "strictly experimental; never a production default recovery",
+            }
+            if second["cancel_nonterminal"]:
+                result["campaign_stopped"] = True
+                result["stop_reason"] = "second plan cancel left the request nonterminal"
+
+        if spec["mode"] == "same_goal_retry":
+            # Fixed same-goal continuation: a NEW second plan in the SAME session
+            # with the SAME soup_to_basket goal and budget, submitted ONLY when
+            # the first plan blocked without an operational timeout.  The
+            # environment is never reset and the RNG is never reseeded; the
+            # policy queues reset naturally per job.  No scripted release,
+            # action injection or foreign-object schedule is used.
+            first_state = (first.get("plan") or {}).get("state")
+            if first.get("submit_error"):
+                result["campaign_stopped"] = True
+                result["stop_reason"] = "first plan submit error; no same-goal retry"
+                result["retry"] = {"retried": False, "reason": "submit_error"}
+                return result
+            if first["timed_out"]:
+                result["campaign_stopped"] = True
+                result["stop_reason"] = "first plan operational timeout; no same-goal retry"
+                result["retry"] = {"retried": False, "reason": "operational_timeout"}
+                return result
+            if first_state in ("cancelled", "error"):
+                result["campaign_stopped"] = True
+                result["stop_reason"] = "first plan %s; no same-goal retry" % first_state
+                result["retry"] = {"retried": False, "reason": first_state}
+                return result
+            if first_state != "blocked":
+                # completed (or any other terminal state) -> no retry.
+                result["retry"] = {
+                    "retried": False,
+                    "reason": "first plan %s" % first_state,
+                }
+                return result
+            # A blocked plan whose owned job ended in an operational error
+            # (state=="error", ended_reason=="error" or a truthy job.error) must
+            # NOT be retried: the same-goal continuation recovers from a
+            # non-operational block only.  The job list is inspected through the
+            # existing _job_evidence seam; the errored job's real detail is kept.
+            for job_id in (first.get("plan") or {}).get("job_ids") or []:
+                evidence = _job_evidence(service_, job_id)
+                if not evidence.get("available"):
+                    continue
+                job_public = evidence.get("job") or {}
+                if (
+                    job_public.get("state") == "error"
+                    or job_public.get("ended_reason") == "error"
+                    or job_public.get("error")
+                ):
+                    result["campaign_stopped"] = True
+                    result["stop_reason"] = (
+                        "first plan blocked with an operational job error; "
+                        "no same-goal retry"
+                    )
+                    result["retry"] = {"retried": False, "reason": "job_error"}
+                    return result
+            second = _submit_and_wait(
+                service_,
+                session_id,
+                spec["capability_ids"],
+                int(spec["budget_per_subgoal"]),
+                bool(spec["audit"]),
+                "%s-plan2" % trial_key,
+                timeout,
+                "same-goal retry after a blocked first plan for %s" % condition,
+            )
+            result["plans"].append(second)
+            result["retry"] = {
+                "retried": True,
+                "same_goal": True,
+                "first_plan_state": first_state,
+                "second_plan_state": (second.get("plan") or {}).get("state"),
+                "second_submit_error": second.get("submit_error"),
+                "second_timed_out": second["timed_out"],
             }
             if second["cancel_nonterminal"]:
                 result["campaign_stopped"] = True
@@ -1346,12 +1450,39 @@ def _build_trial(
     if final_snapshot is None:
         errors.append("final_snapshot_unavailable")
 
+    # A capability that ended in a *job error* (state=="error", a truthy
+    # ``job.error`` or ``ended_reason=="error"``) is an operational failure: it
+    # is recorded with its real detail and is NEVER mistaken for an ordinary
+    # ``budget_exhausted`` physical failure.
+    job_operational_errors: list[str] = []
+    for evidence in job_evidence:
+        if not evidence.get("available"):
+            continue
+        job_public = evidence.get("job") or {}
+        state = job_public.get("state")
+        ended = job_public.get("ended_reason")
+        detail = job_public.get("error")
+        if state == "error" or ended == "error" or detail:
+            job_operational_errors.append(
+                "job_error: job=%s state=%s ended_reason=%s error=%s"
+                % (evidence.get("job_id"), state, ended, detail or "")
+            )
+    errors.extend(job_operational_errors)
+
     # Operational failures (submit/timeout/config/telemetry) are kept distinct
     # from ``budget_exhausted`` physical failures, which are NOT errors.
     physical_failures: list[str] = []
     for evidence in job_evidence:
         job_public = evidence.get("job") or {}
-        if job_public.get("ended_reason") == "budget_exhausted":
+        state = job_public.get("state")
+        ended = job_public.get("ended_reason")
+        detail = job_public.get("error")
+        if state == "error" or ended == "error" or detail:
+            # An operationally errored job (state=="error", ended_reason=="error"
+            # or a truthy job.error) is never a physical budget exhaustion -- even
+            # when it also reports ended_reason=="budget_exhausted".
+            continue
+        if ended == "budget_exhausted":
             physical_failures.append(
                 "budget_exhausted: job=%s capability=%s"
                 % (evidence.get("job_id"), job_public.get("capability_id"))
@@ -1383,6 +1514,7 @@ def _build_trial(
         "policy_resets": session.get("policy_resets"),
         "model_revision": model_revision,
         "source_git_sha": git_sha,
+        "completion_mode": getattr(service_, "completion_mode", None),
         "instructions": instructions,
         "native_instruction": condition_result.get("native_instruction"),
         "plans": plan_records,
@@ -1407,6 +1539,9 @@ def _build_trial(
         "strict_task_success": strict_task_success,
         "native_benchmark_success": native_benchmark_success,
         "forced_handoff": condition_result.get("forced_handoff"),
+        "retry_same_goal": bool(condition_result.get("retry_same_goal")),
+        "retry": condition_result.get("retry"),
+        "job_operational_errors": job_operational_errors,
         "final_oracle_samples_n": len(final_oracle_samples),
         "final_oracle_strict_window": [
             _oracle_sample_strict(sample) for sample in final_oracle_samples[-STRICT_STREAK:]
@@ -1545,6 +1680,12 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output", required=True, type=str, help="absolute path of the JSON report (must not exist)")
     parser.add_argument("--run-root", required=True, type=str, help="absolute run root for per-trial artifacts")
     parser.add_argument("--timeout", type=float, default=900.0, help="per-plan deadline in seconds")
+    parser.add_argument(
+        "--completion-mode",
+        choices=service.COMPLETION_MODES,
+        default=service.DEFAULT_COMPLETION_MODE,
+        help="completion gate passed to the diagnostic service (native or release_verified)",
+    )
     return parser
 
 
@@ -1593,6 +1734,7 @@ def _campaign_report(
             "conditions": list(args.conditions),
             "pairs": list(args.pairs),
             "timeout_s": float(args.timeout),
+            "completion_mode": getattr(args, "completion_mode", "native"),
             "model_path": service.DEFAULT_MODEL_PATH,
             "model_revision": model_revision,
             "source_git_sha": git_sha,
@@ -1659,7 +1801,11 @@ def _run_campaign(args: argparse.Namespace) -> int:
     diagnostic_service: DiagnosticService | None = None
     ready = False
     try:
-        diagnostic_service = DiagnosticService(service.DEFAULT_MODEL_PATH, str(run_root))
+        diagnostic_service = DiagnosticService(
+            service.DEFAULT_MODEL_PATH,
+            str(run_root),
+            completion_mode=args.completion_mode,
+        )
         diagnostic_service.start()
         deadline = time.monotonic() + 120.0
         while time.monotonic() < deadline:
@@ -1741,6 +1887,18 @@ def _run_campaign(args: argparse.Namespace) -> int:
                 if (trial.get("errors") or []) and "campaign_stopped" in " ".join(trial["errors"]):
                     _progress("campaign stopped after nonterminal cancellation")
                     break
+                # A job that ended in a real operational error (state=="error",
+                # truthy job.error or ended_reason=="error") stops the campaign
+                # with an explanatory fatal_error -- it is never treated as an
+                # ordinary budget_exhausted physical failure.  The record has
+                # already been atomically persisted above.
+                if trial.get("job_operational_errors"):
+                    fatal_error = (
+                        "job operational error(s); stopping campaign (no continuation): %s"
+                        % ("; ".join(trial["job_operational_errors"]),)
+                    )
+                    _progress(fatal_error)
+                    break
     except BaseException as exc:  # noqa: BLE001 - never lose the partial report
         fatal_error = _format_exc(exc)
     finally:
@@ -1762,7 +1920,9 @@ def _run_campaign(args: argparse.Namespace) -> int:
         _progress("report written to %s (%d trials)" % (output_path, len(trials)))
 
     report_write_failed = bool(persist_errors)
-    return 1 if (fatal_error or report_write_failed) else 0
+    # Report-write failures and any operational error must never exit 0.
+    operational_failure = any(bool(trial.get("operational_errors")) for trial in trials)
+    return 1 if (fatal_error or report_write_failed or operational_failure) else 0
 
 
 def main(argv: list[str] | None = None) -> int:

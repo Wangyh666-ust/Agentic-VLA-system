@@ -15,6 +15,7 @@ CUDA.  They exercise:
 
 from __future__ import annotations
 
+import json
 import sys
 import tempfile
 import threading
@@ -1425,6 +1426,238 @@ class PersistentWorkerTests(unittest.TestCase):
         self.assertEqual(len(self.service._jobs), n_jobs_before)
         self.assertEqual(session_after["total_steps"], session_before["total_steps"])
         self.assertEqual(session_after["scene_version"], session_before["scene_version"])
+
+
+# --- opt-in release-verified completion gate --------------------------------
+
+
+class _ReleaseSimData:
+    """Minimal native ``sim.data`` including a free-joint velocity reader."""
+
+    def __init__(self):
+        self.qpos = np.zeros(7, dtype=np.float64)
+        self.qvel = np.zeros(7, dtype=np.float64)
+        self.linear = np.zeros(3, dtype=np.float64)
+        self.angular = np.zeros(3, dtype=np.float64)
+
+    def get_joint_qpos(self, name):
+        return np.zeros(7, dtype=np.float64)
+
+    def set_joint_qpos(self, name, value):
+        pass
+
+    def get_joint_qvel(self, name):
+        return np.concatenate([self.linear, self.angular])
+
+
+class _ReleaseObject:
+    def __init__(self, object_id):
+        self.joints = ["%s_joint0" % object_id]
+        self.contact_geoms = object_id
+
+
+class _ReleaseInnerEnv:
+    """Native-shaped inner env whose grasp/velocity change over the episode.
+
+    The declared soup predicate becomes raw-true at ``truth_at``; the soup is
+    additionally grasped (contact-proxy) until ``release_at`` steps have run.
+    """
+
+    def __init__(self, truth_at=3, release_at=10 ** 9):
+        self.sim = types.SimpleNamespace(
+            data=_ReleaseSimData(),
+            model=types.SimpleNamespace(camera_names=[], get_xml=lambda: "<xml/>"),
+        )
+        self.steps = 0
+        self.truth_at = truth_at
+        self.release_at = release_at
+        self.objects_dict = {
+            "alphabet_soup_1": _ReleaseObject("alphabet_soup_1"),
+            "basket_1": _ReleaseObject("basket_1"),
+        }
+        self.object_states_dict = {}
+        self.obj_body_id = {"alphabet_soup_1": 0, "basket_1": 1}
+        self.robots = [types.SimpleNamespace(gripper=types.SimpleNamespace())]
+
+    def _get_observations(self, force_update=False):  # noqa: ARG002
+        return {}
+
+    def _check_grasp(self, gripper, geoms):  # noqa: ARG002
+        if geoms == "alphabet_soup_1":
+            return self.steps < self.release_at
+        return False
+
+    def _eval_predicate(self, predicate):
+        key = "|".join(str(part) for part in predicate)
+        if key == "in|alphabet_soup_1|basket_1_contain_region":
+            return self.steps >= self.truth_at
+        return False
+
+    def step(self, action):  # noqa: ARG002
+        self.steps += 1
+        self.sim.data.qpos[0] = float(self.steps)
+        return {}
+
+
+class _ReleaseEnv:
+    """``env_factory`` output wrapping a :class:`_ReleaseInnerEnv`."""
+
+    def __init__(self, inner):
+        self._inner = inner
+        self._env = types.SimpleNamespace(env=inner)
+        self.action_space = types.SimpleNamespace(low=-np.ones(7), high=np.ones(7))
+        self.closed = False
+
+    def reset(self, seed=0):  # noqa: ARG002
+        return _FakeObs(), {}
+
+    def step(self, action):
+        self._inner.step(action)
+        return _FakeObs(), 0.0, False, False, {"is_success": False}
+
+    def render(self):
+        return np.zeros((8, 8, 3), dtype=np.uint8)
+
+    def close(self):
+        self.closed = True
+
+
+class ReleaseVerifiedWorkerTests(unittest.TestCase):
+    """One real worker run per gate against a native-shaped release fake."""
+
+    def _run_soup(self, mode, truth_at, release_at, budget=50):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        action_calls = {"n": 0}
+
+        def _action(batch):  # noqa: ARG001
+            action_calls["n"] += 1
+            return np.zeros(7)
+
+        svc = service.SceneService(
+            run_root=tmp.name,
+            env_factory=lambda **kwargs: _ReleaseEnv(
+                _ReleaseInnerEnv(truth_at=truth_at, release_at=release_at)
+            ),
+            policy_loader=lambda s: setattr(s._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+            completion_mode=mode,
+        )
+        svc.start()
+        try:
+            deadline = time.time() + 20.0
+            while time.time() < deadline and not svc.health()["ready"]:
+                time.sleep(0.05)
+            session = svc.create_session("basket_two", seed=0, init_state_index=0)
+            self.assertTrue(session["ok"], session)
+            submitted = svc.submit_plan(
+                {
+                    "session_id": session["session_id"],
+                    "scene_version": 0,
+                    "request_id": "req-soup",
+                    "capability_ids": ["soup_to_basket"],
+                    "decision": "execute",
+                    "budget_per_subgoal": budget,
+                }
+            )
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-soup")
+            job = svc.job(plan["job_ids"][0]) if plan.get("job_ids") else None
+            after = svc.session(session["session_id"])
+            health = svc.health()
+            return {
+                "session": session,
+                "plan": plan,
+                "job": job,
+                "after": after,
+                "health": health,
+                "action_calls": action_calls["n"],
+            }
+        finally:
+            svc.stop()
+
+    def _wait(self, svc, request_id, deadline_s=20.0):
+        deadline = time.time() + deadline_s
+        while time.time() < deadline:
+            payload = svc.plan(request_id)
+            if payload is not None and payload["state"] in service.TERMINAL_PLAN_STATES:
+                return payload
+            time.sleep(0.05)
+        self.fail("plan %s did not reach a terminal state" % request_id)
+
+    def test_release_continues_while_held_then_succeeds_after_stable_release(self):
+        result = self._run_soup("release_verified", truth_at=3, release_at=12)
+        job = result["job"]
+        self.assertEqual(job["state"], "completed")
+        self.assertEqual(job["ended_reason"], "success")
+        # Raw predicate truth begins at step 3; the first five raw-true samples
+        # (3..7) are still held, so the release gate must keep stepping past them.
+        self.assertGreater(job["steps"], 7)
+        # One persistent environment, exactly one episode reset, no reseeding.
+        self.assertEqual(result["session"]["episode_resets"], 1)
+        self.assertEqual(result["after"]["episode_resets"], 1)
+        self.assertEqual(result["after"]["env_instance_id"], 1)
+        # Every step corresponds to a real mock VLA action: nothing injected.
+        self.assertEqual(result["action_calls"], job["steps"])
+
+    def test_native_terminates_earlier_than_release(self):
+        native = self._run_soup("native", truth_at=3, release_at=10 ** 9)
+        release = self._run_soup("release_verified", truth_at=3, release_at=12)
+        self.assertEqual(native["job"]["ended_reason"], "success")
+        self.assertEqual(native["job"]["steps"], 7)
+        self.assertEqual(release["job"]["ended_reason"], "success")
+        self.assertGreater(release["job"]["steps"], native["job"]["steps"])
+
+    def test_release_prevents_initial_raw_true_but_held_instant_success(self):
+        native = self._run_soup("native", truth_at=0, release_at=10 ** 9)
+        self.assertEqual(native["job"]["ended_reason"], "already_satisfied")
+        self.assertEqual(native["job"]["steps"], 0)
+        self.assertEqual(native["action_calls"], 0)
+
+        release = self._run_soup("release_verified", truth_at=0, release_at=5)
+        self.assertNotEqual(release["job"]["ended_reason"], "already_satisfied")
+        self.assertEqual(release["job"]["ended_reason"], "success")
+        self.assertGreater(release["job"]["steps"], 0)
+
+    def test_completion_mode_is_reported_in_health_and_job(self):
+        result = self._run_soup("release_verified", truth_at=3, release_at=12)
+        self.assertEqual(result["health"]["completion_mode"], "release_verified")
+        self.assertEqual(result["job"]["completion_mode"], "release_verified")
+        self.assertEqual(result["job"]["phase"], "not_holding")
+
+        native = self._run_soup("native", truth_at=3, release_at=10 ** 9)
+        self.assertEqual(native["health"]["completion_mode"], "native")
+        self.assertEqual(native["job"]["completion_mode"], "native")
+        self.assertIsNone(native["job"]["phase"])
+
+    def test_events_record_completion_fields(self):
+        result = self._run_soup("release_verified", truth_at=3, release_at=12)
+        events_path = Path(result["job"]["run_dir"]) / "events.jsonl"
+        events = [
+            json.loads(line)
+            for line in events_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertTrue(events)
+        self.assertTrue(all(e["completion_mode"] == "release_verified" for e in events))
+        self.assertTrue(all("declared_predicates" in e for e in events))
+        self.assertTrue(all("native_success" in e for e in events))
+        held_true = [
+            e for e in events if e["completion_phase"] == "goal_still_held"
+        ]
+        self.assertTrue(held_true)
+        self.assertTrue(all(e["completion_ready"] is False for e in held_true))
+
+    def test_invalid_completion_mode_is_rejected(self):
+        with self.assertRaises(ValueError):
+            service.SceneService(run_root=tempfile.mkdtemp(), completion_mode="bogus")
+
+    def test_default_completion_mode_is_native(self):
+        svc = service.SceneService(run_root=tempfile.mkdtemp())
+        self.assertEqual(svc.completion_mode, "native")
+        self.assertEqual(service.DEFAULT_COMPLETION_MODE, "native")
+        self.assertEqual(tuple(service.COMPLETION_MODES), ("native", "release_verified"))
 
 
 if __name__ == "__main__":

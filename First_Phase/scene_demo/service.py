@@ -57,6 +57,7 @@ if str(_HERE) not in sys.path:
 
 import catalog  # noqa: E402
 import oracle  # noqa: E402
+import placement_completion  # noqa: E402
 
 
 # --- v1 bridge ---------------------------------------------------------------
@@ -117,6 +118,12 @@ DEFAULT_BUDGET = 300
 AUDIT_BUDGET = 600
 GOAL_CONSECUTIVE_STEPS = 5
 WORKER_WAIT_S = 60.0
+
+# Completion gates.  ``native`` is the historical predicate-only rule; the
+# opt-in ``release_verified`` gate additionally screens the declared placement
+# target for a stable released grasp (see ``placement_completion``).
+COMPLETION_MODES = ("native", "release_verified")
+DEFAULT_COMPLETION_MODE = "native"
 
 VIEW_AGENTVIEW = "agentview"
 VIEW_WRIST = "wrist"
@@ -968,6 +975,10 @@ class JobRecord:
         self.latest_png: str | None = None
         self.rollout_path: str | None = None
         self.wall_s: float | None = None
+        # The completion gate this job ran under (inherited from the service)
+        # and the last screened completion phase observed for it.
+        self.completion_mode: str | None = None
+        self.phase: str | None = None
         self._t0: float | None = None
 
     def public(self) -> dict[str, Any]:
@@ -992,6 +1003,8 @@ class JobRecord:
             "state_after_sha": self.state_after_sha,
             "env_instance_id": self.env_instance_id,
             "episode_resets": self.episode_resets,
+            "completion_mode": self.completion_mode,
+            "phase": self.phase,
             "run_dir": str(self.run_dir),
             "latest_png": self.latest_png,
             "rollout_path": self.rollout_path,
@@ -1019,9 +1032,17 @@ class SceneService:
         policy_loader: Any = None,
         action_function: Any = None,
         batch_builder: Any = None,
+        completion_mode: str = DEFAULT_COMPLETION_MODE,
     ) -> None:
+        if completion_mode not in COMPLETION_MODES:
+            raise ValueError(
+                "completion_mode must be one of %s, got %r"
+                % (list(COMPLETION_MODES), completion_mode)
+            )
         self.model_path = str(model_path)
         self.run_root = Path(run_root)
+        # The actual completion gate; jobs inherit it verbatim.
+        self.completion_mode = completion_mode
 
         self._lock = threading.RLock()
         self._queue: queue.Queue = queue.Queue()
@@ -1045,6 +1066,9 @@ class SceneService:
         self._last_obs: Any = None
         self._total_steps = 0
         self._processor: Any = None
+        # Worker-thread-owned last screened completion status (release mode);
+        # ``None`` until the release gate has produced a probe result.
+        self._last_completion_status: dict | None = None
 
         # Test seams (None -> the real lerobot/LIBERO path).
         self._env_factory = env_factory
@@ -1090,6 +1114,7 @@ class SceneService:
                 "dtype": getattr(self._v1, "_dtype", None),
                 "control_mode": CONTROL_MODE,
                 "session_step_limit": SESSION_STEP_LIMIT,
+                "completion_mode": self.completion_mode,
                 "active_request_id": active.request_id if active is not None else None,
             }
 
@@ -1214,6 +1239,28 @@ class SceneService:
             processor = getattr(self._v1, name, None)
             if processor is not None and hasattr(processor, "reset"):
                 processor.reset()
+
+    def _completion_ready(self, env: Any, goals: list, predicates: dict) -> bool:
+        """Whether the declared goal counts as completion-ready for one sample.
+
+        ``native`` reproduces the historical rule *exactly*: a non-empty
+        predicate mapping whose values are all true.  ``release_verified``
+        screens that same raw predicate mapping through
+        :func:`placement_completion.probe_placement_completion`, which
+        additionally requires the declared placement target to be released and
+        at rest.  An unknown probe result (``ready is None``) is never success;
+        the full status is retained on ``self._last_completion_status`` so the
+        phase can be reported.
+        """
+
+        if self.completion_mode == "native":
+            self._last_completion_status = None
+            return bool(predicates) and all(predicates.values())
+        probe = placement_completion.probe_placement_completion(
+            _inner_env(env), goals, predicates
+        )
+        self._last_completion_status = probe
+        return probe.get("ready") is True
 
     # -- environment construction --------------------------------------------
 
@@ -1842,6 +1889,7 @@ class SceneService:
         job.instruction = str(capability["instruction"])
         job.env_instance_id = self._current_env_instance_id
         job.episode_resets = 1
+        job.completion_mode = self.completion_mode
         with self._lock:
             self._jobs[job_id] = job
             self._job_order.append(job_id)
@@ -1900,6 +1948,7 @@ class SceneService:
         success = False
         ended_reason: str | None = None
         error_text: str | None = None
+        last_completion_phase: str | None = None
 
         with self._lock:
             job.state = "running"
@@ -1926,7 +1975,18 @@ class SceneService:
                 frames.append(initial_frame)
                 self._save_frame(first_png, initial_frame)
 
-            already_satisfied = bool(goals) and all(eval_goal_predicate(env, goal) for goal in goals)
+            # Evaluate the *actual* initial declared predicates once, then run
+            # them through the same completion gate used by the step loop: in
+            # release mode a raw-true-but-still-held sample can never be an
+            # instant "already satisfied".
+            initial_predicates = {
+                catalog.goal_key(goal): bool(eval_goal_predicate(env, goal))
+                for goal in goals
+            }
+            already_satisfied = self._completion_ready(env, goals, initial_predicates)
+            initial_status = self._last_completion_status
+            if isinstance(initial_status, dict):
+                last_completion_phase = initial_status.get("phase")
             occupant = None
             if (
                 not already_satisfied
@@ -1980,7 +2040,13 @@ class SceneService:
                                 catalog.goal_key(goal): bool(eval_goal_predicate(env, goal))
                                 for goal in goals
                             }
-                            consecutive = consecutive + 1 if predicates and all(predicates.values()) else 0
+                            completion_ready = self._completion_ready(env, goals, predicates)
+                            status = self._last_completion_status
+                            completion_phase = (
+                                status.get("phase") if isinstance(status, dict) else None
+                            )
+                            last_completion_phase = completion_phase
+                            consecutive = consecutive + 1 if completion_ready else 0
                             events_file.write(
                                 json.dumps(
                                     {
@@ -1989,6 +2055,9 @@ class SceneService:
                                         "total_steps": self._total_steps,
                                         "native_success": native_success,
                                         "declared_predicates": predicates,
+                                        "completion_mode": self.completion_mode,
+                                        "completion_ready": bool(completion_ready),
+                                        "completion_phase": completion_phase,
                                     }
                                 )
                                 + "\n"
@@ -2038,6 +2107,7 @@ class SceneService:
                 job.total_steps = self._total_steps
                 job.success = bool(success)
                 job.wall_s = wall_s
+                job.phase = last_completion_phase
                 job.ended_reason = ended_reason or "unknown"
                 job.error = error_text
                 job.state_after_sha = after_sha
@@ -2357,9 +2427,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--host", type=str, default=DEFAULT_HOST)
     parser.add_argument("--model", type=str, default=DEFAULT_MODEL_PATH)
     parser.add_argument("--run-root", type=str, default=DEFAULT_RUN_ROOT)
+    parser.add_argument(
+        "--completion-mode",
+        type=str,
+        choices=list(COMPLETION_MODES),
+        default=DEFAULT_COMPLETION_MODE,
+        help="completion gate: native (predicate-only) or release_verified",
+    )
     args = parser.parse_args(argv)
 
-    service = SceneService(args.model, args.run_root)
+    service = SceneService(args.model, args.run_root, completion_mode=args.completion_mode)
     service.start()
 
     httpd = _Server((args.host, args.port), _Handler)
