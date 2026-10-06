@@ -890,9 +890,27 @@ function renderSubgoals(plan, jobs) {
     }
   } else {
     html += "<h2>子目标进度</h2>" + selected.map(capId => {
+      // 最新状态取本次请求 jobs 原序中最后一个 capability_id 匹配的 job（无匹配则为 null）。
+      const matches = (jobs || []).filter(j => j && j.capability_id === capId);
+      const latestJob = matches.length ? matches[matches.length - 1] : null;
+      const planState = (plan && plan.state) || "";
+      const planTerminal = isTerminalPlan(planState);
       let cls = "pill", label = "待定";
-      if (done.includes(capId)) { cls += " done"; label = "已完成"; }
-      else if (pend.includes(capId)) { cls += " pend"; label = "进行中"; }
+      if (latestJob && latestJob.state === "running" && planState === "running") {
+        cls += " pend"; label = "进行中";
+      } else if (latestJob && latestJob.state === "queued" &&
+                 (planState === "queued" || planState === "running")) {
+        cls += " pend"; label = "排队中";
+      } else if (done.includes(capId) || (latestJob && latestJob.success === true)) {
+        cls += " done"; label = "已完成";
+      } else if (latestJob && latestJob.success === false) {
+        cls += " pend"; label = "执行未成功";
+        if (pend.includes(capId) && planTerminal) label += "（后续未执行）";
+      } else if (planTerminal) {
+        label = "未执行（计划已停止）";
+      } else if (pend.includes(capId)) {
+        cls += " pend"; label = "待执行";
+      }
       return "<div style='margin:4px 0'><span class='" + cls + "'>" + label + "</span>" +
              esc(capId) + " — " + esc(capInstruction(capId)) + "</div>";
     }).join("");
