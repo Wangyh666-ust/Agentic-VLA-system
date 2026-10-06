@@ -208,6 +208,7 @@ class ResumeValidationTests(unittest.TestCase):
             "state": "blocked",
             "decision": "execute",
             "capability_ids": ["bowl_to_plate"],
+            "original_capability_ids": ["bowl_to_plate", "wine_to_rack"],
             "completed_capability_ids": [],
             "repair_history": [],
         }
@@ -285,6 +286,50 @@ class ResumeValidationTests(unittest.TestCase):
             },
         )
         self.assertEqual(error["reason"], "invalid_budget")
+
+    def test_resume_cannot_substitute_object(self):
+        # Original goal: the white mug onto the RIGHT plate.  A repair that puts
+        # the YELLOW mug there instead introduces a new object.
+        error = service.validate_resume_request(
+            _ready_session(scene_id="mugs_two"),
+            self._plan(
+                original_capability_ids=["white_mug_right"],
+                capability_ids=["white_mug_right"],
+            ),
+            {"scene_version": 0, "capability_ids": ["yellow_mug_right"]},
+        )
+        self.assertEqual(error["reason"], "repair_scope")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_resume_cannot_substitute_destination(self):
+        # Original goal: the white mug onto the LEFT plate.  Putting the same mug
+        # onto the RIGHT plate changes the destination.
+        error = service.validate_resume_request(
+            _ready_session(scene_id="mugs_two"),
+            self._plan(
+                original_capability_ids=["white_mug_left"],
+                capability_ids=["white_mug_left"],
+            ),
+            {"scene_version": 0, "capability_ids": ["white_mug_right"]},
+        )
+        self.assertEqual(error["reason"], "repair_scope")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_resume_composite_may_split_into_original_atomic_goals(self):
+        # The original audit composite declared the bowl-on-plate AND
+        # wine-on-rack goals.  Retrying just the wine goal is a subset of the
+        # original goal set, so it is allowed -- and audit is NOT inherited, so
+        # audit=False is accepted.
+        error = service.validate_resume_request(
+            _ready_session(scene_id="goal_table"),
+            self._plan(
+                original_capability_ids=["table_both"],
+                capability_ids=["table_both"],
+                audit=True,
+            ),
+            {"scene_version": 0, "capability_ids": ["wine_to_rack"], "audit": False},
+        )
+        self.assertIsNone(error)
 
 
 class EvaluateValidationTests(unittest.TestCase):
@@ -1320,6 +1365,66 @@ class PersistentWorkerTests(unittest.TestCase):
         self.assertEqual(final["state"], "blocked", final)
         self.assertFalse(final["plan_success"])
         self.assertIn("on|wine_bottle_1|wine_rack_1_top_region", final["error"])
+
+    def test_resume_out_of_scope_is_rejected_without_any_mutation(self):
+        session = self.service.create_session("goal_table", seed=0, init_state_index=0)
+        session_id = session["session_id"]
+        # The wine goal can never be satisfied, so the plan blocks.
+        self.service._env._inner.truth_after[
+            "on|wine_bottle_1|wine_rack_1_top_region"
+        ] = 10 ** 9
+        submitted = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-scope",
+                "capability_ids": ["bowl_to_plate", "wine_to_rack"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(submitted["ok"], submitted)
+        self.assertEqual(
+            submitted["original_capability_ids"], ["bowl_to_plate", "wine_to_rack"]
+        )
+        blocked = self._wait_for_plan("req-scope")
+        self.assertEqual(blocked["state"], "blocked", blocked)
+
+        plan_before = self.service.plan("req-scope")
+        session_before = self.service.session(session_id)
+        job_ids_before = list(plan_before["job_ids"])
+        jobs_before = [self.service.job(job_id) for job_id in job_ids_before]
+        n_jobs_before = len(self.service._jobs)
+
+        # stove_on is NOT one of the original goals -> the repair is out of scope
+        # and must be refused before any history/queue/job/simulator mutation.
+        rejected = self.service.resume_plan(
+            {
+                "session_id": session_id,
+                "request_id": "req-scope",
+                "scene_version": session_before["scene_version"],
+                "capability_ids": ["stove_on"],
+                "rationale": "attempt to add a brand new goal",
+            }
+        )
+        self.assertFalse(rejected["ok"], rejected)
+        self.assertEqual(rejected["reason"], "repair_scope")
+        self.assertEqual(service.status_for_reason(rejected["reason"]), 409)
+
+        # Nothing moved: still the same blocked plan, no new job, no repair
+        # history entry, and the session's steps/version are untouched.
+        plan_after = self.service.plan("req-scope")
+        session_after = self.service.session(session_id)
+        self.assertEqual(plan_after, plan_before)
+        self.assertEqual(plan_after["state"], "blocked")
+        self.assertEqual(plan_after["repair_history"], [])
+        self.assertEqual(plan_after["job_ids"], job_ids_before)
+        self.assertEqual(
+            [self.service.job(job_id) for job_id in job_ids_before], jobs_before
+        )
+        self.assertEqual(len(self.service._jobs), n_jobs_before)
+        self.assertEqual(session_after["total_steps"], session_before["total_steps"])
+        self.assertEqual(session_after["scene_version"], session_before["scene_version"])
 
 
 if __name__ == "__main__":

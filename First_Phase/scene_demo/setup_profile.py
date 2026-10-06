@@ -134,6 +134,10 @@ their order.
 - If the scene cannot support the request at all, use `decision="unsupported"`
   with an empty capability list.
 
+## Repair scope
+
+修复只可重排、重试、恢复原声明目标，不得新增物体或目的地；物体身份不确定时保持blocked并说明限制；改变目标必须由用户发起新请求。
+
 ## Honesty
 
 - Do not read, request or reveal any independent fixtures, answer keys or

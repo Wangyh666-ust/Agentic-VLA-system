@@ -235,6 +235,7 @@ _REASON_STATUS = {
     "precondition_conflict": 409,
     "plan_not_blocked": 409,
     "resume_exhausted": 409,
+    "repair_scope": 409,
     "blocked": 409,
     "cancelled": 409,
     # 503
@@ -392,7 +393,47 @@ def validate_resume_request(
             )
     # audit defaults to False: a repair never silently inherits audit rights.
     audit = bool(payload.get("audit", False))
-    return validate_capability_list(session.get("scene_id"), capability_ids, audit)
+    # The existing capability-list gate keeps its current error priority: an
+    # unknown/cross-scene/audit-gated/duplicate repair payload is reported
+    # exactly as before, before any scope reasoning runs.
+    error = validate_capability_list(session.get("scene_id"), capability_ids, audit)
+    if error is not None:
+        return error
+
+    # --- original-goal scope guard ------------------------------------------
+    # A repair may only reorder, retry or recover the goals the *original*
+    # request declared.  The baseline is the immutable snapshot
+    # ``original_capability_ids`` (never the current, possibly already-repaired
+    # ``capability_ids``), so a substitution or an added goal cannot widen the
+    # plan: a new object or destination requires a new user request.  A
+    # composite original goal may legitimately be split into its atomic
+    # capabilities, because then every proposed goal already exists in the
+    # original declared set.
+    original_ids = plan.get("original_capability_ids")
+    if (
+        not isinstance(original_ids, list)
+        or not original_ids
+        or any(
+            not isinstance(capability_id, str) or capability_id not in catalog.CAPABILITIES
+            for capability_id in original_ids
+        )
+    ):
+        return _err(
+            "repair_scope",
+            "plan has no valid original_capability_ids baseline; a repair can only "
+            "reorder or retry the originally declared goals",
+        )
+    original_goals = {catalog.goal_key(goal) for goal in catalog.deduplicate_goals(original_ids)}
+    proposed_goals = {catalog.goal_key(goal) for goal in catalog.deduplicate_goals(capability_ids)}
+    added_goals = sorted(proposed_goals - original_goals)
+    if added_goals:
+        return _err(
+            "repair_scope",
+            "repairs only reorder, retry or recover the plan's original declared "
+            "goals; the proposed goal(s) %s add a new object or destination, which "
+            "requires a new user request" % (added_goals,),
+        )
+    return None
 
 
 def validate_evaluate_request(

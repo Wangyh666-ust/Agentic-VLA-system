@@ -101,19 +101,20 @@ class CatalogTests(unittest.TestCase):
 
 
 class FixtureTests(unittest.TestCase):
-    def test_ten_cases_and_version(self):
+    def test_eleven_cases_and_version(self):
         cases = _load()
-        self.assertEqual(len(cases), 10)
+        self.assertEqual(len(cases), 11)
         fixtures_path = os.path.join(_SCENE_DEMO, "fixtures.json")
         with open(fixtures_path, encoding="utf-8") as handle:
             raw = json.load(handle)
         self.assertEqual(raw["version"], 1)
-        self.assertEqual(len(raw["cases"]), 10)
+        self.assertEqual(len(raw["cases"]), 11)
         self.assertEqual(
             set(cases),
             {
                 "table_tidy",
                 "table_wine_only",
+                "table_bowl_only",
                 "table_shifted_tidy",
                 "basket_two_cans",
                 "mugs_standard",
@@ -141,7 +142,7 @@ class FixtureTests(unittest.TestCase):
     def test_load_cases_explicit_path(self):
         fixtures_path = os.path.join(_SCENE_DEMO, "fixtures.json")
         cases = oracle.load_cases(fixtures_path)
-        self.assertEqual(len(cases), 10)
+        self.assertEqual(len(cases), 11)
         self.assertIn("table_tidy", cases)
 
 
