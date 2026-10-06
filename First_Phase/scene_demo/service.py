@@ -979,6 +979,13 @@ class JobRecord:
         # and the last screened completion phase observed for it.
         self.completion_mode: str | None = None
         self.phase: str | None = None
+        # Public holding evidence from the release-verified probe.  ``native``
+        # jobs never probe the simulator here, so all three stay ``None``; a
+        # ``release_verified`` job carries the measured values of its last
+        # screened sample (an unknown probe keeps ``completion_ready`` ``None``).
+        self.held_objects: list[str] | None = None
+        self.grasp_observation_complete: bool | None = None
+        self.completion_ready: bool | None = None
         self._t0: float | None = None
 
     def public(self) -> dict[str, Any]:
@@ -1005,6 +1012,9 @@ class JobRecord:
             "episode_resets": self.episode_resets,
             "completion_mode": self.completion_mode,
             "phase": self.phase,
+            "held_objects": list(self.held_objects) if self.held_objects is not None else None,
+            "grasp_observation_complete": self.grasp_observation_complete,
+            "completion_ready": self.completion_ready,
             "run_dir": str(self.run_dir),
             "latest_png": self.latest_png,
             "rollout_path": self.rollout_path,
@@ -1261,6 +1271,81 @@ class SceneService:
         )
         self._last_completion_status = probe
         return probe.get("ready") is True
+
+    # -- release-verified holding evidence + handoff guard -------------------
+
+    @staticmethod
+    def _declared_placement_ids(goals: list) -> list[str]:
+        """Object ids named by the declared ``on``/``in`` placement goals.
+
+        Only ``on``/``in`` goals name a physical placement object; every other
+        goal (e.g. ``turnon``) carries none.  Ordered, de-duplicated.
+        """
+
+        ids: list[str] = []
+        for goal in goals:
+            if (
+                len(goal) >= 2
+                and goal[0] in placement_completion.PLACEMENT_PREDICATES
+            ):
+                object_id = str(goal[1])
+                if object_id not in ids:
+                    ids.append(object_id)
+        return ids
+
+    def _holding_guard_reason(self, goals: list, status: Any) -> str | None:
+        """The physical handoff block reason, or ``None`` when the job may run.
+
+        Release-verified only, and only with a non-empty declared placement
+        target.  An unknown grasp screen (``grasp_observation_complete`` is not
+        ``True``) blocks as ``holding_state_unknown``; a held object that is not
+        one of the declared placement objects blocks as
+        ``holding_other_object``.  Holding the *same* declared object (a
+        same-goal retry) is allowed.  Native mode and non-placement goals bypass
+        the guard entirely.
+        """
+
+        if self.completion_mode != "release_verified":
+            return None
+        placement_ids = self._declared_placement_ids(goals)
+        if not placement_ids:
+            return None
+        complete = (
+            status.get("grasp_observation_complete")
+            if isinstance(status, dict)
+            else None
+        )
+        if complete is not True:
+            return "holding_state_unknown"
+        held = status.get("held_objects")
+        if not isinstance(held, list):
+            return "holding_state_unknown"
+        if any(object_id not in placement_ids for object_id in held):
+            return "holding_other_object"
+        return None
+
+    def _apply_completion_probe(self, job: JobRecord, status: Any) -> None:
+        """Publish the screened probe fields on the job under the lock.
+
+        Called with the *initial* sample and after every VLA step.  In native
+        mode ``status`` is ``None`` so all three stay ``None``; a release probe
+        that could not observe the grasp keeps ``completion_ready`` ``None``
+        (unknown is never reported as a boolean success/failure).
+        """
+
+        if isinstance(status, dict):
+            held = status.get("held_objects")
+            grasp = status.get("grasp_observation_complete")
+            ready = status.get("ready")
+            values: tuple[Any, Any, Any] = (
+                [str(object_id) for object_id in held] if isinstance(held, list) else None,
+                grasp if isinstance(grasp, bool) else None,
+                ready if isinstance(ready, bool) else None,
+            )
+        else:
+            values = (None, None, None)
+        with self._lock:
+            job.held_objects, job.grasp_observation_complete, job.completion_ready = values
 
     # -- environment construction --------------------------------------------
 
@@ -1987,15 +2072,30 @@ class SceneService:
             initial_status = self._last_completion_status
             if isinstance(initial_status, dict):
                 last_completion_phase = initial_status.get("phase")
+            self._apply_completion_probe(job, initial_status)
+            # Release-verified handoff guard: with non-empty declared placement
+            # goals, an unknown grasp screen or a foreign held object physically
+            # blocks the job BEFORE any env.step.  These are expected physical
+            # blocks (never operational errors): success stays false, ``error``
+            # stays None, and the measured phase/held ids + the exact before/after
+            # physics SHA are recorded.  Native mode and non-placement-only goals
+            # bypass the guard, and holding the SAME declared object (a same-goal
+            # retry) is allowed.  Only if the guard allows does the existing
+            # completed/occupancy/budget/cancel logic run.
+            holding_block = self._holding_guard_reason(goals, initial_status)
             occupant = None
             if (
-                not already_satisfied
+                holding_block is None
+                and not already_satisfied
                 and capability.get("exclusive_target")
                 and capability.get("target_id")
             ):
                 occupant = self._target_occupant(env, capability)
 
-            if already_satisfied:
+            if holding_block is not None:
+                success = False
+                ended_reason = holding_block
+            elif already_satisfied:
                 success = True
                 ended_reason = "already_satisfied"
             elif occupant is not None:
@@ -2046,6 +2146,7 @@ class SceneService:
                                 status.get("phase") if isinstance(status, dict) else None
                             )
                             last_completion_phase = completion_phase
+                            self._apply_completion_probe(job, status)
                             consecutive = consecutive + 1 if completion_ready else 0
                             events_file.write(
                                 json.dumps(

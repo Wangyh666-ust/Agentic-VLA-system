@@ -328,6 +328,67 @@ class PromptContractTests(unittest.TestCase):
         payload = _prompt_payload(prompt, run_agent.REPAIR_PROMPT_HEAD)
         self.assertEqual(payload["execution_evidence"], [])
 
+    # ---- public holding evidence + repair guidance ----------------------- #
+    def test_job_evidence_whitelist_includes_holding_probe_fields(self):
+        for field in ("completion_mode", "phase", "held_objects",
+                      "grasp_observation_complete", "completion_ready"):
+            self.assertIn(field, run_agent.JOB_EVIDENCE_FIELDS)
+
+    def test_repair_prompt_surfaces_holding_evidence_without_hidden_fields(self):
+        """All five holding fields of this request's job reach the request-scoped
+        execution_evidence, while hidden evaluation/oracle/fixture/case fields
+        stay excluded by the whitelist."""
+        session = make_session()
+        plan = make_plan("blocked", job_ids=["job-1"])
+        jobs = [{
+            "job_id": "job-1",
+            "request_id": "req-1",
+            "session_id": "sess-1",
+            "capability_id": "bowl_to_plate",
+            "state": "completed",
+            "steps": 0,
+            "total_steps": 0,
+            "success": False,
+            "ended_reason": "holding_other_object",
+            "completion_mode": "release_verified",
+            "phase": "holding_foreign_object",
+            "held_objects": ["akita_black_bowl_1"],
+            "grasp_observation_complete": True,
+            "completion_ready": False,
+            "evaluation": {"task_success": True},
+            "oracle_source": "preauthored_fixture",
+            "fixtures": {"secret": 1},
+            "case_id": "secret_case",
+        }]
+        prompt = run_agent.build_repair_prompt(session, "整理桌面", "req-1", plan,
+                                               ["/b.png"], jobs)
+        evidence = _prompt_payload(prompt, run_agent.REPAIR_PROMPT_HEAD)["execution_evidence"]
+
+        self.assertEqual(len(evidence), 1)
+        entry = evidence[0]
+        self.assertEqual(entry["ended_reason"], "holding_other_object")
+        self.assertEqual(entry["completion_mode"], "release_verified")
+        self.assertEqual(entry["phase"], "holding_foreign_object")
+        self.assertEqual(entry["held_objects"], ["akita_black_bowl_1"])
+        self.assertIs(entry["grasp_observation_complete"], True)
+        self.assertIs(entry["completion_ready"], False)
+        for leaked in ("evaluation", "oracle_source", "fixtures", "case_id"):
+            self.assertNotIn(leaked, entry)
+        for forbidden in ("evaluation", "oracle", "fixture", "case_id",
+                          "task_success", "secret_case"):
+            self.assertNotIn(forbidden, prompt, "repair prompt leaked %r" % forbidden)
+
+    def test_repair_head_carries_holding_handoff_guidance(self):
+        head = run_agent.REPAIR_PROMPT_HEAD
+        self.assertIn("contact screening proxy", head)
+        self.assertIn("not tactile truth", head)
+        self.assertIn("still held", head)
+        self.assertIn("at-most-one repair", head)
+        self.assertIn("foreign-held object", head)
+        self.assertIn("blocked", head)
+        for forbidden in ("oracle", "fixture", "case_id", "evaluation", "task_success"):
+            self.assertNotIn(forbidden, head)
+
     def test_both_phase_heads_state_separate_per_subgoal_budget(self):
         """Both prompts must state the MCP gives EACH subgoal its OWN 300-step
         budget (not one shared budget), and the repair head must explain

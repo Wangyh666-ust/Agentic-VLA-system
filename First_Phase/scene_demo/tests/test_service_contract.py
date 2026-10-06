@@ -1660,5 +1660,331 @@ class ReleaseVerifiedWorkerTests(unittest.TestCase):
         self.assertEqual(tuple(service.COMPLETION_MODES), ("native", "release_verified"))
 
 
+# --- release-mode foreign-held-object placement handoff guard ----------------
+
+
+class _HandoffObject:
+    def __init__(self, object_id):
+        self.joints = ["%s_joint0" % object_id]
+        self.contact_geoms = object_id
+
+
+class _HandoffSimData:
+    """Minimal native ``sim.data``: joint qpos, body centres + free-joint vel."""
+
+    def __init__(self):
+        self.qpos = np.zeros(7, dtype=np.float64)
+        self.qvel = np.zeros(7, dtype=np.float64)
+        self.body_xpos = np.zeros((8, 3), dtype=np.float64)
+
+    def get_joint_qpos(self, name):  # noqa: ARG002
+        return np.zeros(7, dtype=np.float64)
+
+    def set_joint_qpos(self, name, value):  # noqa: ARG002
+        pass
+
+    def get_joint_qvel(self, name):  # noqa: ARG002
+        return np.zeros(6, dtype=np.float64)
+
+
+class _HandoffInnerEnv:
+    """goal_table native-shaped fake with a per-object hold window.
+
+    ``hold_until`` maps an object id to the (global) step at which its
+    contact-geom grasp proxy releases; ``truth_after`` maps a goal key to the
+    step at which the raw predicate turns true.  ``unknown_grasp`` makes the
+    grasp probe raise, so the screen is unknown (never a released grasp).
+    """
+
+    OBJECT_IDS = (
+        "akita_black_bowl_1",
+        "plate_1",
+        "wine_bottle_1",
+        "wine_rack_1_top_region",
+        "flat_stove_1",
+    )
+
+    def __init__(self, truth_after=None, hold_until=None, unknown_grasp=False):
+        self.sim = types.SimpleNamespace(
+            data=_HandoffSimData(),
+            model=types.SimpleNamespace(camera_names=[], get_xml=lambda: "<xml/>"),
+        )
+        self.steps = 0
+        self.truth_after = dict(truth_after or {})
+        self.hold_until = dict(hold_until or {})
+        self.unknown_grasp = bool(unknown_grasp)
+        self.objects_dict = {oid: _HandoffObject(oid) for oid in self.OBJECT_IDS}
+        self.object_states_dict = {}
+        self.obj_body_id = {oid: i for i, oid in enumerate(self.OBJECT_IDS)}
+        self.robots = [types.SimpleNamespace(gripper=types.SimpleNamespace())]
+
+    def _get_observations(self, force_update=False):  # noqa: ARG002
+        return {}
+
+    def _check_grasp(self, gripper, geoms):  # noqa: ARG002
+        if self.unknown_grasp:
+            raise RuntimeError("grasp probe unavailable")
+        release_at = self.hold_until.get(geoms)
+        if release_at is None:
+            return False
+        return self.steps < release_at
+
+    def _eval_predicate(self, predicate):
+        key = "|".join(str(part) for part in predicate)
+        threshold = self.truth_after.get(key)
+        if threshold is None:
+            return False
+        return self.steps >= threshold
+
+    def step(self, action):  # noqa: ARG002
+        self.steps += 1
+        self.sim.data.qpos[0] = float(self.steps)
+        return {}
+
+
+class _HandoffEnv:
+    def __init__(self, inner):
+        self._inner = inner
+        self._env = types.SimpleNamespace(env=inner)
+        self.action_space = types.SimpleNamespace(low=-np.ones(7), high=np.ones(7))
+        self.closed = False
+
+    def reset(self, seed=0):  # noqa: ARG002
+        return _FakeObs(), {}
+
+    def step(self, action):
+        self._inner.step(action)
+        return _FakeObs(), 0.0, False, False, {"is_success": False}
+
+    def render(self):
+        return np.zeros((8, 8, 3), dtype=np.uint8)
+
+    def close(self):
+        self.closed = True
+
+
+class HandoffGuardWorkerTests(unittest.TestCase):
+    """Release-mode physical handoff guards block with zero new steps/actions."""
+
+    def _service(self, mode, *, truth_after=None, hold_until=None, unknown_grasp=False):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        calls = {"n": 0}
+
+        def _action(batch):  # noqa: ARG001
+            calls["n"] += 1
+            return np.zeros(7)
+
+        svc = service.SceneService(
+            run_root=tmp.name,
+            env_factory=lambda **kwargs: _HandoffEnv(
+                _HandoffInnerEnv(
+                    truth_after=truth_after,
+                    hold_until=hold_until,
+                    unknown_grasp=unknown_grasp,
+                )
+            ),
+            policy_loader=lambda s: setattr(s._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+            completion_mode=mode,
+        )
+        svc.start()
+        self.addCleanup(svc.stop)
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not svc.health()["ready"]:
+            time.sleep(0.05)
+        return svc, calls
+
+    def _wait(self, svc, request_id, deadline_s=20.0):
+        deadline = time.time() + deadline_s
+        while time.time() < deadline:
+            payload = svc.plan(request_id)
+            if payload is not None and payload["state"] in service.TERMINAL_PLAN_STATES:
+                return payload
+            time.sleep(0.05)
+        self.fail("plan %s did not reach a terminal state" % request_id)
+
+    def _submit(self, svc, session_id, request_id, capability_ids, budget=50):
+        return svc.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": svc.session(session_id)["scene_version"],
+                "request_id": request_id,
+                "capability_ids": capability_ids,
+                "decision": "execute",
+                "budget_per_subgoal": budget,
+            }
+        )
+
+    def test_foreign_held_object_blocks_next_placement_without_steps(self):
+        svc, calls = self._service(
+            "release_verified",
+            truth_after={"on|akita_black_bowl_1|plate_1": 0},
+            hold_until={"akita_black_bowl_1": 10 ** 9},
+        )
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        self.assertEqual(svc._env._inner.steps, 0)
+        self.assertEqual(calls["n"], 0)
+
+        # First declared placement goal fails while the bowl is STILL held.
+        first = self._submit(svc, sid, "req-hold", ["bowl_to_plate", "wine_to_rack"], budget=5)
+        self.assertTrue(first["ok"], first)
+        plan = self._wait(svc, "req-hold")
+        self.assertEqual(plan["state"], "blocked", plan)
+        bowl_job = svc.job(plan["job_ids"][0])
+        self.assertFalse(bowl_job["success"])
+        self.assertEqual(bowl_job["ended_reason"], "budget_exhausted")
+        self.assertEqual(bowl_job["completion_mode"], "release_verified")
+        self.assertIn("akita_black_bowl_1", bowl_job["held_objects"])
+        steps_after_first = svc._env._inner.steps
+        calls_after_first = calls["n"]
+        self.assertEqual(steps_after_first, calls_after_first)
+
+        # The next declared placement goal names the WINE bottle only, but the
+        # bowl is still held -> physically blocked with zero new action/env steps.
+        resumed = svc.resume_plan(
+            {
+                "session_id": sid,
+                "request_id": "req-hold",
+                "scene_version": svc.session(sid)["scene_version"],
+                "capability_ids": ["wine_to_rack"],
+                "rationale": "retry the other declared placement goal",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(resumed["ok"], resumed)
+        plan2 = self._wait(svc, "req-hold")
+        self.assertEqual(plan2["state"], "blocked", plan2)
+        wine_job = svc.job(plan2["job_ids"][-1])
+        self.assertFalse(wine_job["success"])
+        self.assertEqual(wine_job["ended_reason"], "holding_other_object")
+        self.assertIsNone(wine_job["error"])
+        self.assertEqual(wine_job["steps"], 0)
+        self.assertEqual(wine_job["held_objects"], ["akita_black_bowl_1"])
+        self.assertEqual(wine_job["phase"], "holding_foreign_object")
+        self.assertIs(wine_job["grasp_observation_complete"], True)
+        self.assertIs(wine_job["completion_ready"], False)
+        # Exact before/after physics SHA over a physically-blocked, step-free job.
+        self.assertIsNotNone(wine_job["state_before_sha"])
+        self.assertEqual(wine_job["state_before_sha"], wine_job["state_after_sha"])
+        # Zero new actions and zero new simulator steps for the blocked job.
+        self.assertEqual(calls["n"], calls_after_first)
+        self.assertEqual(svc._env._inner.steps, steps_after_first)
+
+    def test_unknown_grasp_blocks_before_any_step(self):
+        svc, calls = self._service(
+            "release_verified",
+            truth_after={"on|akita_black_bowl_1|plate_1": 0},
+            unknown_grasp=True,
+        )
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        submitted = self._submit(svc, sid, "req-unknown", ["bowl_to_plate"], budget=50)
+        self.assertTrue(submitted["ok"], submitted)
+        plan = self._wait(svc, "req-unknown")
+        self.assertEqual(plan["state"], "blocked", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertFalse(job["success"])
+        self.assertEqual(job["ended_reason"], "holding_state_unknown")
+        self.assertIsNone(job["error"])
+        self.assertEqual(job["steps"], 0)
+        self.assertEqual(calls["n"], 0)
+        self.assertEqual(svc._env._inner.steps, 0)
+        self.assertEqual(job["state_before_sha"], job["state_after_sha"])
+        # An unknown probe keeps completion_ready None (never a boolean).
+        self.assertIs(job["grasp_observation_complete"], False)
+        self.assertIsNone(job["completion_ready"])
+        self.assertEqual(job["phase"], "unknown")
+
+    def test_same_goal_retry_allowed_and_succeeds_after_release(self):
+        svc, calls = self._service(
+            "release_verified",
+            truth_after={"on|akita_black_bowl_1|plate_1": 0},
+            hold_until={"akita_black_bowl_1": 8},
+        )
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        first = self._submit(svc, sid, "req-retry", ["bowl_to_plate"], budget=5)
+        self.assertTrue(first["ok"], first)
+        plan = self._wait(svc, "req-retry")
+        self.assertEqual(plan["state"], "blocked", plan)
+        job1 = svc.job(plan["job_ids"][0])
+        self.assertEqual(job1["ended_reason"], "budget_exhausted")
+        self.assertIn("akita_black_bowl_1", job1["held_objects"])
+        env_instance = svc.session(sid)["env_instance_id"]
+
+        # Retrying the SAME declared object while it is still held is allowed.
+        resumed = svc.resume_plan(
+            {
+                "session_id": sid,
+                "request_id": "req-retry",
+                "scene_version": svc.session(sid)["scene_version"],
+                "capability_ids": ["bowl_to_plate"],
+                "rationale": "retry the same declared goal",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(resumed["ok"], resumed)
+        plan2 = self._wait(svc, "req-retry")
+        self.assertEqual(plan2["state"], "completed", plan2)
+        job2 = svc.job(plan2["job_ids"][-1])
+        self.assertTrue(job2["success"])
+        self.assertEqual(job2["ended_reason"], "success")
+        self.assertGreater(job2["steps"], 0)
+        # The successful final sample observed the released grasp and no hold.
+        self.assertEqual(job2["held_objects"], [])
+        self.assertIs(job2["grasp_observation_complete"], True)
+        self.assertIs(job2["completion_ready"], True)
+        # One persistent environment, exactly one episode reset.
+        after = svc.session(sid)
+        self.assertEqual(after["episode_resets"], 1)
+        self.assertEqual(after["env_instance_id"], env_instance)
+
+    def test_native_mode_ignores_holding_handoff_guard(self):
+        svc, calls = self._service(
+            "native",
+            truth_after={"on|wine_bottle_1|wine_rack_1_top_region": 2},
+            hold_until={"akita_black_bowl_1": 10 ** 9},
+        )
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        submitted = self._submit(svc, sid, "req-native", ["wine_to_rack"], budget=50)
+        self.assertTrue(submitted["ok"], submitted)
+        plan = self._wait(svc, "req-native")
+        # A foreign held object never blocks native mode: predicate-only as before.
+        self.assertEqual(plan["state"], "completed", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertTrue(job["success"])
+        self.assertEqual(job["ended_reason"], "success")
+        self.assertGreater(job["steps"], 0)
+        self.assertEqual(job["completion_mode"], "native")
+        # Native mode publishes None for all three release probe fields.
+        self.assertIsNone(job["held_objects"])
+        self.assertIsNone(job["grasp_observation_complete"])
+        self.assertIsNone(job["completion_ready"])
+        self.assertIsNone(job["phase"])
+
+    def test_nonplacement_stove_goal_bypasses_holding_guard(self):
+        svc, calls = self._service(
+            "release_verified",
+            truth_after={"turnon|flat_stove_1": 2},
+            hold_until={"akita_black_bowl_1": 10 ** 9},
+        )
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        # The bowl is held but never declared; a non-placement goal must run.
+        submitted = self._submit(svc, sid, "req-stove", ["stove_on"], budget=50)
+        self.assertTrue(submitted["ok"], submitted)
+        plan = self._wait(svc, "req-stove")
+        self.assertEqual(plan["state"], "completed", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertTrue(job["success"])
+        self.assertEqual(job["ended_reason"], "success")
+        self.assertGreater(job["steps"], 0)
+        self.assertEqual(job["completion_mode"], "release_verified")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

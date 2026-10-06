@@ -174,6 +174,12 @@ REPAIR_PROMPT_HEAD = (
 
 只使用公开数据；不要修改场景，不要重置物体；不要臆造能力。
 
+[holding state]
+Holding observations in execution_evidence are a simulator contact screening proxy, not tactile truth.
+If an object is still held after a failed attempt, finish or retry that still-held failed object before switching to another object.
+Recovery stays within the initially declared goals and the existing at-most-one repair.
+When a foreign-held object has no permitted original-goal recovery, explain why the plan stays blocked rather than inventing a capability or claiming a release.
+
 修复范围：修复只可重排、重试、恢复原声明目标，不得新增物体或目的地；物体身份不确定时保持blocked并说明限制；改变目标必须由用户发起新请求。
 
 """
@@ -207,6 +213,11 @@ JOB_EVIDENCE_FIELDS = (
     "wall_s",
     "scene_version_before",
     "scene_version_after",
+    "completion_mode",
+    "phase",
+    "held_objects",
+    "grasp_observation_complete",
+    "completion_ready",
 )
 
 

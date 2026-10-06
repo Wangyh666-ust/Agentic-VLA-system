@@ -71,6 +71,7 @@ EXPECTED_WORKFLOW = "persistent_scene_v2"
 EXPECTED_REVISION = "6721902bc4d61e50a3bfdb11dfb4cb626f05d102"
 EXPECTED_SERVICE_PORT = 8767
 EXPECTED_APP_PORT = 8081
+EXPECTED_COMPLETION_MODE = "release_verified"
 MARKERS = (PROJECT_WSL, PROJECT_SRC)
 PROXY_VARS = ("http_proxy", "https_proxy", "all_proxy",
               "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY")
@@ -211,6 +212,8 @@ def start(service_port, app_port, min_free_gpu):
             mismatches.append("workflow=%r" % health.get("workflow"))
         if health.get("model_revision") != EXPECTED_REVISION:
             mismatches.append("model_revision=%r" % health.get("model_revision"))
+        if health.get("completion_mode") != EXPECTED_COMPLETION_MODE:
+            mismatches.append("completion_mode=%r" % health.get("completion_mode"))
         if mismatches:
             log("端口 %d 被非本项目服务占用 (%s)：端口冲突，退出，不杀进程。"
                 % (service_port, ", ".join(mismatches)))
