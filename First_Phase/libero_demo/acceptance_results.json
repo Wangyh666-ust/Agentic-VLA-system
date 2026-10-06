@@ -1,0 +1,191 @@
+{
+  "date": "2026-10-06",
+  "purpose": "local integration smoke checks (not a benchmark success-rate evaluation)",
+  "runtime_model": "qwen3-vl-plus",
+  "vla_repo": "HuggingFaceVLA/smolvla_libero",
+  "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+  "no_finetuning": true,
+  "cases": [
+    {
+      "input": "把字母汤罐头放进篮子里。",
+      "mode": "web_hermes",
+      "request_id": "9b1186f7428b",
+      "job_id": "17e0f41421e94b94ac8ded3a6c7217da",
+      "suite": "libero_object",
+      "task_id": 0,
+      "seed": 1,
+      "init_state_index": 1,
+      "run_ok": true,
+      "chain_ok": true,
+      "task_success": true,
+      "execution_timeout": false,
+      "steps": 152,
+      "episode_wall_s": 80.857,
+      "request_wall_s": 95.964,
+      "model": "qwen3-vl-plus",
+      "session": "20261006_110351_5e5273",
+      "tools": [
+        {
+          "name": "mcp__libero_tools__list_libero_tasks"
+        },
+        {
+          "name": "mcp__libero_tools__execute_libero_task",
+          "arguments": {
+            "suite": "libero_object",
+            "task_id": 0,
+            "seed": 1,
+            "init_state_index": 1
+          }
+        },
+        {
+          "name": "mcp__libero_tools__wait_for_libero_execution"
+        },
+        {
+          "name": "mcp__libero_tools__wait_for_libero_execution"
+        }
+      ],
+      "checks": {
+        "completed": true,
+        "action7_finite": true,
+        "events_contiguous": true,
+        "last_event_success": true,
+        "video": {
+          "codec": "h264",
+          "fps": 20.0,
+          "width": 256,
+          "height": 256,
+          "duration_s": 7.65,
+          "frame_count": 153
+        }
+      }
+    },
+    {
+      "input": "put the bowl on the plate",
+      "mode": "web_hermes",
+      "request_id": "c763433f274b",
+      "job_id": "b3aab483b82643929d74978585ae07e9",
+      "suite": "libero_goal",
+      "task_id": 8,
+      "seed": 0,
+      "init_state_index": 0,
+      "run_ok": true,
+      "chain_ok": true,
+      "task_success": true,
+      "execution_timeout": false,
+      "steps": 78,
+      "episode_wall_s": 45.77,
+      "request_wall_s": 58.902,
+      "checks": {
+        "completed": true,
+        "event_count": 78,
+        "action7_finite": true,
+        "events_contiguous": true,
+        "last_event_success": true,
+        "video": {
+          "codec": "h264",
+          "fps": 20.0,
+          "width": 256,
+          "height": 256,
+          "duration_s": 3.95,
+          "frame_count": 79
+        }
+      }
+    },
+    {
+      "input": "帮我驾驶汽车去上海。",
+      "mode": "web_hermes",
+      "request_id": "eb9b8c241b6c",
+      "job_id": null,
+      "suite": null,
+      "task_id": null,
+      "seed": 1,
+      "init_state_index": 1,
+      "run_ok": true,
+      "chain_ok": false,
+      "task_success": null,
+      "execution_timeout": false,
+      "steps": null,
+      "episode_wall_s": null,
+      "request_wall_s": 9.865,
+      "checks": {
+        "completed": true,
+        "correctly_rejected": true,
+        "execution_absent": true,
+        "job_id_changed": false
+      }
+    },
+    {
+      "input": "open the middle drawer of the cabinet",
+      "mode": "direct_service",
+      "request_id": null,
+      "job_id": "5988ce7c5e5c4b32a5530d9c552ddf43",
+      "suite": "libero_goal",
+      "task_id": 0,
+      "seed": 0,
+      "init_state_index": 0,
+      "run_ok": null,
+      "chain_ok": null,
+      "task_success": false,
+      "steps": 300,
+      "episode_wall_s": 167.504,
+      "request_wall_s": null,
+      "checks": {
+        "terminal_state": true,
+        "steps_equal_event_count": true,
+        "action7_finite": true,
+        "steps_contiguous": true,
+        "success_matches_events": true,
+        "files_nonempty": true,
+        "codec_h264": true,
+        "ended_reason": "max_steps",
+        "video": {
+          "codec": "h264",
+          "fps": 20.0,
+          "width": 256,
+          "height": 256,
+          "duration_s": 15.05
+        }
+      }
+    }
+  ],
+  "illegal_http_checks": {
+    "status_checks": [
+      {
+        "case": "array",
+        "status_code": 400
+      },
+      {
+        "case": "numeric_request",
+        "status_code": 400
+      },
+      {
+        "case": "bool_seed",
+        "status_code": 400
+      },
+      {
+        "case": "negative_init",
+        "status_code": 400
+      },
+      {
+        "case": "concurrent_agent",
+        "status_code": 409
+      },
+      {
+        "case": "unsupported_suite",
+        "status_code": 400
+      },
+      {
+        "case": "invalid_task",
+        "status_code": 400
+      },
+      {
+        "case": "artifact_traversal",
+        "status_code": 403
+      }
+    ],
+    "invalid_inputs_pass": true,
+    "artifact_path_traversal_rejected": true,
+    "concurrent_request_check": "PASS"
+  },
+  "limitation": "These are individual local integration smoke examples, not evidence that all 40 tasks succeed and not a benchmark success-rate evaluation. Two web Hermes tasks succeeded, an unsupported request was correctly rejected, and a direct VLA drawer task failed at its step limit."
+}
