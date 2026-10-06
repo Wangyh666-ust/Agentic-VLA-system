@@ -836,7 +836,13 @@ class SessionRecord:
             "init_state_index": self.init_state_index,
             "description": self.scene.get("description"),
             "storage_policy": dict(self.scene.get("storage_policy") or {}),
-            "capabilities": self.capability_ids(),
+            # Public capabilities are the detailed atomic records (dicts) that
+            # the browser renderCaps and the MCP _atomic_capabilities bridge
+            # consume, never bare id strings.  ``catalog.scene_capabilities``
+            # already deep-copies each record and excludes audit-only entries by
+            # default, so callers cannot mutate the catalog or see hidden
+            # fixture/coordinate state.
+            "capabilities": catalog.scene_capabilities(self.scene_id),
             "images": [dict(image) for image in self.images],
             "latest_png": self.latest_png,
             "run_dir": str(self.run_dir),

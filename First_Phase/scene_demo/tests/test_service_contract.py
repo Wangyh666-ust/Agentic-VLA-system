@@ -460,6 +460,96 @@ class PublicSchemaTests(unittest.TestCase):
         self.assertTrue(issubclass(service.PersistentLiberoEnv, service.LiberoEnv))
 
 
+class PublicCapabilityShapeTests(unittest.TestCase):
+    """The public session ``capabilities`` field is the exact catalog contract.
+
+    The browser ``renderCaps`` and the MCP ``_atomic_capabilities`` bridge both
+    require the *detailed atomic dictionaries* (not id strings): each entry must
+    carry ``capability_id``/``instruction``/``object_id``/``target_id``/
+    ``evidence``/``audit_only``, the goal-table ids must be exactly the three
+    atomic goals, every ``audit_only`` flag must be false, and no hidden
+    fixture/coordinate state may leak.
+    """
+
+    _REQUIRED_KEYS = (
+        "capability_id",
+        "instruction",
+        "object_id",
+        "target_id",
+        "evidence",
+        "audit_only",
+    )
+    _FORBIDDEN_KEYS = (
+        "xyz",
+        "patches",
+        "positions",
+        "initial_positions",
+        "initial_state_path",
+        "xml_sha",
+        "seed",
+    )
+    _EXPECTED_GOAL_TABLE_IDS = ["bowl_to_plate", "wine_to_rack", "stove_on"]
+
+    def _public(self, scene_id="goal_table"):
+        with tempfile.TemporaryDirectory() as tmp:
+            record = service.SessionRecord(
+                "sid", scene_id, catalog.SCENES[scene_id], 0, 0, Path(tmp)
+            )
+            return record.public()
+
+    def test_goal_table_capabilities_are_detailed_dicts(self):
+        capabilities = self._public()["capabilities"]
+        self.assertIsInstance(capabilities, list)
+        self.assertTrue(capabilities)
+        for entry in capabilities:
+            self.assertIsInstance(entry, dict)
+            for key in self._REQUIRED_KEYS:
+                self.assertIn(key, entry)
+            self.assertIsInstance(entry["capability_id"], str)
+            self.assertIsInstance(entry["instruction"], str)
+            self.assertIsInstance(entry["evidence"], str)
+            self.assertIs(entry["audit_only"], False)
+
+    def test_goal_table_capability_ids_are_exact(self):
+        capabilities = self._public()["capabilities"]
+        ids = [entry["capability_id"] for entry in capabilities]
+        self.assertEqual(ids, self._EXPECTED_GOAL_TABLE_IDS)
+
+    def test_public_capabilities_are_the_catalog_deepcopy_records(self):
+        # The public field must be exactly catalog.scene_capabilities(scene_id),
+        # not an invented or slimmed-down schema.
+        self.assertEqual(
+            self._public()["capabilities"], catalog.scene_capabilities("goal_table")
+        )
+
+    def test_public_capabilities_are_independent_deep_copies(self):
+        public = self._public()
+        public["capabilities"][0]["instruction"] = "mutated"
+        self.assertEqual(
+            catalog.CAPABILITIES["bowl_to_plate"]["instruction"],
+            "put the bowl on the plate",
+        )
+
+    def test_audit_only_entries_are_absent(self):
+        ids = {entry["capability_id"] for entry in self._public()["capabilities"]}
+        self.assertNotIn("table_both", ids)
+        for capability_id, capability in catalog.CAPABILITIES.items():
+            if capability["audit_only"] and "goal_table" in capability["scene_ids"]:
+                self.assertNotIn(capability_id, ids)
+
+    def test_no_hidden_fixture_or_coordinate_leaks(self):
+        public = self._public()
+        for entry in public["capabilities"]:
+            for forbidden in self._FORBIDDEN_KEYS:
+                self.assertNotIn(forbidden, entry, forbidden)
+        # ``seed`` is explicit public Session contract data (reproducibility),
+        # so it is legitimately present -- it must not be treated as a leak.
+        public_forbidden = tuple(k for k in self._FORBIDDEN_KEYS if k != "seed")
+        for forbidden in public_forbidden:
+            self.assertNotIn(forbidden, public, forbidden)
+        self.assertEqual(public["seed"], 0)
+
+
 # --- end-to-end worker test with an injected fake simulator -----------------
 
 
