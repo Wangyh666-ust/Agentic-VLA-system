@@ -971,7 +971,8 @@ function renderFinalSummary(result) {
     "　plan_success: " + fmtBool(result.plan_success) +
     "　task_success: " + fmtBool(result.task_success) +
     "　execution_timeout: " + fmtBool(result.execution_timeout) +
-    "　Hermes 调用: " + esc(result.hermes_invocations) + "　wall_s: " + esc(result.wall_s));
+    "　Hermes 规划/修复会话: " + esc(result.hermes_invocations) +
+    "（每个会话可含多轮模型请求）　wall_s: " + esc(result.wall_s));
   if (result.error) {
     show("plan", $("plan").innerHTML + "<br><span class='bad-text'>error: " + esc(result.error) + "</span>");
   }
@@ -1015,7 +1016,7 @@ async function pollCurrent() {
         (result && result.error ? "：" + esc(result.error) : "") + "</span>");
       renderVideos([], true);
       renderEvaluation(result ? result.evaluation : null, result ? result.decision : null);
-      loadHermes();
+      loadHermes(result);
       $("run").disabled = !currentSession || currentSession.state !== "ready";
     } else {
       show("plan", '<span class="kv">正在规划…（Hermes 尚未提交本次请求的计划，等待中）</span>');
@@ -1054,15 +1055,22 @@ async function pollCurrent() {
     renderFinalSummary(result);
     if (agentTerminal) {
       renderEvaluation(result ? result.evaluation : null, result ? result.decision : null);
-      loadHermes();
+      loadHermes(result);
     }
   }
   $("run").disabled = !agentTerminal || !currentSession || currentSession.state !== "ready";
 }
 
-async function loadHermes() {
+async function loadHermes(result = null) {
   if (!currentRequest) return;
   const reqId = currentRequest;
+  // 优先显示 Runner._finish 保存的真实合并 CLI 输出（原文 textContent，不合成解释）。
+  if (result && typeof result === "object" &&
+      typeof result.hermes_output === "string" && result.hermes_output) {
+    const out = result.hermes_output;
+    $("hermes").textContent = out.length > 8000 ? out.slice(-8000) : out;
+    return;
+  }
   const url = "/agent-artifacts/" + encodeURIComponent(reqId) + "/hermes_initial.log";
   try {
     const r = await fetch(url, { cache: "no-store" });
