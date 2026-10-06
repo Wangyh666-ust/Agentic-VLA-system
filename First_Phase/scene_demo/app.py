@@ -661,6 +661,9 @@ let currentSessionId = null;
 let currentSession = null;
 let currentRequest = null;
 let pollTimer = null;
+let mediaRenderGeneration = 0;
+let displayedImageKey = null;
+let pendingImageKey = null;
 
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"]/g, c =>
@@ -723,6 +726,9 @@ async function loadScenes() {
 }
 
 function clearMedia() {
+  mediaRenderGeneration += 1;   // 使更早场景的在途结果全部失效
+  displayedImageKey = null;
+  pendingImageKey = null;
   show("images", '<span class="hint">等待场景画面…</span>');
   show("videos", '<span class="hint">本次请求到达终态后显示其视频。</span>');
 }
@@ -806,16 +812,66 @@ function renderSession(s) {
 }
 
 function renderSessionImages(s) {
+  // 同步入口：只在这里启动预加载，绝不直接改 DOM；全部就绪后一次性原子替换。
   const imgs = s.images || [];
-  if (!imgs.length) { return; } // 保留指令前的初始场景，不用空响应覆盖
-  let html = "";
+  const frames = [];
   imgs.forEach(img => {
     const url = toArtifact(img.image_path);
-    html += "<div><span class='pill'>" + esc(img.view || img.kind || "view") + "</span></div>";
-    if (url) html += "<img class='frame' src='" + url + "?t=" + Date.now() + "' alt='" +
-                     esc(img.view || "frame") + "'>";
+    if (!url) return; // 无法映射为同源 artifact 的记录不参与渲染
+    frames.push({
+      view: img.view || img.kind || "view",
+      url: url,
+      revision: img.sha256 || String(s.scene_version ?? ""),
+    });
   });
-  show("images", html);
+  if (!frames.length) { return; } // 没有可用画面：保留上一次显示
+
+  const key = JSON.stringify([s.session_id, frames.map(frame => [frame.view, frame.url, frame.revision])]);
+
+  if (key === displayedImageKey) {
+    // 当前显示已是该键：若存在不同的在途预加载（A -> B -> A），先取消过期的 B。
+    if (pendingImageKey && pendingImageKey !== key) {
+      mediaRenderGeneration += 1;
+      pendingImageKey = null;
+    }
+    return;
+  }
+  if (key === pendingImageKey) { return; } // 同键预加载已在途：不重复下载
+
+  mediaRenderGeneration += 1;
+  const generation = mediaRenderGeneration;
+  pendingImageKey = key;
+
+  const loads = frames.map(frame => new Promise((resolve, reject) => {
+    const image = new Image();
+    image.className = "frame";
+    image.alt = frame.view;
+    image.onload = () => resolve(image);          // 处理器必须在 src 之前赋值
+    image.onerror = () => reject(new Error("image load failed"));
+    image.src = frame.url + "?v=" + encodeURIComponent(frame.revision); // 修订键缓存破坏
+  }));
+
+  Promise.all(loads).then(images => {
+    // 仅当本组仍是最新且会话未切换时才提交。
+    if (generation !== mediaRenderGeneration) return;
+    if (s.session_id !== currentSessionId) return;
+    const nodes = [];
+    frames.forEach((frame, index) => {
+      const wrapper = document.createElement("div");
+      const pill = document.createElement("span");
+      pill.className = "pill";
+      pill.textContent = frame.view;
+      wrapper.appendChild(pill);
+      nodes.push(wrapper);       // 先标签
+      nodes.push(images[index]); // 再已加载好的同一 Image 节点（不二次下载）
+    });
+    $("images").replaceChildren(...nodes); // 一次性替换
+    displayedImageKey = key;
+    pendingImageKey = null;
+  }).catch(() => {
+    // 任一图片失败：完整保留原显示；仅当本组仍最新时可清除 pending 以便同键重试。
+    if (generation === mediaRenderGeneration) pendingImageKey = null;
+  });
 }
 
 async function submitRequest() {
