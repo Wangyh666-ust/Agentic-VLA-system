@@ -1,0 +1,109 @@
+{
+  "request_id": "5da476c42db941448778138af244384d",
+  "session_id": "d07ec8f00e9a4879bce32904db19de17",
+  "request": "把碗放到盘子上，不要动酒瓶，也不要打开炉灶。",
+  "run_ok": true,
+  "chain_ok": true,
+  "plan_success": true,
+  "task_success": true,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "5da476c42db941448778138af244384d",
+    "session_id": "d07ec8f00e9a4879bce32904db19de17",
+    "state": "completed",
+    "decision": "execute",
+    "capability_ids": [
+      "bowl_to_plate"
+    ],
+    "original_capability_ids": [
+      "bowl_to_plate"
+    ],
+    "rationale": "用户明确要求‘把碗放到盘子上’，且禁止动酒瓶和开炉灶；仅执行bowl_to_plate符合意图与约束。",
+    "job_ids": [
+      "a02a9c6f9b984673a75cc08cd12a51fb"
+    ],
+    "completed_capability_ids": [
+      "bowl_to_plate"
+    ],
+    "pending_capability_ids": [],
+    "plan_success": true,
+    "regressions": [],
+    "error": null,
+    "repair_history": [],
+    "scene_version": 1
+  },
+  "jobs": [
+    {
+      "job_id": "a02a9c6f9b984673a75cc08cd12a51fb",
+      "request_id": "5da476c42db941448778138af244384d",
+      "session_id": "d07ec8f00e9a4879bce32904db19de17",
+      "capability_id": "bowl_to_plate",
+      "state": "completed",
+      "steps": 102,
+      "total_steps": 102,
+      "success": true,
+      "ended_reason": "success",
+      "error": null,
+      "instruction": "put the bowl on the plate",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+      "state_after_sha": "f0a5c0e135015071b7eaee75cffefb5f50f3ac07516240e03795e48d189e405e",
+      "env_instance_id": 2,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T184031Z_goal_table_d07ec8f0/cap_01_bowl_to_plate_a02a9c6f",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T184031Z_goal_table_d07ec8f0/cap_01_bowl_to_plate_a02a9c6f/latest.png",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T184031Z_goal_table_d07ec8f0/cap_01_bowl_to_plate_a02a9c6f/rollout.mp4",
+      "wall_s": 55.124
+    }
+  ],
+  "evaluation": {
+    "task_success": true,
+    "goal_option_satisfied": [
+      true
+    ],
+    "protected_satisfied": true,
+    "decision_ok": true,
+    "objects_ok": true,
+    "position_checks": {
+      "wine_bottle_1": {
+        "ok": true,
+        "threshold": 0.08,
+        "displacement": 3.2907010479152855e-13,
+        "reason": "within tolerance"
+      },
+      "cream_cheese_1": {
+        "ok": true,
+        "threshold": 0.08,
+        "displacement": 1.4210854715202004e-14,
+        "reason": "within tolerance"
+      }
+    },
+    "missing_truth": [],
+    "oracle_source": "preauthored_fixture",
+    "ok": true,
+    "case_id": "table_bowl_only",
+    "request_id": "5da476c42db941448778138af244384d",
+    "session_id": "d07ec8f00e9a4879bce32904db19de17"
+  },
+  "hermes_invocations": 1,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "wall_s": 72.16,
+  "error": null,
+  "hermes_output": "计划已提交。\n\nsession_id: 20261007_024037_4ab3ad\n"
+}

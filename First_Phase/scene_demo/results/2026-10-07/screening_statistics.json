@@ -1,0 +1,5521 @@
+{
+  "source_report": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/screening.json",
+  "source_metadata": {
+    "source_git_sha": "4357b61e11f1000ee1bf1b5121460219c77485d1",
+    "source_sha256": {
+      "placement_experiments.py": "cb37709e3339faeb0a727f0377225d05de7083699b02ce6794a0484d0fa4338d",
+      "service.py": "bc194a8141559b3b92e2887ba4c0b1a34eff26ee2e515a355c39ac1893735e87",
+      "catalog.py": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02"
+    },
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "fatal_error": null
+  },
+  "trials": [
+    {
+      "trial_id": "soup_fresh_baseline_bf16_0-0_75949dfc",
+      "profile": "baseline_bf16",
+      "condition": "soup_fresh",
+      "pair": "0:0",
+      "seed": 0,
+      "init_state_index": 0,
+      "scene_id": "basket_two",
+      "source_git_sha": "4357b61e11f1000ee1bf1b5121460219c77485d1",
+      "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+      "initial_state_hash": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+      "task_success": false,
+      "strict_task_success": false,
+      "native_benchmark_success": false,
+      "physical_failures": [
+        "budget_exhausted: job=0eed368c411849d1897a535f80432510 capability=soup_to_basket"
+      ],
+      "null_metrics": [],
+      "trial_wall_s": 245.149,
+      "jobs": [
+        {
+          "job_id": "0eed368c411849d1897a535f80432510",
+          "job": {
+            "state": "completed",
+            "error": null,
+            "ended_reason": "budget_exhausted",
+            "success": false,
+            "steps": 300,
+            "total_steps": 300,
+            "wall_s": 240.047,
+            "capability_id": "soup_to_basket",
+            "request_id": "soup_fresh_baseline_bf16_0-0_75949dfc-plan1",
+            "session_id": "7c363da1ec70466ca260f138200b2fe4"
+          },
+          "telemetry_path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/screening_runs/20261006T172719Z_basket_two_7c363da1/cap_01_soup_to_basket_0eed368c/telemetry.jsonl",
+          "telemetry_read_error": null,
+          "n_rows": 300,
+          "gripper_action_counts_all": {
+            "negative": 93,
+            "zero": 0,
+            "positive": 207,
+            "null": 0
+          },
+          "gripper_action_counts_last20": {
+            "negative": 4,
+            "zero": 0,
+            "positive": 16,
+            "null": 0
+          },
+          "grasp_counts_all": {
+            "alphabet_soup_1": {
+              "true": 226,
+              "false": 74,
+              "null": 0
+            },
+            "basket_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "butter_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "cream_cheese_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "ketchup_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "milk_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "orange_juice_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "tomato_sauce_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            }
+          },
+          "grasp_counts_last20": {
+            "alphabet_soup_1": {
+              "true": 20,
+              "false": 0,
+              "null": 0
+            },
+            "basket_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "butter_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "cream_cheese_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "ketchup_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "milk_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "orange_juice_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "tomato_sauce_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            }
+          },
+          "phase_counts_all": {
+            "in|alphabet_soup_1|basket_1_contain_region": {
+              "ungrasped": 74,
+              "transporting": 226
+            }
+          },
+          "phase_counts_last20": {
+            "in|alphabet_soup_1|basket_1_contain_region": {
+              "transporting": 20
+            }
+          },
+          "native_predicate_true_counts_all": {
+            "in|alphabet_soup_1|basket_1_contain_region": 0
+          },
+          "native_predicate_true_counts_last20": {
+            "in|alphabet_soup_1|basket_1_contain_region": 0
+          },
+          "native_benchmark_success_counts": {
+            "true": 0,
+            "false": 300,
+            "null": 0
+          },
+          "strict_candidate_counts": {
+            "true": 0,
+            "false": 300,
+            "null": 0
+          },
+          "max_consecutive_true_strict_streak": 0,
+          "last_five_fixed_oracle_strict_flags": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  0.03245832839516714,
+                  0.1245097654625824,
+                  0.6526197248364319
+                ],
+                "quaternion": [
+                  0.37770906397237114,
+                  0.40198748951645613,
+                  0.49885311129486865,
+                  0.6684964432342196
+                ],
+                "linear_velocity": [
+                  -0.031499644562865615,
+                  -0.005642043903556139,
+                  -0.018706386913114683
+                ],
+                "angular_velocity": [
+                  0.17561127441848445,
+                  -0.1346258924256372,
+                  0.20168159981348213
+                ],
+                "grasped": true,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.4456959215200001
+                ],
+                "quaternion": [
+                  1.1626568619345339e-18,
+                  6.751531524431143e-18,
+                  1.5087853102029012e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  4.100723056333483e-20,
+                  -9.077665862114009e-17,
+                  3.955278125575404e-15
+                ],
+                "angular_velocity": [
+                  -5.315577194442526e-15,
+                  2.6411202855255817e-17,
+                  -9.696243209772012e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705526,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.002467721697335905,
+                  0.0022070378667393177,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  -2.326903344677169e-15,
+                  -1.4692757451778087e-15,
+                  1.8705255682364794e-15
+                ],
+                "angular_velocity": [
+                  -3.8056983857974497e-14,
+                  1.827368462663505e-16,
+                  -5.950659445008428e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518705,
+                  0.5000000430458178
+                ],
+                "linear_velocity": [
+                  -3.325546276055439e-15,
+                  -3.0433360016080557e-15,
+                  1.3253940518312173e-14
+                ],
+                "angular_velocity": [
+                  -4.589995661383732e-14,
+                  -5.835189544868368e-20,
+                  4.199740930414307e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676225241,
+                  -0.25926272106022036,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999983350491,
+                  0.49999999736973916,
+                  0.5000000025195246,
+                  0.5000000017756859
+                ],
+                "linear_velocity": [
+                  -2.786697931906209e-15,
+                  -1.161578828423673e-15,
+                  9.156181000987179e-15
+                ],
+                "angular_velocity": [
+                  -4.000695842633682e-14,
+                  -3.018199755890563e-19,
+                  1.6615389729401685e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003032268,
+                  -0.12138603670747229,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999973697391,
+                  0.499999998335049,
+                  0.5000000017756866,
+                  0.5000000025195253
+                ],
+                "linear_velocity": [
+                  2.785633988782846e-15,
+                  1.1624481628610973e-15,
+                  2.3042502827807747e-14
+                ],
+                "angular_velocity": [
+                  3.9938800875877324e-14,
+                  7.946094073481003e-21,
+                  -1.6613517469320053e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440566,
+                  0.052656177719437446,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  -1.2302320300431586e-17,
+                  3.285955238456074e-17,
+                  1.8087181009594236e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.4424911075863571e-19,
+                  -1.5830252091541066e-20,
+                  4.600063080003861e-15
+                ],
+                "angular_velocity": [
+                  -1.249103621275774e-16,
+                  -1.020349499370734e-16,
+                  2.143025164764359e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.0030211057640747046,
+                  0.2699825123334344,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7012791168797183,
+                  -0.0017088455979125579,
+                  0.001681029531393243,
+                  0.7128827773307752
+                ],
+                "linear_velocity": [
+                  9.022105333547693e-18,
+                  -8.568796562482045e-17,
+                  9.856545822741922e-15
+                ],
+                "angular_velocity": [
+                  -1.385899133109847e-15,
+                  1.9346461938406546e-14,
+                  -6.418712469865119e-18
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [
+              "alphabet_soup_1"
+            ],
+            "gripper_qpos": [
+              0.0325894532801122,
+              -0.026898394929984106
+            ],
+            "eef_position": [
+              0.018653638822732417,
+              0.13453744493537423,
+              0.6809373783672966
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "transporting"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "final_fixed_oracle_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  0.03245832839516714,
+                  0.1245097654625824,
+                  0.6526197248364319
+                ],
+                "quaternion": [
+                  0.37770906397237114,
+                  0.40198748951645613,
+                  0.49885311129486865,
+                  0.6684964432342196
+                ],
+                "linear_velocity": [
+                  -0.031499644562865615,
+                  -0.005642043903556139,
+                  -0.018706386913114683
+                ],
+                "angular_velocity": [
+                  0.17561127441848445,
+                  -0.1346258924256372,
+                  0.20168159981348213
+                ],
+                "grasped": true,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.4456959215200001
+                ],
+                "quaternion": [
+                  1.1626568619345339e-18,
+                  6.751531524431143e-18,
+                  1.5087853102029012e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  4.100723056333483e-20,
+                  -9.077665862114009e-17,
+                  3.955278125575404e-15
+                ],
+                "angular_velocity": [
+                  -5.315577194442526e-15,
+                  2.6411202855255817e-17,
+                  -9.696243209772012e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705526,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.002467721697335905,
+                  0.0022070378667393177,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  -2.326903344677169e-15,
+                  -1.4692757451778087e-15,
+                  1.8705255682364794e-15
+                ],
+                "angular_velocity": [
+                  -3.8056983857974497e-14,
+                  1.827368462663505e-16,
+                  -5.950659445008428e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518705,
+                  0.5000000430458178
+                ],
+                "linear_velocity": [
+                  -3.325546276055439e-15,
+                  -3.0433360016080557e-15,
+                  1.3253940518312173e-14
+                ],
+                "angular_velocity": [
+                  -4.589995661383732e-14,
+                  -5.835189544868368e-20,
+                  4.199740930414307e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676225241,
+                  -0.25926272106022036,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999983350491,
+                  0.49999999736973916,
+                  0.5000000025195246,
+                  0.5000000017756859
+                ],
+                "linear_velocity": [
+                  -2.786697931906209e-15,
+                  -1.161578828423673e-15,
+                  9.156181000987179e-15
+                ],
+                "angular_velocity": [
+                  -4.000695842633682e-14,
+                  -3.018199755890563e-19,
+                  1.6615389729401685e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003032268,
+                  -0.12138603670747229,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999973697391,
+                  0.499999998335049,
+                  0.5000000017756866,
+                  0.5000000025195253
+                ],
+                "linear_velocity": [
+                  2.785633988782846e-15,
+                  1.1624481628610973e-15,
+                  2.3042502827807747e-14
+                ],
+                "angular_velocity": [
+                  3.9938800875877324e-14,
+                  7.946094073481003e-21,
+                  -1.6613517469320053e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440566,
+                  0.052656177719437446,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  -1.2302320300431586e-17,
+                  3.285955238456074e-17,
+                  1.8087181009594236e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.4424911075863571e-19,
+                  -1.5830252091541066e-20,
+                  4.600063080003861e-15
+                ],
+                "angular_velocity": [
+                  -1.249103621275774e-16,
+                  -1.020349499370734e-16,
+                  2.143025164764359e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.0030211057640747046,
+                  0.2699825123334344,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7012791168797183,
+                  -0.0017088455979125579,
+                  0.001681029531393243,
+                  0.7128827773307752
+                ],
+                "linear_velocity": [
+                  9.022105333547693e-18,
+                  -8.568796562482045e-17,
+                  9.856545822741922e-15
+                ],
+                "angular_velocity": [
+                  -1.385899133109847e-15,
+                  1.9346461938406546e-14,
+                  -6.418712469865119e-18
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [
+              "alphabet_soup_1"
+            ],
+            "gripper_qpos": [
+              0.0325894532801122,
+              -0.026898394929984106
+            ],
+            "eef_position": [
+              0.018653638822732417,
+              0.13453744493537423,
+              0.6809373783672966
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "transporting"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "diagnostic_initial_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.09381556733200731,
+                  -0.1504204339883445,
+                  0.47516992249802875
+                ],
+                "quaternion": [
+                  -0.002413159348733635,
+                  0.0022847967751795815,
+                  0.7074549106978498,
+                  0.7067506672760572
+                ],
+                "linear_velocity": [
+                  -1.054533598127698e-05,
+                  -2.3593996921113917e-05,
+                  5.651429394809351e-05
+                ],
+                "angular_velocity": [
+                  -0.0006258750521146135,
+                  3.894586798273252e-06,
+                  -0.00027959386993909685
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000004
+                ],
+                "quaternion": [
+                  -1.3181533159272424e-20,
+                  4.518909990605476e-17,
+                  1.5200969631737494e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.0909735642005086e-20,
+                  1.881770927872556e-19,
+                  1.0891026564006564e-14
+                ],
+                "angular_velocity": [
+                  2.7882644903439485e-18,
+                  3.140994869360392e-17,
+                  3.8541853098662244e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705469,
+                  0.47516927848924284
+                ],
+                "quaternion": [
+                  -0.002467721697336025,
+                  0.002207037866739529,
+                  0.7074518281383775,
+                  0.7067538115901093
+                ],
+                "linear_velocity": [
+                  2.913177862198775e-15,
+                  2.6111346647247402e-15,
+                  1.2598863832258868e-14
+                ],
+                "angular_velocity": [
+                  6.709099256139686e-14,
+                  -3.773808800025467e-16,
+                  7.062878116929567e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26845985277513545,
+                  -0.1485742186185226,
+                  1.0510565774949703
+                ],
+                "quaternion": [
+                  0.500055356014252,
+                  0.49994460871699736,
+                  0.49981275850891765,
+                  0.5001872005239374
+                ],
+                "linear_velocity": [
+                  3.635442040161954e-05,
+                  0.00010020927500467978,
+                  -1.312049364696069
+                ],
+                "angular_velocity": [
+                  0.0004524938894910952,
+                  -5.195851224654296e-07,
+                  -0.00022360145523132914
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971297474187,
+                  -0.2592465338699187,
+                  0.888858890578431
+                ],
+                "quaternion": [
+                  0.5000431875489297,
+                  0.49995680885055,
+                  0.5000434337232796,
+                  0.4999565623732841
+                ],
+                "linear_velocity": [
+                  6.695392371079887e-06,
+                  -5.814399826311635e-05,
+                  -1.6284502411067387
+                ],
+                "angular_velocity": [
+                  -1.6603862319396689e-06,
+                  -2.352083761797126e-08,
+                  0.0002839415539289451
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926713923230257,
+                  -0.12140222389778298,
+                  0.8888588905776443
+                ],
+                "quaternion": [
+                  0.49995680885067734,
+                  0.5000431875488026,
+                  0.4999565623731524,
+                  0.5000434337234104
+                ],
+                "linear_velocity": [
+                  -6.695392358327992e-06,
+                  5.8143998264122876e-05,
+                  -1.628450241108266
+                ],
+                "angular_velocity": [
+                  1.6603862170057428e-06,
+                  -2.3520837399448145e-08,
+                  -0.00028394155392922433
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.44546992152000003
+                ],
+                "quaternion": [
+                  -5.666756303554149e-20,
+                  -3.929311323188711e-17,
+                  1.501792606606452e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.012851044210432e-20,
+                  6.065281338028623e-19,
+                  1.1541366154987607e-14
+                ],
+                "angular_velocity": [
+                  1.818087338770966e-17,
+                  3.515603537213904e-17,
+                  1.7776267651310002e-19
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002115499018305853,
+                  0.2689851938137835,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.00169499519457912,
+                  0.0016949940570028853,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  -8.646606420242749e-17,
+                  6.798710564565346e-17,
+                  1.0198509008262537e-14
+                ],
+                "angular_velocity": [
+                  1.9445892545848794e-14,
+                  -1.5337387634751088e-14,
+                  9.34938732410821e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.03872955881216562,
+              -0.038728775049055544
+            ],
+            "eef_position": [
+              -0.046135020786421725,
+              -0.0035664079120534026,
+              0.7020572213324064
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "diagnostic_final_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  0.03245832839516714,
+                  0.1245097654625824,
+                  0.6526197248364319
+                ],
+                "quaternion": [
+                  0.37770906397237114,
+                  0.40198748951645613,
+                  0.49885311129486865,
+                  0.6684964432342196
+                ],
+                "linear_velocity": [
+                  -0.031499644562865615,
+                  -0.005642043903556139,
+                  -0.018706386913114683
+                ],
+                "angular_velocity": [
+                  0.17561127441848445,
+                  -0.1346258924256372,
+                  0.20168159981348213
+                ],
+                "grasped": true,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.4456959215200001
+                ],
+                "quaternion": [
+                  1.1626568619345339e-18,
+                  6.751531524431143e-18,
+                  1.5087853102029012e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  4.100723056333483e-20,
+                  -9.077665862114009e-17,
+                  3.955278125575404e-15
+                ],
+                "angular_velocity": [
+                  -5.315577194442526e-15,
+                  2.6411202855255817e-17,
+                  -9.696243209772012e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705526,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.002467721697335905,
+                  0.0022070378667393177,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  -2.326903344677169e-15,
+                  -1.4692757451778087e-15,
+                  1.8705255682364794e-15
+                ],
+                "angular_velocity": [
+                  -3.8056983857974497e-14,
+                  1.827368462663505e-16,
+                  -5.950659445008428e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518705,
+                  0.5000000430458178
+                ],
+                "linear_velocity": [
+                  -3.325546276055439e-15,
+                  -3.0433360016080557e-15,
+                  1.3253940518312173e-14
+                ],
+                "angular_velocity": [
+                  -4.589995661383732e-14,
+                  -5.835189544868368e-20,
+                  4.199740930414307e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676225241,
+                  -0.25926272106022036,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999983350491,
+                  0.49999999736973916,
+                  0.5000000025195246,
+                  0.5000000017756859
+                ],
+                "linear_velocity": [
+                  -2.786697931906209e-15,
+                  -1.161578828423673e-15,
+                  9.156181000987179e-15
+                ],
+                "angular_velocity": [
+                  -4.000695842633682e-14,
+                  -3.018199755890563e-19,
+                  1.6615389729401685e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003032268,
+                  -0.12138603670747229,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999973697391,
+                  0.499999998335049,
+                  0.5000000017756866,
+                  0.5000000025195253
+                ],
+                "linear_velocity": [
+                  2.785633988782846e-15,
+                  1.1624481628610973e-15,
+                  2.3042502827807747e-14
+                ],
+                "angular_velocity": [
+                  3.9938800875877324e-14,
+                  7.946094073481003e-21,
+                  -1.6613517469320053e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440566,
+                  0.052656177719437446,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  -1.2302320300431586e-17,
+                  3.285955238456074e-17,
+                  1.8087181009594236e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.4424911075863571e-19,
+                  -1.5830252091541066e-20,
+                  4.600063080003861e-15
+                ],
+                "angular_velocity": [
+                  -1.249103621275774e-16,
+                  -1.020349499370734e-16,
+                  2.143025164764359e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.0030211057640747046,
+                  0.2699825123334344,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7012791168797183,
+                  -0.0017088455979125579,
+                  0.001681029531393243,
+                  0.7128827773307752
+                ],
+                "linear_velocity": [
+                  9.022105333547693e-18,
+                  -8.568796562482045e-17,
+                  9.856545822741922e-15
+                ],
+                "angular_velocity": [
+                  -1.385899133109847e-15,
+                  1.9346461938406546e-14,
+                  -6.418712469865119e-18
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [
+              "alphabet_soup_1"
+            ],
+            "gripper_qpos": [
+              0.0325894532801122,
+              -0.026898394929984106
+            ],
+            "eef_position": [
+              0.018653638822732417,
+              0.13453744493537423,
+              0.6809373783672966
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "transporting"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "object_displacement_m": {
+            "alphabet_soup_1": 0.35074227527086344,
+            "cream_cheese_1": 5.551115123125783e-17,
+            "tomato_sauce_1": 5.716907481869143e-16,
+            "ketchup_1": 0.5418766572061889,
+            "orange_juice_1": 0.3823489694023009,
+            "milk_1": 0.3823489694015142,
+            "butter_1": 7.757919228897728e-17,
+            "basket_1": 0.0013471331811000414
+          },
+          "per_action_latency": {
+            "unit": "seconds",
+            "includes_queue_hit_steps": true,
+            "n_finite_samples": 300,
+            "n_null_or_nonfinite": 0,
+            "mean": 0.6847032293966661,
+            "median": 0.6874067504999744,
+            "p95_nearest_rank": 0.7694851089999588
+          },
+          "diagnostic_errors": 0,
+          "diagnostic_nulls": 0,
+          "native_benchmark_success_ever": false,
+          "native_benchmark_success_final": false,
+          "validation": {
+            "n_rows_matches_steps": true,
+            "final_snapshot_matches_raw_last_row": true
+          }
+        }
+      ]
+    },
+    {
+      "trial_id": "soup_fresh_fp32_0-0_68d6e4e7",
+      "profile": "fp32",
+      "condition": "soup_fresh",
+      "pair": "0:0",
+      "seed": 0,
+      "init_state_index": 0,
+      "scene_id": "basket_two",
+      "source_git_sha": "4357b61e11f1000ee1bf1b5121460219c77485d1",
+      "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+      "initial_state_hash": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+      "task_success": false,
+      "strict_task_success": false,
+      "native_benchmark_success": false,
+      "physical_failures": [
+        "budget_exhausted: job=c9a2410a0345493bbff554eea78cf30a capability=soup_to_basket"
+      ],
+      "null_metrics": [],
+      "trial_wall_s": 223.94,
+      "jobs": [
+        {
+          "job_id": "c9a2410a0345493bbff554eea78cf30a",
+          "job": {
+            "state": "completed",
+            "error": null,
+            "ended_reason": "budget_exhausted",
+            "success": false,
+            "steps": 300,
+            "total_steps": 300,
+            "wall_s": 219.78,
+            "capability_id": "soup_to_basket",
+            "request_id": "soup_fresh_fp32_0-0_68d6e4e7-plan1",
+            "session_id": "52920b26ec864113a57b1ab6bad208bb"
+          },
+          "telemetry_path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/screening_runs/20261006T173135Z_basket_two_52920b26/cap_01_soup_to_basket_c9a2410a/telemetry.jsonl",
+          "telemetry_read_error": null,
+          "n_rows": 300,
+          "gripper_action_counts_all": {
+            "negative": 78,
+            "zero": 0,
+            "positive": 222,
+            "null": 0
+          },
+          "gripper_action_counts_last20": {
+            "negative": 1,
+            "zero": 0,
+            "positive": 19,
+            "null": 0
+          },
+          "grasp_counts_all": {
+            "alphabet_soup_1": {
+              "true": 228,
+              "false": 72,
+              "null": 0
+            },
+            "basket_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "butter_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "cream_cheese_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "ketchup_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "milk_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "orange_juice_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "tomato_sauce_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            }
+          },
+          "grasp_counts_last20": {
+            "alphabet_soup_1": {
+              "true": 20,
+              "false": 0,
+              "null": 0
+            },
+            "basket_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "butter_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "cream_cheese_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "ketchup_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "milk_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "orange_juice_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "tomato_sauce_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            }
+          },
+          "phase_counts_all": {
+            "in|alphabet_soup_1|basket_1_contain_region": {
+              "ungrasped": 72,
+              "transporting": 228
+            }
+          },
+          "phase_counts_last20": {
+            "in|alphabet_soup_1|basket_1_contain_region": {
+              "transporting": 20
+            }
+          },
+          "native_predicate_true_counts_all": {
+            "in|alphabet_soup_1|basket_1_contain_region": 0
+          },
+          "native_predicate_true_counts_last20": {
+            "in|alphabet_soup_1|basket_1_contain_region": 0
+          },
+          "native_benchmark_success_counts": {
+            "true": 0,
+            "false": 300,
+            "null": 0
+          },
+          "strict_candidate_counts": {
+            "true": 0,
+            "false": 300,
+            "null": 0
+          },
+          "max_consecutive_true_strict_streak": 0,
+          "last_five_fixed_oracle_strict_flags": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  0.06038501695868831,
+                  0.10691284091685782,
+                  0.6804321211819697
+                ],
+                "quaternion": [
+                  0.33574150457067486,
+                  0.3425280426963346,
+                  0.5277516166402956,
+                  0.7010209791502628
+                ],
+                "linear_velocity": [
+                  -0.027525927111676556,
+                  0.0016589143402215743,
+                  -0.0008227579344797911
+                ],
+                "angular_velocity": [
+                  0.12219949692753948,
+                  -0.14826359885035567,
+                  0.24321727656571812
+                ],
+                "grasped": true,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000015
+                ],
+                "quaternion": [
+                  -6.6830457522951835e-19,
+                  3.064472041108467e-17,
+                  1.2509604264232594e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.1623960553466791e-20,
+                  -5.042540410279383e-19,
+                  -2.9894312281503956e-15
+                ],
+                "angular_velocity": [
+                  -1.2382404929761057e-16,
+                  -3.424893708096508e-17,
+                  -1.8505410573707705e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705526,
+                  0.47516927848924284
+                ],
+                "quaternion": [
+                  -0.002467721697335938,
+                  0.0022070378667393554,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  2.1880012897374855e-15,
+                  -8.143486070290591e-16,
+                  1.2527579829049705e-14
+                ],
+                "angular_velocity": [
+                  -2.2071614881590066e-14,
+                  1.9286855410034938e-16,
+                  5.137739597638713e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518706,
+                  0.5000000430458179
+                ],
+                "linear_velocity": [
+                  -3.3253525647674215e-15,
+                  -3.04306100696301e-15,
+                  1.498968906520374e-14
+                ],
+                "angular_velocity": [
+                  -4.592295184929809e-14,
+                  1.6421579662694427e-20,
+                  4.203575577617144e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676261015,
+                  -0.25926272106022036,
+                  0.5065099215193675
+                ],
+                "quaternion": [
+                  0.49999999833504905,
+                  0.4999999973697392,
+                  0.5000000025195244,
+                  0.5000000017756862
+                ],
+                "linear_velocity": [
+                  1.3196153171222392e-15,
+                  2.945173942185687e-15,
+                  2.3884680254715984e-14
+                ],
+                "angular_velocity": [
+                  1.8887706570883957e-14,
+                  -8.486575304641597e-20,
+                  -4.2198011134584496e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003030545,
+                  -0.12138603670747047,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999973697391,
+                  0.499999998335049,
+                  0.5000000017756868,
+                  0.500000002519525
+                ],
+                "linear_velocity": [
+                  -1.319186439271483e-15,
+                  -2.9453245338289804e-15,
+                  2.388044129121446e-14
+                ],
+                "angular_velocity": [
+                  -1.9008730741106296e-14,
+                  3.253205755126137e-19,
+                  4.226919364344168e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  7.012929114521865e-19,
+                  -3.820158521831143e-17,
+                  1.426147346064007e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -6.590782010143241e-18,
+                  -1.1233923832417928e-18,
+                  4.600063080003769e-15
+                ],
+                "angular_velocity": [
+                  1.419388311340468e-16,
+                  9.838476992490219e-17,
+                  1.278867766283852e-19
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002140022769608553,
+                  0.26901132002349426,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7069801262891418,
+                  -0.0016952938233220315,
+                  0.0016946953754370386,
+                  0.7072293510726393
+                ],
+                "linear_velocity": [
+                  -2.762814772364256e-17,
+                  5.795743919589248e-18,
+                  9.582609067395251e-15
+                ],
+                "angular_velocity": [
+                  5.6206952164957285e-15,
+                  -1.4462380202511654e-15,
+                  2.667593771451298e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [
+              "alphabet_soup_1"
+            ],
+            "gripper_qpos": [
+              0.029899776241432818,
+              -0.02172319990231901
+            ],
+            "eef_position": [
+              0.0437163938081777,
+              0.12501838731237114,
+              0.7073590157506284
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "transporting"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "final_fixed_oracle_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  0.06038501695868831,
+                  0.10691284091685782,
+                  0.6804321211819697
+                ],
+                "quaternion": [
+                  0.33574150457067486,
+                  0.3425280426963346,
+                  0.5277516166402956,
+                  0.7010209791502628
+                ],
+                "linear_velocity": [
+                  -0.027525927111676556,
+                  0.0016589143402215743,
+                  -0.0008227579344797911
+                ],
+                "angular_velocity": [
+                  0.12219949692753948,
+                  -0.14826359885035567,
+                  0.24321727656571812
+                ],
+                "grasped": true,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000015
+                ],
+                "quaternion": [
+                  -6.6830457522951835e-19,
+                  3.064472041108467e-17,
+                  1.2509604264232594e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.1623960553466791e-20,
+                  -5.042540410279383e-19,
+                  -2.9894312281503956e-15
+                ],
+                "angular_velocity": [
+                  -1.2382404929761057e-16,
+                  -3.424893708096508e-17,
+                  -1.8505410573707705e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705526,
+                  0.47516927848924284
+                ],
+                "quaternion": [
+                  -0.002467721697335938,
+                  0.0022070378667393554,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  2.1880012897374855e-15,
+                  -8.143486070290591e-16,
+                  1.2527579829049705e-14
+                ],
+                "angular_velocity": [
+                  -2.2071614881590066e-14,
+                  1.9286855410034938e-16,
+                  5.137739597638713e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518706,
+                  0.5000000430458179
+                ],
+                "linear_velocity": [
+                  -3.3253525647674215e-15,
+                  -3.04306100696301e-15,
+                  1.498968906520374e-14
+                ],
+                "angular_velocity": [
+                  -4.592295184929809e-14,
+                  1.6421579662694427e-20,
+                  4.203575577617144e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676261015,
+                  -0.25926272106022036,
+                  0.5065099215193675
+                ],
+                "quaternion": [
+                  0.49999999833504905,
+                  0.4999999973697392,
+                  0.5000000025195244,
+                  0.5000000017756862
+                ],
+                "linear_velocity": [
+                  1.3196153171222392e-15,
+                  2.945173942185687e-15,
+                  2.3884680254715984e-14
+                ],
+                "angular_velocity": [
+                  1.8887706570883957e-14,
+                  -8.486575304641597e-20,
+                  -4.2198011134584496e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003030545,
+                  -0.12138603670747047,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999973697391,
+                  0.499999998335049,
+                  0.5000000017756868,
+                  0.500000002519525
+                ],
+                "linear_velocity": [
+                  -1.319186439271483e-15,
+                  -2.9453245338289804e-15,
+                  2.388044129121446e-14
+                ],
+                "angular_velocity": [
+                  -1.9008730741106296e-14,
+                  3.253205755126137e-19,
+                  4.226919364344168e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  7.012929114521865e-19,
+                  -3.820158521831143e-17,
+                  1.426147346064007e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -6.590782010143241e-18,
+                  -1.1233923832417928e-18,
+                  4.600063080003769e-15
+                ],
+                "angular_velocity": [
+                  1.419388311340468e-16,
+                  9.838476992490219e-17,
+                  1.278867766283852e-19
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002140022769608553,
+                  0.26901132002349426,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7069801262891418,
+                  -0.0016952938233220315,
+                  0.0016946953754370386,
+                  0.7072293510726393
+                ],
+                "linear_velocity": [
+                  -2.762814772364256e-17,
+                  5.795743919589248e-18,
+                  9.582609067395251e-15
+                ],
+                "angular_velocity": [
+                  5.6206952164957285e-15,
+                  -1.4462380202511654e-15,
+                  2.667593771451298e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [
+              "alphabet_soup_1"
+            ],
+            "gripper_qpos": [
+              0.029899776241432818,
+              -0.02172319990231901
+            ],
+            "eef_position": [
+              0.0437163938081777,
+              0.12501838731237114,
+              0.7073590157506284
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "transporting"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "diagnostic_initial_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.09381556733200731,
+                  -0.1504204339883445,
+                  0.47516992249802875
+                ],
+                "quaternion": [
+                  -0.002413159348733635,
+                  0.0022847967751795815,
+                  0.7074549106978498,
+                  0.7067506672760572
+                ],
+                "linear_velocity": [
+                  -1.054533598127698e-05,
+                  -2.3593996921113917e-05,
+                  5.651429394809351e-05
+                ],
+                "angular_velocity": [
+                  -0.0006258750521146135,
+                  3.894586798273252e-06,
+                  -0.00027959386993909685
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000004
+                ],
+                "quaternion": [
+                  -1.3181533159272424e-20,
+                  4.518909990605476e-17,
+                  1.5200969631737494e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.0909735642005086e-20,
+                  1.881770927872556e-19,
+                  1.0891026564006564e-14
+                ],
+                "angular_velocity": [
+                  2.7882644903439485e-18,
+                  3.140994869360392e-17,
+                  3.8541853098662244e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705469,
+                  0.47516927848924284
+                ],
+                "quaternion": [
+                  -0.002467721697336025,
+                  0.002207037866739529,
+                  0.7074518281383775,
+                  0.7067538115901093
+                ],
+                "linear_velocity": [
+                  2.913177862198775e-15,
+                  2.6111346647247402e-15,
+                  1.2598863832258868e-14
+                ],
+                "angular_velocity": [
+                  6.709099256139686e-14,
+                  -3.773808800025467e-16,
+                  7.062878116929567e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26845985277513545,
+                  -0.1485742186185226,
+                  1.0510565774949703
+                ],
+                "quaternion": [
+                  0.500055356014252,
+                  0.49994460871699736,
+                  0.49981275850891765,
+                  0.5001872005239374
+                ],
+                "linear_velocity": [
+                  3.635442040161954e-05,
+                  0.00010020927500467978,
+                  -1.312049364696069
+                ],
+                "angular_velocity": [
+                  0.0004524938894910952,
+                  -5.195851224654296e-07,
+                  -0.00022360145523132914
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971297474187,
+                  -0.2592465338699187,
+                  0.888858890578431
+                ],
+                "quaternion": [
+                  0.5000431875489297,
+                  0.49995680885055,
+                  0.5000434337232796,
+                  0.4999565623732841
+                ],
+                "linear_velocity": [
+                  6.695392371079887e-06,
+                  -5.814399826311635e-05,
+                  -1.6284502411067387
+                ],
+                "angular_velocity": [
+                  -1.6603862319396689e-06,
+                  -2.352083761797126e-08,
+                  0.0002839415539289451
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926713923230257,
+                  -0.12140222389778298,
+                  0.8888588905776443
+                ],
+                "quaternion": [
+                  0.49995680885067734,
+                  0.5000431875488026,
+                  0.4999565623731524,
+                  0.5000434337234104
+                ],
+                "linear_velocity": [
+                  -6.695392358327992e-06,
+                  5.8143998264122876e-05,
+                  -1.628450241108266
+                ],
+                "angular_velocity": [
+                  1.6603862170057428e-06,
+                  -2.3520837399448145e-08,
+                  -0.00028394155392922433
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.44546992152000003
+                ],
+                "quaternion": [
+                  -5.666756303554149e-20,
+                  -3.929311323188711e-17,
+                  1.501792606606452e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.012851044210432e-20,
+                  6.065281338028623e-19,
+                  1.1541366154987607e-14
+                ],
+                "angular_velocity": [
+                  1.818087338770966e-17,
+                  3.515603537213904e-17,
+                  1.7776267651310002e-19
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002115499018305853,
+                  0.2689851938137835,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.00169499519457912,
+                  0.0016949940570028853,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  -8.646606420242749e-17,
+                  6.798710564565346e-17,
+                  1.0198509008262537e-14
+                ],
+                "angular_velocity": [
+                  1.9445892545848794e-14,
+                  -1.5337387634751088e-14,
+                  9.34938732410821e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.03872955881216562,
+              -0.038728775049055544
+            ],
+            "eef_position": [
+              -0.046135020786421725,
+              -0.0035664079120534026,
+              0.7020572213324064
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "diagnostic_final_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  0.06038501695868831,
+                  0.10691284091685782,
+                  0.6804321211819697
+                ],
+                "quaternion": [
+                  0.33574150457067486,
+                  0.3425280426963346,
+                  0.5277516166402956,
+                  0.7010209791502628
+                ],
+                "linear_velocity": [
+                  -0.027525927111676556,
+                  0.0016589143402215743,
+                  -0.0008227579344797911
+                ],
+                "angular_velocity": [
+                  0.12219949692753948,
+                  -0.14826359885035567,
+                  0.24321727656571812
+                ],
+                "grasped": true,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000015
+                ],
+                "quaternion": [
+                  -6.6830457522951835e-19,
+                  3.064472041108467e-17,
+                  1.2509604264232594e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.1623960553466791e-20,
+                  -5.042540410279383e-19,
+                  -2.9894312281503956e-15
+                ],
+                "angular_velocity": [
+                  -1.2382404929761057e-16,
+                  -3.424893708096508e-17,
+                  -1.8505410573707705e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705526,
+                  0.47516927848924284
+                ],
+                "quaternion": [
+                  -0.002467721697335938,
+                  0.0022070378667393554,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  2.1880012897374855e-15,
+                  -8.143486070290591e-16,
+                  1.2527579829049705e-14
+                ],
+                "angular_velocity": [
+                  -2.2071614881590066e-14,
+                  1.9286855410034938e-16,
+                  5.137739597638713e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518706,
+                  0.5000000430458179
+                ],
+                "linear_velocity": [
+                  -3.3253525647674215e-15,
+                  -3.04306100696301e-15,
+                  1.498968906520374e-14
+                ],
+                "angular_velocity": [
+                  -4.592295184929809e-14,
+                  1.6421579662694427e-20,
+                  4.203575577617144e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676261015,
+                  -0.25926272106022036,
+                  0.5065099215193675
+                ],
+                "quaternion": [
+                  0.49999999833504905,
+                  0.4999999973697392,
+                  0.5000000025195244,
+                  0.5000000017756862
+                ],
+                "linear_velocity": [
+                  1.3196153171222392e-15,
+                  2.945173942185687e-15,
+                  2.3884680254715984e-14
+                ],
+                "angular_velocity": [
+                  1.8887706570883957e-14,
+                  -8.486575304641597e-20,
+                  -4.2198011134584496e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003030545,
+                  -0.12138603670747047,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999973697391,
+                  0.499999998335049,
+                  0.5000000017756868,
+                  0.500000002519525
+                ],
+                "linear_velocity": [
+                  -1.319186439271483e-15,
+                  -2.9453245338289804e-15,
+                  2.388044129121446e-14
+                ],
+                "angular_velocity": [
+                  -1.9008730741106296e-14,
+                  3.253205755126137e-19,
+                  4.226919364344168e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  7.012929114521865e-19,
+                  -3.820158521831143e-17,
+                  1.426147346064007e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -6.590782010143241e-18,
+                  -1.1233923832417928e-18,
+                  4.600063080003769e-15
+                ],
+                "angular_velocity": [
+                  1.419388311340468e-16,
+                  9.838476992490219e-17,
+                  1.278867766283852e-19
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002140022769608553,
+                  0.26901132002349426,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7069801262891418,
+                  -0.0016952938233220315,
+                  0.0016946953754370386,
+                  0.7072293510726393
+                ],
+                "linear_velocity": [
+                  -2.762814772364256e-17,
+                  5.795743919589248e-18,
+                  9.582609067395251e-15
+                ],
+                "angular_velocity": [
+                  5.6206952164957285e-15,
+                  -1.4462380202511654e-15,
+                  2.667593771451298e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [
+              "alphabet_soup_1"
+            ],
+            "gripper_qpos": [
+              0.029899776241432818,
+              -0.02172319990231901
+            ],
+            "eef_position": [
+              0.0437163938081777,
+              0.12501838731237114,
+              0.7073590157506284
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "transporting"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "object_displacement_m": {
+            "alphabet_soup_1": 0.3634980120682835,
+            "cream_cheese_1": 1.1102230246251565e-16,
+            "tomato_sauce_1": 5.689893001203927e-16,
+            "ketchup_1": 0.5418766572061889,
+            "orange_juice_1": 0.382348969402301,
+            "milk_1": 0.3823489694015142,
+            "butter_1": 5.551115123125783e-17,
+            "basket_1": 3.583285101422292e-05
+          },
+          "per_action_latency": {
+            "unit": "seconds",
+            "includes_queue_hit_steps": true,
+            "n_finite_samples": 300,
+            "n_null_or_nonfinite": 0,
+            "mean": 0.6180068148633281,
+            "median": 0.6683353769999485,
+            "p95_nearest_rank": 0.7598003360000121
+          },
+          "diagnostic_errors": 0,
+          "diagnostic_nulls": 0,
+          "native_benchmark_success_ever": false,
+          "native_benchmark_success_final": false,
+          "validation": {
+            "n_rows_matches_steps": true,
+            "final_snapshot_matches_raw_last_row": true
+          }
+        }
+      ]
+    },
+    {
+      "trial_id": "soup_fresh_fp32_d1_0-0_19c47d0f",
+      "profile": "fp32_d1",
+      "condition": "soup_fresh",
+      "pair": "0:0",
+      "seed": 0,
+      "init_state_index": 0,
+      "scene_id": "basket_two",
+      "source_git_sha": "4357b61e11f1000ee1bf1b5121460219c77485d1",
+      "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+      "initial_state_hash": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+      "task_success": false,
+      "strict_task_success": false,
+      "native_benchmark_success": false,
+      "physical_failures": [
+        "budget_exhausted: job=48e3253495594a6fb6fd2d0537323287 capability=soup_to_basket"
+      ],
+      "null_metrics": [],
+      "trial_wall_s": 80.802,
+      "jobs": [
+        {
+          "job_id": "48e3253495594a6fb6fd2d0537323287",
+          "job": {
+            "state": "completed",
+            "error": null,
+            "ended_reason": "budget_exhausted",
+            "success": false,
+            "steps": 300,
+            "total_steps": 300,
+            "wall_s": 76.812,
+            "capability_id": "soup_to_basket",
+            "request_id": "soup_fresh_fp32_d1_0-0_19c47d0f-plan1",
+            "session_id": "1c3a70a947354f049b9eeb8a4ded410b"
+          },
+          "telemetry_path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/screening_runs/20261006T173530Z_basket_two_1c3a70a9/cap_01_soup_to_basket_48e32534/telemetry.jsonl",
+          "telemetry_read_error": null,
+          "n_rows": 300,
+          "gripper_action_counts_all": {
+            "negative": 207,
+            "zero": 0,
+            "positive": 93,
+            "null": 0
+          },
+          "gripper_action_counts_last20": {
+            "negative": 0,
+            "zero": 0,
+            "positive": 20,
+            "null": 0
+          },
+          "grasp_counts_all": {
+            "alphabet_soup_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "basket_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "butter_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "cream_cheese_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "ketchup_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "milk_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "orange_juice_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "tomato_sauce_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            }
+          },
+          "grasp_counts_last20": {
+            "alphabet_soup_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "basket_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "butter_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "cream_cheese_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "ketchup_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "milk_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "orange_juice_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "tomato_sauce_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            }
+          },
+          "phase_counts_all": {
+            "in|alphabet_soup_1|basket_1_contain_region": {
+              "ungrasped": 300
+            }
+          },
+          "phase_counts_last20": {
+            "in|alphabet_soup_1|basket_1_contain_region": {
+              "ungrasped": 20
+            }
+          },
+          "native_predicate_true_counts_all": {
+            "in|alphabet_soup_1|basket_1_contain_region": 0
+          },
+          "native_predicate_true_counts_last20": {
+            "in|alphabet_soup_1|basket_1_contain_region": 0
+          },
+          "native_benchmark_success_counts": {
+            "true": 0,
+            "false": 300,
+            "null": 0
+          },
+          "strict_candidate_counts": {
+            "true": 0,
+            "false": 300,
+            "null": 0
+          },
+          "max_consecutive_true_strict_streak": 0,
+          "last_five_fixed_oracle_strict_flags": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.08824825517491529,
+                  -0.14636793571473275,
+                  0.5451155892347344
+                ],
+                "quaternion": [
+                  -0.022522825273776522,
+                  0.2160386341305656,
+                  0.3763781903083914,
+                  0.9006439300660763
+                ],
+                "linear_velocity": [
+                  -0.05246586980434101,
+                  0.05887773902588689,
+                  -0.10137797027731589
+                ],
+                "angular_velocity": [
+                  -1.0023159778864368,
+                  -0.06013825405297308,
+                  -0.4489933169714549
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.4456959215200001
+                ],
+                "quaternion": [
+                  -6.437468494700464e-19,
+                  6.142274437436825e-17,
+                  1.460270602961027e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  2.40500033552123e-19,
+                  5.135514546358788e-20,
+                  3.955278125575504e-15
+                ],
+                "angular_velocity": [
+                  8.795450402779888e-18,
+                  -1.192916165928598e-17,
+                  -6.790248225267001e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084699998,
+                  0.055755485477044744,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.002467721697336528,
+                  0.0022070378667386715,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  -2.8831851535838632e-15,
+                  -1.5477696723881884e-15,
+                  1.3960249818305644e-15
+                ],
+                "angular_velocity": [
+                  -3.9395843018015714e-14,
+                  1.986344906334862e-16,
+                  -6.968680238343681e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518704,
+                  0.500000043045818
+                ],
+                "linear_velocity": [
+                  -3.108528271932956e-16,
+                  -2.845678755942795e-17,
+                  1.229726030289977e-14
+                ],
+                "angular_velocity": [
+                  -4.2672179886057904e-15,
+                  -1.2339760945311616e-18,
+                  4.435292288204614e-16
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009407995293018924,
+                  -0.25863138076814607,
+                  0.5065099215193675
+                ],
+                "quaternion": [
+                  0.5059635400538555,
+                  0.5059635390975405,
+                  0.493964469363086,
+                  0.49396446860771814
+                ],
+                "linear_velocity": [
+                  -3.0050001266656184e-15,
+                  6.296204834225254e-16,
+                  1.9427888270408288e-14
+                ],
+                "angular_velocity": [
+                  -4.3387321619199557e-14,
+                  -2.9962553332938374e-19,
+                  -8.233829253427102e-15
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003030897,
+                  -0.12138603670747229,
+                  0.5065099215193677
+                ],
+                "quaternion": [
+                  0.499999997369739,
+                  0.4999999983350491,
+                  0.5000000017756866,
+                  0.500000002519525
+                ],
+                "linear_velocity": [
+                  -1.320651105305814e-15,
+                  1.1614332062030987e-15,
+                  7.616240392595936e-15
+                ],
+                "angular_velocity": [
+                  -1.890600414673373e-14,
+                  -4.332101530403928e-20,
+                  -1.658531747203485e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  3.580263440437482e-19,
+                  3.671531357324288e-17,
+                  1.7455792128552262e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -2.0987384901112263e-19,
+                  2.0658751897127552e-18,
+                  4.605351691870422e-15
+                ],
+                "angular_velocity": [
+                  -4.324472051092604e-17,
+                  -8.153740243711187e-17,
+                  -6.556170352053698e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002115499018305878,
+                  0.2689851938137835,
+                  0.4321921051647704
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.0016949951945791314,
+                  0.0016949940570028775,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  9.685775878197825e-18,
+                  3.36480060469946e-17,
+                  3.2813479801788323e-15
+                ],
+                "angular_velocity": [
+                  -1.4125616996646678e-15,
+                  -8.345918757506322e-15,
+                  -6.335474781553787e-18
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.00865609730923654,
+              -0.009156493706466871
+            ],
+            "eef_position": [
+              -0.055684294950143334,
+              -0.1590454169181681,
+              0.577983698506309
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "final_fixed_oracle_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.08824825517491529,
+                  -0.14636793571473275,
+                  0.5451155892347344
+                ],
+                "quaternion": [
+                  -0.022522825273776522,
+                  0.2160386341305656,
+                  0.3763781903083914,
+                  0.9006439300660763
+                ],
+                "linear_velocity": [
+                  -0.05246586980434101,
+                  0.05887773902588689,
+                  -0.10137797027731589
+                ],
+                "angular_velocity": [
+                  -1.0023159778864368,
+                  -0.06013825405297308,
+                  -0.4489933169714549
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.4456959215200001
+                ],
+                "quaternion": [
+                  -6.437468494700464e-19,
+                  6.142274437436825e-17,
+                  1.460270602961027e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  2.40500033552123e-19,
+                  5.135514546358788e-20,
+                  3.955278125575504e-15
+                ],
+                "angular_velocity": [
+                  8.795450402779888e-18,
+                  -1.192916165928598e-17,
+                  -6.790248225267001e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084699998,
+                  0.055755485477044744,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.002467721697336528,
+                  0.0022070378667386715,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  -2.8831851535838632e-15,
+                  -1.5477696723881884e-15,
+                  1.3960249818305644e-15
+                ],
+                "angular_velocity": [
+                  -3.9395843018015714e-14,
+                  1.986344906334862e-16,
+                  -6.968680238343681e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518704,
+                  0.500000043045818
+                ],
+                "linear_velocity": [
+                  -3.108528271932956e-16,
+                  -2.845678755942795e-17,
+                  1.229726030289977e-14
+                ],
+                "angular_velocity": [
+                  -4.2672179886057904e-15,
+                  -1.2339760945311616e-18,
+                  4.435292288204614e-16
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009407995293018924,
+                  -0.25863138076814607,
+                  0.5065099215193675
+                ],
+                "quaternion": [
+                  0.5059635400538555,
+                  0.5059635390975405,
+                  0.493964469363086,
+                  0.49396446860771814
+                ],
+                "linear_velocity": [
+                  -3.0050001266656184e-15,
+                  6.296204834225254e-16,
+                  1.9427888270408288e-14
+                ],
+                "angular_velocity": [
+                  -4.3387321619199557e-14,
+                  -2.9962553332938374e-19,
+                  -8.233829253427102e-15
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003030897,
+                  -0.12138603670747229,
+                  0.5065099215193677
+                ],
+                "quaternion": [
+                  0.499999997369739,
+                  0.4999999983350491,
+                  0.5000000017756866,
+                  0.500000002519525
+                ],
+                "linear_velocity": [
+                  -1.320651105305814e-15,
+                  1.1614332062030987e-15,
+                  7.616240392595936e-15
+                ],
+                "angular_velocity": [
+                  -1.890600414673373e-14,
+                  -4.332101530403928e-20,
+                  -1.658531747203485e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  3.580263440437482e-19,
+                  3.671531357324288e-17,
+                  1.7455792128552262e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -2.0987384901112263e-19,
+                  2.0658751897127552e-18,
+                  4.605351691870422e-15
+                ],
+                "angular_velocity": [
+                  -4.324472051092604e-17,
+                  -8.153740243711187e-17,
+                  -6.556170352053698e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002115499018305878,
+                  0.2689851938137835,
+                  0.4321921051647704
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.0016949951945791314,
+                  0.0016949940570028775,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  9.685775878197825e-18,
+                  3.36480060469946e-17,
+                  3.2813479801788323e-15
+                ],
+                "angular_velocity": [
+                  -1.4125616996646678e-15,
+                  -8.345918757506322e-15,
+                  -6.335474781553787e-18
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.00865609730923654,
+              -0.009156493706466871
+            ],
+            "eef_position": [
+              -0.055684294950143334,
+              -0.1590454169181681,
+              0.577983698506309
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "diagnostic_initial_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.09381556733200731,
+                  -0.1504204339883445,
+                  0.47516992249802875
+                ],
+                "quaternion": [
+                  -0.002413159348733635,
+                  0.0022847967751795815,
+                  0.7074549106978498,
+                  0.7067506672760572
+                ],
+                "linear_velocity": [
+                  -1.054533598127698e-05,
+                  -2.3593996921113917e-05,
+                  5.651429394809351e-05
+                ],
+                "angular_velocity": [
+                  -0.0006258750521146135,
+                  3.894586798273252e-06,
+                  -0.00027959386993909685
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000004
+                ],
+                "quaternion": [
+                  -1.3181533159272424e-20,
+                  4.518909990605476e-17,
+                  1.5200969631737494e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.0909735642005086e-20,
+                  1.881770927872556e-19,
+                  1.0891026564006564e-14
+                ],
+                "angular_velocity": [
+                  2.7882644903439485e-18,
+                  3.140994869360392e-17,
+                  3.8541853098662244e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705469,
+                  0.47516927848924284
+                ],
+                "quaternion": [
+                  -0.002467721697336025,
+                  0.002207037866739529,
+                  0.7074518281383775,
+                  0.7067538115901093
+                ],
+                "linear_velocity": [
+                  2.913177862198775e-15,
+                  2.6111346647247402e-15,
+                  1.2598863832258868e-14
+                ],
+                "angular_velocity": [
+                  6.709099256139686e-14,
+                  -3.773808800025467e-16,
+                  7.062878116929567e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26845985277513545,
+                  -0.1485742186185226,
+                  1.0510565774949703
+                ],
+                "quaternion": [
+                  0.500055356014252,
+                  0.49994460871699736,
+                  0.49981275850891765,
+                  0.5001872005239374
+                ],
+                "linear_velocity": [
+                  3.635442040161954e-05,
+                  0.00010020927500467978,
+                  -1.312049364696069
+                ],
+                "angular_velocity": [
+                  0.0004524938894910952,
+                  -5.195851224654296e-07,
+                  -0.00022360145523132914
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971297474187,
+                  -0.2592465338699187,
+                  0.888858890578431
+                ],
+                "quaternion": [
+                  0.5000431875489297,
+                  0.49995680885055,
+                  0.5000434337232796,
+                  0.4999565623732841
+                ],
+                "linear_velocity": [
+                  6.695392371079887e-06,
+                  -5.814399826311635e-05,
+                  -1.6284502411067387
+                ],
+                "angular_velocity": [
+                  -1.6603862319396689e-06,
+                  -2.352083761797126e-08,
+                  0.0002839415539289451
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926713923230257,
+                  -0.12140222389778298,
+                  0.8888588905776443
+                ],
+                "quaternion": [
+                  0.49995680885067734,
+                  0.5000431875488026,
+                  0.4999565623731524,
+                  0.5000434337234104
+                ],
+                "linear_velocity": [
+                  -6.695392358327992e-06,
+                  5.8143998264122876e-05,
+                  -1.628450241108266
+                ],
+                "angular_velocity": [
+                  1.6603862170057428e-06,
+                  -2.3520837399448145e-08,
+                  -0.00028394155392922433
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.44546992152000003
+                ],
+                "quaternion": [
+                  -5.666756303554149e-20,
+                  -3.929311323188711e-17,
+                  1.501792606606452e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.012851044210432e-20,
+                  6.065281338028623e-19,
+                  1.1541366154987607e-14
+                ],
+                "angular_velocity": [
+                  1.818087338770966e-17,
+                  3.515603537213904e-17,
+                  1.7776267651310002e-19
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002115499018305853,
+                  0.2689851938137835,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.00169499519457912,
+                  0.0016949940570028853,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  -8.646606420242749e-17,
+                  6.798710564565346e-17,
+                  1.0198509008262537e-14
+                ],
+                "angular_velocity": [
+                  1.9445892545848794e-14,
+                  -1.5337387634751088e-14,
+                  9.34938732410821e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.03872955881216562,
+              -0.038728775049055544
+            ],
+            "eef_position": [
+              -0.046135020786421725,
+              -0.0035664079120534026,
+              0.7020572213324064
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "diagnostic_final_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.08824825517491529,
+                  -0.14636793571473275,
+                  0.5451155892347344
+                ],
+                "quaternion": [
+                  -0.022522825273776522,
+                  0.2160386341305656,
+                  0.3763781903083914,
+                  0.9006439300660763
+                ],
+                "linear_velocity": [
+                  -0.05246586980434101,
+                  0.05887773902588689,
+                  -0.10137797027731589
+                ],
+                "angular_velocity": [
+                  -1.0023159778864368,
+                  -0.06013825405297308,
+                  -0.4489933169714549
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.4456959215200001
+                ],
+                "quaternion": [
+                  -6.437468494700464e-19,
+                  6.142274437436825e-17,
+                  1.460270602961027e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  2.40500033552123e-19,
+                  5.135514546358788e-20,
+                  3.955278125575504e-15
+                ],
+                "angular_velocity": [
+                  8.795450402779888e-18,
+                  -1.192916165928598e-17,
+                  -6.790248225267001e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084699998,
+                  0.055755485477044744,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.002467721697336528,
+                  0.0022070378667386715,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  -2.8831851535838632e-15,
+                  -1.5477696723881884e-15,
+                  1.3960249818305644e-15
+                ],
+                "angular_velocity": [
+                  -3.9395843018015714e-14,
+                  1.986344906334862e-16,
+                  -6.968680238343681e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518704,
+                  0.500000043045818
+                ],
+                "linear_velocity": [
+                  -3.108528271932956e-16,
+                  -2.845678755942795e-17,
+                  1.229726030289977e-14
+                ],
+                "angular_velocity": [
+                  -4.2672179886057904e-15,
+                  -1.2339760945311616e-18,
+                  4.435292288204614e-16
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009407995293018924,
+                  -0.25863138076814607,
+                  0.5065099215193675
+                ],
+                "quaternion": [
+                  0.5059635400538555,
+                  0.5059635390975405,
+                  0.493964469363086,
+                  0.49396446860771814
+                ],
+                "linear_velocity": [
+                  -3.0050001266656184e-15,
+                  6.296204834225254e-16,
+                  1.9427888270408288e-14
+                ],
+                "angular_velocity": [
+                  -4.3387321619199557e-14,
+                  -2.9962553332938374e-19,
+                  -8.233829253427102e-15
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003030897,
+                  -0.12138603670747229,
+                  0.5065099215193677
+                ],
+                "quaternion": [
+                  0.499999997369739,
+                  0.4999999983350491,
+                  0.5000000017756866,
+                  0.500000002519525
+                ],
+                "linear_velocity": [
+                  -1.320651105305814e-15,
+                  1.1614332062030987e-15,
+                  7.616240392595936e-15
+                ],
+                "angular_velocity": [
+                  -1.890600414673373e-14,
+                  -4.332101530403928e-20,
+                  -1.658531747203485e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  3.580263440437482e-19,
+                  3.671531357324288e-17,
+                  1.7455792128552262e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -2.0987384901112263e-19,
+                  2.0658751897127552e-18,
+                  4.605351691870422e-15
+                ],
+                "angular_velocity": [
+                  -4.324472051092604e-17,
+                  -8.153740243711187e-17,
+                  -6.556170352053698e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002115499018305878,
+                  0.2689851938137835,
+                  0.4321921051647704
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.0016949951945791314,
+                  0.0016949940570028775,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  9.685775878197825e-18,
+                  3.36480060469946e-17,
+                  3.2813479801788323e-15
+                ],
+                "angular_velocity": [
+                  -1.4125616996646678e-15,
+                  -8.345918757506322e-15,
+                  -6.335474781553787e-18
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.00865609730923654,
+              -0.009156493706466871
+            ],
+            "eef_position": [
+              -0.055684294950143334,
+              -0.1590454169181681,
+              0.577983698506309
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "object_displacement_m": {
+            "alphabet_soup_1": 0.07028381038442934,
+            "cream_cheese_1": 5.551115123125783e-17,
+            "tomato_sauce_1": 1.0136983057942755e-14,
+            "ketchup_1": 0.5418766572061889,
+            "orange_juice_1": 0.38234987885863736,
+            "milk_1": 0.3823489694015141,
+            "butter_1": 5.551115123125783e-17,
+            "basket_1": 6.076641255126911e-17
+          },
+          "per_action_latency": {
+            "unit": "seconds",
+            "includes_queue_hit_steps": true,
+            "n_finite_samples": 300,
+            "n_null_or_nonfinite": 0,
+            "mean": 0.15139433092333243,
+            "median": 0.14683749150003678,
+            "p95_nearest_rank": 0.18465499499995985
+          },
+          "diagnostic_errors": 0,
+          "diagnostic_nulls": 0,
+          "native_benchmark_success_ever": false,
+          "native_benchmark_success_final": false,
+          "validation": {
+            "n_rows_matches_steps": true,
+            "final_snapshot_matches_raw_last_row": true
+          }
+        }
+      ]
+    },
+    {
+      "trial_id": "soup_fresh_fp32_h5_0-0_79212887",
+      "profile": "fp32_h5",
+      "condition": "soup_fresh",
+      "pair": "0:0",
+      "seed": 0,
+      "init_state_index": 0,
+      "scene_id": "basket_two",
+      "source_git_sha": "4357b61e11f1000ee1bf1b5121460219c77485d1",
+      "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+      "initial_state_hash": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+      "task_success": false,
+      "strict_task_success": false,
+      "native_benchmark_success": false,
+      "physical_failures": [
+        "budget_exhausted: job=e2f9c694c5274991a3fd0ebc40c988fd capability=soup_to_basket"
+      ],
+      "null_metrics": [],
+      "trial_wall_s": 62.696,
+      "jobs": [
+        {
+          "job_id": "e2f9c694c5274991a3fd0ebc40c988fd",
+          "job": {
+            "state": "completed",
+            "error": null,
+            "ended_reason": "budget_exhausted",
+            "success": false,
+            "steps": 300,
+            "total_steps": 300,
+            "wall_s": 59.18,
+            "capability_id": "soup_to_basket",
+            "request_id": "soup_fresh_fp32_h5_0-0_79212887-plan1",
+            "session_id": "7b5f9cabf28b421b9e2fafa9c6e1aaf0"
+          },
+          "telemetry_path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/screening_runs/20261006T173657Z_basket_two_7b5f9cab/cap_01_soup_to_basket_e2f9c694/telemetry.jsonl",
+          "telemetry_read_error": null,
+          "n_rows": 300,
+          "gripper_action_counts_all": {
+            "negative": 82,
+            "zero": 0,
+            "positive": 218,
+            "null": 0
+          },
+          "gripper_action_counts_last20": {
+            "negative": 2,
+            "zero": 0,
+            "positive": 18,
+            "null": 0
+          },
+          "grasp_counts_all": {
+            "alphabet_soup_1": {
+              "true": 207,
+              "false": 93,
+              "null": 0
+            },
+            "basket_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "butter_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "cream_cheese_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "ketchup_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "milk_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "orange_juice_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "tomato_sauce_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            }
+          },
+          "grasp_counts_last20": {
+            "alphabet_soup_1": {
+              "true": 20,
+              "false": 0,
+              "null": 0
+            },
+            "basket_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "butter_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "cream_cheese_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "ketchup_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "milk_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "orange_juice_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "tomato_sauce_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            }
+          },
+          "phase_counts_all": {
+            "in|alphabet_soup_1|basket_1_contain_region": {
+              "ungrasped": 93,
+              "transporting": 207
+            }
+          },
+          "phase_counts_last20": {
+            "in|alphabet_soup_1|basket_1_contain_region": {
+              "transporting": 20
+            }
+          },
+          "native_predicate_true_counts_all": {
+            "in|alphabet_soup_1|basket_1_contain_region": 0
+          },
+          "native_predicate_true_counts_last20": {
+            "in|alphabet_soup_1|basket_1_contain_region": 0
+          },
+          "native_benchmark_success_counts": {
+            "true": 0,
+            "false": 300,
+            "null": 0
+          },
+          "strict_candidate_counts": {
+            "true": 0,
+            "false": 300,
+            "null": 0
+          },
+          "max_consecutive_true_strict_streak": 0,
+          "last_five_fixed_oracle_strict_flags": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  0.02494527095710558,
+                  0.1305141324524467,
+                  0.646921755481846
+                ],
+                "quaternion": [
+                  0.2660098232419288,
+                  0.260048768307315,
+                  0.5672333228857745,
+                  0.7347515018348783
+                ],
+                "linear_velocity": [
+                  0.0010569781924937584,
+                  0.029022937962878036,
+                  0.04012226345516132
+                ],
+                "angular_velocity": [
+                  -0.04119146454629141,
+                  -0.11756537928409275,
+                  -0.019667531785258298
+                ],
+                "grasped": true,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.4456959215200001
+                ],
+                "quaternion": [
+                  5.167776874005943e-19,
+                  3.284597546853312e-17,
+                  1.9118098944300003e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.4337075046239687e-19,
+                  -2.450619588998704e-20,
+                  3.9507976679278484e-15
+                ],
+                "angular_velocity": [
+                  -1.263426204181456e-16,
+                  1.680181709922732e-16,
+                  1.8265923029451256e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084699995,
+                  0.05575548547704915,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.0024677216973362642,
+                  0.002207037866738945,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  1.0588540636974923e-15,
+                  -9.86051980380173e-16,
+                  4.659811800178505e-15
+                ],
+                "angular_velocity": [
+                  -2.6515967439416363e-14,
+                  1.9335553927389576e-16,
+                  2.2225917109889164e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518704,
+                  0.500000043045818
+                ],
+                "linear_velocity": [
+                  -3.1000590213643287e-16,
+                  -2.989924529054474e-17,
+                  1.229728901432154e-14
+                ],
+                "angular_velocity": [
+                  -4.322688449234931e-15,
+                  5.359451847722021e-19,
+                  2.7166782079674116e-16
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676216257,
+                  -0.25926272106022036,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999983350491,
+                  0.49999999736973916,
+                  0.5000000025195247,
+                  0.5000000017756859
+                ],
+                "linear_velocity": [
+                  -3.471385403637825e-15,
+                  -1.8464268028026967e-15,
+                  9.15968752254193e-15
+                ],
+                "angular_velocity": [
+                  -4.968150708629037e-14,
+                  2.3928118389319542e-19,
+                  2.6440411007083432e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003031109,
+                  -0.12138603670747229,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999973697391,
+                  0.499999998335049,
+                  0.5000000017756865,
+                  0.5000000025195251
+                ],
+                "linear_velocity": [
+                  2.7867739886868675e-15,
+                  1.1609092578289401e-15,
+                  2.130709105063342e-14
+                ],
+                "angular_velocity": [
+                  3.997826899471407e-14,
+                  -9.19266660290368e-20,
+                  -1.6694286029313643e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  1.2819916221858118e-18,
+                  5.914044628804691e-17,
+                  1.6802314727880248e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.6149892887894848e-20,
+                  1.140882795173101e-19,
+                  4.602707385937093e-15
+                ],
+                "angular_velocity": [
+                  -1.1616092206358798e-17,
+                  -2.1131823454730515e-18,
+                  -2.36790223341227e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  0.0018383374802108836,
+                  0.2637952244139193,
+                  0.4321921051647703
+                ],
+                "quaternion": [
+                  0.730301363638768,
+                  -0.0016375036970987355,
+                  0.0017505985276211878,
+                  0.6831209060289365
+                ],
+                "linear_velocity": [
+                  -2.8673864968170695e-17,
+                  -5.552206068765568e-17,
+                  1.179446258263876e-14
+                ],
+                "angular_velocity": [
+                  5.574038732924553e-15,
+                  1.2452241064346384e-14,
+                  2.6876856232421323e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [
+              "alphabet_soup_1"
+            ],
+            "gripper_qpos": [
+              0.03784632730531374,
+              -0.02505599761859535
+            ],
+            "eef_position": [
+              0.021721178705846236,
+              0.13364430696933755,
+              0.660112016729692
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "transporting"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "final_fixed_oracle_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  0.02494527095710558,
+                  0.1305141324524467,
+                  0.646921755481846
+                ],
+                "quaternion": [
+                  0.2660098232419288,
+                  0.260048768307315,
+                  0.5672333228857745,
+                  0.7347515018348783
+                ],
+                "linear_velocity": [
+                  0.0010569781924937584,
+                  0.029022937962878036,
+                  0.04012226345516132
+                ],
+                "angular_velocity": [
+                  -0.04119146454629141,
+                  -0.11756537928409275,
+                  -0.019667531785258298
+                ],
+                "grasped": true,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.4456959215200001
+                ],
+                "quaternion": [
+                  5.167776874005943e-19,
+                  3.284597546853312e-17,
+                  1.9118098944300003e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.4337075046239687e-19,
+                  -2.450619588998704e-20,
+                  3.9507976679278484e-15
+                ],
+                "angular_velocity": [
+                  -1.263426204181456e-16,
+                  1.680181709922732e-16,
+                  1.8265923029451256e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084699995,
+                  0.05575548547704915,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.0024677216973362642,
+                  0.002207037866738945,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  1.0588540636974923e-15,
+                  -9.86051980380173e-16,
+                  4.659811800178505e-15
+                ],
+                "angular_velocity": [
+                  -2.6515967439416363e-14,
+                  1.9335553927389576e-16,
+                  2.2225917109889164e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518704,
+                  0.500000043045818
+                ],
+                "linear_velocity": [
+                  -3.1000590213643287e-16,
+                  -2.989924529054474e-17,
+                  1.229728901432154e-14
+                ],
+                "angular_velocity": [
+                  -4.322688449234931e-15,
+                  5.359451847722021e-19,
+                  2.7166782079674116e-16
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676216257,
+                  -0.25926272106022036,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999983350491,
+                  0.49999999736973916,
+                  0.5000000025195247,
+                  0.5000000017756859
+                ],
+                "linear_velocity": [
+                  -3.471385403637825e-15,
+                  -1.8464268028026967e-15,
+                  9.15968752254193e-15
+                ],
+                "angular_velocity": [
+                  -4.968150708629037e-14,
+                  2.3928118389319542e-19,
+                  2.6440411007083432e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003031109,
+                  -0.12138603670747229,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999973697391,
+                  0.499999998335049,
+                  0.5000000017756865,
+                  0.5000000025195251
+                ],
+                "linear_velocity": [
+                  2.7867739886868675e-15,
+                  1.1609092578289401e-15,
+                  2.130709105063342e-14
+                ],
+                "angular_velocity": [
+                  3.997826899471407e-14,
+                  -9.19266660290368e-20,
+                  -1.6694286029313643e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  1.2819916221858118e-18,
+                  5.914044628804691e-17,
+                  1.6802314727880248e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.6149892887894848e-20,
+                  1.140882795173101e-19,
+                  4.602707385937093e-15
+                ],
+                "angular_velocity": [
+                  -1.1616092206358798e-17,
+                  -2.1131823454730515e-18,
+                  -2.36790223341227e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  0.0018383374802108836,
+                  0.2637952244139193,
+                  0.4321921051647703
+                ],
+                "quaternion": [
+                  0.730301363638768,
+                  -0.0016375036970987355,
+                  0.0017505985276211878,
+                  0.6831209060289365
+                ],
+                "linear_velocity": [
+                  -2.8673864968170695e-17,
+                  -5.552206068765568e-17,
+                  1.179446258263876e-14
+                ],
+                "angular_velocity": [
+                  5.574038732924553e-15,
+                  1.2452241064346384e-14,
+                  2.6876856232421323e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [
+              "alphabet_soup_1"
+            ],
+            "gripper_qpos": [
+              0.03784632730531374,
+              -0.02505599761859535
+            ],
+            "eef_position": [
+              0.021721178705846236,
+              0.13364430696933755,
+              0.660112016729692
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "transporting"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "diagnostic_initial_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.09381556733200731,
+                  -0.1504204339883445,
+                  0.47516992249802875
+                ],
+                "quaternion": [
+                  -0.002413159348733635,
+                  0.0022847967751795815,
+                  0.7074549106978498,
+                  0.7067506672760572
+                ],
+                "linear_velocity": [
+                  -1.054533598127698e-05,
+                  -2.3593996921113917e-05,
+                  5.651429394809351e-05
+                ],
+                "angular_velocity": [
+                  -0.0006258750521146135,
+                  3.894586798273252e-06,
+                  -0.00027959386993909685
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000004
+                ],
+                "quaternion": [
+                  -1.3181533159272424e-20,
+                  4.518909990605476e-17,
+                  1.5200969631737494e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.0909735642005086e-20,
+                  1.881770927872556e-19,
+                  1.0891026564006564e-14
+                ],
+                "angular_velocity": [
+                  2.7882644903439485e-18,
+                  3.140994869360392e-17,
+                  3.8541853098662244e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705469,
+                  0.47516927848924284
+                ],
+                "quaternion": [
+                  -0.002467721697336025,
+                  0.002207037866739529,
+                  0.7074518281383775,
+                  0.7067538115901093
+                ],
+                "linear_velocity": [
+                  2.913177862198775e-15,
+                  2.6111346647247402e-15,
+                  1.2598863832258868e-14
+                ],
+                "angular_velocity": [
+                  6.709099256139686e-14,
+                  -3.773808800025467e-16,
+                  7.062878116929567e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26845985277513545,
+                  -0.1485742186185226,
+                  1.0510565774949703
+                ],
+                "quaternion": [
+                  0.500055356014252,
+                  0.49994460871699736,
+                  0.49981275850891765,
+                  0.5001872005239374
+                ],
+                "linear_velocity": [
+                  3.635442040161954e-05,
+                  0.00010020927500467978,
+                  -1.312049364696069
+                ],
+                "angular_velocity": [
+                  0.0004524938894910952,
+                  -5.195851224654296e-07,
+                  -0.00022360145523132914
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971297474187,
+                  -0.2592465338699187,
+                  0.888858890578431
+                ],
+                "quaternion": [
+                  0.5000431875489297,
+                  0.49995680885055,
+                  0.5000434337232796,
+                  0.4999565623732841
+                ],
+                "linear_velocity": [
+                  6.695392371079887e-06,
+                  -5.814399826311635e-05,
+                  -1.6284502411067387
+                ],
+                "angular_velocity": [
+                  -1.6603862319396689e-06,
+                  -2.352083761797126e-08,
+                  0.0002839415539289451
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926713923230257,
+                  -0.12140222389778298,
+                  0.8888588905776443
+                ],
+                "quaternion": [
+                  0.49995680885067734,
+                  0.5000431875488026,
+                  0.4999565623731524,
+                  0.5000434337234104
+                ],
+                "linear_velocity": [
+                  -6.695392358327992e-06,
+                  5.8143998264122876e-05,
+                  -1.628450241108266
+                ],
+                "angular_velocity": [
+                  1.6603862170057428e-06,
+                  -2.3520837399448145e-08,
+                  -0.00028394155392922433
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.44546992152000003
+                ],
+                "quaternion": [
+                  -5.666756303554149e-20,
+                  -3.929311323188711e-17,
+                  1.501792606606452e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.012851044210432e-20,
+                  6.065281338028623e-19,
+                  1.1541366154987607e-14
+                ],
+                "angular_velocity": [
+                  1.818087338770966e-17,
+                  3.515603537213904e-17,
+                  1.7776267651310002e-19
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002115499018305853,
+                  0.2689851938137835,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.00169499519457912,
+                  0.0016949940570028853,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  -8.646606420242749e-17,
+                  6.798710564565346e-17,
+                  1.0198509008262537e-14
+                ],
+                "angular_velocity": [
+                  1.9445892545848794e-14,
+                  -1.5337387634751088e-14,
+                  9.34938732410821e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.03872955881216562,
+              -0.038728775049055544
+            ],
+            "eef_position": [
+              -0.046135020786421725,
+              -0.0035664079120534026,
+              0.7020572213324064
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "diagnostic_final_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  0.02494527095710558,
+                  0.1305141324524467,
+                  0.646921755481846
+                ],
+                "quaternion": [
+                  0.2660098232419288,
+                  0.260048768307315,
+                  0.5672333228857745,
+                  0.7347515018348783
+                ],
+                "linear_velocity": [
+                  0.0010569781924937584,
+                  0.029022937962878036,
+                  0.04012226345516132
+                ],
+                "angular_velocity": [
+                  -0.04119146454629141,
+                  -0.11756537928409275,
+                  -0.019667531785258298
+                ],
+                "grasped": true,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.4456959215200001
+                ],
+                "quaternion": [
+                  5.167776874005943e-19,
+                  3.284597546853312e-17,
+                  1.9118098944300003e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.4337075046239687e-19,
+                  -2.450619588998704e-20,
+                  3.9507976679278484e-15
+                ],
+                "angular_velocity": [
+                  -1.263426204181456e-16,
+                  1.680181709922732e-16,
+                  1.8265923029451256e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084699995,
+                  0.05575548547704915,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.0024677216973362642,
+                  0.002207037866738945,
+                  0.7074518281383777,
+                  0.7067538115901091
+                ],
+                "linear_velocity": [
+                  1.0588540636974923e-15,
+                  -9.86051980380173e-16,
+                  4.659811800178505e-15
+                ],
+                "angular_velocity": [
+                  -2.6515967439416363e-14,
+                  1.9335553927389576e-16,
+                  2.2225917109889164e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.4999999583020072,
+                  0.4999999585002978,
+                  0.5000000401518704,
+                  0.500000043045818
+                ],
+                "linear_velocity": [
+                  -3.1000590213643287e-16,
+                  -2.989924529054474e-17,
+                  1.229728901432154e-14
+                ],
+                "angular_velocity": [
+                  -4.322688449234931e-15,
+                  5.359451847722021e-19,
+                  2.7166782079674116e-16
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676216257,
+                  -0.25926272106022036,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999983350491,
+                  0.49999999736973916,
+                  0.5000000025195247,
+                  0.5000000017756859
+                ],
+                "linear_velocity": [
+                  -3.471385403637825e-15,
+                  -1.8464268028026967e-15,
+                  9.15968752254193e-15
+                ],
+                "angular_velocity": [
+                  -4.968150708629037e-14,
+                  2.3928118389319542e-19,
+                  2.6440411007083432e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926647003031109,
+                  -0.12138603670747229,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.4999999973697391,
+                  0.499999998335049,
+                  0.5000000017756865,
+                  0.5000000025195251
+                ],
+                "linear_velocity": [
+                  2.7867739886868675e-15,
+                  1.1609092578289401e-15,
+                  2.130709105063342e-14
+                ],
+                "angular_velocity": [
+                  3.997826899471407e-14,
+                  -9.19266660290368e-20,
+                  -1.6694286029313643e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.4454699215200001
+                ],
+                "quaternion": [
+                  1.2819916221858118e-18,
+                  5.914044628804691e-17,
+                  1.6802314727880248e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.6149892887894848e-20,
+                  1.140882795173101e-19,
+                  4.602707385937093e-15
+                ],
+                "angular_velocity": [
+                  -1.1616092206358798e-17,
+                  -2.1131823454730515e-18,
+                  -2.36790223341227e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  0.0018383374802108836,
+                  0.2637952244139193,
+                  0.4321921051647703
+                ],
+                "quaternion": [
+                  0.730301363638768,
+                  -0.0016375036970987355,
+                  0.0017505985276211878,
+                  0.6831209060289365
+                ],
+                "linear_velocity": [
+                  -2.8673864968170695e-17,
+                  -5.552206068765568e-17,
+                  1.179446258263876e-14
+                ],
+                "angular_velocity": [
+                  5.574038732924553e-15,
+                  1.2452241064346384e-14,
+                  2.6876856232421323e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [
+              "alphabet_soup_1"
+            ],
+            "gripper_qpos": [
+              0.03784632730531374,
+              -0.02505599761859535
+            ],
+            "eef_position": [
+              0.021721178705846236,
+              0.13364430696933755,
+              0.660112016729692
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "transporting"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "object_displacement_m": {
+            "alphabet_soup_1": 0.3500386542450836,
+            "cream_cheese_1": 5.551115123125783e-17,
+            "tomato_sauce_1": 5.887077978779593e-15,
+            "ketchup_1": 0.5418766572061889,
+            "orange_juice_1": 0.3823489694023009,
+            "milk_1": 0.3823489694015142,
+            "butter_1": 5.551115123125783e-17,
+            "basket_1": 0.0065244620796300135
+          },
+          "per_action_latency": {
+            "unit": "seconds",
+            "includes_queue_hit_steps": true,
+            "n_finite_samples": 300,
+            "n_null_or_nonfinite": 0,
+            "mean": 0.09630975106666749,
+            "median": 0.004726420999986658,
+            "p95_nearest_rank": 0.48047532299995055
+          },
+          "diagnostic_errors": 0,
+          "diagnostic_nulls": 0,
+          "native_benchmark_success_ever": false,
+          "native_benchmark_success_final": false,
+          "validation": {
+            "n_rows_matches_steps": true,
+            "final_snapshot_matches_raw_last_row": true
+          }
+        }
+      ]
+    },
+    {
+      "trial_id": "soup_fresh_fp32_d1_h5_0-0_0e2f9433",
+      "profile": "fp32_d1_h5",
+      "condition": "soup_fresh",
+      "pair": "0:0",
+      "seed": 0,
+      "init_state_index": 0,
+      "scene_id": "basket_two",
+      "source_git_sha": "4357b61e11f1000ee1bf1b5121460219c77485d1",
+      "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+      "initial_state_hash": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+      "task_success": false,
+      "strict_task_success": false,
+      "native_benchmark_success": false,
+      "physical_failures": [
+        "budget_exhausted: job=266fa58d01a34014b4fc0b71aea75ab4 capability=soup_to_basket"
+      ],
+      "null_metrics": [],
+      "trial_wall_s": 41.848,
+      "jobs": [
+        {
+          "job_id": "266fa58d01a34014b4fc0b71aea75ab4",
+          "job": {
+            "state": "completed",
+            "error": null,
+            "ended_reason": "budget_exhausted",
+            "success": false,
+            "steps": 300,
+            "total_steps": 300,
+            "wall_s": 37.829,
+            "capability_id": "soup_to_basket",
+            "request_id": "soup_fresh_fp32_d1_h5_0-0_0e2f9433-plan1",
+            "session_id": "ddace21e00384caa9952bb2e625e5e56"
+          },
+          "telemetry_path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/screening_runs/20261006T173803Z_basket_two_ddace21e/cap_01_soup_to_basket_266fa58d/telemetry.jsonl",
+          "telemetry_read_error": null,
+          "n_rows": 300,
+          "gripper_action_counts_all": {
+            "negative": 300,
+            "zero": 0,
+            "positive": 0,
+            "null": 0
+          },
+          "gripper_action_counts_last20": {
+            "negative": 20,
+            "zero": 0,
+            "positive": 0,
+            "null": 0
+          },
+          "grasp_counts_all": {
+            "alphabet_soup_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "basket_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "butter_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "cream_cheese_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "ketchup_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "milk_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "orange_juice_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            },
+            "tomato_sauce_1": {
+              "true": 0,
+              "false": 300,
+              "null": 0
+            }
+          },
+          "grasp_counts_last20": {
+            "alphabet_soup_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "basket_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "butter_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "cream_cheese_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "ketchup_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "milk_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "orange_juice_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            },
+            "tomato_sauce_1": {
+              "true": 0,
+              "false": 20,
+              "null": 0
+            }
+          },
+          "phase_counts_all": {
+            "in|alphabet_soup_1|basket_1_contain_region": {
+              "ungrasped": 300
+            }
+          },
+          "phase_counts_last20": {
+            "in|alphabet_soup_1|basket_1_contain_region": {
+              "ungrasped": 20
+            }
+          },
+          "native_predicate_true_counts_all": {
+            "in|alphabet_soup_1|basket_1_contain_region": 0
+          },
+          "native_predicate_true_counts_last20": {
+            "in|alphabet_soup_1|basket_1_contain_region": 0
+          },
+          "native_benchmark_success_counts": {
+            "true": 0,
+            "false": 300,
+            "null": 0
+          },
+          "strict_candidate_counts": {
+            "true": 0,
+            "false": 300,
+            "null": 0
+          },
+          "max_consecutive_true_strict_streak": 0,
+          "last_five_fixed_oracle_strict_flags": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "final_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.0981095917428802,
+                  -0.1972392973581642,
+                  0.4877050818864843
+                ],
+                "quaternion": [
+                  -0.1725195675862557,
+                  -0.09634026931233487,
+                  0.31210499954219545,
+                  0.9292717689510666
+                ],
+                "linear_velocity": [
+                  -0.012809301817280133,
+                  -0.006994303171800451,
+                  0.0006968907365136181
+                ],
+                "angular_velocity": [
+                  -0.06375403447495717,
+                  0.4080901087591733,
+                  -0.010206146699233283
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000015
+                ],
+                "quaternion": [
+                  -4.19065929387283e-20,
+                  -5.251687327949406e-17,
+                  1.0759793462785696e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.1277837850060224e-19,
+                  -6.127055225830056e-20,
+                  -2.987190999326813e-15
+                ],
+                "angular_velocity": [
+                  -2.3929916464398236e-16,
+                  1.3584890594763144e-16,
+                  8.077945306706495e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700189,
+                  0.0557554854770541,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.0024677216973359776,
+                  0.0022070378667392344,
+                  0.7074518281383778,
+                  0.706753811590109
+                ],
+                "linear_velocity": [
+                  -9.967366260662444e-16,
+                  -2.9016124401382934e-15,
+                  2.7892919057589702e-15
+                ],
+                "angular_velocity": [
+                  -7.552748083998907e-14,
+                  4.741066791939345e-16,
+                  -2.5708315132128915e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.49999995830200716,
+                  0.4999999585002979,
+                  0.5000000401518705,
+                  0.5000000430458181
+                ],
+                "linear_velocity": [
+                  -1.3160571741711394e-15,
+                  9.773699862767175e-16,
+                  1.4738152152998595e-14
+                ],
+                "angular_velocity": [
+                  -1.8130731330970324e-14,
+                  -9.254494240989212e-19,
+                  -1.3478809326169236e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676233165,
+                  -0.25926272106022036,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.49999999833504905,
+                  0.4999999973697392,
+                  0.5000000025195248,
+                  0.5000000017756862
+                ],
+                "linear_velocity": [
+                  -2.1020659022243687e-15,
+                  -4.769452222181179e-16,
+                  1.9565328153549485e-14
+                ],
+                "angular_velocity": [
+                  -3.013783114627094e-14,
+                  8.56450030446016e-21,
+                  6.821075458716615e-15
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.049266470030300186,
+                  -0.12138603670747229,
+                  0.5065099215193677
+                ],
+                "quaternion": [
+                  0.49999999736973905,
+                  0.49999999833504905,
+                  0.5000000017756867,
+                  0.5000000025195253
+                ],
+                "linear_velocity": [
+                  4.87049709545916e-17,
+                  1.1598906718010447e-15,
+                  9.860097857063902e-15
+                ],
+                "angular_velocity": [
+                  6.699482798748811e-16,
+                  1.176586310115268e-19,
+                  -1.6634639217734002e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.44546992152000014
+                ],
+                "quaternion": [
+                  9.298445077754301e-20,
+                  -4.181428725641523e-17,
+                  1.1578573690344036e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.401460000169112e-20,
+                  4.606591388326543e-21,
+                  -2.3333070771800473e-15
+                ],
+                "angular_velocity": [
+                  -1.3867738885713963e-16,
+                  -4.2996762343836454e-17,
+                  1.596658193885176e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.0021154990183058987,
+                  0.2689851938137835,
+                  0.43219210516477047
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.0016949951945791455,
+                  0.001694994057002879,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  3.772391603144091e-17,
+                  -5.2362610356058126e-17,
+                  -3.605928723574811e-15
+                ],
+                "angular_velocity": [
+                  -8.306083222796414e-15,
+                  1.2369457307647469e-14,
+                  -3.987010722819054e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.04000893386047055,
+              -0.040105980705853986
+            ],
+            "eef_position": [
+              -0.09812735012254722,
+              -0.19555345748050956,
+              0.5033690573257471
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "final_fixed_oracle_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.0981095917428802,
+                  -0.1972392973581642,
+                  0.4877050818864843
+                ],
+                "quaternion": [
+                  -0.1725195675862557,
+                  -0.09634026931233487,
+                  0.31210499954219545,
+                  0.9292717689510666
+                ],
+                "linear_velocity": [
+                  -0.012809301817280133,
+                  -0.006994303171800451,
+                  0.0006968907365136181
+                ],
+                "angular_velocity": [
+                  -0.06375403447495717,
+                  0.4080901087591733,
+                  -0.010206146699233283
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000015
+                ],
+                "quaternion": [
+                  -4.19065929387283e-20,
+                  -5.251687327949406e-17,
+                  1.0759793462785696e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.1277837850060224e-19,
+                  -6.127055225830056e-20,
+                  -2.987190999326813e-15
+                ],
+                "angular_velocity": [
+                  -2.3929916464398236e-16,
+                  1.3584890594763144e-16,
+                  8.077945306706495e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700189,
+                  0.0557554854770541,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.0024677216973359776,
+                  0.0022070378667392344,
+                  0.7074518281383778,
+                  0.706753811590109
+                ],
+                "linear_velocity": [
+                  -9.967366260662444e-16,
+                  -2.9016124401382934e-15,
+                  2.7892919057589702e-15
+                ],
+                "angular_velocity": [
+                  -7.552748083998907e-14,
+                  4.741066791939345e-16,
+                  -2.5708315132128915e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.49999995830200716,
+                  0.4999999585002979,
+                  0.5000000401518705,
+                  0.5000000430458181
+                ],
+                "linear_velocity": [
+                  -1.3160571741711394e-15,
+                  9.773699862767175e-16,
+                  1.4738152152998595e-14
+                ],
+                "angular_velocity": [
+                  -1.8130731330970324e-14,
+                  -9.254494240989212e-19,
+                  -1.3478809326169236e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676233165,
+                  -0.25926272106022036,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.49999999833504905,
+                  0.4999999973697392,
+                  0.5000000025195248,
+                  0.5000000017756862
+                ],
+                "linear_velocity": [
+                  -2.1020659022243687e-15,
+                  -4.769452222181179e-16,
+                  1.9565328153549485e-14
+                ],
+                "angular_velocity": [
+                  -3.013783114627094e-14,
+                  8.56450030446016e-21,
+                  6.821075458716615e-15
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.049266470030300186,
+                  -0.12138603670747229,
+                  0.5065099215193677
+                ],
+                "quaternion": [
+                  0.49999999736973905,
+                  0.49999999833504905,
+                  0.5000000017756867,
+                  0.5000000025195253
+                ],
+                "linear_velocity": [
+                  4.87049709545916e-17,
+                  1.1598906718010447e-15,
+                  9.860097857063902e-15
+                ],
+                "angular_velocity": [
+                  6.699482798748811e-16,
+                  1.176586310115268e-19,
+                  -1.6634639217734002e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.44546992152000014
+                ],
+                "quaternion": [
+                  9.298445077754301e-20,
+                  -4.181428725641523e-17,
+                  1.1578573690344036e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.401460000169112e-20,
+                  4.606591388326543e-21,
+                  -2.3333070771800473e-15
+                ],
+                "angular_velocity": [
+                  -1.3867738885713963e-16,
+                  -4.2996762343836454e-17,
+                  1.596658193885176e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.0021154990183058987,
+                  0.2689851938137835,
+                  0.43219210516477047
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.0016949951945791455,
+                  0.001694994057002879,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  3.772391603144091e-17,
+                  -5.2362610356058126e-17,
+                  -3.605928723574811e-15
+                ],
+                "angular_velocity": [
+                  -8.306083222796414e-15,
+                  1.2369457307647469e-14,
+                  -3.987010722819054e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.04000893386047055,
+              -0.040105980705853986
+            ],
+            "eef_position": [
+              -0.09812735012254722,
+              -0.19555345748050956,
+              0.5033690573257471
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "diagnostic_initial_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.09381556733200731,
+                  -0.1504204339883445,
+                  0.47516992249802875
+                ],
+                "quaternion": [
+                  -0.002413159348733635,
+                  0.0022847967751795815,
+                  0.7074549106978498,
+                  0.7067506672760572
+                ],
+                "linear_velocity": [
+                  -1.054533598127698e-05,
+                  -2.3593996921113917e-05,
+                  5.651429394809351e-05
+                ],
+                "angular_velocity": [
+                  -0.0006258750521146135,
+                  3.894586798273252e-06,
+                  -0.00027959386993909685
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000004
+                ],
+                "quaternion": [
+                  -1.3181533159272424e-20,
+                  4.518909990605476e-17,
+                  1.5200969631737494e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.0909735642005086e-20,
+                  1.881770927872556e-19,
+                  1.0891026564006564e-14
+                ],
+                "angular_velocity": [
+                  2.7882644903439485e-18,
+                  3.140994869360392e-17,
+                  3.8541853098662244e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700195,
+                  0.05575548547705469,
+                  0.47516927848924284
+                ],
+                "quaternion": [
+                  -0.002467721697336025,
+                  0.002207037866739529,
+                  0.7074518281383775,
+                  0.7067538115901093
+                ],
+                "linear_velocity": [
+                  2.913177862198775e-15,
+                  2.6111346647247402e-15,
+                  1.2598863832258868e-14
+                ],
+                "angular_velocity": [
+                  6.709099256139686e-14,
+                  -3.773808800025467e-16,
+                  7.062878116929567e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26845985277513545,
+                  -0.1485742186185226,
+                  1.0510565774949703
+                ],
+                "quaternion": [
+                  0.500055356014252,
+                  0.49994460871699736,
+                  0.49981275850891765,
+                  0.5001872005239374
+                ],
+                "linear_velocity": [
+                  3.635442040161954e-05,
+                  0.00010020927500467978,
+                  -1.312049364696069
+                ],
+                "angular_velocity": [
+                  0.0004524938894910952,
+                  -5.195851224654296e-07,
+                  -0.00022360145523132914
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971297474187,
+                  -0.2592465338699187,
+                  0.888858890578431
+                ],
+                "quaternion": [
+                  0.5000431875489297,
+                  0.49995680885055,
+                  0.5000434337232796,
+                  0.4999565623732841
+                ],
+                "linear_velocity": [
+                  6.695392371079887e-06,
+                  -5.814399826311635e-05,
+                  -1.6284502411067387
+                ],
+                "angular_velocity": [
+                  -1.6603862319396689e-06,
+                  -2.352083761797126e-08,
+                  0.0002839415539289451
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.04926713923230257,
+                  -0.12140222389778298,
+                  0.8888588905776443
+                ],
+                "quaternion": [
+                  0.49995680885067734,
+                  0.5000431875488026,
+                  0.4999565623731524,
+                  0.5000434337234104
+                ],
+                "linear_velocity": [
+                  -6.695392358327992e-06,
+                  5.8143998264122876e-05,
+                  -1.628450241108266
+                ],
+                "angular_velocity": [
+                  1.6603862170057428e-06,
+                  -2.3520837399448145e-08,
+                  -0.00028394155392922433
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.44546992152000003
+                ],
+                "quaternion": [
+                  -5.666756303554149e-20,
+                  -3.929311323188711e-17,
+                  1.501792606606452e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  3.012851044210432e-20,
+                  6.065281338028623e-19,
+                  1.1541366154987607e-14
+                ],
+                "angular_velocity": [
+                  1.818087338770966e-17,
+                  3.515603537213904e-17,
+                  1.7776267651310002e-19
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.002115499018305853,
+                  0.2689851938137835,
+                  0.43219210516477036
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.00169499519457912,
+                  0.0016949940570028853,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  -8.646606420242749e-17,
+                  6.798710564565346e-17,
+                  1.0198509008262537e-14
+                ],
+                "angular_velocity": [
+                  1.9445892545848794e-14,
+                  -1.5337387634751088e-14,
+                  9.34938732410821e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.03872955881216562,
+              -0.038728775049055544
+            ],
+            "eef_position": [
+              -0.046135020786421725,
+              -0.0035664079120534026,
+              0.7020572213324064
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "diagnostic_final_snapshot": {
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": false
+            },
+            "objects": {
+              "alphabet_soup_1": {
+                "position": [
+                  -0.0981095917428802,
+                  -0.1972392973581642,
+                  0.4877050818864843
+                ],
+                "quaternion": [
+                  -0.1725195675862557,
+                  -0.09634026931233487,
+                  0.31210499954219545,
+                  0.9292717689510666
+                ],
+                "linear_velocity": [
+                  -0.012809301817280133,
+                  -0.006994303171800451,
+                  0.0006968907365136181
+                ],
+                "angular_velocity": [
+                  -0.06375403447495717,
+                  0.4080901087591733,
+                  -0.010206146699233283
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "cream_cheese_1": {
+                "position": [
+                  0.07851475615653067,
+                  -0.19384593250156518,
+                  0.44569592152000015
+                ],
+                "quaternion": [
+                  -4.19065929387283e-20,
+                  -5.251687327949406e-17,
+                  1.0759793462785696e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.1277837850060224e-19,
+                  -6.127055225830056e-20,
+                  -2.987190999326813e-15
+                ],
+                "angular_velocity": [
+                  -2.3929916464398236e-16,
+                  1.3584890594763144e-16,
+                  8.077945306706495e-18
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "tomato_sauce_1": {
+                "position": [
+                  -0.11728844084700189,
+                  0.0557554854770541,
+                  0.4751692784892429
+                ],
+                "quaternion": [
+                  -0.0024677216973359776,
+                  0.0022070378667392344,
+                  0.7074518281383778,
+                  0.706753811590109
+                ],
+                "linear_velocity": [
+                  -9.967366260662444e-16,
+                  -2.9016124401382934e-15,
+                  2.7892919057589702e-15
+                ],
+                "angular_velocity": [
+                  -7.552748083998907e-14,
+                  4.741066791939345e-16,
+                  -2.5708315132128915e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "ketchup_1": {
+                "position": [
+                  -0.26843450234583455,
+                  -0.1485479912079433,
+                  0.509179921516479
+                ],
+                "quaternion": [
+                  0.49999995830200716,
+                  0.4999999585002979,
+                  0.5000000401518705,
+                  0.5000000430458181
+                ],
+                "linear_velocity": [
+                  -1.3160571741711394e-15,
+                  9.773699862767175e-16,
+                  1.4738152152998595e-14
+                ],
+                "angular_velocity": [
+                  -1.8130731330970324e-14,
+                  -9.254494240989212e-19,
+                  -1.3478809326169236e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "orange_juice_1": {
+                "position": [
+                  0.009971966676233165,
+                  -0.25926272106022036,
+                  0.5065099215193676
+                ],
+                "quaternion": [
+                  0.49999999833504905,
+                  0.4999999973697392,
+                  0.5000000025195248,
+                  0.5000000017756862
+                ],
+                "linear_velocity": [
+                  -2.1020659022243687e-15,
+                  -4.769452222181179e-16,
+                  1.9565328153549485e-14
+                ],
+                "angular_velocity": [
+                  -3.013783114627094e-14,
+                  8.56450030446016e-21,
+                  6.821075458716615e-15
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "milk_1": {
+                "position": [
+                  0.049266470030300186,
+                  -0.12138603670747229,
+                  0.5065099215193677
+                ],
+                "quaternion": [
+                  0.49999999736973905,
+                  0.49999999833504905,
+                  0.5000000017756867,
+                  0.5000000025195253
+                ],
+                "linear_velocity": [
+                  4.87049709545916e-17,
+                  1.1598906718010447e-15,
+                  9.860097857063902e-15
+                ],
+                "angular_velocity": [
+                  6.699482798748811e-16,
+                  1.176586310115268e-19,
+                  -1.6634639217734002e-14
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "butter_1": {
+                "position": [
+                  0.07044719834440562,
+                  0.05265617771943741,
+                  0.44546992152000014
+                ],
+                "quaternion": [
+                  9.298445077754301e-20,
+                  -4.181428725641523e-17,
+                  1.1578573690344036e-17,
+                  1.0
+                ],
+                "linear_velocity": [
+                  -1.401460000169112e-20,
+                  4.606591388326543e-21,
+                  -2.3333070771800473e-15
+                ],
+                "angular_velocity": [
+                  -1.3867738885713963e-16,
+                  -4.2996762343836454e-17,
+                  1.596658193885176e-17
+                ],
+                "grasped": false,
+                "error": null
+              },
+              "basket_1": {
+                "position": [
+                  -0.0021154990183058987,
+                  0.2689851938137835,
+                  0.43219210516477047
+                ],
+                "quaternion": [
+                  0.7071047279169312,
+                  -0.0016949951945791455,
+                  0.001694994057002879,
+                  0.7071047714051719
+                ],
+                "linear_velocity": [
+                  3.772391603144091e-17,
+                  -5.2362610356058126e-17,
+                  -3.605928723574811e-15
+                ],
+                "angular_velocity": [
+                  -8.306083222796414e-15,
+                  1.2369457307647469e-14,
+                  -3.987010722819054e-17
+                ],
+                "grasped": false,
+                "error": null
+              }
+            },
+            "held_objects": [],
+            "gripper_qpos": [
+              0.04000893386047055,
+              -0.040105980705853986
+            ],
+            "eef_position": [
+              -0.09812735012254722,
+              -0.19555345748050956,
+              0.5033690573257471
+            ],
+            "grasp_observation_complete": true,
+            "strict_candidate": false,
+            "phases": {
+              "in|alphabet_soup_1|basket_1_contain_region": "ungrasped"
+            },
+            "goal_objects": [
+              "alphabet_soup_1"
+            ]
+          },
+          "object_displacement_m": {
+            "alphabet_soup_1": 0.04865773149024728,
+            "cream_cheese_1": 1.1102230246251565e-16,
+            "tomato_sauce_1": 5.950076235032486e-16,
+            "ketchup_1": 0.5418766572061889,
+            "orange_juice_1": 0.3823489694023009,
+            "milk_1": 0.3823489694015141,
+            "butter_1": 1.1102230246251565e-16,
+            "basket_1": 1.1999801531245766e-16
+          },
+          "per_action_latency": {
+            "unit": "seconds",
+            "includes_queue_hit_steps": true,
+            "n_finite_samples": 300,
+            "n_null_or_nonfinite": 0,
+            "mean": 0.030722876583331525,
+            "median": 0.004813093999985085,
+            "p95_nearest_rank": 0.140450493000003
+          },
+          "diagnostic_errors": 0,
+          "diagnostic_nulls": 0,
+          "native_benchmark_success_ever": false,
+          "native_benchmark_success_final": false,
+          "validation": {
+            "n_rows_matches_steps": true,
+            "final_snapshot_matches_raw_last_row": true
+          }
+        }
+      ]
+    }
+  ]
+}

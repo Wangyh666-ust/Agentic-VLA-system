@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "kind": "derived_sanitized_hermes_session_trace",
+  "derived": true,
+  "source_commit": "7deea902a24f5f83dcb99995819e620caf600e6c",
+  "hermes_session_id": "20261007_024037_4ab3ad",
+  "runtime_model": "qwen3-vl-plus",
+  "runtime_provider": "alibaba-cn",
+  "native_image_attachment_evidenced": true,
+  "image_marker": "[1 image]",
+  "initial_phase_marker": "[phase=initial]",
+  "image_source_log_line": 786,
+  "visual_comprehension_evaluated": false,
+  "hermes_invocations": 1,
+  "usage_export_available": false,
+  "original_agent_result_usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "logged_api_calls": 5,
+  "logged_input_tokens_sum": 43129,
+  "logged_output_tokens_sum": 621,
+  "logged_calls": [
+    {
+      "number": 1,
+      "model": "qwen3-vl-plus",
+      "provider": "alibaba-cn",
+      "input_tokens_logged": 6299,
+      "output_tokens_logged": 41,
+      "total_tokens_logged": 6340,
+      "latency_s": 1.7,
+      "source_log_line": 790
+    },
+    {
+      "number": 2,
+      "model": "qwen3-vl-plus",
+      "provider": "alibaba-cn",
+      "input_tokens_logged": 7417,
+      "output_tokens_logged": 65,
+      "total_tokens_logged": 7482,
+      "latency_s": 1.8,
+      "source_log_line": 792
+    },
+    {
+      "number": 3,
+      "model": "qwen3-vl-plus",
+      "provider": "alibaba-cn",
+      "input_tokens_logged": 8203,
+      "output_tokens_logged": 126,
+      "total_tokens_logged": 8329,
+      "latency_s": 2.3,
+      "source_log_line": 794
+    },
+    {
+      "number": 4,
+      "model": "qwen3-vl-plus",
+      "provider": "alibaba-cn",
+      "input_tokens_logged": 10239,
+      "output_tokens_logged": 384,
+      "total_tokens_logged": 10623,
+      "latency_s": 7.3,
+      "source_log_line": 797
+    },
+    {
+      "number": 5,
+      "model": "qwen3-vl-plus",
+      "provider": "alibaba-cn",
+      "input_tokens_logged": 10971,
+      "output_tokens_logged": 5,
+      "total_tokens_logged": 10976,
+      "latency_s": 1.7,
+      "source_log_line": 799
+    }
+  ],
+  "db_counters": {
+    "id": "20261007_024037_4ab3ad",
+    "model": "qwen3-vl-plus",
+    "api_call_count": 5,
+    "input_tokens": 32505,
+    "output_tokens": 621,
+    "cache_read_tokens": 10624,
+    "cache_write_tokens": 0,
+    "message_count": 11,
+    "tool_call_count": 5
+  },
+  "completed_tools": [
+    {
+      "name": "tool_search",
+      "source_log_line": 791
+    },
+    {
+      "name": "tool_describe",
+      "source_log_line": 793
+    },
+    {
+      "name": "mcp__scene_tools__get_scene_session",
+      "source_log_line": 795
+    },
+    {
+      "name": "mcp__scene_tools__list_scene_capabilities",
+      "source_log_line": 796
+    },
+    {
+      "name": "mcp__scene_tools__submit_scene_plan",
+      "source_log_line": 798
+    }
+  ],
+  "token_semantics": {
+    "logged_input": "prompt_tokens including cache",
+    "database_input": "canonical input excluding cache_read and cache_write",
+    "arithmetic_match": true,
+    "logged_input_equals_db_input_plus_cache_read_plus_cache_write": true,
+    "output_tokens_match": true,
+    "source_references": [
+      {
+        "path": "/home/yhwang/.hermes/hermes-agent/agent/usage_pricing.py",
+        "bytes": 37623,
+        "sha256": "38967feb41c3e0b3866c3d2a9e3c324b0be7ec5e49ac47688ed303adfc530377",
+        "line_references": [
+          [
+            624,
+            631
+          ]
+        ]
+      },
+      {
+        "path": "/home/yhwang/.hermes/hermes-agent/agent/turn_usage.py",
+        "bytes": 15808,
+        "sha256": "340a0c7bd5b69f53b774bdf3c284a79a6833a7e9d216550d825f525f1af3fe70",
+        "line_references": [
+          [
+            205,
+            209
+          ],
+          [
+            257,
+            263
+          ]
+        ]
+      }
+    ],
+    "pricing_applied": false
+  },
+  "provenance": {
+    "sqlite_uri_mode": "ro",
+    "database_path": "/home/yhwang/fyp/scene_demo/hermes_home/state.db",
+    "database_query_fields": [
+      "id",
+      "model",
+      "api_call_count",
+      "input_tokens",
+      "output_tokens",
+      "cache_read_tokens",
+      "cache_write_tokens",
+      "message_count",
+      "tool_call_count"
+    ],
+    "database_session_filter": "20261007_024037_4ab3ad",
+    "agent_log_path": "/home/yhwang/fyp/scene_demo/hermes_home/logs/agent.log",
+    "agent_log_filter": "[20261007_024037_4ab3ad]",
+    "source_messages_or_config_copied": false
+  },
+  "development_models_are_separate_from_runtime_Hermes": true
+}

@@ -1,0 +1,1545 @@
+{
+  "execution_kind": "manual_contract_probe",
+  "source_commit": "7deea902a24f5f83dcb99995819e620caf600e6c",
+  "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+  "completion_mode": "release_verified",
+  "hermes_used": false,
+  "physical_assistance": false,
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/sessions",
+      "payload": {
+        "scene_id": "basket_two",
+        "seed": 0,
+        "init_state_index": 0
+      },
+      "http_status": 201,
+      "response": {
+        "ok": true,
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "scene_id": "basket_two",
+        "state": "ready",
+        "scene_version": 0,
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "policy_resets": 0,
+        "total_steps": 0,
+        "seed": 0,
+        "init_state_index": 0,
+        "description": "Shared original basket scene holding the alphabet soup can and the tomato sauce can.",
+        "storage_policy": {
+          "alphabet_soup_1": "basket_1_contain_region",
+          "tomato_sauce_1": "basket_1_contain_region"
+        },
+        "capabilities": [
+          {
+            "instruction": "put the alphabet soup in the basket",
+            "goals": [
+              [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ]
+            ],
+            "object_id": "alphabet_soup_1",
+            "target_id": "basket_1_contain_region",
+            "scene_ids": [
+              "basket_two"
+            ],
+            "evidence": "candidate in this scene; previous successful single task is a different scene",
+            "audit_only": false,
+            "exclusive_target": false,
+            "capability_id": "soup_to_basket"
+          },
+          {
+            "instruction": "put the tomato sauce in the basket",
+            "goals": [
+              [
+                "in",
+                "tomato_sauce_1",
+                "basket_1_contain_region"
+              ]
+            ],
+            "object_id": "tomato_sauce_1",
+            "target_id": "basket_1_contain_region",
+            "scene_ids": [
+              "basket_two"
+            ],
+            "evidence": "candidate",
+            "audit_only": false,
+            "exclusive_target": false,
+            "capability_id": "sauce_to_basket"
+          }
+        ],
+        "images": [
+          {
+            "view": "agentview",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/agentview.png",
+            "sha256": "3b784daf71a1ca029300f379d02c011c38764ca47e8b2d912c32941a2275c21d",
+            "kind": "vla_observation"
+          },
+          {
+            "view": "wrist",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/wrist.png",
+            "sha256": "e09ccc4b4896d26f5e98a8ae81ec5cdb7bda496c26e5f86652a68af66e1c3361",
+            "kind": "vla_observation"
+          }
+        ],
+        "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/latest.png",
+        "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8",
+        "active_request_id": null,
+        "error": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/plans",
+      "payload": {
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "scene_version": 0,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "decision": "execute",
+        "budget_per_subgoal": 100,
+        "audit": false,
+        "rationale": "manual holding guard contract probe"
+      },
+      "http_status": 202,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "queued",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [],
+        "scene_version": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "blocked",
+        "decision": "execute",
+        "capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual holding guard contract probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": "budget_exhausted",
+        "repair_history": [],
+        "scene_version": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/9dd7ff1fe2db4a6d8d803deee0001122",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "job_id": "9dd7ff1fe2db4a6d8d803deee0001122",
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "capability_id": "soup_to_basket",
+        "state": "completed",
+        "steps": 100,
+        "total_steps": 100,
+        "success": false,
+        "ended_reason": "budget_exhausted",
+        "error": null,
+        "instruction": "put the alphabet soup in the basket",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+        "state_after_sha": "06f1e751c5df3e05b482327a7c1543bbfb78b5037adb198f1299e266f0ee1c31",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "holding_target_outside_goal",
+        "held_objects": [
+          "alphabet_soup_1"
+        ],
+        "grasp_observation_complete": true,
+        "completion_ready": false,
+        "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_soup_to_basket_9dd7ff1f",
+        "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_soup_to_basket_9dd7ff1f/latest.png",
+        "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_soup_to_basket_9dd7ff1f/rollout.mp4",
+        "wall_s": 53.345
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/sessions/99ddfea8689b48d69071ae64ed740b34",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "scene_id": "basket_two",
+        "state": "ready",
+        "scene_version": 1,
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "policy_resets": 1,
+        "total_steps": 100,
+        "seed": 0,
+        "init_state_index": 0,
+        "description": "Shared original basket scene holding the alphabet soup can and the tomato sauce can.",
+        "storage_policy": {
+          "alphabet_soup_1": "basket_1_contain_region",
+          "tomato_sauce_1": "basket_1_contain_region"
+        },
+        "capabilities": [
+          {
+            "instruction": "put the alphabet soup in the basket",
+            "goals": [
+              [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ]
+            ],
+            "object_id": "alphabet_soup_1",
+            "target_id": "basket_1_contain_region",
+            "scene_ids": [
+              "basket_two"
+            ],
+            "evidence": "candidate in this scene; previous successful single task is a different scene",
+            "audit_only": false,
+            "exclusive_target": false,
+            "capability_id": "soup_to_basket"
+          },
+          {
+            "instruction": "put the tomato sauce in the basket",
+            "goals": [
+              [
+                "in",
+                "tomato_sauce_1",
+                "basket_1_contain_region"
+              ]
+            ],
+            "object_id": "tomato_sauce_1",
+            "target_id": "basket_1_contain_region",
+            "scene_ids": [
+              "basket_two"
+            ],
+            "evidence": "candidate",
+            "audit_only": false,
+            "exclusive_target": false,
+            "capability_id": "sauce_to_basket"
+          }
+        ],
+        "images": [
+          {
+            "view": "agentview",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/agentview.png",
+            "sha256": "1ba571a07bbd311e0e3c59dbefa4b7ceb999dce67e65b23913ff9de705f3c4df",
+            "kind": "vla_observation"
+          },
+          {
+            "view": "wrist",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/wrist.png",
+            "sha256": "f5777b7e1890090ae352963c0ecafa9fb99a2d818220cb06fd965fe5a9064aa0",
+            "kind": "vla_observation"
+          }
+        ],
+        "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/latest.png",
+        "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8",
+        "active_request_id": null,
+        "error": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e/resume",
+      "payload": {
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "scene_version": 1,
+        "capability_ids": [
+          "sauce_to_basket"
+        ],
+        "rationale": "manual intentional foreign-object handoff guard probe",
+        "audit": false
+      },
+      "http_status": 202,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "queued",
+        "decision": "execute",
+        "capability_ids": [
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual intentional foreign-object handoff guard probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [
+          {
+            "capability_ids": [
+              "sauce_to_basket"
+            ],
+            "rationale": "manual intentional foreign-object handoff guard probe",
+            "at": "2026-10-06T18:39:05+00:00"
+          }
+        ],
+        "scene_version": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "running",
+        "decision": "execute",
+        "capability_ids": [
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual intentional foreign-object handoff guard probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122",
+          "a1d0aadd20e34a899e96a0e7b12c241e"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [
+          "sauce_to_basket"
+        ],
+        "plan_success": null,
+        "regressions": [],
+        "error": null,
+        "repair_history": [
+          {
+            "capability_ids": [
+              "sauce_to_basket"
+            ],
+            "rationale": "manual intentional foreign-object handoff guard probe",
+            "at": "2026-10-06T18:39:05+00:00"
+          }
+        ],
+        "scene_version": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/plans/d22b106e749247288b58fbb5a14cae2e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "state": "blocked",
+        "decision": "execute",
+        "capability_ids": [
+          "sauce_to_basket"
+        ],
+        "original_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "rationale": "manual intentional foreign-object handoff guard probe",
+        "job_ids": [
+          "9dd7ff1fe2db4a6d8d803deee0001122",
+          "a1d0aadd20e34a899e96a0e7b12c241e"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [],
+        "plan_success": null,
+        "regressions": [],
+        "error": "holding_other_object",
+        "repair_history": [
+          {
+            "capability_ids": [
+              "sauce_to_basket"
+            ],
+            "rationale": "manual intentional foreign-object handoff guard probe",
+            "at": "2026-10-06T18:39:05+00:00"
+          }
+        ],
+        "scene_version": 2
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/a1d0aadd20e34a899e96a0e7b12c241e",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "job_id": "a1d0aadd20e34a899e96a0e7b12c241e",
+        "request_id": "d22b106e749247288b58fbb5a14cae2e",
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "capability_id": "sauce_to_basket",
+        "state": "completed",
+        "steps": 0,
+        "total_steps": 100,
+        "success": false,
+        "ended_reason": "holding_other_object",
+        "error": null,
+        "instruction": "put the tomato sauce in the basket",
+        "scene_version_before": 1,
+        "scene_version_after": 2,
+        "state_before_sha": "06f1e751c5df3e05b482327a7c1543bbfb78b5037adb198f1299e266f0ee1c31",
+        "state_after_sha": "06f1e751c5df3e05b482327a7c1543bbfb78b5037adb198f1299e266f0ee1c31",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "holding_foreign_object",
+        "held_objects": [
+          "alphabet_soup_1"
+        ],
+        "grasp_observation_complete": true,
+        "completion_ready": false,
+        "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_sauce_to_basket_a1d0aadd",
+        "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_sauce_to_basket_a1d0aadd/latest.png",
+        "rollout_path": null,
+        "wall_s": 0.017
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/sessions/99ddfea8689b48d69071ae64ed740b34",
+      "payload": null,
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "session_id": "99ddfea8689b48d69071ae64ed740b34",
+        "scene_id": "basket_two",
+        "state": "ready",
+        "scene_version": 2,
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "policy_resets": 2,
+        "total_steps": 100,
+        "seed": 0,
+        "init_state_index": 0,
+        "description": "Shared original basket scene holding the alphabet soup can and the tomato sauce can.",
+        "storage_policy": {
+          "alphabet_soup_1": "basket_1_contain_region",
+          "tomato_sauce_1": "basket_1_contain_region"
+        },
+        "capabilities": [
+          {
+            "instruction": "put the alphabet soup in the basket",
+            "goals": [
+              [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ]
+            ],
+            "object_id": "alphabet_soup_1",
+            "target_id": "basket_1_contain_region",
+            "scene_ids": [
+              "basket_two"
+            ],
+            "evidence": "candidate in this scene; previous successful single task is a different scene",
+            "audit_only": false,
+            "exclusive_target": false,
+            "capability_id": "soup_to_basket"
+          },
+          {
+            "instruction": "put the tomato sauce in the basket",
+            "goals": [
+              [
+                "in",
+                "tomato_sauce_1",
+                "basket_1_contain_region"
+              ]
+            ],
+            "object_id": "tomato_sauce_1",
+            "target_id": "basket_1_contain_region",
+            "scene_ids": [
+              "basket_two"
+            ],
+            "evidence": "candidate",
+            "audit_only": false,
+            "exclusive_target": false,
+            "capability_id": "sauce_to_basket"
+          }
+        ],
+        "images": [
+          {
+            "view": "agentview",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/agentview.png",
+            "sha256": "1ba571a07bbd311e0e3c59dbefa4b7ceb999dce67e65b23913ff9de705f3c4df",
+            "kind": "vla_observation"
+          },
+          {
+            "view": "wrist",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/wrist.png",
+            "sha256": "f5777b7e1890090ae352963c0ecafa9fb99a2d818220cb06fd965fe5a9064aa0",
+            "kind": "vla_observation"
+          }
+        ],
+        "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/latest.png",
+        "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8",
+        "active_request_id": null,
+        "error": null
+      }
+    }
+  ],
+  "expected_guard_block": true,
+  "session_id": "99ddfea8689b48d69071ae64ed740b34",
+  "request_id": "d22b106e749247288b58fbb5a14cae2e",
+  "initial_session": {
+    "ok": true,
+    "session_id": "99ddfea8689b48d69071ae64ed740b34",
+    "scene_id": "basket_two",
+    "state": "ready",
+    "scene_version": 0,
+    "env_instance_id": 1,
+    "episode_resets": 1,
+    "policy_resets": 0,
+    "total_steps": 0,
+    "seed": 0,
+    "init_state_index": 0,
+    "description": "Shared original basket scene holding the alphabet soup can and the tomato sauce can.",
+    "storage_policy": {
+      "alphabet_soup_1": "basket_1_contain_region",
+      "tomato_sauce_1": "basket_1_contain_region"
+    },
+    "capabilities": [
+      {
+        "instruction": "put the alphabet soup in the basket",
+        "goals": [
+          [
+            "in",
+            "alphabet_soup_1",
+            "basket_1_contain_region"
+          ]
+        ],
+        "object_id": "alphabet_soup_1",
+        "target_id": "basket_1_contain_region",
+        "scene_ids": [
+          "basket_two"
+        ],
+        "evidence": "candidate in this scene; previous successful single task is a different scene",
+        "audit_only": false,
+        "exclusive_target": false,
+        "capability_id": "soup_to_basket"
+      },
+      {
+        "instruction": "put the tomato sauce in the basket",
+        "goals": [
+          [
+            "in",
+            "tomato_sauce_1",
+            "basket_1_contain_region"
+          ]
+        ],
+        "object_id": "tomato_sauce_1",
+        "target_id": "basket_1_contain_region",
+        "scene_ids": [
+          "basket_two"
+        ],
+        "evidence": "candidate",
+        "audit_only": false,
+        "exclusive_target": false,
+        "capability_id": "sauce_to_basket"
+      }
+    ],
+    "images": [
+      {
+        "view": "agentview",
+        "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/agentview.png",
+        "sha256": "3b784daf71a1ca029300f379d02c011c38764ca47e8b2d912c32941a2275c21d",
+        "kind": "vla_observation"
+      },
+      {
+        "view": "wrist",
+        "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/wrist.png",
+        "sha256": "e09ccc4b4896d26f5e98a8ae81ec5cdb7bda496c26e5f86652a68af66e1c3361",
+        "kind": "vla_observation"
+      }
+    ],
+    "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/latest.png",
+    "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8",
+    "active_request_id": null,
+    "error": null
+  },
+  "before": {
+    "plan": {
+      "ok": true,
+      "request_id": "d22b106e749247288b58fbb5a14cae2e",
+      "session_id": "99ddfea8689b48d69071ae64ed740b34",
+      "state": "blocked",
+      "decision": "execute",
+      "capability_ids": [
+        "soup_to_basket",
+        "sauce_to_basket"
+      ],
+      "original_capability_ids": [
+        "soup_to_basket",
+        "sauce_to_basket"
+      ],
+      "rationale": "manual holding guard contract probe",
+      "job_ids": [
+        "9dd7ff1fe2db4a6d8d803deee0001122"
+      ],
+      "completed_capability_ids": [],
+      "pending_capability_ids": [
+        "sauce_to_basket"
+      ],
+      "plan_success": null,
+      "regressions": [],
+      "error": "budget_exhausted",
+      "repair_history": [],
+      "scene_version": 1
+    },
+    "session": {
+      "ok": true,
+      "session_id": "99ddfea8689b48d69071ae64ed740b34",
+      "scene_id": "basket_two",
+      "state": "ready",
+      "scene_version": 1,
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "policy_resets": 1,
+      "total_steps": 100,
+      "seed": 0,
+      "init_state_index": 0,
+      "description": "Shared original basket scene holding the alphabet soup can and the tomato sauce can.",
+      "storage_policy": {
+        "alphabet_soup_1": "basket_1_contain_region",
+        "tomato_sauce_1": "basket_1_contain_region"
+      },
+      "capabilities": [
+        {
+          "instruction": "put the alphabet soup in the basket",
+          "goals": [
+            [
+              "in",
+              "alphabet_soup_1",
+              "basket_1_contain_region"
+            ]
+          ],
+          "object_id": "alphabet_soup_1",
+          "target_id": "basket_1_contain_region",
+          "scene_ids": [
+            "basket_two"
+          ],
+          "evidence": "candidate in this scene; previous successful single task is a different scene",
+          "audit_only": false,
+          "exclusive_target": false,
+          "capability_id": "soup_to_basket"
+        },
+        {
+          "instruction": "put the tomato sauce in the basket",
+          "goals": [
+            [
+              "in",
+              "tomato_sauce_1",
+              "basket_1_contain_region"
+            ]
+          ],
+          "object_id": "tomato_sauce_1",
+          "target_id": "basket_1_contain_region",
+          "scene_ids": [
+            "basket_two"
+          ],
+          "evidence": "candidate",
+          "audit_only": false,
+          "exclusive_target": false,
+          "capability_id": "sauce_to_basket"
+        }
+      ],
+      "images": [
+        {
+          "view": "agentview",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/agentview.png",
+          "sha256": "1ba571a07bbd311e0e3c59dbefa4b7ceb999dce67e65b23913ff9de705f3c4df",
+          "kind": "vla_observation"
+        },
+        {
+          "view": "wrist",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/wrist.png",
+          "sha256": "f5777b7e1890090ae352963c0ecafa9fb99a2d818220cb06fd965fe5a9064aa0",
+          "kind": "vla_observation"
+        }
+      ],
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/latest.png",
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8",
+      "active_request_id": null,
+      "error": null
+    },
+    "first_job": {
+      "job_id": "9dd7ff1fe2db4a6d8d803deee0001122",
+      "request_id": "d22b106e749247288b58fbb5a14cae2e",
+      "session_id": "99ddfea8689b48d69071ae64ed740b34",
+      "capability_id": "soup_to_basket",
+      "state": "completed",
+      "steps": 100,
+      "total_steps": 100,
+      "success": false,
+      "ended_reason": "budget_exhausted",
+      "error": null,
+      "instruction": "put the alphabet soup in the basket",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+      "state_after_sha": "06f1e751c5df3e05b482327a7c1543bbfb78b5037adb198f1299e266f0ee1c31",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "holding_target_outside_goal",
+      "held_objects": [
+        "alphabet_soup_1"
+      ],
+      "grasp_observation_complete": true,
+      "completion_ready": false,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_soup_to_basket_9dd7ff1f",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_soup_to_basket_9dd7ff1f/latest.png",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_soup_to_basket_9dd7ff1f/rollout.mp4",
+      "wall_s": 53.345
+    }
+  },
+  "after": {
+    "plan": {
+      "ok": true,
+      "request_id": "d22b106e749247288b58fbb5a14cae2e",
+      "session_id": "99ddfea8689b48d69071ae64ed740b34",
+      "state": "blocked",
+      "decision": "execute",
+      "capability_ids": [
+        "sauce_to_basket"
+      ],
+      "original_capability_ids": [
+        "soup_to_basket",
+        "sauce_to_basket"
+      ],
+      "rationale": "manual intentional foreign-object handoff guard probe",
+      "job_ids": [
+        "9dd7ff1fe2db4a6d8d803deee0001122",
+        "a1d0aadd20e34a899e96a0e7b12c241e"
+      ],
+      "completed_capability_ids": [],
+      "pending_capability_ids": [],
+      "plan_success": null,
+      "regressions": [],
+      "error": "holding_other_object",
+      "repair_history": [
+        {
+          "capability_ids": [
+            "sauce_to_basket"
+          ],
+          "rationale": "manual intentional foreign-object handoff guard probe",
+          "at": "2026-10-06T18:39:05+00:00"
+        }
+      ],
+      "scene_version": 2
+    },
+    "session": {
+      "ok": true,
+      "session_id": "99ddfea8689b48d69071ae64ed740b34",
+      "scene_id": "basket_two",
+      "state": "ready",
+      "scene_version": 2,
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "policy_resets": 2,
+      "total_steps": 100,
+      "seed": 0,
+      "init_state_index": 0,
+      "description": "Shared original basket scene holding the alphabet soup can and the tomato sauce can.",
+      "storage_policy": {
+        "alphabet_soup_1": "basket_1_contain_region",
+        "tomato_sauce_1": "basket_1_contain_region"
+      },
+      "capabilities": [
+        {
+          "instruction": "put the alphabet soup in the basket",
+          "goals": [
+            [
+              "in",
+              "alphabet_soup_1",
+              "basket_1_contain_region"
+            ]
+          ],
+          "object_id": "alphabet_soup_1",
+          "target_id": "basket_1_contain_region",
+          "scene_ids": [
+            "basket_two"
+          ],
+          "evidence": "candidate in this scene; previous successful single task is a different scene",
+          "audit_only": false,
+          "exclusive_target": false,
+          "capability_id": "soup_to_basket"
+        },
+        {
+          "instruction": "put the tomato sauce in the basket",
+          "goals": [
+            [
+              "in",
+              "tomato_sauce_1",
+              "basket_1_contain_region"
+            ]
+          ],
+          "object_id": "tomato_sauce_1",
+          "target_id": "basket_1_contain_region",
+          "scene_ids": [
+            "basket_two"
+          ],
+          "evidence": "candidate",
+          "audit_only": false,
+          "exclusive_target": false,
+          "capability_id": "sauce_to_basket"
+        }
+      ],
+      "images": [
+        {
+          "view": "agentview",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/agentview.png",
+          "sha256": "1ba571a07bbd311e0e3c59dbefa4b7ceb999dce67e65b23913ff9de705f3c4df",
+          "kind": "vla_observation"
+        },
+        {
+          "view": "wrist",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/wrist.png",
+          "sha256": "f5777b7e1890090ae352963c0ecafa9fb99a2d818220cb06fd965fe5a9064aa0",
+          "kind": "vla_observation"
+        }
+      ],
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/latest.png",
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8",
+      "active_request_id": null,
+      "error": null
+    },
+    "second_job": {
+      "job_id": "a1d0aadd20e34a899e96a0e7b12c241e",
+      "request_id": "d22b106e749247288b58fbb5a14cae2e",
+      "session_id": "99ddfea8689b48d69071ae64ed740b34",
+      "capability_id": "sauce_to_basket",
+      "state": "completed",
+      "steps": 0,
+      "total_steps": 100,
+      "success": false,
+      "ended_reason": "holding_other_object",
+      "error": null,
+      "instruction": "put the tomato sauce in the basket",
+      "scene_version_before": 1,
+      "scene_version_after": 2,
+      "state_before_sha": "06f1e751c5df3e05b482327a7c1543bbfb78b5037adb198f1299e266f0ee1c31",
+      "state_after_sha": "06f1e751c5df3e05b482327a7c1543bbfb78b5037adb198f1299e266f0ee1c31",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "holding_foreign_object",
+      "held_objects": [
+        "alphabet_soup_1"
+      ],
+      "grasp_observation_complete": true,
+      "completion_ready": false,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_sauce_to_basket_a1d0aadd",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_sauce_to_basket_a1d0aadd/latest.png",
+      "rollout_path": null,
+      "wall_s": 0.017
+    }
+  },
+  "zero_action_job_events": {
+    "path": "/home/yhwang/fyp/scene_demo/runs/20261006T183806Z_basket_two_99ddfea8/cap_01_sauce_to_basket_a1d0aadd/events.jsonl",
+    "file_exists": false,
+    "n_events": 0
+  },
+  "checks": {
+    "steps_100_then_0": true,
+    "held_soup": true,
+    "grasp_observation_complete": true,
+    "exact_state_sha_chain": true,
+    "same_env_instance": true,
+    "episode_resets_1": true,
+    "total_steps_100": true,
+    "zero_action_job_events_empty": true,
+    "placement_success": false
+  }
+}

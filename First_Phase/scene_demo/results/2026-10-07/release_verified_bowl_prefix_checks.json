@@ -1,0 +1,768 @@
+{
+  "source_commit": "96c6a375c3a9d29007f96dc99ccf4e147f670df4",
+  "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+  "completion_mode": "release_verified",
+  "runner_pid": 402,
+  "runner_exit_code": 0,
+  "runner_argv": [
+    "/home/yhwang/fyp/libero_demo/venv/bin/python",
+    "-u",
+    "/mnt/d/FYP/First_Phase/scene_demo/placement_experiments.py",
+    "--profiles",
+    "baseline_bf16",
+    "fp32_h5",
+    "--conditions",
+    "bowl_control",
+    "--pairs",
+    "0:0",
+    "--completion-mode",
+    "release_verified",
+    "--output",
+    "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/release_verified_bowls.json",
+    "--run-root",
+    "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/release_verified_bowl_runs",
+    "--timeout",
+    "1200"
+  ],
+  "runner_log": "/mnt/d/FYP/First_Phase/tmp/placement_release_bowl_runtime_20261007.log",
+  "trials": [
+    {
+      "profile": "baseline_bf16",
+      "condition": "bowl_control",
+      "pair": "0:0",
+      "old_report": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/baseline_comparisons.json",
+      "old_job_id": "6095190fd00f438bb3c8479c7776d202",
+      "new_job_id": "3eef289a623248bb87ea7f6a052fab16",
+      "old_steps": 95,
+      "new_steps": 102,
+      "same_initial_state_hash": true,
+      "initial_state_hash": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+      "same_instruction": true,
+      "instruction": "put the bowl on the plate",
+      "same_model_revision": true,
+      "same_profile_config": true,
+      "profile_config": {
+        "amp": true,
+        "num_steps": 10,
+        "n_action_steps": 1
+      },
+      "prefix_length": 95,
+      "all_actions_equal": true,
+      "first_difference_step": null,
+      "max_abs_difference": 0.0,
+      "old_stopping_snapshot_comparison": {
+        "available": true,
+        "old_stopping_step": 95,
+        "old_snapshot": {
+          "predicates": {
+            "on|akita_black_bowl_1|plate_1": true
+          },
+          "objects": {
+            "akita_black_bowl_1": {
+              "position": [
+                0.05977314031623535,
+                -0.025901752266156364,
+                0.9115542929675498
+              ],
+              "quaternion": [
+                0.7594665197324054,
+                -0.07512096607331155,
+                0.06251142197073596,
+                0.643163873351853
+              ],
+              "linear_velocity": [
+                0.0053326876082110345,
+                -0.001832209138585466,
+                -0.02056531279691588
+              ],
+              "angular_velocity": [
+                0.6052168532187834,
+                -0.6209145117422864,
+                0.21954977455497024
+              ],
+              "grasped": false,
+              "error": null
+            },
+            "cream_cheese_1": {
+              "position": [
+                -0.04602629144396026,
+                0.13447270946529477,
+                0.9089214774186077
+              ],
+              "quaternion": [
+                -1.8378090536274553e-17,
+                -7.232910558583983e-17,
+                -5.51493647483079e-17,
+                1.0
+              ],
+              "linear_velocity": [
+                3.0410228640498396e-17,
+                3.502536450038561e-17,
+                1.768150541517198e-14
+              ],
+              "angular_velocity": [
+                -2.5453461005360962e-15,
+                -2.1913653890236726e-15,
+                7.235991299600243e-22
+              ],
+              "grasped": false,
+              "error": null
+            },
+            "wine_bottle_1": {
+              "position": [
+                -0.20423290037391095,
+                -0.061650894860553605,
+                0.8988754774203452
+              ],
+              "quaternion": [
+                1.109359090322761e-08,
+                -6.204091079940719e-06,
+                3.878404398692644e-07,
+                0.9999999999806799
+              ],
+              "linear_velocity": [
+                1.5407068484148317e-17,
+                9.300567599383038e-18,
+                1.7731673452051522e-14
+              ],
+              "angular_velocity": [
+                -4.8406474097476895e-16,
+                7.042584929752162e-16,
+                -6.226891035824898e-18
+              ],
+              "grasped": false,
+              "error": null
+            },
+            "plate_1": {
+              "position": [
+                0.061710741979581187,
+                -0.014658214203238472,
+                0.9024684439699341
+              ],
+              "quaternion": [
+                0.7129690731342369,
+                -0.0004078858315347286,
+                5.107168244665565e-05,
+                0.7011953592080733
+              ],
+              "linear_velocity": [
+                6.784412698090968e-05,
+                -8.470514029976537e-05,
+                0.002309221884468855
+              ],
+              "angular_velocity": [
+                0.03094853008086131,
+                -0.03806542489936696,
+                2.780645451979857e-06
+              ],
+              "grasped": false,
+              "error": null
+            }
+          },
+          "held_objects": [],
+          "gripper_qpos": [
+            0.009292642159967472,
+            -0.009311919643606432
+          ],
+          "eef_position": [
+            0.04776875325295139,
+            0.027392557038517812,
+            0.9375933857019532
+          ],
+          "grasp_observation_complete": true,
+          "strict_candidate": false,
+          "phases": {
+            "on|akita_black_bowl_1|plate_1": "released_unsettled"
+          },
+          "goal_objects": [
+            "akita_black_bowl_1"
+          ]
+        },
+        "new_snapshot": {
+          "predicates": {
+            "on|akita_black_bowl_1|plate_1": true
+          },
+          "objects": {
+            "akita_black_bowl_1": {
+              "position": [
+                0.05977314031623535,
+                -0.025901752266156364,
+                0.9115542929675498
+              ],
+              "quaternion": [
+                0.7594665197324054,
+                -0.07512096607331155,
+                0.06251142197073596,
+                0.643163873351853
+              ],
+              "linear_velocity": [
+                0.0053326876082110345,
+                -0.001832209138585466,
+                -0.02056531279691588
+              ],
+              "angular_velocity": [
+                0.6052168532187834,
+                -0.6209145117422864,
+                0.21954977455497024
+              ],
+              "grasped": false,
+              "error": null
+            },
+            "cream_cheese_1": {
+              "position": [
+                -0.04602629144396026,
+                0.13447270946529477,
+                0.9089214774186077
+              ],
+              "quaternion": [
+                -1.8378090536274553e-17,
+                -7.232910558583983e-17,
+                -5.51493647483079e-17,
+                1.0
+              ],
+              "linear_velocity": [
+                3.0410228640498396e-17,
+                3.502536450038561e-17,
+                1.768150541517198e-14
+              ],
+              "angular_velocity": [
+                -2.5453461005360962e-15,
+                -2.1913653890236726e-15,
+                7.235991299600243e-22
+              ],
+              "grasped": false,
+              "error": null
+            },
+            "wine_bottle_1": {
+              "position": [
+                -0.20423290037391095,
+                -0.061650894860553605,
+                0.8988754774203452
+              ],
+              "quaternion": [
+                1.109359090322761e-08,
+                -6.204091079940719e-06,
+                3.878404398692644e-07,
+                0.9999999999806799
+              ],
+              "linear_velocity": [
+                1.5407068484148317e-17,
+                9.300567599383038e-18,
+                1.7731673452051522e-14
+              ],
+              "angular_velocity": [
+                -4.8406474097476895e-16,
+                7.042584929752162e-16,
+                -6.226891035824898e-18
+              ],
+              "grasped": false,
+              "error": null
+            },
+            "plate_1": {
+              "position": [
+                0.061710741979581187,
+                -0.014658214203238472,
+                0.9024684439699341
+              ],
+              "quaternion": [
+                0.7129690731342369,
+                -0.0004078858315347286,
+                5.107168244665565e-05,
+                0.7011953592080733
+              ],
+              "linear_velocity": [
+                6.784412698090968e-05,
+                -8.470514029976537e-05,
+                0.002309221884468855
+              ],
+              "angular_velocity": [
+                0.03094853008086131,
+                -0.03806542489936696,
+                2.780645451979857e-06
+              ],
+              "grasped": false,
+              "error": null
+            }
+          },
+          "held_objects": [],
+          "gripper_qpos": [
+            0.009292642159967472,
+            -0.009311919643606432
+          ],
+          "eef_position": [
+            0.04776875325295139,
+            0.027392557038517812,
+            0.9375933857019532
+          ],
+          "grasp_observation_complete": true,
+          "strict_candidate": false,
+          "phases": {
+            "on|akita_black_bowl_1|plate_1": "released_unsettled"
+          },
+          "goal_objects": [
+            "akita_black_bowl_1"
+          ]
+        },
+        "full_snapshot_equal": true,
+        "target_object_equal": true,
+        "all_objects_equal": true,
+        "gripper_qpos_equal": true,
+        "held_objects_equal": true
+      },
+      "old_native_task_success": true,
+      "old_strict_task_success": false,
+      "new_native_benchmark_success": true,
+      "new_atomic_task_success": true,
+      "new_strict_task_success": true
+    },
+    {
+      "profile": "fp32_h5",
+      "condition": "bowl_control",
+      "pair": "0:0",
+      "old_report": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/candidate_comparisons.json",
+      "old_job_id": "46e9ca4b2f4140f499b9d23853bdcec2",
+      "new_job_id": "51677b42cb03451981282907f98ed640",
+      "old_steps": 83,
+      "new_steps": 104,
+      "same_initial_state_hash": true,
+      "initial_state_hash": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+      "same_instruction": true,
+      "instruction": "put the bowl on the plate",
+      "same_model_revision": true,
+      "same_profile_config": true,
+      "profile_config": {
+        "amp": false,
+        "num_steps": 10,
+        "n_action_steps": 5
+      },
+      "prefix_length": 83,
+      "all_actions_equal": true,
+      "first_difference_step": null,
+      "max_abs_difference": 0.0,
+      "old_stopping_snapshot_comparison": {
+        "available": true,
+        "old_stopping_step": 83,
+        "old_snapshot": {
+          "predicates": {
+            "on|akita_black_bowl_1|plate_1": true
+          },
+          "objects": {
+            "akita_black_bowl_1": {
+              "position": [
+                0.05766805606929405,
+                -0.03776663294586267,
+                0.9081608812982374
+              ],
+              "quaternion": [
+                0.6792907709601259,
+                -0.0024445943480542877,
+                0.030992938517549855,
+                0.7332104133254789
+              ],
+              "linear_velocity": [
+                -0.009646196004477916,
+                -0.030251142989888832,
+                -0.019670003881037804
+              ],
+              "angular_velocity": [
+                0.37878563424166795,
+                1.4076103126551,
+                1.1002943137285426
+              ],
+              "grasped": true,
+              "error": null
+            },
+            "cream_cheese_1": {
+              "position": [
+                -0.04602629144396026,
+                0.13447270946529477,
+                0.9089214774186077
+              ],
+              "quaternion": [
+                3.314089518197786e-18,
+                -2.9778284011023906e-17,
+                5.382924016016608e-18,
+                1.0
+              ],
+              "linear_velocity": [
+                2.664610923351659e-19,
+                -2.7742183233211974e-18,
+                1.768822610164335e-14
+              ],
+              "angular_velocity": [
+                -2.937683156581882e-16,
+                1.6046949523738936e-16,
+                2.2691778979507185e-17
+              ],
+              "grasped": false,
+              "error": null
+            },
+            "wine_bottle_1": {
+              "position": [
+                -0.20423290037391095,
+                -0.061650894860553605,
+                0.8988754774203452
+              ],
+              "quaternion": [
+                1.1093590904232513e-08,
+                -6.204091079947135e-06,
+                3.87840439876048e-07,
+                0.9999999999806799
+              ],
+              "linear_velocity": [
+                7.320189972133119e-19,
+                1.661353424064115e-18,
+                1.7699082956778488e-14
+              ],
+              "angular_velocity": [
+                -1.062129597226123e-15,
+                2.2174028733199996e-17,
+                -6.785241869573908e-19
+              ],
+              "grasped": false,
+              "error": null
+            },
+            "plate_1": {
+              "position": [
+                0.05961404830057633,
+                -0.012018608732947264,
+                0.9031418725868473
+              ],
+              "quaternion": [
+                0.6857280466972401,
+                0.021089899802764947,
+                -0.007623678499556158,
+                0.7275122965457232
+              ],
+              "linear_velocity": [
+                -0.013891396443675088,
+                -0.014057181375486496,
+                0.002296505639503746
+              ],
+              "angular_velocity": [
+                0.4176204640462569,
+                0.08986727588507604,
+                0.4963687854975879
+              ],
+              "grasped": false,
+              "error": null
+            }
+          },
+          "held_objects": [
+            "akita_black_bowl_1"
+          ],
+          "gripper_qpos": [
+            0.0030895895963968098,
+            -0.006446817039395194
+          ],
+          "eef_position": [
+            0.060185402823154405,
+            0.00998769236464318,
+            0.9392613166175647
+          ],
+          "grasp_observation_complete": true,
+          "strict_candidate": false,
+          "phases": {
+            "on|akita_black_bowl_1|plate_1": "goal_held"
+          },
+          "goal_objects": [
+            "akita_black_bowl_1"
+          ]
+        },
+        "new_snapshot": {
+          "predicates": {
+            "on|akita_black_bowl_1|plate_1": true
+          },
+          "objects": {
+            "akita_black_bowl_1": {
+              "position": [
+                0.05766805606929405,
+                -0.03776663294586267,
+                0.9081608812982374
+              ],
+              "quaternion": [
+                0.6792907709601259,
+                -0.0024445943480542877,
+                0.030992938517549855,
+                0.7332104133254789
+              ],
+              "linear_velocity": [
+                -0.009646196004477916,
+                -0.030251142989888832,
+                -0.019670003881037804
+              ],
+              "angular_velocity": [
+                0.37878563424166795,
+                1.4076103126551,
+                1.1002943137285426
+              ],
+              "grasped": true,
+              "error": null
+            },
+            "cream_cheese_1": {
+              "position": [
+                -0.04602629144396026,
+                0.13447270946529477,
+                0.9089214774186077
+              ],
+              "quaternion": [
+                3.314089518197786e-18,
+                -2.9778284011023906e-17,
+                5.382924016016608e-18,
+                1.0
+              ],
+              "linear_velocity": [
+                2.664610923351659e-19,
+                -2.7742183233211974e-18,
+                1.768822610164335e-14
+              ],
+              "angular_velocity": [
+                -2.937683156581882e-16,
+                1.6046949523738936e-16,
+                2.2691778979507185e-17
+              ],
+              "grasped": false,
+              "error": null
+            },
+            "wine_bottle_1": {
+              "position": [
+                -0.20423290037391095,
+                -0.061650894860553605,
+                0.8988754774203452
+              ],
+              "quaternion": [
+                1.1093590904232513e-08,
+                -6.204091079947135e-06,
+                3.87840439876048e-07,
+                0.9999999999806799
+              ],
+              "linear_velocity": [
+                7.320189972133119e-19,
+                1.661353424064115e-18,
+                1.7699082956778488e-14
+              ],
+              "angular_velocity": [
+                -1.062129597226123e-15,
+                2.2174028733199996e-17,
+                -6.785241869573908e-19
+              ],
+              "grasped": false,
+              "error": null
+            },
+            "plate_1": {
+              "position": [
+                0.05961404830057633,
+                -0.012018608732947264,
+                0.9031418725868473
+              ],
+              "quaternion": [
+                0.6857280466972401,
+                0.021089899802764947,
+                -0.007623678499556158,
+                0.7275122965457232
+              ],
+              "linear_velocity": [
+                -0.013891396443675088,
+                -0.014057181375486496,
+                0.002296505639503746
+              ],
+              "angular_velocity": [
+                0.4176204640462569,
+                0.08986727588507604,
+                0.4963687854975879
+              ],
+              "grasped": false,
+              "error": null
+            }
+          },
+          "held_objects": [
+            "akita_black_bowl_1"
+          ],
+          "gripper_qpos": [
+            0.0030895895963968098,
+            -0.006446817039395194
+          ],
+          "eef_position": [
+            0.060185402823154405,
+            0.00998769236464318,
+            0.9392613166175647
+          ],
+          "grasp_observation_complete": true,
+          "strict_candidate": false,
+          "phases": {
+            "on|akita_black_bowl_1|plate_1": "goal_held"
+          },
+          "goal_objects": [
+            "akita_black_bowl_1"
+          ]
+        },
+        "full_snapshot_equal": true,
+        "target_object_equal": true,
+        "all_objects_equal": true,
+        "gripper_qpos_equal": true,
+        "held_objects_equal": true
+      },
+      "old_native_task_success": true,
+      "old_strict_task_success": false,
+      "new_native_benchmark_success": true,
+      "new_atomic_task_success": true,
+      "new_strict_task_success": true
+    }
+  ],
+  "immutable_input_checks": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/app.py",
+      "sha256": "1591117966d8976038bf373aaa6a5ed5ea46684f04335431fce14688062bdb76",
+      "bytes": 50336,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/catalog.py",
+      "sha256": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02",
+      "bytes": 10910,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/fixtures.json",
+      "sha256": "05a21a557bf520b3b30513ae3e41edbb4fe554feccde6d084c223c18831db78c",
+      "bytes": 4966,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/mcp_server.py",
+      "sha256": "add14a4258f4de0e5e102aab21245697cee427131d7d5b1815c1b099a8d03668",
+      "bytes": 11444,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/oracle.py",
+      "sha256": "2e51f77bba85ef4d51f751dc8b59babc11d7635f92d9c546f30975e75b0cfd8f",
+      "bytes": 6548,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/placement_completion.py",
+      "sha256": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+      "bytes": 10036,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/placement_experiments.py",
+      "sha256": "bc4959ace0e534644e655b2fda7f1fcde22f022a35d9e587e378e9936a57bc10",
+      "bytes": 81038,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/run_agent.py",
+      "sha256": "fdec0d1cfda3413cb761d4a4b04f0bff1d71e72956fc6abf045df06a34527e61",
+      "bytes": 39818,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/run_experiments.py",
+      "sha256": "c239dcbbaf8d759eb8f1104d24b3f43159ab8045d29ec0e6d5964b6d4951320e",
+      "bytes": 21187,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/run_service.sh",
+      "sha256": "7ca53e8e7f1f0ffb77b77e53ee10d95272923fafd717b653d1e20b12044a1e00",
+      "bytes": 1112,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/service.py",
+      "sha256": "3e416a4402b2c07352399d30f9c01ca72e27c8d0fffdeceaba7e3d873d6eccb4",
+      "bytes": 108682,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/setup_profile.py",
+      "sha256": "c26606d648adc34f83f5161142a29f00c739999097cc335a4937b3e52881ad20",
+      "bytes": 9074,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/start_demo.ps1",
+      "sha256": "13dd6c6b9136bd00fe4c839e54ac46dcf0bd8178c01b95471432192e4ebe6ff2",
+      "bytes": 16091,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/tests/test_agent_contract.py",
+      "sha256": "e2833125b74684dc663f37cda54b50fff85d5978b77da552ded91e15ec6580e9",
+      "bytes": 38407,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/tests/test_experiment_contract.py",
+      "sha256": "f7fa3071d594766f89c98ddfe56150356b78264cf1f7c520f06f9b6b6ef9da59",
+      "bytes": 21177,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/tests/test_oracle.py",
+      "sha256": "ca96f043c137b7db1ccfd108261d105d436fc60c727a111fc18271d9cc7dbdfd",
+      "bytes": 19584,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/tests/test_placement_completion.py",
+      "sha256": "fc32905fc94563ab802dd0790ddb8b4e793dc9c8df5ea251f3721fd41550c125",
+      "bytes": 14615,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/tests/test_placement_experiments.py",
+      "sha256": "8cc2fea7296b792fbe19608c0119963eee99df03f131cc34139acfd6521d8bbc",
+      "bytes": 68189,
+      "unchanged": true
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/tests/test_service_contract.py",
+      "sha256": "7140b0082ca7d4f5a5797e4be1180ec5a9fccceea23fb0de53489b7e497d50ae",
+      "bytes": 70364,
+      "unchanged": true
+    },
+    {
+      "path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/candidate_comparisons.json",
+      "sha256": "dbfe8615488a13783aa2c4c9de840276e433faf5301c71e2bbabddd17cc2ccda",
+      "bytes": 10762657,
+      "unchanged": true
+    },
+    {
+      "path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/candidate_comparison_runs/20261006T174637Z_goal_table_8fb77304/cap_01_bowl_to_plate_46e9ca4b/telemetry.jsonl",
+      "sha256": "15667c75ef11d3799cdb8081febc3a387ed42dd67fda59206e30dcf28210167c",
+      "bytes": 369962,
+      "unchanged": true
+    },
+    {
+      "path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/candidate_comparison_runs/20261006T174637Z_goal_table_8fb77304/cap_01_bowl_to_plate_46e9ca4b/events.jsonl",
+      "sha256": "97adace0beb9c99ec1edf36cd611738bcfc285f7be4bf37ea85dd1523a9be05c",
+      "bytes": 23141,
+      "unchanged": true
+    },
+    {
+      "path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/baseline_comparisons.json",
+      "sha256": "6a6520f8137a6285418dd634dcbbdd7650b11e82a4ae8c0fade57b0121ec4b40",
+      "bytes": 13441156,
+      "unchanged": true
+    },
+    {
+      "path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/baseline_comparison_runs/20261006T180217Z_goal_table_9e70bef4/cap_01_bowl_to_plate_6095190f/telemetry.jsonl",
+      "sha256": "042b4998af547f35d9c9138ac0affb671c49a3151b7403b44dfefe92734eedb9",
+      "bytes": 423016,
+      "unchanged": true
+    },
+    {
+      "path": "/home/yhwang/fyp/scene_demo/placement_experiments/2026-10-07/baseline_comparison_runs/20261006T180217Z_goal_table_9e70bef4/cap_01_bowl_to_plate_6095190f/events.jsonl",
+      "sha256": "c56f8e91027f1770b26b3908a4571bae814cfa1051b22af5c2171601fd55dba6",
+      "bytes": 26237,
+      "unchanged": true
+    }
+  ],
+  "all_immutable_inputs_unchanged": true,
+  "tracked_source_clean": true,
+  "report_sha256": "4edee0abffea032470760540f8446ae81d006a0b974c317b2413ce388731921b",
+  "process_exited": true
+}
