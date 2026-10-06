@@ -2,7 +2,11 @@
 
 本目录（`First_Phase/scene_demo/`）是「持久场景 v2」实验版：在**同一个** LIBERO 仿真器内，用 SmolVLA 策略连续执行多个子目标，Hermes 只在场景内做一次规划（失败时最多一次修复）。
 
-> **状态：已完成单次 pilot 的实验版。** 已按 seed 0、初始状态 0、n=1/条件完成一次 pilot 实测；其后另补充了 **direct/manual 物理执行**、**意图 / 容量**、**单目标正对照**与**修复范围守卫协议探针**记录，原始证据见 [results/2026-10-06/README.md](results/2026-10-06/README.md)。本文件**只报告这些实测行与保留限制，不声称任何成功率结论**。
+**状态与标签语义。** 本目录已完成 2026-10-06 的单次 pilot（seed 0、初始状态 0、n=1/条件），并另有 direct/manual 物理执行、意图 / 容量、单目标正对照与修复范围守卫探针记录，原始证据见 [results/2026-10-06/README.md](results/2026-10-06/README.md)。下文历史行中的**物理完成 / 成功（completed / success）标签**取自**当时的原生谓词（native predicate）停止**，是**历史 native-stop 记录**，**不是** 2026-10-07 引入的更严格「释放验证（`release_verified`）」判据；这些历史分数**原样保留**，仅明确其标签语义。`unsupported` / `clarify` 的「正确」属于**零动作的决策成功**，**不是**物理放置成功；独立 fixture 的 `task_success`、服务端 `plan_success`、`decision` 合规与保护物体位移评分**各有其独立含义**（见第六节），**不**因 `release_verified` 而改写。
+
+**当前完成判据与启动器（2026-10-07）。** 完整发现见 [results/2026-10-07/README.md](results/2026-10-07/README.md)。**正常 v2 提交流程**由 [run_service.sh](run_service.sh) **显式启用** `release_verified`；**构造 / 基准对比实验**（[placement_experiments.py](placement_experiments.py) 的 `--completion-mode`）**默认保留原生谓词**（`native`），以与历史结果对齐。`release_verified` 要求原生已声明目标谓词为真、**所有具名关节的物理物体**经接触筛查判定为**未被持有**、已声明的放置目标物体 6 维速度有限且线性范数 ≤ 0.02 m/s、角速度范数 ≤ 0.2 rad/s，并**连续五帧**满足；若作业在**初始完成探针**时即为 `already_satisfied`，则**两种模式**均可**零动作**完成。本地 harness 在动作后逐子目标检查谓词 / 持有 / 速度，**绝不逐动作调用 Hermes**；**Hermes 仍只做一次初始规划**，至多一次失败触发的修复。
+
+**当前 102 步单目标 live 示例**（`goal_table` / `table_bowl_only`，`release_verified`，末五帧 `completion_ready` 全真、结束时未持有物体）见 2026-10-07 报告。**持有守卫**在任何 VLA / 环境步进**之前**运行：已持有一个物体时**阻止切换到另一个物体**，同一已声明目标的继续执行**允许**，持有状态未知则**阻止**；该守卫**不**声称提升已学 VLA 的能力。
 
 ## 一、范围（scope）
 
@@ -225,6 +229,7 @@ export MUJOCO_GL=egl
 | 内容 | 相对链接 |
 |---|---|
 | pilot 实测原始证据（2026-10-06） | [results/2026-10-06/README.md](results/2026-10-06/README.md) |
+| 放置完成诊断与修复（2026-10-07） | [results/2026-10-07/README.md](results/2026-10-07/README.md) |
 | 执行服务（常驻仿真器） | [service.py](service.py) |
 | 场景/能力目录 | [catalog.py](catalog.py) |
 | 独立评测 oracle | [oracle.py](oracle.py) |
