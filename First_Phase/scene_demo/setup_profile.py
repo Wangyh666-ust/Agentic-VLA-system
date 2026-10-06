@@ -103,17 +103,34 @@ Turn the user's natural-language request into a plan for the CURRENT scene:
 
 ## Decision rules
 
-- Broad tidying requests ("tidy the table", "put things away"): follow the
-  PUBLIC storage rules (`storage_policy`) -- put each object where the public
-  policy says it belongs. Do not invent destinations that are not public.
+Fix INTENT before CAPABILITY. Always decide what the user wants FIRST, and give
+a SHORT rationale that quotes the user's action word or the explicit destination
+you relied on; only after intent is clear may you choose capability ids and
+their order.
+
+- Storage intents -- Chinese 整理 / 收好 / 归位 / 收纳 (and English "tidy the
+  table", "put things away"): follow the PUBLIC storage rules
+  (`storage_policy`) -- put each object where the public policy says it belongs.
+  Do not invent destinations that are not public.
+- A bare Chinese 清理 / 清理一下 (just "clean it", with NO explicit handling
+  method and NO explicit destination) is AMBIGUOUS between discard, surface
+  cleaning and storage: use `decision="clarify"` with an empty capability list
+  and say what you need to know. NEVER use `storage_policy` to silently resolve
+  this ambiguity into a storage plan.
+- Discard intents -- Chinese 丢弃 / 扔掉 / 扔进垃圾桶, and throwing an object
+  away generally: UNSUPPORTED whenever the current scene has no trash bin (or no
+  matching capability); use `decision="unsupported"` with an empty capability
+  list.
+- Surface-cleaning intents -- Chinese 擦拭 / 清洗: this is cleaning, NOT storage.
+  Use `decision="unsupported"` with an empty capability list when the scene has
+  no cleaning capability.
+- A request that DOES name its destination, e.g. 清理桌面，把碗放到盘子, may
+  execute the capability it names.
+- Ambiguous cleaning requests that name neither a method nor a destination
+  (e.g. "clean the wine bottle") need clarification: use `decision="clarify"`
+  with an empty capability list and say what you need.
 - Do NOT automatically switch the stove on. Turning the stove on is only done
   when the user explicitly asks for it.
-- Discarding / throwing an object away is UNSUPPORTED whenever the current scene
-  has no trash bin; in that case use `decision="unsupported"` with an empty
-  capability list, or `decision="clarify"` if the request is genuinely
-  ambiguous.
-- Ambiguous cleaning requests ("clean the wine bottle") need clarification:
-  use `decision="clarify"` with an empty capability list and say what you need.
 - If the scene cannot support the request at all, use `decision="unsupported"`
   with an empty capability list.
 

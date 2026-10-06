@@ -118,20 +118,27 @@ INITIAL_PROMPT_HEAD = (
 流程（必须遵守）：
 1. 先调用 get_scene_session(session_id)，核对数据段里的 scene_version 与当前是否一致；不一致就以当前场景为准并说明，绝不对着过期版本做规划。
 2. 依据随本条消息已附带的 native agentview 图像；当它足够时不要重复 vision_analyze，只有图像不足时才 observe_scene(extra_views=True) 并真正查看所需的额外图像，按**真实画面**判断物体与摆放。
-3. 从数据段 capabilities 中挑选合适的**原子能力**作为 capability_ids，并决定执行顺序（顺序即 capability_ids 的先后）。
-4. 调用 submit_scene_plan(...) 提交：
+3. 先确定**用户意图**，再选择能力（intent before capability）：
+   - 「整理 / 收好 / 归位 / 收纳」是收纳意图，可以使用公开 storage_policy 中的目的地。
+   - 裸的「清理 / 清理一下」若**没有**明确处置方式或目的地，则在「丢弃、表面清洁、收纳」之间存在歧义：**必须** decision="clarify" 且 capability_ids=[]，并说明需要澄清什么；**绝不**用 storage_policy 静默化解该歧义。
+   - 「丢弃 / 扔掉 / 扔进垃圾桶」是丢弃意图：当前场景没有垃圾桶或对应能力时，decision="unsupported" 且 capability_ids=[]。
+   - 「擦拭 / 清洗」是表面清洁意图，不是收纳：当前场景缺少清洁能力时，decision="unsupported" 且 capability_ids=[]。
+   - 像「清理桌面，把碗放到盘子」这样**明确点名目的地**的请求，可按其点名能力执行。
+   - 提交时必须给出简短 rationale：引用用户的**动作词**或**明确目的地**来证明所判定的意图。
+4. 只有在意图清楚之后，才从数据段 capabilities 中挑选合适的**原子能力**作为 capability_ids，并决定执行顺序（顺序即 capability_ids 的先后）。
+5. 调用 submit_scene_plan(...) 提交：
    - 可以执行：decision="execute"，capability_ids 为选中的能力 id（可多个，按执行顺序）。
    - 信息不足、需要澄清：decision="clarify"，capability_ids=[]。
    - 当前场景无法支持：decision="unsupported"，capability_ids=[]。
-5. submit_scene_plan 返回后，用一句话说明「计划已提交」，然后**立即结束**：
+6. submit_scene_plan 返回后，用一句话说明「计划已提交」，然后**立即结束**：
    - 不要调用 get_scene_plan 反复查看；不要等待机器人；不要按 45 秒一轮轮询；不要 sleep。
    - host 会负责等待执行终态。
 
 约束：
 - 只依据数据段与工具返回的**公开**数据做选择；不要臆造能力，不要修改场景，不要重置物体。
-- 计划顺序即执行顺序；宽泛的整理目标按公开 storage_policy 收纳。
-- 不要自动打开炉灶（stove）；当前场景没有垃圾桶时，「丢弃 / 扔掉」不受支持。
-- 含糊的「清理」请求应先要求澄清，不要擅自执行。
+- 计划顺序即执行顺序；宽泛的整理目标（整理 / 收好 / 归位 / 收纳）按公开 storage_policy 收纳。
+- 不要自动打开炉灶（stove）；当前场景没有垃圾桶或对应能力时，「丢弃 / 扔掉 / 扔进垃圾桶」不受支持。
+- 裸的「清理 / 清理一下」在没有明确处置方式或目的地时必须先澄清（decision="clarify"，capability_ids=[]），绝不用 storage_policy 静默化解歧义。
 - candidate 能力可以使用，但不要声称它们已被可靠验证。
 - 预算事实：当前 scene_tools MCP 为**每一个 subgoal 单独**提供 300 个控制步的预算
   （separate 300 control steps per subgoal），**不是**多个 subgoal 共享一个总预算；
