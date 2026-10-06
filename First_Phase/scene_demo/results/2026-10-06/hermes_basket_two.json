@@ -1,0 +1,133 @@
+{
+  "request_id": "fcb9de064a6544c2867421cb5c2002a3",
+  "session_id": "f185a0608c6641d79421502e38f39ed6",
+  "request": "把字母汤罐头和番茄酱罐头都收进篮子。",
+  "run_ok": true,
+  "chain_ok": false,
+  "plan_success": null,
+  "task_success": false,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "fcb9de064a6544c2867421cb5c2002a3",
+    "session_id": "f185a0608c6641d79421502e38f39ed6",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "sauce_to_basket",
+      "soup_to_basket"
+    ],
+    "original_capability_ids": [
+      "soup_to_basket",
+      "sauce_to_basket"
+    ],
+    "rationale": "原计划中soup_to_basket超预算未完成；根据图像，番茄酱罐头位置更易抓取，先执行sauce_to_basket，再尝试soup_to_basket，避免因第一个复杂操作耗尽预算导致整个计划失败。",
+    "job_ids": [
+      "5a3df3ad11a94aa4ab45017095675fb2",
+      "db0a523a6ed2407dbd60a16903fc0ea9"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [
+      "soup_to_basket"
+    ],
+    "plan_success": null,
+    "regressions": [],
+    "error": "budget_exhausted",
+    "repair_history": [
+      {
+        "capability_ids": [
+          "sauce_to_basket",
+          "soup_to_basket"
+        ],
+        "rationale": "原计划中soup_to_basket超预算未完成；根据图像，番茄酱罐头位置更易抓取，先执行sauce_to_basket，再尝试soup_to_basket，避免因第一个复杂操作耗尽预算导致整个计划失败。",
+        "at": "2026-10-06T13:00:44+00:00"
+      }
+    ],
+    "scene_version": 2
+  },
+  "jobs": [
+    {
+      "job_id": "5a3df3ad11a94aa4ab45017095675fb2",
+      "request_id": "fcb9de064a6544c2867421cb5c2002a3",
+      "session_id": "f185a0608c6641d79421502e38f39ed6",
+      "capability_id": "soup_to_basket",
+      "state": "completed",
+      "steps": 300,
+      "total_steps": 300,
+      "success": false,
+      "ended_reason": "budget_exhausted",
+      "error": null,
+      "instruction": "put the alphabet soup in the basket",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+      "state_after_sha": "6b04350450dcb5cd6174b76f905a2c6d1fd15edb61fe8f18c362555c02dac055",
+      "env_instance_id": 2,
+      "episode_resets": 1,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T125657Z_basket_two_f185a060/cap_01_soup_to_basket_5a3df3ad",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T125657Z_basket_two_f185a060/cap_01_soup_to_basket_5a3df3ad/latest.png",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T125657Z_basket_two_f185a060/cap_01_soup_to_basket_5a3df3ad/rollout.mp4",
+      "wall_s": 167.817
+    },
+    {
+      "job_id": "db0a523a6ed2407dbd60a16903fc0ea9",
+      "request_id": "fcb9de064a6544c2867421cb5c2002a3",
+      "session_id": "f185a0608c6641d79421502e38f39ed6",
+      "capability_id": "sauce_to_basket",
+      "state": "completed",
+      "steps": 300,
+      "total_steps": 600,
+      "success": false,
+      "ended_reason": "budget_exhausted",
+      "error": null,
+      "instruction": "put the tomato sauce in the basket",
+      "scene_version_before": 1,
+      "scene_version_after": 2,
+      "state_before_sha": "6b04350450dcb5cd6174b76f905a2c6d1fd15edb61fe8f18c362555c02dac055",
+      "state_after_sha": "01fc2d1f70c7f13557adf6f4586a8ea9351e83bad2c6a7faf68822cf165f5ce8",
+      "env_instance_id": 2,
+      "episode_resets": 1,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T125657Z_basket_two_f185a060/cap_01_sauce_to_basket_db0a523a",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T125657Z_basket_two_f185a060/cap_01_sauce_to_basket_db0a523a/latest.png",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T125657Z_basket_two_f185a060/cap_01_sauce_to_basket_db0a523a/rollout.mp4",
+      "wall_s": 165.891
+    }
+  ],
+  "evaluation": {
+    "task_success": false,
+    "goal_option_satisfied": [
+      false
+    ],
+    "protected_satisfied": true,
+    "decision_ok": true,
+    "objects_ok": true,
+    "position_checks": {},
+    "missing_truth": [],
+    "oracle_source": "preauthored_fixture",
+    "ok": true,
+    "case_id": "basket_two_cans",
+    "request_id": "fcb9de064a6544c2867421cb5c2002a3",
+    "session_id": "f185a0608c6641d79421502e38f39ed6"
+  },
+  "hermes_invocations": 2,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    },
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "wall_s": 375.921,
+  "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+  "hermes_output": "计划已提交。\n\nsession_id: 20261006_205718_4ba56a\n\n\n计划已成功提交修复，将先执行\"sauce_to_basket\"（番茄酱罐头入篮），再执行\"soup_to_basket\"（字母汤罐头入篮）。这是基于图像分析得出的修正方案：番茄酱罐头位置更易抓取，先处理简单的任务可避免因第一个复杂操作耗尽预算导致整个计划失败。\n\n计划已提交，修复完成。\n\nsession_id: 20261006_210025_81d0b3\n"
+}

@@ -1,0 +1,128 @@
+{
+  "request_id": "b811b089ce0542e8a2221b8b77a0a4d3",
+  "session_id": "11492c8699b746cfbcb8dcf378efa1e0",
+  "request": "把白杯放到一个空盘子上，不要碰已经放好的红杯。",
+  "run_ok": true,
+  "chain_ok": false,
+  "plan_success": null,
+  "task_success": false,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "b811b089ce0542e8a2221b8b77a0a4d3",
+    "session_id": "11492c8699b746cfbcb8dcf378efa1e0",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "yellow_mug_right"
+    ],
+    "original_capability_ids": [
+      "white_mug_right"
+    ],
+    "rationale": "图像显示白杯实为白黄相间（白色主体+黄色把手），更匹配yellow_mug_right能力描述的'yellow and white mug'；右盘为空，符合用户'放到空盘子上'的要求，且不触碰左盘红杯。",
+    "job_ids": [
+      "05d58268882e4136aa9ff43df5fe5138",
+      "70b00718bc2f4df19493f9d38ef1b355"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "budget_exhausted",
+    "repair_history": [
+      {
+        "capability_ids": [
+          "yellow_mug_right"
+        ],
+        "rationale": "图像显示白杯实为白黄相间（白色主体+黄色把手），更匹配yellow_mug_right能力描述的'yellow and white mug'；右盘为空，符合用户'放到空盘子上'的要求，且不触碰左盘红杯。",
+        "at": "2026-10-06T12:45:54+00:00"
+      }
+    ],
+    "scene_version": 2
+  },
+  "jobs": [
+    {
+      "job_id": "05d58268882e4136aa9ff43df5fe5138",
+      "request_id": "b811b089ce0542e8a2221b8b77a0a4d3",
+      "session_id": "11492c8699b746cfbcb8dcf378efa1e0",
+      "capability_id": "white_mug_right",
+      "state": "completed",
+      "steps": 300,
+      "total_steps": 300,
+      "success": false,
+      "ended_reason": "budget_exhausted",
+      "error": null,
+      "instruction": "put the white mug on the right plate",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "8dfa92381c520e9f4cbb6fba00d27f164ae636898ea3242e27334226dd023eb2",
+      "state_after_sha": "bf8414ff331b7b56841a73187a9d73791a3909c1129220eb354f4c7f9a892e30",
+      "env_instance_id": 6,
+      "episode_resets": 1,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T124139Z_mugs_left_occupied_11492c86/cap_01_white_mug_right_05d58268",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T124139Z_mugs_left_occupied_11492c86/cap_01_white_mug_right_05d58268/latest.png",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T124139Z_mugs_left_occupied_11492c86/cap_01_white_mug_right_05d58268/rollout.mp4",
+      "wall_s": 163.425
+    },
+    {
+      "job_id": "70b00718bc2f4df19493f9d38ef1b355",
+      "request_id": "b811b089ce0542e8a2221b8b77a0a4d3",
+      "session_id": "11492c8699b746cfbcb8dcf378efa1e0",
+      "capability_id": "yellow_mug_right",
+      "state": "completed",
+      "steps": 300,
+      "total_steps": 600,
+      "success": false,
+      "ended_reason": "budget_exhausted",
+      "error": null,
+      "instruction": "put the yellow and white mug on the right plate",
+      "scene_version_before": 1,
+      "scene_version_after": 2,
+      "state_before_sha": "bf8414ff331b7b56841a73187a9d73791a3909c1129220eb354f4c7f9a892e30",
+      "state_after_sha": "78e7507dd63da109a3dbc529db7eaef9900cca56960721e82caa1a689ef1f4af",
+      "env_instance_id": 6,
+      "episode_resets": 1,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T124139Z_mugs_left_occupied_11492c86/cap_01_yellow_mug_right_70b00718",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T124139Z_mugs_left_occupied_11492c86/cap_01_yellow_mug_right_70b00718/latest.png",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T124139Z_mugs_left_occupied_11492c86/cap_01_yellow_mug_right_70b00718/rollout.mp4",
+      "wall_s": 161.437
+    }
+  ],
+  "evaluation": {
+    "task_success": false,
+    "goal_option_satisfied": [
+      false
+    ],
+    "protected_satisfied": false,
+    "decision_ok": true,
+    "objects_ok": false,
+    "position_checks": {},
+    "missing_truth": [],
+    "oracle_source": "preauthored_fixture",
+    "ok": true,
+    "case_id": "mugs_free_right",
+    "request_id": "b811b089ce0542e8a2221b8b77a0a4d3",
+    "session_id": "11492c8699b746cfbcb8dcf378efa1e0"
+  },
+  "hermes_invocations": 2,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    },
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "wall_s": 372.179,
+  "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+  "hermes_output": "计划已提交。\n\nsession_id: 20261006_204226_09c5a4\n\n\n计划已提交。修正方案是使用\"yellow_mug_right\"能力代替原来的\"white_mug_right\"，因为图像显示白杯实际上是白黄相间的（白色主体+黄色把手），更匹配\"yellow_mug_right\"能力描述的\"yellow and white mug\"；右盘为空，符合用户\"放到空盘子上\"的要求，且不触碰左盘红杯.\n\nsession_id: 20261006_204530_87f824\n"
+}

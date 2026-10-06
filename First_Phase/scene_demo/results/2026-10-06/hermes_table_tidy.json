@@ -1,0 +1,156 @@
+{
+  "request_id": "86d077a89933478b81f36e8cac204cc5",
+  "session_id": "b440a37a4d564503ac99b5b0a4bace49",
+  "request": "请帮我整理一下桌面，把碗和酒瓶收好。",
+  "run_ok": true,
+  "chain_ok": false,
+  "plan_success": null,
+  "task_success": false,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "86d077a89933478b81f36e8cac204cc5",
+    "session_id": "b440a37a4d564503ac99b5b0a4bace49",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "bowl_to_plate",
+      "wine_to_rack"
+    ],
+    "original_capability_ids": [
+      "bowl_to_plate",
+      "wine_to_rack"
+    ],
+    "rationale": "bowl_to_plate already completed; only wine_to_rack remains per storage_policy and visible scene. Budget exhaustion was due to attempting two steps in one budget slice; now submit only the pending step.",
+    "job_ids": [
+      "d9252164e7ff4b608982ff5d812a382e",
+      "795969d498b5432e82c6d013718f3f91",
+      "2bf6337d4c2c4f5d93b99b800cae53f6"
+    ],
+    "completed_capability_ids": [
+      "bowl_to_plate"
+    ],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "budget_exhausted",
+    "repair_history": [
+      {
+        "capability_ids": [
+          "wine_to_rack"
+        ],
+        "rationale": "bowl_to_plate already completed; only wine_to_rack remains per storage_policy and visible scene. Budget exhaustion was due to attempting two steps in one budget slice; now submit only the pending step.",
+        "at": "2026-10-06T12:00:29+00:00"
+      }
+    ],
+    "scene_version": 3
+  },
+  "jobs": [
+    {
+      "job_id": "d9252164e7ff4b608982ff5d812a382e",
+      "request_id": "86d077a89933478b81f36e8cac204cc5",
+      "session_id": "b440a37a4d564503ac99b5b0a4bace49",
+      "capability_id": "bowl_to_plate",
+      "state": "completed",
+      "steps": 95,
+      "total_steps": 95,
+      "success": true,
+      "ended_reason": "success",
+      "error": null,
+      "instruction": "put the bowl on the plate",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+      "state_after_sha": "32cd4ae151b52f08e9511e4adab485dc8fc758c78e0aa55600ad7df977415798",
+      "env_instance_id": 4,
+      "episode_resets": 1,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T115520Z_goal_table_b440a37a/cap_01_bowl_to_plate_d9252164",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T115520Z_goal_table_b440a37a/cap_01_bowl_to_plate_d9252164/latest.png",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T115520Z_goal_table_b440a37a/cap_01_bowl_to_plate_d9252164/rollout.mp4",
+      "wall_s": 55.242
+    },
+    {
+      "job_id": "795969d498b5432e82c6d013718f3f91",
+      "request_id": "86d077a89933478b81f36e8cac204cc5",
+      "session_id": "b440a37a4d564503ac99b5b0a4bace49",
+      "capability_id": "wine_to_rack",
+      "state": "completed",
+      "steps": 300,
+      "total_steps": 395,
+      "success": false,
+      "ended_reason": "budget_exhausted",
+      "error": null,
+      "instruction": "put the wine bottle on the rack",
+      "scene_version_before": 1,
+      "scene_version_after": 2,
+      "state_before_sha": "32cd4ae151b52f08e9511e4adab485dc8fc758c78e0aa55600ad7df977415798",
+      "state_after_sha": "61fd677edbb66c6e72151a98b478e40e39004980301e99dc815ef29dd822f24a",
+      "env_instance_id": 4,
+      "episode_resets": 1,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T115520Z_goal_table_b440a37a/cap_02_wine_to_rack_795969d4",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T115520Z_goal_table_b440a37a/cap_02_wine_to_rack_795969d4/latest.png",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T115520Z_goal_table_b440a37a/cap_02_wine_to_rack_795969d4/rollout.mp4",
+      "wall_s": 173.844
+    },
+    {
+      "job_id": "2bf6337d4c2c4f5d93b99b800cae53f6",
+      "request_id": "86d077a89933478b81f36e8cac204cc5",
+      "session_id": "b440a37a4d564503ac99b5b0a4bace49",
+      "capability_id": "wine_to_rack",
+      "state": "completed",
+      "steps": 300,
+      "total_steps": 695,
+      "success": false,
+      "ended_reason": "budget_exhausted",
+      "error": null,
+      "instruction": "put the wine bottle on the rack",
+      "scene_version_before": 2,
+      "scene_version_after": 3,
+      "state_before_sha": "61fd677edbb66c6e72151a98b478e40e39004980301e99dc815ef29dd822f24a",
+      "state_after_sha": "2fd4b1c9997e4b7085839178986c9342d27e5ed1e5b5cc301df1e2e156bd93dd",
+      "env_instance_id": 4,
+      "episode_resets": 1,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T115520Z_goal_table_b440a37a/cap_02_wine_to_rack_2bf6337d",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T115520Z_goal_table_b440a37a/cap_02_wine_to_rack_2bf6337d/latest.png",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T115520Z_goal_table_b440a37a/cap_02_wine_to_rack_2bf6337d/rollout.mp4",
+      "wall_s": 179.046
+    }
+  ],
+  "evaluation": {
+    "task_success": false,
+    "goal_option_satisfied": [
+      false
+    ],
+    "protected_satisfied": true,
+    "decision_ok": true,
+    "objects_ok": true,
+    "position_checks": {},
+    "missing_truth": [],
+    "oracle_source": "preauthored_fixture",
+    "ok": true,
+    "case_id": "table_tidy",
+    "request_id": "86d077a89933478b81f36e8cac204cc5",
+    "session_id": "b440a37a4d564503ac99b5b0a4bace49"
+  },
+  "hermes_invocations": 2,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    },
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "wall_s": 457.966,
+  "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+  "hermes_output": "计划已提交。\n\nsession_id: 20261006_195554_6151d6\n\n\nThe plan was submitted (resumed) with capability_ids = [\"wine_to_rack\"] to complete the remaining step.\n\nsession_id: 20261006_200009_7d48b2\n"
+}

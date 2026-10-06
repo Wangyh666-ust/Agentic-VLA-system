@@ -1,0 +1,292 @@
+{
+  "experiment": "persistent_scene_direct_vs_manual_subgoal_audit",
+  "checkpoint_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+  "service": "http://127.0.0.1:8767",
+  "seed": 0,
+  "requested_conditions": [
+    "table_forward"
+  ],
+  "requested_states": [
+    0
+  ],
+  "n_requested": 1,
+  "trial_timeout_s": 900.0,
+  "generated_utc": "2026-10-06T11:46:30+00:00",
+  "health": {
+    "ok": true,
+    "backend": "smolvla",
+    "robot": "Franka Panda",
+    "workflow": "persistent_scene_v2",
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "ready": true,
+    "worker_error": null,
+    "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+    "device": "cuda",
+    "n_action_steps": 1,
+    "dtype": "float32",
+    "control_mode": "relative",
+    "session_step_limit": 2000,
+    "active_request_id": null
+  },
+  "is_error": false,
+  "error": null,
+  "trials": [
+    {
+      "condition": "table_forward",
+      "state": 0,
+      "seed": 0,
+      "scene_id": "goal_table",
+      "case_id": "table_tidy",
+      "execution_kind": "manual_subgoals",
+      "capability_ids": [
+        "bowl_to_plate",
+        "wine_to_rack"
+      ],
+      "budget_per_subgoal": 300,
+      "request_id": "33c4c536dac84f10b10db3010c8690db",
+      "plan_id": "33c4c536dac84f10b10db3010c8690db",
+      "session_id": "e6d5193e1014489ba69088b17b0e1fa1",
+      "job_ids": [
+        "f06b857d4ca3427494b9ea811af37cb2",
+        "2942be90c44c4208aa52285fa62c1c8e"
+      ],
+      "env_instance_id": 3,
+      "initial_images": [
+        {
+          "view": "agentview",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/agentview.png",
+          "sha256": "576c32456ea62e6a4d828240ce9d0c8ceb207618fade6a9b2014e29e71ef0d71",
+          "kind": "vla_observation"
+        },
+        {
+          "view": "wrist",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/wrist.png",
+          "sha256": "09c739380d345eb82aa70d3fc9cc5ae60cdd01fb111b64d6cb891f4236c5329c",
+          "kind": "vla_observation"
+        }
+      ],
+      "session": {
+        "ok": true,
+        "session_id": "e6d5193e1014489ba69088b17b0e1fa1",
+        "scene_id": "goal_table",
+        "state": "ready",
+        "scene_version": 0,
+        "env_instance_id": 3,
+        "episode_resets": 1,
+        "policy_resets": 0,
+        "total_steps": 0,
+        "seed": 0,
+        "init_state_index": 0,
+        "description": "Shared original bowl, wine and stove scene; no trash bin exists here.",
+        "storage_policy": {
+          "akita_black_bowl_1": "plate_1",
+          "wine_bottle_1": "wine_rack_1_top_region"
+        },
+        "capabilities": [
+          {
+            "instruction": "put the bowl on the plate",
+            "goals": [
+              [
+                "on",
+                "akita_black_bowl_1",
+                "plate_1"
+              ]
+            ],
+            "object_id": "akita_black_bowl_1",
+            "target_id": "plate_1",
+            "scene_ids": [
+              "goal_table",
+              "goal_table_shifted"
+            ],
+            "evidence": "v0.1.0 successful original episode",
+            "audit_only": false,
+            "exclusive_target": true,
+            "capability_id": "bowl_to_plate"
+          },
+          {
+            "instruction": "put the wine bottle on the rack",
+            "goals": [
+              [
+                "on",
+                "wine_bottle_1",
+                "wine_rack_1_top_region"
+              ]
+            ],
+            "object_id": "wine_bottle_1",
+            "target_id": "wine_rack_1_top_region",
+            "scene_ids": [
+              "goal_table",
+              "goal_table_shifted"
+            ],
+            "evidence": "v0.1.0 successful original episode",
+            "audit_only": false,
+            "exclusive_target": true,
+            "capability_id": "wine_to_rack"
+          },
+          {
+            "instruction": "turn on the stove",
+            "goals": [
+              [
+                "turnon",
+                "flat_stove_1"
+              ]
+            ],
+            "object_id": "flat_stove_1",
+            "target_id": null,
+            "scene_ids": [
+              "goal_table",
+              "goal_table_shifted"
+            ],
+            "evidence": "v0.1.0 successful original episode",
+            "audit_only": false,
+            "exclusive_target": false,
+            "capability_id": "stove_on"
+          }
+        ],
+        "images": [
+          {
+            "view": "agentview",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/agentview.png",
+            "sha256": "576c32456ea62e6a4d828240ce9d0c8ceb207618fade6a9b2014e29e71ef0d71",
+            "kind": "vla_observation"
+          },
+          {
+            "view": "wrist",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/wrist.png",
+            "sha256": "09c739380d345eb82aa70d3fc9cc5ae60cdd01fb111b64d6cb891f4236c5329c",
+            "kind": "vla_observation"
+          }
+        ],
+        "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/latest.png",
+        "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e",
+        "active_request_id": null,
+        "error": null
+      },
+      "plan": {
+        "ok": true,
+        "request_id": "33c4c536dac84f10b10db3010c8690db",
+        "session_id": "e6d5193e1014489ba69088b17b0e1fa1",
+        "state": "blocked",
+        "decision": "execute",
+        "capability_ids": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "original_capability_ids": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "rationale": "preauthored manual/direct capability audit",
+        "job_ids": [
+          "f06b857d4ca3427494b9ea811af37cb2",
+          "2942be90c44c4208aa52285fa62c1c8e"
+        ],
+        "completed_capability_ids": [
+          "bowl_to_plate"
+        ],
+        "pending_capability_ids": [],
+        "plan_success": null,
+        "regressions": [],
+        "error": "budget_exhausted",
+        "repair_history": [],
+        "scene_version": 2
+      },
+      "jobs": [
+        {
+          "job_id": "f06b857d4ca3427494b9ea811af37cb2",
+          "request_id": "33c4c536dac84f10b10db3010c8690db",
+          "session_id": "e6d5193e1014489ba69088b17b0e1fa1",
+          "capability_id": "bowl_to_plate",
+          "state": "completed",
+          "steps": 95,
+          "total_steps": 95,
+          "success": true,
+          "ended_reason": "success",
+          "error": null,
+          "instruction": "put the bowl on the plate",
+          "scene_version_before": 0,
+          "scene_version_after": 1,
+          "state_before_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+          "state_after_sha": "32cd4ae151b52f08e9511e4adab485dc8fc758c78e0aa55600ad7df977415798",
+          "env_instance_id": 3,
+          "episode_resets": 1,
+          "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/cap_01_bowl_to_plate_f06b857d",
+          "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/cap_01_bowl_to_plate_f06b857d/latest.png",
+          "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/cap_01_bowl_to_plate_f06b857d/rollout.mp4",
+          "wall_s": 56.201
+        },
+        {
+          "job_id": "2942be90c44c4208aa52285fa62c1c8e",
+          "request_id": "33c4c536dac84f10b10db3010c8690db",
+          "session_id": "e6d5193e1014489ba69088b17b0e1fa1",
+          "capability_id": "wine_to_rack",
+          "state": "completed",
+          "steps": 300,
+          "total_steps": 395,
+          "success": false,
+          "ended_reason": "budget_exhausted",
+          "error": null,
+          "instruction": "put the wine bottle on the rack",
+          "scene_version_before": 1,
+          "scene_version_after": 2,
+          "state_before_sha": "32cd4ae151b52f08e9511e4adab485dc8fc758c78e0aa55600ad7df977415798",
+          "state_after_sha": "61fd677edbb66c6e72151a98b478e40e39004980301e99dc815ef29dd822f24a",
+          "env_instance_id": 3,
+          "episode_resets": 1,
+          "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/cap_02_wine_to_rack_2942be90",
+          "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/cap_02_wine_to_rack_2942be90/latest.png",
+          "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T114630Z_goal_table_e6d5193e/cap_02_wine_to_rack_2942be90/rollout.mp4",
+          "wall_s": 173.736
+        }
+      ],
+      "evaluation": {
+        "task_success": false,
+        "goal_option_satisfied": [
+          false
+        ],
+        "protected_satisfied": true,
+        "decision_ok": true,
+        "objects_ok": true,
+        "position_checks": {},
+        "missing_truth": [],
+        "oracle_source": "preauthored_fixture",
+        "ok": true,
+        "case_id": "table_tidy",
+        "request_id": "33c4c536dac84f10b10db3010c8690db",
+        "session_id": "e6d5193e1014489ba69088b17b0e1fa1"
+      },
+      "plan_success": null,
+      "task_success": false,
+      "error": null,
+      "elapsed_s": 235.657
+    }
+  ],
+  "summary": {
+    "conditions": {
+      "table_forward": {
+        "condition": "table_forward",
+        "n": 1,
+        "evaluable": 1,
+        "successes": 0,
+        "failures": 1,
+        "errors": 0,
+        "wilson_95": [
+          0.0,
+          0.7934506856227626
+        ]
+      }
+    },
+    "totals": {
+      "n": 1,
+      "evaluable": 1,
+      "successes": 0,
+      "failures": 1,
+      "errors": 0,
+      "wilson_95": [
+        0.0,
+        0.7934506856227626
+      ]
+    }
+  },
+  "note": "These trials are direct-VLA / manual-subgoal capability audits. Each condition is a preauthored request; no Hermes planner, no agent narration and no visual inference participates. Independent success is judged only by the preauthored fixture oracle, and every trial runs in its own fresh session with a fixed seed and init_state_index. Because both arms share the same preauthored final target case, these results cannot establish any agent gain."
+}

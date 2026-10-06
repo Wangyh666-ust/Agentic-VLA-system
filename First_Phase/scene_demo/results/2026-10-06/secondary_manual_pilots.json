@@ -1,0 +1,457 @@
+{
+  "experiment": "persistent_scene_direct_vs_manual_subgoal_audit",
+  "checkpoint_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+  "service": "http://127.0.0.1:8767",
+  "seed": 0,
+  "requested_conditions": [
+    "basket_direct",
+    "free_left"
+  ],
+  "requested_states": [
+    0
+  ],
+  "n_requested": 2,
+  "trial_timeout_s": 900.0,
+  "generated_utc": "2026-10-06T12:31:04+00:00",
+  "health": {
+    "ok": true,
+    "backend": "smolvla",
+    "robot": "Franka Panda",
+    "workflow": "persistent_scene_v2",
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "ready": true,
+    "worker_error": null,
+    "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+    "device": "cuda",
+    "n_action_steps": 1,
+    "dtype": "float32",
+    "control_mode": "relative",
+    "session_step_limit": 2000,
+    "active_request_id": null
+  },
+  "is_error": false,
+  "error": null,
+  "trials": [
+    {
+      "condition": "basket_direct",
+      "state": 0,
+      "seed": 0,
+      "scene_id": "basket_two",
+      "case_id": "basket_two_cans",
+      "execution_kind": "direct_vla",
+      "capability_ids": [
+        "basket_both"
+      ],
+      "budget_per_subgoal": 600,
+      "request_id": "f43f5a229e874046bb6872c26cf3ed15",
+      "plan_id": "f43f5a229e874046bb6872c26cf3ed15",
+      "session_id": "3abd7e4759dd4b44be8dc1276ae4bc23",
+      "job_ids": [
+        "b731866c96984891aca49e09c8d3d538"
+      ],
+      "env_instance_id": 4,
+      "initial_images": [
+        {
+          "view": "agentview",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T123104Z_basket_two_3abd7e47/agentview.png",
+          "sha256": "3b784daf71a1ca029300f379d02c011c38764ca47e8b2d912c32941a2275c21d",
+          "kind": "vla_observation"
+        },
+        {
+          "view": "wrist",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T123104Z_basket_two_3abd7e47/wrist.png",
+          "sha256": "e09ccc4b4896d26f5e98a8ae81ec5cdb7bda496c26e5f86652a68af66e1c3361",
+          "kind": "vla_observation"
+        }
+      ],
+      "session": {
+        "ok": true,
+        "session_id": "3abd7e4759dd4b44be8dc1276ae4bc23",
+        "scene_id": "basket_two",
+        "state": "ready",
+        "scene_version": 0,
+        "env_instance_id": 4,
+        "episode_resets": 1,
+        "policy_resets": 0,
+        "total_steps": 0,
+        "seed": 0,
+        "init_state_index": 0,
+        "description": "Shared original basket scene holding the alphabet soup can and the tomato sauce can.",
+        "storage_policy": {
+          "alphabet_soup_1": "basket_1_contain_region",
+          "tomato_sauce_1": "basket_1_contain_region"
+        },
+        "capabilities": [
+          {
+            "instruction": "put the alphabet soup in the basket",
+            "goals": [
+              [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ]
+            ],
+            "object_id": "alphabet_soup_1",
+            "target_id": "basket_1_contain_region",
+            "scene_ids": [
+              "basket_two"
+            ],
+            "evidence": "candidate in this scene; previous successful single task is a different scene",
+            "audit_only": false,
+            "exclusive_target": false,
+            "capability_id": "soup_to_basket"
+          },
+          {
+            "instruction": "put the tomato sauce in the basket",
+            "goals": [
+              [
+                "in",
+                "tomato_sauce_1",
+                "basket_1_contain_region"
+              ]
+            ],
+            "object_id": "tomato_sauce_1",
+            "target_id": "basket_1_contain_region",
+            "scene_ids": [
+              "basket_two"
+            ],
+            "evidence": "candidate",
+            "audit_only": false,
+            "exclusive_target": false,
+            "capability_id": "sauce_to_basket"
+          }
+        ],
+        "images": [
+          {
+            "view": "agentview",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T123104Z_basket_two_3abd7e47/agentview.png",
+            "sha256": "3b784daf71a1ca029300f379d02c011c38764ca47e8b2d912c32941a2275c21d",
+            "kind": "vla_observation"
+          },
+          {
+            "view": "wrist",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T123104Z_basket_two_3abd7e47/wrist.png",
+            "sha256": "e09ccc4b4896d26f5e98a8ae81ec5cdb7bda496c26e5f86652a68af66e1c3361",
+            "kind": "vla_observation"
+          }
+        ],
+        "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T123104Z_basket_two_3abd7e47/latest.png",
+        "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T123104Z_basket_two_3abd7e47",
+        "active_request_id": null,
+        "error": null
+      },
+      "plan": {
+        "ok": true,
+        "request_id": "f43f5a229e874046bb6872c26cf3ed15",
+        "session_id": "3abd7e4759dd4b44be8dc1276ae4bc23",
+        "state": "blocked",
+        "decision": "execute",
+        "capability_ids": [
+          "basket_both"
+        ],
+        "original_capability_ids": [
+          "basket_both"
+        ],
+        "rationale": "preauthored manual/direct capability audit",
+        "job_ids": [
+          "b731866c96984891aca49e09c8d3d538"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [],
+        "plan_success": null,
+        "regressions": [],
+        "error": "budget_exhausted",
+        "repair_history": [],
+        "scene_version": 1
+      },
+      "jobs": [
+        {
+          "job_id": "b731866c96984891aca49e09c8d3d538",
+          "request_id": "f43f5a229e874046bb6872c26cf3ed15",
+          "session_id": "3abd7e4759dd4b44be8dc1276ae4bc23",
+          "capability_id": "basket_both",
+          "state": "completed",
+          "steps": 600,
+          "total_steps": 600,
+          "success": false,
+          "ended_reason": "budget_exhausted",
+          "error": null,
+          "instruction": "put both the alphabet soup and the tomato sauce in the basket",
+          "scene_version_before": 0,
+          "scene_version_after": 1,
+          "state_before_sha": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+          "state_after_sha": "e8b20cb640d95945c3ffcc212fbafb5c10d4b512437d703f62b59631b0fd34ec",
+          "env_instance_id": 4,
+          "episode_resets": 1,
+          "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T123104Z_basket_two_3abd7e47/cap_01_basket_both_b731866c",
+          "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T123104Z_basket_two_3abd7e47/cap_01_basket_both_b731866c/latest.png",
+          "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T123104Z_basket_two_3abd7e47/cap_01_basket_both_b731866c/rollout.mp4",
+          "wall_s": 339.083
+        }
+      ],
+      "evaluation": {
+        "task_success": false,
+        "goal_option_satisfied": [
+          false
+        ],
+        "protected_satisfied": true,
+        "decision_ok": true,
+        "objects_ok": true,
+        "position_checks": {},
+        "missing_truth": [],
+        "oracle_source": "preauthored_fixture",
+        "ok": true,
+        "case_id": "basket_two_cans",
+        "request_id": "f43f5a229e874046bb6872c26cf3ed15",
+        "session_id": "3abd7e4759dd4b44be8dc1276ae4bc23"
+      },
+      "plan_success": null,
+      "task_success": false,
+      "error": null,
+      "elapsed_s": 344.572
+    },
+    {
+      "condition": "free_left",
+      "state": 0,
+      "seed": 0,
+      "scene_id": "mugs_right_occupied",
+      "case_id": "mugs_free_left",
+      "execution_kind": "manual_subgoals",
+      "capability_ids": [
+        "white_mug_left"
+      ],
+      "budget_per_subgoal": 300,
+      "request_id": "a8ff48ff24be48e79c835c8e5ab1fd71",
+      "plan_id": "a8ff48ff24be48e79c835c8e5ab1fd71",
+      "session_id": "fbbeb6d81eaa46789ca2673c3dac7007",
+      "job_ids": [
+        "adfc6032c70e4cd6b5166914f0d01bba"
+      ],
+      "env_instance_id": 5,
+      "initial_images": [
+        {
+          "view": "agentview",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T123649Z_mugs_right_occupied_fbbeb6d8/agentview.png",
+          "sha256": "6bb2c1e76dfa1126cacb277154fdd0bf8048641a2904906d06a0999226738c5c",
+          "kind": "vla_observation"
+        },
+        {
+          "view": "wrist",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T123649Z_mugs_right_occupied_fbbeb6d8/wrist.png",
+          "sha256": "e4fe908a01db099a18a6b5a4a62b7722f9f4c4f439dd073a733177ce44da95f1",
+          "kind": "vla_observation"
+        }
+      ],
+      "session": {
+        "ok": true,
+        "session_id": "fbbeb6d81eaa46789ca2673c3dac7007",
+        "scene_id": "mugs_right_occupied",
+        "state": "ready",
+        "scene_version": 0,
+        "env_instance_id": 5,
+        "episode_resets": 1,
+        "policy_resets": 0,
+        "total_steps": 0,
+        "seed": 0,
+        "init_state_index": 0,
+        "description": "Two-mug scene pre-populated with the yellow and white mug already on the right plate.",
+        "storage_policy": {},
+        "capabilities": [
+          {
+            "instruction": "put the white mug on the left plate",
+            "goals": [
+              [
+                "on",
+                "porcelain_mug_1",
+                "plate_1"
+              ]
+            ],
+            "object_id": "porcelain_mug_1",
+            "target_id": "plate_1",
+            "scene_ids": [
+              "mugs_two",
+              "mugs_left_occupied",
+              "mugs_right_occupied",
+              "mugs_both_occupied"
+            ],
+            "evidence": "candidate",
+            "audit_only": false,
+            "exclusive_target": true,
+            "capability_id": "white_mug_left"
+          },
+          {
+            "instruction": "put the white mug on the right plate",
+            "goals": [
+              [
+                "on",
+                "porcelain_mug_1",
+                "plate_2"
+              ]
+            ],
+            "object_id": "porcelain_mug_1",
+            "target_id": "plate_2",
+            "scene_ids": [
+              "mugs_two",
+              "mugs_left_occupied",
+              "mugs_right_occupied",
+              "mugs_both_occupied"
+            ],
+            "evidence": "unverified alternate destination; candidate",
+            "audit_only": false,
+            "exclusive_target": true,
+            "capability_id": "white_mug_right"
+          },
+          {
+            "instruction": "put the yellow and white mug on the right plate",
+            "goals": [
+              [
+                "on",
+                "white_yellow_mug_1",
+                "plate_2"
+              ]
+            ],
+            "object_id": "white_yellow_mug_1",
+            "target_id": "plate_2",
+            "scene_ids": [
+              "mugs_two",
+              "mugs_left_occupied",
+              "mugs_right_occupied",
+              "mugs_both_occupied"
+            ],
+            "evidence": "candidate",
+            "audit_only": false,
+            "exclusive_target": true,
+            "capability_id": "yellow_mug_right"
+          }
+        ],
+        "images": [
+          {
+            "view": "agentview",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T123649Z_mugs_right_occupied_fbbeb6d8/agentview.png",
+            "sha256": "6bb2c1e76dfa1126cacb277154fdd0bf8048641a2904906d06a0999226738c5c",
+            "kind": "vla_observation"
+          },
+          {
+            "view": "wrist",
+            "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T123649Z_mugs_right_occupied_fbbeb6d8/wrist.png",
+            "sha256": "e4fe908a01db099a18a6b5a4a62b7722f9f4c4f439dd073a733177ce44da95f1",
+            "kind": "vla_observation"
+          }
+        ],
+        "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T123649Z_mugs_right_occupied_fbbeb6d8/latest.png",
+        "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T123649Z_mugs_right_occupied_fbbeb6d8",
+        "active_request_id": null,
+        "error": null
+      },
+      "plan": {
+        "ok": true,
+        "request_id": "a8ff48ff24be48e79c835c8e5ab1fd71",
+        "session_id": "fbbeb6d81eaa46789ca2673c3dac7007",
+        "state": "blocked",
+        "decision": "execute",
+        "capability_ids": [
+          "white_mug_left"
+        ],
+        "original_capability_ids": [
+          "white_mug_left"
+        ],
+        "rationale": "preauthored manual/direct capability audit",
+        "job_ids": [
+          "adfc6032c70e4cd6b5166914f0d01bba"
+        ],
+        "completed_capability_ids": [],
+        "pending_capability_ids": [],
+        "plan_success": null,
+        "regressions": [],
+        "error": "budget_exhausted",
+        "repair_history": [],
+        "scene_version": 1
+      },
+      "jobs": [
+        {
+          "job_id": "adfc6032c70e4cd6b5166914f0d01bba",
+          "request_id": "a8ff48ff24be48e79c835c8e5ab1fd71",
+          "session_id": "fbbeb6d81eaa46789ca2673c3dac7007",
+          "capability_id": "white_mug_left",
+          "state": "completed",
+          "steps": 300,
+          "total_steps": 300,
+          "success": false,
+          "ended_reason": "budget_exhausted",
+          "error": null,
+          "instruction": "put the white mug on the left plate",
+          "scene_version_before": 0,
+          "scene_version_after": 1,
+          "state_before_sha": "0876ad3d7f1dcea5bac07a46affbc8a32f723b85fbe116626fc2e0cb555aa9e8",
+          "state_after_sha": "4281e7ed9cb59527b1724b47c04d6f5b7aa5a1eb94f6efeff0b16b073a3b9bb3",
+          "env_instance_id": 5,
+          "episode_resets": 1,
+          "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T123649Z_mugs_right_occupied_fbbeb6d8/cap_01_white_mug_left_adfc6032",
+          "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T123649Z_mugs_right_occupied_fbbeb6d8/cap_01_white_mug_left_adfc6032/latest.png",
+          "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T123649Z_mugs_right_occupied_fbbeb6d8/cap_01_white_mug_left_adfc6032/rollout.mp4",
+          "wall_s": 173.785
+        }
+      ],
+      "evaluation": {
+        "task_success": false,
+        "goal_option_satisfied": [
+          false
+        ],
+        "protected_satisfied": true,
+        "decision_ok": true,
+        "objects_ok": true,
+        "position_checks": {},
+        "missing_truth": [],
+        "oracle_source": "preauthored_fixture",
+        "ok": true,
+        "case_id": "mugs_free_left",
+        "request_id": "a8ff48ff24be48e79c835c8e5ab1fd71",
+        "session_id": "fbbeb6d81eaa46789ca2673c3dac7007"
+      },
+      "plan_success": null,
+      "task_success": false,
+      "error": null,
+      "elapsed_s": 179.101
+    }
+  ],
+  "summary": {
+    "conditions": {
+      "basket_direct": {
+        "condition": "basket_direct",
+        "n": 1,
+        "evaluable": 1,
+        "successes": 0,
+        "failures": 1,
+        "errors": 0,
+        "wilson_95": [
+          0.0,
+          0.7934506856227626
+        ]
+      },
+      "free_left": {
+        "condition": "free_left",
+        "n": 1,
+        "evaluable": 1,
+        "successes": 0,
+        "failures": 1,
+        "errors": 0,
+        "wilson_95": [
+          0.0,
+          0.7934506856227626
+        ]
+      }
+    },
+    "totals": {
+      "n": 2,
+      "evaluable": 2,
+      "successes": 0,
+      "failures": 2,
+      "errors": 0,
+      "wilson_95": [
+        0.0,
+        0.6576197724933469
+      ]
+    }
+  },
+  "note": "These trials are direct-VLA / manual-subgoal capability audits. Each condition is a preauthored request; no Hermes planner, no agent narration and no visual inference participates. Independent success is judged only by the preauthored fixture oracle, and every trial runs in its own fresh session with a fixed seed and init_state_index. Because both arms share the same preauthored final target case, these results cannot establish any agent gain."
+}

@@ -1,18 +1,34 @@
-# 持久场景 v2（实验）— 场景内多子目标 SmolVLA 演示
+# 持久场景 v2（实验，已完成单次 pilot）— 场景内多子目标 SmolVLA 演示
 
-本目录（`First_Phase/scene_demo/`）是「持久场景 v2」实验线：在**同一个** LIBERO 仿真器内，用 SmolVLA 策略连续执行多个子目标，Hermes 只在场景内做一次规划（失败时最多一次修复）。
+本目录（`First_Phase/scene_demo/`）是「持久场景 v2」实验版：在**同一个** LIBERO 仿真器内，用 SmolVLA 策略连续执行多个子目标，Hermes 只在场景内做一次规划（失败时最多一次修复）。
 
-> **状态：待实测。** 本文描述的是**已实现的工程设计**；live 证据仍在等待，本文件**不声明任何已实测的 v2 成功率或结果**。
+> **状态：已完成单次 pilot 的实验版。** 已按 seed 0、初始状态 0、n=1/条件完成一次 pilot 实测；其后另补充了 **direct/manual 物理执行**、**意图 / 容量**、**单目标正对照**与**修复范围守卫协议探针**记录，原始证据见 [results/2026-10-06/README.md](results/2026-10-06/README.md)。本文件**只报告这些实测行与保留限制，不声称任何成功率结论**。
 
 ## 一、范围（scope）
 
-- 运行时链路固定为**既有**组件：Hermes（`qwen3-vl-plus`）+ `scene_tools` MCP + 预训练 SmolVLA checkpoint（revision `6721902bc4d61e50a3bfdb11dfb4cb626f05d102`）+ LIBERO 场景中的 Franka Panda。**不训练、不微调、不下载。**
+- 运行时链路固定为**既有**组件：Hermes（`qwen3-vl-plus`）+ `scene_tools` MCP + 预训练 SmolVLA checkpoint（revision `6721902bc4d61e50a3bfdb11dfb4cb626f05d102`）+ LIBERO 场景中的 Franka Panda。**不训练、不微调、不下载 VLA 权重；Hermes 可能修复自身依赖。**
 - GPT 的规划/验收与 DeepSeek 的实际源码执行**仅用于开发期**，不属于运行时控制链。
 - v2 与 v0.1.0 单任务演示并存：v0.1.0 见 [../libero_demo/README.md](../libero_demo/README.md)。
 
 ## 二、工作流与职责（workflow and responsibilities）
 
-固定流程（职责划分固定，不由模型自由改写）：
+完整工作流固定如下（职责划分固定，不由模型自由改写）：
+
+```mermaid
+flowchart TD
+    U["用户选择场景<br/>看到初始图像"] --> Q["用户自然语言请求"]
+    Q --> H["Hermes（运行时 qwen3-vl-plus）<br/>收到图像 + 公开 storage_policy"]
+    H --> C["选择物体 / 能力执行顺序<br/>提交计划后结束"]
+    C --> L["本地 harness<br/>在同一个仿真器内执行多个子目标"]
+    L --> V["同一 SmolVLA 策略连续控制<br/>子目标间仅重置动作队列"]
+    V --> P["本地谓词逐子目标判定<br/>最终 plan AND 检查"]
+    P -- "blocked" --> R["最多一次 Hermes 修复<br/>resume_scene_plan"]
+    R --> L
+    P -- "终态" --> O["独立预先编写的测试用例 oracle<br/>最终合取 / 保护约束评分"]
+    O --> S["task_success（blocked 时 plan_success=null）"]
+```
+
+固定流程（要点）：
 
 1. **先固定场景**：host/服务端一次性创建固定场景（一个常驻 LIBERO 仿真器），并公开 agentview / wrist 画面与公开 `storage_policy`。
 2. 用户给出自然语言指令。
@@ -23,12 +39,84 @@
 7. **不逐动作调用 Hermes**，也**不按例程逐子目标**调用 Hermes；正常机器人运动期间不调用 Hermes。
 8. 仅当计划 `blocked` 时，最多触发**一次**由失败驱动的 Hermes 修复（`resume_scene_plan`），之后不再空转。
 
+上述流程对应以下**固定约定**（按实测）：
+
+- **仅一次初始规划**：Hermes 只做一次场景内初始规划（通过 `--image` 接收原生 agentview 图像），**例程子目标之间不调用 Hermes**，正常机器人运动期间也不调用。
+- **本地连续控制与判定**：同一个 **SmolVLA** 与**同一个**环境连续执行动作，并用**本地谓词**逐子目标判定、最后做**最终 AND**；子目标之间**保留同一仿真器**，只重置 VLA 的**动作队列**（不重置场景 / 物体）。
+- **最多一次修复**：只有计划 `blocked` 时才允许**一次**修复；修复**只能**对原计划**已声明**的目标做**重排 / 重试 / 恢复**，**新增物体或目的地需要新的用户请求**（否则服务端以 HTTP 409 `repair_scope` 拒绝）。
+- **独立评分不进 prompt**：预先编写的测试用例（`case_id` / fixture）**绝不进入** Hermes 的 prompt / MCP；它只在计划**终态**后用于一次**独立**评分（terminal scoring）。**没有选中的用例时 `task_success` 保持 `null`。**
+
 关键区分：
 
-- `plan_success` 来自服务端对已声明目标的最终 AND；`task_success` 是**独立**评测结果。**没有预授权用例（case）时 `task_success` 为 `null`。**
-- **用例期望绝不进入 Hermes 的 prompt / MCP**：`case_id` 与 fixture 只在计划终态后用于一次独立评测。
+- **开发期组件**：GPT 的规划 / 验收与 DeepSeek 的实际源码执行**只在开发期**发生，不属于运行时控制链。
+- **运行时组件**：运行时控制链由 **Qwen3-VL / Hermes（in-scene planner）** 与 **SmolVLA** 构成；Hermes 只做一次场景内规划（失败时最多一次修复），SmolVLA 在同一仿真器内连续执行动作。
+- `plan_success` 来自服务端对已声明目标的最终 AND；`task_success` 是**独立**评测结果。**没有预先编写的测试用例时 `task_success` 为 `null`。**
+- **测试用例期望绝不进入 Hermes 的 prompt / MCP**：`case_id` 与 fixture 只在计划终态后用于一次独立评测。
 
-## 三、使用（usage）
+## 三、实测记录（2026-10-06）
+
+全部实测条件为 **seed 0、初始状态 0、n=1/条件**，checkpoint revision `6721902bc4d61e50a3bfdb11dfb4cb626f05d102`，运行时 **qwen3-vl-plus / alibaba-cn**。原始 JSON、图片与全部回放见 [results/2026-10-06/README.md](results/2026-10-06/README.md)。
+
+### 3.1 table pilot（五行，历史）
+
+| 记录 | 场景 / case | 执行方式 | 子目标步数 | plan_success | task_success | elapsed_s |
+|---|---|---|---|---|---|---|
+| `table_forward`（manual） | `goal_table` / `table_tidy` | manual_subgoals（无 Hermes） | 碗 `bowl_to_plate` 95 步成功；酒瓶 `wine_to_rack` 300 步失败 | `null` | `false` | 235.657 |
+| `table_tidy`（真实 Hermes） | `goal_table` / `table_tidy` | Hermes 规划 + 一次修复 | 碗 95 步成功；酒瓶 300 步失败；修复后酒瓶再 300 步失败（累计 695 步） | `null` | `false` | wall_s 457.966 |
+| `table_reverse` | `goal_table` / `table_tidy` | manual_subgoals（无 Hermes） | 酒瓶 300 步失败；碗**从未执行** | `null` | `false` | 187.545 |
+| `table_direct` | `goal_table` / `table_tidy` | direct_vla | 复合 `table_both` 单次 600 步失败 | `null` | `false` | 361.806 |
+| `table_shifted` | `goal_table_shifted` / `table_shifted_tidy` | manual_subgoals（无 Hermes） | 碗 300 步失败；酒瓶**从未执行** | `null` | `false` | 197.762 |
+
+- 真实 Hermes 那一行为 **2 次 Hermes CLI session**（session ID `20261006_195554_6151d6` 为 initial 相位，`20261006_200009_7d48b2` 为 repair 相位）；CLI session 数**不是** API 请求数。
+- 这些 blocked 记录里 **`plan_success` 为 `null`，既不是 `false` 也不是 `true`**；**该表五行**的 `task_success` 均为 `false`。
+- **`run_ok` / 进程退出码不等同于任务成功**：Hermes 侧 `run_ok=true` 只表示计划流程跑完并如实返回 blocked，不代表任务完成。
+- `basket` / `mugs` / 占位（occupied）场景后来已各做过 pilot 实测：其中**受测的物理放置执行均失败**（见 3.2），而**完全占满的 `mugs_full` 以 `unsupported` 正确拒绝**（**0 个机器人动作**、`task_success=true`，见 3.3）——正确拒绝是**决策成功**，**不是** VLA 物理成功，因此**不声称**可靠执行。
+- pilot **n=1** 只支持以上这些**观测**，**不能**推断一般成功率，也**不能**建立 Hermes 信息增益结论。
+
+### 3.2 物理执行记录（direct / manual / Hermes）
+
+均为 seed 0、初始状态 0、n=1/条件；`plan_success=null` 表示 blocked（既非 `false` 也非 `true`）。`elapsed_s` 取自 manual/direct driver 原始字段；job 的 `wall_s` 是动作阶段墙钟时间，**Hermes 行的 `wall_s` 包含 Hermes 与等待时间**。
+
+| 记录 | 场景 / case | 执行方式 | 作业 / 步数 | plan_success | task_success | 时间 | 证据 |
+|---|---|---|---|---|---|---|---|
+| `basket_direct`（manual/direct） | `basket_two` / `basket_two_cans` | direct_vla | `basket_both` 单作业 600 步失败 | `null` | `false` | elapsed_s 344.572；job wall_s 339.083 | [secondary_manual_pilots.json](results/2026-10-06/secondary_manual_pilots.json) |
+| `free_left`（manual） | `mugs_right_occupied` / `mugs_free_left` | manual_subgoals | `white_mug_left` 单作业 300 步失败 | `null` | `false` | elapsed_s 179.101；job wall_s 173.785 | [secondary_manual_pilots.json](results/2026-10-06/secondary_manual_pilots.json) |
+| free-right（真实 Hermes，初次失败） | `mugs_left_occupied` / `mugs_free_right` | Hermes + 一次修复 | 白杯 `white_mug_right` 300 步失败；修复改成 `yellow_mug_right` 300 步失败（2 作业，累计 600 步） | `null` | `false` | wall_s 372.179 | [hermes_free_right_initial_failed.json](results/2026-10-06/hermes_free_right_initial_failed.json) |
+| basket（真实 Hermes） | `basket_two` / `basket_two_cans` | Hermes + 一次修复 | 字母汤 `soup_to_basket` 300 步失败；修复重排为 `[sauce_to_basket, soup_to_basket]` 后番茄酱 `sauce_to_basket` 300 步失败；`pending` 字母汤**没有再次执行**（2 作业，累计 600 步） | `null` | `false` | wall_s 375.921 | [hermes_basket_two.json](results/2026-10-06/hermes_basket_two.json) |
+| bowl-only（真实 Hermes，正对照） | `goal_table` / `table_bowl_only` | Hermes（单目标） | `bowl_to_plate` 单作业 95 步**成功** | `true` | `true` | wall_s 72.191；job wall_s 54.055 | [hermes_bowl_only.json](results/2026-10-06/hermes_bowl_only.json) |
+
+- bowl-only 是**单目标正对照**：`run_ok` / `chain_ok` / `plan_success` / `task_success` 均为 `true`，`protected_satisfied` / `objects_ok` 为 `true`，仅 **1 次 Hermes CLI session**。它证明的是**单目标成功**，**不是**多目标成功。
+- free-right 行 `protected_satisfied=false`、`objects_ok=false`；basket 行 `protected_satisfied` / `objects_ok` 均为 `true`，`pending_capability_ids=["soup_to_basket"]`。
+- **持久性（以状态哈希为准）**：`table_forward`（manual）、Hermes table、free-right 与 basket 多作业记录共享**不变的** `env_instance_id` / `episode_resets`，且**每一段的 `state_after_sha` 等于下一段的 `state_before_sha`**。
+- **未执行 / queued 的目标不记为已失败动作**（如 table_reverse 的碗、table_shifted 的酒瓶、basket 的 `pending` 字母汤）。
+- 各行各自绑定其软件版本；free-right 的错误对象修复**早于**修复范围守卫（见 3.4），**未**在守卫上线后重测。
+
+### 3.3 意图 / 容量记录（unsupported / clarify）
+
+| 记录 | 用户请求 | case | decision | 作业 | plan_success | task_success | wall_s / CLI |
+|---|---|---|---|---|---|---|---|
+| [hermes_missing_bin.json](results/2026-10-06/hermes_missing_bin.json) | 把酒瓶扔进垃圾桶。 | `missing_bin` | `unsupported` | 0 | `null` | `true` | 18.933 / 1 |
+| [hermes_mugs_full.json](results/2026-10-06/hermes_mugs_full.json) | 把白杯放到一个空盘子上，不能移动已有的杯子。 | `mugs_full` | `unsupported` | 0 | `null` | `true` | 20.931 / 1 |
+| [hermes_ambiguous_cleanup_initial_failed.json](results/2026-10-06/hermes_ambiguous_cleanup_initial_failed.json) | 清理一下酒瓶。 | `ambiguous_cleanup` | `execute`（错误） | `wine_to_rack` 300 步失败 | `null` | `false` | 210.399 / 2 |
+| [hermes_ambiguous_cleanup_retest.json](results/2026-10-06/hermes_ambiguous_cleanup_retest.json) | 清理一下酒瓶。 | `ambiguous_cleanup` | `clarify` | 0 | `null` | `true` | 18.599 / 1 |
+
+- 场景无垃圾桶时 `unsupported` 是**正确决策**：**0 个机器人动作**、`task_success=true`，它**不**代表 VLA 操作成功；`clarify` 同理。
+- 含糊「清理」首次为 **incorrect execute**：`wine_to_rack` 300 步失败后被 **blocked**，`decision_ok=false`、`objects_ok=false`、`task_success=false`，`repair_history` 为空。修复阶段解释预算和执行失败、未提交新执行；首次歧义解读仍错误。取消请求到达时计划已是 blocked，因此这不是一次成功取消执行的记录。
+- 同请求重测改为 `clarify`（0 作业、`task_success=true`）。
+
+### 3.4 修复范围守卫（live protocol probe）
+
+[repair_scope_live_probe.json](results/2026-10-06/repair_scope_live_probe.json) 是一条 `manual_contract_probe`（`source_commit` `6815bf98e77dd50f468a3254a0c29ffdccf43841`）：
+
+- `before`：原声明目标 `white_mug_right` 仅 1 步即 `budget_exhausted` 被 blocked（`plan_success=null`）。
+- 探针请求把 `white_mug_right` 改成 `yellow_mug_right`：**新增了一个物体**（`white_yellow_mug_1`），**而目的地仍是右侧盘子**（`plate_2`，与原目标相同）；通用守卫**仍**拒绝**新引入的物体或目的地**（本条探针只改变了物体）。
+- 服务端返回 **HTTP 409、`reason=repair_scope`**：修复只能重排 / 重试 / 恢复原计划**已声明**的目标，新增物体或目的地需要**新的用户请求**。
+- `after` 与 `before` 的 plan、jobs、`repair_history`、`steps`、`scene_version`、`env_instance_id`、`episode_resets` **完全一致**：守卫在入队 / 执行**之前**即以 409 拒绝（因此队列、动作、场景版本都没变）。
+- `contract_ok=true`；独立 oracle 评测 `task_success=false`。**守卫不读 oracle**，只依据**最初声明的目标**判定，并在**入队 / 动作之前**拒绝新目标。
+- 守卫**不能**保证初始 Hermes 解读正确，也**不能**避免 VLA 的**附带碰撞**。
+- 更早那次 free-right 错误对象修复**早于**本守卫，**保留未改**；这**不**意味着物理 free-right 任务在守卫上线后被重测。
+
+## 四、使用（usage）
 
 Windows PowerShell：
 
@@ -39,11 +127,20 @@ powershell -ExecutionPolicy Bypass -File D:\FYP\First_Phase\scene_demo\start_dem
 启动后访问 http://127.0.0.1:8081 。
 
 - `-Stop` **仅影响 v2**：只停 v2 PID 文件中记录、且 cmdline 含 `scene_demo` 的进程，不动 v1 服务。
-- 复用旧的 WSL venv / 模型 / Hermes 凭据；**不训练、不下载**，也**不是新机器一键运行**。
+- 复用旧的 WSL venv / 模型 / Hermes 凭据；**不训练、不微调、不下载 VLA 权重；Hermes 可能修复自身依赖**，也**不是新机器一键运行**。
 - 默认要求 **≥ 6000 MiB 空闲 GPU 显存**。若已有旧的常驻服务占着显存/端口，需要**用户自行**用**旧脚本** [../libero_demo/start_demo.ps1](../libero_demo/start_demo.ps1) `-Stop` 停掉；**本启动器绝不自己杀旧服务**。
 - `-MinFreeGpuMiB 3500` 是 root 为**当前主机 pilot** 选定的调试覆盖值，**不是**通用显存要求。注意参数写法：`-MinFreeGpuMiB 3500`。
 
-## 四、场景与能力审计（scene/capability audit）
+### 首次用户试跑（正对照）
+
+1. 在网页中选择场景 **`goal_table`**，**seed 0、index 0**；加载场景并查看图像。
+2. 输入**完整请求**：`把碗放到盘子上，不要动酒瓶，也不要打开炉灶。`
+3. 选择预先编写的用例 **`table_bowl_only`** 后提交。
+4. 这是**单目标正对照**：**本次已记录的单目标正对照**显示 `run_ok` / `chain_ok` / `plan_success` / `task_success` **四个 flag 均为 `true`**、碗 95 步成功——这只是**一次已记录的样本**，**不保证**每次重放都成功。
+
+若要**复现失败**，请**同时**选对**场景 + 匹配的 case**：table 场景选 `table_tidy`（或 `table_shifted` 用 `table_shifted_tidy`）；basket 场景选 `basket_two_cans`；free-plate（杯子占位）场景选 `mugs_free_left` / `mugs_free_right`。**没有选中预先编写的 case 时 `task_success` 保持 `null`。**
+
+## 五、场景与能力审计（scene/capability audit）
 
 固定场景（见 [catalog.py](catalog.py)）：
 
@@ -58,24 +155,24 @@ powershell -ExecutionPolicy Bypass -File D:\FYP\First_Phase\scene_demo\start_dem
 | `mugs_both_occupied` | experimental | 脚本预置占位物体 |
 
 - **没有**「完全合并的通用场景」，也**没有微调**。
-- 能力目录共 **11 条**：**8 条原子能力 + 3 条仅审计的复合指令**，全部使用**同一**模型。
+- 能力目录共 **11 条**：**8 条原子能力 + 3 条仅审计的复合指令**。这些能力只是把**受约束的指令**包给**同一个** SmolVLA 模型，**不是**不同的技能网络，也**不是**「已训练出可靠技能」的证明。
 - `candidate` 证据**不是**可靠性保证。
 - **原生 original goal 不是唯一终止条件**。
-- 额外仿真相机只是**观测辅助**，**不是**训练得到的 wrist-search 技能。
+- 额外仿真相机视图**只辅助 Hermes 规划**，**不是**训练得到的 look-around / 搜物或 wrist-search 技能。
 - VLA 保持其**两路原生相机输入**；可达性/视角差异**未经验证**。
 
-## 五、独立评测（independent evaluation）
+## 六、独立评测（independent evaluation）
 
-- 共 **10 个预授权 fixture**（见 [fixtures.json](fixtures.json) / [oracle.py](oracle.py)）：判定为**最终合取（AND）+ 保护物体约束 + decision 合规**；**缺失真值 fail-closed**（视为不满足）。
+- 共 **11 个预先编写的测试用例**（见 [fixtures.json](fixtures.json) / [oracle.py](oracle.py)），含单目标 **`table_bowl_only` 正对照**：判定为**最终合取（AND）+ 保护物体约束 + decision 合规**；**缺失真值 fail-closed**（视为不满足）。
 - oracle **只保护被显式声明的谓词**：即 fixture 中的 `protected_goals`，以及可选的 Euclidean `protected_positions` 约束。例如 `table_wine_only` 额外检查 `akita_black_bowl_1`（碗）与 `cream_cheese_1`（奶酪）相对初始位置的位移 **≤ 0.08 m**；该 **0.08 m 阈值是 fixture 约束，不是实测性能结果**。
 - `executed_objects` 只是**被非零 executed 作业寻址**的物体元数据（并须为 `allowed_objects` 的子集），**不是**接触传感器证据。
 - 上述约束是**可测代理（measurable proxies）**，与**完整物理接触验证**不同：目前**没有**对附带接触/碰撞的**全面审计**，因此**不能保证字面上从未触碰**受保护物体。
-- **不提供**面向任意自然语言请求的**自动 oracle 生成**：`task_success` 必须取自某个**预授权 fixture**，否则保持 `null`。
+- **不提供**面向任意自然语言请求的**自动 oracle 生成**：`task_success` 必须取自某个**预先编写的测试用例**，否则保持 `null`。
 - 宽泛的整理遵循公开 `storage_policy`；含糊的「清理」要求**澄清**；场景**没有垃圾桶**时「丢弃」**不受支持**。
 - **左/右盘不能证明**在单个货架上任意左/右空位放置；占位独占目标会被 **blocked**，而不是堆叠。
 - **API 终态/版本归属防止陈旧评测**：只评测精确 `request_id` 的**最终终态**。
 
-## 六、实验命令（experiment commands）
+## 七、实验命令（experiment commands）
 
 在 WSL 内运行（公共运行环境）：
 
@@ -108,22 +205,30 @@ export MUJOCO_GL=egl
   --case-id table_tidy --max-repairs 1
 ```
 
-## 七、当前局限（present limits）
+## 八、当前局限（present limits）
 
-- **live 验证仍待实测**；本文件不声明任何已实测的 v2 成功率。
+- 已完成**一次 pilot 实测**（seed 0、初始状态 0、n=1/条件）并补充了 direct/manual、意图/容量与守卫探针记录，实测行见 [results/2026-10-06/README.md](results/2026-10-06/README.md)；本文件**不声明任何成功率结论**。
+- 目前的**物理多目标 / table / basket / 占位 / shifted** pilot 里，**受测的物理放置执行均失败**；**完全占满的 `mugs_full` 以 `unsupported` 正确拒绝**（**0 个机器人动作**、`task_success=true`）属**决策成功**，**不是** VLA 物理成功；**唯一**的 `task_success=true` 物理结果是**单目标** bowl-only 正对照（**不是**多目标成功）。
 - host-local 的 direct/manual 审计**不能**建立 Hermes 信息增益结论；pilot **n=1** 不能支撑宽泛成功率结论。
-- 泛化（可达性/视角差异、新场景、改顺序、空位选择与占位避让）**未经验证**。
-- **没有完全合并的通用场景**，也**没有微调**；`candidate` 能力不是可靠性保证。
-- **不是新机器一键运行**（复用旧环境与凭据）。
+- **`basket` / `mugs` / 占位（occupied）场景已各做过 pilot 实测**：其中**受测的物理放置执行均失败**，而**完全占满的 `mugs_full` 以 `unsupported` 正确拒绝**（**0 个机器人动作**、`task_success=true`）属**决策成功**，**不是** VLA 物理成功，因此**不声称**可靠执行；这些 **n=1 的 shifted 与占位放置试验已被测量但失败**，**不能**据此建立可靠泛化；**新（更广）场景、可靠的物体跟踪、任意货架空位与训练得到的 robot look-around 均仍未验证**。
+- 两个占位左右变体的 300 步失败**不能**证明模型从未学过左 / 右；`basket` / `mugs` 的失败也**不能**外推到一般可靠性。
+- **额外仿真相机视图**只辅助 Hermes 规划，**不是**训练得到的 look-around / 搜物或 wrist-search 技能；**没有**训练得到的可靠物体跟踪，也**没有**任意货架空位控制。
+- **没有**对附带接触/碰撞的**全面审计**（`executed_objects` 只是 job 元数据，**不是**接触传感），因此**不能保证**字面上「从未触碰」受保护物体。
+- **修复范围守卫**只把修复限制在最初声明的目标内、且**不读** oracle；它**不能**修复所有初始意图错误，也**不能**防止 VLA 的附带接触。
+- **不提供**面向任意自然语言请求的**自动 oracle 生成**：没有预先编写的 fixture 时 `task_success` 保持 `null`；**显式谓词 / 位置约束**（如 `table_wine_only` 的碗/奶酪位移 ≤ 0.08 m 的 **fixture 约束**）属于**可测代理（measurable proxies）**，**不是**实测性能结果。
+- **没有完全合并的通用场景**，也**没有训练 / 微调 / 新 VLA 权重下载**；`candidate` 能力只是把受约束指令包给**同一**模型，不是可靠性保证。
+- **不是新机器一键运行**（复用旧 WSL 环境与凭据；Hermes 可能修复自身依赖）。
+- 已安装 Hermes chat native-image 路径**不导出 usage**（`available=false`、`api_calls` / tokens 为 `null`），**不能**解读为「零成本」；CLI session 数**不是** API 往返数，Hermes 行 `wall_s` **包含** Hermes 与等待时间。
 
 ## 相关文件
 
 | 内容 | 相对链接 |
 |---|---|
+| pilot 实测原始证据（2026-10-06） | [results/2026-10-06/README.md](results/2026-10-06/README.md) |
 | 执行服务（常驻仿真器） | [service.py](service.py) |
 | 场景/能力目录 | [catalog.py](catalog.py) |
 | 独立评测 oracle | [oracle.py](oracle.py) |
-| 预授权 fixture | [fixtures.json](fixtures.json) |
+| 预先编写的测试用例 | [fixtures.json](fixtures.json) |
 | Hermes MCP 桥（6 工具） | [mcp_server.py](mcp_server.py) |
 | Hermes 视觉规划入口 | [run_agent.py](run_agent.py) |
 | direct/manual 审计 runner | [run_experiments.py](run_experiments.py) |

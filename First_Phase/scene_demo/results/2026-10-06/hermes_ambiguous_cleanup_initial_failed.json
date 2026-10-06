@@ -1,0 +1,94 @@
+{
+  "request_id": "c168beee58454c2e8e0fd239647fdd8e",
+  "session_id": "95bd7be6d4be4834aafcaf729b260ef1",
+  "request": "清理一下酒瓶。",
+  "run_ok": true,
+  "chain_ok": false,
+  "plan_success": null,
+  "task_success": false,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "c168beee58454c2e8e0fd239647fdd8e",
+    "session_id": "95bd7be6d4be4834aafcaf729b260ef1",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "wine_to_rack"
+    ],
+    "original_capability_ids": [
+      "wine_to_rack"
+    ],
+    "rationale": "用户请求‘清理酒瓶’；依据 storage_policy，wine_bottle_1 应置于 wine_rack_1_top_region；能力 wine_to_rack 对应此目标，且图像中酒瓶当前在桌面未归位，故执行该能力完成收纳清理。",
+    "job_ids": [
+      "6b37e77759394b79a51eeb4d8a343d0b"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "budget_exhausted",
+    "repair_history": [],
+    "scene_version": 1
+  },
+  "jobs": [
+    {
+      "job_id": "6b37e77759394b79a51eeb4d8a343d0b",
+      "request_id": "c168beee58454c2e8e0fd239647fdd8e",
+      "session_id": "95bd7be6d4be4834aafcaf729b260ef1",
+      "capability_id": "wine_to_rack",
+      "state": "completed",
+      "steps": 300,
+      "total_steps": 300,
+      "success": false,
+      "ended_reason": "budget_exhausted",
+      "error": null,
+      "instruction": "put the wine bottle on the rack",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+      "state_after_sha": "91cef2e8501b8f4f29d2e6fb1ddfe2d6ad232021aba0e97b1c41465db8bcd144",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T121823Z_goal_table_95bd7be6/cap_01_wine_to_rack_6b37e777",
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T121823Z_goal_table_95bd7be6/cap_01_wine_to_rack_6b37e777/latest.png",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T121823Z_goal_table_95bd7be6/cap_01_wine_to_rack_6b37e777/rollout.mp4",
+      "wall_s": 176.059
+    }
+  ],
+  "evaluation": {
+    "task_success": false,
+    "goal_option_satisfied": [],
+    "protected_satisfied": true,
+    "decision_ok": false,
+    "objects_ok": false,
+    "position_checks": {},
+    "missing_truth": [],
+    "oracle_source": "preauthored_fixture",
+    "ok": true,
+    "case_id": "ambiguous_cleanup",
+    "request_id": "c168beee58454c2e8e0fd239647fdd8e",
+    "session_id": "95bd7be6d4be4834aafcaf729b260ef1"
+  },
+  "hermes_invocations": 2,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    },
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "wall_s": 210.399,
+  "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+  "hermes_output": "计划已提交。\n\nsession_id: 20261006_202029_79c3b6\n\n\n从 agentview 图像可见：酒瓶（wine_bottle_1）仍位于桌面中央偏左，未被放置到 wine_rack_1_top_region；其余物体（黑碗、盘子、手机等）位置未变。当前 scene_version = 1，storage_policy 明确要求 wine_bottle_1 → wine_rack_1_top_region。\n\nexecution_evidence 显示：唯一执行的 subgoal `wine_to_rack` 耗尽了其独立的 300 步预算（steps=300/total_steps=300），ended_reason = \"budget_exhausted\"，success = false —— 表明该能力在当前场景布局下未能在 300 步内完成动作。\n\n查看 capabilities 列表，仅有 `wine_to_rack` 对应此收纳目标；无其他能力可替代（如“clean wine bottle”未定义，且清洁请求需澄清）。由于用户请求是“清理一下酒瓶”，而当前场景无 trash bin（description 明确说明），且 storage_policy 指向 rack，因此“清理”在此语境下应理解为“归位收纳”，而非清洗或丢弃。\n\n但 `wine_to_rack` 已被证明在本场景中单次 300 步失败；**没有证据表明拆分步骤或换序能解决**——该能力是原子能力，不可拆；且仅一个 object→target 关系，无依赖顺序可调。\n\n因此，无法通过更换 capability_ids 或重排顺序修复；继续使用同一能力只会重复 budget_exhausted。该计划确实无法继续。\n\n无法修复，保持 blocked。\n\nsession_id: 20261006_202342_50a578\n"
+}

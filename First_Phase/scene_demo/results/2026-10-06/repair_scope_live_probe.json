@@ -1,0 +1,335 @@
+{
+  "execution_kind": "manual_contract_probe",
+  "source_commit": "6815bf98e77dd50f468a3254a0c29ffdccf43841",
+  "request_id": "repair_scope_probe_d80a8115fb024ebab6334929721d6853",
+  "session_id": "a00b38cb80f74570be1ea4a1db5e241f",
+  "before": {
+    "plan": {
+      "ok": true,
+      "request_id": "repair_scope_probe_d80a8115fb024ebab6334929721d6853",
+      "session_id": "a00b38cb80f74570be1ea4a1db5e241f",
+      "state": "blocked",
+      "decision": "execute",
+      "capability_ids": [
+        "white_mug_right"
+      ],
+      "original_capability_ids": [
+        "white_mug_right"
+      ],
+      "rationale": "preauthored repair scope contract probe",
+      "job_ids": [
+        "508ca29fab564faf96d918e7b24cffb5"
+      ],
+      "completed_capability_ids": [],
+      "pending_capability_ids": [],
+      "plan_success": null,
+      "regressions": [],
+      "error": "budget_exhausted",
+      "repair_history": [],
+      "scene_version": 1
+    },
+    "session": {
+      "ok": true,
+      "session_id": "a00b38cb80f74570be1ea4a1db5e241f",
+      "scene_id": "mugs_left_occupied",
+      "state": "ready",
+      "scene_version": 1,
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "policy_resets": 1,
+      "total_steps": 1,
+      "seed": 0,
+      "init_state_index": 0,
+      "description": "Two-mug scene pre-populated with the red coffee mug already on the left plate.",
+      "storage_policy": {},
+      "capabilities": [
+        {
+          "instruction": "put the white mug on the left plate",
+          "goals": [
+            [
+              "on",
+              "porcelain_mug_1",
+              "plate_1"
+            ]
+          ],
+          "object_id": "porcelain_mug_1",
+          "target_id": "plate_1",
+          "scene_ids": [
+            "mugs_two",
+            "mugs_left_occupied",
+            "mugs_right_occupied",
+            "mugs_both_occupied"
+          ],
+          "evidence": "candidate",
+          "audit_only": false,
+          "exclusive_target": true,
+          "capability_id": "white_mug_left"
+        },
+        {
+          "instruction": "put the white mug on the right plate",
+          "goals": [
+            [
+              "on",
+              "porcelain_mug_1",
+              "plate_2"
+            ]
+          ],
+          "object_id": "porcelain_mug_1",
+          "target_id": "plate_2",
+          "scene_ids": [
+            "mugs_two",
+            "mugs_left_occupied",
+            "mugs_right_occupied",
+            "mugs_both_occupied"
+          ],
+          "evidence": "unverified alternate destination; candidate",
+          "audit_only": false,
+          "exclusive_target": true,
+          "capability_id": "white_mug_right"
+        },
+        {
+          "instruction": "put the yellow and white mug on the right plate",
+          "goals": [
+            [
+              "on",
+              "white_yellow_mug_1",
+              "plate_2"
+            ]
+          ],
+          "object_id": "white_yellow_mug_1",
+          "target_id": "plate_2",
+          "scene_ids": [
+            "mugs_two",
+            "mugs_left_occupied",
+            "mugs_right_occupied",
+            "mugs_both_occupied"
+          ],
+          "evidence": "candidate",
+          "audit_only": false,
+          "exclusive_target": true,
+          "capability_id": "yellow_mug_right"
+        }
+      ],
+      "images": [
+        {
+          "view": "agentview",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/agentview.png",
+          "sha256": "9201cb266db07ebcff4d5bbc7f72891f66d5a4aac2250da5fe3b33ba4a28afca",
+          "kind": "vla_observation"
+        },
+        {
+          "view": "wrist",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/wrist.png",
+          "sha256": "230550c4ac8601d7c48f795a410d01b89e9bbde437d8cc8a0b02a3614c99c837",
+          "kind": "vla_observation"
+        }
+      ],
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/latest.png",
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb",
+      "active_request_id": null,
+      "error": null
+    },
+    "jobs": [
+      {
+        "job_id": "508ca29fab564faf96d918e7b24cffb5",
+        "request_id": "repair_scope_probe_d80a8115fb024ebab6334929721d6853",
+        "session_id": "a00b38cb80f74570be1ea4a1db5e241f",
+        "capability_id": "white_mug_right",
+        "state": "completed",
+        "steps": 1,
+        "total_steps": 1,
+        "success": false,
+        "ended_reason": "budget_exhausted",
+        "error": null,
+        "instruction": "put the white mug on the right plate",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "8dfa92381c520e9f4cbb6fba00d27f164ae636898ea3242e27334226dd023eb2",
+        "state_after_sha": "fa86635da0099bdc0f4d4ee87965d189ffe5eb46879a27d9a0906008b275f7ad",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/cap_01_white_mug_right_508ca29f",
+        "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/cap_01_white_mug_right_508ca29f/latest.png",
+        "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/cap_01_white_mug_right_508ca29f/rollout.mp4",
+        "wall_s": 1.297
+      }
+    ]
+  },
+  "rejected_response": {
+    "http_status": 409,
+    "body": {
+      "ok": false,
+      "reason": "repair_scope",
+      "detail": "repairs only reorder, retry or recover the plan's original declared goals; the proposed goal(s) ['on|white_yellow_mug_1|plate_2'] add a new object or destination, which requires a new user request"
+    }
+  },
+  "after": {
+    "plan": {
+      "ok": true,
+      "request_id": "repair_scope_probe_d80a8115fb024ebab6334929721d6853",
+      "session_id": "a00b38cb80f74570be1ea4a1db5e241f",
+      "state": "blocked",
+      "decision": "execute",
+      "capability_ids": [
+        "white_mug_right"
+      ],
+      "original_capability_ids": [
+        "white_mug_right"
+      ],
+      "rationale": "preauthored repair scope contract probe",
+      "job_ids": [
+        "508ca29fab564faf96d918e7b24cffb5"
+      ],
+      "completed_capability_ids": [],
+      "pending_capability_ids": [],
+      "plan_success": null,
+      "regressions": [],
+      "error": "budget_exhausted",
+      "repair_history": [],
+      "scene_version": 1
+    },
+    "session": {
+      "ok": true,
+      "session_id": "a00b38cb80f74570be1ea4a1db5e241f",
+      "scene_id": "mugs_left_occupied",
+      "state": "ready",
+      "scene_version": 1,
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "policy_resets": 1,
+      "total_steps": 1,
+      "seed": 0,
+      "init_state_index": 0,
+      "description": "Two-mug scene pre-populated with the red coffee mug already on the left plate.",
+      "storage_policy": {},
+      "capabilities": [
+        {
+          "instruction": "put the white mug on the left plate",
+          "goals": [
+            [
+              "on",
+              "porcelain_mug_1",
+              "plate_1"
+            ]
+          ],
+          "object_id": "porcelain_mug_1",
+          "target_id": "plate_1",
+          "scene_ids": [
+            "mugs_two",
+            "mugs_left_occupied",
+            "mugs_right_occupied",
+            "mugs_both_occupied"
+          ],
+          "evidence": "candidate",
+          "audit_only": false,
+          "exclusive_target": true,
+          "capability_id": "white_mug_left"
+        },
+        {
+          "instruction": "put the white mug on the right plate",
+          "goals": [
+            [
+              "on",
+              "porcelain_mug_1",
+              "plate_2"
+            ]
+          ],
+          "object_id": "porcelain_mug_1",
+          "target_id": "plate_2",
+          "scene_ids": [
+            "mugs_two",
+            "mugs_left_occupied",
+            "mugs_right_occupied",
+            "mugs_both_occupied"
+          ],
+          "evidence": "unverified alternate destination; candidate",
+          "audit_only": false,
+          "exclusive_target": true,
+          "capability_id": "white_mug_right"
+        },
+        {
+          "instruction": "put the yellow and white mug on the right plate",
+          "goals": [
+            [
+              "on",
+              "white_yellow_mug_1",
+              "plate_2"
+            ]
+          ],
+          "object_id": "white_yellow_mug_1",
+          "target_id": "plate_2",
+          "scene_ids": [
+            "mugs_two",
+            "mugs_left_occupied",
+            "mugs_right_occupied",
+            "mugs_both_occupied"
+          ],
+          "evidence": "candidate",
+          "audit_only": false,
+          "exclusive_target": true,
+          "capability_id": "yellow_mug_right"
+        }
+      ],
+      "images": [
+        {
+          "view": "agentview",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/agentview.png",
+          "sha256": "9201cb266db07ebcff4d5bbc7f72891f66d5a4aac2250da5fe3b33ba4a28afca",
+          "kind": "vla_observation"
+        },
+        {
+          "view": "wrist",
+          "image_path": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/wrist.png",
+          "sha256": "230550c4ac8601d7c48f795a410d01b89e9bbde437d8cc8a0b02a3614c99c837",
+          "kind": "vla_observation"
+        }
+      ],
+      "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/latest.png",
+      "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb",
+      "active_request_id": null,
+      "error": null
+    },
+    "jobs": [
+      {
+        "job_id": "508ca29fab564faf96d918e7b24cffb5",
+        "request_id": "repair_scope_probe_d80a8115fb024ebab6334929721d6853",
+        "session_id": "a00b38cb80f74570be1ea4a1db5e241f",
+        "capability_id": "white_mug_right",
+        "state": "completed",
+        "steps": 1,
+        "total_steps": 1,
+        "success": false,
+        "ended_reason": "budget_exhausted",
+        "error": null,
+        "instruction": "put the white mug on the right plate",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "8dfa92381c520e9f4cbb6fba00d27f164ae636898ea3242e27334226dd023eb2",
+        "state_after_sha": "fa86635da0099bdc0f4d4ee87965d189ffe5eb46879a27d9a0906008b275f7ad",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "run_dir": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/cap_01_white_mug_right_508ca29f",
+        "latest_png": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/cap_01_white_mug_right_508ca29f/latest.png",
+        "rollout_path": "/home/yhwang/fyp/scene_demo/runs/20261006T125548Z_mugs_left_occupied_a00b38cb/cap_01_white_mug_right_508ca29f/rollout.mp4",
+        "wall_s": 1.297
+      }
+    ]
+  },
+  "evaluation": {
+    "task_success": false,
+    "goal_option_satisfied": [
+      false
+    ],
+    "protected_satisfied": true,
+    "decision_ok": true,
+    "objects_ok": true,
+    "position_checks": {},
+    "missing_truth": [],
+    "oracle_source": "preauthored_fixture",
+    "ok": true,
+    "case_id": "mugs_free_right",
+    "request_id": "repair_scope_probe_d80a8115fb024ebab6334929721d6853",
+    "session_id": "a00b38cb80f74570be1ea4a1db5e241f"
+  },
+  "contract_ok": true
+}
