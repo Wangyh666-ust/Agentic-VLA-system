@@ -273,6 +273,61 @@ def start(service_port, app_port, min_free_gpu):
     return 0
 
 
+def proc_state(pid):
+    """返回 /proc/<pid>/stat 中的进程状态字符。
+
+    仅当 /proc/<pid>/stat 不存在（FileNotFoundError）时返回 None，表示进程不存在；
+    其余读取失败（如权限错误）或格式异常一律返回 "unknown"，表示状态无法确认，
+    失败即封闭（fail closed），绝不被误判为进程已退出。
+    """
+    try:
+        with open("/proc/%d/stat" % pid, "rb") as fh:
+            data = fh.read().decode("utf-8", "replace")
+    except FileNotFoundError:
+        return None
+    except Exception:
+        return "unknown"
+    # stat 格式: pid (comm) state ...；comm 可能含空格/括号，取最后一个 ')' 之后。
+    rparen = data.rfind(")")
+    if rparen < 0:
+        return "unknown"
+    fields = data[rparen + 1:].split()
+    if not fields:
+        return "unknown"
+    state = fields[0]
+    if len(state) != 1:
+        return "unknown"
+    return state
+
+
+def wait_exited(pid, timeout=30.0, interval=0.2):
+    """轮询等待进程退出：/proc 缺失或 stat 状态为 Z 均视为已退出。
+
+    返回 True 表示确认退出；False 表示 timeout 内仍存活（绝不 SIGKILL）。
+    """
+    deadline = time.time() + timeout
+    while True:
+        state = proc_state(pid)
+        if state is None or state == "Z":
+            return True
+        remaining = deadline - time.time()
+        if remaining <= 0:
+            return False
+        time.sleep(min(interval, remaining))
+
+
+def wait_ports_closed(ports, timeout=5.0, interval=0.2):
+    """轮询等待所有给定端口关闭；返回 True 表示全部已关闭。"""
+    deadline = time.time() + timeout
+    while True:
+        if not any(port_open(p) for p in ports):
+            return True
+        remaining = deadline - time.time()
+        if remaining <= 0:
+            return False
+        time.sleep(min(interval, remaining))
+
+
 def stop():
     rc = 0
     for pidfile, label in ((APP_PID_FILE, "前端"), (SERVICE_PID_FILE, "服务")):
@@ -296,15 +351,31 @@ def stop():
             continue
         try:
             os.kill(pid, signal.SIGTERM)
-            log("%s: 已发送 SIGTERM 到 pid=%d" % (label, pid))
+            log("%s: 已发送 SIGTERM 到 pid=%d，等待其退出……" % (label, pid))
         except Exception as exc:
             log("%s: SIGTERM pid=%d 失败: %s" % (label, pid, exc))
             rc = 3
             continue
+        if not wait_exited(pid, timeout=30.0, interval=0.2):
+            log("%s: pid=%d 在发送 SIGTERM 后 30 秒内仍未退出（state=%s）；"
+                "保留 PID 文件 %s，绝不 SIGKILL。"
+                % (label, pid, proc_state(pid), pidfile))
+            rc = 4
+            continue
+        log("%s: pid=%d 已确认退出。" % (label, pid))
         try:
             os.remove(pidfile)
         except OSError:
             pass
+
+    ports = (EXPECTED_SERVICE_PORT, EXPECTED_APP_PORT)
+    if any(port_open(p) for p in ports):
+        if wait_ports_closed(ports, timeout=5.0, interval=0.2):
+            log("固定端口 %s 已全部释放。" % ", ".join(str(p) for p in ports))
+        else:
+            still_open = ", ".join(str(p) for p in ports if port_open(p))
+            log("固定端口 %s 在等待 5 秒后仍未释放（端口延迟释放）。" % still_open)
+            rc = 4
     return rc
 
 

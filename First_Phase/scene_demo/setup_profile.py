@@ -56,6 +56,27 @@ mcp_servers:
       PATH: {MCP_PATH}
 """
 
+# Shared explanatory guidance.  IDENTICAL text lives in run_agent.py and is
+# embedded in BOTH phase prompts there; here it is embedded in SOUL_MD so the
+# isolated profile teaches the same lazy meta-tool routing (installed Hermes may
+# expose only tool_search / tool_describe / tool_call, not direct callables).
+MCP_ROUTING_GUIDANCE = """\
+[tool routing]
+Installed Hermes may expose ONLY the meta-tools tool_search / tool_describe / tool_call; the scene_tools MCP methods may NOT be directly callable functions.
+When an MCP method is not a direct callable, route to it in this order:
+1. tool_search for "scene_tools" to find the available methods;
+2. tool_describe to fetch the exact schema of the method you need;
+3. tool_call(calls=[{"name": "mcp__scene_tools__<method>", "arguments": {...}}]) to actually invoke it.
+Only call functions currently exposed as callable; never repeatedly attempt a discovered MCP name as a directly callable function.
+"""
+
+IMAGE_EFFICIENCY_GUIDANCE = """\
+[image efficiency]
+The native agentview image already accompanies this message. When it is sufficient, do NOT repeat vision_analyze.
+Only when the attached imagery is insufficient, use observe_scene(extra_views=true) and actually inspect the extra images you need.
+Checking the latest session_version and submitting a plan are still mandatory.
+"""
+
 SOUL_MD = """\
 # SOUL
 
@@ -106,7 +127,8 @@ Turn the user's natural-language request into a plan for the CURRENT scene:
   report it instead of fixing it yourself.
 - Report outcomes exactly as the tools return them. Never present an unverified
   or unknown result as success.
-"""
+
+""" + MCP_ROUTING_GUIDANCE + "\n" + IMAGE_EFFICIENCY_GUIDANCE
 
 
 def log(msg: str) -> None:

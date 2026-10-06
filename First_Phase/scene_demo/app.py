@@ -845,7 +845,7 @@ async function submitRequest() {
   } catch (e) {
     const msg = (e.data && (e.data.error || e.data.reason)) || e.message;
     $("runmsg").textContent = "提交失败：" + msg;
-    $("run").disabled = false;
+    $("run").disabled = !currentSession || currentSession.state !== "ready";
   }
 }
 
@@ -899,11 +899,12 @@ function renderSubgoals(plan, jobs) {
   }
   if (jobs && jobs.length) {
     html += "<h2>执行明细（本次请求）</h2><div class='scroll'><table><thead><tr>" +
-      "<th>job_id</th><th>能力</th><th>状态</th><th>步数</th><th>success</th></tr></thead><tbody>";
+      "<th>job_id</th><th>能力</th><th>状态</th><th>本段步数 / 场景累计步数</th><th>success</th></tr></thead><tbody>";
     jobs.forEach(j => {
       html += "<tr><td>" + esc(j.job_id) + "</td><td>" + esc(j.capability_id) + "</td><td>" +
-              esc(j.state) + "</td><td>" + esc((j.steps != null ? j.steps : "-") + "/" +
-              (j.total_steps != null ? j.total_steps : "-")) + "</td><td>" +
+              esc(j.state) + "</td><td>" +
+              esc("本段 " + (j.steps != null ? j.steps : "-") + "；累计 " +
+                  (j.total_steps != null ? j.total_steps : "-")) + "</td><td>" +
               fmtBool(j.success) + "</td></tr>";
     });
     html += "</tbody></table></div>";
@@ -1015,7 +1016,7 @@ async function pollCurrent() {
       renderVideos([], true);
       renderEvaluation(result ? result.evaluation : null, result ? result.decision : null);
       loadHermes();
-      $("run").disabled = false;
+      $("run").disabled = !currentSession || currentSession.state !== "ready";
     } else {
       show("plan", '<span class="kv">正在规划…（Hermes 尚未提交本次请求的计划，等待中）</span>');
       renderVideos([], false);
@@ -1056,7 +1057,7 @@ async function pollCurrent() {
       loadHermes();
     }
   }
-  $("run").disabled = !agentTerminal;
+  $("run").disabled = !agentTerminal || !currentSession || currentSession.state !== "ready";
 }
 
 async function loadHermes() {
