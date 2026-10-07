@@ -199,6 +199,14 @@ class PlanValidationTests(unittest.TestCase):
         error = service.validate_plan_request(_ready_session(), None, self._payload(request_id=""))
         self.assertEqual(error["reason"], "invalid_request_id")
 
+    def test_whitespace_request_id_is_invalid(self):
+        # A whitespace-only id is not a usable opaque identifier: it must be
+        # rejected as invalid_request_id (HTTP 400), never accepted as a plan.
+        for bad in (" ", "   ", "\t", "\n", " \t\n "):
+            error = service.validate_plan_request(_ready_session(), None, self._payload(request_id=bad))
+            self.assertEqual(error["reason"], "invalid_request_id", repr(bad))
+            self.assertEqual(service.status_for_reason(error["reason"]), 400)
+
 
 class ResumeValidationTests(unittest.TestCase):
     def _plan(self, **overrides):
@@ -1014,11 +1022,22 @@ class PersistentWorkerTests(unittest.TestCase):
         self._tmp = tempfile.TemporaryDirectory()
         self.gate = threading.Event()
         self.gate.set()
+
+        def _action(batch):  # noqa: ARG001
+            # Gate the inference seam as well as env.step.  Under the single-lock
+            # design the worker holds ``self._lock`` across ``env.step``, so a step
+            # parked on the gate would also park every public read (plan/session/
+            # evaluate).  Blocking inference -- which stays *outside* the lock --
+            # keeps the plan deterministically "running" while those reads stay
+            # responsive.
+            self.gate.wait(timeout=15.0)
+            return np.zeros(7)
+
         self.service = service.SceneService(
             run_root=self._tmp.name,
             env_factory=lambda **kwargs: _FakeEnv(gate=self.gate),
             policy_loader=lambda svc: setattr(svc._v1, "_n_action_steps", 10),
-            action_function=lambda batch: np.zeros(7),
+            action_function=_action,
             batch_builder=lambda obs, instruction: {},
         )
         self.service.start()
@@ -1984,6 +2003,289 @@ class HandoffGuardWorkerTests(unittest.TestCase):
         self.assertEqual(job["ended_reason"], "success")
         self.assertGreater(job["steps"], 0)
         self.assertEqual(job["completion_mode"], "release_verified")
+
+
+# --- cooperative user cancellation tombstones --------------------------------
+
+
+class CancellationRecordTests(unittest.TestCase):
+    """Pure tombstone/ownership/idempotence contracts (no worker, no GPU)."""
+
+    def _service_with_session(self, session_id="sess-1"):
+        tmp = tempfile.mkdtemp()
+        svc = service.SceneService(run_root=tmp)
+        svc._sessions[session_id] = service.SessionRecord(
+            session_id, "goal_table", catalog.SCENES["goal_table"], 0, 0, Path(tmp)
+        )
+        return svc, session_id
+
+    def test_request_id_must_be_nonempty_and_bounded(self):
+        svc, sid = self._service_with_session()
+        for bad in ("", None, 123):
+            result = svc.cancel_request(bad, sid)
+            self.assertFalse(result["ok"], bad)
+            self.assertEqual(result["reason"], "invalid_request_id", bad)
+            self.assertEqual(service.status_for_reason(result["reason"]), 400)
+        too_long = "x" * (service.MAX_REQUEST_ID_LEN + 1)
+        self.assertEqual(svc.cancel_request(too_long, sid)["reason"], "invalid_request_id")
+
+    def test_whitespace_request_id_is_invalid_request_id_400(self):
+        # Whitespace-only ids never name a cancellable request: they are a
+        # client error (HTTP 400), not an unknown plan/session.
+        svc, sid = self._service_with_session()
+        for bad in (" ", "   ", "\t", "\n", " \t "):
+            result = svc.cancel_request(bad, sid)
+            self.assertFalse(result["ok"], repr(bad))
+            self.assertEqual(result["reason"], "invalid_request_id", repr(bad))
+            self.assertEqual(service.status_for_reason(result["reason"]), 400)
+            self.assertNotIn(bad, svc._cancel_requests)
+
+    def test_unknown_session_is_404(self):
+        svc, _ = self._service_with_session()
+        result = svc.cancel_request("req-1", "nope")
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["reason"], "unknown_session")
+        self.assertEqual(service.status_for_reason(result["reason"]), 404)
+
+    def test_preplan_tombstone_never_synthesises_a_plan(self):
+        svc, sid = self._service_with_session()
+        result = svc.cancel_request("req-x", sid)
+        self.assertTrue(result["ok"], result)
+        self.assertEqual(result["request_id"], "req-x")
+        self.assertEqual(result["session_id"], sid)
+        self.assertTrue(result["cancel_requested"])
+        self.assertEqual(result["state"], "cancelled")
+        self.assertIsNone(result["plan"])  # preplanning -> never a plan object
+        # Persistent and idempotent: a second acknowledgement is unchanged.
+        again = svc.cancel_request("req-x", sid)
+        self.assertTrue(again["ok"])
+        self.assertIsNone(again["plan"])
+        self.assertEqual(again["state"], "cancelled")
+
+    def test_wrong_owner_is_409(self):
+        svc, sid = self._service_with_session("sess-1")
+        svc._sessions["sess-2"] = service.SessionRecord(
+            "sess-2", "goal_table", catalog.SCENES["goal_table"], 0, 0, Path(svc.run_root)
+        )
+        self.assertTrue(svc.cancel_request("req-x", sid)["ok"])
+        wrong = svc.cancel_request("req-x", "sess-2")
+        self.assertFalse(wrong["ok"])
+        self.assertEqual(wrong["reason"], "ownership")
+        self.assertEqual(service.status_for_reason(wrong["reason"]), 409)
+        # A plan owned by sess-1 is likewise protected from sess-2.
+        svc._plans["req-y"] = service.PlanRecord(
+            "req-y", "sess-1", {"decision": "execute", "capability_ids": ["bowl_to_plate"]}
+        )
+        self.assertEqual(svc.cancel_request("req-y", "sess-2")["reason"], "ownership")
+
+    def test_completed_plan_cancel_is_idempotent(self):
+        svc, sid = self._service_with_session()
+        plan = service.PlanRecord(
+            "req-1", sid, {"decision": "execute", "capability_ids": ["bowl_to_plate"]}
+        )
+        plan.state = "completed"
+        plan.plan_success = True
+        svc._plans["req-1"] = plan
+        before = plan.public()
+        result = svc.cancel_request("req-1", sid)
+        self.assertTrue(result["ok"], result)
+        self.assertEqual(result["state"], "completed")  # history is never rewritten
+        self.assertEqual(result["plan"], before)
+
+    def test_blocked_plan_cancel_terminalises_and_blocks_resume(self):
+        svc, sid = self._service_with_session()
+        plan = service.PlanRecord(
+            "req-1", sid, {"decision": "execute", "capability_ids": ["bowl_to_plate"]}
+        )
+        plan.state = "blocked"
+        svc._plans["req-1"] = plan
+        result = svc.cancel_request("req-1", sid)
+        self.assertTrue(result["ok"], result)
+        self.assertEqual(result["state"], "cancelled")
+        self.assertEqual(result["plan"]["state"], "cancelled")
+        resumed = svc.resume_plan(
+            {
+                "session_id": sid,
+                "request_id": "req-1",
+                "scene_version": 0,
+                "capability_ids": ["bowl_to_plate"],
+            }
+        )
+        self.assertFalse(resumed["ok"])
+        self.assertEqual(resumed["reason"], "cancelled")
+        self.assertEqual(service.status_for_reason(resumed["reason"]), 409)
+
+    def test_legacy_plan_cancel_routes_blocked_through_cancellation_intent(self):
+        svc, sid = self._service_with_session()
+        plan = service.PlanRecord(
+            "req-1", sid, {"decision": "execute", "capability_ids": ["bowl_to_plate"]}
+        )
+        plan.state = "blocked"
+        svc._plans["req-1"] = plan
+        payload = svc.cancel("req-1")  # legacy shape: plan.public()
+        self.assertTrue(payload["ok"])
+        self.assertEqual(payload["state"], "cancelled")
+        # unknown_plan behaviour is unchanged.
+        self.assertEqual(svc.cancel("missing")["reason"], "unknown_plan")
+        # A repair can no longer reopen the cancelled request.
+        resumed = svc.resume_plan(
+            {
+                "session_id": sid,
+                "request_id": "req-1",
+                "scene_version": 0,
+                "capability_ids": ["bowl_to_plate"],
+            }
+        )
+        self.assertEqual(resumed["reason"], "cancelled")
+
+
+class CancellationWorkerTests(unittest.TestCase):
+    """Cooperative cancellation against the fake simulator (no GPU, no torch)."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.env_gate = threading.Event()
+        self.env_gate.set()
+        # Deterministic delayed inference: env.step is never gated; the *action*
+        # sample is held until the test releases it (only after cancel ack).
+        self.action_gate = threading.Event()
+        self.action_gate.set()
+        self.action_calls = {"n": 0}
+        self.service = service.SceneService(
+            run_root=self._tmp.name,
+            env_factory=lambda **kwargs: _FakeEnv(gate=self.env_gate),
+            policy_loader=lambda svc: setattr(svc._v1, "_n_action_steps", 10),
+            action_function=self._action,
+            batch_builder=lambda obs, instruction: {},
+        )
+        self.service.start()
+        self.addCleanup(self._stop)
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not self.service.health()["ready"]:
+            time.sleep(0.05)
+
+    def _stop(self):
+        self.env_gate.set()
+        self.action_gate.set()
+        self.service.stop()
+        self._tmp.cleanup()
+
+    def _action(self, batch):  # noqa: ARG002
+        self.action_calls["n"] += 1
+        self.action_gate.wait(timeout=15.0)
+        return np.zeros(7)
+
+    def _create(self):
+        session = self.service.create_session("goal_table", seed=0, init_state_index=0)
+        self.assertTrue(session["ok"], session)
+        return session
+
+    def _submit(self, session_id, request_id, capability_ids, budget=50):
+        return self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": self.service.session(session_id)["scene_version"],
+                "request_id": request_id,
+                "capability_ids": capability_ids,
+                "decision": "execute",
+                "budget_per_subgoal": budget,
+            }
+        )
+
+    def _wait_for_state(self, request_id, states, timeout=20.0):
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            payload = self.service.plan(request_id)
+            if payload is not None and payload["state"] in states:
+                return payload
+            time.sleep(0.02)
+        self.fail("plan %s never reached %s" % (request_id, list(states)))
+
+    def _await_inference(self):
+        deadline = time.time() + 10.0
+        while time.time() < deadline and self.action_calls["n"] == 0:
+            time.sleep(0.02)
+        self.assertGreaterEqual(self.action_calls["n"], 1)
+
+    def test_preplan_tombstone_rejects_late_submit(self):
+        session = self._create()
+        sid = session["session_id"]
+        cancelled = self.service.cancel_request("req-late", sid)
+        self.assertTrue(cancelled["ok"], cancelled)
+        self.assertIsNone(cancelled["plan"])
+        submitted = self._submit(sid, "req-late", ["bowl_to_plate"])
+        self.assertFalse(submitted["ok"])
+        self.assertEqual(submitted["reason"], "cancelled")
+        self.assertEqual(service.status_for_reason(submitted["reason"]), 409)
+        # The late submission never queued anything.
+        self.assertNotIn("req-late", self.service._plans)
+
+    def test_delayed_inference_action_is_never_stepped_after_cancel(self):
+        session = self._create()
+        sid = session["session_id"]
+        # The goal can never be satisfied, so the job must enter the step loop.
+        self.service._env._inner.truth_after["on|akita_black_bowl_1|plate_1"] = 10 ** 9
+        self.action_gate.clear()  # inference blocks here
+        submitted = self._submit(sid, "req-stop", ["bowl_to_plate"])
+        self.assertTrue(submitted["ok"], submitted)
+        self._await_inference()
+        # Acknowledge the cancellation BEFORE releasing the in-flight inference.
+        ack = self.service.cancel_request("req-stop", sid)
+        self.assertTrue(ack["ok"], ack)
+        self.assertEqual(ack["state"], "cancelling")
+        self.action_gate.set()  # only now is the sampled action released
+        plan = self._wait_for_state("req-stop", service.TERMINAL_PLAN_STATES)
+        self.assertEqual(plan["state"], "cancelled", plan)
+        job = self.service.job(plan["job_ids"][0])
+        self.assertEqual(job["state"], "cancelled")
+        self.assertEqual(job["ended_reason"], "cancelled")
+        # The action sampled during slow inference was NEVER sent to env.step.
+        self.assertEqual(self.service._env._inner.steps, 0)
+
+    def test_running_cancel_executes_no_following_goal_and_no_reset(self):
+        session = self._create()
+        sid = session["session_id"]
+        self.service._env._inner.truth_after["on|akita_black_bowl_1|plate_1"] = 10 ** 9
+        self.service._env._inner.truth_after["turnon|flat_stove_1"] = 10 ** 9
+        self.action_gate.clear()
+        submitted = self._submit(sid, "req-run", ["bowl_to_plate", "stove_on"], budget=50)
+        self.assertTrue(submitted["ok"], submitted)
+        self._await_inference()
+        ack = self.service.cancel_request("req-run", sid)
+        self.assertTrue(ack["ok"], ack)
+        self.action_gate.set()
+        plan = self._wait_for_state("req-run", service.TERMINAL_PLAN_STATES)
+        self.assertEqual(plan["state"], "cancelled", plan)
+        # Only the first capability was ever started; the following goal was not.
+        self.assertEqual(len(plan["job_ids"]), 1)
+        self.assertEqual(plan["pending_capability_ids"], ["stove_on"])
+        after = self.service.session(sid)
+        self.assertEqual(after["episode_resets"], 1)  # no reset / no env rebuild
+        self.assertEqual(self.service._env._inner.steps, 0)
+
+    def test_blocked_cancel_prevents_worker_resume(self):
+        session = self._create()
+        sid = session["session_id"]
+        self.service._env._inner.truth_after[
+            "on|wine_bottle_1|wine_rack_1_top_region"
+        ] = 10 ** 9
+        submitted = self._submit(sid, "req-blk", ["bowl_to_plate", "wine_to_rack"], budget=30)
+        self.assertTrue(submitted["ok"], submitted)
+        blocked = self._wait_for_state("req-blk", ("blocked",))
+        self.assertEqual(blocked["state"], "blocked", blocked)
+        ack = self.service.cancel_request("req-blk", sid)
+        self.assertTrue(ack["ok"], ack)
+        self.assertEqual(ack["plan"]["state"], "cancelled")
+        resumed = self.service.resume_plan(
+            {
+                "session_id": sid,
+                "request_id": "req-blk",
+                "scene_version": self.service.session(sid)["scene_version"],
+                "capability_ids": ["bowl_to_plate"],
+            }
+        )
+        self.assertFalse(resumed["ok"])
+        self.assertEqual(resumed["reason"], "cancelled")
 
 
 if __name__ == "__main__":

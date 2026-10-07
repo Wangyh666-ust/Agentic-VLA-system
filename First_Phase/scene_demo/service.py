@@ -111,6 +111,9 @@ NUM_STEPS_WAIT = 10
 SETTLE_STEPS = 20
 
 SESSION_STEP_LIMIT = 2000
+# A request id is a bounded opaque identifier; it must never be able to smuggle
+# unbounded data into the cancellation tombstone map.
+MAX_REQUEST_ID_LEN = 256
 MAX_CAPABILITIES = 6
 MIN_BUDGET = 1
 MAX_BUDGET = 600
@@ -309,7 +312,7 @@ def validate_plan_request(
         return _err("session_closed", "session is %s, not ready" % session.get("state"))
 
     request_id = payload.get("request_id")
-    if not isinstance(request_id, str) or not request_id:
+    if not isinstance(request_id, str) or not request_id.strip():
         return _err("invalid_request_id", "request_id must be a non-empty string")
 
     decision = payload.get("decision")
@@ -1055,6 +1058,12 @@ class SceneService:
         self.completion_mode = completion_mode
 
         self._lock = threading.RLock()
+        # The worker holds this single lock across the post-inference
+        # cancellation guard, the single ``env.step`` and the step counters;
+        # every cancellation path takes it while signalling, so an action
+        # sampled during a slow VLA inference is never stepped after a
+        # cancellation was acknowledged.  Inference itself stays *outside* the
+        # lock.
         self._queue: queue.Queue = queue.Queue()
         self._sessions: dict[str, SessionRecord] = {}
         self._session_order: list[str] = []
@@ -1062,6 +1071,11 @@ class SceneService:
         self._plan_order: list[str] = []
         self._jobs: dict[str, JobRecord] = {}
         self._job_order: list[str] = []
+        # Persistent, in-memory cancellation tombstones keyed by request_id.
+        # Each entry records the owning session_id and the request time.  A
+        # tombstone is created even before any plan exists, so a late plan
+        # submission can never resurrect a cancelled request.
+        self._cancel_requests: dict[str, dict[str, Any]] = {}
 
         self._ready = False
         self._worker_error: str | None = None
@@ -1713,12 +1727,21 @@ class SceneService:
             error = validate_plan_request(session_public, active_public, payload)
             if error is not None:
                 return error
+            # A cancelled request id is cancelled forever: check the tombstone
+            # under the same lock, before the plan is accepted or queued.  A late
+            # submission (Hermes or otherwise) can therefore never resurrect a
+            # cancellation -- not even one recorded before any plan existed.
+            request_id = payload["request_id"]
+            if request_id in self._cancel_requests:
+                return _err(
+                    "cancelled",
+                    "request_id %r was cancelled and can no longer be submitted" % request_id,
+                )
             # A request_id is a permanent identifier: once a plan (completed,
             # blocked, cancelled or errored) has used it, the same id may never
             # be reused.  History is never overwritten and replacement is not
             # idempotent.  (An active plan is already reported as ``busy`` above,
             # so busy correctly takes precedence.)
-            request_id = payload["request_id"]
             if request_id in self._plans:
                 return _err(
                     "request_conflict",
@@ -1736,16 +1759,106 @@ class SceneService:
         self._queue.put(_Work("plan", lambda: self._do_run_plan(plan)))
         return plan.public()
 
+    def _record_cancel_locked(
+        self, plan: PlanRecord | None, request_id: str, session_id: str
+    ) -> str:
+        """Record the cancellation intent and signal/terminalise the plan.
+
+        Caller holds ``self._lock``.  A tombstone is always created (even with no
+        plan) so later submissions/resumes cannot reopen the request.  Returns
+        the response ``state``:
+
+        * ``cancelling`` -- an actively running plan was signalled;
+        * ``cancelled``  -- a queued/blocked plan was terminalised, or no plan
+          exists yet;
+        * the plan's own terminal state for an already completed/error/cancelled
+          plan -- history is never rewritten.
+        """
+
+        if request_id not in self._cancel_requests:
+            self._cancel_requests[request_id] = {
+                "request_id": request_id,
+                "session_id": session_id,
+                "requested_at": _now_utc(),
+            }
+        if plan is None:
+            return "cancelled"
+        if plan.state == "running":
+            # The worker owns the physical action boundary: signal it and let it
+            # stop at the next cooperative checkpoint (never an emergency kill).
+            # The caller already holds ``self._lock`` -- the same lock the worker
+            # takes across the post-inference guard+step section -- so the
+            # acknowledgement is atomic w.r.t. that section and the action already
+            # sampled cannot run after this returns.
+            plan.cancel_event.set()
+            return "cancelling"
+        if plan.state in ("queued", "blocked"):
+            # A queued plan has not started; a blocked plan is terminal but a
+            # repair could otherwise reopen it -- both become cancelled so no
+            # repair can resurrect them.
+            plan.cancel_event.set()
+            self._terminalise_plan_locked(plan, "cancelled", None)
+            return plan.state
+        # completed / error / cancelled: idempotent, successful history untouched.
+        return plan.state
+
     def cancel(self, request_id: str) -> dict[str, Any]:
+        """Legacy ``POST /plans/<rid>/cancel`` (no session ownership).
+
+        The response shape (``plan.public()``) and the ``unknown_plan`` behaviour
+        are unchanged, but an existing plan -- including a blocked one -- is now
+        routed through the cancellation intent so a repair cannot reopen it.
+        """
+
         with self._lock:
             plan = self._plans.get(request_id)
             if plan is None:
                 return _err("unknown_plan", "no such request_id")
-            if plan.state not in TERMINAL_PLAN_STATES:
-                plan.cancel_event.set()
-                if plan.state == "queued":
-                    self._terminalise_plan_locked(plan, "cancelled", None)
+            self._record_cancel_locked(plan, plan.request_id, plan.session_id)
             return plan.public()
+
+    def cancel_request(self, request_id: str, session_id: str) -> dict[str, Any]:
+        """Session-owned cooperative cancellation of ``request_id``.
+
+        Validates, under the existing lock: a non-empty bounded request id, an
+        existing session, and ownership against the plan *or* the tombstone.
+        Unknown session -> 404; wrong owner -> 409.  A tombstone is created even
+        before any plan exists, and a pre-planning cancellation never synthesises
+        a plan (``plan`` stays ``None``).
+        """
+
+        with self._lock:
+            if not isinstance(request_id, str) or not request_id.strip():
+                return _err("invalid_request_id", "request_id must be a non-empty string")
+            if len(request_id) > MAX_REQUEST_ID_LEN:
+                return _err(
+                    "invalid_request_id",
+                    "request_id must be at most %d characters" % MAX_REQUEST_ID_LEN,
+                )
+            session = self._sessions.get(session_id) if isinstance(session_id, str) else None
+            if session is None:
+                return _err("unknown_session", "no such session")
+            plan = self._plans.get(request_id)
+            tombstone = self._cancel_requests.get(request_id)
+            if plan is not None:
+                owner = plan.session_id
+            elif tombstone is not None:
+                owner = tombstone.get("session_id")
+            else:
+                owner = None
+            if owner is not None and owner != session_id:
+                return _err(
+                    "ownership", "request %r does not belong to this session" % request_id
+                )
+            state = self._record_cancel_locked(plan, request_id, session_id)
+            return {
+                "ok": True,
+                "request_id": request_id,
+                "session_id": session_id,
+                "cancel_requested": True,
+                "state": state,
+                "plan": plan.public() if plan is not None else None,
+            }
 
     def resume_plan(self, payload: dict[str, Any]) -> dict[str, Any]:
         if not isinstance(payload, dict):
@@ -1754,6 +1867,14 @@ class SceneService:
         with self._lock:
             plan = self._plans.get(request_id) if isinstance(request_id, str) else None
             session = self._sessions.get(payload.get("session_id")) if isinstance(payload.get("session_id"), str) else None
+            # A cancelled request can never be reopened by a repair: the
+            # tombstone is checked under the same lock before anything is
+            # validated, mutated or queued.
+            if isinstance(request_id, str) and request_id in self._cancel_requests:
+                return _err(
+                    "cancelled",
+                    "request_id %r was cancelled and can no longer be resumed" % request_id,
+                )
             # Resume is only for blocked plans.  audit is *never* inherited
             # implicitly: it must be passed explicitly, so a repair can never
             # silently keep audit-only rights.  The effective budget defaults to
@@ -2131,10 +2252,28 @@ class SceneService:
                             if not np.all(np.isfinite(action)):
                                 raise RuntimeError("policy produced a non-finite action: %s" % (action.tolist(),))
                             send = np.clip(action, env.action_space.low, env.action_space.high).astype(np.float32)
-                            obs, reward, terminated, truncated, info = env.step(send)
-                            self._last_obs = obs
-                            steps += 1
-                            self._total_steps += 1
+                            # Post-inference cancellation boundary.  The action
+                            # was just sampled by a possibly slow VLA inference
+                            # *without* the lock; the guard check, ``env.step``
+                            # and the step counters are held under ``self._lock``
+                            # -- the same lock the cancellation path takes -- so
+                            # an action sampled during slow inference is never
+                            # stepped after a cancellation was acknowledged.  An
+                            # already-in-flight ``env.step`` may finish.
+                            with self._lock:
+                                if self._stop.is_set():
+                                    ended_reason = "shutdown"
+                                    break
+                                if plan.cancel_event.is_set():
+                                    ended_reason = "cancelled"
+                                    break
+                                if self._total_steps >= SESSION_STEP_LIMIT:
+                                    ended_reason = "session_limit"
+                                    break
+                                obs, reward, terminated, truncated, info = env.step(send)
+                                self._last_obs = obs
+                                steps += 1
+                                self._total_steps += 1
                             native_success = bool(info.get("is_success", False))
                             predicates = {
                                 catalog.goal_key(goal): bool(eval_goal_predicate(env, goal))
@@ -2499,6 +2638,12 @@ class _Handler(BaseHTTPRequestHandler):
             result = service.evaluate(
                 payload.get("session_id"), payload.get("case_id"), payload.get("request_id")
             )
+            if not result.get("ok"):
+                return self._send_error_payload(result)
+            return self._send_json(200, result)
+
+        if len(segments) == 3 and segments[0] == "requests" and segments[2] == "cancel":
+            result = service.cancel_request(segments[1], payload.get("session_id"))
             if not result.get("ok"):
                 return self._send_error_payload(result)
             return self._send_json(200, result)

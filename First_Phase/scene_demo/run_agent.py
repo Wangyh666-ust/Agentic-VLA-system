@@ -45,6 +45,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import signal
 import subprocess
 import sys
 import time
@@ -323,6 +324,40 @@ def is_evaluable(state) -> bool:
 
 
 # --------------------------------------------------------------------------- #
+# cooperative user cancellation marker
+# --------------------------------------------------------------------------- #
+CANCEL_MARKER_NAME = "cancel_requested.json"
+
+
+def cancellation_requested(path, request_id, session_id) -> bool:
+    """Whether the cancellation marker at ``path`` names EXACTLY this request.
+
+    The marker schema is ``{"request_id", "session_id", "requested_at"}``.  A
+    missing file, malformed JSON, a non-object payload, an absent/incorrect id
+    type, or any mismatch of either id yields ``False``: a marker can only ever
+    stop the exact request/session pair it names.  This is a purely local read;
+    it never contacts the service, the GPU or the network.
+    """
+
+    if not path or not isinstance(request_id, str) or not request_id:
+        return False
+    if not isinstance(session_id, str) or not session_id:
+        return False
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            data = json.load(handle)
+    except (OSError, ValueError):
+        return False
+    if not isinstance(data, dict):
+        return False
+    marker_request = data.get("request_id")
+    marker_session = data.get("session_id")
+    if not isinstance(marker_request, str) or not isinstance(marker_session, str):
+        return False
+    return marker_request == request_id and marker_session == session_id
+
+
+# --------------------------------------------------------------------------- #
 # HTTP helpers
 # --------------------------------------------------------------------------- #
 def _opener():
@@ -387,6 +422,12 @@ class ServiceClient:
     def cancel_plan(self, request_id):
         return http_json("POST", "/plans/" + _quote(request_id) + "/cancel", {}, 10.0)
 
+    def cancel_request(self, request_id, session_id):
+        # Cooperative, session-owned cancellation (idempotent).
+        return http_json(
+            "POST", "/requests/" + _quote(request_id) + "/cancel",
+            {"session_id": session_id}, 10.0)
+
     def get_job(self, job_id):
         return http_json("GET", "/jobs/" + _quote(job_id), None, 10.0)
 
@@ -396,14 +437,22 @@ class ServiceClient:
 
 
 class HermesRunner:
-    """真实 Hermes CLI 子进程封装：每次调用计一次子进程。"""
+    """真实 Hermes CLI 子进程封装：每次调用计一次子进程。
+
+    可选 ``cancel_check`` 回调（默认为 ``None``）让 host 在一次真实的 Hermes
+    调用期间也能协作式响应用户取消：提供回调时改用 ``Popen`` + 轮询
+    ``communicate(timeout<=0.25s)``，在用户请求停止时只终止**本次调用自己
+    拥有的**进程组（POSIX ``start_new_session=True``），绝不影响 VLA 或无关进程。
+    不提供回调时保持原来的阻塞 ``subprocess.run`` 行为不变。
+    """
 
     def __init__(self, bin_path=HERMES_BIN, home=HERMES_HOME, cwd=SCENE_DIR,
-                 tools=HERMES_TOOLS):
+                 tools=HERMES_TOOLS, cancel_check=None):
         self.bin_path = bin_path
         self.home = home
         self.cwd = cwd
         self.tools = tools
+        self.cancel_check = cancel_check
 
     @staticmethod
     def _write_unavailable_usage(usage_path: str) -> None:
@@ -435,6 +484,10 @@ class HermesRunner:
         if not os.path.isfile(self.bin_path):
             return {"exit_code": None, "timed_out": False, "error": "hermes_missing",
                     "output": ("找不到 hermes 可执行文件: %s\n" % self.bin_path).encode("utf-8")}
+        if self.cancel_check is not None:
+            # Cooperative cancellation requested: poll the child so a user stop
+            # (or the deadline) only ever terminates THIS owned process.
+            return self._run_cancellable(cmd, env, usage_path, timeout)
         try:
             proc = subprocess.run(
                 cmd, cwd=self.cwd, env=env,
@@ -452,6 +505,174 @@ class HermesRunner:
         except Exception as exc:  # noqa: BLE001
             return {"exit_code": None, "output": str(exc).encode("utf-8"),
                     "timed_out": False, "error": "hermes_spawn_failed: %s" % exc}
+
+    # -- cooperative-cancellation subprocess path ---------------------------- #
+    CANCEL_POLL_INTERVAL = 0.25  # <= 0.25s
+    CANCEL_GRACE_S = 2.0         # terminate -> grace -> kill
+
+    def _run_cancellable(self, cmd, env, usage_path, timeout):
+        """Run Hermes under ``Popen`` while polling for a user cancellation.
+
+        Preserves partial output, reports ``user_cancelled`` (``timed_out``
+        false) for a user stop and the legacy ``hermes_timeout`` (``timed_out``
+        true) for a deadline.  Only the owned child (POSIX: its own process
+        group) is ever terminated.
+        """
+
+        popen_kwargs = {
+            "cwd": self.cwd,
+            "env": env,
+            "stdout": subprocess.PIPE,
+            "stderr": subprocess.STDOUT,
+        }
+        started = time.monotonic()
+        deadline = started + max(0.0, float(timeout))
+        try:
+            if os.name == "posix":
+                # Own session/process-group: termination can never touch the VLA
+                # service or any unrelated process.
+                proc = subprocess.Popen(cmd, start_new_session=True, **popen_kwargs)
+            else:
+                proc = subprocess.Popen(cmd, **popen_kwargs)
+        except Exception as exc:  # noqa: BLE001
+            return {"exit_code": None, "output": str(exc).encode("utf-8"),
+                    "timed_out": False, "error": "hermes_spawn_failed: %s" % exc}
+
+        partial = b""
+        timed_out = False
+        cancelled = False
+        try:
+            while True:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    timed_out = True
+                    break
+                if self.cancel_check is not None and self.cancel_check():
+                    cancelled = True
+                    break
+                wait = min(self.CANCEL_POLL_INTERVAL, max(0.01, remaining))
+                try:
+                    out, _ = proc.communicate(timeout=wait)
+                except subprocess.TimeoutExpired as exc:
+                    if exc.output:
+                        partial = exc.output
+                    continue
+                partial = out or b""
+                if proc.returncode == 0 and usage_path and not os.path.exists(usage_path):
+                    self._write_unavailable_usage(usage_path)
+                return {"exit_code": proc.returncode, "output": partial,
+                        "timed_out": False, "error": None}
+        except BaseException:
+            # Never leak the owned child on an unexpected poll error.
+            try:
+                partial = self._terminate_owned(proc, partial)
+            except Exception:  # noqa: BLE001
+                pass
+            raise
+
+        partial = self._terminate_owned(proc, partial)
+        if cancelled:
+            return {"exit_code": proc.returncode, "output": partial,
+                    "timed_out": False, "error": "user_cancelled"}
+        return {"exit_code": proc.returncode, "output": partial,
+                "timed_out": True, "error": "hermes_timeout"}
+
+    @staticmethod
+    def _group_alive(pgid):
+        """Whether the POSIX process group ``pgid`` still has any member."""
+
+        try:
+            os.killpg(pgid, 0)
+        except ProcessLookupError:
+            return False
+        except PermissionError:
+            return True
+        except OSError:
+            return False
+        return True
+
+    @staticmethod
+    def _signal_group(pgid, sig, proc):
+        """Signal the owned process group, falling back to the single child."""
+
+        try:
+            os.killpg(pgid, sig)
+            return
+        except ProcessLookupError:
+            return
+        except Exception:  # noqa: BLE001 - fall back to the single owned child
+            pass
+        try:
+            proc.send_signal(sig)
+        except Exception:  # noqa: BLE001
+            pass
+
+    def _terminate_owned(self, proc, partial=b""):
+        """Terminate ONLY the owned child's session/process group (POSIX).
+
+        ``Popen(..., start_new_session=True)`` makes the child a session leader,
+        so its process-group id is the *stable* ``proc.pid``; ``os.getpgid`` is
+        never called, because it raises once the parent has exited.  SIGTERM the
+        owned group, wait a bounded 2 s grace, then SIGKILL the owned group if a
+        descendant still lingers (a TERM-ignoring grandchild holding the stdout
+        pipe also makes ``communicate`` time out), and finally reap the parent.
+        Partial output is preserved; a process in any other group is untouched.
+        """
+
+        if os.name != "posix":
+            if proc.poll() is None:
+                try:
+                    proc.terminate()
+                except Exception:  # noqa: BLE001
+                    pass
+                try:
+                    out, _ = proc.communicate(timeout=self.CANCEL_GRACE_S)
+                    if out:
+                        partial = out
+                except subprocess.TimeoutExpired as exc:
+                    if exc.output:
+                        partial = exc.output
+                except Exception:  # noqa: BLE001
+                    pass
+                if proc.poll() is None:
+                    try:
+                        proc.kill()
+                    except Exception:  # noqa: BLE001
+                        pass
+            try:
+                out, _ = proc.communicate(timeout=self.CANCEL_GRACE_S)
+                if out:
+                    partial = out
+            except Exception:  # noqa: BLE001 - already reaped / nothing buffered
+                pass
+            return partial
+
+        # Stable PGID: the owned child leads a session whose pgid == its pid.
+        pid = proc.pid
+        # TERM the owned group even if the parent already exited, so a descendant
+        # spawned into the same session is still reached.
+        if proc.poll() is None or self._group_alive(pid):
+            self._signal_group(pid, signal.SIGTERM, proc)
+        try:
+            out, _ = proc.communicate(timeout=self.CANCEL_GRACE_S)
+            if out:
+                partial = out
+        except subprocess.TimeoutExpired as exc:
+            if exc.output:
+                partial = exc.output
+        except Exception:  # noqa: BLE001
+            pass
+        # A surviving descendant (or a timed-out communicate) keeps the group
+        # alive: KILL the owned group, never the single parent only.
+        if self._group_alive(pid):
+            self._signal_group(pid, signal.SIGKILL, proc)
+        try:
+            out, _ = proc.communicate(timeout=self.CANCEL_GRACE_S)
+            if out:
+                partial = out
+        except Exception:  # noqa: BLE001 - already reaped / nothing buffered
+            pass
+        return partial
 
 
 class SystemClock:
@@ -482,6 +703,11 @@ class Runner:
         self.timed_out_any = False
         self.repair_used = False
         self.execution_timeout = False
+        self.user_cancelled = False
+        # True only when a user stop's bounded collection window closed while the
+        # backend plan was still active: an unconfirmed (pending) cancellation is
+        # reported honestly instead of a faked confirmed stop.
+        self.cancellation_pending = False
         self.errors: list[str] = []
 
     # ---- small helpers ---------------------------------------------------- #
@@ -572,9 +798,99 @@ class Runner:
             self.usages.append(usage)
         return result
 
+    # ---- cooperative user cancellation ------------------------------------ #
+    def _cancel_requested(self) -> bool:
+        """Whether the configured marker names exactly this request/session."""
+        path = getattr(self.config, "cancel_file", None)
+        if not path:
+            return False
+        return cancellation_requested(path, self.request_id, self.config.session_id)
+
+    def _own_plan(self, candidate):
+        """The exact plan owned by THIS request, or ``None``.
+
+        A plan is adopted only when both ids match exactly: a foreign request or
+        session can never be attached to this run's result.
+        """
+
+        if not isinstance(candidate, dict):
+            return None
+        if candidate.get("request_id") != self.request_id:
+            return None
+        if candidate.get("session_id") != self.config.session_id:
+            return None
+        return candidate
+
+    def _do_user_stop(self, plan, lookup=False):
+        """Cooperative user stop.
+
+        Requests cancellation of the EXACT request id (idempotent) and ALWAYS
+        replaces any locally known candidate plan with the exact owned plan the
+        acknowledgement reports -- even when the candidate is not ``None`` (e.g.
+        a stale cached ``blocked`` plan).  Adoption is therefore not restricted
+        to the no-candidate case, so the freshest authoritative state (a plan the
+        model submitted during the initial call, or a transition the stale cache
+        missed) always drives the result.  Only with ``lookup`` -- i.e. once the
+        model has had a chance to submit -- is ``get_plan`` queried once for the
+        exact request id; a true pre-model stop performs no plan lookup and stays
+        ``plan=None``/``jobs=[]``.  The terminal state is then collected within a
+        bounded 10 s window; if the acknowledged exact plan is still active when
+        that window closes, ``cancellation_pending`` is set and that actual plan
+        (never a stale cached candidate) is reported rather than faking a
+        confirmed stop.  Runs no repair and no evaluation.
+        """
+
+        if not self.user_cancelled:
+            self.user_cancelled = True
+            self.errors.append("user_cancelled: 用户已请求停止")
+        plan = self._own_plan(plan)
+        response = None
+        try:
+            response = self.service.cancel_request(self.request_id, self.config.session_id)
+        except Exception as exc:  # noqa: BLE001
+            self.errors.append("取消请求失败：%s" % exc)
+        # ALWAYS adopt the exact plan the cancellation acknowledged: a stale
+        # cached candidate (e.g. a blocked plan) must never outrank the fresh,
+        # exactly-owned acknowledgement.  Exact ownership is validated.
+        acknowledged = (self._own_plan(response.get("plan"))
+                        if isinstance(response, dict) else None)
+        if acknowledged is not None:
+            plan = acknowledged
+        # Alternative: fetch the EXACT request id once (never a "latest plan").
+        if plan is None and lookup:
+            try:
+                plan = self._own_plan(self.service.get_plan(self.request_id))
+            except Exception as exc:  # noqa: BLE001
+                self.errors.append("查询计划失败：%s" % exc)
+        if plan is None:
+            return None
+        if is_terminal(plan.get("state")):
+            return plan
+        # Keep the fresh (acknowledged) exact plan as the authoritative fallback.
+        fresh = plan
+        collected = self._collect_cancelled(plan)
+        if is_terminal(collected.get("state")):
+            return collected
+        # The bounded collection window closed while the acknowledged exact plan
+        # is still active: report an unconfirmed cancellation and keep that
+        # actual plan -- never a stale cached (e.g. blocked) candidate, and never
+        # a faked confirmed stop.
+        self.cancellation_pending = True
+        return fresh
+
+    def _finish_user_stop(self, started, plan, lookup=False):
+        """Finish a user-stopped run with REAL plan/jobs only (never a fake
+        physical success); a true pre-model stop yields ``plan=None`` and no jobs."""
+
+        plan = self._do_user_stop(plan, lookup=lookup)
+        jobs = self._collect_jobs(plan) if isinstance(plan, dict) else []
+        return self._finish(started, plan, jobs, None)
+
     # ---- plan waiting ----------------------------------------------------- #
     def _await_first_plan(self, deadline, grace: float = 5.0):
         """等首次计划出现（最多 grace 秒）；始终只查精确 request_id。"""
+        if self._cancel_requested():
+            return None
         try:
             plan = self.service.get_plan(self.request_id)
         except Exception as exc:  # noqa: BLE001
@@ -582,6 +898,8 @@ class Runner:
             return None
         end = min(deadline, self.clock.monotonic() + grace)
         while plan is None and self.clock.monotonic() < end:
+            if self._cancel_requested():
+                return None
             self.clock.sleep(0.5)
             try:
                 plan = self.service.get_plan(self.request_id)
@@ -624,6 +942,11 @@ class Runner:
 
     def _wait_for_terminal(self, plan, deadline):
         while True:
+            # A user stop is checked before every terminal test and before any
+            # repair, so a stopped request never opens a new repair -- and it is
+            # re-checked after the repair too.
+            if self._cancel_requested():
+                return self._do_user_stop(plan)
             state = plan.get("state")
             if is_terminal(state):
                 return plan
@@ -633,6 +956,8 @@ class Runner:
                         and (deadline - now) > 0):
                     self.repair_used = True
                     self._repair(plan, deadline)
+                    if self._cancel_requested():
+                        return self._do_user_stop(plan)
                     try:
                         new_plan = self.service.get_plan(self.request_id)
                     except Exception as exc:  # noqa: BLE001
@@ -711,6 +1036,8 @@ class Runner:
             "hermes_invocations": self.invocations,
             "usage": self.usages,
             "execution_timeout": bool(self.execution_timeout),
+            "cancelled_by_user": bool(self.user_cancelled),
+            "cancellation_pending": bool(self.cancellation_pending),
             "wall_s": round(self.clock.monotonic() - started, 3),
             "error": "; ".join(errors) if errors else None,
             "hermes_output": "\n\n".join(text for text in self.outputs if text),
@@ -760,13 +1087,25 @@ class Runner:
             self.errors.append("会话没有可用图像，无法进行真实视觉规划")
             return self._finish(started, None, [], None)
 
+        # User stop before the initial model: no Hermes call, no plan, no jobs.
+        if self._cancel_requested():
+            return self._finish_user_stop(started, None)
+
         prompt = build_initial_prompt(session, self.config.request, self.request_id,
                                       image_paths)
         usage_initial = os.path.join(self.run_dir, "usage_initial.json")
         self._invoke_hermes(prompt, agentview, usage_initial, "hermes_initial.log", deadline)
 
+        # And after it: a stop that arrived while the model ran must not poll --
+        # but the model may already have submitted the exact plan, which is
+        # adopted (never lost as None) via the cancellation acknowledgement.
+        if self._cancel_requested():
+            return self._finish_user_stop(started, None, lookup=True)
+
         plan = self._await_first_plan(deadline)
         if plan is None:
+            if self._cancel_requested():
+                return self._finish_user_stop(started, None, lookup=True)
             message = "no_plan_submitted: 本次请求没有提交任何计划，不关联任何历史 job 或视频"
             if self.timed_out_any:
                 self.execution_timeout = True
@@ -775,6 +1114,10 @@ class Runner:
             return self._finish(started, None, [], None)
 
         plan = self._wait_for_terminal(plan, deadline)
+        if self.user_cancelled:
+            # No repair, no oracle evaluation, no fabricated success.
+            jobs = self._collect_jobs(plan) if isinstance(plan, dict) else []
+            return self._finish(started, plan, jobs, None)
         jobs = self._collect_jobs(plan)
         evaluation = self._evaluate(plan)
         return self._finish(started, plan, jobs, evaluation)
@@ -795,6 +1138,9 @@ def main(argv=None) -> int:
     parser.add_argument("--max-repairs", type=int, default=1, dest="max_repairs",
                         help="blocked 修复次数上限（0 或 1）")
     parser.add_argument("--run-dir", default=None, dest="run_dir")
+    parser.add_argument("--cancel-file", default=None, dest="cancel_file",
+                        help="可选：JSON 取消标记路径 {request_id,session_id,requested_at}；"
+                             "仅当精确匹配本次 request/session 时协作式停止")
     args = parser.parse_args(argv)
 
     request_id = args.request_id or uuid.uuid4().hex
@@ -807,8 +1153,18 @@ def main(argv=None) -> int:
         request_id=request_id,
         timeout=args.timeout,
         max_repairs=args.max_repairs,
+        cancel_file=args.cancel_file,
     )
-    runner = Runner(config, ServiceClient(), HermesRunner(), SystemClock(), run_dir)
+
+    cancel_file = args.cancel_file
+    cancel_check = None
+    if cancel_file:
+        # Only ever terminates the Hermes child this call owns; the callback is
+        # built from the exact marker IDs for THIS request/session.
+        cancel_check = lambda: cancellation_requested(
+            cancel_file, request_id, args.session_id)
+    runner = Runner(config, ServiceClient(), HermesRunner(cancel_check=cancel_check),
+                    SystemClock(), run_dir)
 
     try:
         result = runner.run()
@@ -828,6 +1184,8 @@ def main(argv=None) -> int:
             "hermes_invocations": runner.invocations,
             "usage": runner.usages,
             "execution_timeout": False,
+            "cancelled_by_user": bool(runner.user_cancelled),
+            "cancellation_pending": bool(runner.cancellation_pending),
             "wall_s": 0.0,
             "error": "runner_failed: %s" % exc,
             "hermes_output": "",

@@ -12,6 +12,9 @@
   POST /api/session              校验后代理 POST /sessions（选择场景 + seed + 初始状态）
   POST /api/agent                启动唯一后台 agent job（生成精确 request_id 交给 run_agent.py）
   GET  /api/agent/<request_id>   该精确 request/session 的 job 状态与结果
+  POST /api/agent/<request_id>/cancel
+                                 仅对精确 request 归属的 session 请求停止（代理服务取消，
+                                 服务确认后才原子落盘 <run_dir>/cancel_requested.json）
   GET  /artifacts/<relative>     代理服务 artifact（仅 PNG/MP4，安全转发 Range->206）
   GET  /agent-artifacts/<request_id>/<allowedbasename>
                                  仅在 run_root 内、且与 request_id 精确关联时暴露本机日志
@@ -31,7 +34,9 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 import threading
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -124,6 +129,160 @@ def resolve_run_dir(request_id: str):
     return None
 
 
+# 公开 job 视图：只暴露固定白名单字段，绝不泄露内部 process 对象 / Event 等。
+PUBLIC_JOB_FIELDS = (
+    "request_id",
+    "session_id",
+    "status",
+    "request",
+    "case_id",
+    "run_dir",
+    "created",
+    "started",
+    "finished",
+    "exit_code",
+    "result",
+    "log_path",
+    "cancel_requested",
+    "cancel_note",
+)
+
+
+def public_job(job):
+    """返回 job 的**字典快照**（新 dict，仅白名单字段），绝非 live 引用。
+
+    调用方须在 JOBS_LOCK 内调用，使取消字段更新无法与 JSON 序列化竞争。
+    """
+    if not isinstance(job, dict):
+        return {}
+    return {key: job.get(key) for key in PUBLIC_JOB_FIELDS if key in job}
+
+
+# 真实 plan 的终态集合（queued/running 视为活动）。
+PLAN_TERMINAL_STATES = ("completed", "blocked", "error", "cancelled")
+# cancellation_pending 时的只读轮询间隔（测试可 monkeypatch 加速）。
+CANCEL_PLAN_POLL_INTERVAL = 1.0
+CANCEL_PENDING_NOTE = "后端未确认取消完成：真实计划仍在执行，保持 cancelling 并等待真实终态。"
+# 真实 plan 已终态、但归属本次请求的终态 job 尚未刷新到位时的明确等待说明。
+JOBS_REFRESH_NOTE = "真实计划已终态，但归属本次请求的终态 job 尚未就绪：保持 cancelling 并等待真实 job 确认。"
+
+
+def plan_is_terminal(plan) -> bool:
+    return isinstance(plan, dict) and plan.get("state") in PLAN_TERMINAL_STATES
+
+
+def _owned_terminal_plan(plan, request_id, session_id) -> bool:
+    """仅当 plan 的 request_id 与 session_id **都精确相等**且处于终态时才采纳。
+
+    省略 request_id、缺失/wrong session_id 一律视为不匹配（绝不采纳 latest 或不归属的 plan）。
+    """
+    if not isinstance(plan, dict):
+        return False
+    if plan.get("request_id") != request_id:
+        return False
+    if plan.get("session_id") != session_id:
+        return False
+    return plan_is_terminal(plan)
+
+
+def refresh_owned_jobs(plan, request_id, session_id):
+    """只读 GET /jobs/<exact job_id>，仅保留 job_id/request_id/session_id 全精确匹配的公开记录。
+
+    成功返回 owned 公开记录列表（可能为空列表）；只要任一 job_id 非字符串、取不到、响应非对象、
+    或 job_id/request_id/session_id 任一不精确匹配，就返回 None。调用方据此保持 cancelling 并重试，
+    绝不使用 latest 回退，也不沿用 runner 的旧 10 秒窗口快照或编造 job。
+    """
+    job_ids = plan.get("job_ids")
+    if job_ids is None:
+        job_ids = []
+    if not isinstance(job_ids, list):
+        return None
+    refreshed = []
+    for job_id in job_ids:
+        if not isinstance(job_id, str) or not job_id:
+            return None
+        path = "/jobs/" + urllib.parse.quote(job_id, safe="")
+        try:
+            record = proxy_json("GET", path, None, 10.0)
+        except Exception:  # noqa: BLE001
+            return None
+        if not isinstance(record, dict):
+            return None
+        if record.get("job_id") != job_id:
+            return None
+        if record.get("request_id") != request_id:
+            return None
+        if record.get("session_id") != session_id:
+            return None
+        refreshed.append(record)
+    return refreshed
+
+
+def await_real_plan_terminal(request_id: str, session_id, result, job=None):
+    """只读轮询 GET /plans/<exact request_id>，直到真实计划终态并刷新其 owned 终态 job。
+
+    仅采纳 request_id 与 session_id **都精确相等**的真实 plan（省略 request_id 或 session 缺失/
+    不符一律忽略，仍保持 cancelling）。真实终态后只读 GET /jobs/<exact id> 刷新 plan.job_ids 的公开
+    job，只有全部精确归属才合并；服务不可达或 job 未就绪时保留 cancelling 并重试（绝不伪造确认、
+    绝不编造/沿用旧 job）。返回 (merged_result, note)。
+    """
+    plan_path = "/plans/" + urllib.parse.quote(request_id, safe="")
+    while True:
+        plan = None
+        try:
+            plan = proxy_json("GET", plan_path, None, 10.0)
+        except Exception:  # noqa: BLE001
+            plan = None
+        if _owned_terminal_plan(plan, request_id, session_id):
+            refreshed = refresh_owned_jobs(plan, request_id, session_id)
+            if refreshed is not None:
+                merged = dict(result) if isinstance(result, dict) else {}
+                merged["jobs"] = refreshed       # 只用刷新后的 owned 公开记录替换旧快照
+                merged["plan"] = plan            # 只合并真实精确终态 plan
+                merged.pop("cancellation_pending", None)
+                return merged, None
+            # 终态已确认但 job 未就绪/归属不符：明确说明并继续等待，绝不提前发布旧 job。
+            if job is not None:
+                with JOBS_LOCK:
+                    job["cancel_note"] = JOBS_REFRESH_NOTE
+        time.sleep(CANCEL_PLAN_POLL_INTERVAL)
+
+
+CANCEL_MARKER_NAME = "cancel_requested.json"
+
+
+def write_cancel_marker(run_dir, request_id, session_id, requested_at) -> str:
+    """原子写入 <run_dir>/cancel_requested.json（临时文件 + os.replace）。
+
+    run_dir 必须解析到 RUNS_DIR 之内；schema 精确为
+    {request_id, session_id, requested_at}（UTF-8 JSON）。仅在服务确认取消后调用。
+    """
+    if not run_dir:
+        raise OSError("unknown run_dir")
+    root = os.path.realpath(RUNS_DIR)
+    target_dir = os.path.realpath(run_dir)
+    if target_dir != root and not target_dir.startswith(root + os.sep):
+        raise OSError("run_dir outside RUNS")
+    payload = {"request_id": request_id, "session_id": session_id,
+               "requested_at": requested_at}
+    final_path = os.path.join(target_dir, CANCEL_MARKER_NAME)
+    handle_fd, tmp_path = tempfile.mkstemp(prefix=".cancel_requested.", suffix=".tmp",
+                                           dir=target_dir)
+    try:
+        with os.fdopen(handle_fd, "w", encoding="utf-8") as handle:
+            json.dump(payload, handle, ensure_ascii=False)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp_path, final_path)
+    except BaseException:
+        try:
+            os.remove(tmp_path)
+        except OSError:
+            pass
+        raise
+    return final_path
+
+
 def run_job(request_id: str, session_id: str, request_text: str, case_id, run_dir: str) -> None:
     """后台线程：调用 run_agent.py（真实 Hermes + MCP），不做任何 Agent 逻辑复刻。
 
@@ -140,11 +299,17 @@ def run_job(request_id: str, session_id: str, request_text: str, case_id, run_di
         "--request", request_text,
         "--request-id", request_id,
         "--run-dir", run_dir,
+        "--cancel-file", os.path.join(run_dir, CANCEL_MARKER_NAME),
     ]
     if case_id:
         cmd += ["--case-id", str(case_id)]
     with JOBS_LOCK:
-        job["status"] = "running"
+        # 已被请求取消（queued 阶段即收到 Stop）的任务保持 cancelling，
+        # 绝不用 running 覆盖排队中的取消状态；真实 runner 仍会阻塞到实际退出。
+        if job.get("cancel_requested"):
+            job["status"] = "cancelling"
+        else:
+            job["status"] = "running"
         job["started"] = _now()
 
     exit_code = None
@@ -183,12 +348,60 @@ def run_job(request_id: str, session_id: str, request_text: str, case_id, run_di
             except (OSError, ValueError):
                 result = None
 
+    # 运行器可能返回 cancellation_pending=true：其 10 秒收集窗口结束时真实 plan 仍
+    # queued/running。此时绝不因为 cancelled_by_user 就标记已停止或释放 RUNNING；
+    # 保持 cancelling 占用，并只读轮询精确 request 的真实 plan，直到真实终态为止。
+    # 注意：只有 runner 自己的 plan 快照明确处于 queued/running 才等待；plan 缺失
+    # 视为“无计划提交”，那是真实终态取消（绝不无限轮询）。
+    pending_plan = result.get("plan") if isinstance(result, dict) else None
+    pending_active = (
+        isinstance(result, dict)
+        and result.get("cancellation_pending") is True
+        and isinstance(pending_plan, dict)
+        and pending_plan.get("state") in ("queued", "running")
+    )
+    if pending_active:
+        with JOBS_LOCK:
+            job["cancel_requested"] = True
+            if job.get("status") not in ("completed", "error", "cancelled"):
+                job["status"] = "cancelling"
+            job["cancel_note"] = CANCEL_PENDING_NOTE
+            job["log_path"] = log_path
+        result, note = await_real_plan_terminal(request_id, session_id, result, job)
+        with JOBS_LOCK:
+            if note:
+                job["cancel_note"] = note
+            else:
+                job.pop("cancel_note", None)
+
+    # cancellation_pending 至此必然已落定（无活动计划，或轮询到真实终态）：如实清除，
+    # 使前端不再把它当成“仍未决”。
+    if isinstance(result, dict) and result.get("cancellation_pending") is True:
+        result = dict(result)
+        result.pop("cancellation_pending", None)
+
+    # 终态只依据真实结果：真实 plan 终态优先，其次才是 cancelled_by_user。
+    cancelled = False
+    result_plan = result.get("plan") if isinstance(result, dict) else None
+    plan_state = result_plan.get("state") if isinstance(result_plan, dict) else None
+    if plan_state == "cancelled":
+        cancelled = True
+    elif plan_state in PLAN_TERMINAL_STATES:
+        cancelled = False        # 真实计划已到非取消终态：以真实计划为准
+    elif plan_state in ("queued", "running"):
+        cancelled = False        # 真实计划仍活动：绝不因 cancelled_by_user 误判
+    elif isinstance(result, dict) and result.get("cancelled_by_user") is True:
+        cancelled = True
+
     with JOBS_LOCK:
         job["exit_code"] = exit_code
         job["result"] = result
         job["log_path"] = log_path
         job["finished"] = _now()
-        job["status"] = "completed" if exit_code == 0 else "error"
+        if cancelled:
+            job["status"] = "cancelled"
+        else:
+            job["status"] = "completed" if exit_code == 0 else "error"
         if RUNNING.get("request_id") == request_id:
             RUNNING["request_id"] = None
 
@@ -282,6 +495,8 @@ class Handler(BaseHTTPRequestHandler):
                 self._api_create_session()
             elif parsed.path == "/api/agent":
                 self._api_start_agent()
+            elif parsed.path.startswith("/api/agent/") and parsed.path.endswith("/cancel"):
+                self._api_cancel(parsed.path[len("/api/agent/"):-len("/cancel")])
             else:
                 self._send_json({"error": "not found"}, 404)
         except BrokenPipeError:
@@ -414,6 +629,7 @@ class Handler(BaseHTTPRequestHandler):
                 "exit_code": None,
                 "result": None,
                 "log_path": None,
+                "cancel_requested": False,
             }
             RUNNING["request_id"] = request_id
 
@@ -425,17 +641,98 @@ class Handler(BaseHTTPRequestHandler):
         self._send_json({"request_id": request_id, "session_id": session_id,
                          "status": "queued", "run_dir": run_dir}, 202)
 
-    def _api_list_agents(self):
+    def _api_cancel(self, request_id):
+        """POST /api/agent/<request_id>/cancel {session_id}。
+
+        只校验精确 request 归属的 live JOBS 项（绝非全局 latest）：
+        unknown 404、wrong owner 409；completed/error/cancelled 的 live job 返回
+        现有状态（noop）。queued/running/cancelling 代理服务取消（10 秒超时）；
+        仅在**服务确认成功**后原子写入取消标记，并置 cancel_requested/status=cancelling。
+        服务失败如实返回错误，绝不谎报取消成功；RUNNING 仍保持占用直到真实 runner 退出。
+        """
+        request_id = urllib.parse.unquote(request_id)
+        payload, error = self._read_body()
+        if error:
+            self._send_json({"error": error}, 400)
+            return
+        session_id = payload.get("session_id")
+        if not isinstance(session_id, str) or not session_id.strip():
+            self._send_json({"error": "session_id 必须是非空字符串"}, 400)
+            return
+        session_id = session_id.strip()
+
         with JOBS_LOCK:
-            jobs = list(JOBS.values())
+            job = JOBS.get(request_id)
+        if job is None:
+            self._send_json({"error": "unknown request_id", "request_id": request_id}, 404)
+            return
+        if job.get("session_id") != session_id:
+            self._send_json({"error": "session_id 与该 request 不匹配",
+                             "request_id": request_id, "session_id": session_id}, 409)
+            return
+
+        status = job.get("status")
+        if status in ("completed", "error", "cancelled"):
+            # 已完成/错误/已取消的 live job：幂等 noop，返回其现有状态，不再调用服务。
+            self._send_json({"ok": True, "request_id": request_id, "session_id": session_id,
+                             "cancel_requested": bool(job.get("cancel_requested")),
+                             "status": status, "noop": True})
+            return
+
+        body = {"session_id": session_id}
+        service_path = "/requests/" + urllib.parse.quote(request_id, safe="") + "/cancel"
+        try:
+            service = proxy_json("POST", service_path, body, 10.0)
+        except urllib.error.HTTPError as exc:
+            detail = {"error": "service http %s" % exc.code}
+            try:
+                parsed = json.loads(exc.read().decode("utf-8"))
+                if isinstance(parsed, dict):
+                    detail.update(parsed)
+            except Exception:  # noqa: BLE001
+                pass
+            self._send_json(detail, exc.code if exc.code in (400, 404, 409) else 502)
+            return
+        except Exception as exc:  # noqa: BLE001
+            self._send_json({"error": "service unreachable: %s" % exc}, 502)
+            return
+        if not isinstance(service, dict) or service.get("ok") is not True:
+            detail = service.get("detail") if isinstance(service, dict) else None
+            self._send_json({"error": "服务未确认取消", "detail": detail}, 502)
+            return
+
+        # 仅在服务确认后落盘取消标记（原子写入），再更新 job 状态。
+        try:
+            write_cancel_marker(job.get("run_dir"), request_id, session_id, _now())
+        except OSError as exc:
+            self._send_json({"error": "无法写入取消标记: %s" % exc}, 500)
+            return
+        with JOBS_LOCK:
+            job["cancel_requested"] = True
+            if job.get("status") not in ("completed", "error", "cancelled"):
+                job["status"] = "cancelling"
+            # 服务确认后真实运行可能已经抢先到达终态：返回**实际当前**状态，
+            # 绝不硬编码 cancelling（取消确认与完成存在竞态）。
+            actual_status = job.get("status")
+            actual_cancel_requested = bool(job.get("cancel_requested"))
+        self._send_json({"ok": True, "request_id": request_id, "session_id": session_id,
+                         "cancel_requested": actual_cancel_requested, "status": actual_status,
+                         "noop": False, "service_state": service.get("state")})
+
+    def _api_list_agents(self):
+        # 在锁内构造**字典快照**列表：取消字段更新无法与 JSON 序列化竞争。
+        with JOBS_LOCK:
+            jobs = [public_job(job) for job in list(JOBS.values())]
         self._send_json({"jobs": jobs})
 
     def _api_agent_status(self, request_id):
         request_id = urllib.parse.unquote(request_id)
+        # 在锁内取**字典快照**（新 dict），序列化时不再持有 live job 引用。
         with JOBS_LOCK:
             job = JOBS.get(request_id)
-        if job is not None:
-            self._send_json(job)
+            snapshot = public_job(job) if job is not None else None
+        if snapshot is not None:
+            self._send_json(snapshot)
             return
         # 重启后的磁盘回退：仅当 run_dir 与 request_id 精确关联时才返回。
         run_dir = resolve_run_dir(request_id)
@@ -568,6 +865,8 @@ PAGE = """<!DOCTYPE html>
   button { background: #2563eb; color: #fff; border: 0; padding: 9px 18px;
            border-radius: 6px; font-size: 14px; cursor: pointer; }
   button:disabled { background: #94a3b8; cursor: not-allowed; }
+  button.stop { background: #dc2626; }
+  button.stop:disabled { background: #94a3b8; }
   pre { background: #0f172a; color: #e2e8f0; padding: 10px; border-radius: 6px;
         font-size: 12px; overflow: auto; max-height: 260px; white-space: pre-wrap;
         word-break: break-all; }
@@ -579,8 +878,10 @@ PAGE = """<!DOCTYPE html>
   .ok-text { color: #16a34a; font-weight: 600; }
   .bad-text { color: #dc2626; font-weight: 600; }
   .warn-text { color: #d97706; font-weight: 600; }
-  video { width: 100%; background: #000; border-radius: 6px; margin-bottom: 8px; }
-  img.frame { width: 100%; border-radius: 6px; border: 1px solid #cbd5e1; margin-bottom: 8px; }
+  video { width: 100%; aspect-ratio: 1 / 1; background: #000; border-radius: 6px;
+          margin-bottom: 8px; }
+  img.frame { width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 6px;
+              border: 1px solid #cbd5e1; margin-bottom: 8px; }
   .hint { font-size: 12px; color: #64748b; }
   .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px;
           background: #e2e8f0; margin-right: 6px; }
@@ -627,8 +928,10 @@ PAGE = """<!DOCTYPE html>
     <div class="row">
       <label>case_id（可选，仅用于终态后的独立评测） <input type="text" id="case" placeholder="留空则不评测"></label>
       <button id="run" disabled>提交请求</button>
+      <button id="stop" class="stop" disabled>停止任务</button>
       <span id="runmsg" class="hint"></span>
     </div>
+    <p class="hint">停止将在当前动作或推理结束后生效，并保留当前场景。</p>
     <p class="hint">能力由真实 Hermes 依据画面与公开数据自行选择；网页与 host 都不选择能力。</p>
   </section>
 
@@ -660,16 +963,31 @@ const $ = (id) => document.getElementById(id);
 let currentSessionId = null;
 let currentSession = null;
 let currentRequest = null;
-let pollTimer = null;
+let currentAgentStatus = null;   // queued | running | cancelling | completed | error | cancelled
+let pollTimer = null;            // 唯一的完成驱动 setTimeout 句柄
+let tickInFlight = false;        // 顶层 tick 在途保护：绝不允许两条轮询链
+let pollInFlight = false;        // pollCurrent 在途保护
+let sessionRefreshInFlight = false; // session 刷新在途保护
+let stopInFlight = false;        // 单次在途取消，防双击
+let stopRequested = false;       // 已请求停止：终态前禁用 Stop
 let mediaRenderGeneration = 0;
 let displayedImageKey = null;
 let pendingImageKey = null;
+let videoCacheKey = null;        // renderVideos 缓存键
+const showCache = new Map();     // id -> 最近写入的确切源 HTML
 
 function esc(s) {
   return String(s == null ? "" : s).replace(/[&<>"]/g, c =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 }
-function show(id, html) { $(id).innerHTML = html; }
+// show 缓存“确切源 HTML”，写相同内容时跳过，绝不用规范化 DOM innerHTML 比较。
+function show(id, html) {
+  const key = String(id);
+  if (showCache.get(key) === html) return;
+  showCache.set(key, html);
+  const el = $(id);
+  if (el) el.innerHTML = html;
+}
 function toArtifact(p) {
   if (!p || typeof p !== "string") return null;
   if (p.startsWith(RUNS_ROOT)) return "/artifacts/" + p.slice(RUNS_ROOT.length);
@@ -689,17 +1007,50 @@ async function getJSON(url, options) {
   return data;
 }
 
+// queued/running/cancelling 均视为“占用中”，此时禁止新提交与载入场景。
+function agentBusy(status) {
+  return status === "queued" || status === "running" || status === "cancelling";
+}
+function agentTerminalStatus(status) {
+  return status === "completed" || status === "error" || status === "cancelled";
+}
+function statusLabel(status) {
+  if (status === "queued") return "排队中";
+  if (status === "running") return "执行中";
+  if (status === "cancelling") return "正在停止";
+  if (status === "completed") return "已完成";
+  if (status === "cancelled") return "已停止";
+  if (status === "error") return "错误";
+  return status || "未知";
+}
+// 终态判断只依据真实结果：真实 plan 终态优先；cancellation_pending 且计划仍活动时
+// 绝不因 cancelled_by_user 提前判定为已停止。
+function isResultCancelled(result) {
+  if (!result || typeof result !== "object") return false;
+  const plan = result.plan;
+  const planState = (plan && typeof plan === "object") ? plan.state : null;
+  if (planState === "cancelled") return true;
+  if (result.cancellation_pending === true && !isTerminalPlan(planState)) return false;
+  return result.cancelled_by_user === true;
+}
+function updateControls() {
+  const busy = agentBusy(currentAgentStatus);
+  const ready = !!(currentSession && currentSession.state === "ready");
+  $("run").disabled = busy || !ready;
+  $("load").disabled = busy;
+  $("stop").disabled = !busy || stopRequested || stopInFlight;
+}
+
 async function pollHealth() {
+  // 只更新服务徽标；绝不在此独立刷新 session（由统一 tick 负责，且同一 session 只刷新一次）。
   try {
     const h = await getJSON("/api/health");
-    const ready = h.ready === true;
+    const ready = h && h.ready === true;
     const el = $("svc");
-    el.textContent = "服务状态: " + (ready ? "就绪" : (h.reachable === false ? "不可达" : "模型加载中/未就绪"));
+    el.textContent = "服务状态: " + (ready ? "就绪" : (h && h.reachable === false ? "不可达" : "模型加载中/未就绪"));
     el.className = "badge " + (ready ? "ok" : "warn");
-    $("wf").textContent = "workflow: " + (h.workflow || "-");
-    $("rev").textContent = "revision: " + (h.model_revision ? String(h.model_revision).slice(0, 12) : "-");
-    // 有进行中的请求时由 pollCurrent 每 2 秒刷新同一 session，避免重复拉取。
-    if (ready && currentSessionId && !currentRequest) refreshSession();
+    $("wf").textContent = "workflow: " + ((h && h.workflow) || "-");
+    $("rev").textContent = "revision: " + (h && h.model_revision ? String(h.model_revision).slice(0, 12) : "-");
   } catch (e) {
     $("svc").textContent = "服务状态: 前端可达，服务未知";
     $("svc").className = "badge bad";
@@ -729,6 +1080,7 @@ function clearMedia() {
   mediaRenderGeneration += 1;   // 使更早场景的在途结果全部失效
   displayedImageKey = null;
   pendingImageKey = null;
+  videoCacheKey = null;         // 新场景/清空使视频缓存失效
   show("images", '<span class="hint">等待场景画面…</span>');
   show("videos", '<span class="hint">本次请求到达终态后显示其视频。</span>');
 }
@@ -751,35 +1103,39 @@ async function loadSession() {
     currentSessionId = s.session_id;
     currentSession = s;
     currentRequest = null;
+    currentAgentStatus = null;
+    stopRequested = false;
     $("loadmsg").textContent = "已载入：" + s.session_id;
     renderSession(s);
     clearMedia();
     renderSessionImages(s);
-    $("run").disabled = s.state !== "ready";
-    $("plan").innerHTML = '<span class="kv">尚未提交请求。</span>';
-    $("subgoals").innerHTML = "";
-    $("eval").innerHTML = '<span class="kv">尚未评测。</span>';
+    show("plan", '<span class="kv">尚未提交请求。</span>');
+    show("subgoals", "");
+    show("eval", '<span class="kv">尚未评测。</span>');
     $("hermes").textContent = "暂无。";
+    $("runmsg").textContent = "";
   } catch (e) {
     $("loadmsg").textContent = "载入失败：" + (e.data && (e.data.error || e.data.reason) || e.message);
   } finally {
-    $("load").disabled = false;
+    updateControls();
   }
 }
 
 async function refreshSession() {
+  // 只读刷新同一个 currentSessionId 的缓存画面/存储/能力；绝不重建/重置会话。
   if (!currentSessionId) return;
+  if (sessionRefreshInFlight) return;   // 在途保护：绝不重叠刷新
+  sessionRefreshInFlight = true;
   const sid = currentSessionId;
   try {
-    // 只读刷新同一个 currentSessionId 的缓存画面/存储/能力；绝不重建/重置会话。
     const s = await getJSON("/api/session/" + encodeURIComponent(sid));
     if (sid !== currentSessionId) return; // 场景已切换：丢弃过期响应
     currentSession = s;
     renderSession(s);
     // 服务返回缓存画面时才更新；否则保留指令前的初始场景。
     if ((s.images || []).length) renderSessionImages(s);
-    $("run").disabled = s.state !== "ready" || !!currentRequest;
   } catch (e) { /* 保持上次显示 */ }
+  finally { sessionRefreshInFlight = false; }
 }
 
 function renderSession(s) {
@@ -865,7 +1221,8 @@ function renderSessionImages(s) {
       nodes.push(wrapper);       // 先标签
       nodes.push(images[index]); // 再已加载好的同一 Image 节点（不二次下载）
     });
-    $("images").replaceChildren(...nodes); // 一次性替换
+    $("images").replaceChildren(...nodes); // 一次性替换（保留已加载好的 Image 节点）
+    showCache.set("images", "__media_nodes__"); // 直改 DOM：标记 show 缓存失效以保持一致
     displayedImageKey = key;
     pendingImageKey = null;
   }).catch(() => {
@@ -890,18 +1247,22 @@ async function submitRequest() {
       body: JSON.stringify(payload),
     });
     currentRequest = data.request_id;
-    $("runmsg").textContent = "请求已受理：" + currentRequest;
+    currentAgentStatus = data.status || "queued";
+    stopRequested = false;      // 新请求：重新允许停止
+    videoCacheKey = null;       // 新请求使视频缓存失效
+    $("runmsg").textContent = "请求已受理：" + currentRequest + "（" + statusLabel(currentAgentStatus) + "）";
     // 新请求：清空旧的计划/子目标/job/视频与说明（画面保留当前场景）。
-    $("plan").innerHTML = '<span class="kv">正在规划…（Hermes 尚未提交本次请求的计划，等待中）</span>';
+    show("plan", '<span class="kv">正在规划…（Hermes 尚未提交本次请求的计划，等待中）</span>');
     show("subgoals", "");
-    $("eval").innerHTML = '<span class="kv">等待计划终态。</span>';
+    show("eval", '<span class="kv">等待计划终态。</span>');
     $("hermes").textContent = "正在规划或执行，说明将在完成后显示。";
-    renderVideos([], false);
+    renderVideos(currentRequest, [], false);
+    updateControls();           // 受理后即在计划出现前启用 Stop
     startPolling();
   } catch (e) {
     const msg = (e.data && (e.data.error || e.data.reason)) || e.message;
     $("runmsg").textContent = "提交失败：" + msg;
-    $("run").disabled = !currentSession || currentSession.state !== "ready";
+    updateControls();
   }
 }
 
@@ -912,10 +1273,38 @@ function capInstruction(capId) {
   return found ? found.instruction : "";
 }
 
-function renderPlan(plan) {
-  if (!plan) { show("plan", '<span class="kv">暂无。</span>'); return; }
+// 纯函数：只根据真实终态结果返回 HTML 字符串（不碰 DOM）。
+function finalSummaryHTML(result) {
+  if (!result || typeof result !== "object") return "";
+  let html = "<br>run_ok: " + fmtBool(result.run_ok) +
+    "　chain_ok: " + fmtBool(result.chain_ok) +
+    "　plan_success: " + fmtBool(result.plan_success) +
+    "　task_success: " + fmtBool(result.task_success) +
+    "　execution_timeout: " + fmtBool(result.execution_timeout) +
+    "　Hermes 规划/修复会话: " + esc(result.hermes_invocations) + "　wall_s: " + esc(result.wall_s);
+  if (result.error) {
+    html += "<br><span class='bad-text'>error: " + esc(result.error) + "</span>";
+  }
+  return html;
+}
+
+function renderPlan(plan, result) {
+  // 计划本体 + 终态摘要一次性构建；摘要只在真实终态且带 result 时出现。
+  if (!plan) {
+    if (result && typeof result === "object") {
+      const cancelled = isResultCancelled(result);
+      const cls = cancelled ? "warn-text" : "bad-text";
+      const msg = cancelled
+        ? "已停止：本次请求在提交任何计划之前被取消，未执行机器人。"
+        : "本次请求未提交任何计划。";
+      show("plan", '<span class="' + cls + '">' + esc(msg) + "</span>" + finalSummaryHTML(result));
+    } else {
+      show("plan", '<span class="kv">正在规划…（Hermes 尚未提交本次请求的计划，等待中）</span>');
+    }
+    return;
+  }
   if (plan.error && !plan.decision) {
-    show("plan", '<span class="bad-text">计划错误：' + esc(plan.error) + "</span>");
+    show("plan", '<span class="bad-text">计划错误：' + esc(plan.error) + "</span>" + finalSummaryHTML(result));
     return;
   }
   const decision = plan.decision || "-";
@@ -929,8 +1318,8 @@ function renderPlan(plan) {
     "plan_success: " + fmtBool(plan.plan_success) + "　scene_version: " + esc(plan.scene_version) + "<br>" +
     "capability_ids: " + esc((plan.capability_ids || []).join(", ") || "（空）") + "<br>" +
     "rationale: " + esc(plan.rationale || "-") +
-    (plan.error ? "<br><span class='bad-text'>error: " + esc(plan.error) + "</span>" : ""));
-
+    (plan.error ? "<br><span class='bad-text'>error: " + esc(plan.error) + "</span>" : "") +
+    finalSummaryHTML(result));
 }
 
 function renderSubgoals(plan, jobs) {
@@ -986,24 +1375,41 @@ function renderSubgoals(plan, jobs) {
   show("subgoals", html);
 }
 
-function renderVideos(jobs, terminal) {
+function renderVideos(reqId, jobs, terminal) {
   // 仅当本次请求到达终态（completed/blocked/cancelled/error）才显示其视频；
   // 且只使用该计划自身的 job（绝不回退到历史 job/视频）。
+  // 缓存键 = [request id, terminal, 归属 job IDs, artifact URLs]；键相同则保留
+  // 现有 video 节点与播放位置，绝不替换 DOM。
+  const vids = (jobs || []).filter(j => j && j.rollout_path);
+  const urls = vids.map(j => toArtifact(j.rollout_path)).filter(Boolean);
+  const key = JSON.stringify([reqId || null, !!terminal, vids.map(j => j.job_id || null), urls]);
+  if (key === videoCacheKey) return;   // 同一快照：保留节点与播放位置
+  videoCacheKey = key;
+
   if (!terminal) {
     show("videos", '<span class="hint">等待本次请求到达终态后显示其视频。</span>');
     return;
   }
-  const vids = (jobs || []).filter(j => j && j.rollout_path);
   if (!vids.length) {
     show("videos", '<span class="hint">本次请求没有产生机器人执行视频。</span>');
     return;
   }
-  show("videos", vids.map(j => {
+  const nodes = [];
+  vids.forEach(j => {
     const url = toArtifact(j.rollout_path);
-    if (!url) return "";
-    return "<div class='hint'>" + esc(j.capability_id || "") + " · " + esc(j.job_id || "") + "</div>" +
-           "<video controls preload='metadata' src='" + url + "'></video>";
-  }).join(""));
+    if (!url) return;
+    const label = document.createElement("div");
+    label.className = "hint";
+    label.textContent = (j.capability_id || "") + " · " + (j.job_id || "");
+    const video = document.createElement("video");
+    video.controls = true;
+    video.preload = "metadata";
+    video.src = url;
+    nodes.push(label);
+    nodes.push(video);
+  });
+  $("videos").replaceChildren(...nodes);
+  showCache.set("videos", "__media_nodes__"); // 直改 DOM：标记 show 缓存失效以保持一致
 }
 
 function renderEvaluation(ev, decision) {
@@ -1032,107 +1438,144 @@ function jobBelongsTo(job, requestId, sessionId) {
   return true;
 }
 
-function renderProgress(plan, jobs) {
-  renderPlan(plan);
+function renderProgress(plan, jobs, result) {
+  renderPlan(plan, result);
   renderSubgoals(plan, jobs);
-}
-
-function renderFinalSummary(result) {
-  // 后台任务完成后继续渲染 run_ok/chain_ok/plan_success/task_success 与错误。
-  if (!result) return;
-  show("plan", $("plan").innerHTML +
-    "<br>run_ok: " + fmtBool(result.run_ok) + "　chain_ok: " + fmtBool(result.chain_ok) +
-    "　plan_success: " + fmtBool(result.plan_success) +
-    "　task_success: " + fmtBool(result.task_success) +
-    "　execution_timeout: " + fmtBool(result.execution_timeout) +
-    "　Hermes 规划/修复会话: " + esc(result.hermes_invocations) +
-    "（每个会话可含多轮模型请求）　wall_s: " + esc(result.wall_s));
-  if (result.error) {
-    show("plan", $("plan").innerHTML + "<br><span class='bad-text'>error: " + esc(result.error) + "</span>");
-  }
 }
 
 async function pollCurrent() {
   if (!currentRequest) return;
+  if (pollInFlight) return;   // 在途保护：绝不重叠轮询
+  pollInFlight = true;
   const reqId = currentRequest;
   const sesId = currentSessionId;
-
-  // 步骤3：期间始终刷新同一 currentSessionId 的缓存画面/存储/能力（不重建会话）。
-  await refreshSession();
-  if (reqId !== currentRequest || sesId !== currentSessionId) return; // 丢弃过期响应
-
-  // 后台 agent job：仅用于终态后的最终结果；进度不再由它门控。
-  let agentJob = null;
-  try { agentJob = await getJSON("/api/agent/" + encodeURIComponent(reqId)); }
-  catch (e) { agentJob = null; }
-  if (reqId !== currentRequest || sesId !== currentSessionId) return;
-  const agentTerminal = !!agentJob && (agentJob.status === "completed" || agentJob.status === "error");
-  const result = (agentJob && agentJob.result && typeof agentJob.result === "object") ? agentJob.result : null;
-
-  // 步骤1：始终按精确 request_id 拉取计划，无论 job.result 是否存在；容忍 404。
-  let plan = null;
-  let planMissing = false;
-  let planUnreachable = false;
   try {
-    plan = await getJSON("/api/plan/" + encodeURIComponent(reqId));
-  } catch (e) {
-    if (e.status === 404) planMissing = true;
-    else planUnreachable = true;
-  }
-  if (reqId !== currentRequest || sesId !== currentSessionId) return; // 丢弃过期响应
-  if (planUnreachable) return; // 服务暂不可用：保留上次显示
+    // 后台 agent job：仅用于终态后的最终结果；进度不再由它门控。
+    let agentJob = null;
+    try { agentJob = await getJSON("/api/agent/" + encodeURIComponent(reqId)); }
+    catch (e) { agentJob = null; }
+    if (reqId !== currentRequest || sesId !== currentSessionId) return; // 丢弃过期响应
 
-  if (planMissing || !plan || typeof plan !== "object") {
-    // Hermes 尚未提交计划（404）：给出可理解的规划中提示，绝不回退到别的计划。
-    show("subgoals", "");
-    if (agentTerminal) {
-      show("plan", '<span class="bad-text">本次请求未提交任何计划' +
-        (result && result.error ? "：" + esc(result.error) : "") + "</span>");
-      renderVideos([], true);
-      renderEvaluation(result ? result.evaluation : null, result ? result.decision : null);
-      loadHermes(result);
-      $("run").disabled = !currentSession || currentSession.state !== "ready";
-    } else {
-      show("plan", '<span class="kv">正在规划…（Hermes 尚未提交本次请求的计划，等待中）</span>');
-      renderVideos([], false);
-      $("run").disabled = true;
+    if (agentJob && typeof agentJob.status === "string") {
+      currentAgentStatus = agentJob.status;
+      if (agentTerminalStatus(currentAgentStatus)) stopRequested = false;
     }
-    return;
-  }
+    const jobTerminal = agentTerminalStatus(currentAgentStatus);
+    const result = (agentJob && agentJob.result && typeof agentJob.result === "object")
+      ? agentJob.result : null;
 
-  // 只接受精确属于当前请求的计划。
-  if (plan.request_id && plan.request_id !== reqId) return;
-
-  // 步骤2：仅取该计划自己的 job_ids，并校验归属后才显示。
-  const jobIds = Array.isArray(plan.job_ids) ? plan.job_ids : [];
-  const jobs = [];
-  for (const jid of jobIds) {
-    if (!jid) continue;
+    // 步骤1：始终按精确 request_id 拉取计划，无论 job.result 是否存在；容忍 404。
+    let plan = null;
+    let planMissing = false;
+    let planUnreachable = false;
     try {
-      const job = await getJSON("/api/job/" + encodeURIComponent(jid));
-      if (reqId !== currentRequest || sesId !== currentSessionId) return; // 丢弃过期响应
-      if (jobBelongsTo(job, reqId, sesId)) jobs.push(job);
-    } catch (e) { /* 单个 job 尚未就绪：跳过，下次再取 */ }
-  }
-  if (reqId !== currentRequest || sesId !== currentSessionId) return;
+      plan = await getJSON("/api/plan/" + encodeURIComponent(reqId));
+    } catch (e) {
+      if (e.status === 404) planMissing = true;
+      else planUnreachable = true;
+    }
+    if (reqId !== currentRequest || sesId !== currentSessionId) return; // 丢弃过期响应
+    if (planUnreachable) { updateControls(); return; } // 服务暂不可用：保留上次显示
 
-  // 运动期间即渲染初始计划与每个子目标/真实步数。
-  renderProgress(plan, jobs);
+    if (planMissing || !plan || typeof plan !== "object") {
+      // Hermes 尚未提交计划（404）：给出可理解的规划中/已停止提示，绝不回退到别的计划。
+      show("subgoals", "");
+      if (jobTerminal) {
+        if (result) {
+          renderPlan(null, result);   // 诚实展示“未提交计划/已停止，未执行机器人”
+        } else {
+          // job 已终态但没有结果对象：仍如实显示终态，绝不退回“正在规划”。
+          const stopped = currentAgentStatus === "cancelled";
+          show("plan", '<span class="' + (stopped ? "warn-text" : "bad-text") + '">' +
+            esc(stopped ? "已停止：本次请求在提交任何计划之前被取消，未执行机器人。"
+                        : "本次请求未提交任何计划（job " + statusLabel(currentAgentStatus) + "）。") +
+            "</span>");
+        }
+        renderVideos(reqId, [], true);
+        renderEvaluation(result ? result.evaluation : null, result ? result.decision : null);
+        loadHermes(result);
+      } else {
+        renderPlan(null, null);
+        renderVideos(reqId, [], false);
+      }
+      updateControls();
+      return;
+    }
 
-  const terminal = isTerminalPlan(plan.state) || agentTerminal;
+    // 只接受精确属于当前请求的计划。
+    if (plan.request_id && plan.request_id !== reqId) { updateControls(); return; }
 
-  // 步骤4：视频只在本次请求终态后出现（含 blocked/cancelled/error）。
-  renderVideos(jobs, terminal);
+    // 步骤2：仅取该计划自己的 job_ids，并校验归属后才显示。
+    const jobIds = Array.isArray(plan.job_ids) ? plan.job_ids : [];
+    const jobs = [];
+    for (const jid of jobIds) {
+      if (!jid) continue;
+      try {
+        const job = await getJSON("/api/job/" + encodeURIComponent(jid));
+        if (reqId !== currentRequest || sesId !== currentSessionId) return; // 丢弃过期响应
+        if (jobBelongsTo(job, reqId, sesId)) jobs.push(job);
+      } catch (e) { /* 单个 job 尚未就绪：跳过，下次再取 */ }
+    }
+    if (reqId !== currentRequest || sesId !== currentSessionId) return;
 
-  // 步骤5：终态后继续渲染最终结果/独立评测/Hermes 说明/错误。
-  if (terminal) {
-    renderFinalSummary(result);
-    if (agentTerminal) {
+    const terminal = isTerminalPlan(plan.state) || jobTerminal;
+
+    // 运动期间即渲染初始计划与每个子目标/真实步数；终态摘要只在真实终态带 result 时出现。
+    renderProgress(plan, jobs, terminal ? result : null);
+
+    // 步骤4：视频只在本次请求终态后出现（含 blocked/cancelled/error）。
+    renderVideos(reqId, jobs, terminal);
+
+    // 步骤5：终态后继续渲染独立评测/Hermes 说明（摘要已随 renderPlan 一次构建）。
+    if (terminal && jobTerminal) {
       renderEvaluation(result ? result.evaluation : null, result ? result.decision : null);
       loadHermes(result);
     }
+    updateControls();
+  } finally {
+    pollInFlight = false;
   }
-  $("run").disabled = !agentTerminal || !currentSession || currentSession.state !== "ready";
+}
+
+async function stopRequest() {
+  if (stopInFlight) return;   // 单次在途取消，防双击
+  if (!currentRequest || !currentSessionId) { $("runmsg").textContent = "没有可停止的请求"; return; }
+  const reqId = currentRequest;
+  const sesId = currentSessionId;
+  stopInFlight = true;
+  stopRequested = true;
+  updateControls();           // 立即禁用 Stop
+  $("runmsg").textContent = "正在停止…";
+  try {
+    const data = await getJSON("/api/agent/" + encodeURIComponent(reqId) + "/cancel", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sesId }),
+    });
+    if (reqId !== currentRequest || sesId !== currentSessionId) return; // 过期响应：不修改新请求
+    // 如实读取取消 API 的实际状态（noop 可能表示终态竞态），绝不一律宣称已受理停止。
+    // 绝不清理当前 request/session/media。
+    const status = data && data.status;
+    if (status === "completed" || status === "error") {
+      $("runmsg").textContent = "任务已结束，无需停止。";
+    } else if (status === "cancelled") {
+      $("runmsg").textContent = "已停止";
+    } else if (status === "cancelling") {
+      // 仅真正的活动 cancelling 确认才提示正在停止/已受理。
+      $("runmsg").textContent = "停止请求已受理，当前动作或推理结束后生效（保留当前场景）。";
+    } else {
+      // 状态异常/未知：绝不谎报已受理停止。
+      $("runmsg").textContent = "停止未确认，请稍后重试。";
+    }
+  } catch (e) {
+    if (reqId !== currentRequest || sesId !== currentSessionId) return; // 过期响应：不修改新请求
+    const msg = (e.data && (e.data.error || e.data.detail || e.data.reason)) || e.message;
+    $("runmsg").textContent = "停止失败：" + msg;
+    stopRequested = false;    // 失败：重新启用，允许重试
+  } finally {
+    stopInFlight = false;
+    if (reqId === currentRequest && sesId === currentSessionId) updateControls();
+  }
 }
 
 async function loadHermes(result = null) {
@@ -1158,17 +1601,66 @@ async function loadHermes(result = null) {
   }
 }
 
+async function recoverActiveJob() {
+  // 启动恢复：GET /api/agent，仅当**恰好一个** active（queued/running/cancelling）
+  // job 时才采纳其精确 request_id/session_id；绝不选历史终态 job，也不选全局 latest。
+  // 零个保持初始视图；多个 active 一个都不选。绝不创建/重置场景：只读精确 session。
+  let listing = null;
+  try { listing = await getJSON("/api/agent"); } catch (e) { return; }
+  const jobs = (listing && Array.isArray(listing.jobs)) ? listing.jobs : [];
+  const active = jobs.filter(j => j && agentBusy(j.status));
+  if (active.length !== 1) return;             // 0 -> 初始视图；>1 -> 不选
+  const job = active[0];
+  if (!job.request_id || !job.session_id) return;
+  const reqId = job.request_id;
+  let session = null;
+  try { session = await getJSON("/api/session/" + encodeURIComponent(job.session_id)); }
+  catch (e) { session = null; }
+  if (reqId !== job.request_id) return;        // 过期保护（理论上不会变）
+  currentRequest = reqId;                      // 采纳精确归属
+  currentAgentStatus = job.status;
+  stopRequested = false;
+  currentSessionId = job.session_id;
+  if (session && typeof session === "object") {
+    currentSession = session;
+    renderSession(session);
+    if ((session.images || []).length) renderSessionImages(session);  // 只读画面
+  }
+  renderVideos(reqId, [], false);
+  updateControls();                            // 占用中：启用 Stop，禁用新提交/载入
+  startPolling();                              // 交给同一轮询调度器，绝不另起链
+}
+
+// 单一完成驱动 tick：每 2 秒一次（上一次 tick 完成后才排下一次），绝不重叠。
 function startPolling() {
-  if (pollTimer) clearInterval(pollTimer);
-  pollTimer = setInterval(() => { pollHealth(); pollCurrent(); }, 2000);
-  pollCurrent();
+  // 清除任何待触发的 timeout，避免二次调用留下两条链。
+  if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
+  // 当前 tick 仍在执行：由它的 finally 负责排下一次，绝不再起第二条链。
+  if (tickInFlight) return;
+  tick();
+}
+
+async function tick() {
+  if (tickInFlight) return;   // 忙：绝不重叠
+  tickInFlight = true;        // 在所有 await 之前置位
+  try {
+    await pollHealth();
+    await refreshSession();   // 同一 session 无论 idle 或 current request 都只刷新一次
+    await pollCurrent();
+  } catch (e) { /* 保持上次显示 */ }
+  finally {
+    tickInFlight = false;
+    updateControls();
+    pollTimer = setTimeout(tick, 2000);   // 恰好排一个下一次
+  }
 }
 
 $("load").addEventListener("click", loadSession);
 $("run").addEventListener("click", submitRequest);
+$("stop").addEventListener("click", stopRequest);
 loadScenes();
-pollHealth();
-setInterval(pollHealth, 4000);
+recoverActiveJob();   // 启动时按精确 active 归属恢复（绝不新建/重置场景）
+startPolling();
 </script>
 </body>
 </html>

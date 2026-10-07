@@ -29,8 +29,10 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from types import SimpleNamespace
 from unittest import mock
@@ -141,8 +143,12 @@ class FakeService:
                                          "oracle_source": "preauthored_fixture"}
         self.plan_lookups = []
         self.cancel_calls = []
+        self.cancel_request_calls = []
         self.evaluate_calls = []
         self.session_calls = []
+        # Optional hook invoked at the top of every get_plan (used to inject a
+        # cancellation marker deterministically mid-run).
+        self.plan_hook = None
 
     def get_health(self):
         return self.health
@@ -153,6 +159,8 @@ class FakeService:
 
     def get_plan(self, request_id):
         self.plan_lookups.append(request_id)
+        if self.plan_hook is not None:
+            self.plan_hook(request_id)
         if not self.plans:
             return None
         if self._index < len(self.plans) - 1:
@@ -166,6 +174,15 @@ class FakeService:
         if self.cancelled_plan is not None:
             self.plans = [self.cancelled_plan]
         return {"ok": True}
+
+    def cancel_request(self, request_id, session_id):
+        self.cancel_request_calls.append((request_id, session_id))
+        if self.cancelled_plan is not None:
+            self.plans = [self.cancelled_plan]
+        return {"ok": True, "request_id": request_id, "session_id": session_id,
+                "cancel_requested": True,
+                "state": (self.cancelled_plan or {}).get("state", "cancelled"),
+                "plan": self.cancelled_plan}
 
     def get_job(self, job_id):
         return self.jobs.get(job_id, {
@@ -204,6 +221,7 @@ class Config:
         self.request_id = kwargs.get("request_id", "req-123")
         self.timeout = kwargs.get("timeout", 30)
         self.max_repairs = kwargs.get("max_repairs", 1)
+        self.cancel_file = kwargs.get("cancel_file")
 
 
 # --------------------------------------------------------------------------- #
@@ -459,10 +477,10 @@ class PromptContractTests(unittest.TestCase):
         self.assertIn(guidance, setup_profile.SOUL_MD)
 
     def _runner(self, service, hermes, case_id=None, timeout=30, max_repairs=1,
-                request_id="req-123"):
+                request_id="req-123", cancel_file=None):
         run_dir = tempfile.mkdtemp()
         config = Config(case_id=case_id, timeout=timeout, max_repairs=max_repairs,
-                        request_id=request_id)
+                        request_id=request_id, cancel_file=cancel_file)
         return run_agent.Runner(config, service, hermes, FakeClock(), run_dir)
 
 
@@ -471,10 +489,11 @@ class RunnerContractTests(unittest.TestCase):
         self.tmp = tempfile.mkdtemp()
 
     def _runner(self, service, hermes, case_id=None, timeout=30, max_repairs=1,
-                request_id="req-123", session_id="sess-1"):
+                request_id="req-123", session_id="sess-1", cancel_file=None):
         run_dir = tempfile.mkdtemp(dir=self.tmp)
         config = Config(session_id=session_id, case_id=case_id, timeout=timeout,
-                        max_repairs=max_repairs, request_id=request_id)
+                        max_repairs=max_repairs, request_id=request_id,
+                        cancel_file=cancel_file)
         return run_agent.Runner(config, service, hermes, FakeClock(), run_dir)
 
     def test_no_submitted_plan_never_attaches_old_results(self):
@@ -667,6 +686,312 @@ class RunnerContractTests(unittest.TestCase):
             # Direct eligibility check: the evaluator must never be called.
             self.assertIsNone(runner._evaluate(make_plan(state)))
             self.assertEqual(service.evaluate_calls, [])
+
+
+class CancellationMarkerTests(unittest.TestCase):
+    """``cancellation_requested`` only honours an EXACT request/session marker."""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+        self.path = os.path.join(self.tmp, run_agent.CANCEL_MARKER_NAME)
+
+    def _write(self, payload):
+        with open(self.path, "w", encoding="utf-8") as handle:
+            json.dump(payload, handle)
+
+    def test_exact_ids_match(self):
+        self._write({"request_id": "r1", "session_id": "s1",
+                     "requested_at": "2024-01-01T00:00:00Z"})
+        self.assertTrue(run_agent.cancellation_requested(self.path, "r1", "s1"))
+
+    def test_missing_or_mismatched_ids_are_false(self):
+        # No file yet.
+        self.assertFalse(run_agent.cancellation_requested(self.path, "r1", "s1"))
+        self._write({"request_id": "r1", "session_id": "s1"})
+        self.assertFalse(run_agent.cancellation_requested(self.path, "r2", "s1"))
+        self.assertFalse(run_agent.cancellation_requested(self.path, "r1", "s2"))
+        # Empty / non-string marker fields never match.
+        self._write({"request_id": "", "session_id": "s1"})
+        self.assertFalse(run_agent.cancellation_requested(self.path, "r1", "s1"))
+        self._write({"request_id": 1, "session_id": "s1"})
+        self.assertFalse(run_agent.cancellation_requested(self.path, "r1", "s1"))
+        # Non-path or non-string arguments are never a cancellation.
+        self.assertFalse(run_agent.cancellation_requested(None, "r1", "s1"))
+        self.assertFalse(run_agent.cancellation_requested(self.path, None, "s1"))
+        self.assertFalse(run_agent.cancellation_requested(self.path, "r1", ""))
+
+    def test_malformed_marker_is_false(self):
+        with open(self.path, "w", encoding="utf-8") as handle:
+            handle.write("{not json")
+        self.assertFalse(run_agent.cancellation_requested(self.path, "r1", "s1"))
+        self._write(["not", "an", "object"])
+        self.assertFalse(run_agent.cancellation_requested(self.path, "r1", "s1"))
+
+
+class _StaleCacheService(FakeService):
+    """The stale-cache race: the cancel acknowledgement is authoritative and
+    fresh, while ``get_plan`` keeps returning the locally cached (stale) plan.
+
+    ``cancel_request`` acknowledges the exact owned ``ack_plan`` WITHOUT mutating
+    ``self.plans``, so the bounded polls keep serving the stale candidate.  Only
+    a correct acknowledgement adoption can therefore reveal the real
+    running/cancelled state.
+    """
+
+    def __init__(self, ack_plan, **kwargs):
+        super().__init__(**kwargs)
+        self.ack_plan = ack_plan
+
+    def cancel_request(self, request_id, session_id):
+        self.cancel_request_calls.append((request_id, session_id))
+        return {"ok": True, "request_id": request_id, "session_id": session_id,
+                "cancel_requested": True,
+                "state": (self.ack_plan or {}).get("state"),
+                "plan": self.ack_plan}
+
+
+class RunnerCancellationTests(unittest.TestCase):
+    """Cooperative user cancellation never calls Hermes/repair/oracle after a stop."""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+
+    def _runner(self, service, hermes, **kwargs):
+        cancel_file = kwargs.pop("cancel_file", None)
+        run_dir = tempfile.mkdtemp(dir=self.tmp)
+        config = Config(cancel_file=cancel_file, **kwargs)
+        return run_agent.Runner(config, service, hermes, FakeClock(), run_dir)
+
+    def _marker(self, request_id="req-123", session_id="sess-1"):
+        path = os.path.join(self.tmp, run_agent.CANCEL_MARKER_NAME)
+        with open(path, "w", encoding="utf-8") as handle:
+            json.dump({"request_id": request_id, "session_id": session_id,
+                       "requested_at": "2024-01-01T00:00:00Z"}, handle)
+        return path
+
+    def test_preplan_cancel_calls_no_hermes_and_no_oracle(self):
+        marker = self._marker()
+        service = FakeService(session=make_session(), plans=[make_plan("completed")])
+        hermes = FakeHermes()
+        result = self._runner(service, hermes, case_id="mugs_standard",
+                              cancel_file=marker).run()
+
+        self.assertEqual(len(hermes.calls), 0)
+        self.assertEqual(result["hermes_invocations"], 0)
+        self.assertTrue(result["cancelled_by_user"])
+        self.assertFalse(result["execution_timeout"])
+        self.assertIsNone(result["plan"])
+        self.assertEqual(result["jobs"], [])
+        self.assertIsNone(result["evaluation"])
+        self.assertEqual(service.evaluate_calls, [])
+        self.assertEqual(service.cancel_request_calls, [("req-123", "sess-1")])
+        self.assertIn("user_cancelled", result["error"] or "")
+
+    def test_blocked_cancel_stops_repair_without_timeout(self):
+        marker = os.path.join(self.tmp, run_agent.CANCEL_MARKER_NAME)
+        service = FakeService(
+            session=make_session(),
+            plans=[make_plan("blocked", error="failed")],
+            cancelled_plan=make_plan("cancelled"),
+        )
+
+        def hook(request_id):
+            # The marker appears only once the run is already waiting on a
+            # blocked plan -- deterministic, no timing dependence.
+            if not os.path.exists(marker):
+                with open(marker, "w", encoding="utf-8") as handle:
+                    json.dump({"request_id": "req-123", "session_id": "sess-1",
+                               "requested_at": "2024-01-01T00:00:00Z"}, handle)
+
+        service.plan_hook = hook
+        hermes = FakeHermes()
+        result = self._runner(service, hermes, case_id="mugs_standard",
+                              max_repairs=1, cancel_file=marker).run()
+
+        # Initial model only: the blocked plan's one repair was NOT taken.
+        self.assertEqual(len(hermes.calls), 1)
+        self.assertEqual(result["hermes_invocations"], 1)
+        self.assertEqual(service.cancel_request_calls, [("req-123", "sess-1")])
+        self.assertTrue(result["cancelled_by_user"])
+        self.assertFalse(result["execution_timeout"])
+        self.assertFalse(result["chain_ok"])
+        self.assertIsNone(result["evaluation"])
+        self.assertEqual(service.evaluate_calls, [])
+        self.assertEqual(result["plan"]["state"], "cancelled")
+
+    def test_stale_marker_for_other_session_is_ignored(self):
+        # A marker that names a DIFFERENT session must never stop this run.
+        marker = self._marker(session_id="someone-else")
+        service = FakeService(session=make_session(),
+                              plans=[make_plan("running"), make_plan("completed")])
+        hermes = FakeHermes()
+        result = self._runner(service, hermes, cancel_file=marker).run()
+
+        self.assertEqual(len(hermes.calls), 1)
+        self.assertFalse(result["cancelled_by_user"])
+        self.assertFalse(result["execution_timeout"])
+        self.assertEqual(service.cancel_request_calls, [])
+        self.assertEqual(result["plan"]["state"], "completed")
+
+    def test_model_submits_then_cancel_adopts_exact_plan(self):
+        """The stop arrives AFTER the initial model call, which already submitted
+        the exact plan: the plan is adopted from the cancellation
+        acknowledgement (``response.plan``) -- never lost as ``None`` -- with the
+        real jobs collected, no pending flag and no fabricated evaluation."""
+        marker = os.path.join(self.tmp, run_agent.CANCEL_MARKER_NAME)
+
+        class _MarkerHermes(FakeHermes):
+            def __call__(self, prompt, image_path, usage_path, timeout):
+                with open(marker, "w", encoding="utf-8") as handle:
+                    json.dump({"request_id": "req-123", "session_id": "sess-1",
+                               "requested_at": "2024-01-01T00:00:00Z"}, handle)
+                return super().__call__(prompt, image_path, usage_path, timeout)
+
+        cancelled = make_plan("cancelled", job_ids=["job-1"])
+        service = FakeService(
+            session=make_session(),
+            plans=[make_plan("running")],
+            jobs={"job-1": {"job_id": "job-1", "request_id": "req-123",
+                            "session_id": "sess-1", "state": "cancelled",
+                            "success": False}},
+            cancelled_plan=cancelled,
+        )
+        hermes = _MarkerHermes()
+        result = self._runner(service, hermes, case_id="mugs_standard",
+                              cancel_file=marker).run()
+
+        self.assertEqual(result["hermes_invocations"], 1)          # initial only
+        self.assertTrue(result["cancelled_by_user"])
+        self.assertFalse(result["cancellation_pending"])
+        self.assertFalse(result["execution_timeout"])
+        # The exact owned plan survives (adopted from the cancel response.plan).
+        self.assertIsNotNone(result["plan"])
+        self.assertEqual(result["plan"]["request_id"], "req-123")
+        self.assertEqual(result["plan"]["state"], "cancelled")
+        # Real jobs of that exact plan, collected; no evaluation, no repair.
+        self.assertEqual([job["job_id"] for job in result["jobs"]], ["job-1"])
+        self.assertIsNone(result["evaluation"])
+        self.assertEqual(service.evaluate_calls, [])
+        self.assertEqual(service.cancel_request_calls, [("req-123", "sess-1")])
+        # Never a "latest plan" fallback: only the exact request id was queried.
+        self.assertTrue(all(rid == "req-123" for rid in service.plan_lookups))
+
+    def test_still_running_bounded_collection_reports_pending(self):
+        """The backend plan stays active for the whole bounded 10 s collection
+        window: the run reports cancelled_by_user AND cancellation_pending
+        instead of faking a confirmed stop, while the known plan is preserved
+        (never ``None``) and execution_timeout stays false."""
+        marker = os.path.join(self.tmp, run_agent.CANCEL_MARKER_NAME)
+        service = FakeService(
+            session=make_session(),
+            plans=[make_plan("running")],
+            cancelled_plan=make_plan("running"),
+        )
+
+        def hook(request_id):
+            # The marker appears only once the plan is already known (mid-poll):
+            # bounded and deterministic, no timing dependence.
+            if not os.path.exists(marker):
+                with open(marker, "w", encoding="utf-8") as handle:
+                    json.dump({"request_id": "req-123", "session_id": "sess-1",
+                               "requested_at": "2024-01-01T00:00:00Z"}, handle)
+
+        service.plan_hook = hook
+        hermes = FakeHermes()
+        result = self._runner(service, hermes, case_id="mugs_standard",
+                              cancel_file=marker).run()
+
+        self.assertEqual(result["hermes_invocations"], 1)          # initial only
+        self.assertTrue(result["cancelled_by_user"])
+        self.assertTrue(result["cancellation_pending"])
+        self.assertFalse(result["execution_timeout"])
+        # A known actual plan is never lost as None.
+        self.assertIsNotNone(result["plan"])
+        self.assertEqual(result["plan"]["state"], "running")
+        self.assertEqual(service.cancel_request_calls, [("req-123", "sess-1")])
+        self.assertEqual(service.evaluate_calls, [])
+        # The 10 s window is bounded: a handful of polls, never an endless loop.
+        self.assertLessEqual(len(service.plan_lookups), 40)
+
+    def test_stale_blocked_candidate_ack_running_retains_actual_running_plan(self):
+        """Race regression: the locally cached plan is a STALE blocked plan, but
+        the cancel acknowledgement reports the exact owned plan as still
+        ``running`` and the bounded polls stay stale.  The result must retain the
+        ACTUAL acknowledged running plan with ``cancellation_pending`` true --
+        never the stale cached blocked plan and never a faked confirmed stop --
+        while ``execution_timeout`` stays false."""
+        marker = os.path.join(self.tmp, run_agent.CANCEL_MARKER_NAME)
+        stale = make_plan("blocked", error="stale cache", job_ids=["stale-job"])
+        acknowledged = make_plan("running", job_ids=["job-1"])
+        service = _StaleCacheService(acknowledged, session=make_session(),
+                                     plans=[stale])
+
+        def hook(request_id):
+            # The stop appears only once the stale blocked plan is already known
+            # (mid-poll): bounded and deterministic, no timing dependence.
+            if not os.path.exists(marker):
+                with open(marker, "w", encoding="utf-8") as handle:
+                    json.dump({"request_id": "req-123", "session_id": "sess-1",
+                               "requested_at": "2024-01-01T00:00:00Z"}, handle)
+
+        service.plan_hook = hook
+        hermes = FakeHermes()
+        result = self._runner(service, hermes, case_id="mugs_standard",
+                              max_repairs=1, cancel_file=marker).run()
+
+        self.assertEqual(result["hermes_invocations"], 1)          # initial only
+        self.assertTrue(result["cancelled_by_user"])
+        self.assertTrue(result["cancellation_pending"])
+        self.assertFalse(result["execution_timeout"])
+        # The actual acknowledged plan survives -- not the stale blocked cache.
+        self.assertIsNotNone(result["plan"])
+        self.assertEqual(result["plan"]["request_id"], "req-123")
+        self.assertEqual(result["plan"]["state"], "running")
+        self.assertEqual([job["job_id"] for job in result["jobs"]], ["job-1"])
+        self.assertEqual(service.cancel_request_calls, [("req-123", "sess-1")])
+        self.assertIsNone(result["evaluation"])
+        self.assertEqual(service.evaluate_calls, [])
+        # Never a "latest plan" fallback: only the exact request id was queried.
+        self.assertTrue(all(rid == "req-123" for rid in service.plan_lookups))
+        self.assertLessEqual(len(service.plan_lookups), 40)
+
+    def test_stale_blocked_candidate_ack_cancelled_returns_actual_cancelled_plan(self):
+        """Race regression: the locally cached plan is a STALE blocked plan, but
+        the cancel acknowledgement reports the exact owned plan as ``cancelled``
+        (the authoritative terminal) while the bounded polls stay stale.  The
+        result must contain that actual cancelled plan -- never the stale cached
+        blocked plan claimed as stopped -- with no pending flag, no timeout, the
+        real jobs of the cancelled plan and no fabricated evaluation."""
+        marker = os.path.join(self.tmp, run_agent.CANCEL_MARKER_NAME)
+        stale = make_plan("blocked", error="stale cache", job_ids=["stale-job"])
+        acknowledged = make_plan("cancelled", job_ids=["job-1"])
+        service = _StaleCacheService(acknowledged, session=make_session(),
+                                     plans=[stale])
+
+        def hook(request_id):
+            if not os.path.exists(marker):
+                with open(marker, "w", encoding="utf-8") as handle:
+                    json.dump({"request_id": "req-123", "session_id": "sess-1",
+                               "requested_at": "2024-01-01T00:00:00Z"}, handle)
+
+        service.plan_hook = hook
+        hermes = FakeHermes()
+        result = self._runner(service, hermes, case_id="mugs_standard",
+                              max_repairs=1, cancel_file=marker).run()
+
+        self.assertEqual(result["hermes_invocations"], 1)          # initial only
+        self.assertTrue(result["cancelled_by_user"])
+        self.assertFalse(result["cancellation_pending"])
+        self.assertFalse(result["execution_timeout"])
+        # The actual acknowledged terminal replaces the stale cached candidate.
+        self.assertIsNotNone(result["plan"])
+        self.assertEqual(result["plan"]["request_id"], "req-123")
+        self.assertEqual(result["plan"]["state"], "cancelled")
+        self.assertEqual([job["job_id"] for job in result["jobs"]], ["job-1"])
+        self.assertEqual(service.cancel_request_calls, [("req-123", "sess-1")])
+        self.assertIsNone(result["evaluation"])
+        self.assertEqual(service.evaluate_calls, [])
+        self.assertTrue(all(rid == "req-123" for rid in service.plan_lookups))
 
 
 class HealthIdentityTests(unittest.TestCase):
@@ -887,6 +1212,155 @@ class HermesCommandContractTests(unittest.TestCase):
         usage = result["usage"][0]
         self.assertIs(usage["available"], False)
         self.assertIsNone(usage["api_calls"])
+
+
+class HermesCancellationTests(unittest.TestCase):
+    """The ``cancel_check`` Popen path: owned-child process-group cleanup only."""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+
+    def _dummy(self, name, body):
+        script = os.path.join(self.tmp, name)
+        with open(script, "w", encoding="utf-8") as handle:
+            handle.write("#!/bin/sh\n%s\n" % body)
+        os.chmod(script, 0o755)
+        return script
+
+    @unittest.skipUnless(os.name == "posix", "POSIX process groups")
+    def test_user_cancel_terminates_only_the_owned_process_group(self):
+        started = os.path.join(self.tmp, "started.txt")
+        script = self._dummy("dummy_hermes.sh", ": > %s\nsleep 60" % started)
+        runner = run_agent.HermesRunner(
+            bin_path=script, home=self.tmp, cwd=self.tmp,
+            cancel_check=lambda: os.path.exists(started))
+
+        captured = {}
+        real_popen = run_agent.subprocess.Popen
+
+        def recording_popen(cmd, **kwargs):
+            proc = real_popen(cmd, **kwargs)
+            captured["proc"] = proc
+            captured["kwargs"] = kwargs
+            return proc
+
+        with mock.patch("run_agent.subprocess.Popen", side_effect=recording_popen):
+            result = runner("prompt", None, os.path.join(self.tmp, "usage.json"), 30)
+
+        self.assertEqual(result["error"], "user_cancelled")
+        self.assertFalse(result["timed_out"])
+        # POSIX: the owned child leads its own session/process group.
+        self.assertTrue(captured["kwargs"].get("start_new_session"))
+        proc = captured["proc"]
+        # The owned child was terminated and reaped ...
+        self.assertIsNotNone(proc.poll())
+        # ... and its whole process group is gone (no orphaned `sleep`).
+        deadline = time.time() + 5.0
+        while True:
+            try:
+                os.killpg(proc.pid, 0)
+            except ProcessLookupError:
+                break
+            if time.time() > deadline:
+                self.fail("owned process group survived user cancellation")
+            time.sleep(0.05)
+
+    @unittest.skipUnless(os.name == "posix", "POSIX process groups")
+    def test_deadline_still_reports_hermes_timeout(self):
+        script = self._dummy("dummy_sleep.sh", "sleep 60")
+        runner = run_agent.HermesRunner(
+            bin_path=script, home=self.tmp, cwd=self.tmp,
+            cancel_check=lambda: False)
+        result = runner("prompt", None, os.path.join(self.tmp, "usage.json"), 0.5)
+        self.assertEqual(result["error"], "hermes_timeout")
+        self.assertTrue(result["timed_out"])
+
+    # ---- stable-PGID owned termination ------------------------------------ #
+    @staticmethod
+    def _pid_alive(pid):
+        try:
+            os.kill(pid, 0)
+        except ProcessLookupError:
+            return False
+        except PermissionError:
+            return True
+        # A zombie has already exited (it merely awaits a reap): treat it as dead
+        # so an unreaped orphan cannot make the check flaky.
+        try:
+            with open("/proc/%d/stat" % pid, "r", encoding="utf-8") as handle:
+                rest = handle.read().rsplit(")", 1)[-1].split()
+            if rest and rest[0] == "Z":
+                return False
+        except OSError:
+            pass
+        return True
+
+    def _read_child_pid(self, path, timeout=5.0):
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            try:
+                with open(path, "r", encoding="utf-8") as handle:
+                    text = handle.read().strip()
+                if text:
+                    return int(text)
+            except (OSError, ValueError):
+                pass
+            time.sleep(0.02)
+        self.fail("owned child pid file was never written: %s" % path)
+
+    @unittest.skipUnless(os.name == "posix", "POSIX process groups")
+    def test_terminate_owned_kills_stubborn_descendant_without_unrelated_death(self):
+        """The owned group uses the *stable* PGID == ``Popen.pid``: a
+        TERM-ignoring child that holds stdout is killed even after its parent has
+        exited, while an unrelated process in another session stays alive."""
+        pidfile = os.path.join(self.tmp, "owned_child.pid")
+        # The parent spawns a TERM-ignoring child (which inherits and holds the
+        # stdout pipe) and then EXITS: the parent is reaped while the stubborn
+        # child keeps both the process group and the pipe alive.
+        script = self._dummy(
+            "stubborn_parent.sh",
+            'sh -c \'trap "" TERM; while :; do sleep 1; done\' &\n'
+            'echo $! > "%s"\n'
+            'exit 0' % pidfile,
+        )
+        # An unrelated TERM-ignoring process in its OWN session/process group.
+        unrelated = subprocess.Popen(
+            ["sh", "-c", 'trap "" TERM; while :; do sleep 1; done'],
+            start_new_session=True,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        )
+        try:
+            proc = subprocess.Popen(
+                [script], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                start_new_session=True,
+            )
+            child_pid = self._read_child_pid(pidfile)
+            self.assertTrue(self._pid_alive(child_pid))
+            self.assertTrue(self._pid_alive(unrelated.pid))
+
+            runner = run_agent.HermesRunner(
+                bin_path=script, home=self.tmp, cwd=self.tmp,
+                cancel_check=lambda: False)
+            runner._terminate_owned(proc, b"")
+
+            # The owned parent is reaped ...
+            self.assertIsNotNone(proc.poll())
+            # ... and its stubborn TERM-ignoring child is genuinely dead.
+            deadline = time.time() + 5.0
+            while self._pid_alive(child_pid) and time.time() < deadline:
+                time.sleep(0.05)
+            self.assertFalse(self._pid_alive(child_pid))
+            # ... while the unrelated process (another group) survives untouched.
+            self.assertTrue(self._pid_alive(unrelated.pid))
+        finally:
+            try:
+                unrelated.kill()
+            except Exception:  # noqa: BLE001
+                pass
+            try:
+                unrelated.wait(timeout=5)
+            except Exception:  # noqa: BLE001
+                pass
 
 
 if __name__ == "__main__":
