@@ -13,6 +13,7 @@
 |---|---|
 | 当前实验入口（持久场景 v2，已完成单次 pilot 的实验版） | [First_Phase/scene_demo/README.md](First_Phase/scene_demo/README.md) |
 | v2 pilot 实测原始证据（2026-10-06） | [First_Phase/scene_demo/results/2026-10-06/README.md](First_Phase/scene_demo/results/2026-10-06/README.md) |
+| 酒瓶分阶段诊断六次试验报告（2026-10-07，wine-only） | [First_Phase/scene_demo/results/2026-10-07-wine/README.md](First_Phase/scene_demo/results/2026-10-07-wine/README.md) |
 | v0.1.0 详细运行说明（子目录 README） | [First_Phase/libero_demo/README.md](First_Phase/libero_demo/README.md) |
 | 验收结果记录 | [First_Phase/libero_demo/acceptance_results.json](First_Phase/libero_demo/acceptance_results.json) |
 | 精选 Demo 元数据（权威值来源） | [First_Phase/libero_demo/demos/manifest.json](First_Phase/libero_demo/demos/manifest.json) |
