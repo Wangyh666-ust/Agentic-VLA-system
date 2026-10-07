@@ -411,6 +411,157 @@ async function testStopResponseOwnershipRaces() {
   }
 }
 
+async function testPollCurrentStopRunmsgRefresh() {
+  // Exercise the *actual* pollCurrent function: after a real Stop, the visible
+  // runmsg must be refreshed from the exact-owned agentJob status instead of
+  // retaining "stop accepted" forever. Plan is always 404 (no plan submitted).
+  run(`
+    currentSessionId = "sP";
+    currentSession = {state:"ready", session_id:"sP", capabilities:[], images:[]};
+    currentRequest = "reqP";
+    currentAgentStatus = "running";
+    stopRequested = false;
+    stopInFlight = false;
+    pollInFlight = false;
+    showCache.clear();
+    document.getElementById("runmsg").textContent = "停止失败：service down";
+    document.getElementById("images").replaceChildrenCalls = 0;
+    document.getElementById("videos").replaceChildrenCalls = 0;
+  `);
+
+  // ---- queued/running after a failed Stop: keep the honest failure text ----
+  const activeStates = ['queued', 'running'];
+  for (let i = 0; i < activeStates.length; i += 1) {
+    const st = activeStates[i];
+    fetchRouter = function (url) {
+      if (url === '/api/agent/reqP') {
+        return jsonResponse({status: st, request_id: 'reqP', session_id: 'sP', result: null});
+      }
+      if (url.indexOf('/api/plan/') === 0) return jsonResponse({}, 404);
+      return new Promise(function () {});
+    };
+    await run('pollCurrent()');
+    await flush();
+    check('failed Stop text retained while job is ' + st,
+      run('document.getElementById("runmsg").textContent') === '停止失败：service down',
+      run('document.getElementById("runmsg").textContent'));
+  }
+
+  // ---- cancelling: says stopping, never claims stopped ----
+  fetchRouter = function (url) {
+    if (url === '/api/agent/reqP') {
+      return jsonResponse({status: 'cancelling', request_id: 'reqP',
+        session_id: 'sP', result: null});
+    }
+    if (url.indexOf('/api/plan/') === 0) return jsonResponse({}, 404);
+    return new Promise(function () {});
+  };
+  await run('pollCurrent()');
+  await flush();
+  check('cancelling poll shows the stopping message',
+    run('document.getElementById("runmsg").textContent') === '正在停止…',
+    run('document.getElementById("runmsg").textContent'));
+
+  const note = '真实计划已终态，但归属本次请求的终态 job 尚未就绪：保持 cancelling 并等待真实 job 确认。';
+  fetchRouter = function (url) {
+    if (url === '/api/agent/reqP') {
+      return jsonResponse({status: 'cancelling', request_id: 'reqP',
+        session_id: 'sP', result: null, cancel_note: note});
+    }
+    if (url.indexOf('/api/plan/') === 0) return jsonResponse({}, 404);
+    return new Promise(function () {});
+  };
+  await run('pollCurrent()');
+  await flush();
+  check('cancelling poll shows the exact nonempty cancel_note',
+    run('document.getElementById("runmsg").textContent') === note,
+    run('document.getElementById("runmsg").textContent'));
+
+  // ---- exact cancelled result + plan 404: say stopped, no media recreation ----
+  run(`
+    currentAgentStatus = "cancelling";
+    stopRequested = true;                      // a real Stop was accepted
+    showCache.clear();
+    document.getElementById("runmsg").textContent =
+      "停止请求已受理，当前动作或推理结束后生效（保留当前场景）。";
+    document.getElementById("run").disabled = true;
+    document.getElementById("stop").disabled = false;
+    document.getElementById("images").replaceChildrenCalls = 0;
+    document.getElementById("videos").replaceChildrenCalls = 0;
+  `);
+  fetchRouter = function (url) {
+    if (url === '/api/agent/reqP') {
+      return jsonResponse({status: 'cancelled', request_id: 'reqP', session_id: 'sP',
+        result: {cancelled_by_user: true, plan: null, jobs: [], steps: 0}});
+    }
+    if (url.indexOf('/api/plan/') === 0) return jsonResponse({error: 'not found'}, 404);
+    return new Promise(function () {});
+  };
+  await run('pollCurrent()');
+  await flush();
+  check('cancelled poll updates runmsg to the stopped message',
+    run('document.getElementById("runmsg").textContent') === '已停止（保留当前场景）。',
+    run('document.getElementById("runmsg").textContent'));
+  check('cancelled poll shows the plan panel as stopped (no stale planning state)',
+    run('document.getElementById("plan").innerHTML').indexOf('已停止') !== -1 &&
+    run('document.getElementById("plan").innerHTML').indexOf('正在规划') === -1);
+  check('cancelled poll enables Submit for a ready session',
+    run('document.getElementById("run").disabled') === false);
+  check('cancelled poll disables Stop',
+    run('document.getElementById("stop").disabled') === true);
+  check('cancelled poll recreates no media',
+    run('document.getElementById("images").replaceChildrenCalls') === 0 &&
+    run('document.getElementById("videos").replaceChildrenCalls') === 0);
+  check('cancelled poll retains the current request/session',
+    run('currentRequest') === 'reqP' && run('currentSessionId') === 'sP');
+
+  // ---- completed/error Stop races: honest "task has ended" message ----
+  const races = ['completed', 'error'];
+  for (let i = 0; i < races.length; i += 1) {
+    const st = races[i];
+    run(`
+      currentAgentStatus = "running";
+      stopRequested = true;                    // Stop was requested (race)
+      showCache.clear();
+      document.getElementById("runmsg").textContent =
+        "停止请求已受理，当前动作或推理结束后生效（保留当前场景）。";
+    `);
+    fetchRouter = function (url) {
+      if (url === '/api/agent/reqP') {
+        return jsonResponse({status: st, request_id: 'reqP', session_id: 'sP', result: null});
+      }
+      if (url.indexOf('/api/plan/') === 0) return jsonResponse({}, 404);
+      return new Promise(function () {});
+    };
+    await run('pollCurrent()');
+    await flush();
+    check('Stop race (' + st + ') shows the honest ended message',
+      run('document.getElementById("runmsg").textContent') === '任务已结束，无需停止。',
+      run('document.getElementById("runmsg").textContent'));
+  }
+
+  // ---- completed without any Stop intent: leave the message untouched ----
+  run(`
+    currentAgentStatus = "running";
+    stopRequested = false;
+    showCache.clear();
+    document.getElementById("runmsg").textContent = "请求已受理：reqP（执行中）";
+  `);
+  fetchRouter = function (url) {
+    if (url === '/api/agent/reqP') {
+      return jsonResponse({status: 'completed', request_id: 'reqP',
+        session_id: 'sP', result: null});
+    }
+    if (url.indexOf('/api/plan/') === 0) return jsonResponse({}, 404);
+    return new Promise(function () {});
+  };
+  await run('pollCurrent()');
+  await flush();
+  check('completed without a Stop intent keeps the existing runmsg',
+    run('document.getElementById("runmsg").textContent') === '请求已受理：reqP（执行中）',
+    run('document.getElementById("runmsg").textContent'));
+}
+
 async function testBootRecoveryIgnoresTerminal() {
   run('currentRequest = null; currentSessionId = null; currentAgentStatus = null;' +
       ' stopRequested = false; stopInFlight = false;');
@@ -542,6 +693,7 @@ async function testSinglePollingChain() {
   await testSinglePollingChain();
   await testStopFlow();
   await testStopResponseOwnershipRaces();
+  await testPollCurrentStopRunmsgRefresh();
   if (failures) {
     console.error(failures + ' frontend contract test(s) failed');
     process.exit(1);

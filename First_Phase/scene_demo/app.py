@@ -1457,8 +1457,25 @@ async function pollCurrent() {
     if (reqId !== currentRequest || sesId !== currentSessionId) return; // 丢弃过期响应
 
     if (agentJob && typeof agentJob.status === "string") {
+      // 采纳真实归属 job 状态**之前**先记录本次“停止意图”：终态清除 stopRequested 后，
+      // 仍能据此判断终态是否是一次停止竞态（completed/error 后无需停止）。
+      const stopIntent = stopRequested;
       currentAgentStatus = agentJob.status;
       if (agentTerminalStatus(currentAgentStatus)) stopRequested = false;
+      // 仅在真实 job 状态推进后如实刷新 runmsg（其余生命周期一律不动）：
+      //  - cancelling：显示“正在停止…”或真实非空 cancel_note（绝不谎称已停止）；
+      //  - cancelled：如实显示已停止且保留当前场景；
+      //  - completed/error：仅当此前确有停止意图时告知任务已结束、无需停止；
+      //  - queued/running：绝不覆盖 Stop API 失败原因（保留诚实失败文本）。
+      if (currentAgentStatus === "cancelling") {
+        const note = (typeof agentJob.cancel_note === "string" && agentJob.cancel_note)
+          ? agentJob.cancel_note : "正在停止…";
+        $("runmsg").textContent = note;
+      } else if (currentAgentStatus === "cancelled") {
+        $("runmsg").textContent = "已停止（保留当前场景）。";
+      } else if (stopIntent && agentTerminalStatus(currentAgentStatus)) {
+        $("runmsg").textContent = "任务已结束，无需停止。";
+      }
     }
     const jobTerminal = agentTerminalStatus(currentAgentStatus);
     const result = (agentJob && agentJob.result && typeof agentJob.result === "object")
