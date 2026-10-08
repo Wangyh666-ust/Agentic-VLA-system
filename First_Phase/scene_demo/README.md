@@ -1,5 +1,7 @@
 # 持久场景 v2（实验，已完成单次 pilot）— 场景内多子目标 SmolVLA 演示
 
+最新（2026-10-09）：[侧向抓取五例试点报告](results/2026-10-09-side-grasp/README.md)。完整组合成功1/5；三例在辅助接近酒瓶时因偏转超限停止，一例酒瓶成功而后续碗未完成。本轮未微调，默认演示配置尚未切换。
+
 最新（2026-10-08）：酒瓶起始位姿对照（start-pose A/B）实验已完成，完整报告见 [results/2026-10-08-wine-start-pose/README.md](results/2026-10-08-wine-start-pose/README.md)。直接执行与准备后执行均失败（direct 0/2、prepared 0/2），四次均无稳定抓取确认；有效的空手就位准备（125 步）没有改善酒瓶抓取执行。本轮没有训练，也没有生产技能改动。
 
 上一轮（2026-10-08）：新的「规划与 VLA 起始状态诊断」已完成，完整报告见 [results/2026-10-08-skill-context/README.md](results/2026-10-08-skill-context/README.md)。在给定场景与能力目录下，Hermes 五次请求中有四次给出正确的真实提交。基线酒瓶试验为 native 2/2、shared_initial 1/2、after_bowl 0/2，仅限所测起始状态与两个种子；预注册的准备对照在酒瓶阶段之前就被阻断，**不是**一次新的酒瓶失败。本轮没有训练，也没有生产技能改进。

@@ -1,0 +1,107 @@
+COMPILE_EXIT=0
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+WARNING:robosuite_logs:No private macro file found!
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+WARNING:robosuite_logs:It is recommended to use a private macro file
+[robosuite WARNING] To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+WARNING:robosuite_logs:To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py
+usage: side_grasp_calibration.py [-h] --output-dir OUTPUT_DIR
+
+ONE isolated assisted local-grasp physical calibration on the shared
+goal_table scene: after the recorded 102-action bowl prefix, replay at most
+150 historical A0 wine approach actions until the LocalGraspController returns
+its first auxiliary action, then run at most 200 local actions. No model, no
+Hermes, no assessment/recovery/forced release.
+
+options:
+  -h, --help            show this help message and exit
+  --output-dir OUTPUT_DIR
+                        absolute, absent output directory for the calibration
+                        artifacts
+HELP_EXIT=0
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/yhwang/fyp/libero_demo/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo
+plugins: hydra-core-1.3.7, platformdirs-4.12.3, anyio-4.15.1, typeguard-4.6.0
+collecting ... collected 62 items
+
+tests/test_side_grasp.py::ReferenceTests::test_actual_reference_derives_relative_pose PASSED [  1%]
+tests/test_side_grasp.py::ReferenceTests::test_reference_independent_recompute PASSED [  3%]
+tests/test_side_grasp.py::EquivarianceTests::test_body_to_controller_compensation PASSED [  4%]
+tests/test_side_grasp.py::EquivarianceTests::test_rotation_equivariance PASSED [  6%]
+tests/test_side_grasp.py::EquivarianceTests::test_translation_equivariance PASSED [  8%]
+tests/test_side_grasp.py::OffsetTests::test_approach_offset_is_along_hand_z PASSED [  9%]
+tests/test_side_grasp.py::OffsetTests::test_approach_offset_non_world_z PASSED [ 11%]
+tests/test_side_grasp.py::FailureTests::test_injected_builders_counter_preservation PASSED [ 12%]
+tests/test_side_grasp.py::FailureTests::test_invalid_offset_never_arms PASSED [ 14%]
+tests/test_side_grasp.py::FailureTests::test_missing_or_nonfinite_geometry_raises PASSED [ 16%]
+tests/test_side_grasp.py::FailureTests::test_read_geometry_missing_body_raises PASSED [ 17%]
+tests/test_side_grasp.py::BaseSeamTests::test_base_default_target_and_counters PASSED [ 19%]
+tests/test_local_grasp.py::TargetTests::test_make_target_compensates_the_local_pad_offset PASSED [ 20%]
+tests/test_local_grasp.py::TargetTests::test_make_target_picks_the_closer_symmetric_neck_frame PASSED [ 22%]
+tests/test_local_grasp.py::TargetTests::test_make_target_requires_known_readings PASSED [ 24%]
+tests/test_local_grasp.py::TargetTests::test_make_target_uses_wine_rotation_and_the_fixed_neck_height PASSED [ 25%]
+tests/test_local_grasp.py::TriggerTests::test_already_wine_held_bypasses PASSED [ 27%]
+tests/test_local_grasp.py::TriggerTests::test_far_or_open_hand_never_triggers PASSED [ 29%]
+tests/test_local_grasp.py::TriggerTests::test_unknown_observations_never_trigger PASSED [ 30%]
+tests/test_local_grasp.py::StateMachineTests::test_above_target_is_the_frozen_grasp_target_plus_clearance PASSED [ 32%]
+tests/test_local_grasp.py::StateMachineTests::test_actions_are_finite_float32_with_the_expected_gripper PASSED [ 33%]
+tests/test_local_grasp.py::StateMachineTests::test_active_incomplete_grasp_observation_fails PASSED [ 35%]
+tests/test_local_grasp.py::StateMachineTests::test_active_unknown_geometry_fails PASSED [ 37%]
+tests/test_local_grasp.py::StateMachineTests::test_active_unknown_or_nonbool_grasp_fails PASSED [ 38%]
+tests/test_local_grasp.py::StateMachineTests::test_active_unknown_rotation_fails PASSED [ 40%]
+tests/test_local_grasp.py::StateMachineTests::test_alignment_stages_then_five_sample_confirmation PASSED [ 41%]
+tests/test_local_grasp.py::StateMachineTests::test_each_stage_budget_times_out PASSED [ 43%]
+tests/test_local_grasp.py::StateMachineTests::test_foreign_held_object_fails PASSED [ 45%]
+tests/test_local_grasp.py::StateMachineTests::test_idle_unknown_trigger_still_returns_none PASSED [ 46%]
+tests/test_local_grasp.py::StateMachineTests::test_lift_confirmation_requires_a_real_raise_and_known_grasp PASSED [ 48%]
+tests/test_local_grasp.py::StateMachineTests::test_protected_displacement_fails PASSED [ 50%]
+tests/test_local_grasp.py::StateMachineTests::test_repeated_next_action_never_counts PASSED [ 51%]
+tests/test_local_grasp.py::StateMachineTests::test_summary_reports_the_frozen_evidence PASSED [ 53%]
+tests/test_local_grasp.py::StateMachineTests::test_total_budget_boundary_fails_before_another_action PASSED [ 54%]
+tests/test_local_grasp.py::ReadGeometryTests::test_geometry_reads_pads_site_and_wxyz_rotation PASSED [ 56%]
+tests/test_grasp_assist_service.py::SelectActionUnitTests::test_active_stage_returns_the_auxiliary_action_directly PASSED [ 58%]
+tests/test_grasp_assist_service.py::SelectActionUnitTests::test_confirmed_return_resets_exactly_once_then_stays_vla PASSED [ 59%]
+tests/test_grasp_assist_service.py::SelectActionUnitTests::test_failed_phase_raises_before_any_action PASSED [ 61%]
+tests/test_grasp_assist_service.py::SelectActionUnitTests::test_idle_not_triggered_keeps_the_vla_action_and_clears_source PASSED [ 62%]
+tests/test_grasp_assist_service.py::SelectActionUnitTests::test_latched_observer_error_stops_before_any_inference PASSED [ 64%]
+tests/test_grasp_assist_service.py::SelectActionUnitTests::test_no_helper_returns_the_original_action PASSED [ 66%]
+tests/test_grasp_assist_service.py::SelectActionUnitTests::test_trigger_handoff_replaces_proposal_resets_once_and_clears_evidence PASSED [ 67%]
+tests/test_grasp_assist_service.py::SelectActionUnitTests::test_unknown_geometry_raises_honestly PASSED [ 69%]
+tests/test_grasp_assist_service.py::WorkerIntegrationTests::test_cancellation_still_wins_and_is_never_a_failed_grasp PASSED [ 70%]
+tests/test_grasp_assist_service.py::WorkerIntegrationTests::test_failed_assist_raises_before_the_next_action PASSED [ 72%]
+tests/test_grasp_assist_service.py::WorkerIntegrationTests::test_far_wine_idle_leaves_the_vla_action_unchanged PASSED [ 74%]
+tests/test_grasp_assist_service.py::WorkerIntegrationTests::test_local_assist_records_and_confirms PASSED [ 75%]
+tests/test_grasp_assist_service.py::WorkerIntegrationTests::test_non_wine_capability_is_untouched PASSED [ 77%]
+tests/test_grasp_assist_service.py::WorkerIntegrationTests::test_unknown_geometry_fails_honestly_without_stepping PASSED [ 79%]
+tests/test_grasp_assist_service.py::FailClosedIntegrationTests::test_action_sources_flush_failure_stops_before_the_next_action PASSED [ 80%]
+tests/test_grasp_assist_service.py::FailClosedIntegrationTests::test_action_sources_write_failure_stops_before_the_next_action PASSED [ 82%]
+tests/test_grasp_assist_service.py::FailClosedIntegrationTests::test_audit_open_failure_stops_before_any_action PASSED [ 83%]
+tests/test_grasp_assist_service.py::FailClosedIntegrationTests::test_observer_exception_stops_before_the_next_action PASSED [ 85%]
+tests/test_grasp_assist_service.py::FailClosedIntegrationTests::test_post_step_geometry_exception_stops_before_the_next_action PASSED [ 87%]
+tests/test_grasp_assist_service.py::FailClosedIntegrationTests::test_trigger_proposal_is_recorded_only_for_the_first_local_action PASSED [ 88%]
+tests/test_grasp_assist_service.py::JsonDefaultTests::test_dumps_round_trips_numeric_without_stringifying PASSED [ 90%]
+tests/test_grasp_assist_service.py::JsonDefaultTests::test_ndarray_is_a_nested_numeric_list PASSED [ 91%]
+tests/test_grasp_assist_service.py::JsonDefaultTests::test_numpy_scalar_item_and_other_fallback PASSED [ 93%]
+tests/test_grasp_assist_service.py::BudgetOverrideTests::test_execute_overridden_and_clarify_untouched PASSED [ 95%]
+tests/test_grasp_assist_service.py::CliContractTests::test_parser_defaults PASSED [ 96%]
+tests/test_grasp_assist_service.py::CliContractTests::test_process_environment_convention PASSED [ 98%]
+tests/test_grasp_assist_service.py::CliContractTests::test_run_root_is_required PASSED [100%]
+
+=============================== warnings summary ===============================
+../../../../../../../../../../home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:7
+  /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:7: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+    ROBOSUITE_DEFAULT_LOGGER.warn("No private macro file found!")
+
+../../../../../../../../../../home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:8
+  /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:8: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+    ROBOSUITE_DEFAULT_LOGGER.warn("It is recommended to use a private macro file")
+
+../../../../../../../../../../home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:9
+  /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:9: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+    ROBOSUITE_DEFAULT_LOGGER.warn("To setup, run: python {}/scripts/setup_macros.py".format(robosuite.__path__[0]))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 62 passed, 3 warnings in 14.22s ========================
+TEST_EXIT=0

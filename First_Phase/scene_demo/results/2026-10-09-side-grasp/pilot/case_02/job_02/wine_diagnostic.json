@@ -1,0 +1,96 @@
+{
+  "job_id": "54d90bb7909c4f6b847f27eda30e31eb",
+  "capability_id": "wine_to_rack",
+  "condition": "side_grasp_pilot",
+  "profile": "baseline_bf16",
+  "oracle_goals": [
+    [
+      "on",
+      "wine_bottle_1",
+      "wine_rack_1_top_region"
+    ]
+  ],
+  "instruction": "put the wine bottle on the rack",
+  "n_samples": 120,
+  "wine_summary": {
+    "n_samples": 120,
+    "first_grasp_proxy_step": null,
+    "max_grasp_proxy_streak": null,
+    "max_lift_m": 0.006612183718598175,
+    "lift_reference_m": 0.8988754774203452,
+    "lift_reference_step": 1,
+    "first_lift_2cm_step": null,
+    "lift_threshold_m": 0.02,
+    "first_goal_true_step": null,
+    "first_strict_five_end_step": null,
+    "strict_streak_required": 5,
+    "sent_open_count": 119,
+    "sent_close_count": 1,
+    "sent_open_while_goal_true_count": 0,
+    "sent_open_while_grasp_proxy_before_count": 0,
+    "sent_known_count": 120,
+    "width_min_m": 0.039898584320480254,
+    "width_max_m": 0.07974917624180422,
+    "width_change_epsilon_m": 0.0001,
+    "open_command_width_increased_count": 16,
+    "raw_policy_action_dim": {
+      "dimension_counts": {
+        "7": 108
+      },
+      "dims": [
+        7
+      ],
+      "n_known": 108,
+      "n_null": 12
+    },
+    "postprocessed_action_dim": {
+      "dimension_counts": {
+        "7": 108
+      },
+      "dims": [
+        7
+      ],
+      "n_known": 108,
+      "n_null": 12
+    },
+    "sent_action_dim": {
+      "dimension_counts": {
+        "7": 120
+      },
+      "dims": [
+        7
+      ],
+      "n_known": 120,
+      "n_null": 0
+    },
+    "n_native_success_true": 120,
+    "n_native_success_known": 120,
+    "native_success_final": true,
+    "null_counts": {
+      "raw_policy_action": 12,
+      "postprocessed_action": 12,
+      "sent_action": 0,
+      "instruction": 12,
+      "policy_input_state": 12,
+      "before_snapshot": 0,
+      "after_snapshot": 0,
+      "gripper_before": 0,
+      "gripper_after": 0
+    },
+    "error_counts": {
+      "before_snapshot_errors": 0,
+      "after_snapshot_errors": 0,
+      "gripper_before_errors": 0,
+      "gripper_after_errors": 0
+    },
+    "grasp_proxy_limitation": "grasp is screened from robosuite contact geoms via inner._check_grasp, a contact/kinematic proxy -- not a tactile or force measurement; it can be wrong at contact transitions and is unknown when the probe is unavailable. gripper width is a jaw-joint gap, not an object identity or grasp-force measurement. An unknown value is never treated as success."
+  },
+  "telemetry_path": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T172313Z_goal_table_86339538/cap_02_wine_to_rack_54d90bb7/wine_telemetry.jsonl",
+  "control_frequency_hz": 20,
+  "proxy_limitation": "grasp is screened from robosuite contact geoms via inner._check_grasp, a contact/kinematic proxy -- not a tactile or force measurement; it can be wrong at contact transitions and is unknown when the probe is unavailable. gripper width is a jaw-joint gap, not an object identity or grasp-force measurement. An unknown value is never treated as success.",
+  "assisted": true,
+  "hermes_calls": 0,
+  "action_sources_path": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T172313Z_goal_table_86339538/cap_02_wine_to_rack_54d90bb7/action_sources.jsonl",
+  "actual_vla_actions": 108,
+  "actual_local_actions": 12
+}

@@ -1,0 +1,242 @@
+{
+  "status": "COMPLETED_EVIDENCE_PRESERVED",
+  "software_proof_path": "D:\\FYP\\First_Phase\\tmp\\side_grasp_testfix_checks.log",
+  "software_proof_sha256": "c81f965d21ec0709994aa007259e1a42d16943eddb037d4dbb90e2a00e82af86",
+  "software_gate_verified_before_launch": true,
+  "source_hashes_before": {
+    "local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d",
+    "side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+    "side_grasp_calibration.py": "eb33d07264b8aae3d6cbeca41e5611490a5c5ca603c5a537ee258ce42f97a275"
+  },
+  "argv": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu",
+    "--exec",
+    "env",
+    "-u",
+    "HTTP_PROXY",
+    "-u",
+    "HTTPS_PROXY",
+    "-u",
+    "ALL_PROXY",
+    "-u",
+    "http_proxy",
+    "-u",
+    "https_proxy",
+    "-u",
+    "all_proxy",
+    "MUJOCO_GL=egl",
+    "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+    "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+    "HF_HUB_OFFLINE=1",
+    "TRANSFORMERS_OFFLINE=1",
+    "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo",
+    "/home/yhwang/fyp/libero_demo/venv/bin/python",
+    "-u",
+    "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/side_grasp_calibration.py",
+    "--output-dir",
+    "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-calibration-v1/"
+  ],
+  "output_dir": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\grasp_assist\\2026-10-09-side-calibration-v1",
+  "physical_attempts": 1,
+  "started_epoch": 1791479151.4122033,
+  "owned_wsl_windows_pid": 14164,
+  "cli_exit": 0,
+  "finished_epoch": 1791479204.7977242,
+  "source_hashes_after": {
+    "local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d",
+    "side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+    "side_grasp_calibration.py": "eb33d07264b8aae3d6cbeca41e5611490a5c5ca603c5a537ee258ce42f97a275"
+  },
+  "source_unchanged": true,
+  "run_completed": true,
+  "report_ok": true,
+  "fatal_error": null,
+  "calibration_summary": {
+    "ok": true,
+    "reason": null,
+    "kind": null,
+    "detail": "",
+    "confirmed": true,
+    "helper_phase": "confirmed",
+    "helper_reason": null,
+    "historical_sent": 91,
+    "local_actions": 70,
+    "aux_actions": 70,
+    "wine_lift_m": 0.027940736413770928,
+    "wine_lift_streak": 5,
+    "final_bowl_predicate": true,
+    "protection_violations": [],
+    "helper_summary": {
+      "assisted": true,
+      "phase": "confirmed",
+      "reason": null,
+      "total_actions": 70,
+      "stage_counts": {
+        "above": 25,
+        "descend": 24,
+        "close": 10,
+        "lift": 11
+      },
+      "trigger": {
+        "command": 1.0,
+        "grasped": false,
+        "grasp_observation_complete": true,
+        "held_objects": [],
+        "distance_m": 0.12776918001539472,
+        "satisfied": true,
+        "target_ready": true
+      },
+      "target": {
+        "eef_position": [
+          -0.20123991372177524,
+          -0.07217506457314737,
+          0.9927249740850868
+        ],
+        "orientation": [
+          [
+            -0.94632027123426,
+            -0.32177686299714153,
+            0.03062016804053081
+          ],
+          [
+            -0.14959752714095023,
+            0.3520311694348842,
+            -0.923955970606617
+          ],
+          [
+            0.2865284002056763,
+            -0.8789389661324737,
+            -0.3812712547380791
+          ]
+        ],
+        "above_position": [
+          -0.2030771238042071,
+          -0.016737706336750355,
+          1.0156012493693716
+        ],
+        "lift_position": [
+          -0.20085383505561652,
+          -0.07157874806343384,
+          1.0283701933185565
+        ]
+      },
+      "targets": {
+        "eef_position": [
+          -0.20123991372177524,
+          -0.07217506457314737,
+          0.9927249740850868
+        ],
+        "orientation": [
+          [
+            -0.94632027123426,
+            -0.32177686299714153,
+            0.03062016804053081
+          ],
+          [
+            -0.14959752714095023,
+            0.3520311694348842,
+            -0.923955970606617
+          ],
+          [
+            0.2865284002056763,
+            -0.8789389661324737,
+            -0.3812712547380791
+          ]
+        ],
+        "above_position": [
+          -0.2030771238042071,
+          -0.016737706336750355,
+          1.0156012493693716
+        ],
+        "lift_position": [
+          -0.20085383505561652,
+          -0.07157874806343384,
+          1.0283701933185565
+        ]
+      },
+      "last_errors": {
+        "above_position_error_m": 0.0021394921231025596,
+        "above_rotation_error_rad": 0.030458160076245876,
+        "descend_position_error_m": 0.002122412763606342,
+        "descend_rotation_error_rad": 0.0009435736701893739,
+        "close_grasped": true,
+        "lift_grasped": true,
+        "lift_metres": 0.027940736413770928
+      },
+      "grasp_mode": "demonstrated_side",
+      "reference": {
+        "source_path": "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+        "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+        "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+        "step": 93,
+        "quaternion_order": "wxyz",
+        "policy_orientation": "axis_angle_body",
+        "relative_position": [
+          -0.0029941513870073433,
+          0.01052424244341749,
+          0.09384945135656639
+        ],
+        "relative_orientation": [
+          [
+            0.3217877768160636,
+            -0.9463167125463993,
+            -0.030615457650521972
+          ],
+          [
+            -0.3520318440699383,
+            -0.14959777039620165,
+            0.9239556741820488
+          ],
+          [
+            -0.8789347003347259,
+            -0.28654002625787023,
+            -0.38127235134434434
+          ]
+        ]
+      },
+      "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset"
+    }
+  },
+  "media": {
+    "first_png": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-calibration-v1/first.png",
+    "last_png": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-calibration-v1/last.png",
+    "video": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-calibration-v1/calibration.mp4"
+  },
+  "artifacts": {
+    "calibration.json": {
+      "path": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\grasp_assist\\2026-10-09-side-calibration-v1\\calibration.json",
+      "bytes": 717318,
+      "sha256": "9fa72e909fbf22a63e219f0ee5846625bb2fa85623573ef18c8f4bf50b324f35"
+    },
+    "preregistration.json": {
+      "path": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\grasp_assist\\2026-10-09-side-calibration-v1\\preregistration.json",
+      "bytes": 4185,
+      "sha256": "f4c47b44191376a45824f97d41f0d6cdd407f756b1b956446fc189bfa1504b6c"
+    },
+    "calibration_steps.jsonl": {
+      "path": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\grasp_assist\\2026-10-09-side-calibration-v1\\calibration_steps.jsonl",
+      "bytes": 1295269,
+      "sha256": "d786a07e0c14354679c9888096c109e0e27cd0efdc791076f6a6ffd53ea5b755"
+    },
+    "calibration.mp4": {
+      "path": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\grasp_assist\\2026-10-09-side-calibration-v1\\calibration.mp4",
+      "bytes": 69142,
+      "sha256": "d7f046757dd6ce2081df64a9017f7e71409aa4e6b4cb911439a1fa6503bca42f"
+    },
+    "first.png": {
+      "path": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\grasp_assist\\2026-10-09-side-calibration-v1\\first.png",
+      "bytes": 67124,
+      "sha256": "fe53d862feb78e075f6623f778712d5e14b0d1cdf1248f945b0f4957c03fedb8"
+    },
+    "last.png": {
+      "path": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\grasp_assist\\2026-10-09-side-calibration-v1\\last.png",
+      "bytes": 68100,
+      "sha256": "5a4dbd3caec8cfd955bb660be31b3fba4fb86491497a15e60f83c6a5a3e9be1a"
+    }
+  },
+  "output_marker_pass": true,
+  "output_marker_fail": false,
+  "no_retry_or_combination_requests": true
+}

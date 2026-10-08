@@ -1,0 +1,365 @@
+{
+  "status": "SIDE_PILOT_SINGLE_RUN_EVIDENCE_COMPLETE",
+  "software_proof_path": "D:\\FYP\\First_Phase\\tmp\\side_pilot_fix_checks.json",
+  "software_proof_sha256": "91f119f02ff90ae3d5891ff65d6bcbc2efbdc8f42de6e95252974ac3a6a67808",
+  "software_gate_verified_before_launch": true,
+  "primary_source_review_accepted_before_launch": true,
+  "source_hashes_before": {
+    "local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d",
+    "side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+    "side_grasp_calibration.py": "eb33d07264b8aae3d6cbeca41e5611490a5c5ca603c5a537ee258ce42f97a275",
+    "grasp_assist_service.py": "c97e2279b05868862cbfe2d364ab58ed65130aa72550f937756a86f2c88b32fa",
+    "side_grasp_pilot.py": "8e26e9c5c4830c3b593396a660faa50a1adfceb5bc8286276592d34e4ac62e91"
+  },
+  "calibration_sha256": "9fa72e909fbf22a63e219f0ee5846625bb2fa85623573ef18c8f4bf50b324f35",
+  "argv": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu",
+    "--exec",
+    "env",
+    "-u",
+    "HTTP_PROXY",
+    "-u",
+    "HTTPS_PROXY",
+    "-u",
+    "ALL_PROXY",
+    "-u",
+    "http_proxy",
+    "-u",
+    "https_proxy",
+    "-u",
+    "all_proxy",
+    "MUJOCO_GL=egl",
+    "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+    "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+    "HF_HUB_OFFLINE=1",
+    "TRANSFORMERS_OFFLINE=1",
+    "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo",
+    "/home/yhwang/fyp/libero_demo/venv/bin/python",
+    "-u",
+    "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/side_grasp_pilot.py",
+    "--output-dir",
+    "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/",
+    "--calibration",
+    "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-calibration-v1/calibration.json",
+    "--hermes-home",
+    "/home/yhwang/fyp/scene_demo/hermes_home_side_pilot_20261009_v1"
+  ],
+  "output_dir": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\grasp_assist\\2026-10-09-side-pilot-v1",
+  "hermes_home_path": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\hermes_home_side_pilot_20261009_v1",
+  "attempts": 1,
+  "started_epoch": 1791479695.490078,
+  "owned_wsl_windows_pid": 26996,
+  "cli_exit": 0,
+  "finished_epoch": 1791480991.515252,
+  "source_hashes_after": {
+    "local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d",
+    "side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+    "side_grasp_calibration.py": "eb33d07264b8aae3d6cbeca41e5611490a5c5ca603c5a537ee258ce42f97a275",
+    "grasp_assist_service.py": "c97e2279b05868862cbfe2d364ab58ed65130aa72550f937756a86f2c88b32fa",
+    "side_grasp_pilot.py": "8e26e9c5c4830c3b593396a660faa50a1adfceb5bc8286276592d34e4ac62e91"
+  },
+  "source_unchanged": true,
+  "calibration_unchanged": true,
+  "report_path": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\grasp_assist\\2026-10-09-side-pilot-v1\\report.json",
+  "report_sha256": "1f8a04d8123ac3bcfafe44da29d0aee336e1a4836f5cc7cb79f0c73f5619b29c",
+  "report_root_keys": [
+    "experiment",
+    "condition",
+    "generated_utc",
+    "status",
+    "planned_cases",
+    "executed_cases",
+    "fatal_error",
+    "preregistration_sha256",
+    "calibration_sha256",
+    "stage_counts",
+    "cases",
+    "sessions_root",
+    "hermes_home_config_sha256",
+    "gpu_free_mib",
+    "profile",
+    "profile_ok",
+    "completed"
+  ],
+  "no_retry": true,
+  "owned_service_cleanup_readonly": {
+    "owned_port": 8779,
+    "connection_result": 11,
+    "owned_service_not_listening": true
+  },
+  "cleanup_check_exit": 0,
+  "completed_case_count": 5,
+  "combined_success_count": 1,
+  "operational_error_count": 0,
+  "case_summaries": [
+    {
+      "case_index": 0,
+      "request_id": "e55ebe2507b44e0da6e1b6dd44e98ef5",
+      "actual_order": [
+        "bowl_to_plate",
+        "wine_to_rack"
+      ],
+      "order_ok": true,
+      "score": {
+        "gold_completed": true,
+        "combined_success": true,
+        "n_actual_samples": 373,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": true
+      },
+      "physical_failures": [],
+      "operational_errors": [],
+      "hermes_invocations": 1,
+      "jobs": [
+        {
+          "job_id": "be4ebc87b8b5414297a2ea7ace3572aa",
+          "capability_id": "bowl_to_plate",
+          "steps": 102,
+          "success": true,
+          "ended_reason": "success",
+          "actual_vla_actions": 102,
+          "actual_local_actions": 0,
+          "helper_phase": null,
+          "helper_reason": null
+        },
+        {
+          "job_id": "45c263471bc943889310d767f7e77970",
+          "capability_id": "wine_to_rack",
+          "steps": 271,
+          "success": true,
+          "ended_reason": "success",
+          "actual_vla_actions": 199,
+          "actual_local_actions": 72,
+          "helper_phase": "confirmed",
+          "helper_reason": null
+        }
+      ]
+    },
+    {
+      "case_index": 1,
+      "request_id": "bb5bf8b5839c472387e9d12770d16c50",
+      "actual_order": [
+        "bowl_to_plate",
+        "wine_to_rack"
+      ],
+      "order_ok": true,
+      "score": {
+        "gold_completed": false,
+        "combined_success": false,
+        "n_actual_samples": 235,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": false
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": false
+      },
+      "physical_failures": [
+        "local_grasp_failed: a9a15dd379da4c07bb6e33d4dd5aba4c",
+        "plan_blocked"
+      ],
+      "operational_errors": [],
+      "hermes_invocations": 1,
+      "jobs": [
+        {
+          "job_id": "89cb3f29515143eaae860f2e5b5ab828",
+          "capability_id": "bowl_to_plate",
+          "steps": 104,
+          "success": true,
+          "ended_reason": "success",
+          "actual_vla_actions": 104,
+          "actual_local_actions": 0,
+          "helper_phase": null,
+          "helper_reason": null
+        },
+        {
+          "job_id": "a9a15dd379da4c07bb6e33d4dd5aba4c",
+          "capability_id": "wine_to_rack",
+          "steps": 131,
+          "success": false,
+          "ended_reason": "local_grasp_failed",
+          "actual_vla_actions": 120,
+          "actual_local_actions": 11,
+          "helper_phase": "failed",
+          "helper_reason": "wine_rotation_drift"
+        }
+      ]
+    },
+    {
+      "case_index": 2,
+      "request_id": "cf8834ef80234806a77457ce25da6a61",
+      "actual_order": [
+        "bowl_to_plate",
+        "wine_to_rack"
+      ],
+      "order_ok": true,
+      "score": {
+        "gold_completed": false,
+        "combined_success": false,
+        "n_actual_samples": 212,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": false
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": false
+      },
+      "physical_failures": [
+        "local_grasp_failed: 54d90bb7909c4f6b847f27eda30e31eb",
+        "plan_blocked"
+      ],
+      "operational_errors": [],
+      "hermes_invocations": 1,
+      "jobs": [
+        {
+          "job_id": "ed3e4c7d5b03446a928025f0908e5c58",
+          "capability_id": "bowl_to_plate",
+          "steps": 92,
+          "success": true,
+          "ended_reason": "success",
+          "actual_vla_actions": 92,
+          "actual_local_actions": 0,
+          "helper_phase": null,
+          "helper_reason": null
+        },
+        {
+          "job_id": "54d90bb7909c4f6b847f27eda30e31eb",
+          "capability_id": "wine_to_rack",
+          "steps": 120,
+          "success": false,
+          "ended_reason": "local_grasp_failed",
+          "actual_vla_actions": 108,
+          "actual_local_actions": 12,
+          "helper_phase": "failed",
+          "helper_reason": "wine_rotation_drift"
+        }
+      ]
+    },
+    {
+      "case_index": 3,
+      "request_id": "71db701c9bb44fc8928357a98ccc653f",
+      "actual_order": [
+        "wine_to_rack",
+        "bowl_to_plate"
+      ],
+      "order_ok": true,
+      "score": {
+        "gold_completed": false,
+        "combined_success": false,
+        "n_actual_samples": 752,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": false,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": false
+      },
+      "physical_failures": [
+        "budget_exhausted: b7065cfeec534a7cb912a03e6bfec6d5",
+        "plan_blocked"
+      ],
+      "operational_errors": [],
+      "hermes_invocations": 1,
+      "jobs": [
+        {
+          "job_id": "34738e0ab3274b35b72c8809e66439c4",
+          "capability_id": "wine_to_rack",
+          "steps": 252,
+          "success": true,
+          "ended_reason": "success",
+          "actual_vla_actions": 187,
+          "actual_local_actions": 65,
+          "helper_phase": "confirmed",
+          "helper_reason": null
+        },
+        {
+          "job_id": "b7065cfeec534a7cb912a03e6bfec6d5",
+          "capability_id": "bowl_to_plate",
+          "steps": 500,
+          "success": false,
+          "ended_reason": "budget_exhausted",
+          "actual_vla_actions": 500,
+          "actual_local_actions": 0,
+          "helper_phase": null,
+          "helper_reason": null
+        }
+      ]
+    },
+    {
+      "case_index": 4,
+      "request_id": "d2a466ea6a724872b2e3e89745e467a3",
+      "actual_order": [
+        "bowl_to_plate",
+        "wine_to_rack"
+      ],
+      "order_ok": true,
+      "score": {
+        "gold_completed": false,
+        "combined_success": false,
+        "n_actual_samples": 216,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": false
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": false
+      },
+      "physical_failures": [
+        "local_grasp_failed: b76040bbb05045bcbbe02c2e10d514ab",
+        "plan_blocked"
+      ],
+      "operational_errors": [],
+      "hermes_invocations": 1,
+      "jobs": [
+        {
+          "job_id": "98eb66f9f8b24d2f9628df7517fd169d",
+          "capability_id": "bowl_to_plate",
+          "steps": 91,
+          "success": true,
+          "ended_reason": "success",
+          "actual_vla_actions": 91,
+          "actual_local_actions": 0,
+          "helper_phase": null,
+          "helper_reason": null
+        },
+        {
+          "job_id": "b76040bbb05045bcbbe02c2e10d514ab",
+          "capability_id": "wine_to_rack",
+          "steps": 125,
+          "success": false,
+          "ended_reason": "local_grasp_failed",
+          "actual_vla_actions": 114,
+          "actual_local_actions": 11,
+          "helper_phase": "failed",
+          "helper_reason": "wine_rotation_drift"
+        }
+      ]
+    }
+  ]
+}

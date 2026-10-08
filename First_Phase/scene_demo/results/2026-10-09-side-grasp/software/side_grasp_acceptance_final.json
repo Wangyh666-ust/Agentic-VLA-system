@@ -1,0 +1,79 @@
+{
+  "status": "SIDE_GRASP_SOFTWARE_ACCEPTANCE_PASS",
+  "compile_exit": 0,
+  "help_exit": 0,
+  "help_output_dir": true,
+  "pytest_exit": 0,
+  "pytest_passed": 62,
+  "new_tests": 12,
+  "old_local_tests": 23,
+  "old_service_tests": 27,
+  "warnings": 3,
+  "pytest_seconds": 14.22,
+  "diff_check_exit": 0,
+  "unchanged_core_sha256": {
+    "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d",
+    "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+    "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\side_grasp_calibration.py": "eb33d07264b8aae3d6cbeca41e5611490a5c5ca603c5a537ee258ce42f97a275"
+  },
+  "unchanged_other_sources": [
+    "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\grasp_calibration.py",
+    "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\tests\\test_local_grasp.py",
+    "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\tests\\test_grasp_assist_service.py",
+    "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\grasp_pilot.py"
+  ],
+  "parallel_service_change_exempt": true,
+  "model_proof": {
+    "http_status": 200,
+    "model": "deepseek-flash",
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 2660,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 305,
+      "service_tier": "standard"
+    },
+    "request_count": 1,
+    "physical_calls": 0
+  },
+  "commands": [
+    "wsl -d Ubuntu -- bash /mnt/d/FYP/First_Phase/tmp/side_grasp_acceptance_checks.sh",
+    "python -m py_compile local_grasp.py side_grasp.py side_grasp_calibration.py tests/test_side_grasp.py",
+    "python side_grasp_calibration.py --help",
+    "python -m pytest tests/test_side_grasp.py tests/test_local_grasp.py tests/test_grasp_assist_service.py -v",
+    "git -C C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP diff --check"
+  ],
+  "raw_log": "D:\\FYP\\First_Phase\\tmp\\side_grasp_testfix_checks.log",
+  "prior_failure_log": "D:\\FYP\\First_Phase\\tmp\\side_grasp_acceptance_checks.log",
+  "files": [
+    {
+      "path": "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\local_grasp.py",
+      "sha256": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d",
+      "lines": 1022,
+      "bytes": 40740
+    },
+    {
+      "path": "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\side_grasp.py",
+      "sha256": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+      "lines": 190,
+      "bytes": 7339
+    },
+    {
+      "path": "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\side_grasp_calibration.py",
+      "sha256": "eb33d07264b8aae3d6cbeca41e5611490a5c5ca603c5a537ee258ce42f97a275",
+      "lines": 40,
+      "bytes": 1285
+    },
+    {
+      "path": "C:\\Users\\Admin1\\.codex\\worktrees\\wine-grasp-assist\\FYP\\First_Phase\\scene_demo\\tests\\test_side_grasp.py",
+      "sha256": "c630bd00cf2aa67df38d88979d93777ae374b63ca611df40bfe9b7feb5dd17bd",
+      "lines": 175,
+      "bytes": 7291
+    }
+  ],
+  "physical_calls": 0,
+  "vla_calls": 0,
+  "hermes_calls": 0,
+  "git_mutations": 0
+}

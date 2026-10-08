@@ -1,0 +1,148 @@
+{
+  "ok": true,
+  "status": "SIDE_PILOT_SOFTWARE_PASS",
+  "source_sha256": {
+    "First_Phase/scene_demo/grasp_assist_service.py": "c97e2279b05868862cbfe2d364ab58ed65130aa72550f937756a86f2c88b32fa",
+    "First_Phase/scene_demo/side_grasp_pilot.py": "8e26e9c5c4830c3b593396a660faa50a1adfceb5bc8286276592d34e4ac62e91",
+    "First_Phase/scene_demo/tests/test_side_grasp_pilot.py": "120446509a93734a295c5a5ec64f10e20c22c9351a2946f98c57bf8019b7ee6c"
+  },
+  "actual_deepseek_calls": {
+    "side_pilot_http_proof.json": {
+      "requested_model": "deepseek-flash",
+      "max_tokens": 14000,
+      "endpoint": "https://api.deepseek.com/anthropic/v1/messages",
+      "usage": {
+        "input_tokens": 111681,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 13765,
+        "service_tier": "standard"
+      },
+      "ok": true,
+      "started_utc": "2026-10-08T16:56:09.3488276Z",
+      "stop_reason": "end_turn",
+      "thinking": "disabled",
+      "http_status": 200,
+      "finished_utc": "2026-10-08T16:56:47.7828122Z",
+      "attempts": 1,
+      "timeout_seconds": 180,
+      "response_model": "deepseek-flash"
+    },
+    "side_pilot_fix_edits_http_proof.json": {
+      "usage": {
+        "input_tokens": 14188,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 2894,
+        "service_tier": "standard"
+      },
+      "timeout_seconds": 180,
+      "http_status": 200,
+      "finished_utc": "2026-10-08T17:07:53.3995135Z",
+      "ok": true,
+      "max_tokens": 6000,
+      "thinking": "disabled",
+      "requested_model": "deepseek-flash",
+      "response_model": "deepseek-flash",
+      "started_utc": "2026-10-08T17:07:44.6054099Z",
+      "endpoint": "https://api.deepseek.com/anthropic/v1/messages",
+      "stop_reason": "end_turn",
+      "attempts": 1
+    },
+    "side_pilot_order_http_proof.json": {
+      "thinking": "disabled",
+      "endpoint": "https://api.deepseek.com/anthropic/v1/messages",
+      "started_utc": "2026-10-08T17:10:42.9977057Z",
+      "response_model": "deepseek-flash",
+      "requested_model": "deepseek-flash",
+      "stop_reason": "end_turn",
+      "timeout_seconds": 180,
+      "http_status": 200,
+      "usage": {
+        "input_tokens": 14164,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 1542,
+        "service_tier": "standard"
+      },
+      "attempts": 1,
+      "ok": true,
+      "finished_utc": "2026-10-08T17:10:48.2394762Z",
+      "max_tokens": 6000
+    },
+    "side_pilot_attrs_http_proof.json": {
+      "response_model": "deepseek-flash",
+      "ok": true,
+      "stop_reason": "end_turn",
+      "started_utc": "2026-10-08T17:08:58.0594633Z",
+      "timeout_seconds": 180,
+      "requested_model": "deepseek-flash",
+      "finished_utc": "2026-10-08T17:08:59.1584034Z",
+      "endpoint": "https://api.deepseek.com/anthropic/v1/messages",
+      "attempts": 1,
+      "thinking": "disabled",
+      "max_tokens": 1500,
+      "usage": {
+        "input_tokens": 674,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 185,
+        "service_tier": "standard"
+      },
+      "http_status": 200
+    }
+  },
+  "checks": [
+    {
+      "name": "compile",
+      "command": [
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-m",
+        "py_compile",
+        "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/grasp_assist_service.py",
+        "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/side_grasp_pilot.py",
+        "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/tests/test_side_grasp_pilot.py"
+      ],
+      "exit_code": 0,
+      "log": "side_pilot_fix_compile.log"
+    },
+    {
+      "name": "help",
+      "command": [
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/side_grasp_pilot.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "log": "side_pilot_fix_help.log"
+    },
+    {
+      "name": "pytest",
+      "command": [
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-m",
+        "pytest",
+        "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/tests/test_side_grasp_pilot.py",
+        "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/tests/test_grasp_assist_service.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "log": "side_pilot_fix_pytest.log"
+    }
+  ],
+  "pytest_passed": 52,
+  "pilot_lines": 488,
+  "diff_check_exit": 0,
+  "attributes": [
+    "First_Phase/scene_demo/side_grasp.py: text: unset",
+    "First_Phase/scene_demo/side_grasp_calibration.py: text: unset",
+    "First_Phase/scene_demo/side_grasp_pilot.py: text: unset",
+    "First_Phase/scene_demo/tests/test_side_grasp.py: text: unset",
+    "First_Phase/scene_demo/tests/test_side_grasp_pilot.py: text: unset"
+  ],
+  "frozen_source_count": 49,
+  "frozen_sources_unchanged": true,
+  "five_literal_requests_exact": true,
+  "hermes_vla_physical_execution_count": 0,
+  "git_mutations": false
+}

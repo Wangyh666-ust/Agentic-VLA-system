@@ -1,0 +1,131 @@
+{
+  "experiment": "side_grasp_pilot",
+  "condition": "side_grasp_pilot",
+  "created_utc": "2026-10-08T17:15:09+00:00",
+  "scene_id": "goal_table",
+  "seed": 0,
+  "init_state_index": 0,
+  "model_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "requests": [
+    "\u8bf7\u5e2e\u6211\u6574\u7406\u684c\u9762\u4e0a\u7684\u7897\u548c\u9152\u74f6\u3002",
+    "\u628a\u7897\u653e\u5230\u76d8\u5b50\u4e0a\uff0c\u7136\u540e\u628a\u9152\u74f6\u653e\u5230\u67b6\u5b50\u4e0a\u3002",
+    "\u8bf7\u628a\u9152\u74f6\u548c\u7897\u90fd\u6536\u56de\u5404\u81ea\u7684\u4f4d\u7f6e\u3002",
+    "\u5148\u628a\u9152\u74f6\u653e\u5230\u67b6\u5b50\u4e0a\uff0c\u518d\u628a\u7897\u653e\u5230\u76d8\u5b50\u4e0a\u3002",
+    "\u6574\u7406\u8fd9\u4e24\u4ef6\u4e1c\u897f\uff1a\u7897\u653e\u76d8\u5b50\uff0c\u9152\u74f6\u653e\u67b6\u5b50\u3002"
+  ],
+  "profile": "baseline_bf16",
+  "oracle_goals": [
+    [
+      "on",
+      "akita_black_bowl_1",
+      "plate_1"
+    ],
+    [
+      "on",
+      "wine_bottle_1",
+      "wine_rack_1_top_region"
+    ]
+  ],
+  "protected_goals": [
+    [
+      "not",
+      "turnon",
+      "flat_stove_1"
+    ]
+  ],
+  "protected_object": "cream_cheese_1",
+  "protected_tolerance_m": 0.005,
+  "budget_per_subgoal": 500,
+  "helper_action_cap": 200,
+  "cancellation": true,
+  "retries": 0,
+  "assisted": true,
+  "order_expectations": {
+    "1": [
+      "bowl_to_plate",
+      "wine_to_rack"
+    ],
+    "3": [
+      "wine_to_rack",
+      "bowl_to_plate"
+    ]
+  },
+  "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+  "checkpoint_audit": {
+    "ok": true,
+    "reason": null,
+    "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+    "expected_file_count": 7,
+    "files": [
+      {
+        "name": "README.md",
+        "size": 1679,
+        "sha256": "8f0505f851e9bec50a1ba37e5776f69bf12f7c8f5307f796deff026fb3761963",
+        "error": null
+      },
+      {
+        "name": "config.json",
+        "size": 2109,
+        "sha256": "e346a63094732ea28e05b08302a218306cf6541960b663a3cb4b6948e4efe6e0",
+        "error": null
+      },
+      {
+        "name": "model.safetensors",
+        "size": 1218047032,
+        "sha256": "71d9563c8295284acba8fc2d5c19de000d6fe9ba58a406832af7ef3d221ed52f",
+        "error": null
+      },
+      {
+        "name": "policy_postprocessor.json",
+        "size": 660,
+        "sha256": "ad2d22405cb63be4932c4a4d9a69bc9953df02a01235c5f420b679dbe6bfe7c5",
+        "error": null
+      },
+      {
+        "name": "policy_postprocessor_step_1_unnormalizer_processor.safetensors",
+        "size": 416,
+        "sha256": "7008ba73c73887e5a7e631d478de9563ec5a0c51b7f0327f2530d7326c4b039e",
+        "error": null
+      },
+      {
+        "name": "policy_preprocessor.json",
+        "size": 1709,
+        "sha256": "29267ff4423fcce93bbd76ad0f386905f9de5d267ca13379a5795a514a81b7a9",
+        "error": null
+      },
+      {
+        "name": "policy_preprocessor_step_5_normalizer_processor.safetensors",
+        "size": 416,
+        "sha256": "7008ba73c73887e5a7e631d478de9563ec5a0c51b7f0327f2530d7326c4b039e",
+        "error": null
+      }
+    ]
+  },
+  "checkpoint_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+  "capture_images": false,
+  "runs_per_case": 1,
+  "max_repairs": 0,
+  "timeout_s": 900.0,
+  "ready_timeout_s": 180.0,
+  "min_free_mib": 2500,
+  "host": "127.0.0.1",
+  "port": 8779,
+  "endpoint": "http://127.0.0.1:8779",
+  "grasp_module": "side_grasp",
+  "controller": "side_grasp.SideGraspController",
+  "calibration_path": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-calibration-v1/calibration.json",
+  "source_sha256": {
+    "side_grasp_pilot.py": "8e26e9c5c4830c3b593396a660faa50a1adfceb5bc8286276592d34e4ac62e91",
+    "local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d",
+    "side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+    "side_grasp_calibration.py": "eb33d07264b8aae3d6cbeca41e5611490a5c5ca603c5a537ee258ce42f97a275",
+    "grasp_assist_service.py": "c97e2279b05868862cbfe2d364ab58ed65130aa72550f937756a86f2c88b32fa"
+  },
+  "calibration_sha256": "9fa72e909fbf22a63e219f0ee5846625bb2fa85623573ef18c8f4bf50b324f35"
+}
