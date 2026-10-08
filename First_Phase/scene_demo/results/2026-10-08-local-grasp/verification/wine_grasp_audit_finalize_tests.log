@@ -1,0 +1,114 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+WARNING:robosuite_logs:No private macro file found!
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+WARNING:robosuite_logs:It is recommended to use a private macro file
+[robosuite WARNING] To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+WARNING:robosuite_logs:To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py
+test_execute_overridden_and_clarify_untouched (test_grasp_assist_service.BudgetOverrideTests.test_execute_overridden_and_clarify_untouched) ... [scene-service 2026-10-08T16:04:00Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:00Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmpqp6gyv9w)
+WARNING:imageio_ffmpeg:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (8, 8) to (16, 16) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[scene-service 2026-10-08T16:04:00Z] job ec510abe10e440fab1fcb0b75a0a4b01 completed | capability=bowl_to_plate steps=7 success=True ended=success
+ok
+test_parser_defaults (test_grasp_assist_service.CliContractTests.test_parser_defaults) ... ok
+test_process_environment_convention (test_grasp_assist_service.CliContractTests.test_process_environment_convention) ... ok
+test_run_root_is_required (test_grasp_assist_service.CliContractTests.test_run_root_is_required) ... usage: python -m unittest [-h] [--port PORT] --run-root RUN_ROOT
+python -m unittest: error: the following arguments are required: --run-root
+ok
+test_action_sources_flush_failure_stops_before_the_next_action (test_grasp_assist_service.FailClosedIntegrationTests.test_action_sources_flush_failure_stops_before_the_next_action) ... [scene-service 2026-10-08T16:04:01Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:01Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmptfdlb3vy)
+WARNING:imageio_ffmpeg:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (8, 8) to (16, 16) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[scene-service 2026-10-08T16:04:01Z] job ebe0f70125544218adad92ce01f8219a completed | capability=wine_to_rack steps=1 success=False ended=local_grasp_unknown
+ok
+test_action_sources_write_failure_stops_before_the_next_action (test_grasp_assist_service.FailClosedIntegrationTests.test_action_sources_write_failure_stops_before_the_next_action) ... [scene-service 2026-10-08T16:04:02Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:02Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmp1ryohiye)
+WARNING:imageio_ffmpeg:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (8, 8) to (16, 16) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[scene-service 2026-10-08T16:04:02Z] job 74061667ebd54e1d9616095b6d37649f completed | capability=wine_to_rack steps=1 success=False ended=local_grasp_unknown
+ok
+test_audit_open_failure_stops_before_any_action (test_grasp_assist_service.FailClosedIntegrationTests.test_audit_open_failure_stops_before_any_action) ... [scene-service 2026-10-08T16:04:02Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:02Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmpgbrf1sk_)
+[scene-service 2026-10-08T16:04:02Z] plan req-open crashed:
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/grasp_assist_service.py", line 433, in _run_capability
+    sources_file: Any = open(sources_path, "w", encoding="utf-8")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/tests/test_grasp_assist_service.py", line 802, in _fake_open
+    raise OSError("audit open exploded")
+OSError: audit open exploded
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/service.py", line 2319, in _do_run_plan
+    outcome = self._run_capability(record, plan, job, capability_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/grasp_assist_service.py", line 448, in _run_capability
+    raise error from exc
+service.SceneError: audit_unavailable: Traceback (most recent call last):
+  File "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/grasp_assist_service.py", line 433, in _run_capability
+    sources_file: Any = open(sources_path, "w", encoding="utf-8")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/tests/test_grasp_assist_service.py", line 802, in _fake_open
+    raise OSError("audit open exploded")
+OSError: audit open exploded
+
+
+ok
+test_observer_exception_stops_before_the_next_action (test_grasp_assist_service.FailClosedIntegrationTests.test_observer_exception_stops_before_the_next_action) ... [scene-service 2026-10-08T16:04:03Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:03Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmp1dr6__vj)
+WARNING:imageio_ffmpeg:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (8, 8) to (16, 16) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[scene-service 2026-10-08T16:04:03Z] job 741b6790301e4abca497e42c258c09fd completed | capability=wine_to_rack steps=1 success=False ended=local_grasp_unknown
+ok
+test_post_step_geometry_exception_stops_before_the_next_action (test_grasp_assist_service.FailClosedIntegrationTests.test_post_step_geometry_exception_stops_before_the_next_action) ... [scene-service 2026-10-08T16:04:03Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:03Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmpy_st85ug)
+WARNING:imageio_ffmpeg:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (8, 8) to (16, 16) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[scene-service 2026-10-08T16:04:03Z] job 286766e43fa940beae1d68519e58bf5b completed | capability=wine_to_rack steps=1 success=False ended=local_grasp_unknown
+ok
+test_trigger_proposal_is_recorded_only_for_the_first_local_action (test_grasp_assist_service.FailClosedIntegrationTests.test_trigger_proposal_is_recorded_only_for_the_first_local_action) ... [scene-service 2026-10-08T16:04:04Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:04Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmp2wnq1e9o)
+WARNING:imageio_ffmpeg:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (8, 8) to (16, 16) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[scene-service 2026-10-08T16:04:04Z] job 659bacd7395c497daf60b34b7b238065 completed | capability=wine_to_rack steps=7 success=True ended=success
+ok
+test_dumps_round_trips_numeric_without_stringifying (test_grasp_assist_service.JsonDefaultTests.test_dumps_round_trips_numeric_without_stringifying) ... ok
+test_ndarray_is_a_nested_numeric_list (test_grasp_assist_service.JsonDefaultTests.test_ndarray_is_a_nested_numeric_list) ... ok
+test_numpy_scalar_item_and_other_fallback (test_grasp_assist_service.JsonDefaultTests.test_numpy_scalar_item_and_other_fallback) ... ok
+test_active_stage_returns_the_auxiliary_action_directly (test_grasp_assist_service.SelectActionUnitTests.test_active_stage_returns_the_auxiliary_action_directly) ... ok
+test_confirmed_return_resets_exactly_once_then_stays_vla (test_grasp_assist_service.SelectActionUnitTests.test_confirmed_return_resets_exactly_once_then_stays_vla) ... ok
+test_failed_phase_raises_before_any_action (test_grasp_assist_service.SelectActionUnitTests.test_failed_phase_raises_before_any_action) ... ok
+test_idle_not_triggered_keeps_the_vla_action_and_clears_source (test_grasp_assist_service.SelectActionUnitTests.test_idle_not_triggered_keeps_the_vla_action_and_clears_source) ... ok
+test_latched_observer_error_stops_before_any_inference (test_grasp_assist_service.SelectActionUnitTests.test_latched_observer_error_stops_before_any_inference) ... ok
+test_no_helper_returns_the_original_action (test_grasp_assist_service.SelectActionUnitTests.test_no_helper_returns_the_original_action) ... ok
+test_trigger_handoff_replaces_proposal_resets_once_and_clears_evidence (test_grasp_assist_service.SelectActionUnitTests.test_trigger_handoff_replaces_proposal_resets_once_and_clears_evidence) ... ok
+test_unknown_geometry_raises_honestly (test_grasp_assist_service.SelectActionUnitTests.test_unknown_geometry_raises_honestly) ... ok
+test_cancellation_still_wins_and_is_never_a_failed_grasp (test_grasp_assist_service.WorkerIntegrationTests.test_cancellation_still_wins_and_is_never_a_failed_grasp) ... [scene-service 2026-10-08T16:04:04Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:04Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmpc23r_ren)
+[scene-service 2026-10-08T16:04:04Z] job 42f2a72f4a1443a59d027bd75d42a111 cancelled | capability=wine_to_rack steps=0 success=False ended=cancelled
+ok
+test_failed_assist_raises_before_the_next_action (test_grasp_assist_service.WorkerIntegrationTests.test_failed_assist_raises_before_the_next_action) ... [scene-service 2026-10-08T16:04:05Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:05Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmp7sf_u2pi)
+WARNING:imageio_ffmpeg:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (8, 8) to (16, 16) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[scene-service 2026-10-08T16:04:05Z] job 61177d7ab21748ce80b35be58eaf7037 completed | capability=wine_to_rack steps=1 success=False ended=local_grasp_failed
+ok
+test_far_wine_idle_leaves_the_vla_action_unchanged (test_grasp_assist_service.WorkerIntegrationTests.test_far_wine_idle_leaves_the_vla_action_unchanged) ... [scene-service 2026-10-08T16:04:06Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:06Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmpgsia5jrs)
+WARNING:imageio_ffmpeg:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (8, 8) to (16, 16) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[scene-service 2026-10-08T16:04:06Z] job edf660901bcc4d46b8158c104db3d740 completed | capability=wine_to_rack steps=7 success=True ended=success
+ok
+test_local_assist_records_and_confirms (test_grasp_assist_service.WorkerIntegrationTests.test_local_assist_records_and_confirms) ... [scene-service 2026-10-08T16:04:06Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:06Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmptfjf9ebl)
+WARNING:imageio_ffmpeg:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (8, 8) to (16, 16) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[scene-service 2026-10-08T16:04:06Z] job e3cf95a70c5a43bca0d380b1004c158c completed | capability=wine_to_rack steps=7 success=True ended=success
+ok
+test_non_wine_capability_is_untouched (test_grasp_assist_service.WorkerIntegrationTests.test_non_wine_capability_is_untouched) ... [scene-service 2026-10-08T16:04:07Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:07Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmprv385842)
+WARNING:imageio_ffmpeg:IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (8, 8) to (16, 16) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+[scene-service 2026-10-08T16:04:07Z] job 4c8ec46b2bb3484bab4886e96b5c2ec8 completed | capability=bowl_to_plate steps=7 success=True ended=success
+ok
+test_unknown_geometry_fails_honestly_without_stepping (test_grasp_assist_service.WorkerIntegrationTests.test_unknown_geometry_fails_honestly_without_stepping) ... [scene-service 2026-10-08T16:04:07Z] policy ready (n_action_steps=10)
+[scene-service 2026-10-08T16:04:07Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/tmp/tmpvad45zd1)
+[scene-service 2026-10-08T16:04:07Z] job 9b9cfe61387743ada9bf359cf6e56aea completed | capability=wine_to_rack steps=0 success=False ended=local_grasp_unknown
+ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 7.754s
+
+OK

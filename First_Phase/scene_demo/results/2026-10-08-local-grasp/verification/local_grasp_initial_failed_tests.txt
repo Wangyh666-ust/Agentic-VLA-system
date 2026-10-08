@@ -1,0 +1,61 @@
+["wsl", "-d", "Ubuntu", "--", "env", "MUJOCO_GL=egl", "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config", "LD_LIBRARY_PATH=/usr/lib/wsl/lib", "HF_HUB_OFFLINE=1", "TRANSFORMERS_OFFLINE=1", "/home/yhwang/fyp/libero_demo/venv/bin/python", "-m", "unittest", "discover", "-s", "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/tests", "-p", "test_local_grasp.py", "-v"]
+EXIT 1
+STDOUT
+
+STDERR
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+WARNING:robosuite_logs:No private macro file found!
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+WARNING:robosuite_logs:It is recommended to use a private macro file
+[robosuite WARNING] To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+WARNING:robosuite_logs:To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py
+test_geometry_reads_pads_site_and_wxyz_rotation (test_local_grasp.ReadGeometryTests.test_geometry_reads_pads_site_and_wxyz_rotation) ... ok
+test_above_target_is_the_frozen_grasp_target_plus_clearance (test_local_grasp.StateMachineTests.test_above_target_is_the_frozen_grasp_target_plus_clearance) ... ok
+test_actions_are_finite_float32_with_the_expected_gripper (test_local_grasp.StateMachineTests.test_actions_are_finite_float32_with_the_expected_gripper) ... ok
+test_active_incomplete_grasp_observation_fails (test_local_grasp.StateMachineTests.test_active_incomplete_grasp_observation_fails) ... ok
+test_active_unknown_geometry_fails (test_local_grasp.StateMachineTests.test_active_unknown_geometry_fails) ... ok
+test_active_unknown_or_nonbool_grasp_fails (test_local_grasp.StateMachineTests.test_active_unknown_or_nonbool_grasp_fails) ... ok
+test_active_unknown_rotation_fails (test_local_grasp.StateMachineTests.test_active_unknown_rotation_fails) ... ok
+test_alignment_stages_then_five_sample_confirmation (test_local_grasp.StateMachineTests.test_alignment_stages_then_five_sample_confirmation) ... FAIL
+test_each_stage_budget_times_out (test_local_grasp.StateMachineTests.test_each_stage_budget_times_out) ... ok
+test_foreign_held_object_fails (test_local_grasp.StateMachineTests.test_foreign_held_object_fails) ... ok
+test_idle_unknown_trigger_still_returns_none (test_local_grasp.StateMachineTests.test_idle_unknown_trigger_still_returns_none) ... ok
+test_lift_confirmation_requires_a_real_raise_and_known_grasp (test_local_grasp.StateMachineTests.test_lift_confirmation_requires_a_real_raise_and_known_grasp) ... FAIL
+test_protected_displacement_fails (test_local_grasp.StateMachineTests.test_protected_displacement_fails) ... ok
+test_repeated_next_action_never_counts (test_local_grasp.StateMachineTests.test_repeated_next_action_never_counts) ... ok
+test_summary_reports_the_frozen_evidence (test_local_grasp.StateMachineTests.test_summary_reports_the_frozen_evidence) ... ok
+test_total_budget_boundary_fails_before_another_action (test_local_grasp.StateMachineTests.test_total_budget_boundary_fails_before_another_action) ... ok
+test_make_target_compensates_the_local_pad_offset (test_local_grasp.TargetTests.test_make_target_compensates_the_local_pad_offset) ... ok
+test_make_target_picks_the_closer_symmetric_neck_frame (test_local_grasp.TargetTests.test_make_target_picks_the_closer_symmetric_neck_frame) ... ok
+test_make_target_requires_known_readings (test_local_grasp.TargetTests.test_make_target_requires_known_readings) ... ok
+test_make_target_uses_wine_rotation_and_the_fixed_neck_height (test_local_grasp.TargetTests.test_make_target_uses_wine_rotation_and_the_fixed_neck_height) ... ok
+test_already_wine_held_bypasses (test_local_grasp.TriggerTests.test_already_wine_held_bypasses) ... ok
+test_far_or_open_hand_never_triggers (test_local_grasp.TriggerTests.test_far_or_open_hand_never_triggers) ... ok
+test_unknown_observations_never_trigger (test_local_grasp.TriggerTests.test_unknown_observations_never_trigger) ... ok
+
+======================================================================
+FAIL: test_alignment_stages_then_five_sample_confirmation (test_local_grasp.StateMachineTests.test_alignment_stages_then_five_sample_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/tests/test_local_grasp.py", line 278, in test_alignment_stages_then_five_sample_confirmation
+    self.assertEqual(controller.phase, "confirmed")
+AssertionError: 'lift' != 'confirmed'
+- lift
++ confirmed
+
+
+======================================================================
+FAIL: test_lift_confirmation_requires_a_real_raise_and_known_grasp (test_local_grasp.StateMachineTests.test_lift_confirmation_requires_a_real_raise_and_known_grasp)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/tests/test_local_grasp.py", line 298, in test_lift_confirmation_requires_a_real_raise_and_known_grasp
+    self.assertEqual(controller.phase, "confirmed")
+AssertionError: 'lift' != 'confirmed'
+- lift
++ confirmed
+
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.091s
+
+FAILED (failures=2)

@@ -1,0 +1,140 @@
+{
+  "ok": true,
+  "commands": [
+    {
+      "name": "compile",
+      "command": [
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-m",
+        "py_compile",
+        "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/grasp_assist_service.py",
+        "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/tests/test_grasp_assist_service.py"
+      ],
+      "exit_code": 0,
+      "log": "wine_grasp_service_compile.log"
+    },
+    {
+      "name": "help",
+      "command": [
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/grasp_assist_service.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "log": "wine_grasp_service_help.log"
+    },
+    {
+      "name": "tests",
+      "command": [
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/tests",
+        "-p",
+        "test_grasp_assist_service.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "wine_grasp_service_tests.log",
+      "test_count": 27
+    }
+  ],
+  "old_source_file_count": 42,
+  "old_source_unchanged": true,
+  "source_sha256": {
+    "First_Phase/scene_demo/grasp_assist_service.py": "db5e65db592dbe2a20d9572ff266f7d912060ab8e6db02a12a3e1032173a6691",
+    "First_Phase/scene_demo/tests/test_grasp_assist_service.py": "b91b5e332de60a6d4197145f68fade6f514bc2474e191df2c69203d4e3803d5d"
+  },
+  "status": "WINE_GRASP_SERVICE_PASS",
+  "deepseek_calls": [
+    {
+      "num_turns": 123,
+      "model_names": [
+        "deepseek-flash"
+      ],
+      "is_error": false,
+      "log": "wine_grasp_service_deepseek.json",
+      "runner_exit_code": 0,
+      "duration_ms": 538235
+    },
+    {
+      "num_turns": 25,
+      "model_names": [
+        "deepseek-flash"
+      ],
+      "is_error": false,
+      "log": "wine_grasp_service_fix_deepseek.json",
+      "runner_exit_code": 0,
+      "duration_ms": 201887
+    },
+    {
+      "num_turns": 4,
+      "model_names": [
+        "deepseek-flash"
+      ],
+      "is_error": false,
+      "log": "wine_grasp_service_fixture_deepseek.json",
+      "runner_exit_code": 0,
+      "duration_ms": 6672
+    },
+    {
+      "num_turns": 5,
+      "model_names": [
+        "deepseek-flash"
+      ],
+      "is_error": false,
+      "log": "wine_grasp_audit_finalize_deepseek.json",
+      "runner_exit_code": 0,
+      "duration_ms": 12561
+    },
+    {
+      "num_turns": 3,
+      "model_names": [
+        "deepseek-flash"
+      ],
+      "is_error": false,
+      "log": "wine_grasp_service_attributes_deepseek.json",
+      "runner_exit_code": 0,
+      "duration_ms": 4329
+    }
+  ],
+  "attributes_acceptance": {
+    "old_bytes_prefix_unchanged": true,
+    "ok": true,
+    "prior_private_validation_error": "Expected new suffix LF but DS preserved existing CRLF; rule content and old byte prefix exact",
+    "exact_six_rule_append": true,
+    "runner_exit": 0,
+    "check_attr": [
+      "First_Phase/scene_demo/local_grasp.py: text: unset",
+      "First_Phase/scene_demo/grasp_calibration.py: text: unset",
+      "First_Phase/scene_demo/grasp_assist_service.py: text: unset",
+      "First_Phase/scene_demo/grasp_pilot.py: text: unset",
+      "First_Phase/scene_demo/tests/test_local_grasp.py: text: unset",
+      "First_Phase/scene_demo/tests/test_grasp_assist_service.py: text: unset"
+    ],
+    "is_error": false,
+    "line_ending": "CRLF, preserved native file convention",
+    "check_attr_exit": 0,
+    "deepseek_model": "deepseek-flash"
+  },
+  "diff_check_exit": 0,
+  "managed_head": "6316abb0eeb93fb70463f7ef9f5f0f74f9a1e678",
+  "managed_status": [
+    " M .gitattributes",
+    "?? First_Phase/scene_demo/grasp_assist_service.py",
+    "?? First_Phase/scene_demo/grasp_pilot.py",
+    "?? First_Phase/scene_demo/results/2026-10-08-local-grasp/",
+    "?? First_Phase/scene_demo/tests/test_grasp_assist_service.py"
+  ],
+  "index_empty": true,
+  "parallel_changes": [
+    "grasp_pilot.py and results/2026-10-08-local-grasp created by separate executor; untouched by this task"
+  ],
+  "physical_rollouts_run": 0,
+  "related_source_sha256": {
+    "grasp_calibration": "71ea59c5ba411d4cab7370825bb2bc8928c2db43d55816d6d5c2ab6d0e375ac4",
+    "local_grasp": "257cd076bf56212a098417e5dac62067021a2052d717b999b55d6fdc82f4cd9c"
+  }
+}
