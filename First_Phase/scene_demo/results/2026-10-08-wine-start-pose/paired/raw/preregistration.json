@@ -1,0 +1,147 @@
+{
+  "experiment": "wine_pose_diagnostics",
+  "created_utc": "2026-10-08T12:18:29+00:00",
+  "commitment": "written before the model starts; the raw SHA-256 of this file's bytes is recorded in the campaign report and the fixed order is never re-decided",
+  "scope": "ONE actual starting state (shared_after_bowl, scene seed 0 / init state 0: the exact recorded 102-action bowl prefix) measured at TWO model seeds; this is not a statistical reliability claim and no success rate is inferred",
+  "fixed_spec": {
+    "condition": "shared_after_bowl",
+    "scene_id": "goal_table",
+    "scene_seed": 0,
+    "init_state_index": 0,
+    "model_seeds": [
+      0,
+      1
+    ],
+    "capability_id": "wine_to_rack",
+    "instruction": "put the wine bottle on the rack",
+    "oracle_goals": [
+      [
+        "on",
+        "wine_bottle_1",
+        "wine_rack_1_top_region"
+      ]
+    ],
+    "profile": "baseline_bf16",
+    "completion_mode": "release_verified",
+    "grasp_guard_mode": "shadow",
+    "budget": 300,
+    "wine_vla_action_cap": 300,
+    "replay_action_count": 102,
+    "replay_origin_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+    "replay_final_state_sha": "f0a5c0e135015071b7eaee75cffefb5f50f3ac07516240e03795e48d189e405e",
+    "source_revision_expected": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "target_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102"
+  },
+  "branches": {
+    "A": {
+      "preparation": false,
+      "replay_only": true,
+      "auxiliary_actions": 0
+    },
+    "B": {
+      "preparation": true,
+      "assistant": true,
+      "is_vla": false,
+      "vla_actions_from_preparation": 0
+    }
+  },
+  "preparation_limits": {
+    "lift_stage_max_actions": 120,
+    "align_stage_max_actions": 180,
+    "aux_action_cap": 300,
+    "previous": {
+      "lift_stage_max_actions": 40,
+      "align_stage_max_actions": 60,
+      "aux_action_cap": 100
+    },
+    "note": "only the three fixed action bounds are raised, process-locally; every gain, clamp and tolerance is unchanged and no source file is edited"
+  },
+  "unchanged": {
+    "servo_gain": 0.5,
+    "servo_translation_clamp": 0.35,
+    "servo_rotation_clamp": 0.25,
+    "servo_position_tolerance_m": 0.005,
+    "servo_rotation_tolerance_rad": 0.05,
+    "servo_success_streak": 5,
+    "protection_tolerance_m": 0.005,
+    "protected_objects": [
+      "wine_bottle_1",
+      "akita_black_bowl_1",
+      "plate_1",
+      "cream_cheese_1"
+    ]
+  },
+  "native_start_pose_target": {
+    "source": "libero_goal/9 seed0 init0 reset",
+    "state_sha": "6511e57b416fc70e9fc6ac3e533033dcf9c19f9b1b46046fddfdf7981a5b0b40",
+    "position": [
+      -0.2106549420981822,
+      -0.001078746540446626,
+      1.1709686438992606
+    ],
+    "orientation_matrix": [
+      [
+        -0.0019382800148050213,
+        0.9983199305614412,
+        -0.057909924144146516
+      ],
+      [
+        0.9999980456464852,
+        0.0019124663345057972,
+        -0.0005011743476561782
+      ],
+      [
+        -0.0003895815595918277,
+        -0.05791078238390479,
+        -0.9983216863866525
+      ]
+    ],
+    "note": "the end-effector start-pose target is a measured XYZ/orientation and does NOT guarantee the full robot joint configuration"
+  },
+  "plan": [
+    {
+      "entry": "A",
+      "model_seed": 0
+    },
+    {
+      "entry": "B",
+      "model_seed": 0
+    },
+    {
+      "entry": "B",
+      "model_seed": 1
+    },
+    {
+      "entry": "A",
+      "model_seed": 1
+    }
+  ],
+  "inputs": {
+    "input_actions_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/inputs/actions.json",
+    "input_actions_count": 102,
+    "input_actions_sha256": "33e6ca6dc0cefc794e1f3b62cc10841b99aa83b14bc415ba169bc00af8462d1e",
+    "calibration_path": "/home/yhwang/fyp/scene_demo/skill_context/2026-10-08-pose-calibration/calibration.json",
+    "calibration_sha256": "ea06a85228ffcb57a6d75a36cac7e484be26c9cfd87318f88cd8f19046de013f"
+  },
+  "source_sha256": {
+    "wine_pose_diagnostics.py": "3c2834ae53131293d55db542ce854985b0b1020509e518b19138c89996b38001",
+    "preparation_diagnostics.py": "00861b6cc8f9619c630dacced029fdcd8733a195c5f4027de92cc70ae0e87eb7",
+    "skill_context_diagnostics.py": "5f4212a458920e4b5d32e69a837cf4edc9597f448749278da24439f2669169a5",
+    "service.py": "42a449191890aeafd64c48647c79223cc36d11a2fba386a40c2cae28ebfcd6b4",
+    "wine_diagnostics.py": "236ed46af5d36e65ad48fa3dc8fa175ad9234180ed2a972f17cfe64e5e6419ef",
+    "placement_experiments.py": "bc4959ace0e534644e655b2fda7f1fcde22f022a35d9e587e378e9936a57bc10",
+    "guard_validation.py": "bfca3cea9ae380210c432a174a989e5991728e83f1c48bd22092ceb6f3f62169",
+    "paired_config_experiments.py": "90483620089b23241d5eb30f335d0f0a70035add25e099257880e558b34508b1",
+    "placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+    "catalog.py": "9cdf94be39a90a1cf4eccf474ec627592ba0d7793e494f2e06eff472179e41bf"
+  },
+  "source_git_sha": "c7ac73d53897ff7fe8f78045bfa9094580871604",
+  "limitations": {
+    "assistant_preparation": "branch B runs the accepted assistant open-loop preparation (0 VLA actions) after the recorded bowl prefix; it is not a learned VLA skill",
+    "recorded_policy_replay": "the 102-action bowl prefix is the preserved recorded-policy replay, not a freshly generated VLA bowl execution, a recovery or a forced release",
+    "one_starting_state": "one actual starting state at two model seeds is not a statistical reliability claim and no success rate is inferred",
+    "joint_configuration": "the end-effector start-pose target is a measured XYZ/orientation and does NOT guarantee the full robot joint configuration",
+    "no_repair": "no assessment, repair, retry, forced release or Hermes call is performed",
+    "preparation_changes": "Preparation changes end-effector position/orientation, gripper opening, robot velocities and elapsed simulation time. This A/B estimates the preparation procedure effect, not an isolated position-only or orientation-only causal effect. Objects are protected by the fixed displacement gate."
+  }
+}

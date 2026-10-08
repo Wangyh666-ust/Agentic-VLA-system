@@ -1,6 +1,8 @@
 # 持久场景 v2（实验，已完成单次 pilot）— 场景内多子目标 SmolVLA 演示
 
-最新（2026-10-08）：新的「规划与 VLA 起始状态诊断」已完成，完整报告见 [results/2026-10-08-skill-context/README.md](results/2026-10-08-skill-context/README.md)。在给定场景与能力目录下，Hermes 五次请求中有四次给出正确的真实提交。基线酒瓶试验为 native 2/2、shared_initial 1/2、after_bowl 0/2，仅限所测起始状态与两个种子；预注册的准备对照在酒瓶阶段之前就被阻断，**不是**一次新的酒瓶失败。本轮没有训练，也没有生产技能改进。
+最新（2026-10-08）：酒瓶起始位姿对照（start-pose A/B）实验已完成，完整报告见 [results/2026-10-08-wine-start-pose/README.md](results/2026-10-08-wine-start-pose/README.md)。直接执行与准备后执行均失败（direct 0/2、prepared 0/2），四次均无稳定抓取确认；有效的空手就位准备（125 步）没有改善酒瓶抓取执行。本轮没有训练，也没有生产技能改动。
+
+上一轮（2026-10-08）：新的「规划与 VLA 起始状态诊断」已完成，完整报告见 [results/2026-10-08-skill-context/README.md](results/2026-10-08-skill-context/README.md)。在给定场景与能力目录下，Hermes 五次请求中有四次给出正确的真实提交。基线酒瓶试验为 native 2/2、shared_initial 1/2、after_bowl 0/2，仅限所测起始状态与两个种子；预注册的准备对照在酒瓶阶段之前就被阻断，**不是**一次新的酒瓶失败。本轮没有训练，也没有生产技能改进。
 
 上一轮（2026-10-08）：酒瓶抓取与配对配置实验已完成，完整报告见 [results/2026-10-08-grasp-config/README.md](results/2026-10-08-grasp-config/README.md)。默认配置保留 baseline，本轮没有训练；抓取守卫在失败或停滞时把当前执行轮提前停下（原生失败 119 步、共享 109 步，对比原本的 300 步预算），覆盖范围仅限酒瓶子目标。下面原「最新：酒瓶分阶段诊断（2026-10-07）」小节改为「上一轮」，其历史句与数值原样保留。
 
