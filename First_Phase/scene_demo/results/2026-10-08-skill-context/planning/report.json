@@ -1,0 +1,152 @@
+{
+  "cases": [
+    {
+      "case_id": "table_tidy",
+      "request": "请帮我整理一下桌面，把碗和酒瓶收好。",
+      "request_id": "f33b0f4548ed4d02899229b6d6ed28cc",
+      "exit_code": 0,
+      "submission_count": 1,
+      "plan": {
+        "request_id": "f33b0f4548ed4d02899229b6d6ed28cc",
+        "session_id": "ab379fc6e26c4ad9b602a0468211bb72",
+        "scene_version": 0,
+        "decision": "execute",
+        "capability_ids": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "rationale": "用户要求‘整理’并‘把碗和酒瓶收好’；storage_policy规定碗→plate_1、酒瓶→wine_rack_1_top_region；对应能力为bowl_to_plate与wine_to_rack，按用户提及顺序执行。"
+      },
+      "score": {
+        "decision_correct": true,
+        "goal_set_correct": true,
+        "objects_correct": true,
+        "single_submission": true,
+        "planning_correct": true,
+        "errors": []
+      },
+      "protocol_errors": [],
+      "wall_s": 91.704,
+      "errors": []
+    },
+    {
+      "case_id": "table_bowl_only",
+      "request": "把碗放到盘子上，不要动酒瓶，也不要打开炉灶。",
+      "request_id": "c0a5b2a82f1942b298422478618af34c",
+      "exit_code": 0,
+      "submission_count": 1,
+      "plan": {
+        "request_id": "c0a5b2a82f1942b298422478618af34c",
+        "session_id": "ab379fc6e26c4ad9b602a0468211bb72",
+        "scene_version": 0,
+        "decision": "execute",
+        "capability_ids": [
+          "bowl_to_plate"
+        ],
+        "rationale": "用户明确要求‘把碗放到盘子上’，对应 capability bowl_to_plate；并禁止动酒瓶和开炉灶，故仅执行此项。"
+      },
+      "score": {
+        "decision_correct": true,
+        "goal_set_correct": true,
+        "objects_correct": true,
+        "single_submission": true,
+        "planning_correct": true,
+        "errors": []
+      },
+      "protocol_errors": [],
+      "wall_s": 17.466,
+      "errors": []
+    },
+    {
+      "case_id": "table_wine_only",
+      "request": "把酒瓶收好，其他东西不要动。",
+      "request_id": "8ae70513d8cd44bda82653abb6367ef5",
+      "exit_code": 0,
+      "submission_count": 1,
+      "plan": {
+        "request_id": "8ae70513d8cd44bda82653abb6367ef5",
+        "session_id": "ab379fc6e26c4ad9b602a0468211bb72",
+        "scene_version": 0,
+        "decision": "execute",
+        "capability_ids": [
+          "wine_to_rack"
+        ],
+        "rationale": "用户说‘把酒瓶收好’，‘收好’是收纳意图；storage_policy规定wine_bottle_1应归位到wine_rack_1_top_region；对应能力为wine_to_rack。用户要求‘其他东西不要动’，故仅执行此一项。"
+      },
+      "score": {
+        "decision_correct": true,
+        "goal_set_correct": true,
+        "objects_correct": true,
+        "single_submission": true,
+        "planning_correct": true,
+        "errors": []
+      },
+      "protocol_errors": [],
+      "wall_s": 15.898,
+      "errors": []
+    },
+    {
+      "case_id": "missing_bin",
+      "request": "把酒瓶扔进垃圾桶。",
+      "request_id": "1e0d8c668ad241708ef4ed664fe452a8",
+      "exit_code": 0,
+      "submission_count": 1,
+      "plan": {
+        "request_id": "1e0d8c668ad241708ef4ed664fe452a8",
+        "session_id": "ab379fc6e26c4ad9b602a0468211bb72",
+        "scene_version": 0,
+        "decision": "unsupported",
+        "capability_ids": [],
+        "rationale": "用户要求‘把酒瓶扔进垃圾桶’，属丢弃意图；但场景描述明确说明‘no trash bin exists here’，且 capabilities 中无丢弃相关能力，故不支持。"
+      },
+      "score": {
+        "decision_correct": true,
+        "goal_set_correct": true,
+        "objects_correct": true,
+        "single_submission": true,
+        "planning_correct": true,
+        "errors": []
+      },
+      "protocol_errors": [],
+      "wall_s": 16.084,
+      "errors": []
+    },
+    {
+      "case_id": "ambiguous_cleanup",
+      "request": "清理一下酒瓶。",
+      "request_id": "2023d728a8534564b49a2f33b257db9f",
+      "exit_code": 0,
+      "submission_count": 0,
+      "plan": null,
+      "score": {
+        "decision_correct": false,
+        "goal_set_correct": false,
+        "objects_correct": false,
+        "single_submission": false,
+        "planning_correct": false,
+        "errors": [
+          "missing or invalid plan"
+        ]
+      },
+      "protocol_errors": [],
+      "wall_s": 11.843,
+      "errors": [
+        "no_plan_submitted"
+      ]
+    }
+  ],
+  "ok": false,
+  "robot_actions": 0,
+  "model": "qwen3-vl-plus",
+  "endpoint": "http://127.0.0.1:8778",
+  "oracle_not_in_prompt": true,
+  "config_sha": "a9c31eb6d84625ef61eda53647cde60facc79b21ff0cde8e3ae9a9a24617e655",
+  "config": {
+    "model": "qwen3-vl-plus",
+    "provider": "alibaba-cn",
+    "supports_vision": true,
+    "endpoint": "http://127.0.0.1:8778"
+  },
+  "output_dir": "/mnt/d/FYP/First_Phase/tmp/planning_context_20261008_results",
+  "hermes_home": "/home/yhwang/fyp/scene_demo/planning_context_20261008_home"
+}

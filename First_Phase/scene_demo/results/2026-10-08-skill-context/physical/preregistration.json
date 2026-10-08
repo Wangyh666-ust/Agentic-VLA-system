@@ -1,0 +1,147 @@
+{
+  "experiment": "skill_context_diagnostics",
+  "created_utc": "2026-10-08T07:36:13+00:00",
+  "commitment": "written before the model starts; the raw SHA-256 of this file's bytes is recorded in the campaign report and the fixed order is never re-decided after data collection begins",
+  "fixed_spec": {
+    "condition_order": [
+      "native_goal9",
+      "shared_initial",
+      "shared_after_bowl"
+    ],
+    "conditions": {
+      "native_goal9": {
+        "scene_id": "wine_native_goal9",
+        "task_id": 9,
+        "shared": false,
+        "use_prefix": false
+      },
+      "shared_initial": {
+        "scene_id": "goal_table",
+        "task_id": 8,
+        "shared": true,
+        "use_prefix": false
+      },
+      "shared_after_bowl": {
+        "scene_id": "goal_table",
+        "task_id": 8,
+        "shared": true,
+        "use_prefix": true
+      }
+    },
+    "model_seeds": [
+      0,
+      1
+    ],
+    "scene_seed": 0,
+    "init_state_index": 0,
+    "budget": 300,
+    "timeout_s": 900.0,
+    "profile": "baseline_bf16",
+    "completion_mode": "release_verified",
+    "grasp_guard_mode": "shadow",
+    "capability_id": "wine_to_rack",
+    "instruction": "put the wine bottle on the rack",
+    "oracle_goals": [
+      [
+        "on",
+        "wine_bottle_1",
+        "wine_rack_1_top_region"
+      ]
+    ],
+    "bowl_goal": [
+      "on",
+      "akita_black_bowl_1",
+      "plate_1"
+    ],
+    "replay_action_count": 102,
+    "replay_origin_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+    "replay_final_state_sha": "f0a5c0e135015071b7eaee75cffefb5f50f3ac07516240e03795e48d189e405e",
+    "source_revision_expected": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "target_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "assessment_actions": 0,
+    "forced_release": false,
+    "recovery": false,
+    "assisted": false,
+    "hermes_calls": 0
+  },
+  "plan": [
+    {
+      "model_seed": 0,
+      "condition": "native_goal9",
+      "scene_id": "wine_native_goal9",
+      "task_id": 9,
+      "shared": false,
+      "use_prefix": false
+    },
+    {
+      "model_seed": 0,
+      "condition": "shared_initial",
+      "scene_id": "goal_table",
+      "task_id": 8,
+      "shared": true,
+      "use_prefix": false
+    },
+    {
+      "model_seed": 0,
+      "condition": "shared_after_bowl",
+      "scene_id": "goal_table",
+      "task_id": 8,
+      "shared": true,
+      "use_prefix": true
+    },
+    {
+      "model_seed": 1,
+      "condition": "native_goal9",
+      "scene_id": "wine_native_goal9",
+      "task_id": 9,
+      "shared": false,
+      "use_prefix": false
+    },
+    {
+      "model_seed": 1,
+      "condition": "shared_initial",
+      "scene_id": "goal_table",
+      "task_id": 8,
+      "shared": true,
+      "use_prefix": false
+    },
+    {
+      "model_seed": 1,
+      "condition": "shared_after_bowl",
+      "scene_id": "goal_table",
+      "task_id": 8,
+      "shared": true,
+      "use_prefix": true
+    }
+  ],
+  "inputs": {
+    "input_actions_path": "/mnt/d/FYP/First_Phase/tmp/skill_context_20261008_input/actions.json",
+    "input_actions_count": 102,
+    "input_actions_sha256": "33e6ca6dc0cefc794e1f3b62cc10841b99aa83b14bc415ba169bc00af8462d1e"
+  },
+  "limitations": {
+    "native_vs_shared": "native_goal9 and the shared goal_table conditions differ in task and environment; they are not the same scene.",
+    "before_vs_after_bowl": "the before-bowl vs after-bowl conditions change the scene AND the robot pose; the after-bowl prefix is a recorded-policy replay, not a freshly generated VLA bowl execution.",
+    "reseed_not_reproduction": "re-seeding the wine model RNG does not reproduce the user's original wine trajectory; it only fixes the model RNG for this campaign.",
+    "no_success_rate": "no success rate is inferred from the six recorded trials.",
+    "recorded_policy_replay": "the after-bowl prefix replays the preserved 102 user bowl actions through env.step; it is not a new VLA bowl execution, a recovery, a repair or a forced release.",
+    "no_settle_step": "no settle step is added after the replay; the state is read as-is.",
+    "no_assessment": "no assessment actions, repairs, forced release, recovery or Hermes calls are performed.",
+    "monitor_confirmation_null": "first_grasp_confirmed_step is the shadow guard MONITOR's own confirmation step only. The monitor latches failed_grasp, so this field may stay null even when later shadow actions truly lift and grasp the bottle; a null value must never be read as 'never grasped'. The independent, monitor-blind statistic is raw_stable_grasp_first_step.",
+    "semantic_window_vs_strict_stop": "the shadow semantic tracker needs 20 consecutive semantic samples to report a completed success, so a strict wine-success stop can occur before that window is reached. final_semantic and ever_semantic are kept separate from the strict wine success and a descriptive/unknown semantic status alone is never called a physical failure.",
+    "raw_stable_grasp": "raw_stable_grasp_first_step is an independent statistic computed ONLY from the shadow observer's actual raw probe telemetry (objects['wine_bottle_1'].position/grasped): the step of the fifth of 5 consecutive known samples whose wine z is at least 0.02 m above the initial probe's z while the probe reports grasped=True. It never consults the guard monitor's stage or first_grasp_confirmed_step, so it can confirm a stable grasp even after the monitor has latched failed_grasp; an unknown value is never a grasp."
+  },
+  "source_sha256": {
+    "skill_context_diagnostics.py": "c3841a2fddbb29dfe20333d9bbd8ad8a4b6ab79579dd14a3282842378f305533",
+    "service.py": "42a449191890aeafd64c48647c79223cc36d11a2fba386a40c2cae28ebfcd6b4",
+    "grasp_guard.py": "cdfd81215e2feee7d3d1d538a739518c405f3ca64646ac82d955630ab6f77eaf",
+    "wine_semantic.py": "e7741154b96f7a20e25f29ac5ef4965f905fc22adef84f4e271c34260775b508",
+    "wine_diagnostics.py": "236ed46af5d36e65ad48fa3dc8fa175ad9234180ed2a972f17cfe64e5e6419ef",
+    "placement_experiments.py": "bc4959ace0e534644e655b2fda7f1fcde22f022a35d9e587e378e9936a57bc10",
+    "guard_validation.py": "bfca3cea9ae380210c432a174a989e5991728e83f1c48bd22092ceb6f3f62169",
+    "paired_config_experiments.py": "90483620089b23241d5eb30f335d0f0a70035add25e099257880e558b34508b1",
+    "placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+    "catalog.py": "9cdf94be39a90a1cf4eccf474ec627592ba0d7793e494f2e06eff472179e41bf"
+  },
+  "source_git_sha": "3ea02b236ef6bcac5a49bf50b5dcfeee6b6fc6d3"
+}
