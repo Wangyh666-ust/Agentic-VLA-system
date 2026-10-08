@@ -13,6 +13,9 @@
     stderr=STDOUT) 拉起进程；不使用字符串拼接的 shell 命令，不弹任何可见辅助窗口。
   - 服务端口固定 8767、网页端口固定 8081；启动前先做端口冲突检查与 /health 工作流
     （workflow=persistent_scene_v2）和模型 revision 校验，**仅完全吻合**才复用。
+  - **正常 launcher 要求抓取守卫为 enforce 才复用服务**：/health 还必须报告
+    grasp_guard_mode=enforce（诊断运行仍可通过尾随参数覆盖，例如改为 shadow/off），
+    否则视为端口冲突、退出且不杀进程。
   - **启动新 GPU 服务前**先检查当前可用显存；显存不足会抛出可执行的提示，交由主
     agent 处理（**绝不**自动杀旧服务）。网页可在模型加载完成前显示「加载中」。
   - 启动时不下载模型、不训练。
@@ -72,6 +75,7 @@ EXPECTED_REVISION = "6721902bc4d61e50a3bfdb11dfb4cb626f05d102"
 EXPECTED_SERVICE_PORT = 8767
 EXPECTED_APP_PORT = 8081
 EXPECTED_COMPLETION_MODE = "release_verified"
+EXPECTED_GRASP_GUARD_MODE = "enforce"
 MARKERS = (PROJECT_WSL, PROJECT_SRC)
 PROXY_VARS = ("http_proxy", "https_proxy", "all_proxy",
               "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY")
@@ -214,6 +218,8 @@ def start(service_port, app_port, min_free_gpu):
             mismatches.append("model_revision=%r" % health.get("model_revision"))
         if health.get("completion_mode") != EXPECTED_COMPLETION_MODE:
             mismatches.append("completion_mode=%r" % health.get("completion_mode"))
+        if health.get("grasp_guard_mode") != EXPECTED_GRASP_GUARD_MODE:
+            mismatches.append("grasp_guard_mode=%r" % health.get("grasp_guard_mode"))
         if mismatches:
             log("端口 %d 被非本项目服务占用 (%s)：端口冲突，退出，不杀进程。"
                 % (service_port, ", ".join(mismatches)))

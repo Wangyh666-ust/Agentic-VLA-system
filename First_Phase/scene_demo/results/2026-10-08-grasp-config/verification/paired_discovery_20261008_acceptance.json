@@ -1,0 +1,284 @@
+{
+  "status": "PAIRED_DISCOVERY_PASS",
+  "exit_code": 0,
+  "trials": 19,
+  "non_controls": 18,
+  "controls": 1,
+  "operational_errors": 0,
+  "profile_counts": {
+    "baseline_bf16": {
+      "n": 6,
+      "strict_policy_true": 2,
+      "strict_policy_false": 4,
+      "strict_policy_unknown": 0,
+      "semantic_before_true": 2,
+      "semantic_after_true": 4,
+      "semantic_after_unknown": 0
+    },
+    "fp32": {
+      "n": 6,
+      "strict_policy_true": 2,
+      "strict_policy_false": 4,
+      "strict_policy_unknown": 0,
+      "semantic_before_true": 2,
+      "semantic_after_true": 4,
+      "semantic_after_unknown": 0
+    },
+    "fp32_h5": {
+      "n": 6,
+      "strict_policy_true": 1,
+      "strict_policy_false": 5,
+      "strict_policy_unknown": 0,
+      "semantic_before_true": 2,
+      "semantic_after_true": 3,
+      "semantic_after_unknown": 0
+    }
+  },
+  "selection": {
+    "rule": {
+      "primary": "highest count of strict POLICY successes across the 18 non-control discovery trials",
+      "secondary": "highest count of post-assessment semantic successes",
+      "tertiary": "lowest median policy wall time (seconds)",
+      "exact_tie_order": [
+        "baseline_bf16",
+        "fp32",
+        "fp32_h5"
+      ],
+      "unknown_is_success": false,
+      "rate_inference": false,
+      "note": "explicit counts only; a three-state/six-trial grid is not a statistical reliability claim and no success rate is inferred"
+    },
+    "n_non_control_trials": 18,
+    "ranking": [
+      "baseline_bf16",
+      "fp32",
+      "fp32_h5"
+    ],
+    "winner": "baseline_bf16",
+    "stats": {
+      "baseline_bf16": {
+        "n_trials": 6,
+        "strict_successes": 2,
+        "semantic_successes": 4,
+        "median_policy_wall_s": 173.43650000000002,
+        "trials": [
+          "discovery_s0_m0_baseline_bf16_085e81c8",
+          "discovery_s0_m1000_baseline_bf16_79d5c313",
+          "discovery_s1_m1_baseline_bf16_3171808f",
+          "discovery_s1_m1001_baseline_bf16_a81fbb03",
+          "discovery_s2_m2_baseline_bf16_3539d973",
+          "discovery_s2_m1002_baseline_bf16_fd80359b"
+        ]
+      },
+      "fp32": {
+        "n_trials": 6,
+        "strict_successes": 2,
+        "semantic_successes": 4,
+        "median_policy_wall_s": 184.9355,
+        "trials": [
+          "discovery_s0_m0_fp32_ede180ee",
+          "discovery_s0_m1000_fp32_b2b760c5",
+          "discovery_s1_m1_fp32_d6d5d182",
+          "discovery_s1_m1001_fp32_7e8358d7",
+          "discovery_s2_m2_fp32_a2f9e869",
+          "discovery_s2_m1002_fp32_79e115fa"
+        ]
+      },
+      "fp32_h5": {
+        "n_trials": 6,
+        "strict_successes": 1,
+        "semantic_successes": 3,
+        "median_policy_wall_s": 68.6675,
+        "trials": [
+          "discovery_s0_m0_fp32_h5_7e3871a1",
+          "discovery_s0_m1000_fp32_h5_903f26f5",
+          "discovery_s1_m1_fp32_h5_b844e1a7",
+          "discovery_s1_m1001_fp32_h5_65e8290d",
+          "discovery_s2_m2_fp32_h5_0c696ff5",
+          "discovery_s2_m1002_fp32_h5_02fda331"
+        ]
+      }
+    },
+    "reselects": false
+  },
+  "aa_control": {
+    "control_trial_id": "discovery_s0_m0_baseline_bf16_085e81c8",
+    "repeat_trial_id": "discovery_s0_m0_baseline_bf16_427b61a8",
+    "state_index": 0,
+    "model_seed": 0,
+    "profile": "baseline_bf16",
+    "control_length": 178,
+    "repeat_length": 178,
+    "length_match": true,
+    "compared_count": 178,
+    "exact_match_count": 178,
+    "max_abs_diff": 0.0,
+    "length_mismatches": [],
+    "control_stop": {
+      "plan_terminal_state": "completed",
+      "policy_action_count": 178,
+      "strict_policy_success": true,
+      "assessment_action_count": 20
+    },
+    "repeat_stop": {
+      "plan_terminal_state": "completed",
+      "policy_action_count": 178,
+      "strict_policy_success": true,
+      "assessment_action_count": 20
+    },
+    "stop_result_match": true,
+    "inputs_match": true,
+    "first_input_errors": [],
+    "note": "repeatability evidence only; bitwise CUDA determinism is not claimed or asserted"
+  },
+  "same_state_input_hashes": true,
+  "assessment_trials": 19,
+  "assessment_action_count": 380,
+  "source_checks": [
+    {
+      "path": "First_Phase/scene_demo/paired_config_experiments.py",
+      "sha256": "90483620089b23241d5eb30f335d0f0a70035add25e099257880e558b34508b1",
+      "unchanged": true
+    },
+    {
+      "path": "First_Phase/scene_demo/wine_diagnostics.py",
+      "sha256": "236ed46af5d36e65ad48fa3dc8fa175ad9234180ed2a972f17cfe64e5e6419ef",
+      "unchanged": true
+    },
+    {
+      "path": "First_Phase/scene_demo/placement_experiments.py",
+      "sha256": "bc4959ace0e534644e655b2fda7f1fcde22f022a35d9e587e378e9936a57bc10",
+      "unchanged": true
+    },
+    {
+      "path": "First_Phase/scene_demo/placement_completion.py",
+      "sha256": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+      "unchanged": true
+    },
+    {
+      "path": "First_Phase/scene_demo/service.py",
+      "sha256": "42a449191890aeafd64c48647c79223cc36d11a2fba386a40c2cae28ebfcd6b4",
+      "unchanged": true
+    },
+    {
+      "path": "First_Phase/scene_demo/catalog.py",
+      "sha256": "9cdf94be39a90a1cf4eccf474ec627592ba0d7793e494f2e06eff472179e41bf",
+      "unchanged": true
+    },
+    {
+      "path": "First_Phase/scene_demo/grasp_guard.py",
+      "sha256": "cdfd81215e2feee7d3d1d538a739518c405f3ca64646ac82d955630ab6f77eaf",
+      "unchanged": true
+    },
+    {
+      "path": "First_Phase/scene_demo/wine_semantic.py",
+      "sha256": "e7741154b96f7a20e25f29ac5ef4965f905fc22adef84f4e271c34260775b508",
+      "unchanged": true
+    }
+  ],
+  "model_checks": [
+    {
+      "filename": "config.json",
+      "sha256": "e346a63094732ea28e05b08302a218306cf6541960b663a3cb4b6948e4efe6e0",
+      "unchanged": true
+    },
+    {
+      "filename": "README.md",
+      "sha256": "8f0505f851e9bec50a1ba37e5776f69bf12f7c8f5307f796deff026fb3761963",
+      "unchanged": true
+    },
+    {
+      "filename": "policy_preprocessor.json",
+      "sha256": "29267ff4423fcce93bbd76ad0f386905f9de5d267ca13379a5795a514a81b7a9",
+      "unchanged": true
+    },
+    {
+      "filename": "policy_postprocessor.json",
+      "sha256": "ad2d22405cb63be4932c4a4d9a69bc9953df02a01235c5f420b679dbe6bfe7c5",
+      "unchanged": true
+    },
+    {
+      "filename": "policy_preprocessor_step_5_normalizer_processor.safetensors",
+      "sha256": "7008ba73c73887e5a7e631d478de9563ec5a0c51b7f0327f2530d7326c4b039e",
+      "unchanged": true
+    },
+    {
+      "filename": "policy_postprocessor_step_1_unnormalizer_processor.safetensors",
+      "sha256": "7008ba73c73887e5a7e631d478de9563ec5a0c51b7f0327f2530d7326c4b039e",
+      "unchanged": true
+    },
+    {
+      "filename": "model.safetensors",
+      "sha256": "71d9563c8295284acba8fc2d5c19de000d6fe9ba58a406832af7ef3d221ed52f",
+      "unchanged": true
+    }
+  ],
+  "preregistration_sha256": "47e7f2c72b0db35f32269aef1c000aa34dc02e90a7db65117386acd1991ec780",
+  "report_sha256": "0c493abe860efb7bd130f7c2e2ae44141a3c8c237d7320790c2e2804eed63b5c",
+  "report_bytes": 1587087,
+  "observed_guard_flags": [
+    {
+      "trial_id": "discovery_s1_m1_baseline_bf16_3171808f",
+      "profile": "baseline_bf16",
+      "state": 1,
+      "seed": 1,
+      "failed_step": 119,
+      "strict_policy": false,
+      "semantic_before": false,
+      "semantic_after": false
+    },
+    {
+      "trial_id": "discovery_s1_m1_fp32_d6d5d182",
+      "profile": "fp32",
+      "state": 1,
+      "seed": 1,
+      "failed_step": 117,
+      "strict_policy": false,
+      "semantic_before": false,
+      "semantic_after": false
+    },
+    {
+      "trial_id": "discovery_s1_m1_fp32_h5_b844e1a7",
+      "profile": "fp32_h5",
+      "state": 1,
+      "seed": 1,
+      "failed_step": 113,
+      "strict_policy": false,
+      "semantic_before": false,
+      "semantic_after": false
+    },
+    {
+      "trial_id": "discovery_s1_m1001_fp32_h5_65e8290d",
+      "profile": "fp32_h5",
+      "state": 1,
+      "seed": 1001,
+      "failed_step": 113,
+      "strict_policy": false,
+      "semantic_before": false,
+      "semantic_after": false
+    },
+    {
+      "trial_id": "discovery_s2_m1002_fp32_h5_02fda331",
+      "profile": "fp32_h5",
+      "state": 2,
+      "seed": 1002,
+      "failed_step": 114,
+      "strict_policy": false,
+      "semantic_before": false,
+      "semantic_after": false
+    }
+  ],
+  "flagged_then_strict_success": [],
+  "policy_failed_without_guard_flag": [
+    "discovery_s0_m1000_fp32_h5_903f26f5",
+    "discovery_s1_m1001_baseline_bf16_a81fbb03",
+    "discovery_s1_m1001_fp32_7e8358d7",
+    "discovery_s2_m2_baseline_bf16_3539d973",
+    "discovery_s2_m2_fp32_a2f9e869",
+    "discovery_s2_m2_fp32_h5_0c696ff5",
+    "discovery_s2_m1002_baseline_bf16_fd80359b",
+    "discovery_s2_m1002_fp32_79e115fa"
+  ],
+  "raw_report": "/home/yhwang/fyp/scene_demo/paired_config/2026-10-08-discovery.json",
+  "log": "/mnt/d/FYP/First_Phase/tmp/paired_discovery_20261008_runner.log"
+}

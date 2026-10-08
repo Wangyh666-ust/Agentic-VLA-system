@@ -1,0 +1,345 @@
+{
+  "experiment": "grasp_guard_validation",
+  "generated_utc": "2026-10-08T04:40:15+00:00",
+  "ok": true,
+  "fatal_error": null,
+  "metadata": {
+    "output": "/home/yhwang/fyp/scene_demo/guard_validation/2026-10-08-native_fail.json",
+    "run_root": "/home/yhwang/fyp/scene_demo/guard_validation/2026-10-08-native_fail",
+    "scene": "wine_native_goal9",
+    "capabilities": "wine",
+    "capability_ids": [
+      "wine_to_rack"
+    ],
+    "guard_mode": "enforce",
+    "state_index": 1,
+    "model_seed": 1,
+    "budget": 300,
+    "timeout_s": 900.0,
+    "profile": "baseline_bf16",
+    "completion_mode": "release_verified",
+    "source_git_sha": "cc19f6d5682586bc7f3a14136baf967157642484",
+    "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "source_revision_expected": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "source_sha256": {
+      "service.py": "42a449191890aeafd64c48647c79223cc36d11a2fba386a40c2cae28ebfcd6b4",
+      "grasp_guard.py": "cdfd81215e2feee7d3d1d538a739518c405f3ca64646ac82d955630ab6f77eaf",
+      "wine_semantic.py": "e7741154b96f7a20e25f29ac5ef4965f905fc22adef84f4e271c34260775b508",
+      "wine_diagnostics.py": "236ed46af5d36e65ad48fa3dc8fa175ad9234180ed2a972f17cfe64e5e6419ef",
+      "placement_experiments.py": "bc4959ace0e534644e655b2fda7f1fcde22f022a35d9e587e378e9936a57bc10",
+      "guard_validation.py": "bfca3cea9ae380210c432a174a989e5991728e83f1c48bd22092ceb6f3f62169"
+    },
+    "checkpoint_file": "model.safetensors",
+    "checkpoint_sha256": "71d9563c8295284acba8fc2d5c19de000d6fe9ba58a406832af7ef3d221ed52f",
+    "assisted": false,
+    "hermes_calls": 0
+  },
+  "service": {
+    "ready": true,
+    "worker_error": null,
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102"
+  },
+  "session": {
+    "session_id": "9810c023d4384b8ca6405d34eb68a255",
+    "scene_id": "wine_native_goal9",
+    "seed": 1,
+    "init_state_index": 1,
+    "initial_state_sha": "bb7981f86b3aa1bd64cb9de246973c7554d7f46c33fa09c8dcf029b872cb56b8",
+    "xml_sha": "d12949db7a7f92177acd70a0f4734cb0541a830b5b39186f95931fefdbed61a4",
+    "camera_names": [
+      "frontview",
+      "birdview",
+      "agentview",
+      "sideview",
+      "galleryview",
+      "robot0_robotview",
+      "robot0_eye_in_hand"
+    ],
+    "control_frequency_hz": 20
+  },
+  "model_rng_seed": {
+    "requested": 1,
+    "result": {
+      "ok": true,
+      "seeded": true,
+      "seed": 1
+    },
+    "seeded": true,
+    "reason": null
+  },
+  "profile": {
+    "ok": true,
+    "profile": "baseline_bf16",
+    "policy_present": true,
+    "applied": {
+      "policy.config": {
+        "use_amp": true,
+        "num_steps": 10,
+        "n_action_steps": 1
+      },
+      "policy.model.config": {
+        "use_amp": true,
+        "num_steps": 10,
+        "n_action_steps": 1
+      }
+    }
+  },
+  "plan": {
+    "request_id": "f634f7fc841441298bcd2f304d1eb4c4-plan1",
+    "submitted": true,
+    "submit_error": null,
+    "timed_out": false,
+    "cancel_nonterminal": false,
+    "cancelled": false,
+    "wall_s": 67.21,
+    "state": "blocked",
+    "error": "failed_grasp",
+    "plan_success": null,
+    "completed_capability_ids": [],
+    "pending_capability_ids": [],
+    "job_ids": [
+      "19f8d5dc52d040458c005b13e4ee1359"
+    ]
+  },
+  "jobs": [
+    {
+      "job_id": "19f8d5dc52d040458c005b13e4ee1359",
+      "available": true,
+      "capability_id": "wine_to_rack",
+      "state": "completed",
+      "ended_reason": "failed_grasp",
+      "error": null,
+      "success": false,
+      "steps": 119,
+      "total_steps": 119,
+      "instruction": "put the wine bottle on the rack",
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "completion_ready": false,
+      "state_before_sha": "bb7981f86b3aa1bd64cb9de246973c7554d7f46c33fa09c8dcf029b872cb56b8",
+      "state_after_sha": "88f7c9e2fc6a42e904641a075b4ffebdcce5068d3998aea2a3af4a578ddca8cc",
+      "guard": {
+        "grasp_guard_mode": "enforce",
+        "grasp_stage": "failed_grasp",
+        "grasp_guard_status": {
+          "stage": "failed_grasp",
+          "armed_step": 71,
+          "grasp_confirmed_step": null,
+          "failure_step": 119,
+          "candidate_streak": 5,
+          "should_stop": true
+        }
+      },
+      "run_dir": "/home/yhwang/fyp/scene_demo/guard_validation/2026-10-08-native_fail/20261008T044029Z_wine_native_goal9_9810c023/cap_01_wine_to_rack_19f8d5dc",
+      "wine_telemetry_path": "/home/yhwang/fyp/scene_demo/guard_validation/2026-10-08-native_fail/20261008T044029Z_wine_native_goal9_9810c023/cap_01_wine_to_rack_19f8d5dc/wine_telemetry.jsonl",
+      "wine_diagnostic_path": "/home/yhwang/fyp/scene_demo/guard_validation/2026-10-08-native_fail/20261008T044029Z_wine_native_goal9_9810c023/cap_01_wine_to_rack_19f8d5dc/wine_diagnostic.json",
+      "events_path": "/home/yhwang/fyp/scene_demo/guard_validation/2026-10-08-native_fail/20261008T044029Z_wine_native_goal9_9810c023/cap_01_wine_to_rack_19f8d5dc/events.jsonl",
+      "result_path": "/home/yhwang/fyp/scene_demo/guard_validation/2026-10-08-native_fail/20261008T044029Z_wine_native_goal9_9810c023/cap_01_wine_to_rack_19f8d5dc/result.json",
+      "rollout_path": "/home/yhwang/fyp/scene_demo/guard_validation/2026-10-08-native_fail/20261008T044029Z_wine_native_goal9_9810c023/cap_01_wine_to_rack_19f8d5dc/rollout.mp4",
+      "latest_png": "/home/yhwang/fyp/scene_demo/guard_validation/2026-10-08-native_fail/20261008T044029Z_wine_native_goal9_9810c023/cap_01_wine_to_rack_19f8d5dc/latest.png"
+    }
+  ],
+  "declared_capabilities": [
+    "wine_to_rack"
+  ],
+  "executed_capabilities": [
+    "wine_to_rack"
+  ],
+  "skipped_capabilities": [],
+  "first_fingerprint": {
+    "is_mapping": true,
+    "keys": [
+      "observation.images.image",
+      "observation.images.image2",
+      "observation.state",
+      "task"
+    ],
+    "cameras": [
+      {
+        "key": "observation.images.image",
+        "present": true,
+        "shape": [
+          1,
+          3,
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "raw_sha256": "af1d2d88ef4bdab4892d2a6a8ccffa21ed38cd4d270daeae9cbec175c39600bd",
+        "raw_nbytes": 786432
+      },
+      {
+        "key": "observation.images.image2",
+        "present": true,
+        "shape": [
+          1,
+          3,
+          256,
+          256
+        ],
+        "dtype": "torch.float32",
+        "raw_sha256": "9cbbac4cf3bfcf22169d6d30f217ec3e0f9fd783f7f2a7e6ec41c1303cdb6f77",
+        "raw_nbytes": 786432
+      }
+    ],
+    "camera_keys": [
+      "observation.images.image",
+      "observation.images.image2"
+    ],
+    "state": {
+      "key": "observation.state",
+      "present": true,
+      "shape": [
+        1,
+        8
+      ],
+      "dtype": "torch.float32",
+      "raw_sha256": "43c349e6bec06c1ebaf6cde82b7adbf25231f84fb674529c0b338044a1ecacef",
+      "raw_nbytes": 32
+    },
+    "task": [
+      "put the wine bottle on the rack"
+    ],
+    "task_sha256": "4e106a83d10802553a4b87024bad2389ebd9923f104277177e474fc9f3629456",
+    "combined_sha256": "c993ee7e19d9de536304f82b299bf8905cb76106361e6b375bcc8109a7d8c697",
+    "errors": []
+  },
+  "first_input": {
+    "state_index": 1,
+    "initial_state_sha": "bb7981f86b3aa1bd64cb9de246973c7554d7f46c33fa09c8dcf029b872cb56b8",
+    "xml_sha": "d12949db7a7f92177acd70a0f4734cb0541a830b5b39186f95931fefdbed61a4",
+    "camera_names": [
+      "frontview",
+      "birdview",
+      "agentview",
+      "sideview",
+      "galleryview",
+      "robot0_robotview",
+      "robot0_eye_in_hand"
+    ],
+    "control_frequency_hz": 20,
+    "camera_raw_sha256": {
+      "observation.images.image": "af1d2d88ef4bdab4892d2a6a8ccffa21ed38cd4d270daeae9cbec175c39600bd",
+      "observation.images.image2": "9cbbac4cf3bfcf22169d6d30f217ec3e0f9fd783f7f2a7e6ec41c1303cdb6f77"
+    },
+    "state_raw_sha256": "43c349e6bec06c1ebaf6cde82b7adbf25231f84fb674529c0b338044a1ecacef",
+    "state_shape": [
+      1,
+      8
+    ],
+    "state_dtype": "torch.float32",
+    "task": [
+      "put the wine bottle on the rack"
+    ],
+    "task_sha256": "4e106a83d10802553a4b87024bad2389ebd9923f104277177e474fc9f3629456",
+    "combined_sha256": "c993ee7e19d9de536304f82b299bf8905cb76106361e6b375bcc8109a7d8c697"
+  },
+  "input_evidence": {
+    "state_index": 1,
+    "model_seed": 1,
+    "profile": "baseline_bf16",
+    "initial_state_sha": "bb7981f86b3aa1bd64cb9de246973c7554d7f46c33fa09c8dcf029b872cb56b8",
+    "xml_sha": "d12949db7a7f92177acd70a0f4734cb0541a830b5b39186f95931fefdbed61a4",
+    "camera_names": [
+      "frontview",
+      "birdview",
+      "agentview",
+      "sideview",
+      "galleryview",
+      "robot0_robotview",
+      "robot0_eye_in_hand"
+    ],
+    "control_frequency_hz": 20,
+    "fingerprint": {
+      "is_mapping": true,
+      "keys": [
+        "observation.images.image",
+        "observation.images.image2",
+        "observation.state",
+        "task"
+      ],
+      "cameras": [
+        {
+          "key": "observation.images.image",
+          "present": true,
+          "shape": [
+            1,
+            3,
+            256,
+            256
+          ],
+          "dtype": "torch.float32",
+          "raw_sha256": "af1d2d88ef4bdab4892d2a6a8ccffa21ed38cd4d270daeae9cbec175c39600bd",
+          "raw_nbytes": 786432
+        },
+        {
+          "key": "observation.images.image2",
+          "present": true,
+          "shape": [
+            1,
+            3,
+            256,
+            256
+          ],
+          "dtype": "torch.float32",
+          "raw_sha256": "9cbbac4cf3bfcf22169d6d30f217ec3e0f9fd783f7f2a7e6ec41c1303cdb6f77",
+          "raw_nbytes": 786432
+        }
+      ],
+      "camera_keys": [
+        "observation.images.image",
+        "observation.images.image2"
+      ],
+      "state": {
+        "key": "observation.state",
+        "present": true,
+        "shape": [
+          1,
+          8
+        ],
+        "dtype": "torch.float32",
+        "raw_sha256": "43c349e6bec06c1ebaf6cde82b7adbf25231f84fb674529c0b338044a1ecacef",
+        "raw_nbytes": 32
+      },
+      "task": [
+        "put the wine bottle on the rack"
+      ],
+      "task_sha256": "4e106a83d10802553a4b87024bad2389ebd9923f104277177e474fc9f3629456",
+      "combined_sha256": "c993ee7e19d9de536304f82b299bf8905cb76106361e6b375bcc8109a7d8c697",
+      "errors": []
+    }
+  },
+  "action_selection_count": 119,
+  "freeze": {
+    "sleep_s": 0.25,
+    "probe_1": {
+      "ok": true,
+      "physical_hash": "88f7c9e2fc6a42e904641a075b4ffebdcce5068d3998aea2a3af4a578ddca8cc",
+      "physical_hash_source": "service.state_sha",
+      "total_steps": 119,
+      "action_selection_count": 119,
+      "action_queue_length": 0
+    },
+    "probe_2": {
+      "ok": true,
+      "physical_hash": "88f7c9e2fc6a42e904641a075b4ffebdcce5068d3998aea2a3af4a578ddca8cc",
+      "physical_hash_source": "service.state_sha",
+      "total_steps": 119,
+      "action_selection_count": 119,
+      "action_queue_length": 0
+    },
+    "equal": true
+  },
+  "operational_errors": [],
+  "physical_failures": [
+    "failed_grasp: job=19f8d5dc52d040458c005b13e4ee1359 capability=wine_to_rack"
+  ],
+  "null_metrics": [
+    "plan_success"
+  ],
+  "timings": {
+    "validation_wall_s": 86.155
+  }
+}

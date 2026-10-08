@@ -65,6 +65,19 @@ _JSONL_ROLES = (
 )
 _ROLLOUT_NAME = "rollout.mp4"
 
+# The session-level initial simulator state.  The paired service
+# ``SceneService._snapshot_session_state`` saves the float64 flattened simulator
+# state with ``np.save`` to ``record.run_dir/'initial_state.npy'`` and stores its
+# equal-state digest as ``record.initial_state_hash`` (SHA-256 of the raw float64
+# bytes).  Every capability ``job.run_dir`` is a *direct* child of the session
+# ``record.run_dir``, so the one allowed derivation of the source file is the
+# parent of the first declared ``job.run_dir`` -- never a recursive search, never
+# a different rule and never a generated file.
+_INITIAL_STATE_NAME = "initial_state.npy"
+_INITIAL_STATE_SOURCEBASIS = (
+    "service._snapshot_session_state: job.run_dir parent/session initial_state.npy"
+)
+
 # The exact per-job declared path fields the exporter reads.  Both the campaign
 # ``trials[].jobs[]`` records and the guard report's top-level ``jobs[]`` records
 # use these exact keys; only these nonempty declared paths are preflighted.
@@ -215,6 +228,21 @@ def _input_digest(trial):
     first_input = trial.get("first_input")
     if isinstance(first_input, dict):
         return first_input.get("combined_sha256")
+    return None
+
+
+def _first_declared_run_dir(jobs):
+    """The first declared nonempty ``run_dir`` string across ``jobs`` (or ``None``).
+
+    The session ``initial_state.npy`` is derived *only* from this first declared
+    ``job.run_dir`` -- the same ``jobs[]`` list the exporter already reads.
+    """
+    for job in jobs:
+        if not isinstance(job, dict):
+            continue
+        run_dir = job.get("run_dir")
+        if isinstance(run_dir, str) and run_dir.strip():
+            return run_dir
     return None
 
 
@@ -560,6 +588,68 @@ class _Run:
             return
         self._publish(src, out_rel, role, meta, gzip_it)
 
+    def copy_session_initial_state(self, root, jobs, out_rel, role, meta, declared_sha):
+        """Copy the session ``initial_state.npy`` derived from the first declared job.
+
+        The ONLY allowed source is
+        ``Path(first declared job.run_dir).parent / 'initial_state.npy'``: the
+        service ``_snapshot_session_state`` writes that file next to the
+        capability jobs because every ``job.run_dir`` is a direct child of the
+        session ``record.run_dir``.  The path is never searched recursively,
+        never rebuilt from a different rule and never generated.
+
+        The derived path is containment-checked against *this report's own*
+        ``metadata.run_root``: a derived path that escapes that root is a fatal
+        refusal, while a contained but absent file stays an explicit missing
+        record.  When the report declares no absolute root the derivation cannot
+        be containment-checked, so it is recorded missing rather than copied.
+
+        Only the actual bytes are copied once.  ``declared_sha`` is the float64
+        payload digest the service stored (``record.initial_state_hash``, exposed
+        as ``trials[].initial_state_sha`` / ``session.initial_state_sha``); it is
+        recorded verbatim and is never validated, recomputed or invented, and it
+        stays separate from the whole-file ``source_sha256`` / ``published_sha256``.
+        """
+
+        entry_meta = dict(meta)
+        entry_meta["sourcebasis"] = _INITIAL_STATE_SOURCEBASIS
+        entry_meta["declared_initial_state_sha"] = declared_sha
+
+        run_dir = _first_declared_run_dir(jobs)
+        if run_dir is None:
+            self.record_missing(
+                entry_meta,
+                role,
+                None,
+                "no declared job.run_dir; the session initial_state.npy is derived only "
+                "from the first declared job.run_dir parent",
+            )
+            return
+        derived = Path(run_dir).parent / _INITIAL_STATE_NAME
+        try:
+            resolved = derived.resolve()
+        except Exception as exc:  # noqa: BLE001 - an unresolvable path is refused
+            raise ExportError("session initial_state.npy could not be resolved: %s" % exc)
+        if root is None:
+            self.record_missing(
+                entry_meta,
+                role,
+                str(derived),
+                "no absolute metadata.run_root is declared for this report; the derived "
+                "session initial_state.npy cannot be containment-checked",
+            )
+            return
+        if not _contained(resolved, root):
+            raise ExportError(
+                "session initial_state.npy derived from the first job.run_dir parent "
+                "resolves outside its own run_root %r: %r" % (str(root), str(derived))
+            )
+        src, reason = self.resolve_source(str(derived))
+        if src is None:
+            self.record_missing(entry_meta, role, str(derived), reason)
+            return
+        self._publish(src, out_rel, role, entry_meta, False)
+
     # -- campaigns / guards -------------------------------------------------
 
     def index_trial(self, trial, phase):
@@ -587,7 +677,7 @@ class _Run:
 
     # -- per-trial artifacts -----------------------------------------------
 
-    def export_trial(self, trial, campaign_phase):
+    def export_trial(self, trial, campaign_phase, campaign_root):
         trial_id = trial.get("trial_id")
         safe = _safe_component(trial_id)
         if trial_id in self.seen_trial_ids:
@@ -620,11 +710,13 @@ class _Run:
             else:
                 job_base = base
             self._export_job(job_meta, job_base, job)
-        self.record_missing(
-            meta,
+        self.copy_session_initial_state(
+            campaign_root,
+            jobs,
+            base + "/" + _INITIAL_STATE_NAME,
             "session_initial_state",
-            None,
-            "no accepted paired trial field locates the session initial_state path",
+            meta,
+            trial.get("initial_state_sha"),
         )
 
     def _export_job(self, job_meta, job_base, job):
@@ -717,8 +809,10 @@ class _Run:
 
     # -- guard declared logs ------------------------------------------------
 
-    def export_guard(self, index, obj, err):
+    def export_guard(self, index, obj, err, guard_root):
         meta = {"phase": None, "guard_index": index}
+        declared_sha = None
+        jobs = None
         if obj is None:
             self.record_missing(
                 meta,
@@ -726,22 +820,24 @@ class _Run:
                 None,
                 "guard report JSON could not be parsed (%s); raw bytes exported verbatim" % (err,),
             )
-            return
-        if not isinstance(obj, dict):
+        elif not isinstance(obj, dict):
             self.record_missing(
                 meta, "guard_fields", None, "guard report root is not an object; raw bytes exported verbatim"
             )
-            return
-        jobs = obj.get("jobs")
-        if not isinstance(jobs, list):
-            self.record_missing(
-                meta,
-                "guard_jobs",
-                None,
-                "guard report declares no jobs[] list; guard job log paths are unsupported",
-            )
-            return
-        for job_index, job in enumerate(jobs):
+        else:
+            session = obj.get("session")
+            if isinstance(session, dict):
+                declared_sha = session.get("initial_state_sha")
+            jobs = obj.get("jobs")
+            if not isinstance(jobs, list):
+                self.record_missing(
+                    meta,
+                    "guard_jobs",
+                    None,
+                    "guard report declares no jobs[] list; guard job log paths are unsupported",
+                )
+        guard_jobs = jobs if isinstance(jobs, list) else []
+        for job_index, job in enumerate(guard_jobs):
             if not isinstance(job, dict):
                 continue
             job_meta = {
@@ -781,6 +877,14 @@ class _Run:
                     job.get("run_dir"),
                     "guard job declares no supported log path field; optional fields unsupported",
                 )
+        self.copy_session_initial_state(
+            guard_root,
+            guard_jobs,
+            "guard/guard_%02d/%s" % (index, _INITIAL_STATE_NAME),
+            "session_initial_state",
+            meta,
+            declared_sha,
+        )
 
     # -- summary / manifest / checksums ------------------------------------
 
@@ -923,15 +1027,16 @@ def export_results(args):
     # --- validate everything above BEFORE creating the output directory ---
     output.mkdir(parents=True, exist_ok=False)
 
-    run.unsupported = [
-        {
-            "field": "session.initial_state",
-            "reason": (
-                "the accepted paired trial schema declares no session initial_state path, so it "
-                "is recorded missing and no file is fabricated"
-            ),
-        },
-    ]
+    # The session initial simulator state IS supported: both the paired trial and
+    # the guard schemas locate it through the first declared ``job.run_dir`` (a
+    # direct child of the session ``run_dir`` that
+    # ``service._snapshot_session_state`` fills with ``initial_state.npy``).  The
+    # exact derived source contract is published per entry as ``sourcebasis``;
+    # only an actually absent derived file is recorded missing (never fabricated).
+    # No optional field remains unsupported here, so the list is now empty (the
+    # genuinely unsupported optional guard-log fields keep their explicit missing
+    # records unchanged).
+    run.unsupported = []
 
     run.copy_plain(str(discovery_path), "raw/discovery.json", "raw_discovery", {"phase": "discovery"})
     run.copy_plain(str(holdout_path), "raw/holdout.json", "raw_holdout", {"phase": "holdout"})
@@ -947,15 +1052,15 @@ def export_results(args):
         )
 
     for trial in discovery_trials:
-        run.export_trial(trial, "discovery")
+        run.export_trial(trial, "discovery", discovery_root)
     for trial in holdout_trials:
-        run.export_trial(trial, "holdout")
+        run.export_trial(trial, "holdout", holdout_root)
 
     for video in videos:
         run.export_video(video)
 
     for index, (_path, obj, err) in enumerate(guard_objects):
-        run.export_guard(index, obj, err)
+        run.export_guard(index, obj, err, guard_roots[index])
 
     rows = [_summary_row(trial) for trial in list(discovery_trials) + list(holdout_trials)]
     run.write_summary(rows)

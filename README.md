@@ -1,5 +1,7 @@
 # Agentic VLA System
 
+最新（2026-10-08）：酒瓶抓取与配对配置实验已完成，完整报告见 [First_Phase/scene_demo/results/2026-10-08-grasp-config/README.md](First_Phase/scene_demo/results/2026-10-08-grasp-config/README.md)。默认配置保留 baseline，本轮没有训练；抓取守卫在失败或停滞时把当前执行轮提前停下（原生失败 119 步、共享 109 步，对比原本的 300 步预算），覆盖范围仅限酒瓶子目标。
+
 本仓库有两条线：
 
 - **v0.1.0（历史基线，已实测）**：单任务集成演示。运行链为自然语言 → Hermes（qwen3-vl-plus）→ MCP → SmolVLA LIBERO checkpoint → Franka Panda。GPT 与 DeepSeek 仅负责开发期的规划与代码执行，不参与这条运行时控制链。

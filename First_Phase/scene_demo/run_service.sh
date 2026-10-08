@@ -27,4 +27,4 @@ exec /home/yhwang/fyp/libero_demo/venv/bin/python -u \
     /mnt/d/FYP/First_Phase/scene_demo/service.py \
     --port 8767 \
     --run-root /home/yhwang/fyp/scene_demo/runs \
-    --completion-mode release_verified "$@"
+    --completion-mode release_verified --grasp-guard-mode enforce "$@"
