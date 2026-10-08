@@ -707,6 +707,7 @@ def _base_report(args: argparse.Namespace, plan: list[dict[str, Any]]) -> dict[s
         "preregistration": None,
         "service": {},
         "trials": [],
+        "health_checks": [],
         "operational_errors": [],
         "limitations": dict(LIMITATIONS),
         "aggregate": {},

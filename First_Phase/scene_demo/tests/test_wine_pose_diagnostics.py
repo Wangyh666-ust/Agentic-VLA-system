@@ -10,6 +10,7 @@ the existing test import pattern.
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 import tempfile
@@ -49,6 +50,25 @@ def _valid_calibration() -> dict:
             "state_sha": wpd.NATIVE_STATE_SHA,
         },
     }
+
+
+class _FakeService:
+    """A GPU-free service stub: it only counts its lifecycle calls.
+
+    It deliberately carries NO ``_close_env`` attribute (so the campaign's
+    best-effort close is skipped) and never loads a model, starts a worker or
+    touches CUDA.
+    """
+
+    def __init__(self) -> None:
+        self.start_calls = 0
+        self.stop_calls = 0
+
+    def start(self) -> None:
+        self.start_calls += 1
+
+    def stop(self) -> None:
+        self.stop_calls += 1
 
 
 class WinePoseDiagnosticsTests(unittest.TestCase):
@@ -373,6 +393,140 @@ class WinePoseDiagnosticsTests(unittest.TestCase):
         self.assertEqual(branch_b["n_strict_wine_failure"], 1)
         self.assertEqual(branch_b["n_physical_preparation_failed"], 1)
         self.assertEqual(aggregate["n_wine_actions"], 600)
+
+    # -- full GPU-free run_campaign entry smoke tests --------------------------
+
+    def _write_real_inputs(self, tmp: str):
+        """Write the REAL, loadable 102-row actions file and calibration report."""
+
+        root = Path(tmp)
+        actions_path = root / "input_actions.json"
+        actions_path.write_text(
+            json.dumps([[0.0] * 7 for _ in range(102)]), encoding="utf-8"
+        )
+        calibration_path = root / "calibration.json"
+        calibration_path.write_text(json.dumps(_valid_calibration()), encoding="utf-8")
+        return actions_path, calibration_path
+
+    def _smoke_args(self, tmp: str, actions_path: Path, calibration_path: Path) -> argparse.Namespace:
+        return argparse.Namespace(
+            input_actions=str(actions_path),
+            calibration=str(calibration_path),
+            output=str(Path(tmp) / "report.json"),
+            run_root=str(Path(tmp) / "run"),
+            source_git_sha="0" * 40,
+        )
+
+    @staticmethod
+    def _fake_trial_view(branch: str, model_seed: int) -> dict:
+        return {
+            "branch": branch,
+            "model_seed": int(model_seed),
+            "status": "ok",
+            "operational_errors": [],
+            "prefix_result": {"replay_action_count": 102},
+            "aux_actions": 0 if branch == "A" else 125,
+            "wine_action_count": 300,
+            "wine_attempted": True,
+            "strict_wine_success": False,
+            "combined_success": False,
+            "raw_stable_grasp_first_step": None,
+            "final_bowl_predicate": True,
+            "final_bowl_strict": True,
+            "native_target_pose_error": None,
+        }
+
+    def test_run_campaign_complete_success_smoke(self):
+        # REAL input loading, preregistration and report JSON serialization run
+        # for real; only the model/service boundary and the per-trial runner are
+        # replaced with GPU-free doubles.
+        limits_before = (
+            pd.LIFT_STAGE_MAX_ACTIONS,
+            pd.ALIGN_STAGE_MAX_ACTIONS,
+            pd.AUX_ACTION_CAP,
+        )
+        order: list = []
+
+        def fake_run_branch_trial(
+            svc, branch, model_seed, actions, run_root, context_seen, b_cross_seen
+        ):
+            order.append((branch, int(model_seed)))
+            return self._fake_trial_view(branch, model_seed)
+
+        health_record = {"ready": True, "active_request_id": None}
+        with tempfile.TemporaryDirectory() as tmp:
+            actions_path, calibration_path = self._write_real_inputs(tmp)
+            args = self._smoke_args(tmp, actions_path, calibration_path)
+            output = Path(args.output)
+            run_root = Path(args.run_root)
+            fake_service = _FakeService()
+            with mock.patch.object(
+                wpd, "_build_service", return_value=fake_service
+            ), mock.patch.object(
+                context, "_wait_ready", return_value={"ready": True}
+            ), mock.patch.object(
+                pd, "production_health_gate", return_value=(health_record, None)
+            ), mock.patch.object(
+                wpd, "_run_branch_trial", side_effect=fake_run_branch_trial
+            ):
+                result = wpd.run_campaign(args)
+
+            self.assertTrue(result["ok"])
+            self.assertEqual(order, [("A", 0), ("B", 0), ("B", 1), ("A", 1)])
+            self.assertEqual(
+                [(t["branch"], t["model_seed"]) for t in result["trials"]],
+                [("A", 0), ("B", 0), ("B", 1), ("A", 1)],
+            )
+            self.assertEqual(fake_service.start_calls, 1)
+            self.assertEqual(fake_service.stop_calls, 1)
+            checks = result["health_checks"]
+            self.assertEqual(len(checks), 5)
+            self.assertEqual([c.get("trial_index") for c in checks[:4]], [1, 2, 3, 4])
+            self.assertEqual(checks[4].get("phase"), "after_campaign")
+            self.assertEqual(result["aggregate"]["n_replay_actions"], 408)
+            self.assertEqual(result["aggregate"]["n_auxiliary_actions"], 250)
+            self.assertEqual(result["aggregate"]["n_wine_actions"], 1200)
+            # A physical failure (no wine success) still leaves the campaign
+            # operationally ok.
+            self.assertTrue(all(t["strict_wine_success"] is False for t in result["trials"]))
+            self.assertEqual(
+                (pd.LIFT_STAGE_MAX_ACTIONS, pd.ALIGN_STAGE_MAX_ACTIONS, pd.AUX_ACTION_CAP),
+                limits_before,
+            )
+            self.assertTrue(output.is_file())
+            prereg_path = run_root / "preregistration.json"
+            self.assertTrue(prereg_path.is_file())
+            persisted = json.loads(output.read_text(encoding="utf-8"))
+            self.assertTrue(persisted["ok"])
+            self.assertEqual(len(persisted["health_checks"]), 5)
+            json.loads(prereg_path.read_text(encoding="utf-8"))
+
+    def test_run_campaign_readiness_failure_smoke(self):
+        health_record = {"ready": True, "active_request_id": None}
+        with tempfile.TemporaryDirectory() as tmp:
+            actions_path, calibration_path = self._write_real_inputs(tmp)
+            args = self._smoke_args(tmp, actions_path, calibration_path)
+            output = Path(args.output)
+            fake_service = _FakeService()
+            with mock.patch.object(
+                wpd, "_build_service", return_value=fake_service
+            ), mock.patch.object(
+                context,
+                "_wait_ready",
+                return_value={"ready": False, "worker_error": "fixture readiness failure"},
+            ), mock.patch.object(
+                pd, "production_health_gate", return_value=(health_record, None)
+            ), mock.patch.object(wpd, "_run_branch_trial") as run_trial:
+                result = wpd.run_campaign(args)
+
+            self.assertFalse(result["ok"])
+            self.assertEqual(result["trials"], [])
+            self.assertEqual(fake_service.stop_calls, 1)
+            self.assertIn("fixture readiness failure", result["fatal_error"])
+            run_trial.assert_not_called()
+            self.assertTrue(output.is_file())
+            persisted = json.loads(output.read_text(encoding="utf-8"))
+            self.assertFalse(persisted["ok"])
 
 
 if __name__ == "__main__":
