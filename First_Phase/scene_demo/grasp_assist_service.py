@@ -176,6 +176,7 @@ class GraspAssistService(wd.WineDiagnosticService):
         *args: Any,
         completion_mode: str = ASSIST_COMPLETION_MODE,
         grasp_guard_mode: str = ASSIST_GRASP_GUARD_MODE,
+        grasp_module: Any = None,
         **kwargs: Any,
     ) -> None:
         super().__init__(
@@ -184,6 +185,10 @@ class GraspAssistService(wd.WineDiagnosticService):
             grasp_guard_mode=grasp_guard_mode,
             **kwargs,
         )
+        # Backward-compatible grasp-module injection: consume the keyword (never
+        # forward it to the base) and default to the existing local_grasp module.
+        # The caller may inject a compatible controller module instead.
+        self._grasp_module = grasp_module if grasp_module is not None else local_grasp
         # Per-request budget bookkeeping for the assist report (requested vs the
         # fixed effective pilot override).  Keyed by request id; never mutates a
         # caller payload.
@@ -263,7 +268,7 @@ class GraspAssistService(wd.WineDiagnosticService):
         """Read the wine geometry; an unreadable geometry is an honest unknown."""
 
         try:
-            return local_grasp.read_geometry(self._env)
+            return getattr(self, "_grasp_module", local_grasp).read_geometry(self._env)
         except service.SceneError:
             raise
         except BaseException as exc:  # noqa: BLE001 - never blind-continue
@@ -411,7 +416,7 @@ class GraspAssistService(wd.WineDiagnosticService):
 
         job.run_dir.mkdir(parents=True, exist_ok=True)
         helper = (
-            local_grasp.LocalGraspController()
+            getattr(self, "_grasp_module", local_grasp).LocalGraspController()
             if capability_id == WINE_CAPABILITY_ID
             else None
         )
@@ -461,7 +466,7 @@ class GraspAssistService(wd.WineDiagnosticService):
             geometry = None
             if source == "local_grasp" and helper is not None:
                 try:
-                    geometry = local_grasp.read_geometry(env)
+                    geometry = getattr(self, "_grasp_module", local_grasp).read_geometry(env)
                 except BaseException as exc:  # noqa: BLE001 - latch, never fatal here
                     geometry = {"error": _format_exc(exc)}
                     self._latch_observer_error(_format_exc(exc))

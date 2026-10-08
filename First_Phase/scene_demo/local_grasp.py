@@ -493,6 +493,12 @@ def read_geometry(env: Any) -> dict[str, Any]:
 # --- the frozen contact target ------------------------------------------------
 
 
+def _default_approach_offset(reading: dict, position: np.ndarray, orientation: np.ndarray) -> np.ndarray:
+    """The frozen default above-clearance offset (world +Z)."""
+
+    return np.array([0.0, 0.0, ABOVE_CLEARANCE_M], dtype=np.float64)
+
+
 def make_target(reading: dict) -> tuple[np.ndarray, np.ndarray]:
     """The frozen end-effector target for the wine grasp.
 
@@ -605,7 +611,11 @@ class LocalGraspController:
     ``next_action`` reads never fabricate progress.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, *, target_builder: Any = None, approach_offset_builder: Any = None) -> None:
+        self._target_builder = target_builder if target_builder is not None else make_target
+        self._approach_offset_builder = (
+            approach_offset_builder if approach_offset_builder is not None else _default_approach_offset
+        )
         self.phase: str = IDLE
         self.reason: str | None = None
         self.total_actions: int = 0
@@ -735,7 +745,17 @@ class LocalGraspController:
             return None
 
         try:
-            target_position, target_orientation = make_target(reading)
+            target_position, target_orientation = self._target_builder(reading)
+            target_position = _finite_vec3(target_position)
+            target_orientation = _finite_matrix3(target_orientation)
+            if target_position is None or target_orientation is None:
+                raise ValueError("invalid target")
+            approach_offset = self._approach_offset_builder(
+                reading, np.asarray(target_position, dtype=np.float64).reshape(3), np.asarray(target_orientation, dtype=np.float64).reshape(3, 3)
+            )
+            approach_offset = _finite_vec3(approach_offset)
+            if approach_offset is None:
+                raise ValueError("invalid approach offset")
         except Exception:  # noqa: BLE001 - an uncomputable target is not a trigger
             trigger["satisfied"] = False
             trigger["target_ready"] = False
@@ -758,7 +778,7 @@ class LocalGraspController:
         self._target_orientation = target_orientation
         self._above_target_position = (
             np.asarray(target_position, dtype=np.float64).reshape(3)
-            + np.array([0.0, 0.0, ABOVE_CLEARANCE_M], dtype=np.float64)
+            + np.asarray(approach_offset, dtype=np.float64).reshape(3)
         )
         self._above_target_orientation = target_orientation
         self.phase = ABOVE
