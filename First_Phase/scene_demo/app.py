@@ -939,6 +939,7 @@ PAGE = """<!DOCTYPE html>
     <h2>5. 计划与子目标进度</h2>
     <div id="plan" class="kv">暂无。</div>
     <div id="subgoals"></div>
+    <p class="hint">提示：该固定规则仅针对 wine 任务的放置评价，检查是否已松手并稳定支撑在架子上；标准目标命中本身并不代表已松手或稳定，也不改变 job/plan 的 success 判定。</p>
   </section>
 
   <section>
@@ -1273,6 +1274,81 @@ function capInstruction(capId) {
   return found ? found.instruction : "";
 }
 
+// 本地抓取阶段映射：原生取值 grasp_confirmed/attempting/approaching/unknown/
+// failed_grasp/already_placed。绝不用历史确认冒充“当前持有”；其余原生值（含
+// approaching/already_placed/failed_grasp）只如实转义回显，绝不编造状态。
+function graspStageText(stage) {
+  const s = (stage == null) ? "" : String(stage);
+  if (s === "grasp_confirmed") return "已确认抓起过";
+  if (s === "attempting") return "正在尝试抓取";
+  if (s === "unknown") return "抓取状态待确认";
+  if (!s) return "-";
+  return esc(s);
+}
+
+// 计数器校验：仅有限非负整数才显示，否则显示 '-'（绝不回显注入/未校验值）。
+function intOrDash(v) {
+  if (typeof v === "number" && isFinite(v) && v >= 0 && Math.floor(v) === v) return String(v);
+  return "-";
+}
+
+// 固定 wine 诊断单元格（供执行明细表三列）：抓取阶段/停止原因、标准目标命中、
+// 语义放置评价。仅 capability_id === "wine_to_rack" 展示 wine 诊断；非 wine 一律
+// '-'/'未启用'，绝不因初始字段为空而显示 false 失败。语义真值只由 semantic_spec_id
+// === "semantic_wine_rack_v1" 门控，且始终独立于 job.success/plan success，绝不提升为成功。
+function wineJobStatus(j) {
+  const job = (j && typeof j === "object") ? j : {};
+
+  // 列1：抓取阶段 / 停止原因（所有 job 通用，原生值一律转义）。
+  let phase = graspStageText(job.grasp_stage);
+  if (job.ended_reason != null && String(job.ended_reason) !== "") {
+    phase += " · " + esc(String(job.ended_reason));
+  }
+  const graspCell = "<td>" + phase + "</td>";
+
+  if (job.capability_id !== "wine_to_rack") {
+    // 非 wine：不评估 wine 诊断，绝不显示为失败。
+    return graspCell + "<td>-</td><td><span class='hint'>未启用</span></td>";
+  }
+
+  // 列2：标准目标命中（native 谓词）。null/缺失 = 尚无法确认，绝不为 false。
+  const native = job.native_wine_predicate;
+  let nativeCell;
+  if (native === true) nativeCell = "<span class='ok-text'>已命中</span>";
+  else if (native === false) nativeCell = "<span class='warn-text'>未命中</span>";
+  else nativeCell = "<span class='kv'>尚无法确认</span>";
+
+  // 列3：语义放置评价。仅合法 spec 才允许依据 semantic_success 判真；无样本仍为未知。
+  const specOk = (job.semantic_spec_id === "semantic_wine_rack_v1");
+  const samples = job.semantic_observation_samples;
+  const samplesZero = (typeof samples === "number" && isFinite(samples) && samples === 0);
+  const semanticTrue = specOk && !samplesZero && job.semantic_success === true;
+  let semanticCell;
+  if (!specOk || samplesZero) {
+    semanticCell = "<span class='kv'>尚无法确认</span>";
+  } else if (job.semantic_success === true) {
+    semanticCell = "<span class='ok-text'>已松手并稳定支撑在架子上</span>";
+  } else if (job.semantic_success === false) {
+    semanticCell = "<span class='warn-text'>尚未满足</span>";
+  } else {
+    semanticCell = "<span class='kv'>尚无法确认</span>";
+  }
+  // native 未命中但语义取得合法真值时，独立额外提示（不改动 raw success/plan success）。
+  if (native === false && semanticTrue) {
+    semanticCell += "<div class='hint'>语义达成，标准区域未命中</div>";
+  }
+  // 计数器与状态：仅校验后的有限非负整数才显示，动态字符串一律转义。
+  let meta = "<div class='hint'>样本 " + intOrDash(samples) +
+             " · 连续 " + intOrDash(job.semantic_candidate_streak);
+  if (job.semantic_state != null && String(job.semantic_state) !== "") {
+    meta += " · 状态 " + esc(String(job.semantic_state));
+  }
+  meta += "</div>";
+  semanticCell += meta;
+
+  return graspCell + "<td>" + nativeCell + "</td><td>" + semanticCell + "</td>";
+}
+
 // 纯函数：只根据真实终态结果返回 HTML 字符串（不碰 DOM）。
 function finalSummaryHTML(result) {
   if (!result || typeof result !== "object") return "";
@@ -1348,6 +1424,13 @@ function renderSubgoals(plan, jobs) {
         cls += " pend"; label = "排队中";
       } else if (done.includes(capId) || (latestJob && latestJob.success === true)) {
         cls += " done"; label = "已完成";
+      } else if (latestJob && latestJob.ended_reason === "failed_grasp") {
+        // 未抓起：仅 enforce 模式才代表任务被停止；shadow/观察模式只如实说明
+        // “检测到未抓起”，绝不宣称已停止。completed + success false 是执行完成而非成功。
+        cls += " pend";
+        label = (latestJob.grasp_guard_mode === "enforce")
+          ? "未抓起，任务已停止"
+          : "检测到未抓起（观察模式）";
       } else if (latestJob && latestJob.success === false) {
         cls += " pend"; label = "执行未成功";
         if (pend.includes(capId) && planTerminal) label += "（后续未执行）";
@@ -1362,13 +1445,14 @@ function renderSubgoals(plan, jobs) {
   }
   if (jobs && jobs.length) {
     html += "<h2>执行明细（本次请求）</h2><div class='scroll'><table><thead><tr>" +
-      "<th>job_id</th><th>能力</th><th>状态</th><th>本段步数 / 场景累计步数</th><th>success</th></tr></thead><tbody>";
+      "<th>job_id</th><th>能力</th><th>状态</th><th>本段步数 / 场景累计步数</th><th>success</th>" +
+      "<th>抓取阶段 / 停止原因</th><th>标准目标命中</th><th>语义放置评价</th></tr></thead><tbody>";
     jobs.forEach(j => {
       html += "<tr><td>" + esc(j.job_id) + "</td><td>" + esc(j.capability_id) + "</td><td>" +
               esc(j.state) + "</td><td>" +
               esc("本段 " + (j.steps != null ? j.steps : "-") + "；累计 " +
                   (j.total_steps != null ? j.total_steps : "-")) + "</td><td>" +
-              fmtBool(j.success) + "</td></tr>";
+              fmtBool(j.success) + "</td>" + wineJobStatus(j) + "</tr>";
     });
     html += "</tbody></table></div>";
   }

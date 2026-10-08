@@ -23,6 +23,7 @@ import time
 import types
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import numpy as np
 
@@ -33,6 +34,7 @@ if str(_SCENE_DEMO) not in sys.path:
 
 import catalog  # noqa: E402
 import service  # noqa: E402
+import wine_semantic  # noqa: E402
 
 
 def _ready_session(**overrides):
@@ -2005,6 +2007,291 @@ class HandoffGuardWorkerTests(unittest.TestCase):
         self.assertEqual(job["completion_mode"], "release_verified")
 
 
+# --- wine-only grasp guard (shadow records, enforce stops) --------------------
+
+
+def _scripted_probe(inner, script):
+    """A ``grasp_guard.read_probe`` replacement keyed on the inner step count."""
+
+    def _read_probe(env, object_id, goal_key):  # noqa: ARG001
+        return script(inner.steps, object_id, goal_key)
+
+    return _read_probe
+
+
+def _ghost_grasp_script(step, object_id, goal_key):
+    """A ghost-grasp probe: the eef retreats while the bottle never rises."""
+
+    eef = [0.0, 0.0, 0.0] if step <= 1 else [0.06, 0.0, 0.03]
+    qpos = [0.0, 0.04]
+    return {
+        "objects": {object_id: {"position": [0.0, 0.0, 0.0], "grasped": False}},
+        "eef_position": eef,
+        "predicates": {goal_key: False},
+        "gripper_qpos": qpos,
+        "gap": abs(qpos[0] - qpos[1]),
+    }
+
+
+class GraspGuardModeTests(unittest.TestCase):
+    """Constructor / health contracts for the grasp-guard mode."""
+
+    def test_default_mode_is_shadow(self):
+        svc = service.SceneService(run_root=tempfile.mkdtemp())
+        self.assertEqual(svc.grasp_guard_mode, "shadow")
+        self.assertEqual(service.DEFAULT_GRASP_GUARD_MODE, "shadow")
+        self.assertEqual(tuple(service.GRASP_GUARD_MODES), ("off", "shadow", "enforce"))
+
+    def test_invalid_mode_is_rejected(self):
+        with self.assertRaises(ValueError):
+            service.SceneService(run_root=tempfile.mkdtemp(), grasp_guard_mode="loud")
+
+    def test_health_reports_the_guard_mode(self):
+        svc = service.SceneService(run_root=tempfile.mkdtemp(), grasp_guard_mode="enforce")
+        self.assertEqual(svc.health()["grasp_guard_mode"], "enforce")
+
+
+class GraspGuardWorkerTests(unittest.TestCase):
+    """The wine-only guard against the injected fake simulator (no GPU)."""
+
+    def _make(self, mode, *, action_gate=None):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        envs: list = []
+        calls = {"n": 0}
+
+        def _factory(**kwargs):  # noqa: ARG001
+            env = _FakeEnv()
+            envs.append(env)
+            return env
+
+        def _action(batch):  # noqa: ARG001
+            calls["n"] += 1
+            if action_gate is not None:
+                action_gate.wait(timeout=15.0)
+            # A positive gripper command so the guard can arm.
+            return np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5])
+
+        svc = service.SceneService(
+            run_root=tmp.name,
+            env_factory=_factory,
+            policy_loader=lambda s: setattr(s._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+            grasp_guard_mode=mode,
+        )
+        svc.start()
+        self.addCleanup(svc.stop)
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not svc.health()["ready"]:
+            time.sleep(0.05)
+        return svc, envs, calls
+
+    def _wait(self, svc, request_id, deadline_s=20.0):
+        deadline = time.time() + deadline_s
+        while time.time() < deadline:
+            payload = svc.plan(request_id)
+            if payload is not None and payload["state"] in service.TERMINAL_PLAN_STATES:
+                return payload
+            time.sleep(0.05)
+        self.fail("plan %s did not reach a terminal state" % request_id)
+
+    def _submit(self, svc, session_id, request_id, capability_ids, budget=50):
+        return svc.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": svc.session(session_id)["scene_version"],
+                "request_id": request_id,
+                "capability_ids": capability_ids,
+                "decision": "execute",
+                "budget_per_subgoal": budget,
+            }
+        )
+
+    def test_off_mode_leaves_the_guard_fields_null(self):
+        svc, envs, calls = self._make("off")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        with mock.patch.object(
+            service.grasp_guard, "read_probe", _scripted_probe(inner, _ghost_grasp_script)
+        ):
+            submitted = self._submit(svc, sid, "req-off", ["wine_to_rack"], budget=8)
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-off")
+        job = svc.job(plan["job_ids"][0])
+        self.assertEqual(job["ended_reason"], "budget_exhausted")
+        self.assertEqual(job["steps"], 8)
+        # mode ``off`` never even starts a monitor: all three fields stay None.
+        self.assertIsNone(job["grasp_guard_mode"])
+        self.assertIsNone(job["grasp_stage"])
+        self.assertIsNone(job["grasp_guard_status"])
+
+    def test_non_wine_capability_bypasses_the_guard_entirely(self):
+        svc, envs, calls = self._make("enforce")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        probed = {"n": 0}
+
+        def _boom(env, object_id, goal_key):  # noqa: ARG001
+            probed["n"] += 1
+            raise AssertionError("the guard must never probe a non-wine goal")
+
+        with mock.patch.object(service.grasp_guard, "read_probe", _boom):
+            submitted = self._submit(svc, sid, "req-bowl", ["bowl_to_plate"], budget=50)
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-bowl")
+        self.assertEqual(plan["state"], "completed", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertTrue(job["success"])
+        self.assertEqual(job["ended_reason"], "success")
+        self.assertIsNone(job["grasp_guard_mode"])
+        self.assertIsNone(job["grasp_stage"])
+        self.assertEqual(probed["n"], 0)
+
+    def test_shadow_records_a_failure_without_changing_the_run(self):
+        # Enforce would stop at step 6; shadow must run the whole budget and only
+        # record the latched failure -- the action count is unchanged.
+        shadow, envs, calls = self._make("shadow")
+        session = shadow.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = shadow._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        with mock.patch.object(
+            service.grasp_guard, "read_probe", _scripted_probe(inner, _ghost_grasp_script)
+        ):
+            submitted = self._submit(shadow, sid, "req-shadow", ["wine_to_rack"], budget=10)
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(shadow, "req-shadow")
+        job = shadow.job(plan["job_ids"][0])
+        self.assertEqual(job["ended_reason"], "budget_exhausted")
+        self.assertEqual(job["steps"], 10)
+        self.assertEqual(calls["n"], 10)  # not truncated by the guard
+        self.assertFalse(job["success"])
+        self.assertEqual(job["grasp_guard_mode"], "shadow")
+        self.assertEqual(job["grasp_stage"], "failed_grasp")
+        self.assertTrue(job["grasp_guard_status"]["should_stop"])
+
+    def test_enforce_stops_wine_before_the_next_action_and_blocks_the_following(self):
+        svc, envs, calls = self._make("enforce")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        reset_steps: list = []
+        original_reset = svc._reset_policy_queues
+
+        def _spy_reset():
+            reset_steps.append(svc._env._inner.steps)
+            original_reset()
+
+        svc._reset_policy_queues = _spy_reset
+        with mock.patch.object(
+            service.grasp_guard, "read_probe", _scripted_probe(inner, _ghost_grasp_script)
+        ):
+            submitted = self._submit(
+                svc, sid, "req-enf", ["wine_to_rack", "bowl_to_plate"], budget=50
+            )
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-enf")
+
+        self.assertEqual(plan["state"], "blocked", plan)
+        # Only the wine job started; the following bowl goal was never executed.
+        self.assertEqual(len(plan["job_ids"]), 1)
+        self.assertEqual(plan["pending_capability_ids"], ["bowl_to_plate"])
+        job = svc.job(plan["job_ids"][0])
+        self.assertEqual(job["ended_reason"], "failed_grasp")
+        self.assertFalse(job["success"])
+        self.assertIsNone(job["error"])  # a physical failure, not an error
+        self.assertEqual(job["state"], "completed")
+        self.assertEqual(job["grasp_guard_mode"], "enforce")
+        self.assertEqual(job["grasp_stage"], "failed_grasp")
+        self.assertEqual(job["grasp_guard_status"]["failure_step"], 6)
+        self.assertTrue(job["grasp_guard_status"]["should_stop"])
+        # Stopped before the next VLA inference: exactly six actions and steps.
+        self.assertEqual(job["steps"], 6)
+        self.assertEqual(calls["n"], 6)
+        self.assertEqual(svc._env._inner.steps, 6)
+        # One persistent environment, one reset, no reseed/teleport by the guard.
+        self.assertEqual(svc.session(sid)["episode_resets"], 1)
+        self.assertEqual(svc.session(sid)["env_instance_id"], 1)
+        # The capability-scoped policy queues were cleared after the stop.
+        self.assertIn(6, reset_steps)
+
+        events_path = Path(job["run_dir"]) / "events.jsonl"
+        events = [
+            json.loads(line)
+            for line in events_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(len(events), 6)
+        self.assertTrue(all(e["grasp_guard_mode"] == "enforce" for e in events))
+        self.assertEqual(events[-1]["grasp_stage"], "failed_grasp")
+        self.assertTrue(events[-1]["grasp_guard_status"]["should_stop"])
+
+    def test_enforce_success_retains_priority_over_a_guard_failure(self):
+        svc, envs, calls = self._make("enforce")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        # The wine goal becomes true at step 1 -> success latches at step 5,
+        # one step before the guard's five-candidate failure would latch.
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 1
+        with mock.patch.object(
+            service.grasp_guard, "read_probe", _scripted_probe(inner, _ghost_grasp_script)
+        ):
+            submitted = self._submit(
+                svc, sid, "req-win", ["wine_to_rack", "bowl_to_plate"], budget=50
+            )
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-win")
+        self.assertEqual(plan["state"], "completed", plan)
+        wine_job = svc.job(plan["job_ids"][0])
+        bowl_job = svc.job(plan["job_ids"][1])
+        self.assertTrue(wine_job["success"])
+        self.assertEqual(wine_job["ended_reason"], "success")
+        self.assertEqual(wine_job["steps"], 5)
+        self.assertNotEqual(wine_job["grasp_stage"], "failed_grasp")
+        self.assertFalse(wine_job["grasp_guard_status"]["should_stop"])
+        # Normal success keeps priority: the following bowl goal still ran.
+        self.assertTrue(bowl_job["success"])
+
+    def test_enforce_cancellation_still_wins_and_is_never_failed_grasp(self):
+        gate = threading.Event()
+        gate.set()
+        svc, envs, calls = self._make("enforce", action_gate=gate)
+        self.addCleanup(gate.set)
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        with mock.patch.object(
+            service.grasp_guard, "read_probe", _scripted_probe(inner, _ghost_grasp_script)
+        ):
+            gate.clear()  # park the first inference
+            submitted = self._submit(svc, sid, "req-cancel", ["wine_to_rack"], budget=50)
+            self.assertTrue(submitted["ok"], submitted)
+            deadline = time.time() + 10.0
+            while time.time() < deadline and calls["n"] == 0:
+                time.sleep(0.02)
+            self.assertGreaterEqual(calls["n"], 1)
+            ack = svc.cancel_request("req-cancel", sid)
+            self.assertTrue(ack["ok"], ack)
+            self.assertEqual(ack["state"], "cancelling")
+            gate.set()
+            plan = self._wait(svc, "req-cancel")
+        self.assertEqual(plan["state"], "cancelled", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertEqual(job["state"], "cancelled")
+        self.assertEqual(job["ended_reason"], "cancelled")
+        # The guard recorded its mode/stage but never relabelled the cancel.
+        self.assertEqual(job["grasp_guard_mode"], "enforce")
+        self.assertNotEqual(job["grasp_stage"], "failed_grasp")
+        self.assertFalse(job["grasp_guard_status"]["should_stop"])
+        self.assertEqual(svc._env._inner.steps, 0)
+
+
 # --- cooperative user cancellation tombstones --------------------------------
 
 
@@ -2286,6 +2573,522 @@ class CancellationWorkerTests(unittest.TestCase):
         )
         self.assertFalse(resumed["ok"])
         self.assertEqual(resumed["reason"], "cancelled")
+
+
+# --- wine semantic observer (independent read-only scalar status) -------------
+
+
+def _wine_sample(*, standard_predicate=None, candidate=True, held=None):
+    """A raw sample shaped exactly as ``wine_semantic.read_wine_semantic``.
+
+    ``candidate=True`` scores semantically True (unheld, at rest, support-like),
+    ``candidate=False`` scores False (e.g. a known held wine) and the default
+    (an incomplete observation) scores unknown -- so the helper tests exercise
+    the module's real ``score_wine_semantic``/``SemanticTracker`` unchanged.
+    """
+
+    sample = {
+        "spec_id": wine_semantic.SPEC.spec_id,
+        "object_id": wine_semantic.SPEC.object_id,
+        "target_id": wine_semantic.SPEC.target_id,
+        "rack_contact": None,
+        "support_contact": None,
+        "linear_speed": None,
+        "angular_speed": None,
+        "held_objects": None,
+        "observation_complete": False,
+        "standard_predicate": standard_predicate,
+        "semantic_candidate": None,
+        "contacts": [],
+    }
+    if candidate is True:
+        sample.update(
+            rack_contact=True,
+            support_contact=True,
+            linear_speed=0.0,
+            angular_speed=0.0,
+            held_objects=list(held or []),
+            observation_complete=True,
+            semantic_candidate=True,
+        )
+    elif candidate is False:
+        sample.update(
+            rack_contact=True,
+            support_contact=True,
+            linear_speed=0.0,
+            angular_speed=0.0,
+            held_objects=list(held or ["wine_bottle_1"]),
+            observation_complete=True,
+            semantic_candidate=False,
+        )
+    return sample
+
+
+class WineSemanticPublicFieldTests(unittest.TestCase):
+    """The public semantic scalars exist, default honestly, and are in scope."""
+
+    _SCALAR_FIELDS = (
+        "semantic_spec_id",
+        "semantic_state",
+        "semantic_candidate_streak",
+        "semantic_success",
+        "native_wine_predicate",
+    )
+
+    def test_job_public_defaults_are_null_and_zero(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            job = service.JobRecord("job", "req", "sess", "bowl_to_plate", Path(tmp))
+            public = job.public()
+            for field in self._SCALAR_FIELDS:
+                self.assertIn(field, public)
+                self.assertIsNone(public[field], field)
+            self.assertEqual(public["semantic_observation_samples"], 0)
+            # No coordinate/contact/force keys leak onto the public job.
+            for forbidden in ("sample", "contacts", "object_positions", "positions"):
+                self.assertNotIn(forbidden, public)
+
+    def test_observer_scope_is_only_the_literal_wine_goal(self):
+        svc = service.SceneService(run_root=tempfile.mkdtemp())
+        self.assertTrue(
+            svc._wine_semantic_applies("wine_to_rack", catalog.CAPABILITIES["wine_to_rack"])
+        )
+        self.assertFalse(
+            svc._wine_semantic_applies("bowl_to_plate", catalog.CAPABILITIES["bowl_to_plate"])
+        )
+        # A different capability id, a different object or a different goal are
+        # all out of scope (the observer is fixed to one literal goal).
+        same_goal = {
+            "object_id": "wine_bottle_1",
+            "goals": [["on", "wine_bottle_1", "wine_rack_1_top_region"]],
+        }
+        self.assertFalse(svc._wine_semantic_applies("wine_to_rack_v2", same_goal))
+        other_object = {
+            "object_id": "tomato_sauce_1",
+            "goals": [["on", "tomato_sauce_1", "wine_rack_1_top_region"]],
+        }
+        self.assertFalse(svc._wine_semantic_applies("wine_to_rack", other_object))
+        other_goal = {
+            "object_id": "wine_bottle_1",
+            "goals": [["on", "wine_bottle_1", "plate_1"]],
+        }
+        self.assertFalse(svc._wine_semantic_applies("wine_to_rack", other_goal))
+
+
+class WineSemanticObserverTests(unittest.TestCase):
+    """Pure ``_update_wine_semantic`` contract against crafted samples."""
+
+    def _setup(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        svc = service.SceneService(run_root=tmp.name)
+        job = service.JobRecord("job", "req", "sess", "wine_to_rack", Path(tmp.name))
+        tracker = wine_semantic.SemanticTracker()
+        return svc, job, tracker, Path(tmp.name)
+
+    def _handle(self, run_dir):
+        handle = open(run_dir / "semantic_status.jsonl", "w", encoding="utf-8")
+        self.addCleanup(handle.close)
+        return handle
+
+    def test_semantic_and_native_predicate_are_independent_fields(self):
+        svc, job, tracker, run_dir = self._setup()
+        handle = self._handle(run_dir)
+        # The native standard predicate is TRUE, but the wine is still held, so
+        # the fixed semantic rubric is FALSE: two independent fields.
+        reader = lambda env: _wine_sample(standard_predicate=True, candidate=False)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", reader):
+            svc._update_wine_semantic(job, object(), tracker, 1, handle)
+        public = job.public()
+        self.assertIs(public["native_wine_predicate"], True)
+        self.assertIs(public["semantic_success"], False)
+        self.assertEqual(public["semantic_state"], "incomplete")
+        self.assertEqual(public["semantic_spec_id"], wine_semantic.SPEC.spec_id)
+        self.assertEqual(public["semantic_observation_samples"], 1)
+
+    def test_semantic_true_after_twenty_candidates_native_false(self):
+        svc, job, tracker, run_dir = self._setup()
+        handle = self._handle(run_dir)
+        # An already-decided standard outcome must never be touched.
+        job.success = False
+        reader = lambda env: _wine_sample(standard_predicate=False, candidate=True)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", reader):
+            for step in range(1, 21):
+                svc._update_wine_semantic(job, object(), tracker, step, handle)
+        public = job.public()
+        self.assertEqual(public["semantic_state"], "semantic_complete")
+        self.assertIs(public["semantic_success"], True)
+        self.assertEqual(public["semantic_candidate_streak"], 20)
+        self.assertIs(public["native_wine_predicate"], False)
+        self.assertEqual(public["semantic_observation_samples"], 20)
+        # The standard success flag is a separate field and stays untouched.
+        self.assertIs(public["success"], False)
+
+    def test_probe_failure_resets_streak_and_stays_unknown(self):
+        svc, job, tracker, run_dir = self._setup()
+        handle = self._handle(run_dir)
+        good = lambda env: _wine_sample(candidate=True)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", good):
+            for step in range(1, 6):
+                svc._update_wine_semantic(job, object(), tracker, step, handle)
+        self.assertEqual(job.public()["semantic_candidate_streak"], 5)
+
+        def _boom(env):  # noqa: ARG001
+            raise RuntimeError("probe unavailable")
+
+        with mock.patch.object(wine_semantic, "read_wine_semantic", _boom):
+            svc._update_wine_semantic(job, object(), tracker, 6, handle)
+        public = job.public()
+        self.assertEqual(public["semantic_state"], "unknown")
+        self.assertEqual(public["semantic_candidate_streak"], 0)
+        self.assertIsNone(public["semantic_success"])
+        self.assertIsNone(public["native_wine_predicate"])
+        # A failed probe never fabricates an observation row.
+        self.assertEqual(public["semantic_observation_samples"], 5)
+
+    def test_telemetry_write_failure_is_passive_and_unknown(self):
+        svc, job, tracker, run_dir = self._setup()
+        good = lambda env: _wine_sample(candidate=True)  # noqa: E731
+        handle = self._handle(run_dir)
+        with mock.patch.object(wine_semantic, "read_wine_semantic", good):
+            for step in range(1, 5):
+                svc._update_wine_semantic(job, object(), tracker, step, handle)
+        self.assertEqual(job.public()["semantic_candidate_streak"], 4)
+
+        class _BoomHandle:
+            def write(self, *args, **kwargs):  # noqa: ARG002
+                raise OSError("disk full")
+
+            def flush(self):
+                raise OSError("disk full")
+
+        with mock.patch.object(wine_semantic, "read_wine_semantic", good):
+            svc._update_wine_semantic(job, object(), tracker, 5, _BoomHandle())
+        public = job.public()
+        self.assertEqual(public["semantic_state"], "unknown")
+        self.assertIsNone(public["semantic_success"])
+        self.assertEqual(public["semantic_candidate_streak"], 0)
+        self.assertEqual(tracker.candidate_streak, 0)
+        # No fabricated row: the sample counter is unchanged.
+        self.assertEqual(public["semantic_observation_samples"], 4)
+
+    def test_missing_telemetry_handle_exposes_unknown(self):
+        svc, job, tracker, _run_dir = self._setup()
+        reader = lambda env: _wine_sample(candidate=True)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", reader):
+            svc._update_wine_semantic(job, object(), tracker, 1, None)
+        public = job.public()
+        self.assertEqual(public["semantic_state"], "unknown")
+        self.assertIsNone(public["semantic_success"])
+        self.assertEqual(public["semantic_observation_samples"], 0)
+
+    def test_semantic_status_jsonl_records_one_row_per_step(self):
+        svc, job, tracker, run_dir = self._setup()
+        handle = self._handle(run_dir)
+        reader = lambda env: _wine_sample(standard_predicate=False, candidate=True)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", reader):
+            for step in range(1, 4):
+                svc._update_wine_semantic(job, object(), tracker, step, handle)
+        path = run_dir / "semantic_status.jsonl"
+        rows = [
+            json.loads(line)
+            for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(len(rows), 3)
+        self.assertEqual([row["step"] for row in rows], [1, 2, 3])
+        for row in rows:
+            self.assertIn("sample", row)  # the raw sample lives only here
+            self.assertIn("semantic_state", row)
+        self.assertEqual(rows[-1]["semantic_candidate_streak"], 3)
+        self.assertIs(rows[-1]["semantic_success"], False)
+
+    def test_observer_never_steps_resets_or_forwards(self):
+        svc, job, tracker, run_dir = self._setup()
+        handle = self._handle(run_dir)
+
+        class _SpyEnv:
+            def step(self, *args, **kwargs):  # noqa: ARG002
+                raise AssertionError("the observer must never step")
+
+            def reset(self, *args, **kwargs):  # noqa: ARG002
+                raise AssertionError("the observer must never reset")
+
+            def forward(self, *args, **kwargs):  # noqa: ARG002
+                raise AssertionError("the observer must never forward")
+
+        reader = lambda env: _wine_sample(candidate=True)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", reader):
+            for step in range(1, 4):
+                svc._update_wine_semantic(job, _SpyEnv(), tracker, step, handle)
+        self.assertEqual(job.public()["semantic_observation_samples"], 3)
+
+
+class WineSemanticWorkerTests(unittest.TestCase):
+    """The wine observer against the injected fake simulator (no GPU)."""
+
+    def _make(self, mode="shadow"):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        envs: list = []
+        calls = {"n": 0}
+
+        def _factory(**kwargs):  # noqa: ARG001
+            env = _FakeEnv()
+            envs.append(env)
+            return env
+
+        def _action(batch):  # noqa: ARG001
+            calls["n"] += 1
+            return np.zeros(7)
+
+        svc = service.SceneService(
+            run_root=tmp.name,
+            env_factory=_factory,
+            policy_loader=lambda s: setattr(s._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+            grasp_guard_mode=mode,
+        )
+        svc.start()
+        self.addCleanup(svc.stop)
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not svc.health()["ready"]:
+            time.sleep(0.05)
+        return svc, envs, calls
+
+    def _wait(self, svc, request_id, deadline_s=20.0):
+        deadline = time.time() + deadline_s
+        while time.time() < deadline:
+            payload = svc.plan(request_id)
+            if payload is not None and payload["state"] in service.TERMINAL_PLAN_STATES:
+                return payload
+            time.sleep(0.05)
+        self.fail("plan %s did not reach a terminal state" % request_id)
+
+    def _submit(self, svc, session_id, request_id, capability_ids, budget=50):
+        return svc.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": svc.session(session_id)["scene_version"],
+                "request_id": request_id,
+                "capability_ids": capability_ids,
+                "decision": "execute",
+                "budget_per_subgoal": budget,
+            }
+        )
+
+    def _rows(self, job):
+        path = Path(job["run_dir"]) / "semantic_status.jsonl"
+        return [
+            json.loads(line)
+            for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+
+    def test_observer_active_with_guard_off_and_no_extra_steps(self):
+        svc, envs, calls = self._make("off")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        sample = _wine_sample(standard_predicate=False, candidate=True)
+        with mock.patch.object(wine_semantic, "read_wine_semantic", lambda env: sample):
+            submitted = self._submit(svc, sid, "req-sem", ["wine_to_rack"], budget=6)
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-sem")
+        job = svc.job(plan["job_ids"][0])
+        self.assertEqual(job["ended_reason"], "budget_exhausted")
+        self.assertEqual(job["steps"], 6)
+        # Exactly one action and one simulator step per loop iteration: the
+        # read-only observer adds nothing.
+        self.assertEqual(calls["n"], 6)
+        self.assertEqual(inner.steps, 6)
+        self.assertEqual(svc.session(sid)["episode_resets"], 1)
+        self.assertEqual(svc.session(sid)["env_instance_id"], 1)
+        # Guard off -> guard fields null, but the semantic observer still ran.
+        self.assertIsNone(job["grasp_guard_mode"])
+        self.assertEqual(job["semantic_spec_id"], wine_semantic.SPEC.spec_id)
+        self.assertEqual(job["semantic_observation_samples"], 6)
+        self.assertEqual(job["semantic_candidate_streak"], 6)
+        self.assertIs(job["native_wine_predicate"], False)
+        self.assertFalse(job["success"])
+        rows = self._rows(job)
+        self.assertEqual(len(rows), 6)
+        self.assertEqual([row["step"] for row in rows], [1, 2, 3, 4, 5, 6])
+
+    def test_nonwine_job_bypasses_the_observer(self):
+        svc, envs, calls = self._make("shadow")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+
+        def _boom(env):  # noqa: ARG001
+            raise AssertionError("the observer must never read a non-wine goal")
+
+        with mock.patch.object(wine_semantic, "read_wine_semantic", _boom):
+            submitted = self._submit(svc, sid, "req-bowl", ["bowl_to_plate"], budget=50)
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-bowl")
+        job = svc.job(plan["job_ids"][0])
+        self.assertTrue(job["success"])
+        for field in (
+            "semantic_spec_id",
+            "semantic_state",
+            "semantic_candidate_streak",
+            "semantic_success",
+            "native_wine_predicate",
+        ):
+            self.assertIsNone(job[field], field)
+        self.assertEqual(job["semantic_observation_samples"], 0)
+        self.assertFalse((Path(job["run_dir"]) / "semantic_status.jsonl").exists())
+
+    def test_fresh_tracker_per_job_and_no_cross_job_streak(self):
+        created: list = []
+
+        class _CountingTracker(wine_semantic.SemanticTracker):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                created.append(self)
+
+        svc, envs, calls = self._make("shadow")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        # Unspecified fake object-on-rack predicates must stay false (not flip
+        # true after the default three steps), keeping the production occupancy
+        # gate from spuriously satisfying the goal before the budget is spent.
+        inner.default_truth_at = 10 ** 9
+        sample = _wine_sample(standard_predicate=False, candidate=True)
+        with mock.patch.object(wine_semantic, "SemanticTracker", _CountingTracker), \
+             mock.patch.object(wine_semantic, "read_wine_semantic", lambda env: sample):
+            first = self._submit(svc, sid, "req-1", ["wine_to_rack"], budget=4)
+            self.assertTrue(first["ok"], first)
+            plan1 = self._wait(svc, "req-1")
+            job1 = svc.job(plan1["job_ids"][0])
+            second = self._submit(svc, sid, "req-2", ["wine_to_rack"], budget=4)
+            self.assertTrue(second["ok"], second)
+            plan2 = self._wait(svc, "req-2")
+            job2 = svc.job(plan2["job_ids"][0])
+        # One fresh tracker per wine job, and the streak never carries over.
+        self.assertEqual(len(created), 2)
+        # Both jobs must run their full four-step budget: the false unspecified
+        # occupancy predicate never terminates either job early.
+        self.assertEqual(job1["steps"], 4)
+        self.assertEqual(job2["steps"], 4)
+        self.assertEqual(job1["semantic_candidate_streak"], 4)
+        self.assertEqual(job2["semantic_candidate_streak"], 4)
+        self.assertEqual(job2["semantic_observation_samples"], 4)
+
+    def test_wine_observer_does_not_change_cancellation(self):
+        gate = threading.Event()
+        gate.set()
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        calls = {"n": 0}
+
+        def _factory(**kwargs):  # noqa: ARG001
+            return _FakeEnv(gate=gate)
+
+        def _action(batch):  # noqa: ARG001
+            calls["n"] += 1
+            gate.wait(timeout=15.0)
+            return np.zeros(7)
+
+        svc = service.SceneService(
+            run_root=tmp.name,
+            env_factory=_factory,
+            policy_loader=lambda s: setattr(s._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+            grasp_guard_mode="shadow",
+        )
+        svc.start()
+        self.addCleanup(gate.set)
+        self.addCleanup(svc.stop)
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not svc.health()["ready"]:
+            time.sleep(0.05)
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        svc._env._inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        sample = _wine_sample(candidate=True)
+        gate.clear()
+        with mock.patch.object(wine_semantic, "read_wine_semantic", lambda env: sample):
+            submitted = self._submit(svc, sid, "req-cancel", ["wine_to_rack"], budget=50)
+            self.assertTrue(submitted["ok"], submitted)
+            deadline = time.time() + 10.0
+            while time.time() < deadline and calls["n"] == 0:
+                time.sleep(0.02)
+            self.assertGreaterEqual(calls["n"], 1)
+            ack = svc.cancel_request("req-cancel", sid)
+            self.assertTrue(ack["ok"], ack)
+            self.assertEqual(ack["state"], "cancelling")
+            gate.set()
+            plan = self._wait(svc, "req-cancel")
+        self.assertEqual(plan["state"], "cancelled", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertEqual(job["state"], "cancelled")
+        self.assertEqual(job["ended_reason"], "cancelled")
+        # The sampled action was never stepped and the observer never fabricated.
+        self.assertEqual(svc._env._inner.steps, 0)
+        self.assertIsNone(job["semantic_state"])
+        self.assertEqual(job["semantic_observation_samples"], 0)
+
+
+class GraspGuardCliTests(unittest.TestCase):
+    """``--grasp-guard-mode`` parsing, with a fake service constructor only."""
+
+    def _run_main(self, argv):
+        seen: dict = {}
+
+        class _FakeService:
+            def __init__(self, model, run_root, **kwargs):
+                seen["model"] = model
+                seen["run_root"] = run_root
+                seen["kwargs"] = kwargs
+
+            def start(self):
+                seen["started"] = True
+
+            def stop(self):
+                seen["stopped"] = True
+
+        class _FakeServer:
+            def __init__(self, address, handler):  # noqa: ARG002
+                seen["address"] = address
+
+            def serve_forever(self, poll_interval=0.5):  # noqa: ARG002
+                seen["served"] = True
+
+            def server_close(self):
+                seen["closed"] = True
+
+            def shutdown(self):
+                pass
+
+        with mock.patch.object(service, "SceneService", _FakeService), \
+             mock.patch.object(service, "_Server", _FakeServer), \
+             mock.patch.object(service.signal, "signal", lambda *a, **k: None):
+            rc = service.main(argv)
+        return rc, seen
+
+    def test_default_guard_mode_is_shadow(self):
+        rc, seen = self._run_main([])
+        self.assertEqual(rc, 0)
+        self.assertEqual(seen["kwargs"]["grasp_guard_mode"], "shadow")
+        self.assertTrue(seen["started"])
+        self.assertTrue(seen["served"])
+        self.assertTrue(seen["closed"])
+
+    def test_all_guard_mode_choices_are_accepted(self):
+        for mode in ("off", "shadow", "enforce"):
+            rc, seen = self._run_main(["--grasp-guard-mode", mode])
+            self.assertEqual(rc, 0)
+            self.assertEqual(seen["kwargs"]["grasp_guard_mode"], mode)
+
+    def test_unknown_guard_mode_is_rejected(self):
+        with self.assertRaises(SystemExit):
+            self._run_main(["--grasp-guard-mode", "loud"])
 
 
 if __name__ == "__main__":

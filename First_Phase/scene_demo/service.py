@@ -56,6 +56,7 @@ if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
 
 import catalog  # noqa: E402
+import grasp_guard  # noqa: E402
 import oracle  # noqa: E402
 import placement_completion  # noqa: E402
 
@@ -128,6 +129,27 @@ WORKER_WAIT_S = 60.0
 COMPLETION_MODES = ("native", "release_verified")
 DEFAULT_COMPLETION_MODE = "native"
 
+# Wine-only grasp guard.  ``off`` disables it entirely, ``shadow`` records the
+# guard status without ever changing the run, and ``enforce`` lets a confirmed
+# ghost-grasp failure stop the wine job before the next VLA inference.  The guard
+# applies to exactly one literal goal (the wine bottle onto the wine rack).
+GRASP_GUARD_MODES = ("off", "shadow", "enforce")
+DEFAULT_GRASP_GUARD_MODE = "shadow"
+GRASP_GUARD_CAPABILITY_ID = "wine_to_rack"
+GRASP_GUARD_OBJECT_ID = grasp_guard.WINE_OBJECT_ID
+GRASP_GUARD_GOAL_KEY = grasp_guard.WINE_GOAL_KEY
+
+# Wine-only semantic observer.  It is deliberately *independent* of the grasp
+# guard mode: it screens exactly one literal capability (the wine bottle onto
+# the wine rack), records one raw read-only sample plus the tracker status per
+# real policy action step, and never changes a run (no action, step, reset or
+# success is ever altered).  The semantic module is imported lazily because it
+# imports this ``service`` module in turn.
+WINE_SEMANTIC_CAPABILITY_ID = "wine_to_rack"
+WINE_SEMANTIC_OBJECT_ID = "wine_bottle_1"
+WINE_SEMANTIC_GOAL_KEY = "on|wine_bottle_1|wine_rack_1_top_region"
+SEMANTIC_STATUS_FILENAME = "semantic_status.jsonl"
+
 VIEW_AGENTVIEW = "agentview"
 VIEW_WRIST = "wrist"
 EXTRA_VIEW_CANDIDATES = ("frontview", "birdview", "sideview")
@@ -187,6 +209,47 @@ def _sha256_file(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def _wine_semantic_module() -> Any:
+    """Lazily import the sibling ``wine_semantic`` module.
+
+    ``wine_semantic`` imports this module (to reuse ``_inner_env``), so the
+    import is deferred to call time to avoid an import cycle.  It is a named
+    seam so the fixed integration can be exercised by the GPU-free tests
+    without importing any simulator module first.
+    """
+
+    import wine_semantic
+
+    return wine_semantic
+
+
+def _wine_semantic_unknown_sample(module: Any = None) -> dict[str, Any]:
+    """The exact fail-closed unknown sample shape the semantic tracker accepts.
+
+    It mirrors ``wine_semantic``'s own null sample (an *incomplete* all-object
+    observation), so ``score_wine_semantic`` returns ``None`` ("unknown") and
+    ``SemanticTracker.update`` resets its streak.  Missing evidence is therefore
+    never scored as a success, and the fixed spec identity fields are pulled
+    from the module when it is available.
+    """
+
+    spec = getattr(module, "SPEC", None)
+    return {
+        "spec_id": getattr(spec, "spec_id", None),
+        "object_id": getattr(spec, "object_id", None),
+        "target_id": getattr(spec, "target_id", None),
+        "rack_contact": None,
+        "support_contact": None,
+        "linear_speed": None,
+        "angular_speed": None,
+        "held_objects": None,
+        "observation_complete": False,
+        "standard_predicate": None,
+        "semantic_candidate": None,
+        "contacts": [],
+    }
 
 
 # --- errors and result helpers ----------------------------------------------
@@ -989,6 +1052,22 @@ class JobRecord:
         self.held_objects: list[str] | None = None
         self.grasp_observation_complete: bool | None = None
         self.completion_ready: bool | None = None
+        # Wine-only grasp guard evidence.  All three stay ``None`` unless the
+        # guard actually applied to this job (wine capability + mode != off).
+        self.grasp_guard_mode: str | None = None
+        self.grasp_stage: str | None = None
+        self.grasp_guard_status: dict | None = None
+        # Wine-only semantic observer evidence.  Scalar summaries only (no
+        # coordinates, contacts or forces are ever exposed here); the raw sample
+        # lives exclusively in the private ``semantic_status.jsonl``.  Every
+        # field except the sample counter stays ``None`` for a disabled/non-wine
+        # job, and an already-satisfied zero-step job never fabricates one.
+        self.semantic_spec_id: str | None = None
+        self.semantic_state: str | None = None
+        self.semantic_candidate_streak: int | None = None
+        self.semantic_success: bool | None = None
+        self.native_wine_predicate: bool | None = None
+        self.semantic_observation_samples: int = 0
         self._t0: float | None = None
 
     def public(self) -> dict[str, Any]:
@@ -1018,6 +1097,17 @@ class JobRecord:
             "held_objects": list(self.held_objects) if self.held_objects is not None else None,
             "grasp_observation_complete": self.grasp_observation_complete,
             "completion_ready": self.completion_ready,
+            "grasp_guard_mode": self.grasp_guard_mode,
+            "grasp_stage": self.grasp_stage,
+            "grasp_guard_status": (
+                dict(self.grasp_guard_status) if isinstance(self.grasp_guard_status, dict) else None
+            ),
+            "semantic_spec_id": self.semantic_spec_id,
+            "semantic_state": self.semantic_state,
+            "semantic_candidate_streak": self.semantic_candidate_streak,
+            "semantic_success": self.semantic_success,
+            "native_wine_predicate": self.native_wine_predicate,
+            "semantic_observation_samples": self.semantic_observation_samples,
             "run_dir": str(self.run_dir),
             "latest_png": self.latest_png,
             "rollout_path": self.rollout_path,
@@ -1046,16 +1136,25 @@ class SceneService:
         action_function: Any = None,
         batch_builder: Any = None,
         completion_mode: str = DEFAULT_COMPLETION_MODE,
+        grasp_guard_mode: str = DEFAULT_GRASP_GUARD_MODE,
     ) -> None:
         if completion_mode not in COMPLETION_MODES:
             raise ValueError(
                 "completion_mode must be one of %s, got %r"
                 % (list(COMPLETION_MODES), completion_mode)
             )
+        if grasp_guard_mode not in GRASP_GUARD_MODES:
+            raise ValueError(
+                "grasp_guard_mode must be one of %s, got %r"
+                % (list(GRASP_GUARD_MODES), grasp_guard_mode)
+            )
         self.model_path = str(model_path)
         self.run_root = Path(run_root)
         # The actual completion gate; jobs inherit it verbatim.
         self.completion_mode = completion_mode
+        # The wine-only grasp guard mode; ``shadow`` is the default and never
+        # changes a run, ``enforce`` may stop a ghost-grasp wine job.
+        self.grasp_guard_mode = grasp_guard_mode
 
         self._lock = threading.RLock()
         # The worker holds this single lock across the post-inference
@@ -1139,6 +1238,7 @@ class SceneService:
                 "control_mode": CONTROL_MODE,
                 "session_step_limit": SESSION_STEP_LIMIT,
                 "completion_mode": self.completion_mode,
+                "grasp_guard_mode": self.grasp_guard_mode,
                 "active_request_id": active.request_id if active is not None else None,
             }
 
@@ -1360,6 +1460,222 @@ class SceneService:
             values = (None, None, None)
         with self._lock:
             job.held_objects, job.grasp_observation_complete, job.completion_ready = values
+
+    # -- wine-only grasp guard (worker thread only) ---------------------------
+
+    def _grasp_guard_applies(self, capability_id: str, capability: dict) -> bool:
+        """Whether the wine-only grasp guard screens this capability.
+
+        It applies to exactly one literal goal: the ``wine_to_rack`` capability
+        whose declared object is ``wine_bottle_1`` and whose goal key is
+        ``on|wine_bottle_1|wine_rack_1_top_region``.  Every other capability
+        (and mode ``off``) bypasses the guard entirely.
+        """
+
+        if self.grasp_guard_mode == "off":
+            return False
+        if capability_id != GRASP_GUARD_CAPABILITY_ID:
+            return False
+        if capability.get("object_id") != GRASP_GUARD_OBJECT_ID:
+            return False
+        keys = {catalog.goal_key(goal) for goal in (capability.get("goals") or [])}
+        return GRASP_GUARD_GOAL_KEY in keys
+
+    def _grasp_probe(self, env: Any) -> dict:
+        """Read one read-only wine probe; a failed read stays fully unknown."""
+
+        try:
+            return grasp_guard.read_probe(env, GRASP_GUARD_OBJECT_ID, GRASP_GUARD_GOAL_KEY)
+        except Exception:  # noqa: BLE001 - an unavailable probe is never a False
+            return {
+                "objects": {GRASP_GUARD_OBJECT_ID: {"position": None, "grasped": None}},
+                "eef_position": None,
+                "predicates": {GRASP_GUARD_GOAL_KEY: None},
+                "gripper_qpos": None,
+                "gap": None,
+            }
+
+    # -- wine-only semantic observer (worker thread only) ---------------------
+
+    def _wine_semantic_applies(self, capability_id: str, capability: dict) -> bool:
+        """Whether the wine semantic observer screens this capability.
+
+        Exactly one literal goal: the ``wine_to_rack`` capability whose declared
+        object is the literal ``wine_bottle_1`` and whose goal key is
+        ``on|wine_bottle_1|wine_rack_1_top_region``.  This is independent of the
+        grasp guard mode -- the observer stays active even when the guard is
+        ``off`` -- and every other capability bypasses it entirely.
+        """
+
+        if capability_id != WINE_SEMANTIC_CAPABILITY_ID:
+            return False
+        if capability.get("object_id") != WINE_SEMANTIC_OBJECT_ID:
+            return False
+        keys = {catalog.goal_key(goal) for goal in (capability.get("goals") or [])}
+        return WINE_SEMANTIC_GOAL_KEY in keys
+
+    def _start_wine_semantic(self, job: JobRecord) -> tuple[Any, Any]:
+        """Create one fresh tracker and one private telemetry handle per job.
+
+        The semantic module (and therefore ``SemanticTracker``) is imported
+        lazily on the worker; if it is unavailable the tracker stays ``None`` and
+        the job's semantic scalars remain honestly unknown.  The telemetry handle
+        is opened ``"w"`` on the worker thread only and is always closed in
+        ``_run_capability``'s ``finally``.  A handle that cannot be opened stays
+        ``None`` so the observer reports unknown instead of faking rows.
+        """
+
+        module = None
+        tracker = None
+        spec_id = None
+        try:
+            module = _wine_semantic_module()
+            tracker = module.SemanticTracker()
+            spec_id = str(module.SPEC.spec_id)
+        except Exception as exc:  # noqa: BLE001 - an unavailable observer is unknown
+            log("wine semantic observer unavailable: %s" % exc)
+        with self._lock:
+            job.semantic_spec_id = spec_id
+        handle = None
+        try:
+            handle = open(job.run_dir / SEMANTIC_STATUS_FILENAME, "w", encoding="utf-8")
+        except Exception as exc:  # noqa: BLE001 - telemetry is best-effort only
+            log("wine semantic telemetry open failed: %s" % exc)
+            handle = None
+        return tracker, handle
+
+    @staticmethod
+    def _tracker_update(tracker: Any, sample: Any) -> dict | None:
+        """One guarded ``SemanticTracker.update``; a failed update is unknown."""
+
+        try:
+            result = tracker.update(sample)
+        except Exception:  # noqa: BLE001 - a failed tracker is unknown evidence
+            return None
+        return result if isinstance(result, dict) else None
+
+    def _publish_wine_semantic(
+        self, job: JobRecord, *, spec_id: str | None, status: dict | None,
+        native: bool | None, increment: bool,
+    ) -> None:
+        """Publish the scalar semantic summary onto ``job`` under the lock.
+
+        Only scalars are written; the raw sample never leaves the private
+        telemetry file.  ``status`` ``None`` is reported as an explicit unknown.
+        """
+
+        if isinstance(status, dict):
+            state = status.get("state")
+            state = str(state) if state is not None else "unknown"
+            raw_streak = status.get("candidate_streak")
+            streak = raw_streak if isinstance(raw_streak, int) and not isinstance(raw_streak, bool) else None
+            raw_success = status.get("semantic_success")
+            success = raw_success if isinstance(raw_success, bool) else None
+        else:
+            state, streak, success = "unknown", 0, None
+        with self._lock:
+            job.semantic_spec_id = spec_id
+            job.semantic_state = state
+            job.semantic_candidate_streak = streak
+            job.semantic_success = success
+            job.native_wine_predicate = native
+            if increment:
+                job.semantic_observation_samples = int(job.semantic_observation_samples or 0) + 1
+
+    def _update_wine_semantic(self, job: JobRecord, env: Any, tracker: Any,
+                              step: int, handle: Any) -> None:
+        """Observe one read-only wine semantic sample and publish its scalars.
+
+        Observer only: it never steps/resets/forwards the simulator and never
+        touches the action array, the step counters, cancellation, the standard
+        completion gate or ``job.success``.  The raw sample plus the tracker
+        status (with the step) is written exactly once per *actual policy action
+        step* on a successful observation/write; a failed probe or telemetry
+        write feeds an explicit unknown sample into the tracker (resetting the
+        streak) and publishes ``unknown`` rather than fabricating a success or a
+        row.  No cross-job state exists: the caller owns one tracker per job.
+        """
+
+        module = None
+        try:
+            module = _wine_semantic_module()
+        except Exception:  # noqa: BLE001 - an unavailable module stays unknown
+            module = None
+
+        spec_id = None
+        try:
+            spec_id = str(module.SPEC.spec_id) if module is not None else None
+        except Exception:  # noqa: BLE001
+            spec_id = None
+
+        unknown = _wine_semantic_unknown_sample(module)
+
+        observed = False
+        sample = unknown
+        if module is not None:
+            try:
+                candidate = module.read_wine_semantic(env)
+            except Exception:  # noqa: BLE001 - a failed probe is unknown, never False
+                candidate = None
+            if isinstance(candidate, dict):
+                sample = candidate
+                observed = True
+
+        native = None
+        if observed:
+            value = sample.get("standard_predicate")
+            if value is True or value is False:
+                native = bool(value)
+
+        if not observed:
+            # Missing probe evidence: reset the streak and publish unknown.
+            status = self._tracker_update(tracker, unknown)
+            self._publish_wine_semantic(
+                job, spec_id=spec_id, status=status, native=None, increment=False
+            )
+            return
+
+        status = self._tracker_update(tracker, sample)
+        if status is None:
+            status = self._tracker_update(tracker, unknown)
+            self._publish_wine_semantic(
+                job, spec_id=spec_id, status=status, native=None, increment=False
+            )
+            return
+
+        written = False
+        if handle is not None:
+            try:
+                handle.write(
+                    json.dumps(
+                        {
+                            "step": int(step),
+                            "semantic_state": status.get("state"),
+                            "semantic_candidate_streak": status.get("candidate_streak"),
+                            "semantic_success": status.get("semantic_success"),
+                            "native_wine_predicate": native,
+                            "sample": sample,
+                        }
+                    )
+                    + "\n"
+                )
+                handle.flush()
+                written = True
+            except Exception:  # noqa: BLE001 - telemetry failure stays passive
+                written = False
+
+        if not written:
+            # The row could not be persisted: never fake it -- reset the streak
+            # with an explicit unknown sample and expose unknown.
+            status = self._tracker_update(tracker, unknown)
+            self._publish_wine_semantic(
+                job, spec_id=spec_id, status=status, native=None, increment=False
+            )
+            return
+
+        self._publish_wine_semantic(
+            job, spec_id=spec_id, status=status, native=native, increment=True
+        )
 
     # -- environment construction --------------------------------------------
 
@@ -2155,6 +2471,14 @@ class SceneService:
         ended_reason: str | None = None
         error_text: str | None = None
         last_completion_phase: str | None = None
+        # Wine-only grasp guard state (None when the guard does not apply).
+        guard_monitor: Any = None
+        guard_stopped = False
+        # Wine-only semantic observer state (None when it does not apply).  One
+        # fresh tracker and one private telemetry handle per wine job; both are
+        # created lazily on the worker and the handle is closed in ``finally``.
+        wine_semantic_tracker: Any = None
+        wine_semantic_handle: Any = None
 
         with self._lock:
             job.state = "running"
@@ -2194,6 +2518,23 @@ class SceneService:
             if isinstance(initial_status, dict):
                 last_completion_phase = initial_status.get("phase")
             self._apply_completion_probe(job, initial_status)
+            # Wine-only grasp guard: capture ONE read-only initial probe and start
+            # a fresh monitor BEFORE any policy inference.  The guard never feeds
+            # the policy and never modifies the simulator; in ``shadow`` it only
+            # records, in ``enforce`` it may stop a ghost-grasp wine job.
+            if self._grasp_guard_applies(capability_id, capability):
+                guard_monitor = grasp_guard.GraspMonitor()
+                guard_status = guard_monitor.start(self._grasp_probe(env))
+                with self._lock:
+                    job.grasp_guard_mode = self.grasp_guard_mode
+                    job.grasp_stage = guard_status.get("stage")
+                    job.grasp_guard_status = guard_status
+            # Wine-only semantic observer: an independent, read-only screen that
+            # is active even when the grasp guard is ``off``.  It owns exactly
+            # one fresh tracker and one private telemetry handle per wine job and
+            # never changes the run (it only reads the simulator).
+            if self._wine_semantic_applies(capability_id, capability):
+                wine_semantic_tracker, wine_semantic_handle = self._start_wine_semantic(job)
             # Release-verified handoff guard: with non-empty declared placement
             # goals, an unknown grasp screen or a foreign held object physically
             # blocks the job BEFORE any env.step.  These are expected physical
@@ -2287,6 +2628,27 @@ class SceneService:
                             last_completion_phase = completion_phase
                             self._apply_completion_probe(job, status)
                             consecutive = consecutive + 1 if completion_ready else 0
+                            # Wine-only grasp guard: screen this real action's
+                            # sent gripper command against a read-only probe.
+                            guard_should_stop = False
+                            if guard_monitor is not None:
+                                sent_flat = np.asarray(send, dtype=np.float64).reshape(-1)
+                                command = float(sent_flat[-1]) if sent_flat.size else 0.0
+                                guard_status = guard_monitor.update(
+                                    step, self._grasp_probe(env), command
+                                )
+                                guard_should_stop = bool(guard_status.get("should_stop"))
+                                with self._lock:
+                                    job.grasp_stage = guard_status.get("stage")
+                                    job.grasp_guard_status = guard_status
+                            # Wine-only semantic observer: one read-only sample per
+                            # real action step, immediately after the step.  It is
+                            # an observer only -- it never affects the action, the
+                            # step counter, cancellation or the standard result.
+                            if wine_semantic_tracker is not None:
+                                self._update_wine_semantic(
+                                    job, env, wine_semantic_tracker, step, wine_semantic_handle
+                                )
                             events_file.write(
                                 json.dumps(
                                     {
@@ -2298,6 +2660,16 @@ class SceneService:
                                         "completion_mode": self.completion_mode,
                                         "completion_ready": bool(completion_ready),
                                         "completion_phase": completion_phase,
+                                        "grasp_guard_mode": job.grasp_guard_mode,
+                                        "grasp_stage": job.grasp_stage,
+                                        "grasp_guard_status": job.grasp_guard_status,
+                                        # Scalar semantic summaries only; the raw
+                                        # sample stays in semantic_status.jsonl.
+                                        "semantic_state": job.semantic_state,
+                                        "semantic_candidate_streak": job.semantic_candidate_streak,
+                                        "semantic_success": job.semantic_success,
+                                        "native_wine_predicate": job.native_wine_predicate,
+                                        "semantic_observation_samples": job.semantic_observation_samples,
                                     }
                                 )
                                 + "\n"
@@ -2317,8 +2689,23 @@ class SceneService:
                                 success = True
                                 ended_reason = "success"
                                 break
+                            if guard_should_stop and self.grasp_guard_mode == "enforce":
+                                # Enforce only: stop the wine job BEFORE the next
+                                # VLA inference.  This is neither a cancellation,
+                                # an operational error nor a success -- the job
+                                # simply reports the physical ghost-grasp failure
+                                # and the plan blocks (skipping following goals).
+                                success = False
+                                ended_reason = "failed_grasp"
+                                guard_stopped = True
+                                break
                         else:
                             ended_reason = ended_reason or "budget_exhausted"
+                        if guard_stopped:
+                            # The guard stopped the job at a capability boundary;
+                            # drop the stale capability-scoped policy queues (never
+                            # the environment: no reset, no rebuild).
+                            self._reset_policy_queues()
         except SceneError as exc:
             ended_reason = exc.reason
             error_text = exc.detail or exc.reason
@@ -2328,6 +2715,13 @@ class SceneService:
         finally:
             wall_s = round(time.monotonic() - started, 3)
             cancelled = ended_reason == "cancelled"
+            # Close the wine semantic telemetry handle uniformly, whatever
+            # happened above; a close failure never affects the standard result.
+            if wine_semantic_handle is not None:
+                try:
+                    wine_semantic_handle.close()
+                except Exception:  # noqa: BLE001
+                    pass
             try:
                 after_sha = state_sha(self._env) if self._env is not None else None
             except Exception:  # noqa: BLE001
@@ -2680,9 +3074,21 @@ def main(argv: list[str] | None = None) -> int:
         default=DEFAULT_COMPLETION_MODE,
         help="completion gate: native (predicate-only) or release_verified",
     )
+    parser.add_argument(
+        "--grasp-guard-mode",
+        type=str,
+        choices=list(GRASP_GUARD_MODES),
+        default=DEFAULT_GRASP_GUARD_MODE,
+        help="wine-only grasp guard: off, shadow (default, records only) or enforce",
+    )
     args = parser.parse_args(argv)
 
-    service = SceneService(args.model, args.run_root, completion_mode=args.completion_mode)
+    service = SceneService(
+        args.model,
+        args.run_root,
+        completion_mode=args.completion_mode,
+        grasp_guard_mode=args.grasp_guard_mode,
+    )
     service.start()
 
     httpd = _Server((args.host, args.port), _Handler)

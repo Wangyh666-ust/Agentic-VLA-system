@@ -681,6 +681,153 @@ async function testSinglePollingChain() {
     pendingTickTimers() === 1, 'pending=' + pendingTickTimers());
 }
 
+// --------------------------------------------------------------------------- //
+// actual renderSubgoals diagnostics (grasp phase / stopping reason + wine rubric)
+// --------------------------------------------------------------------------- //
+// Runs the *actual* renderSubgoals(plan, jobs) and returns the committed table HTML.
+function renderSubgoalsHtml(plan, jobs) {
+  run('globalThis.__sgPlan = ' + JSON.stringify(plan) + ';' +
+      'globalThis.__sgJobs = ' + JSON.stringify(jobs) + ';' +
+      'currentSession = {capabilities: []};' +
+      'renderSubgoals(globalThis.__sgPlan, globalThis.__sgJobs);');
+  return run('document.getElementById("subgoals").innerHTML');
+}
+
+function sgPlan(caps) {
+  return {
+    capability_ids: caps,
+    completed_capability_ids: [],
+    pending_capability_ids: [],
+    state: 'completed',
+    decision: 'execute',
+    plan_success: false,
+  };
+}
+
+async function testRenderSubgoalsDiagnostics() {
+  // 1. enforce failed grasp -> task stopped (Chinese label).
+  const enforce = renderSubgoalsHtml(sgPlan(['wine_to_rack']), [
+    {job_id: 'j1', capability_id: 'wine_to_rack', state: 'completed', success: false,
+     ended_reason: 'failed_grasp', grasp_guard_mode: 'enforce'}
+  ]);
+  check('renderSubgoals: enforce failed_grasp is labelled task stopped',
+    enforce.indexOf('未抓起，任务已停止') !== -1, enforce);
+
+  // 2. shadow failed grasp -> observation mode, never claims stopped.
+  const shadow = renderSubgoalsHtml(sgPlan(['wine_to_rack']), [
+    {job_id: 'j1', capability_id: 'wine_to_rack', state: 'completed', success: false,
+     ended_reason: 'failed_grasp', grasp_guard_mode: 'shadow'}
+  ]);
+  check('renderSubgoals: shadow failed_grasp is observation mode and never stopped',
+    shadow.indexOf('检测到未抓起（观察模式）') !== -1 &&
+    shadow.indexOf('未抓起，任务已停止') === -1, shadow);
+
+  // 3. grasp_confirmed is a past confirmation, not a current hold.
+  const confirmed = renderSubgoalsHtml(sgPlan(['wine_to_rack']), [
+    {job_id: 'j1', capability_id: 'wine_to_rack', state: 'completed', success: true,
+     grasp_stage: 'grasp_confirmed', grasp_guard_mode: 'enforce'}
+  ]);
+  check('renderSubgoals: grasp_confirmed shown as past confirmation',
+    confirmed.indexOf('已确认抓起过') !== -1, confirmed);
+
+  // 4. attempting / unknown native grasp stages.
+  const stages = renderSubgoalsHtml(sgPlan(['wine_to_rack']), [
+    {job_id: 'j1', capability_id: 'wine_to_rack', state: 'running', success: null,
+     grasp_stage: 'attempting'},
+    {job_id: 'j2', capability_id: 'wine_to_rack', state: 'running', success: null,
+     grasp_stage: 'unknown'}
+  ]);
+  check('renderSubgoals: attempting maps to trying to grasp',
+    stages.indexOf('正在尝试抓取') !== -1, stages);
+  check('renderSubgoals: unknown maps to awaiting confirmation',
+    stages.indexOf('抓取状态待确认') !== -1, stages);
+
+  // 5. native miss + valid semantic true: dual display while job.success stays false.
+  const dual = renderSubgoalsHtml(sgPlan(['wine_to_rack']), [
+    {job_id: 'j1', capability_id: 'wine_to_rack', state: 'completed', success: false,
+     native_wine_predicate: false, semantic_spec_id: 'semantic_wine_rack_v1',
+     semantic_success: true, semantic_observation_samples: 3,
+     semantic_candidate_streak: 2, semantic_state: 'released'}
+  ]);
+  check('renderSubgoals: native miss + semantic true dual display',
+    dual.indexOf('未命中') !== -1 &&
+    dual.indexOf('已松手并稳定支撑在架子上') !== -1 &&
+    dual.indexOf('语义达成，标准区域未命中') !== -1, dual);
+  check('renderSubgoals: semantic success never promotes job.success',
+    dual.indexOf('class="bad-text">false') !== -1, dual);
+
+  // 6. null native / null spec -> cannot confirm yet, never a false failure.
+  const unknown = renderSubgoalsHtml(sgPlan(['wine_to_rack']), [
+    {job_id: 'j1', capability_id: 'wine_to_rack', state: 'completed', success: null,
+     native_wine_predicate: null, semantic_spec_id: null}
+  ]);
+  check('renderSubgoals: null native/spec shows cannot-confirm, not false failure',
+    unknown.indexOf('尚无法确认') !== -1 &&
+    unknown.indexOf('未命中') === -1 &&
+    unknown.indexOf('尚未满足') === -1, unknown);
+
+  // 7. wine before any sample -> still unknown.
+  const noSample = renderSubgoalsHtml(sgPlan(['wine_to_rack']), [
+    {job_id: 'j1', capability_id: 'wine_to_rack', state: 'running', success: null,
+     native_wine_predicate: true, semantic_spec_id: 'semantic_wine_rack_v1',
+     semantic_success: null, semantic_observation_samples: 0}
+  ]);
+  check('renderSubgoals: wine with no samples yet stays unknown',
+    noSample.indexOf('尚无法确认') !== -1 &&
+    noSample.indexOf('已松手并稳定支撑在架子上') === -1, noSample);
+
+  // 8. non-wine job bypasses wine diagnostics (disabled, never a false failure).
+  const nonWine = renderSubgoalsHtml(sgPlan(['stack_block']), [
+    {job_id: 'j1', capability_id: 'stack_block', state: 'completed', success: false}
+  ]);
+  check('renderSubgoals: non-wine bypasses wine diagnostics without false failure',
+    nonWine.indexOf('未启用') !== -1 &&
+    nonWine.indexOf('未命中') === -1 &&
+    nonWine.indexOf('尚无法确认') === -1, nonWine);
+
+  // 9. unknown spec cannot claim semantic success.
+  const badSpec = renderSubgoalsHtml(sgPlan(['wine_to_rack']), [
+    {job_id: 'j1', capability_id: 'wine_to_rack', state: 'completed', success: false,
+     native_wine_predicate: false, semantic_spec_id: 'other_spec',
+     semantic_success: true, semantic_observation_samples: 5}
+  ]);
+  check('renderSubgoals: unknown spec cannot claim semantic success',
+    badSpec.indexOf('已松手并稳定支撑在架子上') === -1 &&
+    badSpec.indexOf('尚无法确认') !== -1, badSpec);
+}
+
+async function testRenderSubgoalsEscapeAndCounters() {
+  // Malicious dynamic strings must be escaped, never rendered as raw HTML.
+  const evil = renderSubgoalsHtml(sgPlan(['wine_to_rack']), [
+    {job_id: '<img src=x onerror=alert(1)>', capability_id: 'wine_to_rack',
+     state: 'completed', success: null,
+     grasp_stage: '<img src=x onerror=alert(1)>',
+     ended_reason: '<script>bad</script>',
+     native_wine_predicate: null,
+     semantic_spec_id: 'semantic_wine_rack_v1',
+     semantic_success: false, semantic_observation_samples: 2,
+     semantic_state: '<b>evil</b>'}
+  ]);
+  check('renderSubgoals: dynamic strings are escaped (no raw HTML injection)',
+    evil.indexOf('<img') === -1 && evil.indexOf('<script>bad') === -1 &&
+    evil.indexOf('<b>evil') === -1 &&
+    evil.indexOf('&lt;img') !== -1 && evil.indexOf('&lt;script&gt;bad') !== -1 &&
+    evil.indexOf('&lt;b&gt;evil') !== -1, evil);
+  check('renderSubgoals: valid sample counter is displayed',
+    evil.indexOf('样本 2') !== -1, evil);
+
+  // Invalid counters (negative / non-integer) must render as '-', never the raw value.
+  const badCounters = renderSubgoalsHtml(sgPlan(['wine_to_rack']), [
+    {job_id: 'j1', capability_id: 'wine_to_rack', state: 'running', success: null,
+     native_wine_predicate: null, semantic_spec_id: 'semantic_wine_rack_v1',
+     semantic_success: null, semantic_observation_samples: -4,
+     semantic_candidate_streak: 1.5}
+  ]);
+  check('renderSubgoals: invalid counters render as dash, not the raw value',
+    badCounters.indexOf('样本 -') !== -1 && badCounters.indexOf('-4') === -1 &&
+    badCounters.indexOf('1.5') === -1, badCounters);
+}
+
 (async function main() {
   testStaticMarkup();
   await testVideoRetention();
@@ -694,6 +841,8 @@ async function testSinglePollingChain() {
   await testStopFlow();
   await testStopResponseOwnershipRaces();
   await testPollCurrentStopRunmsgRefresh();
+  await testRenderSubgoalsDiagnostics();
+  await testRenderSubgoalsEscapeAndCounters();
   if (failures) {
     console.error(failures + ' frontend contract test(s) failed');
     process.exit(1);
