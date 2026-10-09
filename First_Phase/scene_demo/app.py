@@ -48,8 +48,8 @@ APP_DIR = os.path.dirname(os.path.abspath(__file__))
 RUN_AGENT = os.path.join(APP_DIR, "run_agent.py")
 PYTHON = sys.executable
 
-SERVICE_BASE = "http://127.0.0.1:8767"
-RUNS_DIR = "/home/yhwang/fyp/scene_demo/runs"
+SERVICE_BASE = os.environ.get("SCENE_SERVICE_URL", "http://127.0.0.1:8767").rstrip("/")
+RUNS_DIR = os.environ.get("SCENE_RUNS_DIR", "/home/yhwang/fyp/scene_demo/runs")
 FRONTEND_ID = "scene_demo_frontend"
 
 MAX_BODY = 65536

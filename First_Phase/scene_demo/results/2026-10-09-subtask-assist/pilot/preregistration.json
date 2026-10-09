@@ -1,0 +1,90 @@
+{
+  "plan": [
+    [
+      2,
+      "disabled"
+    ],
+    [
+      2,
+      "enabled"
+    ],
+    [
+      3,
+      "disabled"
+    ],
+    [
+      3,
+      "enabled"
+    ]
+  ],
+  "gold": [
+    [
+      "on",
+      "akita_black_bowl_1",
+      "plate_1"
+    ],
+    [
+      "on",
+      "wine_bottle_1",
+      "wine_rack_1_top_region"
+    ]
+  ],
+  "protected_stove_goal": [
+    "not",
+    "turnon",
+    "flat_stove_1"
+  ],
+  "cheese_tolerance_m": 0.005,
+  "strict_post_action_samples": 5,
+  "scene": "goal_table",
+  "env_seed": 0,
+  "init_state_index": 0,
+  "model_seeds": {
+    "2": 2,
+    "3": 3
+  },
+  "budget_per_subgoal": 500,
+  "prepare_max_actions": 200,
+  "profile": "baseline_bf16",
+  "profile_config": {
+    "use_amp": true,
+    "num_steps": 10,
+    "n_action_steps": 1
+  },
+  "checkpoint_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+  "completion_mode": "release_verified",
+  "grasp_guard_mode": "shadow",
+  "source_sha256": {
+    "subtask_context.py": "7bbb5679a8b1ead97bbae5f933ea0578f6b518be7d45383f62c4f4ac26625c2e",
+    "subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "subtask_preparation.py": "e1ad80964d9bba4f63633a92cde7acabe6c726b39dc063ccf07b50ccb77906e8",
+    "subtask_assist_service.py": "e36e38c48d88e81209ab62e6c7cd9d0453c36234161faa49f7fe86ebdbb079ff",
+    "test_subtask_assist.py": "b0e328bb0466d0229d7dd04e38dd73ecd12eca54be72d0e6079eb80fbfd249a8"
+  },
+  "input_sha256": {
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/action_sources.jsonl.gz": "7f9eb55c35ecf515a9a357298d82d113b1865a8092848b6851069225394be777",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/result.json": "687a5ac37a795cc3977b6ef7f7f26f083d0f40c3fbccc907b2b3a290be2ae344",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_03/job_01/action_sources.jsonl.gz": "28e71e65df23f410ce9a0fad3dee7791ef35b78057cdad925f4b37f92299d0d0",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_03/job_01/result.json": "0f9e94981369282e6987bb75097681cda9f927153190bf6d3b23e605cc37c996"
+  },
+  "script_sha256": "d78196216d05f0e9bd59b568b6ea4dedd252c7d82184e8ca74dab99ce44e8a9e",
+  "gate_inputs": {
+    "profiles": {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/subtask_assist_profiles.json",
+      "sha256": "af2dba656f02c2a6c5cc1d6056ec2d0047b5a182b61b9d028854e5a787ccc6a2"
+    },
+    "preflight": {
+      "path": "/mnt/d/FYP/First_Phase/tmp/subtask_assist_pilot_preflight.json",
+      "sha256": "e62cdd753b7786a5ce310e13eda1e9b87a30f188924dafc7e4348834fe3ba148"
+    },
+    "software_proof": {
+      "path": "/mnt/d/FYP/First_Phase/tmp/subtask_assist_software_final3.json",
+      "sha256": "1bdb7f08cc94b3e2016ae04e7f984871b30301bd815835eca2dc43e30269d973"
+    }
+  },
+  "new_hermes_calls": 0,
+  "reused_old_hermes_plan": true,
+  "max_new_jobs": 4,
+  "retries": 0,
+  "limitations": "Two recorded handoff states; descriptive same-state comparisons, no training or general success rate."
+}

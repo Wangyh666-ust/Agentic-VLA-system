@@ -56,11 +56,11 @@ import uuid
 from datetime import datetime, timezone
 from types import SimpleNamespace
 
-SERVICE_BASE = "http://127.0.0.1:8767"
+SERVICE_BASE = os.environ.get("SCENE_SERVICE_URL", "http://127.0.0.1:8767").rstrip("/")
 HERMES_BIN = "/home/yhwang/.local/bin/hermes"
-HERMES_HOME = "/home/yhwang/fyp/scene_demo/hermes_home"
+HERMES_HOME = os.environ.get("HERMES_HOME", "/home/yhwang/fyp/scene_demo/hermes_home")
 SCENE_DIR = "/home/yhwang/fyp/scene_demo"
-RUNS_DIR = "/home/yhwang/fyp/scene_demo/runs"
+RUNS_DIR = os.environ.get("SCENE_RUNS_DIR", "/home/yhwang/fyp/scene_demo/runs")
 HERMES_TOOLS = "scene_tools,vision"
 DEFAULT_TIMEOUT = 1200
 

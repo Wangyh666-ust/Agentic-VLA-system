@@ -1,0 +1,211 @@
+{
+  "ok": true,
+  "final_test_exit_code": 0,
+  "regression_exit_code": 0,
+  "compile_exit_code": 0,
+  "test_output_paths": {
+    "compile": {
+      "stdout": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_compile.stdout.log",
+      "stderr": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_compile.stderr.log"
+    },
+    "final_pytest": {
+      "stdout": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_final_pytest.stdout.log",
+      "stderr": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_final_pytest.stderr.log"
+    },
+    "regression_pytest": {
+      "stdout": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_regression_pytest.stdout.log",
+      "stderr": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_regression_pytest.stderr.log"
+    }
+  },
+  "source_sha256": {
+    "subtask_context.py": "7bbb5679a8b1ead97bbae5f933ea0578f6b518be7d45383f62c4f4ac26625c2e",
+    "subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "subtask_preparation.py": "e1ad80964d9bba4f63633a92cde7acabe6c726b39dc063ccf07b50ccb77906e8",
+    "subtask_assist_service.py": "e36e38c48d88e81209ab62e6c7cd9d0453c36234161faa49f7fe86ebdbb079ff",
+    "test_subtask_assist.py": "b0e328bb0466d0229d7dd04e38dd73ecd12eca54be72d0e6079eb80fbfd249a8"
+  },
+  "tests_count": {
+    "final_pytest": {
+      "passed": 67,
+      "failed": 0,
+      "errors": 0,
+      "error": 0,
+      "skipped": 0,
+      "subtests_passed": 3
+    },
+    "regression_pytest": {
+      "passed": 77,
+      "failed": 0,
+      "errors": 0,
+      "error": 0,
+      "skipped": 0
+    }
+  },
+  "commands": [
+    {
+      "label": "compile",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "Ubuntu",
+        "--cd",
+        "/mnt/d/FYP/First_Phase/scene_demo",
+        "--exec",
+        "env",
+        "MUJOCO_GL=egl",
+        "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+        "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+        "HF_HUB_OFFLINE=1",
+        "TRANSFORMERS_OFFLINE=1",
+        "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/d/FYP/First_Phase/scene_demo",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-c",
+        "import py_compile;py_compile.compile('/mnt/d/FYP/First_Phase/scene_demo/subtask_assist_service.py',cfile='/mnt/d/FYP/First_Phase/tmp/subtask_assist_already_goal_fixture_fix_service.pyc',doraise=True);py_compile.compile('/mnt/d/FYP/First_Phase/scene_demo/test_subtask_assist.py',cfile='/mnt/d/FYP/First_Phase/tmp/subtask_assist_already_goal_fixture_fix_module.pyc',doraise=True);print('TEST_COMPILE_PASS')"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 4.302068699998927,
+      "stdout_path": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_compile.stdout.log",
+      "stderr_path": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_compile.stderr.log",
+      "stdout_sha256": "f04a507a3665d4778026f43860c9eee4b59fa99eea1be371cd6bddea7a44058d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": null,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "errors": 0,
+        "error": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "label": "final_pytest",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "Ubuntu",
+        "--cd",
+        "/mnt/d/FYP/First_Phase/scene_demo",
+        "--exec",
+        "env",
+        "MUJOCO_GL=egl",
+        "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+        "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+        "HF_HUB_OFFLINE=1",
+        "TRANSFORMERS_OFFLINE=1",
+        "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/d/FYP/First_Phase/scene_demo",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-m",
+        "pytest",
+        "--rootdir=/mnt/d/FYP/First_Phase/scene_demo",
+        "-vv",
+        "test_subtask_assist.py"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 10.203845299998648,
+      "stdout_path": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_final_pytest.stdout.log",
+      "stderr_path": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_final_pytest.stderr.log",
+      "stdout_sha256": "00b556f4648ff52eaba027c53699f0801493c96aeefc1f4dc20078ffbf7ee334",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "============== 67 passed, 3 warnings, 3 subtests passed in 8.07s ===============",
+      "counts": {
+        "passed": 67,
+        "failed": 0,
+        "errors": 0,
+        "error": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "label": "regression_pytest",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "Ubuntu",
+        "--cd",
+        "/mnt/d/FYP/First_Phase/scene_demo",
+        "--exec",
+        "env",
+        "MUJOCO_GL=egl",
+        "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+        "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+        "HF_HUB_OFFLINE=1",
+        "TRANSFORMERS_OFFLINE=1",
+        "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/d/FYP/First_Phase/scene_demo",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-m",
+        "pytest",
+        "--rootdir=/mnt/d/FYP/First_Phase/scene_demo",
+        "-vv",
+        "tests/test_collision_grasp.py",
+        "tests/test_grasp_assist_service.py",
+        "tests/test_side_grasp.py",
+        "tests/test_local_grasp.py"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 13.689247800000885,
+      "stdout_path": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_regression_pytest.stdout.log",
+      "stderr_path": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_regression_pytest.stderr.log",
+      "stdout_sha256": "51ba4b8b1e61462707a615496dfc55e167ffadcd1c95d3eb7f8fd40139788691",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "======================= 77 passed, 3 warnings in 11.96s ========================",
+      "counts": {
+        "passed": 77,
+        "failed": 0,
+        "errors": 0,
+        "error": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "source_sha_before": {
+    "subtask_context.py": "7bbb5679a8b1ead97bbae5f933ea0578f6b518be7d45383f62c4f4ac26625c2e",
+    "subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "subtask_preparation.py": "e1ad80964d9bba4f63633a92cde7acabe6c726b39dc063ccf07b50ccb77906e8",
+    "subtask_assist_service.py": "e36e38c48d88e81209ab62e6c7cd9d0453c36234161faa49f7fe86ebdbb079ff",
+    "test_subtask_assist.py": "b0e328bb0466d0229d7dd04e38dd73ecd12eca54be72d0e6079eb80fbfd249a8",
+    "tests/test_collision_grasp.py": "3239e6accd6e8284b87ec5f2e97e6bbfdfd21a02179edf365611c5f0320b9017",
+    "tests/test_grasp_assist_service.py": "b91b5e332de60a6d4197145f68fade6f514bc2474e191df2c69203d4e3803d5d",
+    "tests/test_side_grasp.py": "c630bd00cf2aa67df38d88979d93777ae374b63ca611df40bfe9b7feb5dd17bd",
+    "tests/test_local_grasp.py": "7d470decea9025d2d5f37b46ee31b10decce163fae5dc96b54e6ed4927f27225"
+  },
+  "source_sha_after": {
+    "subtask_context.py": "7bbb5679a8b1ead97bbae5f933ea0578f6b518be7d45383f62c4f4ac26625c2e",
+    "subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "subtask_preparation.py": "e1ad80964d9bba4f63633a92cde7acabe6c726b39dc063ccf07b50ccb77906e8",
+    "subtask_assist_service.py": "e36e38c48d88e81209ab62e6c7cd9d0453c36234161faa49f7fe86ebdbb079ff",
+    "test_subtask_assist.py": "b0e328bb0466d0229d7dd04e38dd73ecd12eca54be72d0e6079eb80fbfd249a8",
+    "tests/test_collision_grasp.py": "3239e6accd6e8284b87ec5f2e97e6bbfdfd21a02179edf365611c5f0320b9017",
+    "tests/test_grasp_assist_service.py": "b91b5e332de60a6d4197145f68fade6f514bc2474e191df2c69203d4e3803d5d",
+    "tests/test_side_grasp.py": "c630bd00cf2aa67df38d88979d93777ae374b63ca611df40bfe9b7feb5dd17bd",
+    "tests/test_local_grasp.py": "7d470decea9025d2d5f37b46ee31b10decce163fae5dc96b54e6ed4927f27225"
+  },
+  "sources_unchanged": true,
+  "software_only": true,
+  "physical_steps": 0,
+  "policy_model_calls": 0,
+  "hermes_calls": 0,
+  "author_apply_proof": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_author_proof.json",
+  "mechanical_fixture_proof": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_already_goal_fixture_fix_proof.json",
+  "freeze_expected_sha256": {
+    "subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "subtask_preparation.py": "e1ad80964d9bba4f63633a92cde7acabe6c726b39dc063ccf07b50ccb77906e8",
+    "subtask_assist_service.py": "e36e38c48d88e81209ab62e6c7cd9d0453c36234161faa49f7fe86ebdbb079ff",
+    "subtask_context.py": "7bbb5679a8b1ead97bbae5f933ea0578f6b518be7d45383f62c4f4ac26625c2e"
+  },
+  "old_failure_proofs_sha256": {
+    "D:\\FYP\\First_Phase\\tmp\\subtask_assist_software_proof.json": "cf40584399d8d02306f478781560bd347951125f48e3c295e67cce73c149cdad",
+    "D:\\FYP\\First_Phase\\tmp\\subtask_assist_tests_fix3_software_proof.json": "1d3b68eef43202cc94e50d8355da90cd118c96dda8022ce0b0d395cfd9e7edba",
+    "D:\\FYP\\First_Phase\\tmp\\subtask_assist_tests_fix4_software_proof.json": "a82aac4dbf4fbe43d83c5238037ffc7e81357517e56c9ae0dffa8adcd1324c78",
+    "D:\\FYP\\First_Phase\\tmp\\subtask_assist_software_final.json": "a0831e8a1d46c2ab1dd0fe256be9c2d438d046d0cab9780897d866c82a999f50",
+    "D:\\FYP\\First_Phase\\tmp\\subtask_assist_software_final2.json": "972188001fb5c564905540a6c10e25182d4d5deab2a70479ea2ce4112176482e"
+  },
+  "old_failure_proofs_unchanged": true,
+  "status": "SUBTASK_ASSIST_SOFTWARE_PASS",
+  "total_test_methods_passed": 144,
+  "total_failed": 0,
+  "unresolved_items": [],
+  "native_fixture_repairs_not_deepseek_authored": true
+}

@@ -1,0 +1,196 @@
+{
+  "status": "SUBTASK_ASSIST_CONVEX_INTEGRATION_PASS",
+  "ok": true,
+  "http": {
+    "ok": true,
+    "actual_http_requests": 1,
+    "request_sha256": "80f08096f568f5308c6cf602b4ac28f0c6691646e551515dd993c64f030e2fc8",
+    "http_status": 200,
+    "model": "deepseek-flash",
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 5750,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 320,
+      "service_tier": "standard"
+    },
+    "response_sha256": "3df97846fe7655b6d6e80ac181ddfb10d90fa4beff3d7805ff95b6fdb6b17fc6",
+    "elapsed_s": 1.7512295246124268
+  },
+  "source_before_sha256": {
+    "subtask_geometry.py": "c2c00973c3767a81a8392486d097a2f309285962c899e294eb8089bf4c507404",
+    "subtask_preparation.py": "c6eaab55f399865832a21217103220aa0cec8ac0d404c22a440260d0a6acea37"
+  },
+  "source_sha256": {
+    "subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "subtask_preparation.py": "e1ad80964d9bba4f63633a92cde7acabe6c726b39dc063ccf07b50ccb77906e8"
+  },
+  "changed_existing_functions": {
+    "subtask_preparation.py": [
+      "support_certificate"
+    ],
+    "subtask_geometry.py": [
+      "geom_bounds",
+      "_mesh_convex_local"
+    ]
+  },
+  "unchanged_existing_functions": {
+    "subtask_preparation.py": [
+      "PreparationError",
+      "_finite_scalar",
+      "_finite_vec3",
+      "_finite_matrix3",
+      "_orthonormal",
+      "_obb_corners",
+      "_validate_obb",
+      "_obb_axes",
+      "obb_overlap",
+      "_reading_pose",
+      "_reading_home_orientation",
+      "_reading_hand",
+      "_reading_obstacles",
+      "_obb_name",
+      "transformed_hand",
+      "pose_collisions",
+      "_validate_target",
+      "_validate_empty_hand_context",
+      "_workspace_ok",
+      "_max_hand_reach",
+      "_obstacle_highest_z",
+      "_relevant_obstacles",
+      "_down_extent",
+      "_interpolate_positions",
+      "_interpolate_orientations",
+      "_segment_length",
+      "_check_route",
+      "plan_route",
+      "PreparationController",
+      "_convex_axes_from_local",
+      "_support_unit_axes"
+    ],
+    "subtask_geometry.py": [
+      "GeometryError",
+      "_finite",
+      "_finite_vec",
+      "_finite_matrix",
+      "_read_attr",
+      "_geom_name",
+      "_round_floats",
+      "geometry_fingerprint",
+      "_proper_orthogonal",
+      "_hand_prefixes",
+      "_geom_names",
+      "read_geometry"
+    ]
+  },
+  "geometry_fingerprint_byte_exact": true,
+  "author_provenance": [
+    {
+      "kind": "edit",
+      "path": "D:\\FYP\\First_Phase\\scene_demo\\subtask_geometry.py",
+      "old_sha256": "0beab35c3b81f1fcc4cd1fe1d9fa8427c273e57a45846e8ca5728831585cc6ad",
+      "new_sha256": "bcc0ebe51de32ebb6615b20ec30da1d38fd9c7fc07e59bcea9e64a7b3818a88c",
+      "old_unique": true
+    },
+    {
+      "kind": "edit",
+      "path": "D:\\FYP\\First_Phase\\scene_demo\\subtask_geometry.py",
+      "old_sha256": "adbc057781b4b22f6c309df4ffb3367a4213f814f044abe7d1b65f45f0a0c6c6",
+      "new_sha256": "1f60292fbe8ed76f03e2cc0c25bbcfbe882487cfea2b53e3f9eddcdfc774f95c",
+      "old_unique": true
+    },
+    {
+      "kind": "edit",
+      "path": "D:\\FYP\\First_Phase\\scene_demo\\subtask_geometry.py",
+      "old_sha256": "9b8d2da658a737204930617345945925ebcb8d8057982570cdee3d3aca15cc3f",
+      "new_sha256": "da49e23b58930bb4277b2d2c4214850c3e30504192bb935fabc1914595755d63",
+      "old_unique": true
+    },
+    {
+      "kind": "edit",
+      "path": "D:\\FYP\\First_Phase\\scene_demo\\subtask_preparation.py",
+      "old_sha256": "1d397b6a669e2a773bc58508fcc1e4e733f8b01a81d7d9624ef17bf298a988b4",
+      "new_sha256": "789b07395a88521cd502c96a433a06030405f722a27d28ad55993366bb008b19",
+      "old_unique": true
+    },
+    {
+      "kind": "edit",
+      "path": "D:\\FYP\\First_Phase\\scene_demo\\subtask_preparation.py",
+      "old_sha256": "ac32c6d45e5496598318962b215fe33386d1154004165775e5a07a1c928c557c",
+      "new_sha256": "2f3d702afd925cc4807a69f4f815107067709217f8063fc74eb9aeaf62891a76",
+      "old_unique": true
+    }
+  ],
+  "new_function_ast_author_exact": true,
+  "physical_calls": 0,
+  "policy_calls": 0,
+  "hermes_calls": 0,
+  "py_compile_exit": 0,
+  "pure_import_exit": 0,
+  "actual_cpu_preflight_exit": 0,
+  "actual_cpu_preflight_status": "ACTUAL_CONVEX_MODULE_PREFLIGHT_PASS",
+  "actual_cpu_preflight_sha256": "54cdff079f26ee37e9dd8c2d7c2ac730909388380bab00caffb8f8ed2fc43697",
+  "readonly_files_unchanged": true,
+  "old_certificate_unchanged": true,
+  "actual_api_author": {
+    "ok": true,
+    "actual_http_requests": 1,
+    "request_sha256": "eb537a4d3a7026f4a0ccbe40498236d8c7dd3beeb743bb92504e04ee29c34235",
+    "http_status": 200,
+    "model": "deepseek-flash",
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 6779,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 4825,
+      "service_tier": "standard"
+    },
+    "response_sha256": "dc8f74a95947e88b0a41bf5c2afed44b5768f217817b3f5e0673801441283748",
+    "elapsed_s": 13.665015697479248
+  },
+  "actual_api_fix": {
+    "ok": true,
+    "actual_http_requests": 1,
+    "request_sha256": "80f08096f568f5308c6cf602b4ac28f0c6691646e551515dd993c64f030e2fc8",
+    "http_status": 200,
+    "model": "deepseek-flash",
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 5750,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 320,
+      "service_tier": "standard"
+    },
+    "response_sha256": "3df97846fe7655b6d6e80ac181ddfb10d90fa4beff3d7805ff95b6fdb6b17fc6",
+    "elapsed_s": 1.7512295246124268
+  },
+  "actual_http_requests_total": 2,
+  "profile_sha256": "af2dba656f02c2a6c5cc1d6056ec2d0047b5a182b61b9d028854e5a787ccc6a2",
+  "actual_cpu_cases": [
+    {
+      "case": 2,
+      "route_usable": true,
+      "initial_certificates": 9,
+      "minimum_gap_m": 0.010072517720620344,
+      "max_old_gap_delta_m": 0.0,
+      "bowl_fingerprint_unchanged": true,
+      "wine_fingerprint_unchanged": true
+    },
+    {
+      "case": 3,
+      "route_usable": true,
+      "initial_certificates": 9,
+      "minimum_gap_m": 0.008288727228962678,
+      "max_old_gap_delta_m": 0.0,
+      "bowl_fingerprint_unchanged": true,
+      "wine_fingerprint_unchanged": true
+    }
+  ],
+  "actual_module_no_monkeypatch": true,
+  "physics_steps": 0,
+  "model_calls": 0,
+  "new_aux_actions": 0
+}

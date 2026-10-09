@@ -1,0 +1,92 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/yhwang/fyp/libero_demo/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /mnt/d/FYP/First_Phase/scene_demo
+plugins: hydra-core-1.3.7, platformdirs-4.12.3, anyio-4.15.1, typeguard-4.6.0
+collecting ... collected 67 items
+
+test_subtask_assist.py::GeometryBoundsTests::test_box_bounds_center_half_and_aabb PASSED [  1%]
+test_subtask_assist.py::GeometryBoundsTests::test_capsule_half_extends_by_radius_along_axis PASSED [  2%]
+test_subtask_assist.py::GeometryBoundsTests::test_invalid_rotation_rejected PASSED [  4%]
+test_subtask_assist.py::GeometryBoundsTests::test_mesh_bounds_from_vertices PASSED [  5%]
+test_subtask_assist.py::GeometryBoundsTests::test_mesh_missing_vertices_rejected PASSED [  7%]
+test_subtask_assist.py::GeometryBoundsTests::test_noncollidable_geometry_rejected PASSED [  8%]
+test_subtask_assist.py::FingerprintTests::test_fingerprint_changes_on_shape_change PASSED [ 10%]
+test_subtask_assist.py::FingerprintTests::test_fingerprint_invariant_to_geom_rename PASSED [ 11%]
+test_subtask_assist.py::FingerprintTests::test_fingerprint_invariant_to_global_rigid_transform PASSED [ 13%]
+test_subtask_assist.py::FingerprintTests::test_fingerprint_normalizes_negative_zero PASSED [ 14%]
+test_subtask_assist.py::FingerprintTests::test_fingerprint_rejects_missing_fields PASSED [ 16%]
+test_subtask_assist.py::FingerprintTests::test_fingerprint_repr_has_no_negative_zero PASSED [ 17%]
+test_subtask_assist.py::ContextTests::test_build_context_roundtrip PASSED [ 19%]
+test_subtask_assist.py::ContextTests::test_calibrated_selection_requires_shape_and_key PASSED [ 20%]
+test_subtask_assist.py::ContextTests::test_foreign_held_object_blocked PASSED [ 22%]
+test_subtask_assist.py::ContextTests::test_geometry_renaming_preserves_selection PASSED [ 23%]
+test_subtask_assist.py::ContextTests::test_goal_object_mismatch_rejected PASSED [ 25%]
+test_subtask_assist.py::ContextTests::test_low_wide_never_selects_grasp PASSED [ 26%]
+test_subtask_assist.py::ContextTests::test_tilted_never_selects_side_helper PASSED [ 28%]
+test_subtask_assist.py::ContextTests::test_unknown_grasp_state_blocked PASSED [ 29%]
+test_subtask_assist.py::ContextTests::test_upright_elongated_without_calibration_matches_no_grasp PASSED [ 31%]
+test_subtask_assist.py::ObstructionTests::test_current_pose_collision_rejected_at_controller PASSED [ 32%]
+test_subtask_assist.py::ObstructionTests::test_interp_orientations_spacing_and_endpoints PASSED [ 34%]
+test_subtask_assist.py::ObstructionTests::test_interp_positions_spacing_and_endpoints PASSED [ 35%]
+test_subtask_assist.py::ObstructionTests::test_large_obstacle_enclosing_xy_remains_relevant PASSED [ 37%]
+test_subtask_assist.py::ObstructionTests::test_nonempty_held_object_rejected PASSED [ 38%]
+test_subtask_assist.py::ObstructionTests::test_pose_collisions_empty_for_non_overlap PASSED [ 40%]
+test_subtask_assist.py::ObstructionTests::test_pose_collisions_sat_separation PASSED [ 41%]
+test_subtask_assist.py::ObstructionTests::test_rotated_boundary_contact_detected PASSED [ 43%]
+test_subtask_assist.py::ObstructionTests::test_transformed_hand_local_world_conversion PASSED [ 44%]
+test_subtask_assist.py::ObstructionTests::test_transformed_hand_world_conversion_rotated PASSED [ 46%]
+test_subtask_assist.py::ObstructionTests::test_unknown_empty_hand_state_rejected PASSED [ 47%]
+test_subtask_assist.py::RouteTests::test_check_route_rejects_final_endpoint_collision PASSED [ 49%]
+test_subtask_assist.py::RouteTests::test_route_selection_independent_of_object_name PASSED [ 50%]
+test_subtask_assist.py::ControllerProgressTests::test_closed_gap_mutation_fails_before_servo PASSED [ 52%]
+test_subtask_assist.py::ControllerProgressTests::test_confirmation_sampling_advances_on_fifth PASSED [ 53%]
+test_subtask_assist.py::ControllerProgressTests::test_final_waypoint_confirmation_reaches_ready PASSED [ 55%]
+test_subtask_assist.py::ControllerProgressTests::test_foreign_held_mutation_fails_before_servo PASSED [ 56%]
+test_subtask_assist.py::ControllerProgressTests::test_no_collision_fixture_produces_plan PASSED [ 58%]
+test_subtask_assist.py::ControllerProgressTests::test_object_displacement_mutation_fails_before_servo PASSED [ 59%]
+test_subtask_assist.py::ControllerProgressTests::test_observe_after_malformed_reading_fails PASSED [ 61%]
+test_subtask_assist.py::ControllerProgressTests::test_preparation_success_is_preparation_only PASSED [ 62%]
+test_subtask_assist.py::ControllerProgressTests::test_repeated_next_action_does_not_count_actions PASSED [ 64%]
+test_subtask_assist.py::ControllerProgressTests::test_robot_contact_mutation_fails_before_servo PASSED [ 65%]
+test_subtask_assist.py::ControllerProgressTests::test_servo_action_returns_legal_float32_7d PASSED [ 67%]
+test_subtask_assist.py::ControllerProgressTests::test_single_iteration_uses_active_waypoint PASSED [ 68%]
+test_subtask_assist.py::ControllerProgressTests::test_stage_action_budget_boundary PASSED [ 70%]
+test_subtask_assist.py::ControllerProgressTests::test_total_action_budget_boundary PASSED [ 71%]
+test_subtask_assist.py::ControllerProgressTests::test_true_goal_lost_mutation_fails_before_servo PASSED [ 73%]
+test_subtask_assist.py::ControllerProgressTests::test_unknown_complete_mutation_fails_before_servo PASSED [ 74%]
+test_subtask_assist.py::ServiceTests::test_base_run_capability_cancellation_prevents_step PASSED [ 76%]
+test_subtask_assist.py::ServiceTests::test_disabled_mode_skips_geometry PASSED [ 77%]
+test_subtask_assist.py::ServiceTests::test_generic_first_action_uses_prepare_source PASSED [ 79%]
+test_subtask_assist.py::ServiceTests::test_geometry_exception_blocks_without_vla PASSED [ 80%]
+test_subtask_assist.py::ServiceTests::test_native_goal_predicate_false_or_none_does_not_short_circuit 
+test_subtask_assist.py::ServiceTests::test_native_goal_predicate_false_or_none_does_not_short_circuit PASSED [ 82%]
+test_subtask_assist.py::ServiceTests::test_native_goals_all_true_but_foreign_held_remains_blocked PASSED [ 83%]
+test_subtask_assist.py::ServiceTests::test_native_goals_already_true_short_circuits_preview PASSED [ 85%]
+test_subtask_assist.py::ServiceTests::test_non_pickplace_skips_geometry PASSED [ 86%]
+test_subtask_assist.py::ServiceTests::test_parent_capability_path_used PASSED [ 88%]
+test_subtask_assist.py::ServiceTests::test_ready_resets_queues_once PASSED [ 89%]
+test_subtask_assist.py::ServiceTests::test_reset_assist_session_state_clears_helper PASSED [ 91%]
+test_subtask_assist.py::ServiceTests::test_run_capability_action_source_audit_and_cleanup PASSED [ 92%]
+test_subtask_assist.py::ConvexCertificateTests::test_distinct_hull_data_not_shared_cache PASSED [ 94%]
+test_subtask_assist.py::ConvexCertificateTests::test_global_rigid_transform_preserves_gap PASSED [ 95%]
+test_subtask_assist.py::ConvexCertificateTests::test_inside_box_not_falsely_excluded PASSED [ 97%]
+test_subtask_assist.py::ConvexCertificateTests::test_malformed_convex_raises_preparation_error 
+test_subtask_assist.py::ConvexCertificateTests::test_malformed_convex_raises_preparation_error PASSED [ 98%]
+test_subtask_assist.py::ConvexCertificateTests::test_real_tetra_outside_box_certificate_clear PASSED [100%]
+
+=============================== warnings summary ===============================
+test_subtask_assist.py::ControllerProgressTests::test_closed_gap_mutation_fails_before_servo
+  /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:7: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+    ROBOSUITE_DEFAULT_LOGGER.warn("No private macro file found!")
+
+test_subtask_assist.py::ControllerProgressTests::test_closed_gap_mutation_fails_before_servo
+  /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:8: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+    ROBOSUITE_DEFAULT_LOGGER.warn("It is recommended to use a private macro file")
+
+test_subtask_assist.py::ControllerProgressTests::test_closed_gap_mutation_fails_before_servo
+  /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:9: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+    ROBOSUITE_DEFAULT_LOGGER.warn("To setup, run: python {}/scripts/setup_macros.py".format(robosuite.__path__[0]))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============== 67 passed, 3 warnings, 3 subtests passed in 8.07s ===============

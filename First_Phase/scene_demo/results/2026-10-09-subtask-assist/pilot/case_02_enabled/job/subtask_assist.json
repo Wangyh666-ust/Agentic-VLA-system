@@ -1,0 +1,223 @@
+{
+  "job_id": "7b55e09918394150a951901c04c4887b",
+  "capability_id": "bowl_to_plate",
+  "mode": "enabled",
+  "execution_kind": "generic_preparation",
+  "prepare_execution": "generic_preparation",
+  "context": {
+    "operation": "pick_place",
+    "object_id": "akita_black_bowl_1",
+    "target_id": "plate_1",
+    "goals": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ],
+    "position": [
+      -0.09762606039235144,
+      -0.008583423299852446,
+      0.8984070750980836
+    ],
+    "orientation": [
+      [
+        5.530211510951233e-09,
+        -0.999999999850978,
+        -1.72639484836648e-05
+      ],
+      [
+        0.9999999997584444,
+        5.150753601412816e-09,
+        2.197978579571482e-05
+      ],
+      [
+        -2.1979785703517006e-05,
+        -1.7263948601047458e-05,
+        0.9999999996094225
+      ]
+    ],
+    "dimensions": [
+      0.10719994032407791,
+      0.10700720136999801,
+      0.050541928523487774
+    ],
+    "shape_family": "low_wide",
+    "geometry_source": "mujoco_collision_obbs",
+    "calibration_key": null,
+    "held_objects": [],
+    "observation_complete": true
+  },
+  "selection": {
+    "prepare_strategy": "clearance_preposition_v1",
+    "grasp_strategy": null,
+    "status": "selected",
+    "reason": "grasp_strategy_unverified",
+    "shape_family": "low_wide"
+  },
+  "helper_summary": {
+    "phase": "failed",
+    "reason": "stage_timeout",
+    "current_stage": "align_clear",
+    "stage_counts": {
+      "lift_escape": 27,
+      "lift_clear": 56,
+      "align_clear": 60
+    },
+    "actual_aux_actions": 143,
+    "last_errors": {
+      "position_error": 0.0004630813715179833,
+      "orientation_error": 0.13989269388725084
+    },
+    "plan": {
+      "chosen_index": 1,
+      "check_samples": 218,
+      "rejection_reasons": [],
+      "geometry_source": "mujoco_collision_obbs",
+      "collision_scope": "gripper_obb_samples_only",
+      "high_z": 1.4657861680946953,
+      "ready_z": 1.0984070750980837,
+      "max_hand_reach": 0.19254557674904846,
+      "waypoints": [
+        {
+          "name": "lift_escape",
+          "position": [
+            -0.1577010742867228,
+            -0.19150172250143627,
+            1.2568718068308053
+          ],
+          "orientation": [
+            [
+              -0.952733649841593,
+              -0.24051314824602557,
+              -0.1856125480141337
+            ],
+            [
+              -0.23596083429916279,
+              0.9706457085391735,
+              -0.04657674496275849
+            ],
+            [
+              0.19136634274698575,
+              -0.0005779405403015282,
+              -0.9815185117196579
+            ]
+          ]
+        },
+        {
+          "name": "lift_clear",
+          "position": [
+            -0.1577010742867228,
+            -0.19150172250143627,
+            1.4657861680946953
+          ],
+          "orientation": [
+            [
+              -0.952733649841593,
+              -0.24051314824602557,
+              -0.1856125480141337
+            ],
+            [
+              -0.23596083429916279,
+              0.9706457085391735,
+              -0.04657674496275849
+            ],
+            [
+              0.19136634274698575,
+              -0.0005779405403015282,
+              -0.9815185117196579
+            ]
+          ]
+        },
+        {
+          "name": "align_clear",
+          "position": [
+            -0.1577010742867228,
+            -0.19150172250143627,
+            1.4657861680946953
+          ],
+          "orientation": [
+            [
+              0.0009490455140583522,
+              0.9984600280358934,
+              -0.055467753940209655
+            ],
+            [
+              0.999999425011794,
+              -0.0009198899001559378,
+              0.0005511611827955544
+            ],
+            [
+              0.0004992881833924094,
+              -0.05546824512395347,
+              -0.9984603269505381
+            ]
+          ]
+        },
+        {
+          "name": "transit",
+          "position": [
+            -0.09762606039235144,
+            -0.008583423299852446,
+            1.4657861680946953
+          ],
+          "orientation": [
+            [
+              0.0009490455140583522,
+              0.9984600280358934,
+              -0.055467753940209655
+            ],
+            [
+              0.999999425011794,
+              -0.0009198899001559378,
+              0.0005511611827955544
+            ],
+            [
+              0.0004992881833924094,
+              -0.05546824512395347,
+              -0.9984603269505381
+            ]
+          ]
+        },
+        {
+          "name": "ready",
+          "position": [
+            -0.09762606039235144,
+            -0.008583423299852446,
+            1.0984070750980837
+          ],
+          "orientation": [
+            [
+              0.0009490455140583522,
+              0.9984600280358934,
+              -0.055467753940209655
+            ],
+            [
+              0.999999425011794,
+              -0.0009198899001559378,
+              0.0005511611827955544
+            ],
+            [
+              0.0004992881833924094,
+              -0.05546824512395347,
+              -0.9984603269505381
+            ]
+          ]
+        }
+      ]
+    },
+    "ready_confirmed": false,
+    "confirmation": "preparation_only_not_grasp_or_placement"
+  },
+  "helper_summary_error": null,
+  "prepare_confirmed": false,
+  "confirmation_is_not_placement_success": true,
+  "prepare_source_actions": 143,
+  "local_grasp_source_actions": 0,
+  "vla_source_actions": 0,
+  "actual_total_steps": 143,
+  "context_error": null,
+  "observer_error": null,
+  "assisted": true,
+  "action_sources_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist/pilot/case_02_enabled/job/action_sources.jsonl"
+}

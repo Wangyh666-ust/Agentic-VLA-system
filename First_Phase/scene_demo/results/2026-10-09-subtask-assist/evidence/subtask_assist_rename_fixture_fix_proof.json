@@ -1,0 +1,105 @@
+{
+  "status": "RENAME_FIXTURE_MECHANICAL_APPLIED",
+  "ok": true,
+  "modified_method": "ContextTests.test_geometry_renaming_preserves_selection",
+  "old_test_sha256": "b0e328bb0466d0229d7dd04e38dd73ecd12eca54be72d0e6079eb80fbfd249a8",
+  "new_test_sha256": "cfb068def1760ed9cfcfb83291f844e48b4eca6529670246ff78e6ff0b7d3686",
+  "author_role": "Native mechanical fixture changes specified by GPT; not a new DeepSeek implementation",
+  "postphysical_test_only_change": true,
+  "old_other66_methods_bytes_unchanged": true,
+  "old_three_strategy_assertions_preserved": true,
+  "fixture_a": {
+    "object_id": "wine",
+    "target_id": "table"
+  },
+  "fixture_b": {
+    "object_id": "renamed_object",
+    "target_id": "renamed_surface",
+    "goals": [
+      [
+        "on",
+        "renamed_object",
+        "renamed_surface"
+      ]
+    ]
+  },
+  "same_geometry": {
+    "dimensions": [
+      0.05,
+      0.05,
+      0.2
+    ],
+    "orientation": "identity",
+    "calibration_key": "libero_wine_side_v1"
+  },
+  "added_assertions": [
+    "object_id differs",
+    "target_id differs",
+    "calibrated_side_v1 selected"
+  ],
+  "diff": "--- old_rename_fixture\n+++ corrected_rename_fixture\n@@ -1,14 +1,17 @@\n     def test_geometry_renaming_preserves_selection(self):\n         cap_a = self._capability(object_id='wine', target_id='table')\n         cap_b = {\n-            'object_id': 'wine',\n-            'target_id': 'table',\n-            'goals': [['on', 'wine', 'table']],\n+            'object_id': 'renamed_object',\n+            'target_id': 'renamed_surface',\n+            'goals': [['on', 'renamed_object', 'renamed_surface']],\n         }\n-        ctx_a = sc.build_context(cap_a, self._reading())\n-        ctx_b = sc.build_context(cap_b, self._reading())\n+        ctx_a = sc.build_context(cap_a, self._reading(calibration_key='libero_wine_side_v1'))\n+        ctx_b = sc.build_context(cap_b, self._reading(calibration_key='libero_wine_side_v1'))\n         sel_a = sc.select_strategies(ctx_a)\n         sel_b = sc.select_strategies(ctx_b)\n         self.assertEqual(sel_a.prepare_strategy, sel_b.prepare_strategy)\n         self.assertEqual(sel_a.grasp_strategy, sel_b.grasp_strategy)\n         self.assertEqual(sel_a.shape_family, sel_b.shape_family)\n+        self.assertNotEqual(ctx_a.object_id, ctx_b.object_id)\n+        self.assertNotEqual(ctx_a.target_id, ctx_b.target_id)\n+        self.assertEqual(sel_a.grasp_strategy, 'calibrated_side_v1')\n",
+  "physical_gate_final3_path": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_software_final3.json",
+  "physical_gate_final3_sha256": "1bdb7f08cc94b3e2016ae04e7f984871b30301bd815835eca2dc43e30269d973",
+  "physical_preregistered_test_sha256": "b0e328bb0466d0229d7dd04e38dd73ecd12eca54be72d0e6079eb80fbfd249a8",
+  "protected_source_sha256_before": {
+    "subtask_context.py": "7bbb5679a8b1ead97bbae5f933ea0578f6b518be7d45383f62c4f4ac26625c2e",
+    "subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "subtask_preparation.py": "e1ad80964d9bba4f63633a92cde7acabe6c726b39dc063ccf07b50ccb77906e8",
+    "subtask_assist_service.py": "e36e38c48d88e81209ab62e6c7cd9d0453c36234161faa49f7fe86ebdbb079ff",
+    "subtask_assist_profiles.json": "af2dba656f02c2a6c5cc1d6056ec2d0047b5a182b61b9d028854e5a787ccc6a2",
+    "app.py": "075943ba23c30149db736c9693d4d6cfdfcc699cb124dcef2c2f4888881d2cfb",
+    "run_agent.py": "7097f7535aecebb91d820e6cde9bfe03af7838368c0b827c78155b96e14d0281"
+  },
+  "physical_files_sha256_before": {
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\report.json": "97191f584183a9191b8dc3e3aa4015c3355ce11b25b0f64790e1da915b3d5057",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_disabled\\trial.json": "dbe521918bec65f700dd33e2df6fb2133e9f32054de59b41d53a0d8784fc73d0",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_disabled\\job\\subtask_assist.json": "0433caa37ea26df740efd66c97f9b43fd688fd3132462cfa3886d9527d8c97ca",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_disabled\\job\\action_sources.jsonl": "bde5558ff973baa114c0ebf17edbd3907c969676fffb617d5a47482ed8d73ccf",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_disabled\\job\\telemetry.jsonl": "5c548f62b8dd07dcc019ac76337d0c588b673c95ec69e48befd646ddb76ed8f7",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_enabled\\trial.json": "95e282c93df97b95e3ae43ce9b41ecbf17581c4b56d8d4b113b915a5e22e2093",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_enabled\\job\\subtask_assist.json": "75352a36ed283c7ec9b7d10f44c319d754277c3adc52429eac184e283473811c",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_enabled\\job\\action_sources.jsonl": "7ad4cba896862df3aec4b6b1bb5bc2415487982561abb71825571c5e554fc440",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_enabled\\job\\telemetry.jsonl": "024ec5cd2d99b9cf3efddc34bcb5e5004ee1b47dffe0aada5d1febf8d24fa381",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_disabled\\trial.json": "3f24890dcdb6c794e4cda40fc051c28000ea6f4006b313a0350813ba81d6af5e",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_disabled\\job\\subtask_assist.json": "5cdb30038a034255a183e50f326c0ed964e90e412a093504ba9fd26cee27baac",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_disabled\\job\\action_sources.jsonl": "c77ea12741dba6728fb29fccd2b6182bcaf89250564d0c32f8eb514dfa021563",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_disabled\\job\\telemetry.jsonl": "20e95c0d1702f7387980ff183aa9318e4ea0f35dc1a63b13e5b8b98d62f1831f",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_enabled\\trial.json": "2c0b309e26ab47c144a882064a830a9449c4dce8ad51ee9824745f3955324394",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_enabled\\job\\subtask_assist.json": "b1e28269a71fee6479c014a399dcc42a2340365133a84ff55365abd09234a9f6",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_enabled\\job\\action_sources.jsonl": "8e731d1058e3174cf1d7fc6d53e19f2542d087f73037fe883a0bc364be59a6aa",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_enabled\\job\\telemetry.jsonl": "9d5bc0c9c8bac28a450da7a9fe6e347eccb5f5ad619a77178b49fbdd3f877a95",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\preregistration.json": "432d6ccd138b206f879d121c5d1014eb13f377390cf6385fbea76c72e283e04e"
+  },
+  "protected_source_sha256_after": {
+    "subtask_context.py": "7bbb5679a8b1ead97bbae5f933ea0578f6b518be7d45383f62c4f4ac26625c2e",
+    "subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "subtask_preparation.py": "e1ad80964d9bba4f63633a92cde7acabe6c726b39dc063ccf07b50ccb77906e8",
+    "subtask_assist_service.py": "e36e38c48d88e81209ab62e6c7cd9d0453c36234161faa49f7fe86ebdbb079ff",
+    "subtask_assist_profiles.json": "af2dba656f02c2a6c5cc1d6056ec2d0047b5a182b61b9d028854e5a787ccc6a2",
+    "app.py": "075943ba23c30149db736c9693d4d6cfdfcc699cb124dcef2c2f4888881d2cfb",
+    "run_agent.py": "7097f7535aecebb91d820e6cde9bfe03af7838368c0b827c78155b96e14d0281"
+  },
+  "physical_files_sha256_after": {
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\report.json": "97191f584183a9191b8dc3e3aa4015c3355ce11b25b0f64790e1da915b3d5057",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_disabled\\trial.json": "dbe521918bec65f700dd33e2df6fb2133e9f32054de59b41d53a0d8784fc73d0",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_disabled\\job\\subtask_assist.json": "0433caa37ea26df740efd66c97f9b43fd688fd3132462cfa3886d9527d8c97ca",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_disabled\\job\\action_sources.jsonl": "bde5558ff973baa114c0ebf17edbd3907c969676fffb617d5a47482ed8d73ccf",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_disabled\\job\\telemetry.jsonl": "5c548f62b8dd07dcc019ac76337d0c588b673c95ec69e48befd646ddb76ed8f7",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_enabled\\trial.json": "95e282c93df97b95e3ae43ce9b41ecbf17581c4b56d8d4b113b915a5e22e2093",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_enabled\\job\\subtask_assist.json": "75352a36ed283c7ec9b7d10f44c319d754277c3adc52429eac184e283473811c",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_enabled\\job\\action_sources.jsonl": "7ad4cba896862df3aec4b6b1bb5bc2415487982561abb71825571c5e554fc440",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_enabled\\job\\telemetry.jsonl": "024ec5cd2d99b9cf3efddc34bcb5e5004ee1b47dffe0aada5d1febf8d24fa381",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_disabled\\trial.json": "3f24890dcdb6c794e4cda40fc051c28000ea6f4006b313a0350813ba81d6af5e",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_disabled\\job\\subtask_assist.json": "5cdb30038a034255a183e50f326c0ed964e90e412a093504ba9fd26cee27baac",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_disabled\\job\\action_sources.jsonl": "c77ea12741dba6728fb29fccd2b6182bcaf89250564d0c32f8eb514dfa021563",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_disabled\\job\\telemetry.jsonl": "20e95c0d1702f7387980ff183aa9318e4ea0f35dc1a63b13e5b8b98d62f1831f",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_enabled\\trial.json": "2c0b309e26ab47c144a882064a830a9449c4dce8ad51ee9824745f3955324394",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_enabled\\job\\subtask_assist.json": "b1e28269a71fee6479c014a399dcc42a2340365133a84ff55365abd09234a9f6",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_enabled\\job\\action_sources.jsonl": "8e731d1058e3174cf1d7fc6d53e19f2542d087f73037fe883a0bc364be59a6aa",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_enabled\\job\\telemetry.jsonl": "9d5bc0c9c8bac28a450da7a9fe6e347eccb5f5ad619a77178b49fbdd3f877a95",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\preregistration.json": "432d6ccd138b206f879d121c5d1014eb13f377390cf6385fbea76c72e283e04e"
+  },
+  "protected_sources_unchanged": true,
+  "physical_files_unchanged": true,
+  "final3_original_unchanged": true
+}
