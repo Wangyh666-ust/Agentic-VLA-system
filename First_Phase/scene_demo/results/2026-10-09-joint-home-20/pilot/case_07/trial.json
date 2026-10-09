@@ -1,0 +1,950 @@
+{
+  "case_id": "case_07",
+  "spec": {
+    "case_id": "case_07",
+    "scene_id": "goal_table",
+    "init_state_index": 0,
+    "model_seed": 2,
+    "env_seed": 0,
+    "capability_ids": [
+      "stove_on",
+      "bowl_to_plate"
+    ],
+    "gold_goals": [
+      [
+        "turnon",
+        "flat_stove_1"
+      ],
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ],
+    "vla_cap": 336,
+    "home_cap": 360
+  },
+  "physical_success": false,
+  "operational_errors": [],
+  "unknown": [],
+  "home_actions": 0,
+  "vla_actions": 78,
+  "total_physical_actions": 78,
+  "new_hermes_calls": 0,
+  "stages": [
+    {
+      "capability_id": "stove_on",
+      "job": {
+        "job_id": "a3b2415b431e4beb8c128013b4943a62",
+        "request_id": "ddac785763f1404aa344d30778e65c17",
+        "session_id": "f190ddcbcdd648c89baa872123328a50",
+        "capability_id": "stove_on",
+        "state": "completed",
+        "steps": 78,
+        "total_steps": 78,
+        "success": true,
+        "ended_reason": "success",
+        "error": null,
+        "instruction": "turn on the stove",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+        "state_after_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569",
+        "env_instance_id": null,
+        "episode_resets": null,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/job",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/job/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/job/rollout.mp4",
+        "wall_s": 46.655
+      },
+      "score": {
+        "physical_gold_success": true,
+        "last5_ready": true,
+        "completed_goals_preserved": true,
+        "unknown": []
+      },
+      "observations_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/observer.jsonl",
+      "assistcounts": {
+        "vla_source_actions": 78,
+        "prepare_source_actions": 0,
+        "local_grasp_source_actions": 0,
+        "job_steps": 78,
+        "observer_rows": 78
+      },
+      "actual_assist": {
+        "vla_source_actions": 78,
+        "prepare_source_actions": 0,
+        "local_grasp_source_actions": 0,
+        "job_steps": 78,
+        "observer_rows": 78
+      },
+      "assist_source_sha256": "5850690749197b814eac60ff16d4d6515f9e9f2a6c7be3c53be457f1982a6f65",
+      "home_after": {
+        "ok": false,
+        "ready": false,
+        "actions": 0,
+        "reason": "joint_route_blocked",
+        "unknown": [],
+        "operational_errors": [],
+        "restore": {
+          "original_identity": true,
+          "controller_facts": {
+            "n_robots": 1,
+            "controller_type": "OperationalSpaceController",
+            "use_delta": true,
+            "control_dim": 6,
+            "input_min": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "input_max": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "output_min": [
+              -0.05,
+              -0.05,
+              -0.05,
+              -0.5,
+              -0.5,
+              -0.5
+            ],
+            "output_max": [
+              0.05,
+              0.05,
+              0.05,
+              0.5,
+              0.5,
+              0.5
+            ],
+            "ee_pos": [
+              -0.41833614360269566,
+              0.19898647902484093,
+              0.9287028572966403
+            ],
+            "ee_ori_mat": [
+              [
+                -0.7313217395738855,
+                0.6547557552227258,
+                -0.19095395840186757
+              ],
+              [
+                0.6814523531608202,
+                0.7130231077734317,
+                -0.16498708480573895
+              ],
+              [
+                0.028128341547360713,
+                -0.25078466616568346,
+                -0.9676341496753615
+              ]
+            ],
+            "error": null
+          },
+          "controller_mismatch": null,
+          "ok": true,
+          "readonly_metrics": {
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "arm_error_rad": [
+              0.2055833129885631,
+              0.48433307355928246,
+              0.36937136225975903,
+              0.3298703943318855,
+              0.42156262094510305,
+              0.5658683258783586,
+              0.162862068309103
+            ],
+            "arm_speed_rad_s": [
+              0.02075663774008609,
+              0.00010917479613376359,
+              0.10146111127434726,
+              0.032072015048046465,
+              0.4717293256672402,
+              0.062345307562861524,
+              0.23161494856959
+            ],
+            "max_joint_error_rad": 0.5658683258783586,
+            "max_joint_speed_rad_s": 0.4717293256672402,
+            "finger_error_m": [
+              0.019374306664240438,
+              0.02823183205033032
+            ],
+            "finger_speed_m_s": [
+              0.027615810196911797,
+              0.031323025881558456
+            ],
+            "max_finger_error_m": 0.02823183205033032,
+            "max_finger_speed_m_s": 0.031323025881558456,
+            "ready": false
+          },
+          "readonly_protection": {
+            "ok": false,
+            "violations": [
+              "robot_contact"
+            ],
+            "objects": {
+              "akita_black_bowl_1:akita_black_bowl_1_joint0": {
+                "translation_m": 0.0,
+                "rotation_rad": 0.0
+              },
+              "cream_cheese_1:cream_cheese_1_joint0": {
+                "translation_m": 0.0,
+                "rotation_rad": 0.0
+              },
+              "wine_bottle_1:wine_bottle_1_joint0": {
+                "translation_m": 0.0,
+                "rotation_rad": 0.0
+              },
+              "plate_1:plate_1_joint0": {
+                "translation_m": 0.0,
+                "rotation_rad": 0.0
+              }
+            },
+            "empty_hand": true,
+            "observation_complete": true,
+            "robot_contacts": [
+              {
+                "geom1": 209,
+                "geom2": 73,
+                "names": [
+                  "flat_stove_1_g5",
+                  "gripper0_finger1_collision"
+                ],
+                "dist": -0.0003932280642655605,
+                "pos": [
+                  -0.39167515775257367,
+                  0.1787143332982064,
+                  0.9175833859678673
+                ]
+              },
+              {
+                "geom1": 77,
+                "geom2": 223,
+                "names": [
+                  "gripper0_finger2_pad_collision",
+                  "flat_stove_1_g19"
+                ],
+                "dist": -2.4245629730396215e-05,
+                "pos": [
+                  -0.43173165745768294,
+                  0.199377980020014,
+                  0.9267327133547592
+                ]
+              }
+            ],
+            "joints": {
+              "akita_black_bowl_1": {
+                "akita_black_bowl_1_joint0": {
+                  "type": 0,
+                  "qpos": [
+                    -0.09762606039235144,
+                    -0.008583423299852446,
+                    0.8984070750980836,
+                    0.707106783005648,
+                    -1.3874755319831753e-05,
+                    1.6673002342709846e-06,
+                    0.7071067792293566
+                  ]
+                }
+              },
+              "cream_cheese_1": {
+                "cream_cheese_1_joint0": {
+                  "type": 0,
+                  "qpos": [
+                    -0.04602629144396026,
+                    0.13447270946529477,
+                    0.9089214774186077,
+                    6.107164579103297e-18,
+                    -2.752724164410738e-17,
+                    7.977273886168948e-18,
+                    1.0
+                  ]
+                }
+              },
+              "wine_bottle_1": {
+                "wine_bottle_1_joint0": {
+                  "type": 0,
+                  "qpos": [
+                    -0.20423290037391095,
+                    -0.06165089486055362,
+                    0.8988754774203452,
+                    1.1093590895510117e-08,
+                    -6.2040910799496645e-06,
+                    3.8784043985960537e-07,
+                    0.9999999999806799
+                  ]
+                }
+              },
+              "plate_1": {
+                "plate_1_joint0": {
+                  "type": 0,
+                  "qpos": [
+                    0.062073867819834094,
+                    -0.009382152565275154,
+                    0.902506338529415,
+                    0.7071068099946488,
+                    -1.3218930757283315e-05,
+                    5.9052040285612224e-06,
+                    0.7071067522302282
+                  ]
+                }
+              }
+            },
+            "stove_on": true,
+            "completed_goals": [
+              [
+                "turnon",
+                "flat_stove_1"
+              ]
+            ]
+          },
+          "not_additional_postaction_confirmation_sample": true
+        },
+        "last_metrics": null,
+        "last_protection": null,
+        "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/home/home.mp4",
+        "initial_image": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/home/first.png",
+        "route_screen": {
+          "sample_count": 8,
+          "planned_samples": 58,
+          "collisions": [
+            {
+              "point_index": 0,
+              "point": [
+                0.21557878401669883,
+                0.31815530422370314,
+                0.36333867182029406,
+                -2.7648451483785386,
+                -0.4218383875796362,
+                2.7791747114836296,
+                0.953932991401623
+              ],
+              "geom1": 209,
+              "geom2": 73,
+              "name1": "flat_stove_1_g5",
+              "name2": "gripper0_finger1_collision",
+              "dist": -0.00043535870676411756
+            },
+            {
+              "point_index": 0,
+              "point": [
+                0.21557878401669883,
+                0.31815530422370314,
+                0.36333867182029406,
+                -2.7648451483785386,
+                -0.4218383875796362,
+                2.7791747114836296,
+                0.953932991401623
+              ],
+              "geom1": 220,
+              "geom2": 73,
+              "name1": "flat_stove_1_g16",
+              "name2": "gripper0_finger1_collision",
+              "dist": -0.000938195179360557
+            },
+            {
+              "point_index": 0,
+              "point": [
+                0.21557878401669883,
+                0.31815530422370314,
+                0.36333867182029406,
+                -2.7648451483785386,
+                -0.4218383875796362,
+                2.7791747114836296,
+                0.953932991401623
+              ],
+              "geom1": 221,
+              "geom2": 73,
+              "name1": "flat_stove_1_g17",
+              "name2": "gripper0_finger1_collision",
+              "dist": -0.0008244348045384414
+            },
+            {
+              "point_index": 0,
+              "point": [
+                0.21557878401669883,
+                0.31815530422370314,
+                0.36333867182029406,
+                -2.7648451483785386,
+                -0.4218383875796362,
+                2.7791747114836296,
+                0.953932991401623
+              ],
+              "geom1": 222,
+              "geom2": 73,
+              "name1": "flat_stove_1_g18",
+              "name2": "gripper0_finger1_collision",
+              "dist": -0.0006770538462918174
+            },
+            {
+              "point_index": 5,
+              "point": [
+                0.19754516007033365,
+                0.27566994689394153,
+                0.3309376751308415,
+                -2.7359091488757414,
+                -0.38485921030375,
+                2.7295371390381598,
+                0.9396468450587192
+              ],
+              "geom1": 223,
+              "geom2": 76,
+              "name1": "flat_stove_1_g19",
+              "name2": "gripper0_finger2_collision",
+              "dist": -0.000151882142642582
+            },
+            {
+              "point_index": 5,
+              "point": [
+                0.19754516007033365,
+                0.27566994689394153,
+                0.3309376751308415,
+                -2.7359091488757414,
+                -0.38485921030375,
+                2.7295371390381598,
+                0.9396468450587192
+              ],
+              "geom1": 77,
+              "geom2": 223,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g19",
+              "dist": -0.000383136556002908
+            },
+            {
+              "point_index": 6,
+              "point": [
+                0.1939384352810606,
+                0.2671728754279892,
+                0.32445747579295103,
+                -2.730121948975182,
+                -0.37746337484857273,
+                2.7196096245490655,
+                0.9367896157901385
+              ],
+              "geom1": 223,
+              "geom2": 76,
+              "name1": "flat_stove_1_g19",
+              "name2": "gripper0_finger2_collision",
+              "dist": -0.005763877774297879
+            },
+            {
+              "point_index": 6,
+              "point": [
+                0.1939384352810606,
+                0.2671728754279892,
+                0.32445747579295103,
+                -2.730121948975182,
+                -0.37746337484857273,
+                2.7196096245490655,
+                0.9367896157901385
+              ],
+              "geom1": 224,
+              "geom2": 76,
+              "name1": "flat_stove_1_g20",
+              "name2": "gripper0_finger2_collision",
+              "dist": -0.0016957573862500176
+            },
+            {
+              "point_index": 6,
+              "point": [
+                0.1939384352810606,
+                0.2671728754279892,
+                0.32445747579295103,
+                -2.730121948975182,
+                -0.37746337484857273,
+                2.7196096245490655,
+                0.9367896157901385
+              ],
+              "geom1": 77,
+              "geom2": 223,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g19",
+              "dist": -0.005443606754322386
+            },
+            {
+              "point_index": 6,
+              "point": [
+                0.1939384352810606,
+                0.2671728754279892,
+                0.32445747579295103,
+                -2.730121948975182,
+                -0.37746337484857273,
+                2.7196096245490655,
+                0.9367896157901385
+              ],
+              "geom1": 77,
+              "geom2": 223,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g19",
+              "dist": -0.006003373977380106
+            },
+            {
+              "point_index": 6,
+              "point": [
+                0.1939384352810606,
+                0.2671728754279892,
+                0.32445747579295103,
+                -2.730121948975182,
+                -0.37746337484857273,
+                2.7196096245490655,
+                0.9367896157901385
+              ],
+              "geom1": 77,
+              "geom2": 223,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g19",
+              "dist": -0.004276786381948136
+            },
+            {
+              "point_index": 6,
+              "point": [
+                0.1939384352810606,
+                0.2671728754279892,
+                0.32445747579295103,
+                -2.730121948975182,
+                -0.37746337484857273,
+                2.7196096245490655,
+                0.9367896157901385
+              ],
+              "geom1": 77,
+              "geom2": 223,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g19",
+              "dist": -0.0035824488125151023
+            },
+            {
+              "point_index": 6,
+              "point": [
+                0.1939384352810606,
+                0.2671728754279892,
+                0.32445747579295103,
+                -2.730121948975182,
+                -0.37746337484857273,
+                2.7196096245490655,
+                0.9367896157901385
+              ],
+              "geom1": 77,
+              "geom2": 224,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g20",
+              "dist": -0.0007360009275575756
+            },
+            {
+              "point_index": 6,
+              "point": [
+                0.1939384352810606,
+                0.2671728754279892,
+                0.32445747579295103,
+                -2.730121948975182,
+                -0.37746337484857273,
+                2.7196096245490655,
+                0.9367896157901385
+              ],
+              "geom1": 77,
+              "geom2": 224,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g20",
+              "dist": -0.00032469615697358975
+            },
+            {
+              "point_index": 7,
+              "point": [
+                0.19033171049178757,
+                0.2586758039620369,
+                0.31797727645506046,
+                -2.7243347490746226,
+                -0.3700675393933955,
+                2.7096821100599717,
+                0.9339323865215577
+              ],
+              "geom1": 223,
+              "geom2": 76,
+              "name1": "flat_stove_1_g19",
+              "name2": "gripper0_finger2_collision",
+              "dist": -0.011376884317386848
+            },
+            {
+              "point_index": 7,
+              "point": [
+                0.19033171049178757,
+                0.2586758039620369,
+                0.31797727645506046,
+                -2.7243347490746226,
+                -0.3700675393933955,
+                2.7096821100599717,
+                0.9339323865215577
+              ],
+              "geom1": 224,
+              "geom2": 76,
+              "name1": "flat_stove_1_g20",
+              "name2": "gripper0_finger2_collision",
+              "dist": -0.004561877025438747
+            },
+            {
+              "point_index": 7,
+              "point": [
+                0.19033171049178757,
+                0.2586758039620369,
+                0.31797727645506046,
+                -2.7243347490746226,
+                -0.3700675393933955,
+                2.7096821100599717,
+                0.9339323865215577
+              ],
+              "geom1": 77,
+              "geom2": 223,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g19",
+              "dist": -0.011166385055352722
+            },
+            {
+              "point_index": 7,
+              "point": [
+                0.19033171049178757,
+                0.2586758039620369,
+                0.31797727645506046,
+                -2.7243347490746226,
+                -0.3700675393933955,
+                2.7096821100599717,
+                0.9339323865215577
+              ],
+              "geom1": 77,
+              "geom2": 223,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g19",
+              "dist": -0.011624780506515414
+            },
+            {
+              "point_index": 7,
+              "point": [
+                0.19033171049178757,
+                0.2586758039620369,
+                0.31797727645506046,
+                -2.7243347490746226,
+                -0.3700675393933955,
+                2.7096821100599717,
+                0.9339323865215577
+              ],
+              "geom1": 77,
+              "geom2": 223,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g19",
+              "dist": -0.01014890008219255
+            },
+            {
+              "point_index": 7,
+              "point": [
+                0.19033171049178757,
+                0.2586758039620369,
+                0.31797727645506046,
+                -2.7243347490746226,
+                -0.3700675393933955,
+                2.7096821100599717,
+                0.9339323865215577
+              ],
+              "geom1": 77,
+              "geom2": 224,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g20",
+              "dist": -0.003694096134084478
+            }
+          ],
+          "collision_count": 20,
+          "ok": false,
+          "live_unchanged": true
+        },
+        "final_state_sha256": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569"
+      }
+    }
+  ],
+  "failure_stage": {
+    "index": 0,
+    "capability_id": "stove_on"
+  },
+  "failure_category": "home",
+  "assist_mode": "disabled",
+  "session": {
+    "ok": true,
+    "session_id": "f190ddcbcdd648c89baa872123328a50",
+    "scene_id": "goal_table",
+    "state": "ready",
+    "scene_version": 0,
+    "env_instance_id": 7,
+    "episode_resets": 1,
+    "policy_resets": 0,
+    "total_steps": 0,
+    "seed": 0,
+    "init_state_index": 0,
+    "description": "Shared original bowl, wine and stove scene; no trash bin exists here.",
+    "storage_policy": {
+      "akita_black_bowl_1": "plate_1",
+      "wine_bottle_1": "wine_rack_1_top_region"
+    },
+    "capabilities": [
+      {
+        "instruction": "put the bowl on the plate",
+        "goals": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ]
+        ],
+        "object_id": "akita_black_bowl_1",
+        "target_id": "plate_1",
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "v0.1.0 single-task success in libero_goal/8; sequence and shifted-layout reliability unverified",
+        "audit_only": false,
+        "exclusive_target": true,
+        "capability_id": "bowl_to_plate"
+      },
+      {
+        "instruction": "put the wine bottle on the rack",
+        "goals": [
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ]
+        ],
+        "object_id": "wine_bottle_1",
+        "target_id": "wine_rack_1_top_region",
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "candidate here; v0.1.0 single-task wine success used libero_goal/9, a different task initialization",
+        "audit_only": false,
+        "exclusive_target": true,
+        "capability_id": "wine_to_rack"
+      },
+      {
+        "instruction": "turn on the stove",
+        "goals": [
+          [
+            "turnon",
+            "flat_stove_1"
+          ]
+        ],
+        "object_id": "flat_stove_1",
+        "target_id": null,
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "candidate here; v0.1.0 single-task stove success used libero_goal/7, a different task initialization",
+        "audit_only": false,
+        "exclusive_target": false,
+        "capability_id": "stove_on"
+      }
+    ],
+    "images": [
+      {
+        "view": "agentview",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T124942Z_goal_table_f190ddcb/agentview.png",
+        "sha256": "576c32456ea62e6a4d828240ce9d0c8ceb207618fade6a9b2014e29e71ef0d71",
+        "kind": "vla_observation"
+      },
+      {
+        "view": "wrist",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T124942Z_goal_table_f190ddcb/wrist.png",
+        "sha256": "09c739380d345eb82aa70d3fc9cc5ae60cdd01fb111b64d6cb891f4236c5329c",
+        "kind": "vla_observation"
+      }
+    ],
+    "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T124942Z_goal_table_f190ddcb/latest.png",
+    "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T124942Z_goal_table_f190ddcb",
+    "active_request_id": null,
+    "error": null
+  },
+  "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "reference": {
+    "schema_version": 1,
+    "origin_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "qpos_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "qvel_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "joint_limits_low": [
+      -2.8973,
+      -1.7628,
+      -2.8973,
+      -3.0718,
+      -2.8973,
+      -0.0175,
+      -2.8973
+    ],
+    "joint_limits_high": [
+      2.8973,
+      1.7628,
+      2.8973,
+      -0.0698,
+      2.8973,
+      3.7525,
+      2.8973
+    ],
+    "homeq": [
+      0.009995471028135713,
+      -0.16617776933557932,
+      -0.0060326904394649465,
+      -2.434974754046653,
+      -0.00027576663453314525,
+      2.213306385605271,
+      0.79107092309252
+    ],
+    "home_joint_speed": [
+      -0.012188780173923199,
+      0.0009834354469799224,
+      0.013955709439674365,
+      4.527928720471166e-05,
+      -0.000652399959401127,
+      -0.003040586044170541,
+      -0.001988348872891502
+    ],
+    "finger_qpos_indexes": [
+      7,
+      8
+    ],
+    "finger_qvel_indexes": [
+      7,
+      8
+    ],
+    "finger_home": [
+      0.03873057586502897,
+      -0.03872776397868675
+    ],
+    "finger_speed": [
+      0.003175510081982881,
+      -0.003200680528741967
+    ],
+    "eef_pose": {
+      "position": [
+        -0.2071182569725561,
+        0.0018681514295332126,
+        1.1786384539512935
+      ],
+      "orientation_matrix": [
+        [
+          0.0009490455140583522,
+          0.9984600280358934,
+          -0.055467753940209655
+        ],
+        [
+          0.999999425011794,
+          -0.0009198899001559378,
+          0.0005511611827955544
+        ],
+        [
+          0.0004992881833924094,
+          -0.05546824512395347,
+          -0.9984603269505381
+        ]
+      ]
+    },
+    "gold_goals": [
+      [
+        "turnon",
+        "flat_stove_1"
+      ],
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ]
+  },
+  "initial_capture": {
+    "tag": "native_origin",
+    "directory": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/native_origin",
+    "state_before_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+    "state_after_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+    "readonly_state_unchanged": true
+  },
+  "model_rng": {
+    "ok": true,
+    "seeded": true,
+    "seed": 2
+  },
+  "queue_refresh": {
+    "ok": true,
+    "state_before_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+    "state_after_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+    "readonly_state_unchanged": true
+  },
+  "attempted_home": 1,
+  "failure_reason": "joint_route_blocked"
+}

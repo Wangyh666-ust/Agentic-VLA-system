@@ -1,0 +1,785 @@
+{
+  "case_id": "case_06",
+  "spec": {
+    "case_id": "case_06",
+    "scene_id": "goal_table",
+    "init_state_index": 1,
+    "model_seed": 3,
+    "env_seed": 0,
+    "capability_ids": [
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "gold_goals": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ],
+      [
+        "turnon",
+        "flat_stove_1"
+      ]
+    ],
+    "vla_cap": 336,
+    "home_cap": 360
+  },
+  "physical_success": true,
+  "operational_errors": [],
+  "unknown": [],
+  "home_actions": 124,
+  "vla_actions": 156,
+  "total_physical_actions": 280,
+  "new_hermes_calls": 0,
+  "stages": [
+    {
+      "capability_id": "bowl_to_plate",
+      "job": {
+        "job_id": "f03e2785b7b84d109c9432b3a929c336",
+        "request_id": "d9e0301fd40d4aa0a1afa110a583fada",
+        "session_id": "e8b677298cd44035b56cd182afddfcfb",
+        "capability_id": "bowl_to_plate",
+        "state": "completed",
+        "steps": 82,
+        "total_steps": 82,
+        "success": true,
+        "ended_reason": "success",
+        "error": null,
+        "instruction": "put the bowl on the plate",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "bd974baeab772df43c3db589b35e6885d3428363a8dbbbbcbe4c07171fcad859",
+        "state_after_sha": "206ce6c7e451a8fc8042561f3051b177bb085ab9fde9d4080253f26d1ffd3f6d",
+        "env_instance_id": null,
+        "episode_resets": null,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/subtask_01_bowl_to_plate/job",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/subtask_01_bowl_to_plate/job/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/subtask_01_bowl_to_plate/job/rollout.mp4",
+        "wall_s": 48.25
+      },
+      "score": {
+        "physical_gold_success": true,
+        "last5_ready": true,
+        "completed_goals_preserved": true,
+        "unknown": []
+      },
+      "observations_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/subtask_01_bowl_to_plate/observer.jsonl",
+      "assistcounts": {
+        "vla_source_actions": 82,
+        "prepare_source_actions": 0,
+        "local_grasp_source_actions": 0,
+        "job_steps": 82,
+        "observer_rows": 82
+      },
+      "actual_assist": {
+        "vla_source_actions": 82,
+        "prepare_source_actions": 0,
+        "local_grasp_source_actions": 0,
+        "job_steps": 82,
+        "observer_rows": 82
+      },
+      "assist_source_sha256": "aa6d2ee6d1e3c508165948fcffbf266e858348fbc9d2abb919a4bd8ed7ed2883",
+      "home_after": {
+        "ok": true,
+        "ready": true,
+        "actions": 124,
+        "reason": "joint_home_ready",
+        "unknown": [],
+        "operational_errors": [],
+        "restore": {
+          "original_identity": true,
+          "controller_facts": {
+            "n_robots": 1,
+            "controller_type": "OperationalSpaceController",
+            "use_delta": true,
+            "control_dim": 6,
+            "input_min": [
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0,
+              -1.0
+            ],
+            "input_max": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "output_min": [
+              -0.05,
+              -0.05,
+              -0.05,
+              -0.5,
+              -0.5,
+              -0.5
+            ],
+            "output_max": [
+              0.05,
+              0.05,
+              0.05,
+              0.5,
+              0.5,
+              0.5
+            ],
+            "ee_pos": [
+              -0.1908203617089148,
+              0.003999617224407717,
+              1.1881126006640113
+            ],
+            "ee_ori_mat": [
+              [
+                -0.0013068746782612726,
+                0.998649251440552,
+                -0.05194193561851622
+              ],
+              [
+                0.999997730268628,
+                0.0012177049637881678,
+                -0.0017483284048418757
+              ],
+              [
+                -0.001682716899936161,
+                -0.051944102570397055,
+                -0.9986485761628003
+              ]
+            ],
+            "error": null
+          },
+          "controller_mismatch": null,
+          "ok": true,
+          "readonly_metrics": {
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "arm_error_rad": [
+              0.00018599918780552033,
+              0.001689849919901426,
+              0.0004890663393478233,
+              0.0016965626840121928,
+              0.001400441218035936,
+              0.0016255512191145627,
+              0.0026678507705697463
+            ],
+            "arm_speed_rad_s": [
+              7.800955698102752e-05,
+              0.00564811591924658,
+              4.3960574824726134e-05,
+              0.0054207517512063885,
+              0.0001330613549530237,
+              0.00028654271747225173,
+              0.0009814615598443652
+            ],
+            "max_joint_error_rad": 0.0026678507705697463,
+            "max_joint_speed_rad_s": 0.00564811591924658,
+            "finger_error_m": [
+              0.0012578919265634064,
+              0.0012676953031492688
+            ],
+            "finger_speed_m_s": [
+              1.095362946611195e-05,
+              3.1457305942984004e-06
+            ],
+            "max_finger_error_m": 0.0012676953031492688,
+            "max_finger_speed_m_s": 1.095362946611195e-05,
+            "ready": true
+          },
+          "readonly_protection": {
+            "ok": true,
+            "violations": [],
+            "objects": {
+              "akita_black_bowl_1:akita_black_bowl_1_joint0": {
+                "translation_m": 2.2057417128584933e-08,
+                "rotation_rad": 5.960464477539063e-08
+              },
+              "cream_cheese_1:cream_cheese_1_joint0": {
+                "translation_m": 0.0,
+                "rotation_rad": 0.0
+              },
+              "wine_bottle_1:wine_bottle_1_joint0": {
+                "translation_m": 1.3877787807814457e-17,
+                "rotation_rad": 0.0
+              },
+              "plate_1:plate_1_joint0": {
+                "translation_m": 3.761434237048413e-11,
+                "rotation_rad": 0.0
+              }
+            },
+            "empty_hand": true,
+            "observation_complete": true,
+            "robot_contacts": [],
+            "joints": {
+              "akita_black_bowl_1": {
+                "akita_black_bowl_1_joint0": {
+                  "type": 0,
+                  "qpos": [
+                    0.05481240264302396,
+                    -0.03921667526543374,
+                    0.9061419764520603,
+                    0.6644901419369859,
+                    0.008485850509994867,
+                    -0.009564140721198103,
+                    0.7471876396340831
+                  ]
+                }
+              },
+              "cream_cheese_1": {
+                "cream_cheese_1_joint0": {
+                  "type": 0,
+                  "qpos": [
+                    -0.040864171825062065,
+                    0.12131172107437177,
+                    0.9089214774186077,
+                    8.378632802620751e-18,
+                    4.545112096262344e-17,
+                    5.622601027341208e-18,
+                    1.0
+                  ]
+                }
+              },
+              "wine_bottle_1": {
+                "wine_bottle_1_joint0": {
+                  "type": 0,
+                  "qpos": [
+                    -0.20317571392373684,
+                    -0.05371376487208047,
+                    0.8988754774203452,
+                    1.109359093730063e-08,
+                    -6.204091079947051e-06,
+                    3.8784043987436465e-07,
+                    0.9999999999806799
+                  ]
+                }
+              },
+              "plate_1": {
+                "plate_1_joint0": {
+                  "type": 0,
+                  "qpos": [
+                    0.058753982523486514,
+                    -0.034474310202817444,
+                    0.902503213522657,
+                    0.7073383172983182,
+                    -1.4265305235571327e-05,
+                    5.334086858241386e-06,
+                    0.7068751690713376
+                  ]
+                }
+              }
+            },
+            "stove_on": false,
+            "completed_goals": [
+              [
+                "on",
+                "akita_black_bowl_1",
+                "plate_1"
+              ]
+            ]
+          },
+          "not_additional_postaction_confirmation_sample": true
+        },
+        "last_metrics": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.00018599918780552033,
+            0.001689849919901426,
+            0.0004890663393478233,
+            0.0016965626840121928,
+            0.001400441218035936,
+            0.0016255512191145627,
+            0.0026678507705697463
+          ],
+          "arm_speed_rad_s": [
+            7.800955698102752e-05,
+            0.00564811591924658,
+            4.3960574824726134e-05,
+            0.0054207517512063885,
+            0.0001330613549530237,
+            0.00028654271747225173,
+            0.0009814615598443652
+          ],
+          "max_joint_error_rad": 0.0026678507705697463,
+          "max_joint_speed_rad_s": 0.00564811591924658,
+          "finger_error_m": [
+            0.0012578919265634064,
+            0.0012676953031492688
+          ],
+          "finger_speed_m_s": [
+            1.095362946611195e-05,
+            3.1457305942984004e-06
+          ],
+          "max_finger_error_m": 0.0012676953031492688,
+          "max_finger_speed_m_s": 1.095362946611195e-05,
+          "ready": true
+        },
+        "last_protection": {
+          "ok": true,
+          "violations": [],
+          "objects": {
+            "akita_black_bowl_1:akita_black_bowl_1_joint0": {
+              "translation_m": 2.2057417128584933e-08,
+              "rotation_rad": 5.960464477539063e-08
+            },
+            "cream_cheese_1:cream_cheese_1_joint0": {
+              "translation_m": 0.0,
+              "rotation_rad": 0.0
+            },
+            "wine_bottle_1:wine_bottle_1_joint0": {
+              "translation_m": 1.3877787807814457e-17,
+              "rotation_rad": 0.0
+            },
+            "plate_1:plate_1_joint0": {
+              "translation_m": 3.761434237048413e-11,
+              "rotation_rad": 0.0
+            }
+          },
+          "empty_hand": true,
+          "observation_complete": true,
+          "robot_contacts": [],
+          "joints": {
+            "akita_black_bowl_1": {
+              "akita_black_bowl_1_joint0": {
+                "type": 0,
+                "qpos": [
+                  0.05481240264302396,
+                  -0.03921667526543374,
+                  0.9061419764520603,
+                  0.6644901419369859,
+                  0.008485850509994867,
+                  -0.009564140721198103,
+                  0.7471876396340831
+                ]
+              }
+            },
+            "cream_cheese_1": {
+              "cream_cheese_1_joint0": {
+                "type": 0,
+                "qpos": [
+                  -0.040864171825062065,
+                  0.12131172107437177,
+                  0.9089214774186077,
+                  8.378632802620751e-18,
+                  4.545112096262344e-17,
+                  5.622601027341208e-18,
+                  1.0
+                ]
+              }
+            },
+            "wine_bottle_1": {
+              "wine_bottle_1_joint0": {
+                "type": 0,
+                "qpos": [
+                  -0.20317571392373684,
+                  -0.05371376487208047,
+                  0.8988754774203452,
+                  1.109359093730063e-08,
+                  -6.204091079947051e-06,
+                  3.8784043987436465e-07,
+                  0.9999999999806799
+                ]
+              }
+            },
+            "plate_1": {
+              "plate_1_joint0": {
+                "type": 0,
+                "qpos": [
+                  0.058753982523486514,
+                  -0.034474310202817444,
+                  0.902503213522657,
+                  0.7073383172983182,
+                  -1.4265305235571327e-05,
+                  5.334086858241386e-06,
+                  0.7068751690713376
+                ]
+              }
+            }
+          },
+          "stove_on": false,
+          "completed_goals": [
+            [
+              "on",
+              "akita_black_bowl_1",
+              "plate_1"
+            ]
+          ]
+        },
+        "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/subtask_01_bowl_to_plate/home/home.mp4",
+        "initial_image": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/subtask_01_bowl_to_plate/home/first.png",
+        "route_screen": {
+          "sample_count": 110,
+          "planned_samples": 110,
+          "collisions": [],
+          "collision_count": 0,
+          "ok": true,
+          "live_unchanged": true
+        },
+        "postaction_ready_streak": 5,
+        "final_state_sha256": "58eaa87bbf8ede4748f688653916c2f94124ad1aa3e9e5238c977c6d4373aa19"
+      }
+    },
+    {
+      "capability_id": "stove_on",
+      "job": {
+        "job_id": "37f2c79761184909a766a1eaeeb58a76",
+        "request_id": "d9e0301fd40d4aa0a1afa110a583fada",
+        "session_id": "e8b677298cd44035b56cd182afddfcfb",
+        "capability_id": "stove_on",
+        "state": "completed",
+        "steps": 74,
+        "total_steps": 280,
+        "success": true,
+        "ended_reason": "success",
+        "error": null,
+        "instruction": "turn on the stove",
+        "scene_version_before": 1,
+        "scene_version_after": 2,
+        "state_before_sha": "58eaa87bbf8ede4748f688653916c2f94124ad1aa3e9e5238c977c6d4373aa19",
+        "state_after_sha": "50b97b6798bf6c09d945afc707a9490ebb4c1f5b8c9ab0a5553ba841f9ceedb1",
+        "env_instance_id": null,
+        "episode_resets": null,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/subtask_02_stove_on/job",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/subtask_02_stove_on/job/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/subtask_02_stove_on/job/rollout.mp4",
+        "wall_s": 43.341
+      },
+      "score": {
+        "physical_gold_success": true,
+        "last5_ready": true,
+        "completed_goals_preserved": true,
+        "unknown": []
+      },
+      "observations_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/subtask_02_stove_on/observer.jsonl",
+      "assistcounts": {
+        "vla_source_actions": 74,
+        "prepare_source_actions": 0,
+        "local_grasp_source_actions": 0,
+        "job_steps": 74,
+        "observer_rows": 74
+      },
+      "actual_assist": {
+        "vla_source_actions": 74,
+        "prepare_source_actions": 0,
+        "local_grasp_source_actions": 0,
+        "job_steps": 74,
+        "observer_rows": 74
+      },
+      "assist_source_sha256": "f46e32e7f8ff770f9ae3348adae5bfadc78a633f42b72fcc92f30f86a97c15ba"
+    }
+  ],
+  "failure_stage": null,
+  "failure_category": null,
+  "assist_mode": "disabled",
+  "session": {
+    "ok": true,
+    "session_id": "e8b677298cd44035b56cd182afddfcfb",
+    "scene_id": "goal_table",
+    "state": "ready",
+    "scene_version": 0,
+    "env_instance_id": 6,
+    "episode_resets": 1,
+    "policy_resets": 0,
+    "total_steps": 0,
+    "seed": 0,
+    "init_state_index": 1,
+    "description": "Shared original bowl, wine and stove scene; no trash bin exists here.",
+    "storage_policy": {
+      "akita_black_bowl_1": "plate_1",
+      "wine_bottle_1": "wine_rack_1_top_region"
+    },
+    "capabilities": [
+      {
+        "instruction": "put the bowl on the plate",
+        "goals": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ]
+        ],
+        "object_id": "akita_black_bowl_1",
+        "target_id": "plate_1",
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "v0.1.0 single-task success in libero_goal/8; sequence and shifted-layout reliability unverified",
+        "audit_only": false,
+        "exclusive_target": true,
+        "capability_id": "bowl_to_plate"
+      },
+      {
+        "instruction": "put the wine bottle on the rack",
+        "goals": [
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ]
+        ],
+        "object_id": "wine_bottle_1",
+        "target_id": "wine_rack_1_top_region",
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "candidate here; v0.1.0 single-task wine success used libero_goal/9, a different task initialization",
+        "audit_only": false,
+        "exclusive_target": true,
+        "capability_id": "wine_to_rack"
+      },
+      {
+        "instruction": "turn on the stove",
+        "goals": [
+          [
+            "turnon",
+            "flat_stove_1"
+          ]
+        ],
+        "object_id": "flat_stove_1",
+        "target_id": null,
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "candidate here; v0.1.0 single-task stove success used libero_goal/7, a different task initialization",
+        "audit_only": false,
+        "exclusive_target": false,
+        "capability_id": "stove_on"
+      }
+    ],
+    "images": [
+      {
+        "view": "agentview",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T124749Z_goal_table_e8b67729/agentview.png",
+        "sha256": "057f6ea7b532b577a07e1ab32b8aee9f28e8c9d607a350a1530462c226d17875",
+        "kind": "vla_observation"
+      },
+      {
+        "view": "wrist",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T124749Z_goal_table_e8b67729/wrist.png",
+        "sha256": "74f8db2b69bc4be44cf00c69fed3995597854e573fa1536d4b93d484ecdd341c",
+        "kind": "vla_observation"
+      }
+    ],
+    "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T124749Z_goal_table_e8b67729/latest.png",
+    "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T124749Z_goal_table_e8b67729",
+    "active_request_id": null,
+    "error": null
+  },
+  "initial_state_sha": "bd974baeab772df43c3db589b35e6885d3428363a8dbbbbcbe4c07171fcad859",
+  "reference": {
+    "schema_version": 1,
+    "origin_sha256": "bd974baeab772df43c3db589b35e6885d3428363a8dbbbbcbe4c07171fcad859",
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "qpos_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "qvel_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "joint_limits_low": [
+      -2.8973,
+      -1.7628,
+      -2.8973,
+      -3.0718,
+      -2.8973,
+      -0.0175,
+      -2.8973
+    ],
+    "joint_limits_high": [
+      2.8973,
+      1.7628,
+      2.8973,
+      -0.0698,
+      2.8973,
+      3.7525,
+      2.8973
+    ],
+    "homeq": [
+      0.00814871539036041,
+      -0.1360581744114584,
+      7.904065168963338e-05,
+      -2.37544378342106,
+      -8.280022629655342e-05,
+      2.1857739710627606,
+      0.7917446828706742
+    ],
+    "home_joint_speed": [
+      -0.0082870864048104,
+      0.03634400746122716,
+      0.005115721617638265,
+      0.06433417358414599,
+      0.005194981154614984,
+      -0.07958932485698607,
+      0.003269204100543981
+    ],
+    "finger_qpos_indexes": [
+      7,
+      8
+    ],
+    "finger_qvel_indexes": [
+      7,
+      8
+    ],
+    "finger_home": [
+      0.03872783560654059,
+      -0.038730509939092383
+    ],
+    "finger_speed": [
+      0.003198956800136426,
+      -0.003177126280346282
+    ],
+    "eef_pose": {
+      "position": [
+        -0.19170754643393328,
+        0.0038425711211586724,
+        1.1880503790907353
+      ],
+      "orientation_matrix": [
+        [
+          -0.002432864361831327,
+          0.998560408606412,
+          -0.05358350058356204
+        ],
+        [
+          0.9999969647734429,
+          0.0024085046996529195,
+          -0.0005191810952625379
+        ],
+        [
+          -0.00038937757364672365,
+          -0.053584601042682145,
+          -0.998563237314592
+        ]
+      ]
+    },
+    "gold_goals": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ],
+      [
+        "turnon",
+        "flat_stove_1"
+      ]
+    ]
+  },
+  "initial_capture": {
+    "tag": "native_origin",
+    "directory": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_06/native_origin",
+    "state_before_sha256": "bd974baeab772df43c3db589b35e6885d3428363a8dbbbbcbe4c07171fcad859",
+    "state_after_sha256": "bd974baeab772df43c3db589b35e6885d3428363a8dbbbbcbe4c07171fcad859",
+    "readonly_state_unchanged": true
+  },
+  "model_rng": {
+    "ok": true,
+    "seeded": true,
+    "seed": 3
+  },
+  "queue_refresh": {
+    "ok": true,
+    "state_before_sha256": "58eaa87bbf8ede4748f688653916c2f94124ad1aa3e9e5238c977c6d4373aa19",
+    "state_after_sha256": "58eaa87bbf8ede4748f688653916c2f94124ad1aa3e9e5238c977c6d4373aa19",
+    "readonly_state_unchanged": true
+  },
+  "attempted_home": 1,
+  "ready_home": 1,
+  "final_score": {
+    "physical_gold_success": true,
+    "last5_ready": true,
+    "completed_goals_preserved": true,
+    "unknown": []
+  }
+}

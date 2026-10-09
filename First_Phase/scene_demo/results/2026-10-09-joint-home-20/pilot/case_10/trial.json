@@ -1,0 +1,331 @@
+{
+  "case_id": "case_10",
+  "spec": {
+    "case_id": "case_10",
+    "scene_id": "basket_two",
+    "init_state_index": 1,
+    "model_seed": 3,
+    "env_seed": 0,
+    "capability_ids": [
+      "soup_to_basket",
+      "sauce_to_basket"
+    ],
+    "gold_goals": [
+      [
+        "in",
+        "alphabet_soup_1",
+        "basket_1_contain_region"
+      ],
+      [
+        "in",
+        "tomato_sauce_1",
+        "basket_1_contain_region"
+      ]
+    ],
+    "vla_cap": 336,
+    "home_cap": 360
+  },
+  "physical_success": false,
+  "operational_errors": [],
+  "unknown": [],
+  "home_actions": 0,
+  "vla_actions": 336,
+  "total_physical_actions": 336,
+  "new_hermes_calls": 0,
+  "stages": [
+    {
+      "capability_id": "soup_to_basket",
+      "job": {
+        "job_id": "77bf55cb7de24cf287e0b0ba43f01640",
+        "request_id": "01b7a71fd26a4763923a6eb75c3d0199",
+        "session_id": "bdd61686e1904b1a99bf0f368597730d",
+        "capability_id": "soup_to_basket",
+        "state": "completed",
+        "steps": 336,
+        "total_steps": 336,
+        "success": false,
+        "ended_reason": "budget_exhausted",
+        "error": null,
+        "instruction": "put the alphabet soup in the basket",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "bdd98d9838cf9d44f95f4cec9b387b8b178d6e6e2542be916b174b410c8bbe97",
+        "state_after_sha": "c0929388b61c65a810521f5aedd4f0213a03db54a21962f1494fa1ab998aa679",
+        "env_instance_id": null,
+        "episode_resets": null,
+        "completion_mode": "release_verified",
+        "phase": "holding_target_outside_goal",
+        "held_objects": [
+          "alphabet_soup_1"
+        ],
+        "grasp_observation_complete": true,
+        "completion_ready": false,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_10/subtask_01_soup_to_basket/job",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_10/subtask_01_soup_to_basket/job/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_10/subtask_01_soup_to_basket/job/rollout.mp4",
+        "wall_s": 196.684
+      },
+      "score": {
+        "physical_gold_success": false,
+        "last5_ready": false,
+        "completed_goals_preserved": true,
+        "unknown": []
+      },
+      "observations_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_10/subtask_01_soup_to_basket/observer.jsonl",
+      "assistcounts": {
+        "vla_source_actions": 336,
+        "prepare_source_actions": 0,
+        "local_grasp_source_actions": 0,
+        "job_steps": 336,
+        "observer_rows": 336
+      },
+      "actual_assist": {
+        "vla_source_actions": 336,
+        "prepare_source_actions": 0,
+        "local_grasp_source_actions": 0,
+        "job_steps": 336,
+        "observer_rows": 336
+      },
+      "assist_source_sha256": "3a8c936c9b654a18659393695a8e950a8db5329702e7ef39705cfb630cad8376"
+    }
+  ],
+  "failure_stage": {
+    "index": 0,
+    "capability_id": "soup_to_basket"
+  },
+  "failure_category": "first_subtask",
+  "assist_mode": "disabled",
+  "session": {
+    "ok": true,
+    "session_id": "bdd61686e1904b1a99bf0f368597730d",
+    "scene_id": "basket_two",
+    "state": "ready",
+    "scene_version": 0,
+    "env_instance_id": 10,
+    "episode_resets": 1,
+    "policy_resets": 0,
+    "total_steps": 0,
+    "seed": 0,
+    "init_state_index": 1,
+    "description": "Shared original basket scene holding the alphabet soup can and the tomato sauce can.",
+    "storage_policy": {
+      "alphabet_soup_1": "basket_1_contain_region",
+      "tomato_sauce_1": "basket_1_contain_region"
+    },
+    "capabilities": [
+      {
+        "instruction": "put the alphabet soup in the basket",
+        "goals": [
+          [
+            "in",
+            "alphabet_soup_1",
+            "basket_1_contain_region"
+          ]
+        ],
+        "object_id": "alphabet_soup_1",
+        "target_id": "basket_1_contain_region",
+        "scene_ids": [
+          "basket_two"
+        ],
+        "evidence": "candidate in this scene; previous successful single task is a different scene",
+        "audit_only": false,
+        "exclusive_target": false,
+        "capability_id": "soup_to_basket"
+      },
+      {
+        "instruction": "put the tomato sauce in the basket",
+        "goals": [
+          [
+            "in",
+            "tomato_sauce_1",
+            "basket_1_contain_region"
+          ]
+        ],
+        "object_id": "tomato_sauce_1",
+        "target_id": "basket_1_contain_region",
+        "scene_ids": [
+          "basket_two"
+        ],
+        "evidence": "candidate",
+        "audit_only": false,
+        "exclusive_target": false,
+        "capability_id": "sauce_to_basket"
+      }
+    ],
+    "images": [
+      {
+        "view": "agentview",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T125446Z_basket_two_bdd61686/agentview.png",
+        "sha256": "b3b1bcbf17b2f597f02262d5b3cafd9553ab3590585ad91f91e6d8f69e9bc582",
+        "kind": "vla_observation"
+      },
+      {
+        "view": "wrist",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T125446Z_basket_two_bdd61686/wrist.png",
+        "sha256": "a98c03779aee01b95dad6ed87b4d7064374268b4debec4aae917f59c5d677f43",
+        "kind": "vla_observation"
+      }
+    ],
+    "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T125446Z_basket_two_bdd61686/latest.png",
+    "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/sessions/20261009T125446Z_basket_two_bdd61686",
+    "active_request_id": null,
+    "error": null
+  },
+  "initial_state_sha": "bdd98d9838cf9d44f95f4cec9b387b8b178d6e6e2542be916b174b410c8bbe97",
+  "reference": {
+    "schema_version": 1,
+    "origin_sha256": "bdd98d9838cf9d44f95f4cec9b387b8b178d6e6e2542be916b174b410c8bbe97",
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "qpos_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "qvel_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "joint_limits_low": [
+      -2.8973,
+      -1.7628,
+      -2.8973,
+      -3.0718,
+      -2.8973,
+      -0.0175,
+      -2.8973
+    ],
+    "joint_limits_high": [
+      2.8973,
+      1.7628,
+      2.8973,
+      -0.0698,
+      2.8973,
+      3.7525,
+      2.8973
+    ],
+    "homeq": [
+      0.011648225016690326,
+      -0.15413638004577138,
+      0.013177425724245191,
+      -2.4547992489639445,
+      0.0040718005744481275,
+      2.24306019855607,
+      0.8060894277339516
+    ],
+    "home_joint_speed": [
+      -0.007653839117174604,
+      -0.027358602805719744,
+      0.005399138119012135,
+      -0.05057933135814286,
+      0.0027559203158846945,
+      0.05856573116420172,
+      8.383394431596065e-05
+    ],
+    "finger_qpos_indexes": [
+      7,
+      8
+    ],
+    "finger_qvel_indexes": [
+      7,
+      8
+    ],
+    "finger_home": [
+      0.0387289507843544,
+      -0.038729347107214485
+    ],
+    "finger_speed": [
+      0.0031932810943884646,
+      -0.0031833121009448508
+    ],
+    "eef_pose": {
+      "position": [
+        -0.05980855003088964,
+        0.011375943370326564,
+        0.6751293988659444
+      ],
+      "orientation_matrix": [
+        [
+          -0.0017893290473404884,
+          0.9983386637751647,
+          -0.05759089088716644
+        ],
+        [
+          0.9999983876406621,
+          0.0017776217425475131,
+          -0.0002545132905704857
+        ],
+        [
+          -0.00015171563860744489,
+          -0.05759125343797954,
+          -0.9983402348447175
+        ]
+      ]
+    },
+    "gold_goals": [
+      [
+        "in",
+        "alphabet_soup_1",
+        "basket_1_contain_region"
+      ],
+      [
+        "in",
+        "tomato_sauce_1",
+        "basket_1_contain_region"
+      ]
+    ]
+  },
+  "initial_capture": {
+    "tag": "native_origin",
+    "directory": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_10/native_origin",
+    "state_before_sha256": "bdd98d9838cf9d44f95f4cec9b387b8b178d6e6e2542be916b174b410c8bbe97",
+    "state_after_sha256": "bdd98d9838cf9d44f95f4cec9b387b8b178d6e6e2542be916b174b410c8bbe97",
+    "readonly_state_unchanged": true
+  },
+  "model_rng": {
+    "ok": true,
+    "seeded": true,
+    "seed": 3
+  },
+  "queue_refresh": {
+    "ok": true,
+    "state_before_sha256": "bdd98d9838cf9d44f95f4cec9b387b8b178d6e6e2542be916b174b410c8bbe97",
+    "state_after_sha256": "bdd98d9838cf9d44f95f4cec9b387b8b178d6e6e2542be916b174b410c8bbe97",
+    "readonly_state_unchanged": true
+  },
+  "failure_reason": "budget_exhausted"
+}
