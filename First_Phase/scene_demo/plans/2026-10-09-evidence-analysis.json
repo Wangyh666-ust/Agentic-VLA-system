@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "id": "20261009-wine-existing-evidence-analysis",
+  "intent": "analyze_existing",
+  "question_key": "wine-start-context",
+  "purpose": "复用已有原生/共享/放碗后/完整归位酒瓶记录，列出已排除因素与实际缺项，先不启动新物理实验",
+  "prior_evidence": [
+    "20261006-persistent-pilot",
+    "20261008-skill-context",
+    "20261008-wine-start-pose",
+    "20261009-joint-home-12",
+    "20261007-wine-stages",
+    "20261008-grasp-config"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261006-persistent-pilot",
+      "disposition": "reuse",
+      "reason": "提供旧manual/Hermes/direct序列背景，旧native完成判据与后续严格分分开"
+    },
+    {
+      "experiment_id": "20261008-skill-context",
+      "disposition": "reuse",
+      "reason": "原生2/2、共享1/2、放碗后0/2和同XML/状态差异已测，不能重列成未做基线"
+    },
+    {
+      "experiment_id": "20261008-wine-start-pose",
+      "disposition": "reuse",
+      "reason": "直接和末端位姿准备均失败，末端位姿与完整关节恢复必须区分"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "首酒瓶成功和归位后酒瓶失败是最新证据；case级随机流和不同前序画面仍未单独隔离"
+    },
+    {
+      "experiment_id": "20261007-wine-stages",
+      "disposition": "reuse",
+      "reason": "旧抓取/释放/窄目标区诊断可按阶段复用，避免把所有失败归于没有松手"
+    },
+    {
+      "experiment_id": "20261008-grasp-config",
+      "disposition": "reuse",
+      "reason": "接口/实际初态与推理配置配对已核查，默认配置未变，不重做全套配置试验"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "读取上述台账条目及相关已存状态、first.png、CSV和必要observer，不启动模型或仿真",
+    "列出实际状态、语言/输入、策略队列/随机流、预算与抓取/搬运/释放的可比信息，缺失字段记未知",
+    "生成已排除/仍可能/证据缺项表，决定是否真的需要一个新对照；本方案不执行后续物理分支"
+  ]
+}

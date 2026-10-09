@@ -1,3 +1,11 @@
+## 实验历史与证据审查（FYP）
+
+涉及本项目机器人实验的解释、排错、计划、执行或报告时，先读取 `.agents/skills/fyp-experiment-review/SKILL.md`，按其中流程检索 `First_Phase/scene_demo/experiment_registry.json` 和相关原始证据。普通文档排版不触发本规则。
+提出新物理实验前必须列出已有相关实验、证据缺口和新实验改变的条件；启动前运行 skill 的 `review.py check`。历史证据可复用，只有明确的变化或重复测量目的才补跑。检查通过不等于用户授权，也不等于科学结论成立；沿用已有授权范围，无需重复请示。
+分工沿用仓库规定；当前 GPT 会话由 GPT 做推理、方案与验收，实际 DeepSeek 做确定的实现任务，本地 worker 做机械执行。不能以 worker 名称代替实际 DeepSeek 调用证据。暂停/缩小范围以用户最新指令为准。
+
+---
+
 # 工作结构:Opus 5.5 规划 + DeepSeek 执行
 
 本仓库采用双模型分工。**主 Agent(Opus 5.5)只负责推理与决策,不亲自做机械执行;执行工作派发给 `executor` 子 Agent。**

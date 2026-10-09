@@ -1,0 +1,83 @@
+{
+  "evaluator": "independent GPT behavioral pass",
+  "cases": [
+    {
+      "id": "Q1",
+      "request": "我想定位失败技能，下一步先重新建立原始LIBERO酒瓶任务以及篮子完整/拆分指令的基线。请先查一下这是否是新工作，再建议是否执行。",
+      "answer": "这不是从零开始的新工作，建议先复用已有基线，不立即重跑。台账20261007-wine-stages已用原生goal9与共享goal8、三个seed:init配对、每轮300动作做过六次酒瓶诊断：1次严格成功、2次抓取失败、3次已释放但落在目标区外。20261008-grasp-config进一步做过18次三配置比较及默认配置3次留出，默认留出3/3严格成功；这些是不同范围的记录，不能合并成总体成功率。篮子方面，20261006-persistent-pilot已有完整两罐头600步与拆分汤/酱300步pilot；20261007-placement已有原生完整指令、拆分单目标、600步及300+300重试对照，完整任务均未完成，但一条完整指令轨迹的汤在212步被筛查为已释放稳定，不能说所有子技能从未成功。证据：[酒瓶六例](D:/FYP/First_Phase/scene_demo/results/2026-10-07-wine/README.md)、[篮子基线统计](D:/FYP/First_Phase/scene_demo/results/2026-10-07/baseline_comparison_statistics.json)、[配置与留出](D:/FYP/First_Phase/scene_demo/results/2026-10-08-grasp-config/README.md)。现有缺口是篮子小样本、不同完成口径与语言/场景适配的因果尚未隔离。下一步先离线对齐已有输入、字面指令、动作预算、目标谓词、抓持/高度/释放记录，定位失败阶段；已有接口核查在配置未变时可复用。只有明确的新条件或复现/补样本目的才拟新物理实验，列出相关历史、证据缺口和改变因素，并在启动前运行review.py check；检查通过本身不构成授权。本回答没有启动任何实验。",
+      "experiment_ids": ["20261006-persistent-pilot", "20261007-placement", "20261007-wine-stages", "20261008-grasp-config"],
+      "evidence_paths": [
+        "D:/FYP/First_Phase/scene_demo/experiment_registry.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-06/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-07/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-07/baseline_comparison_statistics.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-07-wine/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-07-wine/summary.csv",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-08-grasp-config/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-08-grasp-config/summary.csv"
+      ]
+    },
+    {
+      "id": "Q2",
+      "request": "辅助器已经把手移到碗旁边，VLA仍抓不起碗，是不是证明辅助器和VLA架构不兼容、只能微调？请根据已有实验回答。",
+      "answer": "不能这样下结论。20261009-assist-repair的两例确实各用164步把空手夹爪移到碗上方约20cm，准备达标后各336个新VLA动作仍未抓起碗；旧无辅助对照各有500个VLA动作，因此不能当相同VLA预算比较。更关键的反例是20261009-entry-compatibility：原生起点165步真实辅助准备后，59个新VLA动作成功放碗并释放稳定，证明至少一个辅助器+VLA兼容入口存在；原第30步状态接续61个新VLA动作也成功。该轮酒瓶后案例224步准备朝向超时、VLA为0，不能算VLA失败。20261009-joint-home又在两个旧酒瓶后状态用243/241步完整关节归位后，93/105个新VLA动作成功放碗，无训练。证据：[准备修正原报告](D:/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist-repair/pilot/report.json)、[入口兼容原报告](D:/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/report.json)、[完整归位原报告](D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home/pilot/report.json)。证据支持接续入口/上下文敏感，不能证明架构普遍不兼容、唯一原因是某个关节或只能微调。建议先离线比较这些已保存的成功与失败入口的实际关节、朝向、开口、观测及动作预算，保留未知，不扩测、不立即训练。",
+      "experiment_ids": ["20261009-subtask-assist", "20261009-assist-repair", "20261009-entry-compatibility", "20261009-joint-home"],
+      "evidence_paths": [
+        "D:/FYP/First_Phase/scene_demo/experiment_registry.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist-repair/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist-repair/pilot/report.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/report.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home/pilot/report.json"
+      ]
+    },
+    {
+      "id": "Q3",
+      "request": "最新目录叫joint-home-20，原report.ok=false。这是否说明20例全部失败？请说明实际范围与成功、VLA失败、归位阻断的计数。",
+      "answer": "不说明20例全失败。20261009-joint-home-12对应目录保留了原20例注册名；用户改为先做12例后停止，实际只有case01–12是完整样本。case13已运行164动作后被用户中止，成功/失败均排除；case14–20未启动。原report.ok=false反映原20例campaign没有完成，不是20次物理失败。12例中：全链成功3例（01、05、06）；首个VLA任务失败4例（09–12）；归位达标后酒瓶VLA失败2例（03、04）；归位入口阻断3例（02、07、08），这些归位动作0、后续VLA没有启动。实际启动17个VLA子任务，11成功、6失败：碗5/5、酒瓶2/4、开灶台4/4、汤0/2、番茄酱0/2。8次归位检查中5次归位达标，达标后的接续3/5成功；3/12与3/5是不同分母。证据：[范围原记录](D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/scope12.json)、[逐例CSV](D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/case_summary12.csv)、[详细统计](D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/metrics12.json)。建议保留原report，以12个完整样本做分层分析；不续跑已中止的第13–20例，也不把目录名称或ok字段当成功率。",
+      "experiment_ids": ["20261009-joint-home-12"],
+      "evidence_paths": [
+        "D:/FYP/First_Phase/scene_demo/experiment_registry.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/scope12.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/case_summary12.csv",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/metrics12.json"
+      ]
+    },
+    {
+      "id": "Q4",
+      "request": "归位以后碗→酒瓶还是失败，是否可以直接下结论：训练时没学好抓取或没学松手？请指出已有证据支持什么、不支持什么，给一个不扩大试验的下一步。",
+      "answer": "不能直接认定训练缺陷，更不能认定没学松手。20261009-joint-home-12的case03/04在放碗后分别139/124步归位达标，随后各336个新VLA动作耗尽：酒瓶目标谓词从未为真，抓持代理为真样本均为0；报告记录后续瓶子被碰倒。证据支持这两个上下文中的酒瓶抓取/执行失败，而非已经放对却仅因严格释放评分失败；接触代理没有观察到抓取也不证明所有物理瞬间绝未抓住。该轮首酒瓶2/2严格放置成功、碗5/5成功；20261007-wine-stages已有完整抓取、搬运、释放严格成功，另三例已释放接触货架但落点出区；20261008-grasp-config默认留出3/3严格成功。这些已保存成功反驳普遍不会抓取或释放，却不证明可靠。归位只恢复机器人，碗/盘和画面上下文仍改变；本轮没有无归位配对组，初态与种子同时变，后续采样随机流未单独控制，无法把原因归为训练、单个关节或单一场景因素，确切训练覆盖仍未知。证据：[本轮统计](D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/metrics12.json)、[酒瓶阶段表](D:/FYP/First_Phase/scene_demo/results/2026-10-07-wine/summary.csv)、[配置留出表](D:/FYP/First_Phase/scene_demo/results/2026-10-08-grasp-config/summary.csv)。下一步只做analyze_existing：对齐case03/04与已有首酒瓶/原生成功记录的实际输入、语言、抓持/高度/闭合与目标轨迹，明确最早分歧和不可配对之处；复用未受变化影响的接口核查，不重新建立基线、不放宽判据、不扩大物理试验或微调。",
+      "experiment_ids": ["20261009-joint-home-12", "20261007-wine-stages", "20261008-grasp-config", "20261008-skill-context"],
+      "evidence_paths": [
+        "D:/FYP/First_Phase/scene_demo/experiment_registry.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/case_summary12.csv",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/metrics12.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-07-wine/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-07-wine/summary.csv",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-08-grasp-config/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-08-grasp-config/summary.csv",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/README.md"
+      ]
+    },
+    {
+      "id": "Q5",
+      "request": "最新12例完整成功只有3例，是否证明Hermes规划能力差、没有增益？请先确认这轮实际测试了哪一层。",
+      "answer": "这轮测的是VLA执行与关节归位交接，无法证明Hermes规划差或没有增益。20261009-joint-home-12的组合顺序在实验前固定，全部任务动作是新VLA推理；metrics12.configuration明确new_hermes_calls=0、historical_action_replay=false、assist_mode=disabled。3/12包括4例首技能失败、3例归位入口阻断、2例归位后酒瓶失败，归因对象不是本轮未参与的Hermes。证据：[配置与结果](D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/metrics12.json)、[本轮说明](D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/README.md)。真正相关的20261008-skill-context单独规划检查是五次请求中四次正确真实提交，一次本应澄清但没有真实提交；那只能说明给定场景与能力目录下的局部表现。20261006-persistent-pilot中的真实Hermes/manual/direct预算及修复也不同，不能据此计算Hermes增益。建议先把既有报告按规划决策、准备/归位与VLA物理执行分层复核，保留规划无提交这项真实缺陷；要评价增益需要适当的匹配对照，这12例没有提供。当前只复用历史证据，不扩展或重启用户已停止的实验。",
+      "experiment_ids": ["20261009-joint-home-12", "20261008-skill-context", "20261006-persistent-pilot"],
+      "evidence_paths": [
+        "D:/FYP/First_Phase/scene_demo/experiment_registry.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/metrics12.json",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/README.md",
+        "D:/FYP/First_Phase/scene_demo/results/2026-10-06/README.md"
+      ]
+    }
+  ],
+  "new_physical_actions": 0,
+  "new_vla_calls": 0,
+  "new_hermes_calls": 0
+}

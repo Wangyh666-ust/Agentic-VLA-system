@@ -1,0 +1,640 @@
+{
+  "status": "EXPERIMENT_REVIEW_ACCEPTANCE_ARCHIVE_PASS",
+  "ok": true,
+  "linux_tests": {
+    "passed": 47,
+    "skipped": 0
+  },
+  "windows_tests": {
+    "passed": 46,
+    "skipped": 1
+  },
+  "original_failure_preserved": true,
+  "official_skill_valid": true,
+  "registry_entries": 15,
+  "historical_evidence_count": 21,
+  "historical_evidence_21_bytehash_unchanged": true,
+  "configuration_complete_false_count": 15,
+  "verified_complete_configuration_count": 0,
+  "exact_configuration_dedup_scope": "synthetic tests only; real history uses question retrieval and GPT review",
+  "commands": [
+    {
+      "argv": [
+        "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\FYP\\.agents\\skills\\fyp-experiment-review\\scripts\\review.py",
+        "check",
+        "--proposal",
+        "D:\\FYP\\First_Phase\\scene_demo\\plans\\2026-10-09-evidence-analysis.json"
+      ],
+      "exit_code": 0,
+      "stdout_path": "First_Phase/scene_demo/review_checks/2026-10-09/offline-proposal-check.json",
+      "stdout_sha256": "8cf3bdbdcff819f4ec2f870f671adfd1de77f874eaae3cbced77238226293df8",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\FYP\\.agents\\skills\\fyp-experiment-review\\scripts\\review.py",
+        "check",
+        "--proposal",
+        "D:\\FYP\\First_Phase\\scene_demo\\review_checks\\2026-10-09\\missing-history-proposal.json"
+      ],
+      "exit_code": 2,
+      "stdout_path": "First_Phase/scene_demo/review_checks/2026-10-09/missing-history-check.json",
+      "stdout_sha256": "3be448c5f51d136855d7c77c85f9730a17dbce202b4ecdf67a3a1410faeda264",
+      "stderr": ""
+    }
+  ],
+  "previous_commands": [
+    {
+      "kind": "linux_tests",
+      "argv": [
+        "wsl",
+        "-d",
+        "Ubuntu",
+        "--",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/mnt/d/FYP/.agents/skills/fyp-experiment-review/tests",
+        "-p",
+        "test_review.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "summary": [
+        "Ran 47 tests in 0.026s",
+        "OK"
+      ]
+    },
+    {
+      "kind": "skill_validate",
+      "argv": [
+        "wsl",
+        "-d",
+        "Ubuntu",
+        "--",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "/mnt/c/Users/Admin1/.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+        "/mnt/d/FYP/.agents/skills/fyp-experiment-review"
+      ],
+      "exit_code": 0,
+      "summary": "Skill is valid!"
+    },
+    {
+      "kind": "registry_validate",
+      "argv": [
+        "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\FYP\\.agents\\skills\\fyp-experiment-review\\scripts\\review.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "json_output": {
+        "ok": true,
+        "entry_count": 15,
+        "evidence_count": 21,
+        "scientific_review_required": true,
+        "launch_authorized": false
+      }
+    },
+    {
+      "kind": "registry_query",
+      "argv": [
+        "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\FYP\\.agents\\skills\\fyp-experiment-review\\scripts\\review.py",
+        "query",
+        "--text",
+        "wine-native-baseline",
+        "basket-full-vs-atomic"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "actual_deepseek_author_calls": 2,
+  "actual_deepseek_model": "deepseek-flash",
+  "actual_author_metadata": [
+    {
+      "private_proof_sha256": "ad37d3abe46685e9baec62128ea585f3c883b71d596100355c6adbf2f956da2f",
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 2377,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 14520,
+        "service_tier": "standard"
+      },
+      "response_sha256": "759641e4be52855a6b397232c6710c35450c4c59f418e21ff9ff4c2ef5ebd542"
+    },
+    {
+      "private_proof_sha256": "105e618eecf3db028c5d6620466aa8e12f73cd8e209a2e78e1804d61a9a4550e",
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "stop_reason": "end_turn",
+      "usage": {
+        "input_tokens": 16335,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 5316,
+        "service_tier": "standard"
+      },
+      "response_sha256": "51db6ea112882b8b134dbf71f1369d242f7541d71343a67dc6a4b2d32e675609"
+    }
+  ],
+  "behavioral_review": {
+    "reviewed_by": "GPT main agent",
+    "passed": 5,
+    "requests": 5,
+    "ratings": {
+      "Q1": {
+        "pass": true,
+        "basis": "识别旧原生/配置/篮子对照并避免重复"
+      },
+      "Q2": {
+        "pass": true,
+        "basis": "区分准备与抓取、有兼容入口和完整归位成功反例、不直接训练"
+      },
+      "Q3": {
+        "pass": true,
+        "basis": "完整12/部分13/未启动14–20、3成功+6VLA失败+3归位阻断、11/17子任务成功"
+      },
+      "Q4": {
+        "pass": true,
+        "basis": "无抓稳与未知训练因果，复用离线"
+      },
+      "Q5": {
+        "pass": true,
+        "basis": "最新Hermes0，不拿3/12评价规划增益"
+      }
+    },
+    "new_model_scoring_calls": 0
+  },
+  "copy_checks": [
+    {
+      "public_path": "First_Phase/scene_demo/review_checks/2026-10-09/linux-tests.log",
+      "original_sha256": "346549c855fe511f3dbd535711491eb39ca0d1d75dfeecfb33f0af6763d9223f",
+      "bytes": 5583,
+      "sha256": "346549c855fe511f3dbd535711491eb39ca0d1d75dfeecfb33f0af6763d9223f",
+      "bytes_exact": true
+    },
+    {
+      "public_path": "First_Phase/scene_demo/review_checks/2026-10-09/skill-validate.log",
+      "original_sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0",
+      "bytes": 16,
+      "sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0",
+      "bytes_exact": true
+    },
+    {
+      "public_path": "First_Phase/scene_demo/review_checks/2026-10-09/registry-validate.json",
+      "original_sha256": "34d0782ad1f7ad86026d2c5dfb9508b8e883c85919b158fbbcd50e8b31ccf3e4",
+      "bytes": 119,
+      "sha256": "34d0782ad1f7ad86026d2c5dfb9508b8e883c85919b158fbbcd50e8b31ccf3e4",
+      "bytes_exact": true
+    },
+    {
+      "public_path": "First_Phase/scene_demo/review_checks/2026-10-09/windows-tests.log",
+      "original_sha256": "3b6ccafa60462c6d0b1624095300a7856eda1d76256fd7e05a1a802744f39613",
+      "bytes": 5689,
+      "sha256": "3b6ccafa60462c6d0b1624095300a7856eda1d76256fd7e05a1a802744f39613",
+      "bytes_exact": true
+    },
+    {
+      "public_path": "First_Phase/scene_demo/review_checks/2026-10-09/forward_answers.json",
+      "original_sha256": "2fa331fcbace19f5e767704e75288404a45465b08209ad011d447239f9cee997",
+      "bytes": 12024,
+      "sha256": "2fa331fcbace19f5e767704e75288404a45465b08209ad011d447239f9cee997",
+      "bytes_exact": true
+    }
+  ],
+  "file_facts": {
+    ".agents/skills/fyp-experiment-review/SKILL.md": {
+      "bytes": 4706,
+      "sha256": "b51b71f0302d2dea92ceb3c36d52ac4298a4f32e18e6eaffbd918d5b30898322"
+    },
+    ".agents/skills/fyp-experiment-review/agents/openai.yaml": {
+      "bytes": 305,
+      "sha256": "1a533a5bdd5a46d12c4fef5a6f67ff99b57155255a44292960599c44a480f8ac"
+    },
+    ".agents/skills/fyp-experiment-review/references/schema.md": {
+      "bytes": 3870,
+      "sha256": "1782d85d8dec4e7c56c993a71574bf864cf600e654fc948da1546cb123ecaa7f"
+    },
+    ".agents/skills/fyp-experiment-review/scripts/review.py": {
+      "bytes": 26730,
+      "sha256": "7d443af86f78bf17084f4b7dcbd76818fab801e6b2e90c18aee2d6ae13904560"
+    },
+    ".agents/skills/fyp-experiment-review/tests/test_review.py": {
+      "bytes": 32291,
+      "sha256": "a7c2d65f2198c71bbdc0478997dd70e35b1aa0309f3510e507c1cb83f1a6c6f7"
+    },
+    "AGENTS.md": {
+      "bytes": 5190,
+      "sha256": "05549103c85edb99fa6cef532bf067940ea3cfa38fee7f354ba7013202dd7d4b"
+    },
+    "First_Phase/scene_demo/experiment_registry.json": {
+      "bytes": 20349,
+      "sha256": "d86e68ebc154f61f2de04b62959fb6fe76ff78ef28d84ebf7654a727d5cad858"
+    },
+    "First_Phase/scene_demo/plans/2026-10-09-evidence-first-next.md": {
+      "bytes": 8363,
+      "sha256": "144eb65845e33f6de4e020b5c013fd3929201fe1991560aab7a4be6ad750847f"
+    },
+    "First_Phase/scene_demo/plans/2026-10-09-evidence-analysis.json": {
+      "bytes": 2210,
+      "sha256": "c72ddc39cf58a93199a4e93fb42bda5feee1bb7379400b2b947a477691665c8b"
+    },
+    "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md": {
+      "bytes": 3484,
+      "sha256": "292bf404db05ed154f259bbab0c267dfc393ff64aa2c328899276a93c292bdce"
+    },
+    "First_Phase/scene_demo/review_checks/2026-10-09/forward_answers.json": {
+      "bytes": 12024,
+      "sha256": "2fa331fcbace19f5e767704e75288404a45465b08209ad011d447239f9cee997"
+    },
+    "First_Phase/scene_demo/review_checks/2026-10-09/linux-tests.log": {
+      "bytes": 5583,
+      "sha256": "346549c855fe511f3dbd535711491eb39ca0d1d75dfeecfb33f0af6763d9223f"
+    },
+    "First_Phase/scene_demo/review_checks/2026-10-09/windows-tests.log": {
+      "bytes": 5689,
+      "sha256": "3b6ccafa60462c6d0b1624095300a7856eda1d76256fd7e05a1a802744f39613"
+    },
+    "First_Phase/scene_demo/review_checks/2026-10-09/skill-validate.log": {
+      "bytes": 16,
+      "sha256": "db349825903d66adffea3ecf1bd8e1803043e8a71cf1a051235dabc5371f5bb0"
+    },
+    "First_Phase/scene_demo/review_checks/2026-10-09/registry-validate.json": {
+      "bytes": 119,
+      "sha256": "34d0782ad1f7ad86026d2c5dfb9508b8e883c85919b158fbbcd50e8b31ccf3e4"
+    },
+    "First_Phase/scene_demo/review_checks/2026-10-09/offline-proposal-check.json": {
+      "bytes": 285,
+      "sha256": "8cf3bdbdcff819f4ec2f870f671adfd1de77f874eaae3cbced77238226293df8"
+    },
+    "First_Phase/scene_demo/review_checks/2026-10-09/missing-history-proposal.json": {
+      "bytes": 379,
+      "sha256": "15c18d62a61e30f2ec093a7aba14bf1d70cad6389a610a1ddc1501030f6c33cf"
+    },
+    "First_Phase/scene_demo/review_checks/2026-10-09/missing-history-check.json": {
+      "bytes": 456,
+      "sha256": "3be448c5f51d136855d7c77c85f9730a17dbce202b4ecdf67a3a1410faeda264"
+    }
+  },
+  "source_script_test_unchanged": true,
+  "original_evidence_facts": {
+    "First_Phase/scene_demo/results/2026-10-06/README.md": {
+      "bytes": 18071,
+      "sha256": "48e37aa7fa5459605e8fda66143651d0e5677a0c2d89c58b99ab7de8b96da1ba"
+    },
+    "First_Phase/scene_demo/results/2026-10-07/README.md": {
+      "bytes": 41116,
+      "sha256": "aec6a3122e509eda1c4f9c0f043f69443805dc783f20631fabfad1110bacfb14"
+    },
+    "First_Phase/scene_demo/results/2026-10-07/baseline_comparison_statistics.json": {
+      "bytes": 171487,
+      "sha256": "f3e45aeeeb6c06cf8ccdfaf8e6326b0157bad0224fdf9d7fb318a4de9a637529"
+    },
+    "First_Phase/scene_demo/results/2026-10-07-wine/README.md": {
+      "bytes": 12120,
+      "sha256": "b923d4c4683becee7571a58cc6ff15410324676bc51df29931efee4fc2da1fdc"
+    },
+    "First_Phase/scene_demo/results/2026-10-07-wine/summary.csv": {
+      "bytes": 992,
+      "sha256": "a0a94cebe6e72517695fb6f5a7a86bfe14e1c3811e82951b29c94d87aa748006"
+    },
+    "First_Phase/scene_demo/results/2026-10-08-grasp-config/README.md": {
+      "bytes": 11811,
+      "sha256": "d54ff9e306d67950a60c499fc5ac452b117bd164b104d78a1f65e9ced2208fb2"
+    },
+    "First_Phase/scene_demo/results/2026-10-08-grasp-config/summary.csv": {
+      "bytes": 4881,
+      "sha256": "a52a778ae80656e33340f22fe1b0027c78002b8ecfa8b82cf4472886efb7ec51"
+    },
+    "First_Phase/scene_demo/results/2026-10-08-skill-context/README.md": {
+      "bytes": 11294,
+      "sha256": "8f892ffe91820d4a522b6a0049695003995cfb9b052fd5d550f3e8033e79ad26"
+    },
+    "First_Phase/scene_demo/results/2026-10-08-wine-start-pose/README.md": {
+      "bytes": 6985,
+      "sha256": "6e7e28935077b59ac1581073e3075deea8e20df0165d07422fed485c0dc0a397"
+    },
+    "First_Phase/scene_demo/results/2026-10-08-local-grasp/README.md": {
+      "bytes": 3807,
+      "sha256": "b91781d72febd7ebd25f63e1bce5b15133feccf5196abf48cfccfc1e9a223901"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-side-grasp/README.md": {
+      "bytes": 3358,
+      "sha256": "5e2b33d9c215c3f23ca1d909e6f9eb787a210d4093ce531206fe0642f70fe941"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-collision-approach/README.md": {
+      "bytes": 4007,
+      "sha256": "45230097d3e4c2ee8b2fdc19e12b6f13b0695a1f62568bf478811394222e69d3"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-collision-chain/README.md": {
+      "bytes": 4738,
+      "sha256": "6c645fce23a905b05067876b5a128db3c0b1c64e850cfe4cdddaa0f9123e3329"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-subtask-assist/README.md": {
+      "bytes": 5213,
+      "sha256": "00706942d1645c34f4eeff7206ec420228ac643c16915df9cbf455166abe241d"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-subtask-assist-repair/README.md": {
+      "bytes": 5679,
+      "sha256": "cf43a058fd490859169cba201341d728a1c75e34432b9d1865b3061d61a4eceb"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-entry-compatibility/README.md": {
+      "bytes": 6574,
+      "sha256": "451ad3eff2c2428b225ba2d83a7f4063ed0bb0060b705cd58268ce7ff77c599c"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home/README.md": {
+      "bytes": 6536,
+      "sha256": "162edd099f1300b79d79a395732b80234dcb1005ce3bdacd9aa872b136406c29"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/README.md": {
+      "bytes": 7328,
+      "sha256": "93debc649e87a463fb752b07c12e2f90356fca198f77009e4f7bf28cded4e370"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/case_summary12.csv": {
+      "bytes": 1409,
+      "sha256": "dd588b7bccc2099f0a520078d800d86d791b4299eefd08d2601b24b36af6f432"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/scope12.json": {
+      "bytes": 2991,
+      "sha256": "1c719ccf0dff3f80675f928269a2eb90edac7e11b91ba36d417544195d156c7b"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/metrics12.json": {
+      "bytes": 201079,
+      "sha256": "8a331d7433dfcbd36de0be6027905b0711e43a9f50076c60bbf7b4079cc038bb"
+    }
+  },
+  "index_only_specified_insertion": true,
+  "index_before": {
+    "bytes": 6041,
+    "sha256": "255b62e512970636afa10dc5947d7dc927d7f4ed10dad52472f623040c77149e"
+  },
+  "index_after": {
+    "bytes": 6155,
+    "sha256": "22e5bb24f3124e94fc1ce3f39b7b2c6679f118261a6eea35ea6878a5af0a3059"
+  },
+  "links": [
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "../../../../.agents/skills/fyp-experiment-review/SKILL.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "../../../../AGENTS.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "../../EXPERIMENT_INDEX.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "../../experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "linux-tests.log",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "windows-tests.log",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "skill-validate.log",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "registry-validate.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "../../plans/2026-10-09-evidence-analysis.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "offline-proposal-check.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "missing-history-proposal.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "missing-history-check.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "forward_answers.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "CHECKS.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/review_checks/2026-10-09/ACCEPTANCE.md",
+      "target": "../../plans/2026-10-09-evidence-first-next.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "plans/2026-10-09-evidence-first-next.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "review_checks/2026-10-09/ACCEPTANCE.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-06/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-07/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-07-wine/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-08-grasp-config/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-08-skill-context/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-08-wine-start-pose/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-08-local-grasp/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-09-side-grasp/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-09-collision-approach/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-09-collision-chain/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-09-subtask-assist/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-09-subtask-assist-repair/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-09-entry-compatibility/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-09-joint-home/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "results/2026-10-09-joint-home-20/README.md",
+      "exists": true
+    },
+    {
+      "origin": "First_Phase/scene_demo/EXPERIMENT_INDEX.md",
+      "target": "experiment_registry.json",
+      "exists": true
+    }
+  ],
+  "new_robot_actions": 0,
+  "new_vla_calls": 0,
+  "new_hermes_calls": 0,
+  "new_api_calls": 0,
+  "git_mutations": 0,
+  "secret_format_matches": 0,
+  "launch_authorized": false,
+  "scientific_review_required": true
+}

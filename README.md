@@ -1,5 +1,7 @@
 # Agentic VLA System
 
+最新（2026-10-09）：已建立[实验历史索引](First_Phase/scene_demo/EXPERIMENT_INDEX.md)与[结构化台账](First_Phase/scene_demo/experiment_registry.json)，用项目 skill `fyp-experiment-review` 检索旧证据、检查新方案与验收结论。当前最近一轮[前12例关节归位组合](First_Phase/scene_demo/results/2026-10-09-joint-home-20/README.md)完整成功3/12；四例首任务失败、三例归位入口受阻、两例归位后酒瓶失败。既有原生基线与配置对照继续有效，不重复安排。下面日期较早的“最新/下一步”段落属于当时记录，应结合索引阅读。
+
 最新（2026-10-08）：酒瓶起始位姿对照（start-pose A/B）实验已完成，完整报告见 [First_Phase/scene_demo/results/2026-10-08-wine-start-pose/README.md](First_Phase/scene_demo/results/2026-10-08-wine-start-pose/README.md)。直接执行与准备后执行均失败（direct 0/2、prepared 0/2），四次均无稳定抓取确认；有效的空手就位准备（125 步）没有改善酒瓶抓取执行。本轮没有训练，也没有生产技能改动。
 
 上一轮（2026-10-08）：新的「规划与 VLA 起始状态诊断」已完成，完整报告见 [First_Phase/scene_demo/results/2026-10-08-skill-context/README.md](First_Phase/scene_demo/results/2026-10-08-skill-context/README.md)。在给定场景与能力目录下，Hermes 五次请求中有四次给出正确的真实提交。基线酒瓶试验为 native 2/2、shared_initial 1/2、after_bowl 0/2，仅限所测起始状态与两个种子；预注册的准备对照在酒瓶阶段之前就被阻断，**不是**一次新的酒瓶失败。本轮没有训练，也没有生产技能改进。
