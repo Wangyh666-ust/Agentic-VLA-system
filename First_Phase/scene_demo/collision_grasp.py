@@ -43,6 +43,7 @@ class CollisionGraspController(side.SideGraspController):
         self.route_index = 0
         self.route_counts = [0, 0, 0]
         self.high_z = None
+        self.rotation_lower_extent_m = None
         self._above_target_position = None
         self._above_target_orientation = None
 
@@ -91,7 +92,14 @@ class CollisionGraspController(side.SideGraspController):
         old_above_orientation = np.asarray(old_above_orientation, dtype=np.float64).reshape(3, 3)
         current_z = float(current_position[2])
         old_above_z = float(old_above[2])
-        self.high_z = max(current_z + 0.10, old_above_z, top + sweep + 0.015)
+        descriptor = reading.get('collision_geometry')
+        extent = collision_geometry.rotation_lower_extent(
+            descriptor, orientation, self._target_orientation
+        )
+        if extent is None:
+            return None
+        self.rotation_lower_extent_m = float(extent)
+        self.high_z = max(current_z + 0.10, old_above_z, top + extent + 0.015)
         high_z = self.high_z
 
         escape_xy = current_position[:2] + 0.05 * radial_unit
@@ -149,9 +157,9 @@ class CollisionGraspController(side.SideGraspController):
             return self._fail(failure)
         if self.total_actions >= 200:
             return self._fail('total_budget_exceeded')
-        if self.route_counts[self.route_index] >= 50:
+        if self.route_counts[self.route_index] >= 60:
             return self._fail('route_timeout')
-        if sum(self.route_counts) >= 130:
+        if sum(self.route_counts) >= 150:
             return self._fail('approach_budget_exceeded')
         return self._stage_action(reading)
 
@@ -170,8 +178,13 @@ class CollisionGraspController(side.SideGraspController):
         if self.route_index >= 1 and isinstance(contacts, list) and len(contacts) > 0:
             return 'approach_collision'
         if self.route_index == 1:
+            extent = collision_geometry.rotation_lower_extent(
+                descriptor, orientation, self._target_orientation
+            )
+            if extent is None:
+                return 'unknown_collision_geometry'
             z = float(current_position[2])
-            if z - sweep < top + 0.005:
+            if z - extent < top + 0.005:
                 return 'rotation_clearance_lost'
         return None
 
@@ -193,6 +206,7 @@ class CollisionGraspController(side.SideGraspController):
             for position, orientation in self.route_targets
         ]
         data['high_z'] = self.high_z
+        data['rotation_lower_extent_m'] = self.rotation_lower_extent_m
         return data
 
 

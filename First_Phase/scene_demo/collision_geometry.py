@@ -4,6 +4,61 @@ import numpy as np
 import service
 
 
+def rotation_lower_extent(descriptor: object, current_orientation: object, target_orientation: object) -> float | None:
+    """CPU upper bound on hand downward extent over any rotation <= required angle + 0.05 rad."""
+    if not isinstance(descriptor, dict):
+        return None
+    if 'hand_sweep_radius_m' not in descriptor:
+        return None
+    hand_sweep = descriptor.get('hand_sweep_radius_m')
+    try:
+        sweep = float(hand_sweep)
+    except Exception:
+        return None
+    if not math.isfinite(sweep) or sweep < 0.0:
+        return None
+    if 'hand_spheres' not in descriptor:
+        return sweep
+    spheres = descriptor.get('hand_spheres')
+    if not isinstance(spheres, list) or len(spheres) == 0:
+        return None
+    try:
+        current = np.asarray(current_orientation, dtype=np.float64)
+        target = np.asarray(target_orientation, dtype=np.float64)
+    except Exception:
+        return None
+    if current.shape != (3, 3) or target.shape != (3, 3):
+        return None
+    if not np.all(np.isfinite(current)) or not np.all(np.isfinite(target)):
+        return None
+    trace = float(np.trace(target @ current.T))
+    angle = math.acos(min(1.0, max(-1.0, (trace - 1.0) / 2.0)))
+    theta = min(math.pi, angle + 0.05)
+    result = 0.0
+    for sphere in spheres:
+        if not isinstance(sphere, dict):
+            return None
+        offset = sphere.get('offset_world')
+        radius = sphere.get('radius')
+        try:
+            v = np.asarray(offset, dtype=np.float64)
+            r = float(radius)
+        except Exception:
+            return None
+        if v.shape != (3,) or not np.all(np.isfinite(v)):
+            return None
+        if not math.isfinite(r) or r < 0.0:
+            return None
+        d = float(np.linalg.norm(v))
+        if d <= 1.0e-12:
+            z_min = 0.0
+        else:
+            beta = math.acos(min(1.0, max(-1.0, v[2] / d)))
+            z_min = d * math.cos(min(math.pi, beta + theta))
+        result = max(result, r - z_min)
+    return max(0.0, float(result))
+
+
 def describe(env: object, eef_position: object) -> dict | None:
     """Describe fixed three-segment path collision geometry.
 
@@ -46,6 +101,7 @@ def describe(env: object, eef_position: object) -> dict | None:
             bottle_top_z = top if bottle_top_z is None else max(bottle_top_z, top)
 
         hand_sweep = None
+        hand_spheres = []
         for index in hand:
             center = np.asarray(data.geom_xpos[index], dtype=float)
             if center.shape != (3,) or not np.all(np.isfinite(center)):
@@ -53,8 +109,13 @@ def describe(env: object, eef_position: object) -> dict | None:
             rbound = float(model.geom_rbound[index])
             if not math.isfinite(rbound) or rbound < 0.0:
                 return None
+            offset_world = center - eef
             reach = float(np.linalg.norm(center - eef) + rbound)
             hand_sweep = reach if hand_sweep is None else max(hand_sweep, reach)
+            hand_spheres.append({
+                'offset_world': offset_world.tolist(),
+                'radius': float(rbound),
+            })
 
         ncon = int(data.ncon)
         if ncon < 0 or ncon > len(data.contact):
@@ -88,6 +149,7 @@ def describe(env: object, eef_position: object) -> dict | None:
         return {
             "bottle_top_z_m": float(bottle_top_z),
             "hand_sweep_radius_m": float(hand_sweep),
+            "hand_spheres": hand_spheres,
             "wine_robot_contacts": contacts,
         }
     except Exception:

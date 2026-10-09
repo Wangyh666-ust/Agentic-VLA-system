@@ -280,5 +280,75 @@ class TestGeometryDescribe(unittest.TestCase):
         self.assertIsNone(result)
 
 
+class TestRotationLowerExtent(unittest.TestCase):
+    def test_legacy_descriptor_missing_spheres_returns_sweep(self):
+        descriptor = {
+            "bottle_top_z_m": 1.06,
+            "hand_sweep_radius_m": 0.20,
+            "wine_robot_contacts": [],
+        }
+        extent = collision_geometry.rotation_lower_extent(descriptor, _eye3(), _eye3())
+        self.assertEqual(extent, 0.20)
+
+    def test_single_sphere_identity_rotation_extent_zero(self):
+        descriptor = {
+            "bottle_top_z_m": 1.06,
+            "hand_sweep_radius_m": 0.20,
+            "hand_spheres": [
+                {"offset_world": [0.0, 0.0, 0.1], "radius": 0.02},
+            ],
+            "wine_robot_contacts": [],
+        }
+        extent = collision_geometry.rotation_lower_extent(descriptor, _eye3(), _eye3())
+        self.assertIsNotNone(extent)
+        self.assertGreaterEqual(extent, 0.0)
+        self.assertLessEqual(extent, 0.02)
+
+    def test_single_sphere_rotated_180_returns_larger_extent(self):
+        descriptor = {
+            "bottle_top_z_m": 1.06,
+            "hand_sweep_radius_m": 0.20,
+            "hand_spheres": [
+                {"offset_world": [0.0, 0.0, 0.1], "radius": 0.02},
+            ],
+            "wine_robot_contacts": [],
+        }
+        rx180 = [[1.0, 0.0, 0.0], [0.0, -1.0, 0.0], [0.0, 0.0, -1.0]]
+        extent = collision_geometry.rotation_lower_extent(descriptor, _eye3(), rx180)
+        self.assertIsNotNone(extent)
+        self.assertAlmostEqual(extent, 0.12, places=6)
+
+    def test_invalid_inputs_return_none(self):
+        base = {
+            "bottle_top_z_m": 1.06,
+            "hand_sweep_radius_m": 0.20,
+            "wine_robot_contacts": [],
+        }
+        bad_radius = dict(base)
+        bad_radius["hand_spheres"] = [
+            {"offset_world": [0.0, 0.0, 0.1], "radius": -0.01},
+        ]
+        self.assertIsNone(
+            collision_geometry.rotation_lower_extent(bad_radius, _eye3(), _eye3())
+        )
+        bad_offset = dict(base)
+        bad_offset["hand_spheres"] = [
+            {"offset_world": [0.0, 0.0, float("nan")], "radius": 0.02},
+        ]
+        self.assertIsNone(
+            collision_geometry.rotation_lower_extent(bad_offset, _eye3(), _eye3())
+        )
+        good = dict(base)
+        good["hand_spheres"] = [
+            {"offset_world": [0.0, 0.0, 0.1], "radius": 0.02},
+        ]
+        self.assertIsNone(
+            collision_geometry.rotation_lower_extent(good, _eye3(), [[1.0, 0.0], [0.0, 1.0]])
+        )
+        self.assertIsNone(
+            collision_geometry.rotation_lower_extent(good, _eye3(), [[1.0, 0.0, float("inf")], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
