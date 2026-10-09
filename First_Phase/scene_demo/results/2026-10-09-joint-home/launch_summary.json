@@ -1,0 +1,140 @@
+{
+  "argv": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu",
+    "--cd",
+    "/mnt/d/FYP/First_Phase/scene_demo",
+    "--exec",
+    "env",
+    "MUJOCO_GL=egl",
+    "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+    "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+    "HF_HUB_OFFLINE=1",
+    "TRANSFORMERS_OFFLINE=1",
+    "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/d/FYP/First_Phase/scene_demo",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/yhwang/fyp/libero_demo/venv/bin/python",
+    "/mnt/d/FYP/First_Phase/tmp/joint_home_20261009_run.py",
+    "--output-dir",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-joint-home/pilot",
+    "--profiles",
+    "/mnt/d/FYP/First_Phase/scene_demo/subtask_assist_profiles.json",
+    "--software-proof",
+    "/mnt/d/FYP/First_Phase/tmp/joint_home_20261009_software_proof.json",
+    "--inputs",
+    "/mnt/d/FYP/First_Phase/tmp/joint_home_20261009_inputs.json"
+  ],
+  "cli_exit_code": 0,
+  "status": "JOINT_HOME_SINGLE_CAMPAIGN_EVIDENCE_PRESERVED",
+  "runner_invocations": 1,
+  "wall_s": 293.0989088999995,
+  "start_utc": "2026-10-09T11:12:41Z",
+  "end_utc": "2026-10-09T11:17:34Z",
+  "report_sha256": "5656d3f999badea900bd0eec8fa33df3ccb26e9777deae75a28a8396881a669a",
+  "source_inputs_plan_profile_unchanged": true,
+  "inputs_unchanged": true,
+  "user8_unchanged": true,
+  "stdout_sha256": "69ab2af83305b73aff166978ea0c1ae5aac12d82bc4380726eed4759eaf70ad7",
+  "stderr_sha256": "05a3fc864f58f06d4015208444ed96b2f7c74e9e2114ed8b7de3bd8d10cab2c0",
+  "close_env": {
+    "ok": true
+  },
+  "protocol_ok": true,
+  "planned_cases": 2,
+  "executed_cases": 2,
+  "cases": [
+    {
+      "case": "case_02_joint_home",
+      "replay_actions": 346,
+      "home_actions": 243,
+      "vla_actions": 93,
+      "new_motion_actions": 336,
+      "total_physical_actions": 682,
+      "home_ready": true,
+      "home_reason": "joint_home_ready",
+      "physical_success": true,
+      "gate_pass": true,
+      "score": {
+        "gold": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ],
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ]
+        ],
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "last5_strict_samples": true,
+        "final_strict_candidate": true,
+        "empty_hand": true,
+        "all_physical_objects_unheld": true,
+        "stove_off": true,
+        "protected_displacement_m": {
+          "wine_bottle_1": 4.398981825351322e-06,
+          "cream_cheese_1": 0.0
+        },
+        "protection_ok": true,
+        "unknown": [],
+        "physical_gold_success": true
+      },
+      "operational_errors": [],
+      "unknown": []
+    },
+    {
+      "case": "case_03_joint_home",
+      "replay_actions": 348,
+      "home_actions": 241,
+      "vla_actions": 105,
+      "new_motion_actions": 346,
+      "total_physical_actions": 694,
+      "home_ready": true,
+      "home_reason": "joint_home_ready",
+      "physical_success": true,
+      "gate_pass": true,
+      "score": {
+        "gold": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ],
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ]
+        ],
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "last5_strict_samples": true,
+        "final_strict_candidate": true,
+        "empty_hand": true,
+        "all_physical_objects_unheld": true,
+        "stove_off": true,
+        "protected_displacement_m": {
+          "wine_bottle_1": 4.774553979606045e-06,
+          "cream_cheese_1": 0.0
+        },
+        "protection_ok": true,
+        "unknown": [],
+        "physical_gold_success": true
+      },
+      "operational_errors": [],
+      "unknown": []
+    }
+  ],
+  "not_run": [],
+  "operational_errors": [],
+  "new_hermes_calls": 0,
+  "protocol_ok_is_not_task_success": true
+}
