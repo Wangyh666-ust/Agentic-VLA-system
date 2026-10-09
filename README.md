@@ -1,5 +1,7 @@
 # Agentic VLA System
 
+最新（2026-10-10）：针对旧三例归位入口受阻，新增保持夹爪开口的短距离退离。试点第一例重放180个旧动作后遇到夹爪接口错误，退离0、归位0，另外两例未启动；接口现已修正并通过35项软件测试，归位效果仍待实际验证。详见[安全退离报告](First_Phase/scene_demo/results/2026-10-09-safe-exit/README.md)。
+
 最新（2026-10-09）：已建立[实验历史索引](First_Phase/scene_demo/EXPERIMENT_INDEX.md)与[结构化台账](First_Phase/scene_demo/experiment_registry.json)，用项目 skill `fyp-experiment-review` 检索旧证据、检查新方案与验收结论。当前最近一轮[前12例关节归位组合](First_Phase/scene_demo/results/2026-10-09-joint-home-20/README.md)完整成功3/12；四例首任务失败、三例归位入口受阻、两例归位后酒瓶失败。既有原生基线与配置对照继续有效，不重复安排。下面日期较早的“最新/下一步”段落属于当时记录，应结合索引阅读。
 
 最新（2026-10-08）：酒瓶起始位姿对照（start-pose A/B）实验已完成，完整报告见 [First_Phase/scene_demo/results/2026-10-08-wine-start-pose/README.md](First_Phase/scene_demo/results/2026-10-08-wine-start-pose/README.md)。直接执行与准备后执行均失败（direct 0/2、prepared 0/2），四次均无稳定抓取确认；有效的空手就位准备（125 步）没有改善酒瓶抓取执行。本轮没有训练，也没有生产技能改动。

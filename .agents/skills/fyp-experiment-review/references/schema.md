@@ -16,7 +16,7 @@
 
 `reuse_evidence` 与 `analyze_existing` 要求 new_physical_actions=0，并提供非空 `analysis_steps` 字符串数组；不要求物理实验预算、假设或成功率。
 
-`new_experiment` 还要求非空 `hypothesis`、`information_gain`、`success_criteria`、`failure_criteria`、`unknown_criteria`；`changed_factors` 为非空 `{name,before,after,reason}` 数组（before/after 不同），`fixed_factors` 为非空对象；`scope={max_cases,max_vla_actions_per_case,max_helper_actions_per_case,stop_rule}`，max_cases/max_vla_actions_per_case 为正整数，max_helper_actions_per_case 为非负整数，stop_rule 非空；`configuration` 为非空对象，`configuration_complete=true`；`repeat={needed,reason}`，needed 为布尔值，needed=true 时 reason 非空。new_physical_actions 必须为正整数且不超过 scope 的总预算。
+`new_experiment` 还要求非空 `hypothesis`、`information_gain`、`success_criteria`、`failure_criteria`、`unknown_criteria`；`changed_factors` 为非空 `{name,before,after,reason}` 数组（before/after 不同），`fixed_factors` 为非空对象；`scope={max_cases,max_vla_actions_per_case,max_helper_actions_per_case,stop_rule}`，max_cases 为正整数，max_vla_actions_per_case/max_helper_actions_per_case 为非负整数，二者总预算必须覆盖正整数物理动作，stop_rule 非空；`configuration` 为非空对象，`configuration_complete=true`；`repeat={needed,reason}`，needed 为布尔值，needed=true 时 reason 非空。new_physical_actions 必须为正整数且不超过 scope 的总预算。
 
 若 configuration 与完整历史配置完全相同，repeat.needed 必须为 true 且说明复现/补样本的具体目的；新名称或 changed_factors 的声明不会免除重复检查。多项因素变化输出提醒，由主 Agent 判断设计，脚本不替代判断。完整配置要求研究者记录实际对照所需的权重、输入/状态/语言、控制、种子/随机流、动作预算与停止条件；脚本不能证明这些值真实或语义等价。
 

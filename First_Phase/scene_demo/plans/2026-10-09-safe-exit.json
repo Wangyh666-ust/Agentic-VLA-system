@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "id": "20261009-safe-exit-3",
+  "intent": "new_experiment",
+  "question_key": "joint-home-handoff",
+  "purpose": "处理上一轮三例joint_route_blocked归位拒绝，验证保持夹爪实际开口的小幅退离能否接上已验证的7关节归位",
+  "prior_evidence": [
+    "20261009-joint-home",
+    "20261009-joint-home-12"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "旧的两个酒瓶结束状态真实关节归位成功，复用控制器/阈值/严格保护；不是本轮三例终态"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "insufficient",
+      "reason": "12例中case02/07/08第一技能成功但归位scratch预检拒绝且0归位动作，复用终态、原动作和来源；没有保持实际夹爪开口先退离的测试结果，故只补这3例"
+    }
+  ],
+  "hypothesis": "保持终态夹爪实际开口，小幅沿接触外法线或上方退离，可在不改变第一任务成果的情况下脱离架子/灶台，再通过原严格归位",
+  "information_gain": "只验证拒绝归位这一故障；相同历史终态由原动作真实重放且origin/finalSHA精确相等才进入退离。不能证明后续VLA改进，不能单独分辨保持开口与退离各自贡献",
+  "changed_factors": [
+    {
+      "name": "pre_home_safe_exit",
+      "before": "strict_home_immediately_with_reference_finger_gap",
+      "after": "hold_actual_finger_gap_then_bounded_contact_monitored_retreat_then_original_strict_home",
+      "reason": "真实终态已有轻微robot接触；原scratch立即恢复finger_home会扩大部分接触，新增有界退离而非忽略碰撞"
+    }
+  ],
+  "fixed_factors": {
+    "environment": "native LIBERO goal task8 / robosuite MuJoCo / MountedPanda",
+    "env_seed": 0,
+    "cases": [
+      "case_02",
+      "case_07",
+      "case_08"
+    ],
+    "init_state_index": [
+      1,
+      0,
+      1
+    ],
+    "historical_model_seed": [
+      3,
+      2,
+      3
+    ],
+    "action_sources": "frozen original sent_action float32 real replay; no new model inference",
+    "frozen_inputs_sha256": "5fae1983b80eedbc38f4db30ce6ac5607ebb7ed24b612fbe5814085e1fbc0f71",
+    "replay_counts": [
+      180,
+      78,
+      76
+    ],
+    "joint_home": "unchanged joint_home.py and original run_home, kp50/damping1; q .01rad/speed .02rad/s/finger .002m/5post; cap360",
+    "object_protection": "all jointed objects; free5mm/rotation .05rad/hinge .05rad/slide5mm; empty hand; prior literal native goal preserved; stove state unchanged",
+    "vla_weights": "not_loaded",
+    "vla_language": "not_applicable_no_new_VLA",
+    "policy_rng": "not_applicable_no_new_VLA; historical original action prefix reused",
+    "retries": 0
+  },
+  "success_criteria": "每例重放origin和terminalSHA均与原记录精确相同；退离<=80且最终空接触连续5个真实post-action samples（already_clear0步需单列，不能编造确认）；原归位<=360且home.ready/restore.ok、完整保护和原已完成literalgoal持续成立/连续5post归位就绪。成功只计该例恢复归位，不计完整组合任务",
+  "failure_criteria": "已知物理失败：无合法候选、contact加深/新pair/重接触、物体/原成果破坏、退离或归位动作预算耗尽；立即停该例辅助，剩余固定例照计划，无调参和重试",
+  "unknown_criteria": "输入/原字节/原stateSHA不匹配、观察不完整、read/emit/step/controllerrestore异常；标unknown并停整个campaign，剩余not_run；不可写成功或补采样",
+  "new_physical_actions": 1654,
+  "scope": {
+    "max_cases": 3,
+    "max_vla_actions_per_case": 0,
+    "max_helper_actions_per_case": 620,
+    "stop_rule": "one per fixed case; replay334+retreat<=240+home<=1080; no new VLA/Hermes; no retries/tuning/downstream; known physical fail stop case, infrastructure unknown stop campaign"
+  },
+  "configuration": {
+    "actual_vla_cap": 0,
+    "retries": 0,
+    "cases": [
+      "case_02",
+      "case_07",
+      "case_08"
+    ],
+    "frozen_inputs_sha256": "5fae1983b80eedbc38f4db30ce6ac5607ebb7ed24b612fbe5814085e1fbc0f71",
+    "mechanism": "actual_gap_safe_exit_then_strict_home",
+    "retreat_cap_per_case": 80,
+    "home_cap_per_case": 360,
+    "replay_actions": [
+      180,
+      78,
+      76
+    ],
+    "candidate_distances_m": [
+      0.02,
+      0.04,
+      0.06
+    ],
+    "cart_step_m": 0.001,
+    "joint_screen_step_rad": 0.003,
+    "ik_iterations": 50,
+    "ik_damping": 0.03,
+    "ik_joint_clip_rad": 0.015,
+    "ik_pos_tol_m": 0.0001,
+    "ik_ori_tol_rad": 0.005,
+    "penetration_slack_m": 5e-05,
+    "real_waypoint_joint_error_rad": 0.004,
+    "confirm_postaction_samples": 5,
+    "gripper_hold": "actual qpos normalized by corresponding position-actuator ctrlrange; zero gripper action holds command",
+    "weight": "not_loaded",
+    "language": "none",
+    "new_policy_rng": "none",
+    "source_freeze": "all current top-level Python SHA map locked in accepted software proof before launch"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "新保持开口退离干预；原三例没有该机制，原初始/终态SHA将在重放时再核对"
+  }
+}

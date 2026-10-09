@@ -806,6 +806,63 @@ def _fingerprint():
     return review.configuration_fingerprint({"b": 2, "a": 1})
 
 
+class HelperOnlyProposalTests(Base):
+    def _make_new_proposal(self, question_key="q1", **overrides):
+        proposal = {
+            "schema_version": 1,
+            "id": "p-helper",
+            "intent": "new_experiment",
+            "question_key": question_key,
+            "purpose": "helper-only safety case",
+            "prior_evidence": [],
+            "history_review": [],
+            "new_physical_actions": 1654,
+            "hypothesis": "h",
+            "information_gain": "ig",
+            "success_criteria": "sc",
+            "failure_criteria": "fc",
+            "unknown_criteria": "uc",
+            "changed_factors": [
+                {"name": "f", "before": "a", "after": "b", "reason": "why"}
+            ],
+            "fixed_factors": {"seed": 1},
+            "scope": {
+                "max_cases": 3,
+                "max_vla_actions_per_case": 0,
+                "max_helper_actions_per_case": 620,
+                "stop_rule": "stop when done",
+            },
+            "configuration": {"weights": "w"},
+            "configuration_complete": True,
+            "repeat": {"needed": False},
+        }
+        proposal.update(overrides)
+        return proposal
+
+    def test_valid_new_proposal(self):
+        relpath, digest = self.write_evidence("evidence/e1.txt")
+        entry = self.make_entry("e1", ["q1"], [(relpath, digest)])
+        proposal = self._make_new_proposal()
+        proposal["history_review"] = [
+            {"experiment_id": "e1", "disposition": "not_applicable", "reason": "r"}
+        ]
+        verdict = review.review_proposal(proposal, [entry])
+        self.assertTrue(verdict["ok"], verdict)
+        self.assertFalse(verdict["launch_authorized"])
+
+    def test_helper_zero_with_physical_rejected(self):
+        relpath, digest = self.write_evidence("evidence/e1.txt")
+        entry = self.make_entry("e1", ["q1"], [(relpath, digest)])
+        proposal = self._make_new_proposal()
+        proposal["scope"]["max_helper_actions_per_case"] = 0
+        proposal["new_physical_actions"] = 1
+        proposal["history_review"] = [
+            {"experiment_id": "e1", "disposition": "not_applicable", "reason": "r"}
+        ]
+        verdict = review.review_proposal(proposal, [entry])
+        self.assertFalse(verdict["ok"])
+
+
 class FingerprintTests(Base):
     def test_fingerprint_is_canonical_and_stable(self):
         first = review.configuration_fingerprint({"b": 2, "a": 1})

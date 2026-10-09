@@ -497,7 +497,7 @@ def review_proposal(proposal: dict, entries: list) -> dict:
         else:
             try:
                 max_cases = _req_pos_int(scope, "max_cases", "scope")
-                max_vla = _req_pos_int(scope, "max_vla_actions_per_case", "scope")
+                max_vla = _req_nonneg_int(scope, "max_vla_actions_per_case", "scope")
                 max_helper = _req_nonneg_int(scope, "max_helper_actions_per_case", "scope")
                 _req_str(scope, "stop_rule", "scope")
                 scope_budget = max_cases * (max_vla + max_helper)

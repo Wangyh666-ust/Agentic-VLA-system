@@ -1,0 +1,91 @@
+..................................F                                      [100%]
+=================================== FAILURES ===================================
+____________ test_finger_hold_uses_installed_single_arm_references _____________
+
+finger_hold_env = (namespace(robot=<robosuite.robots.single_arm.SingleArm object at 0x7aa92459c290>), {'finger_qpos': array([ 0.02, -0.03]), 'finger_qpos_indexes': [7, 8], 'finger_qvel': array([0., 0.])})
+
+    def test_finger_hold_uses_installed_single_arm_references(finger_hold_env):
+        from robosuite.robots.single_arm import SingleArm
+    
+        env, state = finger_hold_env
+        model = env.robot.sim.model
+    
+        joint_qpos = {
+            "arm_joint_%d" % i: i for i in range(7)
+        }
+        joint_qpos.update({
+            "finger_joint_0": 7,
+            "finger_joint_1": 8,
+        })
+        joint_qvel = dict(joint_qpos)
+        joint_ids = dict(joint_qpos)
+        actuator_ids = {
+            "arm_act_0": 0,
+            "arm_act_1": 1,
+            "arm_act_2": 2,
+            "arm_act_3": 3,
+            "arm_act_4": 4,
+            "arm_act_5": 5,
+            "arm_act_6": 6,
+            "finger_act_0": 8,
+            "finger_act_1": 9,
+        }
+        site_ids = {"grip_site": 0, "grip_cylinder": 1}
+    
+        model.get_joint_qpos_addr = lambda name: joint_qpos[name]
+        model.get_joint_qvel_addr = lambda name: joint_qvel[name]
+        model.joint_name2id = lambda name: joint_ids[name]
+        model.actuator_name2id = lambda name: actuator_ids[name]
+        model.site_name2id = lambda name: site_ids[name]
+    
+        r = object.__new__(SingleArm)
+        r.sim = env.robot.sim
+        r.robot_model = types.SimpleNamespace(
+            joints=["arm_joint_%d" % i for i in range(7)],
+            actuators=["arm_act_%d" % i for i in range(7)],
+        )
+        r.gripper = types.SimpleNamespace(
+            joints=["finger_joint_0", "finger_joint_1"],
+            actuators=["finger_act_0", "finger_act_1"],
+            important_sites={
+                "grip_site": "grip_site",
+                "grip_cylinder": "grip_cylinder",
+            },
+        )
+        r.has_gripper = True
+    
+        SingleArm.setup_references(r)
+        assert r._ref_joint_gripper_actuator_indexes == [8, 9]
+        assert not hasattr(r, "_ref_gripper_actuator_indexes")
+    
+        env.robot = r
+>       result = env.robot.gripper._finger_hold(env, state)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'types.SimpleNamespace' object has no attribute '_finger_hold'
+
+test_safe_exit.py:900: AttributeError
+----------------------------- Captured stderr call -----------------------------
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+------------------------------ Captured log call -------------------------------
+WARNING  robosuite_logs:__init__.py:7 No private macro file found!
+WARNING  robosuite_logs:__init__.py:8 It is recommended to use a private macro file
+WARNING  robosuite_logs:__init__.py:9 To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py
+=============================== warnings summary ===============================
+test_safe_exit.py::test_finger_hold_uses_installed_single_arm_references
+  /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:7: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+    ROBOSUITE_DEFAULT_LOGGER.warn("No private macro file found!")
+
+test_safe_exit.py::test_finger_hold_uses_installed_single_arm_references
+  /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:8: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+    ROBOSUITE_DEFAULT_LOGGER.warn("It is recommended to use a private macro file")
+
+test_safe_exit.py::test_finger_hold_uses_installed_single_arm_references
+  /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/__init__.py:9: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
+    ROBOSUITE_DEFAULT_LOGGER.warn("To setup, run: python {}/scripts/setup_macros.py".format(robosuite.__path__[0]))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_safe_exit.py::test_finger_hold_uses_installed_single_arm_references
+1 failed, 34 passed, 3 warnings in 1.25s
