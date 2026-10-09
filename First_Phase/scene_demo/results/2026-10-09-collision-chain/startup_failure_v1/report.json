@@ -1,0 +1,103 @@
+{
+  "experiment": "collision_grasp_pilot",
+  "condition": "collision_grasp_pilot",
+  "generated_utc": "2026-10-09T04:13:14+00:00",
+  "status": "stopped",
+  "planned_cases": 5,
+  "executed_cases": 1,
+  "fatal_error": "case 0 operational: hermes_nonzero_exit",
+  "preregistration_sha256": "5eb78398543c26601b9dba7ac646d7dec1561641e2fe94f423e9144f1d16d9b1",
+  "calibration_sha256": "9fa72e909fbf22a63e219f0ee5846625bb2fa85623573ef18c8f4bf50b324f35",
+  "stage_counts": {
+    "gold_completed": 0,
+    "combined_success": 0,
+    "operational": 1,
+    "physical": 1
+  },
+  "cases": [
+    {
+      "case_index": 0,
+      "model_seed": 0,
+      "request_text": "\u8bf7\u5e2e\u6211\u6574\u7406\u684c\u9762\u4e0a\u7684\u7897\u548c\u9152\u74f6\u3002",
+      "session_id": "5ed985fe926348b186cd2f90d76148cd",
+      "request_id": "c7c7ede7fb234f00813aa99ecb69c15b",
+      "seeded": {
+        "ok": true,
+        "seeded": true,
+        "seed": 0
+      },
+      "plan": {
+        "request_id": null,
+        "state": null,
+        "plan_success": null,
+        "completed_capability_ids": null,
+        "pending_capability_ids": null,
+        "job_ids": null
+      },
+      "jobs": [],
+      "telemetry_paths": [],
+      "agent": {
+        "request_id": "c7c7ede7fb234f00813aa99ecb69c15b",
+        "run_ok": false,
+        "chain_ok": false,
+        "plan_success": null,
+        "decision": null,
+        "hermes_invocations": 1,
+        "execution_timeout": false,
+        "cancelled_by_user": false,
+        "cancellation_pending": false,
+        "wall_s": 83.928,
+        "error": "no_plan_submitted: \u672c\u6b21\u8bf7\u6c42\u6ca1\u6709\u63d0\u4ea4\u4efb\u4f55\u8ba1\u5212\uff0c\u4e0d\u5173\u8054\u4efb\u4f55\u5386\u53f2 job \u6216\u89c6\u9891",
+        "plan_state": null,
+        "agent_result_path": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v1/case_00/agent_result.json",
+        "hermes_initial_log": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v1/case_00/hermes_initial.log"
+      },
+      "score": {
+        "gold_completed": false,
+        "combined_success": false,
+        "n_actual_samples": 0,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": false,
+          "on|wine_bottle_1|wine_rack_1_top_region": false
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 0.0,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": false
+      },
+      "actual_order": [],
+      "expected_order": [],
+      "order_ok": true,
+      "operational_errors": [
+        "hermes_nonzero_exit"
+      ],
+      "physical_failures": [
+        "no_plan"
+      ]
+    }
+  ],
+  "sessions_root": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v1/sessions",
+  "hermes_home_config_sha256": "af6f02a697ec486b02ab068eab7a070813547136a655b9d6ac27e93792125e11",
+  "gpu_free_mib": 6402,
+  "profile": {
+    "ok": true,
+    "profile": "baseline_bf16",
+    "policy_present": true,
+    "applied": {
+      "policy.config": {
+        "use_amp": true,
+        "num_steps": 10,
+        "n_action_steps": 1
+      },
+      "policy.model.config": {
+        "use_amp": true,
+        "num_steps": 10,
+        "n_action_steps": 1
+      }
+    }
+  },
+  "profile_ok": true,
+  "completed": false
+}

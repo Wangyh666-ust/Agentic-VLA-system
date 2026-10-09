@@ -1,0 +1,133 @@
+{
+  "status": "COLLISION_CHAIN_WRAPPER_SOFTWARE_PASS",
+  "author_proof": {
+    "http_status": 200,
+    "model": "deepseek-flash",
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 8959,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 2348,
+      "service_tier": "standard"
+    },
+    "actual_http_calls": 1,
+    "raw_response_sha256": "74910d712c211c9a3bb8e8576fbee461aa708d98dda46a92bd60744488615486",
+    "trailing_exact": true,
+    "path": "D:\\FYP\\First_Phase\\scene_demo\\collision_grasp_pilot.py",
+    "source_sha256": "1113abbf99c8f51953aebfea9af6f4390ec87bdd380ce85eb21efa8b84fc6354",
+    "author_bytes_exact": true,
+    "lines": 163,
+    "dependency_sha256_before": {
+      "side_grasp_pilot.py": "8e26e9c5c4830c3b593396a660faa50a1adfceb5bc8286276592d34e4ac62e91",
+      "grasp_assist_service.py": "c97e2279b05868862cbfe2d364ab58ed65130aa72550f937756a86f2c88b32fa",
+      "placement_experiments.py": "bc4959ace0e534644e655b2fda7f1fcde22f022a35d9e587e378e9936a57bc10",
+      "service.py": "42a449191890aeafd64c48647c79223cc36d11a2fba386a40c2cae28ebfcd6b4",
+      "collision_grasp.py": "451d31c6e671b86c6f6fde4407de60d937107b6f6dd2c226245de1c5762f4898",
+      "collision_geometry.py": "a5e54ab21b6943b47b177691cf1691d0e8a775ad4ea36d59f7bf53eb04c0c202",
+      "side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+      "local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d"
+    },
+    "physical_calls": 0,
+    "model_inference_calls": 0,
+    "hermes_calls": 0
+  },
+  "commands": [
+    {
+      "label": "compile",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "Ubuntu",
+        "--exec",
+        "env",
+        "MUJOCO_GL=egl",
+        "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+        "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+        "HF_HUB_OFFLINE=1",
+        "TRANSFORMERS_OFFLINE=1",
+        "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/d/FYP/First_Phase/scene_demo",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-m",
+        "py_compile",
+        "/mnt/d/FYP/First_Phase/scene_demo/collision_grasp_pilot.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "help",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "Ubuntu",
+        "--cd",
+        "/mnt/d/FYP/First_Phase/scene_demo",
+        "--exec",
+        "env",
+        "MUJOCO_GL=egl",
+        "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+        "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+        "HF_HUB_OFFLINE=1",
+        "TRANSFORMERS_OFFLINE=1",
+        "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/d/FYP/First_Phase/scene_demo",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "collision_grasp_pilot.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "stdout": "usage: collision_grasp_pilot.py [-h] --output-dir OUTPUT_DIR --calibration\n                                CALIBRATION --hermes-home HERMES_HOME\n                                --collision-confirmation\n                                COLLISION_CONFIRMATION\n\nFixed five-case real-Hermes side-grasp assisted combined-task pilot (no run on\n--help).\n\noptions:\n  -h, --help            show this help message and exit\n  --output-dir OUTPUT_DIR\n                        absolute output dir (must not exist)\n  --calibration CALIBRATION\n                        absolute calibration JSON path\n  --hermes-home HERMES_HOME\n                        absolute NEW hermes home (must not exist)\n  --collision-confirmation COLLISION_CONFIRMATION\n                        absolute collision confirmation JSON path\n",
+      "stderr": "[robosuite WARNING] No private macro file found! (__init__.py:7)\nWARNING:robosuite_logs:No private macro file found!\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\nWARNING:robosuite_logs:It is recommended to use a private macro file\n[robosuite WARNING] To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\nWARNING:robosuite_logs:To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py\n"
+    },
+    {
+      "label": "checks",
+      "argv": [
+        "wsl.exe",
+        "-d",
+        "Ubuntu",
+        "--exec",
+        "env",
+        "MUJOCO_GL=egl",
+        "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+        "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+        "HF_HUB_OFFLINE=1",
+        "TRANSFORMERS_OFFLINE=1",
+        "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/d/FYP/First_Phase/scene_demo",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_wrapper_checks.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"COLLISION_WRAPPER_MOCK_CHECKS_PASS\",\n  \"checks\": {\n    \"import_no_runtime_calls\": true,\n    \"import_preserves_originals\": true,\n    \"real_confirmation_positive\": true,\n    \"failed_phase_rejected\": true,\n    \"bad_source_rejected\": true,\n    \"proxy_injection\": true,\n    \"forced_controller_module\": true,\n    \"prereg_collision_metadata\": true,\n    \"other_writer_unchanged\": true,\n    \"payload_not_mutated\": true,\n    \"exact_five_cases_inherited\": true,\n    \"normal_finally_restores\": true,\n    \"exception_finally_restores\": true,\n    \"gate_prevents_runner\": true\n  },\n  \"physical_calls\": 0,\n  \"policy_model_calls\": 0,\n  \"hermes_calls\": 0\n}\n",
+      "stderr": "[robosuite WARNING] No private macro file found! (__init__.py:7)\nWARNING:robosuite_logs:No private macro file found!\n[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)\nWARNING:robosuite_logs:It is recommended to use a private macro file\n[robosuite WARNING] To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)\nWARNING:robosuite_logs:To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py\ncollision confirmation rejected: phase is not 'confirmed'\n"
+    },
+    {
+      "label": "diff",
+      "argv": [
+        "git",
+        "-C",
+        "D:\\FYP",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "dependency_sha256_after": {
+    "side_grasp_pilot.py": "8e26e9c5c4830c3b593396a660faa50a1adfceb5bc8286276592d34e4ac62e91",
+    "grasp_assist_service.py": "c97e2279b05868862cbfe2d364ab58ed65130aa72550f937756a86f2c88b32fa",
+    "placement_experiments.py": "bc4959ace0e534644e655b2fda7f1fcde22f022a35d9e587e378e9936a57bc10",
+    "service.py": "42a449191890aeafd64c48647c79223cc36d11a2fba386a40c2cae28ebfcd6b4",
+    "collision_grasp.py": "451d31c6e671b86c6f6fde4407de60d937107b6f6dd2c226245de1c5762f4898",
+    "collision_geometry.py": "a5e54ab21b6943b47b177691cf1691d0e8a775ad4ea36d59f7bf53eb04c0c202",
+    "side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+    "local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d"
+  },
+  "source_dependencies_unchanged": true,
+  "source_sha256": "1113abbf99c8f51953aebfea9af6f4390ec87bdd380ce85eb21efa8b84fc6354",
+  "physical_calls": 0,
+  "model_inference_calls": 0,
+  "hermes_calls": 0
+}

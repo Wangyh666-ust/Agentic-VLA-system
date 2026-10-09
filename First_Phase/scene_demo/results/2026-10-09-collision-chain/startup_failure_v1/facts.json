@@ -1,0 +1,1433 @@
+{
+  "status": "COLLISION_CHAIN_OPERATIONAL_ERROR_PRESERVED",
+  "evidence_checks_ok": true,
+  "experiment_ok": false,
+  "checks": {
+    "single_attempt": true,
+    "terminal_cli1_preserved": true,
+    "fatal_error_preserved": true,
+    "one_executed_record_only": true,
+    "no_plan_jobs_or_actions": true,
+    "source_hashes_unchanged": true,
+    "input_hashes_unchanged": true,
+    "collision_prereg_metadata": true,
+    "own8780_no_listener": true,
+    "owned_windows_child_exited": true,
+    "owned_linux_runner_exited": true
+  },
+  "cli_exit": 1,
+  "planned_cases": 5,
+  "executed_cases": 1,
+  "fatal_error": "case 0 operational: hermes_nonzero_exit",
+  "stage_counts_raw": {
+    "gold_completed": 0,
+    "combined_success": 0,
+    "operational": 1,
+    "physical": 1
+  },
+  "case_outcomes": [
+    {
+      "case_index": 0,
+      "model_seed": 0,
+      "session_id": "5ed985fe926348b186cd2f90d76148cd",
+      "request_id": "c7c7ede7fb234f00813aa99ecb69c15b",
+      "actual_order": [],
+      "expected_order": [],
+      "order_ok": true,
+      "agent": {
+        "request_id": "c7c7ede7fb234f00813aa99ecb69c15b",
+        "run_ok": false,
+        "chain_ok": false,
+        "plan_success": null,
+        "decision": null,
+        "hermes_invocations": 1,
+        "execution_timeout": false,
+        "cancelled_by_user": false,
+        "cancellation_pending": false,
+        "wall_s": 83.928,
+        "error": "no_plan_submitted: 本次请求没有提交任何计划，不关联任何历史 job 或视频",
+        "plan_state": null,
+        "agent_result_path": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v1/case_00/agent_result.json",
+        "hermes_initial_log": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v1/case_00/hermes_initial.log"
+      },
+      "score": {
+        "gold_completed": false,
+        "combined_success": false,
+        "n_actual_samples": 0,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": false,
+          "on|wine_bottle_1|wine_rack_1_top_region": false
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 0.0,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": false
+      },
+      "jobs": [],
+      "operational_errors": [
+        "hermes_nonzero_exit"
+      ],
+      "physical_failures": [
+        "no_plan"
+      ],
+      "job_count": 0,
+      "video_paths": []
+    }
+  ],
+  "hermes_cli_invocations": [
+    1
+  ],
+  "hermes_api_usage_available": false,
+  "hermes_api_calls": null,
+  "vla_actions": 0,
+  "helper_actions": 0,
+  "new_job_videos": [],
+  "own_cleanup": {
+    "port": 8780,
+    "owned_windows_pid": 34316,
+    "owned_runner": {
+      "owned_runner_pids": []
+    },
+    "commands": [
+      {
+        "argv": [
+          "wsl.exe",
+          "-d",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/ss",
+          "-H",
+          "-ltn",
+          "sport = :8780"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "powershell.exe",
+          "-NoProfile",
+          "-Command",
+          "$p = Get-Process -Id 34316 -ErrorAction SilentlyContinue; if ($null -eq $p) { Write-Output 'OWNED_CHILD_ABSENT'; exit 0 }; Write-Output 'OWNED_CHILD_PRESENT'; exit 1"
+        ],
+        "exit": 1,
+        "stdout": "OWNED_CHILD_PRESENT\r\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "wsl.exe",
+          "-d",
+          "Ubuntu",
+          "--exec",
+          "/usr/bin/python3",
+          "-c",
+          "import base64;exec(base64.b64decode('aW1wb3J0IG9zLHBhdGhsaWIsanNvbgpuZWVkbGU9Jy9tbnQvZC9GWVAvRmlyc3RfUGhhc2Uvc2NlbmVfZGVtby9jb2xsaXNpb25fZ3Jhc3BfcGlsb3QucHknCmZvdW5kPVtdCmZvciBwYXRoIGluIHBhdGhsaWIuUGF0aCgnL3Byb2MnKS5pdGVyZGlyKCk6CiBpZiBub3QgcGF0aC5uYW1lLmlzZGlnaXQoKSBvciBpbnQocGF0aC5uYW1lKT09b3MuZ2V0cGlkKCk6Y29udGludWUKIHRyeTphcmdzPShwYXRoLydjbWRsaW5lJykucmVhZF9ieXRlcygpLnNwbGl0KGJ5dGVzKFswXSkpCiBleGNlcHQgT1NFcnJvcjpjb250aW51ZQogaWYgbmVlZGxlLmVuY29kZSgpIGluIGFyZ3M6Zm91bmQuYXBwZW5kKGludChwYXRoLm5hbWUpKQpwcmludChqc29uLmR1bXBzKHsnb3duZWRfcnVubmVyX3BpZHMnOmZvdW5kfSkpCg=='))"
+        ],
+        "exit": 0,
+        "stdout": "{\"owned_runner_pids\": []}\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "powershell.exe",
+          "-NoProfile",
+          "-Command",
+          "if (Get-Process -Id 34316 -ErrorAction SilentlyContinue) { 'PRESENT'; exit 1 } else { 'ABSENT'; exit 0 }"
+        ],
+        "exit": 0,
+        "stdout": "ABSENT\r\n",
+        "stderr": ""
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "D:\\FYP\\First_Phase\\tmp\\collision_chain_v1_run_proof.json",
+      "bytes": 7925,
+      "sha256": "7dc07736a359ceca504e078ea8e15cdebac1aa4a5ab15886821321e9213057fb"
+    },
+    {
+      "path": "D:\\FYP\\First_Phase\\tmp\\collision_chain_v1_run.log",
+      "bytes": 3408,
+      "sha256": "a2fed2d8aa16c08c541c9395141d60f4f47a9af963346c3409c58fb8f095309f"
+    },
+    {
+      "path": "D:\\FYP\\First_Phase\\tmp\\collision_chain_v1\\report.json",
+      "bytes": 3253,
+      "sha256": "35b72ab4b09edf315483a5af507d6ae81a6de822a7332d03d666d83d353d6867"
+    },
+    {
+      "path": "D:\\FYP\\First_Phase\\tmp\\collision_chain_v1\\preregistration.json",
+      "bytes": 4717,
+      "sha256": "5eb78398543c26601b9dba7ac646d7dec1561641e2fe94f423e9144f1d16d9b1"
+    },
+    {
+      "path": "D:\\FYP\\First_Phase\\tmp\\collision_chain_v1\\case_00\\agent_result.json",
+      "bytes": 1826,
+      "sha256": "e7ac916de24614d6ffe43e7b538448515b7acb7ee1eff2b4d915ded780ad1f2a"
+    },
+    {
+      "path": "D:\\FYP\\First_Phase\\tmp\\collision_chain_v1\\case_00\\hermes_initial.log",
+      "bytes": 1076,
+      "sha256": "3c03385e84017b56f28a37d350e9a26e601f73741c9640a186d4f820ac00668d"
+    },
+    {
+      "path": "D:\\FYP\\First_Phase\\tmp\\collision_chain_v1_privatefacts_preparation.json",
+      "bytes": 775,
+      "sha256": "fa86bd1c90daabc19a1b3b7efde339ebe274fc9c2fa383a8c8d7622dfc9daa88"
+    }
+  ],
+  "old_baseline_report": {
+    "path": "\\\\wsl.localhost\\Ubuntu\\home\\yhwang\\fyp\\scene_demo\\grasp_assist\\2026-10-09-side-pilot-v1\\report.json",
+    "bytes": 49421,
+    "sha256": "1f8a04d8123ac3bcfafe44da29d0aee336e1a4836f5cc7cb79f0c73f5619b29c"
+  },
+  "descriptive_old_new_comparison": [
+    {
+      "case_index": 0,
+      "old_side_pilot": {
+        "case_index": 0,
+        "model_seed": 0,
+        "request_text": "请帮我整理桌面上的碗和酒瓶。",
+        "actual_order": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "expected_order": [],
+        "order_ok": true,
+        "agent": {
+          "request_id": "e55ebe2507b44e0da6e1b6dd44e98ef5",
+          "run_ok": true,
+          "chain_ok": true,
+          "plan_success": true,
+          "decision": "execute",
+          "hermes_invocations": 1,
+          "execution_timeout": false,
+          "cancelled_by_user": false,
+          "cancellation_pending": false,
+          "wall_s": 294.143,
+          "error": null,
+          "plan_state": "completed",
+          "agent_result_path": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/case_00/agent_result.json",
+          "hermes_initial_log": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/case_00/hermes_initial.log"
+        },
+        "score": {
+          "gold_completed": true,
+          "combined_success": true,
+          "n_actual_samples": 373,
+          "final_predicates": {
+            "on|akita_black_bowl_1|plate_1": true,
+            "on|wine_bottle_1|wine_rack_1_top_region": true
+          },
+          "held_objects": [],
+          "stove_off": true,
+          "cheese_displacement_m": 1.4210854715202004e-14,
+          "cheese_within_tolerance": true,
+          "unknown": [],
+          "placement_success": true
+        },
+        "jobs": [
+          {
+            "job_id": "be4ebc87b8b5414297a2ea7ace3572aa",
+            "capability_id": "bowl_to_plate",
+            "state": "completed",
+            "ended_reason": "success",
+            "error": null,
+            "success": true,
+            "steps": 102,
+            "phase": "not_holding",
+            "held_objects": [],
+            "run_dir": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T171524Z_goal_table_49045634/cap_01_bowl_to_plate_be4ebc87",
+            "grasp_assist": {
+              "job_id": "be4ebc87b8b5414297a2ea7ace3572aa",
+              "capability_id": "bowl_to_plate",
+              "condition": "side_grasp_pilot",
+              "profile": "baseline_bf16",
+              "completion_mode": "release_verified",
+              "grasp_guard_mode": "enforce",
+              "helper": false,
+              "assisted": false,
+              "confirmation_is_not_placement_success": true,
+              "requested_budget": 300,
+              "effective_budget": 500,
+              "actual_vla_actions": 102,
+              "actual_local_actions": 0,
+              "steps": 102,
+              "phase": null,
+              "reason": null,
+              "helper_summary": null
+            }
+          },
+          {
+            "job_id": "45c263471bc943889310d767f7e77970",
+            "capability_id": "wine_to_rack",
+            "state": "completed",
+            "ended_reason": "success",
+            "error": null,
+            "success": true,
+            "steps": 271,
+            "phase": "not_holding",
+            "held_objects": [],
+            "run_dir": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T171524Z_goal_table_49045634/cap_02_wine_to_rack_45c26347",
+            "grasp_assist": {
+              "job_id": "45c263471bc943889310d767f7e77970",
+              "capability_id": "wine_to_rack",
+              "condition": "side_grasp_pilot",
+              "profile": "baseline_bf16",
+              "completion_mode": "release_verified",
+              "grasp_guard_mode": "enforce",
+              "helper": true,
+              "assisted": true,
+              "confirmation_is_not_placement_success": true,
+              "requested_budget": 300,
+              "effective_budget": 500,
+              "actual_vla_actions": 199,
+              "actual_local_actions": 72,
+              "steps": 271,
+              "phase": "confirmed",
+              "reason": null,
+              "helper_summary": {
+                "assisted": true,
+                "phase": "confirmed",
+                "reason": null,
+                "total_actions": 72,
+                "stage_counts": {
+                  "above": 27,
+                  "descend": 24,
+                  "close": 10,
+                  "lift": 11
+                },
+                "trigger": {
+                  "command": 0.9969984889030457,
+                  "grasped": false,
+                  "grasp_observation_complete": true,
+                  "held_objects": [],
+                  "distance_m": 0.12183098669900606,
+                  "satisfied": true,
+                  "target_ready": true
+                },
+                "target": {
+                  "eef_position": [
+                    -0.20123991372177524,
+                    -0.07217506457314739,
+                    0.9927249740850868
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342611,
+                      -0.321776862997142,
+                      0.030620168040530877
+                    ],
+                    [
+                      -0.14959752714095043,
+                      0.35203116943488477,
+                      -0.9239559706066183
+                    ],
+                    [
+                      0.28652840020567666,
+                      -0.878938966132475,
+                      -0.38127125473807943
+                    ]
+                  ],
+                  "above_position": [
+                    -0.2030771238042071,
+                    -0.016737706336750292,
+                    1.0156012493693716
+                  ],
+                  "lift_position": [
+                    -0.20085211510475856,
+                    -0.07158104077621137,
+                    1.0283694242801995
+                  ]
+                },
+                "targets": {
+                  "eef_position": [
+                    -0.20123991372177524,
+                    -0.07217506457314739,
+                    0.9927249740850868
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342611,
+                      -0.321776862997142,
+                      0.030620168040530877
+                    ],
+                    [
+                      -0.14959752714095043,
+                      0.35203116943488477,
+                      -0.9239559706066183
+                    ],
+                    [
+                      0.28652840020567666,
+                      -0.878938966132475,
+                      -0.38127125473807943
+                    ]
+                  ],
+                  "above_position": [
+                    -0.2030771238042071,
+                    -0.016737706336750292,
+                    1.0156012493693716
+                  ],
+                  "lift_position": [
+                    -0.20085211510475856,
+                    -0.07158104077621137,
+                    1.0283694242801995
+                  ]
+                },
+                "last_errors": {
+                  "above_position_error_m": 0.0021607985358055165,
+                  "above_rotation_error_rad": 0.027962604650520008,
+                  "descend_position_error_m": 0.0021404515885870934,
+                  "descend_rotation_error_rad": 0.0011380983110950518,
+                  "close_grasped": true,
+                  "lift_grasped": true,
+                  "lift_metres": 0.027941539916621294
+                },
+                "grasp_mode": "demonstrated_side",
+                "reference": {
+                  "source_path": "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                  "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                  "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                  "step": 93,
+                  "quaternion_order": "wxyz",
+                  "policy_orientation": "axis_angle_body",
+                  "relative_position": [
+                    -0.0029941513870073433,
+                    0.01052424244341749,
+                    0.09384945135656639
+                  ],
+                  "relative_orientation": [
+                    [
+                      0.3217877768160636,
+                      -0.9463167125463993,
+                      -0.030615457650521972
+                    ],
+                    [
+                      -0.3520318440699383,
+                      -0.14959777039620165,
+                      0.9239556741820488
+                    ],
+                    [
+                      -0.8789347003347259,
+                      -0.28654002625787023,
+                      -0.38127235134434434
+                    ]
+                  ]
+                },
+                "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset"
+              }
+            }
+          }
+        ],
+        "operational_errors": [],
+        "physical_failures": []
+      },
+      "new_collision_pilot": {
+        "case_index": 0,
+        "model_seed": 0,
+        "request_text": "请帮我整理桌面上的碗和酒瓶。",
+        "actual_order": [],
+        "expected_order": [],
+        "order_ok": true,
+        "agent": {
+          "request_id": "c7c7ede7fb234f00813aa99ecb69c15b",
+          "run_ok": false,
+          "chain_ok": false,
+          "plan_success": null,
+          "decision": null,
+          "hermes_invocations": 1,
+          "execution_timeout": false,
+          "cancelled_by_user": false,
+          "cancellation_pending": false,
+          "wall_s": 83.928,
+          "error": "no_plan_submitted: 本次请求没有提交任何计划，不关联任何历史 job 或视频",
+          "plan_state": null,
+          "agent_result_path": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v1/case_00/agent_result.json",
+          "hermes_initial_log": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v1/case_00/hermes_initial.log"
+        },
+        "score": {
+          "gold_completed": false,
+          "combined_success": false,
+          "n_actual_samples": 0,
+          "final_predicates": {
+            "on|akita_black_bowl_1|plate_1": false,
+            "on|wine_bottle_1|wine_rack_1_top_region": false
+          },
+          "held_objects": [],
+          "stove_off": true,
+          "cheese_displacement_m": 0.0,
+          "cheese_within_tolerance": true,
+          "unknown": [],
+          "placement_success": false
+        },
+        "jobs": [],
+        "operational_errors": [
+          "hermes_nonzero_exit"
+        ],
+        "physical_failures": [
+          "no_plan"
+        ]
+      },
+      "new_executed": true
+    },
+    {
+      "case_index": 1,
+      "old_side_pilot": {
+        "case_index": 1,
+        "model_seed": 1,
+        "request_text": "把碗放到盘子上，然后把酒瓶放到架子上。",
+        "actual_order": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "expected_order": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "order_ok": true,
+        "agent": {
+          "request_id": "bb5bf8b5839c472387e9d12770d16c50",
+          "run_ok": true,
+          "chain_ok": false,
+          "plan_success": null,
+          "decision": "execute",
+          "hermes_invocations": 1,
+          "execution_timeout": false,
+          "cancelled_by_user": false,
+          "cancellation_pending": false,
+          "wall_s": 162.39,
+          "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+          "plan_state": "blocked",
+          "agent_result_path": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/case_01/agent_result.json",
+          "hermes_initial_log": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/case_01/hermes_initial.log"
+        },
+        "score": {
+          "gold_completed": false,
+          "combined_success": false,
+          "n_actual_samples": 235,
+          "final_predicates": {
+            "on|akita_black_bowl_1|plate_1": true,
+            "on|wine_bottle_1|wine_rack_1_top_region": false
+          },
+          "held_objects": [],
+          "stove_off": true,
+          "cheese_displacement_m": 1.4210854715202004e-14,
+          "cheese_within_tolerance": true,
+          "unknown": [],
+          "placement_success": false
+        },
+        "jobs": [
+          {
+            "job_id": "89cb3f29515143eaae860f2e5b5ab828",
+            "capability_id": "bowl_to_plate",
+            "state": "completed",
+            "ended_reason": "success",
+            "error": null,
+            "success": true,
+            "steps": 104,
+            "phase": "not_holding",
+            "held_objects": [],
+            "run_dir": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T172024Z_goal_table_fc973fcd/cap_01_bowl_to_plate_89cb3f29",
+            "grasp_assist": {
+              "job_id": "89cb3f29515143eaae860f2e5b5ab828",
+              "capability_id": "bowl_to_plate",
+              "condition": "side_grasp_pilot",
+              "profile": "baseline_bf16",
+              "completion_mode": "release_verified",
+              "grasp_guard_mode": "enforce",
+              "helper": false,
+              "assisted": false,
+              "confirmation_is_not_placement_success": true,
+              "requested_budget": 300,
+              "effective_budget": 500,
+              "actual_vla_actions": 104,
+              "actual_local_actions": 0,
+              "steps": 104,
+              "phase": null,
+              "reason": null,
+              "helper_summary": null
+            }
+          },
+          {
+            "job_id": "a9a15dd379da4c07bb6e33d4dd5aba4c",
+            "capability_id": "wine_to_rack",
+            "state": "completed",
+            "ended_reason": "local_grasp_failed",
+            "error": "wine_rotation_drift",
+            "success": false,
+            "steps": 131,
+            "phase": "not_holding",
+            "held_objects": [],
+            "run_dir": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T172024Z_goal_table_fc973fcd/cap_02_wine_to_rack_a9a15dd3",
+            "grasp_assist": {
+              "job_id": "a9a15dd379da4c07bb6e33d4dd5aba4c",
+              "capability_id": "wine_to_rack",
+              "condition": "side_grasp_pilot",
+              "profile": "baseline_bf16",
+              "completion_mode": "release_verified",
+              "grasp_guard_mode": "enforce",
+              "helper": true,
+              "assisted": true,
+              "confirmation_is_not_placement_success": true,
+              "requested_budget": 300,
+              "effective_budget": 500,
+              "actual_vla_actions": 120,
+              "actual_local_actions": 11,
+              "steps": 131,
+              "phase": "failed",
+              "reason": "wine_rotation_drift",
+              "helper_summary": {
+                "assisted": true,
+                "phase": "failed",
+                "reason": "wine_rotation_drift",
+                "total_actions": 11,
+                "stage_counts": {
+                  "above": 11,
+                  "descend": 0,
+                  "close": 0,
+                  "lift": 0
+                },
+                "trigger": {
+                  "command": 1.0172357559204102,
+                  "grasped": false,
+                  "grasp_observation_complete": true,
+                  "held_objects": [],
+                  "distance_m": 0.11554292800217154,
+                  "satisfied": true,
+                  "target_ready": true
+                },
+                "target": {
+                  "eef_position": [
+                    -0.20633525902760388,
+                    -0.07217230655141765,
+                    0.9935246525927145
+                  ],
+                  "orientation": [
+                    [
+                      -0.9605724853737813,
+                      -0.27327883361446653,
+                      0.0511779194687477
+                    ],
+                    [
+                      -0.14937618189068005,
+                      0.352015431220016,
+                      -0.9239977773061715
+                    ],
+                    [
+                      0.234493617453856,
+                      -0.8952116036341909,
+                      -0.3789576864138024
+                    ]
+                  ],
+                  "above_position": [
+                    -0.20940593419572875,
+                    -0.01673243991304737,
+                    1.0162621137775427
+                  ],
+                  "lift_position": null
+                },
+                "targets": {
+                  "eef_position": [
+                    -0.20633525902760388,
+                    -0.07217230655141765,
+                    0.9935246525927145
+                  ],
+                  "orientation": [
+                    [
+                      -0.9605724853737813,
+                      -0.27327883361446653,
+                      0.0511779194687477
+                    ],
+                    [
+                      -0.14937618189068005,
+                      0.352015431220016,
+                      -0.9239977773061715
+                    ],
+                    [
+                      0.234493617453856,
+                      -0.8952116036341909,
+                      -0.3789576864138024
+                    ]
+                  ],
+                  "above_position": [
+                    -0.20940593419572875,
+                    -0.01673243991304737,
+                    1.0162621137775427
+                  ],
+                  "lift_position": null
+                },
+                "last_errors": {
+                  "above_position_error_m": 0.026761267596862193,
+                  "above_rotation_error_rad": 0.2989931378975903
+                },
+                "grasp_mode": "demonstrated_side",
+                "reference": {
+                  "source_path": "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                  "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                  "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                  "step": 93,
+                  "quaternion_order": "wxyz",
+                  "policy_orientation": "axis_angle_body",
+                  "relative_position": [
+                    -0.0029941513870073433,
+                    0.01052424244341749,
+                    0.09384945135656639
+                  ],
+                  "relative_orientation": [
+                    [
+                      0.3217877768160636,
+                      -0.9463167125463993,
+                      -0.030615457650521972
+                    ],
+                    [
+                      -0.3520318440699383,
+                      -0.14959777039620165,
+                      0.9239556741820488
+                    ],
+                    [
+                      -0.8789347003347259,
+                      -0.28654002625787023,
+                      -0.38127235134434434
+                    ]
+                  ]
+                },
+                "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset"
+              }
+            }
+          }
+        ],
+        "operational_errors": [],
+        "physical_failures": [
+          "local_grasp_failed: a9a15dd379da4c07bb6e33d4dd5aba4c",
+          "plan_blocked"
+        ]
+      },
+      "new_collision_pilot": null,
+      "new_executed": false
+    },
+    {
+      "case_index": 2,
+      "old_side_pilot": {
+        "case_index": 2,
+        "model_seed": 2,
+        "request_text": "请把酒瓶和碗都收回各自的位置。",
+        "actual_order": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "expected_order": [],
+        "order_ok": true,
+        "agent": {
+          "request_id": "cf8834ef80234806a77457ce25da6a61",
+          "run_ok": true,
+          "chain_ok": false,
+          "plan_success": null,
+          "decision": "execute",
+          "hermes_invocations": 1,
+          "execution_timeout": false,
+          "cancelled_by_user": false,
+          "cancellation_pending": false,
+          "wall_s": 149.134,
+          "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+          "plan_state": "blocked",
+          "agent_result_path": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/case_02/agent_result.json",
+          "hermes_initial_log": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/case_02/hermes_initial.log"
+        },
+        "score": {
+          "gold_completed": false,
+          "combined_success": false,
+          "n_actual_samples": 212,
+          "final_predicates": {
+            "on|akita_black_bowl_1|plate_1": true,
+            "on|wine_bottle_1|wine_rack_1_top_region": false
+          },
+          "held_objects": [],
+          "stove_off": true,
+          "cheese_displacement_m": 1.4210854715202004e-14,
+          "cheese_within_tolerance": true,
+          "unknown": [],
+          "placement_success": false
+        },
+        "jobs": [
+          {
+            "job_id": "ed3e4c7d5b03446a928025f0908e5c58",
+            "capability_id": "bowl_to_plate",
+            "state": "completed",
+            "ended_reason": "success",
+            "error": null,
+            "success": true,
+            "steps": 92,
+            "phase": "not_holding",
+            "held_objects": [],
+            "run_dir": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T172313Z_goal_table_86339538/cap_01_bowl_to_plate_ed3e4c7d",
+            "grasp_assist": {
+              "job_id": "ed3e4c7d5b03446a928025f0908e5c58",
+              "capability_id": "bowl_to_plate",
+              "condition": "side_grasp_pilot",
+              "profile": "baseline_bf16",
+              "completion_mode": "release_verified",
+              "grasp_guard_mode": "enforce",
+              "helper": false,
+              "assisted": false,
+              "confirmation_is_not_placement_success": true,
+              "requested_budget": 300,
+              "effective_budget": 500,
+              "actual_vla_actions": 92,
+              "actual_local_actions": 0,
+              "steps": 92,
+              "phase": null,
+              "reason": null,
+              "helper_summary": null
+            }
+          },
+          {
+            "job_id": "54d90bb7909c4f6b847f27eda30e31eb",
+            "capability_id": "wine_to_rack",
+            "state": "completed",
+            "ended_reason": "local_grasp_failed",
+            "error": "wine_rotation_drift",
+            "success": false,
+            "steps": 120,
+            "phase": "not_holding",
+            "held_objects": [],
+            "run_dir": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T172313Z_goal_table_86339538/cap_02_wine_to_rack_54d90bb7",
+            "grasp_assist": {
+              "job_id": "54d90bb7909c4f6b847f27eda30e31eb",
+              "capability_id": "wine_to_rack",
+              "condition": "side_grasp_pilot",
+              "profile": "baseline_bf16",
+              "completion_mode": "release_verified",
+              "grasp_guard_mode": "enforce",
+              "helper": true,
+              "assisted": true,
+              "confirmation_is_not_placement_success": true,
+              "requested_budget": 300,
+              "effective_budget": 500,
+              "actual_vla_actions": 108,
+              "actual_local_actions": 12,
+              "steps": 120,
+              "phase": "failed",
+              "reason": "wine_rotation_drift",
+              "helper_summary": {
+                "assisted": true,
+                "phase": "failed",
+                "reason": "wine_rotation_drift",
+                "total_actions": 12,
+                "stage_counts": {
+                  "above": 12,
+                  "descend": 0,
+                  "close": 0,
+                  "lift": 0
+                },
+                "trigger": {
+                  "command": 0.995345413684845,
+                  "grasped": false,
+                  "grasp_observation_complete": true,
+                  "held_objects": [],
+                  "distance_m": 0.11091891628922984,
+                  "satisfied": true,
+                  "target_ready": true
+                },
+                "target": {
+                  "eef_position": [
+                    -0.2071609894811142,
+                    -0.07233683078780255,
+                    0.9936475111532664
+                  ],
+                  "orientation": [
+                    [
+                      -0.9610670729822384,
+                      -0.26901691360030183,
+                      0.0630870939758322
+                    ],
+                    [
+                      -0.15911570053099566,
+                      0.3521504941548778,
+                      -0.9223189379553046
+                    ],
+                    [
+                      0.22590324272546033,
+                      -0.896448509209223,
+                      -0.38124505932887653
+                    ]
+                  ],
+                  "above_position": [
+                    -0.21094621511966413,
+                    -0.016997694510484274,
+                    1.016522214712999
+                  ],
+                  "lift_position": null
+                },
+                "targets": {
+                  "eef_position": [
+                    -0.2071609894811142,
+                    -0.07233683078780255,
+                    0.9936475111532664
+                  ],
+                  "orientation": [
+                    [
+                      -0.9610670729822384,
+                      -0.26901691360030183,
+                      0.0630870939758322
+                    ],
+                    [
+                      -0.15911570053099566,
+                      0.3521504941548778,
+                      -0.9223189379553046
+                    ],
+                    [
+                      0.22590324272546033,
+                      -0.896448509209223,
+                      -0.38124505932887653
+                    ]
+                  ],
+                  "above_position": [
+                    -0.21094621511966413,
+                    -0.016997694510484274,
+                    1.016522214712999
+                  ],
+                  "lift_position": null
+                },
+                "last_errors": {
+                  "above_position_error_m": 0.023230710542314344,
+                  "above_rotation_error_rad": 0.2556006139222847
+                },
+                "grasp_mode": "demonstrated_side",
+                "reference": {
+                  "source_path": "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                  "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                  "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                  "step": 93,
+                  "quaternion_order": "wxyz",
+                  "policy_orientation": "axis_angle_body",
+                  "relative_position": [
+                    -0.0029941513870073433,
+                    0.01052424244341749,
+                    0.09384945135656639
+                  ],
+                  "relative_orientation": [
+                    [
+                      0.3217877768160636,
+                      -0.9463167125463993,
+                      -0.030615457650521972
+                    ],
+                    [
+                      -0.3520318440699383,
+                      -0.14959777039620165,
+                      0.9239556741820488
+                    ],
+                    [
+                      -0.8789347003347259,
+                      -0.28654002625787023,
+                      -0.38127235134434434
+                    ]
+                  ]
+                },
+                "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset"
+              }
+            }
+          }
+        ],
+        "operational_errors": [],
+        "physical_failures": [
+          "local_grasp_failed: 54d90bb7909c4f6b847f27eda30e31eb",
+          "plan_blocked"
+        ]
+      },
+      "new_collision_pilot": null,
+      "new_executed": false
+    },
+    {
+      "case_index": 3,
+      "old_side_pilot": {
+        "case_index": 3,
+        "model_seed": 3,
+        "request_text": "先把酒瓶放到架子上，再把碗放到盘子上。",
+        "actual_order": [
+          "wine_to_rack",
+          "bowl_to_plate"
+        ],
+        "expected_order": [
+          "wine_to_rack",
+          "bowl_to_plate"
+        ],
+        "order_ok": true,
+        "agent": {
+          "request_id": "71db701c9bb44fc8928357a98ccc653f",
+          "run_ok": true,
+          "chain_ok": false,
+          "plan_success": null,
+          "decision": "execute",
+          "hermes_invocations": 1,
+          "execution_timeout": false,
+          "cancelled_by_user": false,
+          "cancellation_pending": false,
+          "wall_s": 471.467,
+          "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+          "plan_state": "blocked",
+          "agent_result_path": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/case_03/agent_result.json",
+          "hermes_initial_log": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/case_03/hermes_initial.log"
+        },
+        "score": {
+          "gold_completed": false,
+          "combined_success": false,
+          "n_actual_samples": 752,
+          "final_predicates": {
+            "on|akita_black_bowl_1|plate_1": false,
+            "on|wine_bottle_1|wine_rack_1_top_region": true
+          },
+          "held_objects": [],
+          "stove_off": true,
+          "cheese_displacement_m": 1.4210854715202004e-14,
+          "cheese_within_tolerance": true,
+          "unknown": [],
+          "placement_success": false
+        },
+        "jobs": [
+          {
+            "job_id": "34738e0ab3274b35b72c8809e66439c4",
+            "capability_id": "wine_to_rack",
+            "state": "completed",
+            "ended_reason": "success",
+            "error": null,
+            "success": true,
+            "steps": 252,
+            "phase": "not_holding",
+            "held_objects": [],
+            "run_dir": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T172548Z_goal_table_60774c1c/cap_01_wine_to_rack_34738e0a",
+            "grasp_assist": {
+              "job_id": "34738e0ab3274b35b72c8809e66439c4",
+              "capability_id": "wine_to_rack",
+              "condition": "side_grasp_pilot",
+              "profile": "baseline_bf16",
+              "completion_mode": "release_verified",
+              "grasp_guard_mode": "enforce",
+              "helper": true,
+              "assisted": true,
+              "confirmation_is_not_placement_success": true,
+              "requested_budget": 300,
+              "effective_budget": 500,
+              "actual_vla_actions": 187,
+              "actual_local_actions": 65,
+              "steps": 252,
+              "phase": "confirmed",
+              "reason": null,
+              "helper_summary": {
+                "assisted": true,
+                "phase": "confirmed",
+                "reason": null,
+                "total_actions": 65,
+                "stage_counts": {
+                  "above": 20,
+                  "descend": 24,
+                  "close": 10,
+                  "lift": 11
+                },
+                "trigger": {
+                  "command": 1.025693416595459,
+                  "grasped": false,
+                  "grasp_observation_complete": true,
+                  "held_objects": [],
+                  "distance_m": 0.1331075393397017,
+                  "satisfied": true,
+                  "target_ready": true
+                },
+                "target": {
+                  "eef_position": [
+                    -0.20123991372177524,
+                    -0.0721750645731474,
+                    0.9927249740850868
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342593,
+                      -0.32177686299714137,
+                      0.03062016804053068
+                    ],
+                    [
+                      -0.1495975271409501,
+                      0.35203116943488405,
+                      -0.9239559706066165
+                    ],
+                    [
+                      0.28652840020567616,
+                      -0.8789389661324731,
+                      -0.38127125473807894
+                    ]
+                  ],
+                  "above_position": [
+                    -0.2030771238042071,
+                    -0.016737706336750417,
+                    1.0156012493693716
+                  ],
+                  "lift_position": [
+                    -0.2008381317814878,
+                    -0.07155591452315778,
+                    1.0283507062541468
+                  ]
+                },
+                "targets": {
+                  "eef_position": [
+                    -0.20123991372177524,
+                    -0.0721750645731474,
+                    0.9927249740850868
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342593,
+                      -0.32177686299714137,
+                      0.03062016804053068
+                    ],
+                    [
+                      -0.1495975271409501,
+                      0.35203116943488405,
+                      -0.9239559706066165
+                    ],
+                    [
+                      0.28652840020567616,
+                      -0.8789389661324731,
+                      -0.38127125473807894
+                    ]
+                  ],
+                  "above_position": [
+                    -0.2030771238042071,
+                    -0.016737706336750417,
+                    1.0156012493693716
+                  ],
+                  "lift_position": [
+                    -0.2008381317814878,
+                    -0.07155591452315778,
+                    1.0283507062541468
+                  ]
+                },
+                "last_errors": {
+                  "above_position_error_m": 0.001948453227090129,
+                  "above_rotation_error_rad": 0.03314410703545181,
+                  "descend_position_error_m": 0.002205852721415489,
+                  "descend_rotation_error_rad": 0.000962591489389276,
+                  "close_grasped": true,
+                  "lift_grasped": true,
+                  "lift_metres": 0.027943832567365212
+                },
+                "grasp_mode": "demonstrated_side",
+                "reference": {
+                  "source_path": "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                  "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                  "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                  "step": 93,
+                  "quaternion_order": "wxyz",
+                  "policy_orientation": "axis_angle_body",
+                  "relative_position": [
+                    -0.0029941513870073433,
+                    0.01052424244341749,
+                    0.09384945135656639
+                  ],
+                  "relative_orientation": [
+                    [
+                      0.3217877768160636,
+                      -0.9463167125463993,
+                      -0.030615457650521972
+                    ],
+                    [
+                      -0.3520318440699383,
+                      -0.14959777039620165,
+                      0.9239556741820488
+                    ],
+                    [
+                      -0.8789347003347259,
+                      -0.28654002625787023,
+                      -0.38127235134434434
+                    ]
+                  ]
+                },
+                "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset"
+              }
+            }
+          },
+          {
+            "job_id": "b7065cfeec534a7cb912a03e6bfec6d5",
+            "capability_id": "bowl_to_plate",
+            "state": "completed",
+            "ended_reason": "budget_exhausted",
+            "error": null,
+            "success": false,
+            "steps": 500,
+            "phase": "not_holding",
+            "held_objects": [],
+            "run_dir": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T172548Z_goal_table_60774c1c/cap_02_bowl_to_plate_b7065cfe",
+            "grasp_assist": {
+              "job_id": "b7065cfeec534a7cb912a03e6bfec6d5",
+              "capability_id": "bowl_to_plate",
+              "condition": "side_grasp_pilot",
+              "profile": "baseline_bf16",
+              "completion_mode": "release_verified",
+              "grasp_guard_mode": "enforce",
+              "helper": false,
+              "assisted": false,
+              "confirmation_is_not_placement_success": true,
+              "requested_budget": 300,
+              "effective_budget": 500,
+              "actual_vla_actions": 500,
+              "actual_local_actions": 0,
+              "steps": 500,
+              "phase": null,
+              "reason": null,
+              "helper_summary": null
+            }
+          }
+        ],
+        "operational_errors": [],
+        "physical_failures": [
+          "budget_exhausted: b7065cfeec534a7cb912a03e6bfec6d5",
+          "plan_blocked"
+        ]
+      },
+      "new_collision_pilot": null,
+      "new_executed": false
+    },
+    {
+      "case_index": 4,
+      "old_side_pilot": {
+        "case_index": 4,
+        "model_seed": 4,
+        "request_text": "整理这两件东西：碗放盘子，酒瓶放架子。",
+        "actual_order": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "expected_order": [],
+        "order_ok": true,
+        "agent": {
+          "request_id": "d2a466ea6a724872b2e3e89745e467a3",
+          "run_ok": true,
+          "chain_ok": false,
+          "plan_success": null,
+          "decision": "execute",
+          "hermes_invocations": 1,
+          "execution_timeout": false,
+          "cancelled_by_user": false,
+          "cancellation_pending": false,
+          "wall_s": 147.988,
+          "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+          "plan_state": "blocked",
+          "agent_result_path": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/case_04/agent_result.json",
+          "hermes_initial_log": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/case_04/hermes_initial.log"
+        },
+        "score": {
+          "gold_completed": false,
+          "combined_success": false,
+          "n_actual_samples": 216,
+          "final_predicates": {
+            "on|akita_black_bowl_1|plate_1": true,
+            "on|wine_bottle_1|wine_rack_1_top_region": false
+          },
+          "held_objects": [],
+          "stove_off": true,
+          "cheese_displacement_m": 1.4210854715202004e-14,
+          "cheese_within_tolerance": true,
+          "unknown": [],
+          "placement_success": false
+        },
+        "jobs": [
+          {
+            "job_id": "98eb66f9f8b24d2f9628df7517fd169d",
+            "capability_id": "bowl_to_plate",
+            "state": "completed",
+            "ended_reason": "success",
+            "error": null,
+            "success": true,
+            "steps": 91,
+            "phase": "not_holding",
+            "held_objects": [],
+            "run_dir": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T173353Z_goal_table_e516104b/cap_01_bowl_to_plate_98eb66f9",
+            "grasp_assist": {
+              "job_id": "98eb66f9f8b24d2f9628df7517fd169d",
+              "capability_id": "bowl_to_plate",
+              "condition": "side_grasp_pilot",
+              "profile": "baseline_bf16",
+              "completion_mode": "release_verified",
+              "grasp_guard_mode": "enforce",
+              "helper": false,
+              "assisted": false,
+              "confirmation_is_not_placement_success": true,
+              "requested_budget": 300,
+              "effective_budget": 500,
+              "actual_vla_actions": 91,
+              "actual_local_actions": 0,
+              "steps": 91,
+              "phase": null,
+              "reason": null,
+              "helper_summary": null
+            }
+          },
+          {
+            "job_id": "b76040bbb05045bcbbe02c2e10d514ab",
+            "capability_id": "wine_to_rack",
+            "state": "completed",
+            "ended_reason": "local_grasp_failed",
+            "error": "wine_rotation_drift",
+            "success": false,
+            "steps": 125,
+            "phase": "not_holding",
+            "held_objects": [],
+            "run_dir": "/home/yhwang/fyp/scene_demo/grasp_assist/2026-10-09-side-pilot-v1/sessions/20261008T173353Z_goal_table_e516104b/cap_02_wine_to_rack_b76040bb",
+            "grasp_assist": {
+              "job_id": "b76040bbb05045bcbbe02c2e10d514ab",
+              "capability_id": "wine_to_rack",
+              "condition": "side_grasp_pilot",
+              "profile": "baseline_bf16",
+              "completion_mode": "release_verified",
+              "grasp_guard_mode": "enforce",
+              "helper": true,
+              "assisted": true,
+              "confirmation_is_not_placement_success": true,
+              "requested_budget": 300,
+              "effective_budget": 500,
+              "actual_vla_actions": 114,
+              "actual_local_actions": 11,
+              "steps": 125,
+              "phase": "failed",
+              "reason": "wine_rotation_drift",
+              "helper_summary": {
+                "assisted": true,
+                "phase": "failed",
+                "reason": "wine_rotation_drift",
+                "total_actions": 11,
+                "stage_counts": {
+                  "above": 11,
+                  "descend": 0,
+                  "close": 0,
+                  "lift": 0
+                },
+                "trigger": {
+                  "command": 0.9911848902702332,
+                  "grasped": false,
+                  "grasp_observation_complete": true,
+                  "held_objects": [],
+                  "distance_m": 0.13102683064831608,
+                  "satisfied": true,
+                  "target_ready": true
+                },
+                "target": {
+                  "eef_position": [
+                    -0.20123991372177524,
+                    -0.07217506457314737,
+                    0.9927249740850868
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342618,
+                      -0.3217768629971421,
+                      0.03062016804053085
+                    ],
+                    [
+                      -0.14959752714095048,
+                      0.35203116943488477,
+                      -0.9239559706066188
+                    ],
+                    [
+                      0.2865284002056768,
+                      -0.8789389661324752,
+                      -0.38127125473807977
+                    ]
+                  ],
+                  "above_position": [
+                    -0.2030771238042071,
+                    -0.016737706336750244,
+                    1.0156012493693716
+                  ],
+                  "lift_position": null
+                },
+                "targets": {
+                  "eef_position": [
+                    -0.20123991372177524,
+                    -0.07217506457314737,
+                    0.9927249740850868
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342618,
+                      -0.3217768629971421,
+                      0.03062016804053085
+                    ],
+                    [
+                      -0.14959752714095048,
+                      0.35203116943488477,
+                      -0.9239559706066188
+                    ],
+                    [
+                      0.2865284002056768,
+                      -0.8789389661324752,
+                      -0.38127125473807977
+                    ]
+                  ],
+                  "above_position": [
+                    -0.2030771238042071,
+                    -0.016737706336750244,
+                    1.0156012493693716
+                  ],
+                  "lift_position": null
+                },
+                "last_errors": {
+                  "above_position_error_m": 0.029024562116140743,
+                  "above_rotation_error_rad": 0.254290046116867
+                },
+                "grasp_mode": "demonstrated_side",
+                "reference": {
+                  "source_path": "/mnt/c/Users/Admin1/.codex/worktrees/wine-grasp-assist/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                  "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                  "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                  "step": 93,
+                  "quaternion_order": "wxyz",
+                  "policy_orientation": "axis_angle_body",
+                  "relative_position": [
+                    -0.0029941513870073433,
+                    0.01052424244341749,
+                    0.09384945135656639
+                  ],
+                  "relative_orientation": [
+                    [
+                      0.3217877768160636,
+                      -0.9463167125463993,
+                      -0.030615457650521972
+                    ],
+                    [
+                      -0.3520318440699383,
+                      -0.14959777039620165,
+                      0.9239556741820488
+                    ],
+                    [
+                      -0.8789347003347259,
+                      -0.28654002625787023,
+                      -0.38127235134434434
+                    ]
+                  ]
+                },
+                "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset"
+              }
+            }
+          }
+        ],
+        "operational_errors": [],
+        "physical_failures": [
+          "local_grasp_failed: b76040bbb05045bcbbe02c2e10d514ab",
+          "plan_blocked"
+        ]
+      },
+      "new_collision_pilot": null,
+      "new_executed": false
+    }
+  ],
+  "strict_pair_claim": false,
+  "no_retry": true,
+  "raw_physical_failures_note": "Original classification no_plan retained; this startup error has no wine or bowl actions.",
+  "preparation_mechanical_error_record": "D:\\FYP\\First_Phase\\tmp\\collision_chain_v1_privatefacts_preparation.json",
+  "prior_mechanical_check_records": [
+    "D:\\FYP\\First_Phase\\tmp\\collision_chain_v1_privatefacts.json",
+    "D:\\FYP\\First_Phase\\tmp\\collision_chain_v1_privatefacts_final_before_cleanup.json"
+  ]
+}

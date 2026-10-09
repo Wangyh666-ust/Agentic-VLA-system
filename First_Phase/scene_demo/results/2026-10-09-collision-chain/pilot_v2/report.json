@@ -1,0 +1,1781 @@
+{
+  "experiment": "collision_grasp_pilot",
+  "condition": "collision_grasp_pilot",
+  "generated_utc": "2026-10-09T04:28:08+00:00",
+  "status": "completed",
+  "planned_cases": 5,
+  "executed_cases": 5,
+  "fatal_error": null,
+  "preregistration_sha256": "361e17d3c8e9b582bcc92fefb80c85e515ceb918ef55c8633f528e9283eb1f24",
+  "calibration_sha256": "9fa72e909fbf22a63e219f0ee5846625bb2fa85623573ef18c8f4bf50b324f35",
+  "stage_counts": {
+    "gold_completed": 3,
+    "combined_success": 3,
+    "operational": 0,
+    "physical": 4
+  },
+  "cases": [
+    {
+      "case_index": 0,
+      "model_seed": 0,
+      "request_text": "\u8bf7\u5e2e\u6211\u6574\u7406\u684c\u9762\u4e0a\u7684\u7897\u548c\u9152\u74f6\u3002",
+      "session_id": "f56260d2c8d44bf688d6231d83f8c851",
+      "request_id": "b37ef96a1aac4885a2ae352e67cac893",
+      "seeded": {
+        "ok": true,
+        "seeded": true,
+        "seed": 0
+      },
+      "plan": {
+        "request_id": "b37ef96a1aac4885a2ae352e67cac893",
+        "state": "completed",
+        "plan_success": true,
+        "completed_capability_ids": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "pending_capability_ids": [],
+        "job_ids": [
+          "566e6964969e4bd0a46fa4fad0a6254a",
+          "da2069e685594566b0e053dc604dc4a2"
+        ]
+      },
+      "jobs": [
+        {
+          "job_id": "566e6964969e4bd0a46fa4fad0a6254a",
+          "capability_id": "bowl_to_plate",
+          "state": "completed",
+          "ended_reason": "success",
+          "error": null,
+          "success": true,
+          "steps": 102,
+          "phase": "not_holding",
+          "held_objects": [],
+          "run_dir": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T042823Z_goal_table_f56260d2/cap_01_bowl_to_plate_566e6964",
+          "grasp_assist": {
+            "job_id": "566e6964969e4bd0a46fa4fad0a6254a",
+            "capability_id": "bowl_to_plate",
+            "condition": "collision_grasp_pilot",
+            "profile": "baseline_bf16",
+            "completion_mode": "release_verified",
+            "grasp_guard_mode": "enforce",
+            "helper": false,
+            "assisted": false,
+            "confirmation_is_not_placement_success": true,
+            "requested_budget": 300,
+            "effective_budget": 500,
+            "actual_vla_actions": 102,
+            "actual_local_actions": 0,
+            "steps": 102,
+            "phase": null,
+            "reason": null,
+            "helper_summary": null
+          }
+        },
+        {
+          "job_id": "da2069e685594566b0e053dc604dc4a2",
+          "capability_id": "wine_to_rack",
+          "state": "completed",
+          "ended_reason": "success",
+          "error": null,
+          "success": true,
+          "steps": 361,
+          "phase": "not_holding",
+          "held_objects": [],
+          "run_dir": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T042823Z_goal_table_f56260d2/cap_02_wine_to_rack_da2069e6",
+          "grasp_assist": {
+            "job_id": "da2069e685594566b0e053dc604dc4a2",
+            "capability_id": "wine_to_rack",
+            "condition": "collision_grasp_pilot",
+            "profile": "baseline_bf16",
+            "completion_mode": "release_verified",
+            "grasp_guard_mode": "enforce",
+            "helper": true,
+            "assisted": true,
+            "confirmation_is_not_placement_success": true,
+            "requested_budget": 300,
+            "effective_budget": 500,
+            "actual_vla_actions": 174,
+            "actual_local_actions": 187,
+            "steps": 361,
+            "phase": "confirmed",
+            "reason": null,
+            "helper_summary": {
+              "assisted": true,
+              "phase": "confirmed",
+              "reason": null,
+              "total_actions": 187,
+              "stage_counts": {
+                "above": 142,
+                "descend": 24,
+                "close": 10,
+                "lift": 11
+              },
+              "trigger": {
+                "command": 0.9969984889030457,
+                "grasped": false,
+                "grasp_observation_complete": true,
+                "held_objects": [],
+                "distance_m": 0.12183098669900606,
+                "satisfied": true,
+                "target_ready": true
+              },
+              "target": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.07217506457314739,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342611,
+                    -0.321776862997142,
+                    0.030620168040530877
+                  ],
+                  [
+                    -0.14959752714095043,
+                    0.35203116943488477,
+                    -0.9239559706066183
+                  ],
+                  [
+                    0.28652840020567666,
+                    -0.878938966132475,
+                    -0.38127125473807943
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750292,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.20095548193269575,
+                  -0.07161949781354951,
+                  1.0283840374847293
+                ]
+              },
+              "targets": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.07217506457314739,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342611,
+                    -0.321776862997142,
+                    0.030620168040530877
+                  ],
+                  [
+                    -0.14959752714095043,
+                    0.35203116943488477,
+                    -0.9239559706066183
+                  ],
+                  [
+                    0.28652840020567666,
+                    -0.878938966132475,
+                    -0.38127125473807943
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750292,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.20095548193269575,
+                  -0.07161949781354951,
+                  1.0283840374847293
+                ]
+              },
+              "last_errors": {
+                "above_position_error_m": 0.002187833776407388,
+                "above_rotation_error_rad": 0.0065893262045319,
+                "descend_position_error_m": 0.002150745760490148,
+                "descend_rotation_error_rad": 0.0015113806281014182,
+                "close_grasped": true,
+                "lift_grasped": true,
+                "lift_metres": 0.027931135464359547
+              },
+              "grasp_mode": "demonstrated_side",
+              "reference": {
+                "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "step": 93,
+                "quaternion_order": "wxyz",
+                "policy_orientation": "axis_angle_body",
+                "relative_position": [
+                  -0.0029941513870073433,
+                  0.01052424244341749,
+                  0.09384945135656639
+                ],
+                "relative_orientation": [
+                  [
+                    0.3217877768160636,
+                    -0.9463167125463993,
+                    -0.030615457650521972
+                  ],
+                  [
+                    -0.3520318440699383,
+                    -0.14959777039620165,
+                    0.9239556741820488
+                  ],
+                  [
+                    -0.8789347003347259,
+                    -0.28654002625787023,
+                    -0.38127235134434434
+                  ]
+                ]
+              },
+              "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset",
+              "approach_mode": "clear_then_side",
+              "route_index": 2,
+              "route_stage": "approach_open",
+              "route_counts": [
+                57,
+                36,
+                49
+              ],
+              "route_targets": [
+                {
+                  "position": [
+                    -0.084332963404124,
+                    -0.003906778511173856,
+                    1.1880540890933575
+                  ],
+                  "orientation": [
+                    [
+                      -0.9649543931148393,
+                      0.2548922371369636,
+                      -0.06239364275057728
+                    ],
+                    [
+                      0.2287592462460527,
+                      0.7005654470928251,
+                      -0.6759269646911334
+                    ],
+                    [
+                      -0.12857770594201218,
+                      -0.6665118166896555,
+                      -0.7343226618781047
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750292,
+                    1.1880540890933575
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342611,
+                      -0.321776862997142,
+                      0.030620168040530877
+                    ],
+                    [
+                      -0.14959752714095043,
+                      0.35203116943488477,
+                      -0.9239559706066183
+                    ],
+                    [
+                      0.28652840020567666,
+                      -0.878938966132475,
+                      -0.38127125473807943
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750292,
+                    1.0156012493693716
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342611,
+                      -0.321776862997142,
+                      0.030620168040530877
+                    ],
+                    [
+                      -0.14959752714095043,
+                      0.35203116943488477,
+                      -0.9239559706066183
+                    ],
+                    [
+                      0.28652840020567666,
+                      -0.878938966132475,
+                      -0.38127125473807943
+                    ]
+                  ]
+                }
+              ],
+              "high_z": 1.1880540890933575,
+              "rotation_lower_extent_m": 0.11565073584579046
+            }
+          }
+        }
+      ],
+      "telemetry_paths": [
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T042823Z_goal_table_f56260d2/cap_01_bowl_to_plate_566e6964/telemetry.jsonl",
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T042823Z_goal_table_f56260d2/cap_02_wine_to_rack_da2069e6/telemetry.jsonl"
+      ],
+      "agent": {
+        "request_id": "b37ef96a1aac4885a2ae352e67cac893",
+        "run_ok": true,
+        "chain_ok": true,
+        "plan_success": true,
+        "decision": "execute",
+        "hermes_invocations": 1,
+        "execution_timeout": false,
+        "cancelled_by_user": false,
+        "cancellation_pending": false,
+        "wall_s": 218.611,
+        "error": null,
+        "plan_state": "completed",
+        "agent_result_path": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/case_00/agent_result.json",
+        "hermes_initial_log": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/case_00/hermes_initial.log"
+      },
+      "score": {
+        "gold_completed": true,
+        "combined_success": true,
+        "n_actual_samples": 463,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": true
+      },
+      "actual_order": [
+        "bowl_to_plate",
+        "wine_to_rack"
+      ],
+      "expected_order": [],
+      "order_ok": true,
+      "operational_errors": [],
+      "physical_failures": []
+    },
+    {
+      "case_index": 1,
+      "model_seed": 1,
+      "request_text": "\u628a\u7897\u653e\u5230\u76d8\u5b50\u4e0a\uff0c\u7136\u540e\u628a\u9152\u74f6\u653e\u5230\u67b6\u5b50\u4e0a\u3002",
+      "session_id": "20ea003d3a2e48daab19622783aa77bf",
+      "request_id": "97aa6918887842a2817a68e15cb7aafc",
+      "seeded": {
+        "ok": true,
+        "seeded": true,
+        "seed": 1
+      },
+      "plan": {
+        "request_id": "97aa6918887842a2817a68e15cb7aafc",
+        "state": "completed",
+        "plan_success": true,
+        "completed_capability_ids": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "pending_capability_ids": [],
+        "job_ids": [
+          "73ea5b80d6fd41c3965f2461375b9741",
+          "4ef228d8c9b54260a845977ee15d19bd"
+        ]
+      },
+      "jobs": [
+        {
+          "job_id": "73ea5b80d6fd41c3965f2461375b9741",
+          "capability_id": "bowl_to_plate",
+          "state": "completed",
+          "ended_reason": "success",
+          "error": null,
+          "success": true,
+          "steps": 104,
+          "phase": "not_holding",
+          "held_objects": [],
+          "run_dir": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T043212Z_goal_table_20ea003d/cap_01_bowl_to_plate_73ea5b80",
+          "grasp_assist": {
+            "job_id": "73ea5b80d6fd41c3965f2461375b9741",
+            "capability_id": "bowl_to_plate",
+            "condition": "collision_grasp_pilot",
+            "profile": "baseline_bf16",
+            "completion_mode": "release_verified",
+            "grasp_guard_mode": "enforce",
+            "helper": false,
+            "assisted": false,
+            "confirmation_is_not_placement_success": true,
+            "requested_budget": 300,
+            "effective_budget": 500,
+            "actual_vla_actions": 104,
+            "actual_local_actions": 0,
+            "steps": 104,
+            "phase": null,
+            "reason": null,
+            "helper_summary": null
+          }
+        },
+        {
+          "job_id": "4ef228d8c9b54260a845977ee15d19bd",
+          "capability_id": "wine_to_rack",
+          "state": "completed",
+          "ended_reason": "success",
+          "error": null,
+          "success": true,
+          "steps": 372,
+          "phase": "not_holding",
+          "held_objects": [],
+          "run_dir": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T043212Z_goal_table_20ea003d/cap_02_wine_to_rack_4ef228d8",
+          "grasp_assist": {
+            "job_id": "4ef228d8c9b54260a845977ee15d19bd",
+            "capability_id": "wine_to_rack",
+            "condition": "collision_grasp_pilot",
+            "profile": "baseline_bf16",
+            "completion_mode": "release_verified",
+            "grasp_guard_mode": "enforce",
+            "helper": true,
+            "assisted": true,
+            "confirmation_is_not_placement_success": true,
+            "requested_budget": 300,
+            "effective_budget": 500,
+            "actual_vla_actions": 181,
+            "actual_local_actions": 191,
+            "steps": 372,
+            "phase": "confirmed",
+            "reason": null,
+            "helper_summary": {
+              "assisted": true,
+              "phase": "confirmed",
+              "reason": null,
+              "total_actions": 191,
+              "stage_counts": {
+                "above": 146,
+                "descend": 24,
+                "close": 10,
+                "lift": 11
+              },
+              "trigger": {
+                "command": 1.0172357559204102,
+                "grasped": false,
+                "grasp_observation_complete": true,
+                "held_objects": [],
+                "distance_m": 0.11554292800217154,
+                "satisfied": true,
+                "target_ready": true
+              },
+              "target": {
+                "eef_position": [
+                  -0.20633525902760388,
+                  -0.07217230655141765,
+                  0.9935246525927145
+                ],
+                "orientation": [
+                  [
+                    -0.9605724853737813,
+                    -0.27327883361446653,
+                    0.0511779194687477
+                  ],
+                  [
+                    -0.14937618189068005,
+                    0.352015431220016,
+                    -0.9239977773061715
+                  ],
+                  [
+                    0.234493617453856,
+                    -0.8952116036341909,
+                    -0.3789576864138024
+                  ]
+                ],
+                "above_position": [
+                  -0.20940593419572875,
+                  -0.01673243991304737,
+                  1.0162621137775427
+                ],
+                "lift_position": [
+                  -0.2060834648052923,
+                  -0.07162621895633774,
+                  1.0291952737524575
+                ]
+              },
+              "targets": {
+                "eef_position": [
+                  -0.20633525902760388,
+                  -0.07217230655141765,
+                  0.9935246525927145
+                ],
+                "orientation": [
+                  [
+                    -0.9605724853737813,
+                    -0.27327883361446653,
+                    0.0511779194687477
+                  ],
+                  [
+                    -0.14937618189068005,
+                    0.352015431220016,
+                    -0.9239977773061715
+                  ],
+                  [
+                    0.234493617453856,
+                    -0.8952116036341909,
+                    -0.3789576864138024
+                  ]
+                ],
+                "above_position": [
+                  -0.20940593419572875,
+                  -0.01673243991304737,
+                  1.0162621137775427
+                ],
+                "lift_position": [
+                  -0.2060834648052923,
+                  -0.07162621895633774,
+                  1.0291952737524575
+                ]
+              },
+              "last_errors": {
+                "above_position_error_m": 0.002205704362025213,
+                "above_rotation_error_rad": 0.006685354258208419,
+                "descend_position_error_m": 0.0021382081336345188,
+                "descend_rotation_error_rad": 0.0015200675307819554,
+                "close_grasped": true,
+                "lift_grasped": true,
+                "lift_metres": 0.02732969042761013
+              },
+              "grasp_mode": "demonstrated_side",
+              "reference": {
+                "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "step": 93,
+                "quaternion_order": "wxyz",
+                "policy_orientation": "axis_angle_body",
+                "relative_position": [
+                  -0.0029941513870073433,
+                  0.01052424244341749,
+                  0.09384945135656639
+                ],
+                "relative_orientation": [
+                  [
+                    0.3217877768160636,
+                    -0.9463167125463993,
+                    -0.030615457650521972
+                  ],
+                  [
+                    -0.3520318440699383,
+                    -0.14959777039620165,
+                    0.9239556741820488
+                  ],
+                  [
+                    -0.8789347003347259,
+                    -0.28654002625787023,
+                    -0.38127235134434434
+                  ]
+                ]
+              },
+              "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset",
+              "approach_mode": "clear_then_side",
+              "route_index": 2,
+              "route_stage": "approach_open",
+              "route_counts": [
+                58,
+                37,
+                51
+              ],
+              "route_targets": [
+                {
+                  "position": [
+                    -0.09113523778934815,
+                    -0.06533775247064391,
+                    1.1987877760481893
+                  ],
+                  "orientation": [
+                    [
+                      -0.9382254077394764,
+                      0.3397639730733849,
+                      -0.0655250095267365
+                    ],
+                    [
+                      0.25341291485343087,
+                      0.5457388769615087,
+                      -0.7987183313022661
+                    ],
+                    [
+                      -0.235616168497789,
+                      -0.765982715715033,
+                      -0.5981266591352054
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.20940593419572875,
+                    -0.01673243991304737,
+                    1.1987877760481893
+                  ],
+                  "orientation": [
+                    [
+                      -0.9605724853737813,
+                      -0.27327883361446653,
+                      0.0511779194687477
+                    ],
+                    [
+                      -0.14937618189068005,
+                      0.352015431220016,
+                      -0.9239977773061715
+                    ],
+                    [
+                      0.234493617453856,
+                      -0.8952116036341909,
+                      -0.3789576864138024
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.20940593419572875,
+                    -0.01673243991304737,
+                    1.0162621137775427
+                  ],
+                  "orientation": [
+                    [
+                      -0.9605724853737813,
+                      -0.27327883361446653,
+                      0.0511779194687477
+                    ],
+                    [
+                      -0.14937618189068005,
+                      0.352015431220016,
+                      -0.9239977773061715
+                    ],
+                    [
+                      0.234493617453856,
+                      -0.8952116036341909,
+                      -0.3789576864138024
+                    ]
+                  ]
+                }
+              ],
+              "high_z": 1.1987877760481893,
+              "rotation_lower_extent_m": 0.12576235392104554
+            }
+          }
+        }
+      ],
+      "telemetry_paths": [
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T043212Z_goal_table_20ea003d/cap_01_bowl_to_plate_73ea5b80/telemetry.jsonl",
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T043212Z_goal_table_20ea003d/cap_02_wine_to_rack_4ef228d8/telemetry.jsonl"
+      ],
+      "agent": {
+        "request_id": "97aa6918887842a2817a68e15cb7aafc",
+        "run_ok": true,
+        "chain_ok": true,
+        "plan_success": true,
+        "decision": "execute",
+        "hermes_invocations": 1,
+        "execution_timeout": false,
+        "cancelled_by_user": false,
+        "cancellation_pending": false,
+        "wall_s": 214.188,
+        "error": null,
+        "plan_state": "completed",
+        "agent_result_path": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/case_01/agent_result.json",
+        "hermes_initial_log": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/case_01/hermes_initial.log"
+      },
+      "score": {
+        "gold_completed": true,
+        "combined_success": true,
+        "n_actual_samples": 476,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": true
+      },
+      "actual_order": [
+        "bowl_to_plate",
+        "wine_to_rack"
+      ],
+      "expected_order": [
+        "bowl_to_plate",
+        "wine_to_rack"
+      ],
+      "order_ok": true,
+      "operational_errors": [],
+      "physical_failures": []
+    },
+    {
+      "case_index": 2,
+      "model_seed": 2,
+      "request_text": "\u8bf7\u628a\u9152\u74f6\u548c\u7897\u90fd\u6536\u56de\u5404\u81ea\u7684\u4f4d\u7f6e\u3002",
+      "session_id": "ad610d4c6fc04cd9a6a79229c68c3e22",
+      "request_id": "9eb6d5b4cc3b4e6c8eb0be8c228fd722",
+      "seeded": {
+        "ok": true,
+        "seeded": true,
+        "seed": 2
+      },
+      "plan": {
+        "request_id": "9eb6d5b4cc3b4e6c8eb0be8c228fd722",
+        "state": "blocked",
+        "plan_success": null,
+        "completed_capability_ids": [
+          "wine_to_rack"
+        ],
+        "pending_capability_ids": [],
+        "job_ids": [
+          "2dad2e5cb9b04c54906a7b0018671896",
+          "8fa707807f5d4567a88edd98602de8f0"
+        ]
+      },
+      "jobs": [
+        {
+          "job_id": "2dad2e5cb9b04c54906a7b0018671896",
+          "capability_id": "wine_to_rack",
+          "state": "completed",
+          "ended_reason": "success",
+          "error": null,
+          "success": true,
+          "steps": 346,
+          "phase": "not_holding",
+          "held_objects": [],
+          "run_dir": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T043600Z_goal_table_ad610d4c/cap_01_wine_to_rack_2dad2e5c",
+          "grasp_assist": {
+            "job_id": "2dad2e5cb9b04c54906a7b0018671896",
+            "capability_id": "wine_to_rack",
+            "condition": "collision_grasp_pilot",
+            "profile": "baseline_bf16",
+            "completion_mode": "release_verified",
+            "grasp_guard_mode": "enforce",
+            "helper": true,
+            "assisted": true,
+            "confirmation_is_not_placement_success": true,
+            "requested_budget": 300,
+            "effective_budget": 500,
+            "actual_vla_actions": 184,
+            "actual_local_actions": 162,
+            "steps": 346,
+            "phase": "confirmed",
+            "reason": null,
+            "helper_summary": {
+              "assisted": true,
+              "phase": "confirmed",
+              "reason": null,
+              "total_actions": 162,
+              "stage_counts": {
+                "above": 117,
+                "descend": 24,
+                "close": 10,
+                "lift": 11
+              },
+              "trigger": {
+                "command": 1.0059930086135864,
+                "grasped": false,
+                "grasp_observation_complete": true,
+                "held_objects": [],
+                "distance_m": 0.13050057545455143,
+                "satisfied": true,
+                "target_ready": true
+              },
+              "target": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.0721750645731474,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342595,
+                    -0.32177686299714153,
+                    0.030620168040530818
+                  ],
+                  [
+                    -0.1495975271409502,
+                    0.3520311694348841,
+                    -0.9239559706066168
+                  ],
+                  [
+                    0.28652840020567627,
+                    -0.8789389661324736,
+                    -0.3812712547380788
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750396,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.20095494650704598,
+                  -0.07161909524646033,
+                  1.0283840967022255
+                ]
+              },
+              "targets": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.0721750645731474,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342595,
+                    -0.32177686299714153,
+                    0.030620168040530818
+                  ],
+                  [
+                    -0.1495975271409502,
+                    0.3520311694348841,
+                    -0.9239559706066168
+                  ],
+                  [
+                    0.28652840020567627,
+                    -0.8789389661324736,
+                    -0.3812712547380788
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750396,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.20095494650704598,
+                  -0.07161909524646033,
+                  1.0283840967022255
+                ]
+              },
+              "last_errors": {
+                "above_position_error_m": 0.0021931592157141545,
+                "above_rotation_error_rad": 0.006586622806999856,
+                "descend_position_error_m": 0.002151325922866146,
+                "descend_rotation_error_rad": 0.0015107332815696,
+                "close_grasped": true,
+                "lift_grasped": true,
+                "lift_metres": 0.027931183872477505
+              },
+              "grasp_mode": "demonstrated_side",
+              "reference": {
+                "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "step": 93,
+                "quaternion_order": "wxyz",
+                "policy_orientation": "axis_angle_body",
+                "relative_position": [
+                  -0.0029941513870073433,
+                  0.01052424244341749,
+                  0.09384945135656639
+                ],
+                "relative_orientation": [
+                  [
+                    0.3217877768160636,
+                    -0.9463167125463993,
+                    -0.030615457650521972
+                  ],
+                  [
+                    -0.3520318440699383,
+                    -0.14959777039620165,
+                    0.9239556741820488
+                  ],
+                  [
+                    -0.8789347003347259,
+                    -0.28654002625787023,
+                    -0.38127235134434434
+                  ]
+                ]
+              },
+              "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset",
+              "approach_mode": "clear_then_side",
+              "route_index": 2,
+              "route_stage": "approach_open",
+              "route_counts": [
+                47,
+                23,
+                47
+              ],
+              "route_targets": [
+                {
+                  "position": [
+                    -0.2331097050617959,
+                    0.01725064096919219,
+                    1.1794209387029926
+                  ],
+                  "orientation": [
+                    [
+                      -0.9997583046589429,
+                      -0.01970546609300366,
+                      0.009748172727757451
+                    ],
+                    [
+                      -0.01895431461630497,
+                      0.547932155806196,
+                      -0.8363080094026346
+                    ],
+                    [
+                      0.011138501824699717,
+                      -0.8362906475858908,
+                      -0.548173226760911
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750396,
+                    1.1794209387029926
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342595,
+                      -0.32177686299714153,
+                      0.030620168040530818
+                    ],
+                    [
+                      -0.1495975271409502,
+                      0.3520311694348841,
+                      -0.9239559706066168
+                    ],
+                    [
+                      0.28652840020567627,
+                      -0.8789389661324736,
+                      -0.3812712547380788
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750396,
+                    1.0156012493693716
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342595,
+                      -0.32177686299714153,
+                      0.030620168040530818
+                    ],
+                    [
+                      -0.1495975271409502,
+                      0.3520311694348841,
+                      -0.9239559706066168
+                    ],
+                    [
+                      0.28652840020567627,
+                      -0.8789389661324736,
+                      -0.3812712547380788
+                    ]
+                  ]
+                }
+              ],
+              "high_z": 1.1794209387029926,
+              "rotation_lower_extent_m": 0.10701758545542571
+            }
+          }
+        },
+        {
+          "job_id": "8fa707807f5d4567a88edd98602de8f0",
+          "capability_id": "bowl_to_plate",
+          "state": "completed",
+          "ended_reason": "budget_exhausted",
+          "error": null,
+          "success": false,
+          "steps": 500,
+          "phase": "not_holding",
+          "held_objects": [],
+          "run_dir": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T043600Z_goal_table_ad610d4c/cap_02_bowl_to_plate_8fa70780",
+          "grasp_assist": {
+            "job_id": "8fa707807f5d4567a88edd98602de8f0",
+            "capability_id": "bowl_to_plate",
+            "condition": "collision_grasp_pilot",
+            "profile": "baseline_bf16",
+            "completion_mode": "release_verified",
+            "grasp_guard_mode": "enforce",
+            "helper": false,
+            "assisted": false,
+            "confirmation_is_not_placement_success": true,
+            "requested_budget": 300,
+            "effective_budget": 500,
+            "actual_vla_actions": 500,
+            "actual_local_actions": 0,
+            "steps": 500,
+            "phase": null,
+            "reason": null,
+            "helper_summary": null
+          }
+        }
+      ],
+      "telemetry_paths": [
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T043600Z_goal_table_ad610d4c/cap_01_wine_to_rack_2dad2e5c/telemetry.jsonl",
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T043600Z_goal_table_ad610d4c/cap_02_bowl_to_plate_8fa70780/telemetry.jsonl"
+      ],
+      "agent": {
+        "request_id": "9eb6d5b4cc3b4e6c8eb0be8c228fd722",
+        "run_ok": true,
+        "chain_ok": false,
+        "plan_success": null,
+        "decision": "execute",
+        "hermes_invocations": 1,
+        "execution_timeout": false,
+        "cancelled_by_user": false,
+        "cancellation_pending": false,
+        "wall_s": 443.039,
+        "error": "\u8ba1\u5212\u88ab\u963b\u585e\u4e14\u65e0\u6cd5\u7ee7\u7eed\u4fee\u590d\uff0c\u5982\u5b9e\u8fd4\u56de blocked\uff08\u4e0d\u518d\u7a7a\u8f6c\uff09",
+        "plan_state": "blocked",
+        "agent_result_path": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/case_02/agent_result.json",
+        "hermes_initial_log": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/case_02/hermes_initial.log"
+      },
+      "score": {
+        "gold_completed": false,
+        "combined_success": false,
+        "n_actual_samples": 846,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": false,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": false
+      },
+      "actual_order": [
+        "wine_to_rack",
+        "bowl_to_plate"
+      ],
+      "expected_order": [],
+      "order_ok": true,
+      "operational_errors": [],
+      "physical_failures": [
+        "budget_exhausted: 8fa707807f5d4567a88edd98602de8f0",
+        "plan_blocked"
+      ]
+    },
+    {
+      "case_index": 3,
+      "model_seed": 3,
+      "request_text": "\u5148\u628a\u9152\u74f6\u653e\u5230\u67b6\u5b50\u4e0a\uff0c\u518d\u628a\u7897\u653e\u5230\u76d8\u5b50\u4e0a\u3002",
+      "session_id": "5acb357e19ea49b38773fc3f81df6617",
+      "request_id": "1ff24759ec7f46f395c270db8230f412",
+      "seeded": {
+        "ok": true,
+        "seeded": true,
+        "seed": 3
+      },
+      "plan": {
+        "request_id": "1ff24759ec7f46f395c270db8230f412",
+        "state": "blocked",
+        "plan_success": null,
+        "completed_capability_ids": [
+          "wine_to_rack"
+        ],
+        "pending_capability_ids": [],
+        "job_ids": [
+          "bf35339e43d341eb84e35e52fb37253f",
+          "ef678319ce364aec9075207d10f00331"
+        ]
+      },
+      "jobs": [
+        {
+          "job_id": "bf35339e43d341eb84e35e52fb37253f",
+          "capability_id": "wine_to_rack",
+          "state": "completed",
+          "ended_reason": "success",
+          "error": null,
+          "success": true,
+          "steps": 348,
+          "phase": "not_holding",
+          "held_objects": [],
+          "run_dir": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T044344Z_goal_table_5acb357e/cap_01_wine_to_rack_bf35339e",
+          "grasp_assist": {
+            "job_id": "bf35339e43d341eb84e35e52fb37253f",
+            "capability_id": "wine_to_rack",
+            "condition": "collision_grasp_pilot",
+            "profile": "baseline_bf16",
+            "completion_mode": "release_verified",
+            "grasp_guard_mode": "enforce",
+            "helper": true,
+            "assisted": true,
+            "confirmation_is_not_placement_success": true,
+            "requested_budget": 300,
+            "effective_budget": 500,
+            "actual_vla_actions": 188,
+            "actual_local_actions": 160,
+            "steps": 348,
+            "phase": "confirmed",
+            "reason": null,
+            "helper_summary": {
+              "assisted": true,
+              "phase": "confirmed",
+              "reason": null,
+              "total_actions": 160,
+              "stage_counts": {
+                "above": 115,
+                "descend": 24,
+                "close": 10,
+                "lift": 11
+              },
+              "trigger": {
+                "command": 1.025693416595459,
+                "grasped": false,
+                "grasp_observation_complete": true,
+                "held_objects": [],
+                "distance_m": 0.1331075393397017,
+                "satisfied": true,
+                "target_ready": true
+              },
+              "target": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.0721750645731474,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342593,
+                    -0.32177686299714137,
+                    0.03062016804053068
+                  ],
+                  [
+                    -0.1495975271409501,
+                    0.35203116943488405,
+                    -0.9239559706066165
+                  ],
+                  [
+                    0.28652840020567616,
+                    -0.8789389661324731,
+                    -0.38127125473807894
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750417,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.20095190439656735,
+                  -0.07161630585177929,
+                  1.0283853153750855
+                ]
+              },
+              "targets": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.0721750645731474,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342593,
+                    -0.32177686299714137,
+                    0.03062016804053068
+                  ],
+                  [
+                    -0.1495975271409501,
+                    0.35203116943488405,
+                    -0.9239559706066165
+                  ],
+                  [
+                    0.28652840020567616,
+                    -0.8789389661324731,
+                    -0.38127125473807894
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750417,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.20095190439656735,
+                  -0.07161630585177929,
+                  1.0283853153750855
+                ]
+              },
+              "last_errors": {
+                "above_position_error_m": 0.0023533077905262567,
+                "above_rotation_error_rad": 0.006843291872985571,
+                "descend_position_error_m": 0.002157584278681754,
+                "descend_rotation_error_rad": 0.0015022014023086678,
+                "close_grasped": true,
+                "lift_grasped": true,
+                "lift_metres": 0.027930493273829238
+              },
+              "grasp_mode": "demonstrated_side",
+              "reference": {
+                "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "step": 93,
+                "quaternion_order": "wxyz",
+                "policy_orientation": "axis_angle_body",
+                "relative_position": [
+                  -0.0029941513870073433,
+                  0.01052424244341749,
+                  0.09384945135656639
+                ],
+                "relative_orientation": [
+                  [
+                    0.3217877768160636,
+                    -0.9463167125463993,
+                    -0.030615457650521972
+                  ],
+                  [
+                    -0.3520318440699383,
+                    -0.14959777039620165,
+                    0.9239556741820488
+                  ],
+                  [
+                    -0.8789347003347259,
+                    -0.28654002625787023,
+                    -0.38127235134434434
+                  ]
+                ]
+              },
+              "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset",
+              "approach_mode": "clear_then_side",
+              "route_index": 2,
+              "route_stage": "approach_open",
+              "route_counts": [
+                48,
+                20,
+                47
+              ],
+              "route_targets": [
+                {
+                  "position": [
+                    -0.21528541581176514,
+                    0.012391408396999877,
+                    1.1827441732445605
+                  ],
+                  "orientation": [
+                    [
+                      -0.998408077896247,
+                      0.05589836001622271,
+                      0.007528833841606991
+                    ],
+                    [
+                      0.026398775834323398,
+                      0.5810705728319947,
+                      -0.8134249160329077
+                    ],
+                    [
+                      -0.049843902595672784,
+                      -0.8119312549324547,
+                      -0.5816212020188387
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750417,
+                    1.1827441732445605
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342593,
+                      -0.32177686299714137,
+                      0.03062016804053068
+                    ],
+                    [
+                      -0.1495975271409501,
+                      0.35203116943488405,
+                      -0.9239559706066165
+                    ],
+                    [
+                      0.28652840020567616,
+                      -0.8789389661324731,
+                      -0.38127125473807894
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750417,
+                    1.0156012493693716
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342593,
+                      -0.32177686299714137,
+                      0.03062016804053068
+                    ],
+                    [
+                      -0.1495975271409501,
+                      0.35203116943488405,
+                      -0.9239559706066165
+                    ],
+                    [
+                      0.28652840020567616,
+                      -0.8789389661324731,
+                      -0.38127125473807894
+                    ]
+                  ]
+                }
+              ],
+              "high_z": 1.1827441732445605,
+              "rotation_lower_extent_m": 0.11034081999699343
+            }
+          }
+        },
+        {
+          "job_id": "ef678319ce364aec9075207d10f00331",
+          "capability_id": "bowl_to_plate",
+          "state": "completed",
+          "ended_reason": "budget_exhausted",
+          "error": null,
+          "success": false,
+          "steps": 500,
+          "phase": "not_holding",
+          "held_objects": [],
+          "run_dir": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T044344Z_goal_table_5acb357e/cap_02_bowl_to_plate_ef678319",
+          "grasp_assist": {
+            "job_id": "ef678319ce364aec9075207d10f00331",
+            "capability_id": "bowl_to_plate",
+            "condition": "collision_grasp_pilot",
+            "profile": "baseline_bf16",
+            "completion_mode": "release_verified",
+            "grasp_guard_mode": "enforce",
+            "helper": false,
+            "assisted": false,
+            "confirmation_is_not_placement_success": true,
+            "requested_budget": 300,
+            "effective_budget": 500,
+            "actual_vla_actions": 500,
+            "actual_local_actions": 0,
+            "steps": 500,
+            "phase": null,
+            "reason": null,
+            "helper_summary": null
+          }
+        }
+      ],
+      "telemetry_paths": [
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T044344Z_goal_table_5acb357e/cap_01_wine_to_rack_bf35339e/telemetry.jsonl",
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T044344Z_goal_table_5acb357e/cap_02_bowl_to_plate_ef678319/telemetry.jsonl"
+      ],
+      "agent": {
+        "request_id": "1ff24759ec7f46f395c270db8230f412",
+        "run_ok": true,
+        "chain_ok": false,
+        "plan_success": null,
+        "decision": "execute",
+        "hermes_invocations": 1,
+        "execution_timeout": false,
+        "cancelled_by_user": false,
+        "cancellation_pending": false,
+        "wall_s": 454.689,
+        "error": "\u8ba1\u5212\u88ab\u963b\u585e\u4e14\u65e0\u6cd5\u7ee7\u7eed\u4fee\u590d\uff0c\u5982\u5b9e\u8fd4\u56de blocked\uff08\u4e0d\u518d\u7a7a\u8f6c\uff09",
+        "plan_state": "blocked",
+        "agent_result_path": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/case_03/agent_result.json",
+        "hermes_initial_log": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/case_03/hermes_initial.log"
+      },
+      "score": {
+        "gold_completed": false,
+        "combined_success": false,
+        "n_actual_samples": 848,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": false,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": false
+      },
+      "actual_order": [
+        "wine_to_rack",
+        "bowl_to_plate"
+      ],
+      "expected_order": [
+        "wine_to_rack",
+        "bowl_to_plate"
+      ],
+      "order_ok": true,
+      "operational_errors": [],
+      "physical_failures": [
+        "budget_exhausted: ef678319ce364aec9075207d10f00331",
+        "plan_blocked"
+      ]
+    },
+    {
+      "case_index": 4,
+      "model_seed": 4,
+      "request_text": "\u6574\u7406\u8fd9\u4e24\u4ef6\u4e1c\u897f\uff1a\u7897\u653e\u76d8\u5b50\uff0c\u9152\u74f6\u653e\u67b6\u5b50\u3002",
+      "session_id": "b3a15978e6ec467eae6e89377b75d423",
+      "request_id": "67db66b214914fc3ad2135bba17430a7",
+      "seeded": {
+        "ok": true,
+        "seeded": true,
+        "seed": 4
+      },
+      "plan": {
+        "request_id": "67db66b214914fc3ad2135bba17430a7",
+        "state": "completed",
+        "plan_success": true,
+        "completed_capability_ids": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ],
+        "pending_capability_ids": [],
+        "job_ids": [
+          "10c501d628d84f2e89c4c2967d906774",
+          "fa49e6b0b0814e6bacb1dc118175bf7d"
+        ]
+      },
+      "jobs": [
+        {
+          "job_id": "10c501d628d84f2e89c4c2967d906774",
+          "capability_id": "bowl_to_plate",
+          "state": "completed",
+          "ended_reason": "success",
+          "error": null,
+          "success": true,
+          "steps": 91,
+          "phase": "not_holding",
+          "held_objects": [],
+          "run_dir": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T045140Z_goal_table_b3a15978/cap_01_bowl_to_plate_10c501d6",
+          "grasp_assist": {
+            "job_id": "10c501d628d84f2e89c4c2967d906774",
+            "capability_id": "bowl_to_plate",
+            "condition": "collision_grasp_pilot",
+            "profile": "baseline_bf16",
+            "completion_mode": "release_verified",
+            "grasp_guard_mode": "enforce",
+            "helper": false,
+            "assisted": false,
+            "confirmation_is_not_placement_success": true,
+            "requested_budget": 300,
+            "effective_budget": 500,
+            "actual_vla_actions": 91,
+            "actual_local_actions": 0,
+            "steps": 91,
+            "phase": null,
+            "reason": null,
+            "helper_summary": null
+          }
+        },
+        {
+          "job_id": "fa49e6b0b0814e6bacb1dc118175bf7d",
+          "capability_id": "wine_to_rack",
+          "state": "completed",
+          "ended_reason": "success",
+          "error": null,
+          "success": true,
+          "steps": 375,
+          "phase": "not_holding",
+          "held_objects": [],
+          "run_dir": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T045140Z_goal_table_b3a15978/cap_02_wine_to_rack_fa49e6b0",
+          "grasp_assist": {
+            "job_id": "fa49e6b0b0814e6bacb1dc118175bf7d",
+            "capability_id": "wine_to_rack",
+            "condition": "collision_grasp_pilot",
+            "profile": "baseline_bf16",
+            "completion_mode": "release_verified",
+            "grasp_guard_mode": "enforce",
+            "helper": true,
+            "assisted": true,
+            "confirmation_is_not_placement_success": true,
+            "requested_budget": 300,
+            "effective_budget": 500,
+            "actual_vla_actions": 190,
+            "actual_local_actions": 185,
+            "steps": 375,
+            "phase": "confirmed",
+            "reason": null,
+            "helper_summary": {
+              "assisted": true,
+              "phase": "confirmed",
+              "reason": null,
+              "total_actions": 185,
+              "stage_counts": {
+                "above": 140,
+                "descend": 24,
+                "close": 10,
+                "lift": 11
+              },
+              "trigger": {
+                "command": 0.9911848902702332,
+                "grasped": false,
+                "grasp_observation_complete": true,
+                "held_objects": [],
+                "distance_m": 0.13102683064831608,
+                "satisfied": true,
+                "target_ready": true
+              },
+              "target": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.07217506457314737,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342618,
+                    -0.3217768629971421,
+                    0.03062016804053085
+                  ],
+                  [
+                    -0.14959752714095048,
+                    0.35203116943488477,
+                    -0.9239559706066188
+                  ],
+                  [
+                    0.2865284002056768,
+                    -0.8789389661324752,
+                    -0.38127125473807977
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750244,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.20095187047664,
+                  -0.07161827360919518,
+                  1.0283856495193118
+                ]
+              },
+              "targets": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.07217506457314737,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342618,
+                    -0.3217768629971421,
+                    0.03062016804053085
+                  ],
+                  [
+                    -0.14959752714095048,
+                    0.35203116943488477,
+                    -0.9239559706066188
+                  ],
+                  [
+                    0.2865284002056768,
+                    -0.8789389661324752,
+                    -0.38127125473807977
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750244,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.20095187047664,
+                  -0.07161827360919518,
+                  1.0283856495193118
+                ]
+              },
+              "last_errors": {
+                "above_position_error_m": 0.0022997379424600575,
+                "above_rotation_error_rad": 0.00677639567911416,
+                "descend_position_error_m": 0.0021552996888053017,
+                "descend_rotation_error_rad": 0.0015052483456630204,
+                "close_grasped": true,
+                "lift_grasped": true,
+                "lift_metres": 0.027928933022388303
+              },
+              "grasp_mode": "demonstrated_side",
+              "reference": {
+                "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "step": 93,
+                "quaternion_order": "wxyz",
+                "policy_orientation": "axis_angle_body",
+                "relative_position": [
+                  -0.0029941513870073433,
+                  0.01052424244341749,
+                  0.09384945135656639
+                ],
+                "relative_orientation": [
+                  [
+                    0.3217877768160636,
+                    -0.9463167125463993,
+                    -0.030615457650521972
+                  ],
+                  [
+                    -0.3520318440699383,
+                    -0.14959777039620165,
+                    0.9239556741820488
+                  ],
+                  [
+                    -0.8789347003347259,
+                    -0.28654002625787023,
+                    -0.38127235134434434
+                  ]
+                ]
+              },
+              "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset",
+              "approach_mode": "clear_then_side",
+              "route_index": 2,
+              "route_stage": "approach_open",
+              "route_counts": [
+                54,
+                36,
+                50
+              ],
+              "route_targets": [
+                {
+                  "position": [
+                    -0.08621238390356219,
+                    -0.08239329107111897,
+                    1.195069896409183
+                  ],
+                  "orientation": [
+                    [
+                      -0.9715260991112038,
+                      0.23680643689416334,
+                      -0.007729824788228465
+                    ],
+                    [
+                      0.14257801219708285,
+                      0.5582640301531586,
+                      -0.8173204898172323
+                    ],
+                    [
+                      -0.189231469855557,
+                      -0.7951502902487319,
+                      -0.5761314665366418
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750244,
+                    1.195069896409183
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342618,
+                      -0.3217768629971421,
+                      0.03062016804053085
+                    ],
+                    [
+                      -0.14959752714095048,
+                      0.35203116943488477,
+                      -0.9239559706066188
+                    ],
+                    [
+                      0.2865284002056768,
+                      -0.8789389661324752,
+                      -0.38127125473807977
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750244,
+                    1.0156012493693716
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342618,
+                      -0.3217768629971421,
+                      0.03062016804053085
+                    ],
+                    [
+                      -0.14959752714095048,
+                      0.35203116943488477,
+                      -0.9239559706066188
+                    ],
+                    [
+                      0.2865284002056768,
+                      -0.8789389661324752,
+                      -0.38127125473807977
+                    ]
+                  ]
+                }
+              ],
+              "high_z": 1.195069896409183,
+              "rotation_lower_extent_m": 0.12266654316161611
+            }
+          }
+        }
+      ],
+      "telemetry_paths": [
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T045140Z_goal_table_b3a15978/cap_01_bowl_to_plate_10c501d6/telemetry.jsonl",
+        "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions/20261009T045140Z_goal_table_b3a15978/cap_02_wine_to_rack_fa49e6b0/telemetry.jsonl"
+      ],
+      "agent": {
+        "request_id": "67db66b214914fc3ad2135bba17430a7",
+        "run_ok": true,
+        "chain_ok": true,
+        "plan_success": true,
+        "decision": "execute",
+        "hermes_invocations": 1,
+        "execution_timeout": false,
+        "cancelled_by_user": false,
+        "cancellation_pending": false,
+        "wall_s": 241.275,
+        "error": null,
+        "plan_state": "completed",
+        "agent_result_path": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/case_04/agent_result.json",
+        "hermes_initial_log": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/case_04/hermes_initial.log"
+      },
+      "score": {
+        "gold_completed": true,
+        "combined_success": true,
+        "n_actual_samples": 466,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": [],
+        "placement_success": true
+      },
+      "actual_order": [
+        "bowl_to_plate",
+        "wine_to_rack"
+      ],
+      "expected_order": [],
+      "order_ok": true,
+      "operational_errors": [],
+      "physical_failures": []
+    }
+  ],
+  "sessions_root": "/mnt/d/FYP/First_Phase/tmp/collision_chain_v2/sessions",
+  "hermes_home_config_sha256": "af6f02a697ec486b02ab068eab7a070813547136a655b9d6ac27e93792125e11",
+  "gpu_free_mib": 6393,
+  "profile": {
+    "ok": true,
+    "profile": "baseline_bf16",
+    "policy_present": true,
+    "applied": {
+      "policy.config": {
+        "use_amp": true,
+        "num_steps": 10,
+        "n_action_steps": 1
+      },
+      "policy.model.config": {
+        "use_amp": true,
+        "num_steps": 10,
+        "n_action_steps": 1
+      }
+    }
+  },
+  "profile_ok": true,
+  "completed": true
+}
