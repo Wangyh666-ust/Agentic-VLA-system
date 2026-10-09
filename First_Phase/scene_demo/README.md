@@ -259,6 +259,7 @@ export MUJOCO_GL=egl
 
 | 内容 | 相对链接 |
 |---|---|
+| 单状态接近碰撞筛选对照（2026-10-09，旧失败状态对 v1/v2） | [results/2026-10-09-collision-approach/README.md](results/2026-10-09-collision-approach/README.md) |
 | pilot 实测原始证据（2026-10-06） | [results/2026-10-06/README.md](results/2026-10-06/README.md) |
 | 放置完成诊断与修复（2026-10-07） | [results/2026-10-07/README.md](results/2026-10-07/README.md) |
 | 执行服务（常驻仿真器） | [service.py](service.py) |
