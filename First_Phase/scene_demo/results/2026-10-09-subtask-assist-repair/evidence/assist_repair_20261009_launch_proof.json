@@ -1,0 +1,533 @@
+{
+  "status": "ASSIST_REPAIR_TWO_TRIAL_EXECUTION_PASS",
+  "started_utc": "2026-10-09T07:48:41.807726+00:00",
+  "dry": {
+    "argv": [
+      "wsl.exe",
+      "-d",
+      "Ubuntu",
+      "--cd",
+      "/mnt/d/FYP/First_Phase/scene_demo",
+      "--exec",
+      "env",
+      "MUJOCO_GL=egl",
+      "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+      "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+      "HF_HUB_OFFLINE=1",
+      "TRANSFORMERS_OFFLINE=1",
+      "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/d/FYP/First_Phase/scene_demo",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-c",
+      "import runpy,json;from types import SimpleNamespace;m=runpy.run_path('/mnt/d/FYP/First_Phase/tmp/assist_repair_20261009_run.py',run_name='dry_only');a=SimpleNamespace(output_dir='/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist-repair/pilot',profiles='/mnt/d/FYP/First_Phase/scene_demo/subtask_assist_profiles.json',preflight='/mnt/d/FYP/First_Phase/tmp/assist_repair_20261009_preflight/report.json',software_proof='/mnt/d/FYP/First_Phase/tmp/assist_repair_20261009_software_proof.json');m['gates'](a);v={i:m['load_prefix'](i) for i in (2,3)};print(json.dumps({'status':'ASSIST_REPAIR_DRY_GATES_PASS','counts':{i:len(x[0]) for i,x in v.items()},'inputs':{p:s for rows,h in v.values() for p,s in h.items()},'model_starts':0,'env_steps':0}))"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"status\": \"ASSIST_REPAIR_DRY_GATES_PASS\", \"counts\": {\"2\": 346, \"3\": 348}, \"inputs\": {\"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/action_sources.jsonl.gz\": \"7f9eb55c35ecf515a9a357298d82d113b1865a8092848b6851069225394be777\", \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/result.json\": \"687a5ac37a795cc3977b6ef7f7f26f083d0f40c3fbccc907b2b3a290be2ae344\", \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_03/job_01/action_sources.jsonl.gz\": \"28e71e65df23f410ce9a0fad3dee7791ef35b78057cdad925f4b37f92299d0d0\", \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_03/job_01/result.json\": \"0f9e94981369282e6987bb75097681cda9f927153190bf6d3b23e605cc37c996\"}, \"model_starts\": 0, \"env_steps\": 0}\n",
+    "stderr": ""
+  },
+  "sources_and_gates_before": {
+    "D:\\FYP\\First_Phase\\scene_demo\\subtask_context.py": "7bbb5679a8b1ead97bbae5f933ea0578f6b518be7d45383f62c4f4ac26625c2e",
+    "D:\\FYP\\First_Phase\\scene_demo\\subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "D:\\FYP\\First_Phase\\scene_demo\\subtask_preparation.py": "0c5c64e4be692feb52241aeb01793752783b10ce24a90da2f155c74c349a6ecf",
+    "D:\\FYP\\First_Phase\\scene_demo\\subtask_assist_service.py": "e36e38c48d88e81209ab62e6c7cd9d0453c36234161faa49f7fe86ebdbb079ff",
+    "D:\\FYP\\First_Phase\\scene_demo\\test_subtask_assist.py": "cfb068def1760ed9cfcfb83291f844e48b4eca6529670246ff78e6ff0b7d3686",
+    "D:\\FYP\\First_Phase\\scene_demo\\test_subtask_prepare_repair.py": "07006976550d421e879a776dd0ed58f2970c109158930fb306fea8e566b62a33",
+    "D:\\FYP\\First_Phase\\tmp\\assist_repair_20261009_run.py": "19f1584058447e3774509be6298b4eef46fce6f22586f3d2e920cdedc05e0859",
+    "D:\\FYP\\First_Phase\\tmp\\assist_repair_20261009_software_proof.json": "27f3e5095de2d89b39f625391bf8e54f147fba847916f6301b8fce4a565f23c0",
+    "D:\\FYP\\First_Phase\\tmp\\assist_repair_20261009_preflight\\report.json": "c23f55e288d0345bbd0669b351a0e09b5561858d4efb7f9bc53a8b09af6b8fab",
+    "D:\\FYP\\First_Phase\\scene_demo\\subtask_assist_profiles.json": "af2dba656f02c2a6c5cc1d6056ec2d0047b5a182b61b9d028854e5a787ccc6a2"
+  },
+  "user8_before": [
+    {
+      "path": "1",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "proposal/FYP_Research_Proposal_v1.md",
+      "bytes": 29604,
+      "sha256": "40bbf46f73ba67cf0b9a62671821934a8c65d0b9a1cff40ab0bb9ae80b093223"
+    },
+    {
+      "path": "proposal/research_proposal_draft_v0.1.md",
+      "bytes": 20228,
+      "sha256": "856d1105f3dccc2f399f0e15978f02e489720668642ad6c668b5559fc796613f"
+    },
+    {
+      "path": "\u9009\u9898/38_JZ1_Prop.pdf",
+      "bytes": 458559,
+      "sha256": "edf38cef1f6e1ecdce54c5be2a3bdd4fb7ad87483b9ed20c6ec1aae8b93980a7"
+    },
+    {
+      "path": "\u9009\u9898/\u539f\u7a3f\u5907\u4efd/\u9009\u9898\u4e00_IL\u9884\u8bad\u7ec3\u4e0eRL\u5fae\u8c03\u7ba1\u7ebf\u7684\u5173\u952e\u8bbe\u8ba1\u95ee\u9898\u5b9e\u8bc1\u7814\u7a76.md",
+      "bytes": 20210,
+      "sha256": "4fd453ba5d282abe9670553cd8b145e224876d5a915fee2a5d18b181463b9f99"
+    },
+    {
+      "path": "\u9009\u9898/\u539f\u7a3f\u5907\u4efd/\u9009\u9898\u4e09_\u90e8\u7f72\u4e2d\u81ea\u6211\u6539\u8fdb\u7684\u4e2a\u6027\u5316\u5177\u8eab\u667a\u80fd\u4f53.md",
+      "bytes": 29793,
+      "sha256": "f20184013c9adea10729b964c1474c358dc19ccc0802583fafac71ce16acbdcc"
+    },
+    {
+      "path": "\u9009\u9898/\u9009\u9898\u4e00_IL\u9884\u8bad\u7ec3\u4e0eRL\u5fae\u8c03\u7ba1\u7ebf\u7684\u5173\u952e\u8bbe\u8ba1\u95ee\u9898\u5b9e\u8bc1\u7814\u7a76.md",
+      "bytes": 13801,
+      "sha256": "bcdc9ce2cf3fff97a11dae05e93a8d9e9def3b77fd5e94c68e89c627152ea8eb"
+    },
+    {
+      "path": "\u9009\u9898/\u9009\u9898\u4e09_\u90e8\u7f72\u4e2d\u81ea\u6211\u6539\u8fdb\u7684\u4e2a\u6027\u5316\u5177\u8eab\u667a\u80fd\u4f53.md",
+      "bytes": 16159,
+      "sha256": "8e8eda94675eb3d7a35d7e1ffc9239fb14827a667b2335aefa88126668517ca8"
+    }
+  ],
+  "launch_count": 1,
+  "inputs_before": {
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-collision-chain\\pilot_v2\\case_02\\job_01\\action_sources.jsonl.gz": "7f9eb55c35ecf515a9a357298d82d113b1865a8092848b6851069225394be777",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-collision-chain\\pilot_v2\\case_02\\job_01\\result.json": "687a5ac37a795cc3977b6ef7f7f26f083d0f40c3fbccc907b2b3a290be2ae344",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-collision-chain\\pilot_v2\\case_03\\job_01\\action_sources.jsonl.gz": "28e71e65df23f410ce9a0fad3dee7791ef35b78057cdad925f4b37f92299d0d0",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-collision-chain\\pilot_v2\\case_03\\job_01\\result.json": "0f9e94981369282e6987bb75097681cda9f927153190bf6d3b23e605cc37c996",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_02_disabled\\trial.json": "dbe521918bec65f700dd33e2df6fb2133e9f32054de59b41d53a0d8784fc73d0",
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist\\pilot\\case_03_disabled\\trial.json": "3f24890dcdb6c794e4cda40fc051c28000ea6f4006b313a0350813ba81d6af5e"
+  },
+  "argv": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu",
+    "--cd",
+    "/mnt/d/FYP/First_Phase/scene_demo",
+    "--exec",
+    "env",
+    "MUJOCO_GL=egl",
+    "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+    "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+    "HF_HUB_OFFLINE=1",
+    "TRANSFORMERS_OFFLINE=1",
+    "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/d/FYP/First_Phase/scene_demo",
+    "/home/yhwang/fyp/libero_demo/venv/bin/python",
+    "-u",
+    "/mnt/d/FYP/First_Phase/tmp/assist_repair_20261009_run.py",
+    "--output-dir",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist-repair/pilot",
+    "--profiles",
+    "/mnt/d/FYP/First_Phase/scene_demo/subtask_assist_profiles.json",
+    "--preflight",
+    "/mnt/d/FYP/First_Phase/tmp/assist_repair_20261009_preflight/report.json",
+    "--software-proof",
+    "/mnt/d/FYP/First_Phase/tmp/assist_repair_20261009_software_proof.json"
+  ],
+  "stdout_path": "D:\\FYP\\First_Phase\\tmp\\assist_repair_20261009_launch.stdout.log",
+  "stderr_path": "D:\\FYP\\First_Phase\\tmp\\assist_repair_20261009_launch.stderr.log",
+  "owned_wsl_pid": 41520,
+  "cli_exit_code": 0,
+  "wall_s": 637.0605911999992,
+  "finished_utc": "2026-10-09T07:59:18.876847+00:00",
+  "source_and_gate_unchanged": true,
+  "inputs_unchanged": true,
+  "user8_unchanged": true,
+  "stdout_sha256": "d22f066af368c7b196a05453abd6a8262320870e67a1e851562a252a5d08bb31",
+  "stderr_sha256": "e46c69811564274599ce3bdae47f0ba0e8d9ad52e0e0b30dbba7bd31010fd7e9",
+  "report_path": "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist-repair\\pilot\\report.json",
+  "report_sha256": "f523a0f826cb4cf2ac9016b53075108f8c3dd9060a2ca70f8f5805380b1ac30e",
+  "preregistration_sha256": "ac50bf08139bdfe69f822cbaf9366a26ea20ca93dbea7242417381d1fa388f87",
+  "report_ok": true,
+  "planned_trials": 2,
+  "executed_trials": 2,
+  "operational_errors": [],
+  "close_env": {
+    "ok": true
+  },
+  "report_source_unchanged": true,
+  "report_inputs_unchanged": true,
+  "trials": [
+    {
+      "case_index": 2,
+      "mode": "enabled",
+      "job": {
+        "state": "completed",
+        "steps": 500,
+        "success": false,
+        "ended_reason": "budget_exhausted",
+        "error": null
+      },
+      "prepare_confirmed": true,
+      "source_counts": {
+        "prepare": 164,
+        "local_grasp": 0,
+        "vla": 336
+      },
+      "helper_summary": {
+        "phase": "ready",
+        "reason": null,
+        "current_stage": "done",
+        "stage_counts": {
+          "lift_escape": 27,
+          "lift_clear": 24,
+          "align_clear": 5,
+          "transit": 50,
+          "ready": 58
+        },
+        "actual_aux_actions": 164,
+        "last_errors": {
+          "position_error": 0.0027021698813055636,
+          "orientation_error": 0.0016153679320404513
+        },
+        "plan": {
+          "chosen_index": 1,
+          "check_samples": 123,
+          "rejection_reasons": [],
+          "geometry_source": "mujoco_collision_obbs",
+          "collision_scope": "gripper_obb_samples_only",
+          "high_z": 1.3168718068308054,
+          "ready_z": 1.0984070750980837,
+          "max_hand_reach": 0.19254557674904846,
+          "waypoints": [
+            {
+              "name": "lift_escape",
+              "position": [
+                -0.1577010742867228,
+                -0.19150172250143627,
+                1.2568718068308053
+              ],
+              "orientation": [
+                [
+                  -0.952733649841593,
+                  -0.24051314824602557,
+                  -0.1856125480141337
+                ],
+                [
+                  -0.23596083429916279,
+                  0.9706457085391735,
+                  -0.04657674496275849
+                ],
+                [
+                  0.19136634274698575,
+                  -0.0005779405403015282,
+                  -0.9815185117196579
+                ]
+              ]
+            },
+            {
+              "name": "lift_clear",
+              "position": [
+                -0.1577010742867228,
+                -0.19150172250143627,
+                1.3168718068308054
+              ],
+              "orientation": [
+                [
+                  -0.952733649841593,
+                  -0.24051314824602557,
+                  -0.1856125480141337
+                ],
+                [
+                  -0.23596083429916279,
+                  0.9706457085391735,
+                  -0.04657674496275849
+                ],
+                [
+                  0.19136634274698575,
+                  -0.0005779405403015282,
+                  -0.9815185117196579
+                ]
+              ]
+            },
+            {
+              "name": "align_clear",
+              "position": [
+                -0.1577010742867228,
+                -0.19150172250143627,
+                1.3168718068308054
+              ],
+              "orientation": [
+                [
+                  -0.952733649841593,
+                  -0.24051314824602557,
+                  -0.1856125480141337
+                ],
+                [
+                  -0.23596083429916279,
+                  0.9706457085391735,
+                  -0.04657674496275849
+                ],
+                [
+                  0.19136634274698575,
+                  -0.0005779405403015282,
+                  -0.9815185117196579
+                ]
+              ]
+            },
+            {
+              "name": "transit",
+              "position": [
+                -0.09762606039235144,
+                -0.008583423299852446,
+                1.3168718068308054
+              ],
+              "orientation": [
+                [
+                  -0.952733649841593,
+                  -0.24051314824602557,
+                  -0.1856125480141337
+                ],
+                [
+                  -0.23596083429916279,
+                  0.9706457085391735,
+                  -0.04657674496275849
+                ],
+                [
+                  0.19136634274698575,
+                  -0.0005779405403015282,
+                  -0.9815185117196579
+                ]
+              ]
+            },
+            {
+              "name": "ready",
+              "position": [
+                -0.09762606039235144,
+                -0.008583423299852446,
+                1.0984070750980837
+              ],
+              "orientation": [
+                [
+                  -0.952733649841593,
+                  -0.24051314824602557,
+                  -0.1856125480141337
+                ],
+                [
+                  -0.23596083429916279,
+                  0.9706457085391735,
+                  -0.04657674496275849
+                ],
+                [
+                  0.19136634274698575,
+                  -0.0005779405403015282,
+                  -0.9815185117196579
+                ]
+              ]
+            }
+          ]
+        },
+        "ready_confirmed": true,
+        "confirmation": "preparation_only_not_grasp_or_placement"
+      },
+      "final_eval": {
+        "gold_completed": false,
+        "combined_success": false,
+        "n_actual_samples": 500,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": false,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": []
+      },
+      "prefix": {
+        "origin_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+        "handoff_sha": "2a4521602e384127e079782f4ff0b9ba8537548aabce2ba348a9c7320129c857",
+        "replay_actions": 346
+      },
+      "operational_errors": [],
+      "video_path": "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist-repair\\pilot\\case_02_enabled\\job\\rollout.mp4",
+      "video_exists": true,
+      "video_sha256": "bd811ade9f5ef4f9ba16c94c05c5a025d4c4968492b64892fe31505596915c27"
+    },
+    {
+      "case_index": 3,
+      "mode": "enabled",
+      "job": {
+        "state": "completed",
+        "steps": 500,
+        "success": false,
+        "ended_reason": "budget_exhausted",
+        "error": null
+      },
+      "prepare_confirmed": true,
+      "source_counts": {
+        "prepare": 164,
+        "local_grasp": 0,
+        "vla": 336
+      },
+      "helper_summary": {
+        "phase": "ready",
+        "reason": null,
+        "current_stage": "done",
+        "stage_counts": {
+          "lift_escape": 27,
+          "lift_clear": 24,
+          "align_clear": 5,
+          "transit": 50,
+          "ready": 58
+        },
+        "actual_aux_actions": 164,
+        "last_errors": {
+          "position_error": 0.002632556332612191,
+          "orientation_error": 0.001642296724324793
+        },
+        "plan": {
+          "chosen_index": 1,
+          "check_samples": 123,
+          "rejection_reasons": [],
+          "geometry_source": "mujoco_collision_obbs",
+          "collision_scope": "gripper_obb_samples_only",
+          "high_z": 1.3159130999045927,
+          "ready_z": 1.0984070750980837,
+          "max_hand_reach": 0.19254557674904846,
+          "waypoints": [
+            {
+              "name": "lift_escape",
+              "position": [
+                -0.15172144264760334,
+                -0.19147994766150783,
+                1.2559130999045927
+              ],
+              "orientation": [
+                [
+                  -0.9508304258541744,
+                  -0.23399618839108968,
+                  -0.20289722789730022
+                ],
+                [
+                  -0.22680959717398483,
+                  0.9721918050975129,
+                  -0.05831381252338365
+                ],
+                [
+                  0.21090023209978234,
+                  -0.009427508667684516,
+                  -0.9774621292820387
+                ]
+              ]
+            },
+            {
+              "name": "lift_clear",
+              "position": [
+                -0.15172144264760334,
+                -0.19147994766150783,
+                1.3159130999045927
+              ],
+              "orientation": [
+                [
+                  -0.9508304258541744,
+                  -0.23399618839108968,
+                  -0.20289722789730022
+                ],
+                [
+                  -0.22680959717398483,
+                  0.9721918050975129,
+                  -0.05831381252338365
+                ],
+                [
+                  0.21090023209978234,
+                  -0.009427508667684516,
+                  -0.9774621292820387
+                ]
+              ]
+            },
+            {
+              "name": "align_clear",
+              "position": [
+                -0.15172144264760334,
+                -0.19147994766150783,
+                1.3159130999045927
+              ],
+              "orientation": [
+                [
+                  -0.9508304258541744,
+                  -0.23399618839108968,
+                  -0.20289722789730022
+                ],
+                [
+                  -0.22680959717398483,
+                  0.9721918050975129,
+                  -0.05831381252338365
+                ],
+                [
+                  0.21090023209978234,
+                  -0.009427508667684516,
+                  -0.9774621292820387
+                ]
+              ]
+            },
+            {
+              "name": "transit",
+              "position": [
+                -0.09762606039235144,
+                -0.008583423299852446,
+                1.3159130999045927
+              ],
+              "orientation": [
+                [
+                  -0.9508304258541744,
+                  -0.23399618839108968,
+                  -0.20289722789730022
+                ],
+                [
+                  -0.22680959717398483,
+                  0.9721918050975129,
+                  -0.05831381252338365
+                ],
+                [
+                  0.21090023209978234,
+                  -0.009427508667684516,
+                  -0.9774621292820387
+                ]
+              ]
+            },
+            {
+              "name": "ready",
+              "position": [
+                -0.09762606039235144,
+                -0.008583423299852446,
+                1.0984070750980837
+              ],
+              "orientation": [
+                [
+                  -0.9508304258541744,
+                  -0.23399618839108968,
+                  -0.20289722789730022
+                ],
+                [
+                  -0.22680959717398483,
+                  0.9721918050975129,
+                  -0.05831381252338365
+                ],
+                [
+                  0.21090023209978234,
+                  -0.009427508667684516,
+                  -0.9774621292820387
+                ]
+              ]
+            }
+          ]
+        },
+        "ready_confirmed": true,
+        "confirmation": "preparation_only_not_grasp_or_placement"
+      },
+      "final_eval": {
+        "gold_completed": false,
+        "combined_success": false,
+        "n_actual_samples": 500,
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": false,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "stove_off": true,
+        "cheese_displacement_m": 1.4210854715202004e-14,
+        "cheese_within_tolerance": true,
+        "unknown": []
+      },
+      "prefix": {
+        "origin_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+        "handoff_sha": "69b98ee1794f350d6f64f5c574bfe8e76a745c684cd65f641152a529e759d20b",
+        "replay_actions": 348
+      },
+      "operational_errors": [],
+      "video_path": "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-subtask-assist-repair\\pilot\\case_03_enabled\\job\\rollout.mp4",
+      "video_exists": true,
+      "video_sha256": "06eba22ce6aeb83acd2c6f28d4ae5d2c69916fbacc80a3ebd6172cc4a80026d6"
+    }
+  ]
+}

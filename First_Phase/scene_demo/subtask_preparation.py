@@ -606,6 +606,14 @@ def plan_route(ctx: Any, reading: Any) -> dict:
             "home_orientation does not point sufficiently downward (R[2,2] >= -0.85)"
         )
 
+    reorientation_required = not (current_orientation[2, 2] < _ORIENTATION_FLOOR)
+    if reorientation_required:
+        prepare_orientation = home_orientation.copy()
+        orientation_policy = "home_orientation_for_non_downward_start"
+    else:
+        prepare_orientation = current_orientation.copy()
+        orientation_policy = "preserve_downward_current_orientation"
+
     ctx_position = _finite_vec3(getattr(ctx, "position", None))
     if ctx_position is None:
         raise PreparationError("ctx.position not finite 3-D")
@@ -614,7 +622,7 @@ def plan_route(ctx: Any, reading: Any) -> dict:
     target_xy = (target_min[:2] + target_max[:2]) / 2.0
 
     ready_xy = ctx_position[:2]
-    down_extent = _down_extent(reading, home_orientation)
+    down_extent = _down_extent(reading, prepare_orientation)
     ready_z = max(
         float(ctx_position[2]) + 0.20,
         float(target_max[2]) + down_extent + 0.08,
@@ -630,6 +638,7 @@ def plan_route(ctx: Any, reading: Any) -> dict:
         )
 
     reach = _max_hand_reach(reading, current_position)
+    clearance_extent = reach if reorientation_required else _down_extent(reading, current_orientation)
 
     current_xy = current_position[:2]
     relevant = _relevant_obstacles(reading, current_xy, target_xy, reach)
@@ -640,7 +649,7 @@ def plan_route(ctx: Any, reading: Any) -> dict:
     high_z = max(
         float(current_position[2]) + 0.10,
         float(ready_z),
-        highest_relevant_z + reach + 0.025,
+        highest_relevant_z + clearance_extent + 0.025,
     )
 
     high_position = np.array(
@@ -661,7 +670,7 @@ def plan_route(ctx: Any, reading: Any) -> dict:
         {
             "name": "align_clear",
             "position": high_position.copy(),
-            "orientation": home_orientation.copy(),
+            "orientation": prepare_orientation.copy(),
         },
         {
             "name": "transit",
@@ -669,12 +678,12 @@ def plan_route(ctx: Any, reading: Any) -> dict:
                 [float(ctx_position[0]), float(ctx_position[1]), float(high_z)],
                 dtype=np.float64,
             ),
-            "orientation": home_orientation.copy(),
+            "orientation": prepare_orientation.copy(),
         },
         {
             "name": "ready",
             "position": ready_position.copy(),
-            "orientation": home_orientation.copy(),
+            "orientation": prepare_orientation.copy(),
         },
     ]
 
@@ -743,7 +752,7 @@ def plan_route(ctx: Any, reading: Any) -> dict:
             {
                 "name": "align_clear",
                 "position": lift_clear_position.copy(),
-                "orientation": home_orientation.copy(),
+                "orientation": prepare_orientation.copy(),
             },
             {
                 "name": "transit",
@@ -751,12 +760,12 @@ def plan_route(ctx: Any, reading: Any) -> dict:
                     [float(ctx_position[0]), float(ctx_position[1]), float(high_z)],
                     dtype=np.float64,
                 ),
-                "orientation": home_orientation.copy(),
+                "orientation": prepare_orientation.copy(),
             },
             {
                 "name": "ready",
                 "position": ready_position.copy(),
-                "orientation": home_orientation.copy(),
+                "orientation": prepare_orientation.copy(),
             },
         ]
         for waypoint in candidate_waypoints:
@@ -831,6 +840,9 @@ def plan_route(ctx: Any, reading: Any) -> dict:
                 "high_z": float(high_z),
                 "ready_z": float(ready_z),
                 "max_hand_reach": float(reach),
+                "orientation_policy": orientation_policy,
+                "reorientation_required": bool(reorientation_required),
+                "clearance_extent": float(clearance_extent),
                 "note": (
                     "Sampled gripper OBBs only; not a full-arm or all-physics-substep "
                     "collision guarantee. Preparation only: no descent to grasp, no closing."

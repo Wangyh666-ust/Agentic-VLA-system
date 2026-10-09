@@ -1,0 +1,77 @@
+{
+  "ok": true,
+  "status": "ASSIST_REPAIR_TWO_TESTS_PASS",
+  "http": {
+    "ok": true,
+    "actual_http_requests": 1,
+    "request_sha256": "0106b81d2dce71505a0ac335d3a5394b96bdb1ad979513c0f6329613c50fc0b3",
+    "http_status": 200,
+    "model": "deepseek-flash",
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 726,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 624,
+      "service_tier": "standard"
+    },
+    "response_sha256": "0f6349111a8e9bb141dce8c84755e20638153e479f3785c3c36d778811a1a760",
+    "elapsed_s": 2.229018449783325
+  },
+  "source_sha256": "07006976550d421e879a776dd0ed58f2970c109158930fb306fea8e566b62a33",
+  "author_bytes_exact": true,
+  "test_methods": [
+    "test_downward_heading_is_preserved",
+    "test_non_downward_start_retains_checked_reorientation"
+  ],
+  "compile": {
+    "argv": [
+      "wsl",
+      "-d",
+      "Ubuntu",
+      "--",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-m",
+      "py_compile",
+      "/mnt/d/FYP/First_Phase/scene_demo/test_subtask_prepare_repair.py"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "pytest": {
+    "argv": [
+      "wsl",
+      "-d",
+      "Ubuntu",
+      "--cd",
+      "/mnt/d/FYP/First_Phase/scene_demo",
+      "--",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-m",
+      "pytest",
+      "--rootdir=/mnt/d/FYP/First_Phase/scene_demo",
+      "-v",
+      "test_subtask_prepare_repair.py"
+    ],
+    "exit": 0,
+    "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/yhwang/fyp/libero_demo/venv/bin/python\ncachedir: .pytest_cache\nrootdir: /mnt/d/FYP/First_Phase/scene_demo\nplugins: hydra-core-1.3.7, platformdirs-4.12.3, anyio-4.15.1, typeguard-4.6.0\ncollecting ... collected 2 items\n\ntest_subtask_prepare_repair.py::TestSubtaskPreparation::test_downward_heading_is_preserved PASSED [ 50%]\ntest_subtask_prepare_repair.py::TestSubtaskPreparation::test_non_downward_start_retains_checked_reorientation PASSED [100%]\n\n============================== 2 passed in 0.69s ===============================\n",
+    "stderr": ""
+  },
+  "protected_files_unchanged": {
+    "test_subtask_assist.py": true,
+    "subtask_context.py": true,
+    "subtask_geometry.py": true,
+    "subtask_preparation.py": true,
+    "subtask_assist_service.py": true,
+    "subtask_assist_profiles.json": true,
+    "app.py": true,
+    "run_agent.py": true
+  },
+  "physical_calls": 0,
+  "model_calls": 0,
+  "hermes_calls": 0,
+  "git_mutations": 0
+}

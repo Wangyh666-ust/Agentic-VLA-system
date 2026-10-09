@@ -1,0 +1,92 @@
+{
+  "plan": [
+    [
+      2,
+      "enabled"
+    ],
+    [
+      3,
+      "enabled"
+    ]
+  ],
+  "gold": [
+    [
+      "on",
+      "akita_black_bowl_1",
+      "plate_1"
+    ],
+    [
+      "on",
+      "wine_bottle_1",
+      "wine_rack_1_top_region"
+    ]
+  ],
+  "protected_stove_goal": [
+    "not",
+    "turnon",
+    "flat_stove_1"
+  ],
+  "cheese_tolerance_m": 0.005,
+  "strict_post_action_samples": 5,
+  "scene": "goal_table",
+  "env_seed": 0,
+  "init_state_index": 0,
+  "model_seeds": {
+    "2": 2,
+    "3": 3
+  },
+  "budget_per_subgoal": 500,
+  "prepare_max_actions": 200,
+  "profile": "baseline_bf16",
+  "profile_config": {
+    "use_amp": true,
+    "num_steps": 10,
+    "n_action_steps": 1
+  },
+  "checkpoint_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+  "completion_mode": "release_verified",
+  "grasp_guard_mode": "shadow",
+  "source_sha256": {
+    "subtask_context.py": "7bbb5679a8b1ead97bbae5f933ea0578f6b518be7d45383f62c4f4ac26625c2e",
+    "subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "subtask_preparation.py": "0c5c64e4be692feb52241aeb01793752783b10ce24a90da2f155c74c349a6ecf",
+    "subtask_assist_service.py": "e36e38c48d88e81209ab62e6c7cd9d0453c36234161faa49f7fe86ebdbb079ff",
+    "test_subtask_assist.py": "cfb068def1760ed9cfcfb83291f844e48b4eca6529670246ff78e6ff0b7d3686",
+    "test_subtask_prepare_repair.py": "07006976550d421e879a776dd0ed58f2970c109158930fb306fea8e566b62a33"
+  },
+  "input_sha256": {
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/action_sources.jsonl.gz": "7f9eb55c35ecf515a9a357298d82d113b1865a8092848b6851069225394be777",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/result.json": "687a5ac37a795cc3977b6ef7f7f26f083d0f40c3fbccc907b2b3a290be2ae344",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_03/job_01/action_sources.jsonl.gz": "28e71e65df23f410ce9a0fad3dee7791ef35b78057cdad925f4b37f92299d0d0",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_03/job_01/result.json": "0f9e94981369282e6987bb75097681cda9f927153190bf6d3b23e605cc37c996",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist/pilot/case_02_disabled/trial.json": "dbe521918bec65f700dd33e2df6fb2133e9f32054de59b41d53a0d8784fc73d0",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist/pilot/case_03_disabled/trial.json": "3f24890dcdb6c794e4cda40fc051c28000ea6f4006b313a0350813ba81d6af5e"
+  },
+  "script_sha256": "19f1584058447e3774509be6298b4eef46fce6f22586f3d2e920cdedc05e0859",
+  "gate_inputs": {
+    "profiles": {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/subtask_assist_profiles.json",
+      "sha256": "af2dba656f02c2a6c5cc1d6056ec2d0047b5a182b61b9d028854e5a787ccc6a2"
+    },
+    "preflight": {
+      "path": "/mnt/d/FYP/First_Phase/tmp/assist_repair_20261009_preflight/report.json",
+      "sha256": "c23f55e288d0345bbd0669b351a0e09b5561858d4efb7f9bc53a8b09af6b8fab"
+    },
+    "software_proof": {
+      "path": "/mnt/d/FYP/First_Phase/tmp/assist_repair_20261009_software_proof.json",
+      "sha256": "27f3e5095de2d89b39f625391bf8e54f147fba847916f6301b8fce4a565f23c0"
+    }
+  },
+  "previous_baselines": [
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist/pilot/case_02_disabled/trial.json",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-subtask-assist/pilot/case_03_disabled/trial.json"
+  ],
+  "previous_baseline_commit": "4fde4780f398a51019b903a42ef03420fb681324",
+  "new_baseline_jobs": 0,
+  "fresh_hermes_calls": 0,
+  "new_hermes_calls": 0,
+  "reused_old_hermes_plan": true,
+  "max_new_jobs": 2,
+  "retries": 0,
+  "limitations": "Two recorded handoff states; descriptive same-state comparisons, no training or general success rate."
+}
