@@ -1,0 +1,5158 @@
+{
+  "experiment": "entry_compatibility_existing_measurement_metrics",
+  "report_sha256": "3a4ce35f392b95400d4740656752435fdb32149167f6e941d41ce8faf2d37ccf",
+  "executed_cases": 4,
+  "planned_cases": 5,
+  "not_run": [
+    {
+      "case": "case_05_helper_native_holdout",
+      "reason": "previous_case_gate_failed:case_04_helper_after_wine"
+    }
+  ],
+  "definitions": {
+    "lift_baseline": "case before_snapshot bowl z, not first post-action z",
+    "bool": "only exact JSON true/false are known",
+    "error_units": "meters/radians",
+    "qpos_qvel_scope": "complete simulator arrays; not exclusively robot joints",
+    "stage_action_definition": "post helper stage_counts.entry_align is 1..60; transition row with missing count is separately retained",
+    "metrics_are_new_success_criteria": false
+  },
+  "cases": [
+    {
+      "case": "case_01_reference_replay",
+      "physical_success": true,
+      "replay_actions": 102,
+      "prepare_actions": 0,
+      "new_vla_actions": 0,
+      "physical_actions": 102,
+      "score": {
+        "gold": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ]
+        ],
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true
+        },
+        "last5_strict_samples": true,
+        "final_strict_candidate": true,
+        "empty_hand": true,
+        "all_physical_objects_unheld": true,
+        "stove_off": true,
+        "protected_displacement_m": {
+          "wine_bottle_1": 3.2907010479152855e-13,
+          "cream_cheese_1": 1.4210854715202004e-14
+        },
+        "protection_ok": true,
+        "unknown": [],
+        "physical_gold_success": true
+      },
+      "job": null,
+      "prepare_confirmed": null,
+      "before_sha256": null,
+      "after_sha256": "f0a5c0e135015071b7eaee75cffefb5f50f3ac07516240e03795e48d189e405e",
+      "handoff_capture": null,
+      "source_counts": {
+        "historical_replay": 102
+      },
+      "replay_row_count": 102,
+      "finite_actual_7d": true,
+      "last5_strict_booleans": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "row_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/replay.jsonl.gz"
+    },
+    {
+      "case": "case_02_native_mid_resume",
+      "physical_success": true,
+      "replay_actions": 30,
+      "prepare_actions": 0,
+      "new_vla_actions": 61,
+      "physical_actions": 91,
+      "score": {
+        "gold": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ]
+        ],
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true
+        },
+        "last5_strict_samples": true,
+        "final_strict_candidate": true,
+        "empty_hand": true,
+        "all_physical_objects_unheld": true,
+        "stove_off": true,
+        "protected_displacement_m": {
+          "wine_bottle_1": 1.3877787807814457e-17,
+          "cream_cheese_1": 0.0
+        },
+        "protection_ok": true,
+        "unknown": [],
+        "physical_gold_success": true
+      },
+      "job": {
+        "job_id": "a7f2f2d6aca14fb59646d64ff4b6b544",
+        "request_id": "39f462b13f23425fb937d228e8d8465d",
+        "session_id": "8d10e585949146518c2c38a655b91695",
+        "capability_id": "bowl_to_plate",
+        "state": "completed",
+        "steps": 61,
+        "total_steps": 91,
+        "success": true,
+        "ended_reason": "success",
+        "error": null,
+        "instruction": "put the bowl on the plate",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+        "state_after_sha": "ba3ad34ee1370e1b20395fe374c0a707455fd7bd6aab7a8341ce3c5f9745ca0c",
+        "env_instance_id": null,
+        "episode_resets": null,
+        "completion_mode": null,
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/rollout.mp4",
+        "wall_s": 36.217
+      },
+      "prepare_confirmed": false,
+      "before_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+      "after_sha256": "ba3ad34ee1370e1b20395fe374c0a707455fd7bd6aab7a8341ce3c5f9745ca0c",
+      "handoff_capture": {
+        "directory": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff",
+        "state_before_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+        "state_after_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+        "readonly_state_unchanged": true,
+        "capture_count": 1,
+        "before_first_vla": true,
+        "current_batch_saved": true,
+        "comparison": {
+          "reference_cut_step": 30,
+          "eef_position_error_m": 0.0,
+          "eef_orientation_error_rad": 0.0,
+          "gripper_gap_difference_m": 0.0,
+          "qpos_l2": 0.0,
+          "qvel_l2": 0.0,
+          "reference_state_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+          "actual_state_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+          "complete_state_equality_required": false
+        },
+        "session_id": "8d10e585949146518c2c38a655b91695",
+        "job_id": null,
+        "case": "case_02_native_mid_resume"
+      },
+      "source_counts": {
+        "vla": 61
+      },
+      "source_field": "source",
+      "action_sources_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/action_sources.jsonl.gz",
+      "telemetry_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/telemetry.jsonl.gz",
+      "source_telemetry_alignment": true,
+      "finite_actual_7d": true,
+      "all": {
+        "samples": 61,
+        "grasped_true_samples": 25,
+        "grasped_false_samples": 36,
+        "grasped_unknown_samples": 0,
+        "grasped_first_true_step": 20,
+        "baseline_before_snapshot_z_m": 0.8984070750980836,
+        "max_lift_from_before_snapshot_m": 0.1089026260577507,
+        "positive_gripper_commands": 43,
+        "gripper_command_unknown_samples": 0
+      },
+      "prepare": {
+        "samples": 0,
+        "grasped_true_samples": 0,
+        "grasped_false_samples": 0,
+        "grasped_unknown_samples": 0,
+        "grasped_first_true_step": null,
+        "baseline_before_snapshot_z_m": 0.8984070750980836,
+        "max_lift_from_before_snapshot_m": null,
+        "positive_gripper_commands": 0,
+        "gripper_command_unknown_samples": 0
+      },
+      "vla": {
+        "samples": 61,
+        "grasped_true_samples": 25,
+        "grasped_false_samples": 36,
+        "grasped_unknown_samples": 0,
+        "grasped_first_true_step": 20,
+        "baseline_before_snapshot_z_m": 0.8984070750980836,
+        "max_lift_from_before_snapshot_m": 0.1089026260577507,
+        "positive_gripper_commands": 43,
+        "gripper_command_unknown_samples": 0
+      },
+      "last5_snapshot_strict_booleans": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "last5_oracle_strict_booleans": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "helper_summary": null,
+      "handoff_reading": {
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/reading.json",
+        "sha256": "3bd08e02eaa50e1d63365b40400952ea95a3a0c1a6089954825c2ea3c89ec763",
+        "pose": {
+          "position": [
+            -0.06482413292410762,
+            0.05001658421739147,
+            1.0121087732479783
+          ],
+          "orientation_matrix": [
+            [
+              0.04724960793903395,
+              0.994656794110724,
+              -0.09178963165293264
+            ],
+            [
+              0.9982114983787649,
+              -0.0503872353201195,
+              -0.0321703438155817
+            ],
+            [
+              -0.03662347681508973,
+              -0.09010542961535878,
+              -0.9952586259358936
+            ]
+          ],
+          "orientation": [
+            [
+              0.04724960793903395,
+              0.994656794110724,
+              -0.09178963165293264
+            ],
+            [
+              0.9982114983787649,
+              -0.0503872353201195,
+              -0.0321703438155817
+            ],
+            [
+              -0.03662347681508973,
+              -0.09010542961535878,
+              -0.9952586259358936
+            ]
+          ]
+        },
+        "gripper_gap_m": 0.07936711463696174,
+        "object_positions": {
+          "akita_black_bowl_1": [
+            -0.09762606039235144,
+            -0.008583423299852446,
+            0.8984070750980836
+          ],
+          "cream_cheese_1": [
+            -0.04602629144396026,
+            0.13447270946529477,
+            0.9089214774186077
+          ],
+          "wine_bottle_1": [
+            -0.20423290037391095,
+            -0.06165089486055362,
+            0.8988754774203452
+          ],
+          "plate_1": [
+            0.062073867819834094,
+            -0.009382152565275154,
+            0.902506338529415
+          ]
+        },
+        "robot_contacts": []
+      },
+      "video": {
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/rollout.mp4",
+        "sha256": "16f731d59f3ca941ff73efca3b64278cb3d92e804e2966d48a6c2d38096c3a70",
+        "frame_count": 62,
+        "fps": 20.0,
+        "actions_plus_initial_frame_verified": true,
+        "frames": [
+          {
+            "label": "first",
+            "index": 0,
+            "path": "evidence/frames/case02/first.png",
+            "sha256": "881d59ddd2c888ac326ee24eb2e0a2786689c20ec9036d86bb8793b9853ee02a",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          },
+          {
+            "label": "middle",
+            "index": 31,
+            "path": "evidence/frames/case02/middle.png",
+            "sha256": "e38f3a2caa20defd737804ab8892850d252e095a95b33d7199bea85b7c747aec",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          },
+          {
+            "label": "last",
+            "index": 61,
+            "path": "evidence/frames/case02/last.png",
+            "sha256": "75617c68735c3ee17a5b35b2849ba2b4bfd8c8dda11b6a6ace0a7bc4da954e65",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          }
+        ]
+      }
+    },
+    {
+      "case": "case_03_helper_native_entry",
+      "physical_success": true,
+      "replay_actions": 0,
+      "prepare_actions": 165,
+      "new_vla_actions": 59,
+      "physical_actions": 224,
+      "score": {
+        "gold": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ]
+        ],
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": true
+        },
+        "last5_strict_samples": true,
+        "final_strict_candidate": true,
+        "empty_hand": true,
+        "all_physical_objects_unheld": true,
+        "stove_off": true,
+        "protected_displacement_m": {
+          "wine_bottle_1": 3.290701063278474e-13,
+          "cream_cheese_1": 1.4210854715202004e-14
+        },
+        "protection_ok": true,
+        "unknown": [],
+        "physical_gold_success": true
+      },
+      "job": {
+        "job_id": "82895ce4f8ab4380b6b8cc29e6a8ee29",
+        "request_id": "087fe6ef0b6a4876a6cfe633c017d467",
+        "session_id": "24ca0723f094408b87483f5a1dc1af80",
+        "capability_id": "bowl_to_plate",
+        "state": "completed",
+        "steps": 224,
+        "total_steps": 224,
+        "success": true,
+        "ended_reason": "success",
+        "error": null,
+        "instruction": "put the bowl on the plate",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+        "state_after_sha": "8c7bcbb89130dab22867d413ce25abb7968d931448804445c001c23e675c0ec7",
+        "env_instance_id": null,
+        "episode_resets": null,
+        "completion_mode": null,
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/rollout.mp4",
+        "wall_s": 85.057
+      },
+      "prepare_confirmed": true,
+      "before_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+      "after_sha256": "8c7bcbb89130dab22867d413ce25abb7968d931448804445c001c23e675c0ec7",
+      "handoff_capture": {
+        "directory": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff",
+        "state_before_sha256": "1094b69366067fd13454af2fd54256418b486d105af0f16412eb7223dae3398e",
+        "state_after_sha256": "1094b69366067fd13454af2fd54256418b486d105af0f16412eb7223dae3398e",
+        "readonly_state_unchanged": true,
+        "capture_count": 1,
+        "before_first_vla": true,
+        "current_batch_saved": true,
+        "comparison": {
+          "reference_cut_step": 30,
+          "eef_position_error_m": 0.002814610563430374,
+          "eef_orientation_error_rad": 0.0046822198128507585,
+          "gripper_gap_difference_m": 0.0006078076511826097,
+          "qpos_l2": 0.01833591877550054,
+          "qvel_l2": 0.4895278034385409,
+          "reference_state_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+          "actual_state_sha256": "1094b69366067fd13454af2fd54256418b486d105af0f16412eb7223dae3398e",
+          "complete_state_equality_required": false
+        },
+        "session_id": "24ca0723f094408b87483f5a1dc1af80",
+        "job_id": "82895ce4f8ab4380b6b8cc29e6a8ee29",
+        "case": "case_03_helper_native_entry"
+      },
+      "source_counts": {
+        "prepare": 165,
+        "vla": 59
+      },
+      "source_field": "source",
+      "action_sources_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/action_sources.jsonl.gz",
+      "telemetry_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/telemetry.jsonl.gz",
+      "source_telemetry_alignment": true,
+      "finite_actual_7d": true,
+      "all": {
+        "samples": 224,
+        "grasped_true_samples": 29,
+        "grasped_false_samples": 195,
+        "grasped_unknown_samples": 0,
+        "grasped_first_true_step": 185,
+        "baseline_before_snapshot_z_m": 0.8984070750976497,
+        "max_lift_from_before_snapshot_m": 0.11218575516349405,
+        "positive_gripper_commands": 43,
+        "gripper_command_unknown_samples": 0
+      },
+      "prepare": {
+        "samples": 165,
+        "grasped_true_samples": 0,
+        "grasped_false_samples": 165,
+        "grasped_unknown_samples": 0,
+        "grasped_first_true_step": null,
+        "baseline_before_snapshot_z_m": 0.8984070750976497,
+        "max_lift_from_before_snapshot_m": 4.338751580235112e-13,
+        "positive_gripper_commands": 0,
+        "gripper_command_unknown_samples": 0
+      },
+      "vla": {
+        "samples": 59,
+        "grasped_true_samples": 29,
+        "grasped_false_samples": 30,
+        "grasped_unknown_samples": 0,
+        "grasped_first_true_step": 185,
+        "baseline_before_snapshot_z_m": 0.8984070750976497,
+        "max_lift_from_before_snapshot_m": 0.11218575516349405,
+        "positive_gripper_commands": 43,
+        "gripper_command_unknown_samples": 0
+      },
+      "last5_snapshot_strict_booleans": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "last5_oracle_strict_booleans": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "helper_summary": {
+        "phase": "ready",
+        "reason": null,
+        "current_stage": "done",
+        "stage_counts": {
+          "lift_escape": 27,
+          "lift_clear": 25,
+          "align_clear": 5,
+          "transit": 18,
+          "ready": 52,
+          "entry_align": 8,
+          "entry_ready": 30
+        },
+        "actual_aux_actions": 165,
+        "last_errors": {
+          "position_error": 0.002814610563831255,
+          "orientation_error": 0.004682219812814284
+        },
+        "plan": {
+          "chosen_index": 1,
+          "check_samples": 111,
+          "rejection_reasons": [],
+          "geometry_source": "mujoco_collision_obbs",
+          "collision_scope": "gripper_obb_samples_only",
+          "high_z": 1.2862818708043553,
+          "ready_z": 1.0984070750976498,
+          "max_hand_reach": 0.1925455767490486,
+          "waypoints": [
+            {
+              "name": "lift_escape",
+              "position": [
+                -0.12749030481351814,
+                -0.005838289704865966,
+                1.2186384539512936
+              ],
+              "orientation": [
+                [
+                  0.0009490455140583522,
+                  0.9984600280358934,
+                  -0.055467753940209655
+                ],
+                [
+                  0.999999425011794,
+                  -0.0009198899001559378,
+                  0.0005511611827955544
+                ],
+                [
+                  0.0004992881833924094,
+                  -0.05546824512395347,
+                  -0.9984603269505381
+                ]
+              ]
+            },
+            {
+              "name": "lift_clear",
+              "position": [
+                -0.12749030481351814,
+                -0.005838289704865966,
+                1.2862818708043553
+              ],
+              "orientation": [
+                [
+                  0.0009490455140583522,
+                  0.9984600280358934,
+                  -0.055467753940209655
+                ],
+                [
+                  0.999999425011794,
+                  -0.0009198899001559378,
+                  0.0005511611827955544
+                ],
+                [
+                  0.0004992881833924094,
+                  -0.05546824512395347,
+                  -0.9984603269505381
+                ]
+              ]
+            },
+            {
+              "name": "align_clear",
+              "position": [
+                -0.12749030481351814,
+                -0.005838289704865966,
+                1.2862818708043553
+              ],
+              "orientation": [
+                [
+                  0.0009490455140583522,
+                  0.9984600280358934,
+                  -0.055467753940209655
+                ],
+                [
+                  0.999999425011794,
+                  -0.0009198899001559378,
+                  0.0005511611827955544
+                ],
+                [
+                  0.0004992881833924094,
+                  -0.05546824512395347,
+                  -0.9984603269505381
+                ]
+              ]
+            },
+            {
+              "name": "transit",
+              "position": [
+                -0.09762606039235154,
+                -0.008583423299852285,
+                1.2862818708043553
+              ],
+              "orientation": [
+                [
+                  0.0009490455140583522,
+                  0.9984600280358934,
+                  -0.055467753940209655
+                ],
+                [
+                  0.999999425011794,
+                  -0.0009198899001559378,
+                  0.0005511611827955544
+                ],
+                [
+                  0.0004992881833924094,
+                  -0.05546824512395347,
+                  -0.9984603269505381
+                ]
+              ]
+            },
+            {
+              "name": "ready",
+              "position": [
+                -0.09762606039235154,
+                -0.008583423299852285,
+                1.0984070750976498
+              ],
+              "orientation": [
+                [
+                  0.0009490455140583522,
+                  0.9984600280358934,
+                  -0.055467753940209655
+                ],
+                [
+                  0.999999425011794,
+                  -0.0009198899001559378,
+                  0.0005511611827955544
+                ],
+                [
+                  0.0004992881833924094,
+                  -0.05546824512395347,
+                  -0.9984603269505381
+                ]
+              ]
+            },
+            {
+              "name": "entry_align",
+              "position": [
+                -0.09762606039235154,
+                -0.008583423299852285,
+                1.0984070750976498
+              ],
+              "orientation": [
+                [
+                  0.04724960793903248,
+                  0.9946567941107204,
+                  -0.09178963165297281
+                ],
+                [
+                  0.9982114983787669,
+                  -0.05038723532011465,
+                  -0.03217034381552835
+                ],
+                [
+                  -0.03662347681503813,
+                  -0.09010542961540163,
+                  -0.9952586259358916
+                ]
+              ]
+            },
+            {
+              "name": "entry_ready",
+              "position": [
+                -0.06482413292410312,
+                0.05001658421738553,
+                1.0121087732475467
+              ],
+              "orientation": [
+                [
+                  0.04724960793903248,
+                  0.9946567941107204,
+                  -0.09178963165297281
+                ],
+                [
+                  0.9982114983787669,
+                  -0.05038723532011465,
+                  -0.03217034381552835
+                ],
+                [
+                  -0.03662347681503813,
+                  -0.09010542961540163,
+                  -0.9952586259358916
+                ]
+              ]
+            }
+          ]
+        },
+        "ready_confirmed": true,
+        "confirmation": "preparation_only_not_grasp_or_placement",
+        "entry_reference": {
+          "schema_version": 1,
+          "operation": "pick_place",
+          "shape_family": "low_wide",
+          "reference_dimensions": [
+            0.10719994032407791,
+            0.10700720136999801,
+            0.050541928523487725
+          ],
+          "position_normalized": [
+            0.5466188541559239,
+            -0.3065577800541514,
+            2.2496652413544678
+          ],
+          "orientation_relative": [
+            [
+              0.9982123033751138,
+              -0.05038524930925207,
+              -0.03214846874410922
+            ],
+            [
+              -0.04724897052462992,
+              -0.994655238646525,
+              0.09180681356731538
+            ],
+            [
+              -0.036602352040669583,
+              -0.09012370878445727,
+              -0.995257747992962
+            ]
+          ],
+          "gripper_gap_m": 0.07936711463696174,
+          "provenance": {
+            "cut_step": 30,
+            "cut_state_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+            "historical_files_sha256": {
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-07/artifacts/release_verified_bowls/baseline_bf16/bowl_control/job_01/telemetry.jsonl.gz": "6251b61a36b99354a816bd8430ac6f920cf11fbba01f6799c9fa306b1776a1a7",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-07/artifacts/release_verified_bowls/baseline_bf16/bowl_control/job_01/diagnostic.json.gz": "ee48cc361f05e308e17ffef8e93c2af7ef9049e974b0072f1a2b21bf75af1019",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/action_sources.jsonl.gz": "7f9eb55c35ecf515a9a357298d82d113b1865a8092848b6851069225394be777",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/result.json": "687a5ac37a795cc3977b6ef7f7f26f083d0f40c3fbccc907b2b3a290be2ae344"
+            },
+            "origin_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+            "source": "reference_replay_actual_worker_observation"
+          }
+        },
+        "entry_target": {
+          "position": [
+            -0.06482413292410312,
+            0.05001658421738553,
+            1.0121087732475467
+          ],
+          "orientation": [
+            [
+              0.04724960793903248,
+              0.9946567941107204,
+              -0.09178963165297281
+            ],
+            [
+              0.9982114983787669,
+              -0.05038723532011465,
+              -0.03217034381552835
+            ],
+            [
+              -0.03662347681503813,
+              -0.09010542961540163,
+              -0.9952586259358916
+            ]
+          ],
+          "gripper_gap_m": 0.07745833984371572,
+          "geometry_compatibility": "diagnostic_reference_only"
+        },
+        "generic_action_cap": 200,
+        "bridge_action_cap": 100,
+        "total_prepare_cap": 300,
+        "generic_actions": 127,
+        "bridge_actions": 38,
+        "generic_ready": true
+      },
+      "handoff_reading": {
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/reading.json",
+        "sha256": "150f2327b86f05d37624b922a737b295d8842c354e7d5eaf7cc73c164073b5a5",
+        "pose": {
+          "position": [
+            -0.06404064308924712,
+            0.049393927301861935,
+            1.0147394527548714
+          ],
+          "orientation_matrix": [
+            [
+              0.04614137761950192,
+              0.994280783540173,
+              -0.0963156101268759
+            ],
+            [
+              0.9982457536683544,
+              -0.04947562090066833,
+              -0.03252042772766671
+            ],
+            [
+              -0.03709971097557994,
+              -0.09464611148500073,
+              -0.99481944342996
+            ]
+          ],
+          "orientation": [
+            [
+              0.04614137761950192,
+              0.994280783540173,
+              -0.0963156101268759
+            ],
+            [
+              0.9982457536683544,
+              -0.04947562090066833,
+              -0.03252042772766671
+            ],
+            [
+              -0.03709971097557994,
+              -0.09464611148500073,
+              -0.99481944342996
+            ]
+          ]
+        },
+        "gripper_gap_m": 0.07997492228814435,
+        "object_positions": {
+          "akita_black_bowl_1": [
+            -0.09762606039235144,
+            -0.008583423299852446,
+            0.8984070750980836
+          ],
+          "cream_cheese_1": [
+            -0.04602629144396026,
+            0.13447270946529477,
+            0.9089214774186077
+          ],
+          "wine_bottle_1": [
+            -0.20423290037391095,
+            -0.061650894860553654,
+            0.8988754774203452
+          ],
+          "plate_1": [
+            0.062073867819834094,
+            -0.009382152565275154,
+            0.902506338529415
+          ]
+        },
+        "robot_contacts": []
+      },
+      "video": {
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/rollout.mp4",
+        "sha256": "d470f2485285ed89b793352f980bada3a7efba306c477bb7f654fff7b0c824a6",
+        "frame_count": 225,
+        "fps": 20.0,
+        "actions_plus_initial_frame_verified": true,
+        "frames": [
+          {
+            "label": "first",
+            "index": 0,
+            "path": "evidence/frames/case03/first.png",
+            "sha256": "896a19e562ce2993b5ee0c8c373f2de3544b79c6908eeb38859ee7b72d37dd20",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          },
+          {
+            "label": "middle",
+            "index": 112,
+            "path": "evidence/frames/case03/middle.png",
+            "sha256": "72b7b8661b8c8a0a6dd4ee6a9426b36b3ba0a1d3124ed05acab2601910b802cb",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          },
+          {
+            "label": "last",
+            "index": 224,
+            "path": "evidence/frames/case03/last.png",
+            "sha256": "edf0b83c0fa40bcf53823a3658a129fd5f50015b6a3c34856643720205d6d977",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          },
+          {
+            "label": "handoff_before_vla",
+            "index": 165,
+            "path": "evidence/frames/case03/handoff_before_vla.png",
+            "sha256": "fbd035949bbb2c4e9edfce04fb9e638f31fa153c4d63ea0b7001d05d1f0c1455",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          },
+          {
+            "label": "handoff_after_first_vla",
+            "index": 166,
+            "path": "evidence/frames/case03/handoff_after_first_vla.png",
+            "sha256": "db9418b56cc1d39ddc9732434dc822b230a4f975de0f0a18744cef12a3d715dd",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          }
+        ]
+      }
+    },
+    {
+      "case": "case_04_helper_after_wine",
+      "physical_success": false,
+      "replay_actions": 346,
+      "prepare_actions": 224,
+      "new_vla_actions": 0,
+      "physical_actions": 570,
+      "score": {
+        "gold": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ],
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ]
+        ],
+        "final_predicates": {
+          "on|akita_black_bowl_1|plate_1": false,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "last5_strict_samples": false,
+        "final_strict_candidate": false,
+        "empty_hand": true,
+        "all_physical_objects_unheld": true,
+        "stove_off": true,
+        "protected_displacement_m": {
+          "wine_bottle_1": 2.9332297317341405e-06,
+          "cream_cheese_1": 0.0
+        },
+        "protection_ok": true,
+        "unknown": [],
+        "physical_gold_success": false
+      },
+      "job": {
+        "job_id": "3b66c2e09eb54a24a329671c19efa4c7",
+        "request_id": "cf7d3919cbaf47a3abccff7836bb53b6",
+        "session_id": "7c9b5403428d49f6a69c8b0bb40fe263",
+        "capability_id": "bowl_to_plate",
+        "state": "completed",
+        "steps": 224,
+        "total_steps": 570,
+        "success": false,
+        "ended_reason": "subtask_prepare_failed",
+        "error": "stage_timeout",
+        "instruction": "put the bowl on the plate",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "2a4521602e384127e079782f4ff0b9ba8537548aabce2ba348a9c7320129c857",
+        "state_after_sha": "4cb4e2fad7d486f46d92a682844f77fbf49b6c97f5b9e037f1a30b0619de394b",
+        "env_instance_id": null,
+        "episode_resets": null,
+        "completion_mode": null,
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": false,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_04_helper_after_wine/job",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_04_helper_after_wine/job/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_04_helper_after_wine/job/rollout.mp4",
+        "wall_s": 70.412
+      },
+      "prepare_confirmed": false,
+      "before_sha256": "2a4521602e384127e079782f4ff0b9ba8537548aabce2ba348a9c7320129c857",
+      "after_sha256": "4cb4e2fad7d486f46d92a682844f77fbf49b6c97f5b9e037f1a30b0619de394b",
+      "handoff_capture": null,
+      "source_counts": {
+        "prepare": 224
+      },
+      "source_field": "source",
+      "action_sources_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_04_helper_after_wine/job/action_sources.jsonl.gz",
+      "telemetry_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_04_helper_after_wine/job/telemetry.jsonl.gz",
+      "source_telemetry_alignment": true,
+      "finite_actual_7d": true,
+      "all": {
+        "samples": 224,
+        "grasped_true_samples": 0,
+        "grasped_false_samples": 224,
+        "grasped_unknown_samples": 0,
+        "grasped_first_true_step": null,
+        "baseline_before_snapshot_z_m": 0.8984070750980836,
+        "max_lift_from_before_snapshot_m": 0.0,
+        "positive_gripper_commands": 0,
+        "gripper_command_unknown_samples": 0
+      },
+      "prepare": {
+        "samples": 224,
+        "grasped_true_samples": 0,
+        "grasped_false_samples": 224,
+        "grasped_unknown_samples": 0,
+        "grasped_first_true_step": null,
+        "baseline_before_snapshot_z_m": 0.8984070750980836,
+        "max_lift_from_before_snapshot_m": 0.0,
+        "positive_gripper_commands": 0,
+        "gripper_command_unknown_samples": 0
+      },
+      "vla": {
+        "samples": 0,
+        "grasped_true_samples": 0,
+        "grasped_false_samples": 0,
+        "grasped_unknown_samples": 0,
+        "grasped_first_true_step": null,
+        "baseline_before_snapshot_z_m": 0.8984070750980836,
+        "max_lift_from_before_snapshot_m": null,
+        "positive_gripper_commands": 0,
+        "gripper_command_unknown_samples": 0
+      },
+      "last5_snapshot_strict_booleans": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "last5_oracle_strict_booleans": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "helper_summary": {
+        "phase": "failed",
+        "reason": "stage_timeout",
+        "current_stage": "entry_align",
+        "stage_counts": {
+          "lift_escape": 27,
+          "lift_clear": 24,
+          "align_clear": 5,
+          "transit": 50,
+          "ready": 58,
+          "entry_align": 60
+        },
+        "actual_aux_actions": 224,
+        "last_errors": {
+          "position_error": 0.0005864267522675095,
+          "orientation_error": 0.20023613669565996
+        },
+        "plan": {
+          "chosen_index": 1,
+          "check_samples": 185,
+          "rejection_reasons": [],
+          "geometry_source": "mujoco_collision_obbs",
+          "collision_scope": "gripper_obb_samples_only",
+          "high_z": 1.3168718068308054,
+          "ready_z": 1.0984070750980837,
+          "max_hand_reach": 0.19254557674904846,
+          "waypoints": [
+            {
+              "name": "lift_escape",
+              "position": [
+                -0.1577010742867228,
+                -0.19150172250143627,
+                1.2568718068308053
+              ],
+              "orientation": [
+                [
+                  -0.952733649841593,
+                  -0.24051314824602557,
+                  -0.1856125480141337
+                ],
+                [
+                  -0.23596083429916279,
+                  0.9706457085391735,
+                  -0.04657674496275849
+                ],
+                [
+                  0.19136634274698575,
+                  -0.0005779405403015282,
+                  -0.9815185117196579
+                ]
+              ]
+            },
+            {
+              "name": "lift_clear",
+              "position": [
+                -0.1577010742867228,
+                -0.19150172250143627,
+                1.3168718068308054
+              ],
+              "orientation": [
+                [
+                  -0.952733649841593,
+                  -0.24051314824602557,
+                  -0.1856125480141337
+                ],
+                [
+                  -0.23596083429916279,
+                  0.9706457085391735,
+                  -0.04657674496275849
+                ],
+                [
+                  0.19136634274698575,
+                  -0.0005779405403015282,
+                  -0.9815185117196579
+                ]
+              ]
+            },
+            {
+              "name": "align_clear",
+              "position": [
+                -0.1577010742867228,
+                -0.19150172250143627,
+                1.3168718068308054
+              ],
+              "orientation": [
+                [
+                  -0.952733649841593,
+                  -0.24051314824602557,
+                  -0.1856125480141337
+                ],
+                [
+                  -0.23596083429916279,
+                  0.9706457085391735,
+                  -0.04657674496275849
+                ],
+                [
+                  0.19136634274698575,
+                  -0.0005779405403015282,
+                  -0.9815185117196579
+                ]
+              ]
+            },
+            {
+              "name": "transit",
+              "position": [
+                -0.09762606039235144,
+                -0.008583423299852446,
+                1.3168718068308054
+              ],
+              "orientation": [
+                [
+                  -0.952733649841593,
+                  -0.24051314824602557,
+                  -0.1856125480141337
+                ],
+                [
+                  -0.23596083429916279,
+                  0.9706457085391735,
+                  -0.04657674496275849
+                ],
+                [
+                  0.19136634274698575,
+                  -0.0005779405403015282,
+                  -0.9815185117196579
+                ]
+              ]
+            },
+            {
+              "name": "ready",
+              "position": [
+                -0.09762606039235144,
+                -0.008583423299852446,
+                1.0984070750980837
+              ],
+              "orientation": [
+                [
+                  -0.952733649841593,
+                  -0.24051314824602557,
+                  -0.1856125480141337
+                ],
+                [
+                  -0.23596083429916279,
+                  0.9706457085391735,
+                  -0.04657674496275849
+                ],
+                [
+                  0.19136634274698575,
+                  -0.0005779405403015282,
+                  -0.9815185117196579
+                ]
+              ]
+            },
+            {
+              "name": "entry_align",
+              "position": [
+                -0.09762606039235144,
+                -0.008583423299852446,
+                1.0984070750980837
+              ],
+              "orientation": [
+                [
+                  0.04724960793903396,
+                  0.994656794110724,
+                  -0.09178963165293265
+                ],
+                [
+                  0.9982114983787649,
+                  -0.05038723532011949,
+                  -0.03217034381558171
+                ],
+                [
+                  -0.03662347681508974,
+                  -0.09010542961535879,
+                  -0.9952586259358936
+                ]
+              ]
+            },
+            {
+              "name": "entry_ready",
+              "position": [
+                -0.0648241329241076,
+                0.050016584217391455,
+                1.0121087732479783
+              ],
+              "orientation": [
+                [
+                  0.04724960793903396,
+                  0.994656794110724,
+                  -0.09178963165293265
+                ],
+                [
+                  0.9982114983787649,
+                  -0.05038723532011949,
+                  -0.03217034381558171
+                ],
+                [
+                  -0.03662347681508974,
+                  -0.09010542961535879,
+                  -0.9952586259358936
+                ]
+              ]
+            }
+          ]
+        },
+        "ready_confirmed": false,
+        "confirmation": "preparation_only_not_grasp_or_placement",
+        "entry_reference": {
+          "schema_version": 1,
+          "operation": "pick_place",
+          "shape_family": "low_wide",
+          "reference_dimensions": [
+            0.10719994032407791,
+            0.10700720136999801,
+            0.050541928523487725
+          ],
+          "position_normalized": [
+            0.5466188541559239,
+            -0.3065577800541514,
+            2.2496652413544678
+          ],
+          "orientation_relative": [
+            [
+              0.9982123033751138,
+              -0.05038524930925207,
+              -0.03214846874410922
+            ],
+            [
+              -0.04724897052462992,
+              -0.994655238646525,
+              0.09180681356731538
+            ],
+            [
+              -0.036602352040669583,
+              -0.09012370878445727,
+              -0.995257747992962
+            ]
+          ],
+          "gripper_gap_m": 0.07936711463696174,
+          "provenance": {
+            "cut_step": 30,
+            "cut_state_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+            "historical_files_sha256": {
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-07/artifacts/release_verified_bowls/baseline_bf16/bowl_control/job_01/telemetry.jsonl.gz": "6251b61a36b99354a816bd8430ac6f920cf11fbba01f6799c9fa306b1776a1a7",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-07/artifacts/release_verified_bowls/baseline_bf16/bowl_control/job_01/diagnostic.json.gz": "ee48cc361f05e308e17ffef8e93c2af7ef9049e974b0072f1a2b21bf75af1019",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/action_sources.jsonl.gz": "7f9eb55c35ecf515a9a357298d82d113b1865a8092848b6851069225394be777",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/result.json": "687a5ac37a795cc3977b6ef7f7f26f083d0f40c3fbccc907b2b3a290be2ae344"
+            },
+            "origin_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+            "source": "reference_replay_actual_worker_observation"
+          }
+        },
+        "entry_target": {
+          "position": [
+            -0.0648241329241076,
+            0.050016584217391455,
+            1.0121087732479783
+          ],
+          "orientation": [
+            [
+              0.04724960793903396,
+              0.994656794110724,
+              -0.09178963165293265
+            ],
+            [
+              0.9982114983787649,
+              -0.05038723532011949,
+              -0.03217034381558171
+            ],
+            [
+              -0.03662347681508974,
+              -0.09010542961535879,
+              -0.9952586259358936
+            ]
+          ],
+          "gripper_gap_m": 0.07816034426152041,
+          "geometry_compatibility": "diagnostic_reference_only"
+        },
+        "generic_action_cap": 200,
+        "bridge_action_cap": 100,
+        "total_prepare_cap": 300,
+        "generic_actions": 164,
+        "bridge_actions": 60,
+        "generic_ready": true
+      },
+      "handoff_reading": null,
+      "entry_align": {
+        "actual_action_count": 60,
+        "transition_rows": [
+          {
+            "step": 164,
+            "last_errors": null,
+            "stage_count": null
+          }
+        ],
+        "curve": [
+          {
+            "stage_action": 1,
+            "step": 165,
+            "source": "prepare",
+            "sent_action": [
+              -9.081021562451497e-05,
+              0.0037426319904625416,
+              -0.02676110342144966,
+              -0.25,
+              -0.13866682350635529,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09614879479206331,
+              -0.012641078476736702,
+              1.1018243160113264
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.005506760812622062,
+              "orientation_error": 1.8530433489294915
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040007665921585,
+              -0.039793405734889986
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 2,
+            "step": 166,
+            "source": "prepare",
+            "sent_action": [
+              -0.014772656373679638,
+              0.04057655110955238,
+              -0.034172408282756805,
+              -0.2343452125787735,
+              -0.14480148255825043,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09442397966007234,
+              -0.01573077779647677,
+              1.102776165633861
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.008968107349171764,
+              "orientation_error": 1.8262814122932522
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040007515669535955,
+              -0.039794230810751535
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 3,
+            "step": 167,
+            "source": "prepare",
+            "sent_action": [
+              -0.03202080726623535,
+              0.07147354632616043,
+              -0.04369090497493744,
+              -0.2078818529844284,
+              -0.1550658792257309,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09309153884843636,
+              -0.016500763477387374,
+              1.1034075145048932
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.01040435271317789,
+              "orientation_error": 1.7969979047818578
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.0400074563761415,
+              -0.03979503279799103
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 4,
+            "step": 168,
+            "source": "prepare",
+            "sent_action": [
+              -0.04534521698951721,
+              0.07917340099811554,
+              -0.050004392862319946,
+              -0.1794145107269287,
+              -0.16425354778766632,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09212368382908487,
+              -0.01592851203319102,
+              1.1037656353274734
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.010627353578224448,
+              "orientation_error": 1.767056160600095
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040007398835251944,
+              -0.03979587215271944
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 5,
+            "step": 169,
+            "source": "prepare",
+            "sent_action": [
+              -0.05502376705408096,
+              0.07345088571310043,
+              -0.05358560383319855,
+              -0.15071220695972443,
+              -0.17063508927822113,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09150171305322226,
+              -0.014728509872687227,
+              1.1038947961184102
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.010265709976171506,
+              "orientation_error": 1.7369602190655353
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.04000721889017299,
+              -0.03979701709295688
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 6,
+            "step": 170,
+            "source": "prepare",
+            "sent_action": [
+              -0.06124347448348999,
+              0.06145086511969566,
+              -0.05487721040844917,
+              -0.12274166196584702,
+              -0.17368212342262268,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09120361396966717,
+              -0.013315573102478545,
+              1.103828210632947
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00964519415533462,
+              "orientation_error": 1.706927543972971
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040006869384826324,
+              -0.03979869300238437
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 7,
+            "step": 171,
+            "source": "prepare",
+            "sent_action": [
+              -0.06422446668148041,
+              0.04732149839401245,
+              -0.05421135574579239,
+              -0.09617657214403152,
+              -0.17337435483932495,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09119881592739042,
+              -0.011915136890915579,
+              1.1035948120505974
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.008906312455428644,
+              "orientation_error": 1.6770576906121974
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040006356154429774,
+              -0.03980104993484372
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 8,
+            "step": 172,
+            "source": "prepare",
+            "sent_action": [
+              -0.064272440969944,
+              0.03331713750958443,
+              -0.05187736824154854,
+              -0.07149236649274826,
+              -0.1699424386024475,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09144977062491272,
+              -0.010643235628592894,
+              1.103221835586312
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.008097610800724096,
+              "orientation_error": 1.6473902556228366
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.04000570874602815,
+              -0.03980417227575162
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 9,
+            "step": 173,
+            "source": "prepare",
+            "sent_action": [
+              -0.06176289916038513,
+              0.020598122850060463,
+              -0.04814760386943817,
+              -0.049009475857019424,
+              -0.1637471467256546,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09191467951116195,
+              -0.00955356755657322,
+              1.1027355537277046
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.007231651173552992,
+              "orientation_error": 1.61793560406201
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040004966769310105,
+              -0.039808085768670856
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 10,
+            "step": 174,
+            "source": "prepare",
+            "sent_action": [
+              -0.057113807648420334,
+              0.009701442904770374,
+              -0.043284785002470016,
+              -0.02892373688519001,
+              -0.1552138328552246,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09255028723522543,
+              -0.00865284101430426,
+              1.1021613580166774
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.006313709859862512,
+              "orientation_error": 1.5887019408904655
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040004171248246054,
+              -0.03981276796264905
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 11,
+            "step": 175,
+            "source": "prepare",
+            "sent_action": [
+              -0.05075773224234581,
+              0.0006941771716810763,
+              -0.03754282742738724,
+              -0.011334913782775402,
+              -0.14479073882102966,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09331373775019541,
+              -0.007926470638550443,
+              1.1015239727026134
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.005361227848764348,
+              "orientation_error": 1.5596827885021305
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040003353033329817,
+              -0.03981817463424135
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 12,
+            "step": 176,
+            "source": "prepare",
+            "sent_action": [
+              -0.04312322661280632,
+              -0.006569526623934507,
+              -0.031168976798653603,
+              0.003744957037270069,
+              -0.13293801248073578,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09416351032195736,
+              -0.007381593163262829,
+              1.100846157980664
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.004402587191106839,
+              "orientation_error": 1.5308529600185132
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.04000253759950346,
+              -0.03982424272794703
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 13,
+            "step": 177,
+            "source": "prepare",
+            "sent_action": [
+              -0.034625500440597534,
+              -0.012018301524221897,
+              -0.024390829727053642,
+              0.016377592459321022,
+              -0.12010784447193146,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09506249682578972,
+              -0.007007066328404799,
+              1.1001490329862613
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0034772369412248297,
+              "orientation_error": 1.5022092157365938
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040001746756505245,
+              -0.039830891785897035
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 14,
+            "step": 178,
+            "source": "prepare",
+            "sent_action": [
+              -0.02563563548028469,
+              -0.015763569623231888,
+              -0.01741957850754261,
+              0.026669079437851906,
+              -0.1067252904176712,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.0959777705846596,
+              -0.006786828507052856,
+              1.099452081902993
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0026526687245040756,
+              "orientation_error": 1.4737580546390183
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.04000099533573309,
+              -0.03983803624982902
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 15,
+            "step": 179,
+            "source": "prepare",
+            "sent_action": [
+              -0.016482898965477943,
+              -0.017965948209166527,
+              -0.010450067929923534,
+              0.03477778285741806,
+              -0.09319447726011276,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09688093426323974,
+              -0.006696195661036606,
+              1.0987700166476244
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0020612053942725963,
+              "orientation_error": 1.445553834873161
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040000289017490274,
+              -0.039845571376792614
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 16,
+            "step": 180,
+            "source": "prepare",
+            "sent_action": [
+              -0.007451261393725872,
+              -0.018872275948524475,
+              -0.0036294155288487673,
+              0.040955521166324615,
+              -0.07991772145032883,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09774915788081211,
+              -0.006697644304533394,
+              1.0981161564474708
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0019120536268960237,
+              "orientation_error": 1.4175193146091
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03999919742416122,
+              -0.03985340629643018
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 17,
+            "step": 181,
+            "source": "prepare",
+            "sent_action": [
+              0.0012309749145060778,
+              -0.018857790157198906,
+              0.002909186528995633,
+              0.04534013196825981,
+              -0.06713967025279999,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09855966973296439,
+              -0.006773656975818557,
+              1.0975074092821313
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.002226270228179878,
+              "orientation_error": 1.3896124030024557
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03999760359527157,
+              -0.03986145367290733
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 18,
+            "step": 182,
+            "source": "prepare",
+            "sent_action": [
+              0.009336093440651894,
+              -0.018097663298249245,
+              0.008996658027172089,
+              0.04810311272740364,
+              -0.05507542937994003,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09929357164409341,
+              -0.006909393208582342,
+              1.0969583466288981
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00277160327222215,
+              "orientation_error": 1.3618092757691018
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039995610814662505,
+              -0.03986961908235586
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 19,
+            "step": 183,
+            "source": "prepare",
+            "sent_action": [
+              0.016675112769007683,
+              -0.016740301623940468,
+              0.014487284235656261,
+              0.04943780601024628,
+              -0.04390544444322586,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09993625074133711,
+              -0.007090433385754061,
+              1.0964804940261608
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.003358230629191148,
+              "orientation_error": 1.334087896771143
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03999332302105354,
+              -0.03987781148216542
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 20,
+            "step": 184,
+            "source": "prepare",
+            "sent_action": [
+              0.02310190349817276,
+              -0.014929899014532566,
+              0.019265810027718544,
+              0.04954260215163231,
+              -0.033764537423849106,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.1004772748322739,
+              -0.007303239152541234,
+              1.0960823052514668
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.003895234277060669,
+              "orientation_error": 1.3064271179469076
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03999083745220052,
+              -0.039885945975282895
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 21,
+            "step": 185,
+            "source": "prepare",
+            "sent_action": [
+              0.028512144461274147,
+              -0.012801841832697392,
+              0.023247698321938515,
+              0.04861491918563843,
+              -0.02474234066903591,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10091020158657431,
+              -0.007535535638258069,
+              1.0957691420694755
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.004340776727537952,
+              "orientation_error": 1.278807576641392
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03998824254217152,
+              -0.03989394584783937
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 22,
+            "step": 186,
+            "source": "prepare",
+            "sent_action": [
+              0.032841410487890244,
+              -0.010478876531124115,
+              0.026379330083727837,
+              0.04684721305966377,
+              -0.016886333003640175,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10123142752275559,
+              -0.007776427700232463,
+              1.0955439966057743
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0046740916225432695,
+              "orientation_error": 1.2512135296424494
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03998561440170741,
+              -0.039901746075667384
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 23,
+            "step": 187,
+            "source": "prepare",
+            "sent_action": [
+              0.036053672432899475,
+              -0.008069955743849277,
+              0.028630785644054413,
+              0.044426530599594116,
+              -0.010202526114881039,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10144051578525275,
+              -0.008016405596419566,
+              1.0954071076349734
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.004885835015650894,
+              "orientation_error": 1.2236332355757469
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03998302135217367,
+              -0.03990928879420681
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 24,
+            "step": 188,
+            "source": "prepare",
+            "sent_action": [
+              0.0381445549428463,
+              -0.0056701768189668655,
+              0.02999967522919178,
+              0.041530970484018326,
+              -0.004660998471081257,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10155353702666191,
+              -0.008246100196578274,
+              1.0953441432858027
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.004992034743042181,
+              "orientation_error": 1.1960735070296316
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03998056695942208,
+              -0.039916480225699304
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 25,
+            "step": 189,
+            "source": "prepare",
+            "sent_action": [
+              0.03927476704120636,
+              -0.00337323104031384,
+              0.030629318207502365,
+              0.03836987912654877,
+              -9.248474088963121e-05,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10161204041982673,
+              -0.008465472026223868,
+              1.0953315018240661
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.005035980564521014,
+              "orientation_error": 1.1685298829047939
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039978267421817336,
+              -0.03992331338839174
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 26,
+            "step": 190,
+            "source": "prepare",
+            "sent_action": [
+              0.03985980153083801,
+              -0.0011795127065852284,
+              0.03075573220849037,
+              0.035103343427181244,
+              0.0036129397340118885,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10161671674719776,
+              -0.008668623107037487,
+              1.0953616089817175
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00502070323914428,
+              "orientation_error": 1.1409902085229848
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039976106173988335,
+              -0.03992981367089559
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 27,
+            "step": 191,
+            "source": "prepare",
+            "sent_action": [
+              0.039906565099954605,
+              0.0008519980474375188,
+              0.030454661697149277,
+              0.031830597668886185,
+              0.006502727046608925,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.1015693489321648,
+              -0.008848521304011788,
+              1.0954298521081753
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.004948096421015988,
+              "orientation_error": 1.113445827011552
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039974102969670515,
+              -0.03993596972981353
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 28,
+            "step": 192,
+            "source": "prepare",
+            "sent_action": [
+              0.039432886987924576,
+              0.0026509801391512156,
+              0.029772229492664337,
+              0.028630439192056656,
+              0.00864772591739893,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10147402826368083,
+              -0.009002912378456332,
+              1.0955316249477105
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.004821933366724618,
+              "orientation_error": 1.0858881468172208
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039972265535506576,
+              -0.039941781883106875
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 29,
+            "step": 193,
+            "source": "prepare",
+            "sent_action": [
+              0.038479678332805634,
+              0.0041948906145989895,
+              0.028754500672221184,
+              0.025564134120941162,
+              0.010128148831427097,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10133644330688561,
+              -0.009133946749500035,
+              1.0956618814287853
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.004648236840247582,
+              "orientation_error": 1.0583119779861119
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039970602445114155,
+              -0.0399472492420019
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 30,
+            "step": 194,
+            "source": "prepare",
+            "sent_action": [
+              0.03710382804274559,
+              0.005505234468728304,
+              0.027451936155557632,
+              0.02267538569867611,
+              0.011030259542167187,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10116331524576398,
+              -0.009239373196485682,
+              1.0958152077853918
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.004433984475782977,
+              "orientation_error": 1.0307180080001757
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039969117176264474,
+              -0.03995237562022989
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 31,
+            "step": 195,
+            "source": "prepare",
+            "sent_action": [
+              0.035372547805309296,
+              0.0065594990737736225,
+              0.02591867372393608,
+              0.019996315240859985,
+              0.011439502239227295,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10096179851306379,
+              -0.00931705145998218,
+              1.0959859881615885
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00418652851911655,
+              "orientation_error": 1.003106059260111
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996780493490409,
+              -0.03995717279802895
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 32,
+            "step": 196,
+            "source": "prepare",
+            "sent_action": [
+              0.03335738182067871,
+              0.007336281705647707,
+              0.024210870265960693,
+              0.01754942163825035,
+              0.011437976732850075,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.1007389528797735,
+              -0.009367589313145453,
+              1.0961687662803365
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0039134437952086385,
+              "orientation_error": 0.9754750641074569
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996665600208074,
+              -0.03996165719886267
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 33,
+            "step": 197,
+            "source": "prepare",
+            "sent_action": [
+              0.03112892434000969,
+              0.00784165970981121,
+              0.022383088245987892,
+              0.015346740372478962,
+              0.01110486127436161,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.1005016182967163,
+              -0.0093930666387659,
+              1.096358409557176
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0036223453860869032,
+              "orientation_error": 0.9478250154635082
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.0399656589857374,
+              -0.03996584663304482
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 34,
+            "step": 198,
+            "source": "prepare",
+            "sent_action": [
+              0.02875557914376259,
+              0.008096433244645596,
+              0.020486654713749886,
+              0.013390876352787018,
+              0.010514553636312485,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10025630520796233,
+              -0.009396476359587333,
+              1.0965502007231993
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00332072665422711,
+              "orientation_error": 0.9201568705736414
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039964801023887206,
+              -0.03996976010465696
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 35,
+            "step": 199,
+            "source": "prepare",
+            "sent_action": [
+              0.02630244754254818,
+              0.008130530826747417,
+              0.018568743020296097,
+              0.011676844209432602,
+              0.009734724648296833,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10000901510383381,
+              -0.009381287048912926,
+              1.096739939419673
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0030156924725957043,
+              "orientation_error": 0.8924722454050091
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039964068360438885,
+              -0.039973417248012684
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 36,
+            "step": 200,
+            "source": "prepare",
+            "sent_action": [
+              0.023829547688364983,
+              0.00797863770276308,
+              0.016671357676386833,
+              0.010193835943937302,
+              0.008825399912893772,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09976510153741477,
+              -0.009351117542028758,
+              1.0969240076614335
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0027137318385199003,
+              "orientation_error": 0.8647731276975362
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039963446916913475,
+              -0.03997683776741047
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 37,
+            "step": 201,
+            "source": "prepare",
+            "sent_action": [
+              0.021390412002801895,
+              0.007676942273974419,
+              0.014830674044787884,
+              0.008926795795559883,
+              0.007838563993573189,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09952918000380619,
+              -0.009309503497927188,
+              1.0970994015824134
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0024205509152102982,
+              "orientation_error": 0.8370616513095464
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996292277697534,
+              -0.03998004096325737
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 38,
+            "step": 202,
+            "source": "prepare",
+            "sent_action": [
+              0.01903119683265686,
+              0.007260802201926708,
+              0.013076734729111195,
+              0.007857799530029297,
+              0.0068181343376636505,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.0993050816226056,
+              -0.009259738192252604,
+              1.0972637351291206
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0021409671669493065,
+              "orientation_error": 0.809339934483016
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996248257004751,
+              -0.03998304535844695
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 39,
+            "step": 203,
+            "source": "prepare",
+            "sent_action": [
+              0.01679021306335926,
+              0.006763149052858353,
+              0.01143339928239584,
+              0.006967227905988693,
+              0.005800231825560331,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09909584410977082,
+              -0.009204772386303711,
+              1.0974152207813006
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0018788597204012145,
+              "orientation_error": 0.7816099704644864
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996211376010477,
+              -0.03998586841915709
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 40,
+            "step": 204,
+            "source": "prepare",
+            "sent_action": [
+              0.014697836712002754,
+              0.006213490851223469,
+              0.009918543510138988,
+              0.006234749220311642,
+              0.004813652019947767,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09890373305317524,
+              -0.009147160122461601,
+              1.0975526325022438
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0016371679153243937,
+              "orientation_error": 0.7538735591652451
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996180484684196,
+              -0.03998852636299507
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 41,
+            "step": 205,
+            "source": "prepare",
+            "sent_action": [
+              0.012776726856827736,
+              0.0056373681873083115,
+              0.008544426411390305,
+              0.005640105344355106,
+              0.0038804879877716303,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09873028666946157,
+              -0.009089039107255245,
+              1.097675255839786
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0014179289271932655,
+              "orientation_error": 0.7261322722637971
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996154549046253,
+              -0.03999103404302346
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 42,
+            "step": 206,
+            "source": "prepare",
+            "sent_action": [
+              0.011042262427508831,
+              0.005056158173829317,
+              0.0073181926272809505,
+              0.005163722205907106,
+              0.003016835544258356,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09857637784508111,
+              -0.00903213668897516,
+              1.097782829666318
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0012223458289784476,
+              "orientation_error": 0.6983874398847992
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039961326574366234,
+              -0.03999340489337829
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 43,
+            "step": 207,
+            "source": "prepare",
+            "sent_action": [
+              0.00950317457318306,
+              0.004487134050577879,
+              0.006242454517632723,
+              0.004787166137248278,
+              0.0022335448302328587,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09844228770660166,
+              -0.008977792713574432,
+              1.097875483361201
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0010508777463289745,
+              "orientation_error": 0.6706401595622787
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039961140213383047,
+              -0.0399956509306023
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 44,
+            "step": 208,
+            "source": "prepare",
+            "sent_action": [
+              0.008162273094058037,
+              0.003943694289773703,
+              0.005315917544066906,
+              0.0044934554025530815,
+              0.0015369773609563708,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09832778611262936,
+              -0.00892699442641434,
+              1.0979536725469468
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.000903345990683542,
+              "orientation_error": 0.6428913091566618
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039960979710485366,
+              -0.039997782805499434
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 45,
+            "step": 209,
+            "source": "prepare",
+            "sent_action": [
+              0.007017257157713175,
+              0.0034357113763689995,
+              0.004534025676548481,
+              0.0042672595009207726,
+              0.0009297437500208616,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09823221475977921,
+              -0.008880417078065035,
+              1.0980181159522449
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0007790491888067137,
+              "orientation_error": 0.6151415723827152
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996083948535119,
+              -0.03999980988235235
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 46,
+            "step": 210,
+            "source": "prepare",
+            "sent_action": [
+              0.006061543710529804,
+              0.002969937864691019,
+              0.003889591433107853,
+              0.00409499229863286,
+              0.00041139996028505266,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09815457181670567,
+              -0.008838463196060227,
+              1.0980697338352376
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0006768816749987794,
+              "orientation_error": 0.5873914621742139
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996071495014861,
+              -0.04000091871472169
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 47,
+            "step": 211,
+            "source": "prepare",
+            "sent_action": [
+              0.005285114049911499,
+              0.0025503989309072495,
+              0.00337341264821589,
+              0.003964830189943314,
+              -2.0912348190904595e-05,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09809358403672086,
+              -0.008801322939664388,
+              1.098109597410225
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0005954423446886605,
+              "orientation_error": 0.5596413369200739
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996060250545141,
+              -0.04000130862046897
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 48,
+            "step": 212,
+            "source": "prepare",
+            "sent_action": [
+              0.004675236530601978,
+              0.0021789963357150555,
+              0.0029747767839580774,
+              0.003866682993248105,
+              -0.00037187032285146415,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09804778927787151,
+              -0.008768998382270663,
+              1.098138872367472
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0005331285668617175,
+              "orientation_error": 0.5318914413852095
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996049931691856,
+              -0.0400015003704
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 49,
+            "step": 213,
+            "source": "prepare",
+            "sent_action": [
+              0.004217288922518492,
+              0.0018557508010417223,
+              0.002682027406990528,
+              0.0037920798640698195,
+              -0.0006474750698544085,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09801560099074552,
+              -0.008741347187765203,
+              1.0981587766703815
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00048819457326976495,
+              "orientation_error": 0.5041419189705357
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039960403232578094,
+              -0.04000159569350286
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 50,
+            "step": 214,
+            "source": "prepare",
+            "sent_action": [
+              0.003895405912771821,
+              0.001579238916747272,
+              0.0024829842150211334,
+              0.0037340589333325624,
+              -0.0008545967284590006,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09799536757554884,
+              -0.008718120642218177,
+              1.0981705424756545
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00045877974135178674,
+              "orientation_error": 0.4763928321389377
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996031268975443,
+              -0.04000164298223956
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 51,
+            "step": 215,
+            "source": "prepare",
+            "sent_action": [
+              0.0036930718924850225,
+              0.0013469734694808722,
+              0.002365326276049018,
+              0.0036870248150080442,
+              -0.0010005946969613433,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09798542471340366,
+              -0.00869899433262502,
+              1.0981753835438082
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0004429225160048099,
+              "orientation_error": 0.44864418174470044
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996022660732057,
+              -0.04000166642264371
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 52,
+            "step": 216,
+            "source": "prepare",
+            "sent_action": [
+              0.003593643195927143,
+              0.0011557103134691715,
+              0.0023169154301285744,
+              0.003646592143923044,
+              -0.0010930044809356332,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09798413929514596,
+              -0.008683594962820423,
+              1.0981744687554826
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00043858929912450205,
+              "orientation_error": 0.4208959229351141
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039960144289636415,
+              -0.04000167806409588
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 53,
+            "step": 217,
+            "source": "prepare",
+            "sent_action": [
+              0.0035807890817523003,
+              0.0010017165914177895,
+              0.002326063346117735,
+              0.00360942748375237,
+              -0.0011392831802368164,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09798994530493489,
+              -0.008671522920058796,
+              1.0981689012223892
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00044373479438702046,
+              "orientation_error": 0.3931479790947224
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996006534063001,
+              -0.04000168386531666
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 54,
+            "step": 218,
+            "source": "prepare",
+            "sent_action": [
+              0.003638849128037691,
+              0.0008809962309896946,
+              0.002381738740950823,
+              0.003573093330487609,
+              -0.0011466103605926037,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09800137203760126,
+              -0.008662370791235632,
+              1.0981597025562262
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00045638219939086967,
+              "orientation_error": 0.3654002533822474
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03995998958825721,
+              -0.040001686740612795
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 55,
+            "step": 219,
+            "source": "prepare",
+            "sent_action": [
+              0.0037531163543462753,
+              0.0007894749287515879,
+              0.0024737254716455936,
+              0.003535900264978409,
+              -0.0011217386927455664,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09801706511293237,
+              -0.008655737887783975,
+              1.0981478018360666
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0004746964456799998,
+              "orientation_error": 0.3376526420135525
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03995991702010783,
+              -0.04000168809298405
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 56,
+            "step": 220,
+            "source": "prepare",
+            "sent_action": [
+              0.003910047002136707,
+              0.0007231459021568298,
+              0.0025927326641976833,
+              0.0034967700485140085,
+              -0.001070888014510274,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09803580098661771,
+              -0.008651241565687834,
+              1.0981340287404455
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0004970321772179826,
+              "orientation_error": 0.3099050438693603
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039959847728687256,
+              -0.04000168858434369
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 57,
+            "step": 221,
+            "source": "prepare",
+            "sent_action": [
+              0.004097405821084976,
+              0.0006781826377846301,
+              0.00273046363145113,
+              0.0034551103599369526,
+              -0.000999676063656807,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09805649561147096,
+              -0.008648525342501781,
+              1.098119110323774
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0005219544664612259,
+              "orientation_error": 0.2821573709277504
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039959781867792206,
+              -0.04000168852017067
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 58,
+            "step": 222,
+            "source": "prepare",
+            "sent_action": [
+              0.004304352216422558,
+              0.0006510204402729869,
+              0.002879647770896554,
+              0.0034107051324099302,
+              -0.0009130826801992953,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.0980782080001015,
+              -0.008647264328785563,
+              1.0981036709056815
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0005482401299946447,
+              "orientation_error": 0.2544095613126142
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039959719617745665,
+              -0.04000168804038983
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 59,
+            "step": 223,
+            "source": "prepare",
+            "sent_action": [
+              0.004521476104855537,
+              0.0006384102744050324,
+              0.0030340419616550207,
+              0.0033636188600212336,
+              -0.0008154388633556664,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09810013948453872,
+              -0.008647168493951798,
+              1.0980882345348464
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0005748684546792752,
+              "orientation_error": 0.2266615947414311
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03995966115899751,
+              -0.04000168721258828
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 60,
+            "step": 224,
+            "source": "prepare",
+            "sent_action": [
+              0.0047407909296453,
+              0.0006374519434757531,
+              0.0031884056515991688,
+              0.003314114175736904,
+              -0.0007104374235495925,
+              -0.22663624584674835,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09811051129830345,
+              -0.008572639861668965,
+              1.0980767913216758
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0005864267522675095,
+              "orientation_error": 0.20023613669565996
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03995975255080063,
+              -0.040001625057117636
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          }
+        ],
+        "sampled_actions": [
+          {
+            "stage_action": 1,
+            "step": 165,
+            "source": "prepare",
+            "sent_action": [
+              -9.081021562451497e-05,
+              0.0037426319904625416,
+              -0.02676110342144966,
+              -0.25,
+              -0.13866682350635529,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09614879479206331,
+              -0.012641078476736702,
+              1.1018243160113264
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.005506760812622062,
+              "orientation_error": 1.8530433489294915
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040007665921585,
+              -0.039793405734889986
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 10,
+            "step": 174,
+            "source": "prepare",
+            "sent_action": [
+              -0.057113807648420334,
+              0.009701442904770374,
+              -0.043284785002470016,
+              -0.02892373688519001,
+              -0.1552138328552246,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09255028723522543,
+              -0.00865284101430426,
+              1.1021613580166774
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.006313709859862512,
+              "orientation_error": 1.5887019408904655
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.040004171248246054,
+              -0.03981276796264905
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 20,
+            "step": 184,
+            "source": "prepare",
+            "sent_action": [
+              0.02310190349817276,
+              -0.014929899014532566,
+              0.019265810027718544,
+              0.04954260215163231,
+              -0.033764537423849106,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.1004772748322739,
+              -0.007303239152541234,
+              1.0960823052514668
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.003895234277060669,
+              "orientation_error": 1.3064271179469076
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03999083745220052,
+              -0.039885945975282895
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 30,
+            "step": 194,
+            "source": "prepare",
+            "sent_action": [
+              0.03710382804274559,
+              0.005505234468728304,
+              0.027451936155557632,
+              0.02267538569867611,
+              0.011030259542167187,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.10116331524576398,
+              -0.009239373196485682,
+              1.0958152077853918
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.004433984475782977,
+              "orientation_error": 1.0307180080001757
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.039969117176264474,
+              -0.03995237562022989
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 40,
+            "step": 204,
+            "source": "prepare",
+            "sent_action": [
+              0.014697836712002754,
+              0.006213490851223469,
+              0.009918543510138988,
+              0.006234749220311642,
+              0.004813652019947767,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09890373305317524,
+              -0.009147160122461601,
+              1.0975526325022438
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0016371679153243937,
+              "orientation_error": 0.7538735591652451
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996180484684196,
+              -0.03998852636299507
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 50,
+            "step": 214,
+            "source": "prepare",
+            "sent_action": [
+              0.003895405912771821,
+              0.001579238916747272,
+              0.0024829842150211334,
+              0.0037340589333325624,
+              -0.0008545967284590006,
+              -0.25,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09799536757554884,
+              -0.008718120642218177,
+              1.0981705424756545
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.00045877974135178674,
+              "orientation_error": 0.4763928321389377
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03996031268975443,
+              -0.04000164298223956
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          },
+          {
+            "stage_action": 60,
+            "step": 224,
+            "source": "prepare",
+            "sent_action": [
+              0.0047407909296453,
+              0.0006374519434757531,
+              0.0031884056515991688,
+              0.003314114175736904,
+              -0.0007104374235495925,
+              -0.22663624584674835,
+              -1.0
+            ],
+            "target_position": [
+              -0.09762606039235144,
+              -0.008583423299852446,
+              1.0984070750980837
+            ],
+            "target_orientation": [
+              [
+                0.04724960793903396,
+                0.994656794110724,
+                -0.09178963165293265
+              ],
+              [
+                0.9982114983787649,
+                -0.05038723532011949,
+                -0.03217034381558171
+              ],
+              [
+                -0.03662347681508974,
+                -0.09010542961535879,
+                -0.9952586259358936
+              ]
+            ],
+            "current_position": [
+              -0.09811051129830345,
+              -0.008572639861668965,
+              1.0980767913216758
+            ],
+            "current_orientation": null,
+            "last_errors": {
+              "position_error": 0.0005864267522675095,
+              "orientation_error": 0.20023613669565996
+            },
+            "gripper_command": -1.0,
+            "gripper_qpos": [
+              0.03995975255080063,
+              -0.040001625057117636
+            ],
+            "collision_reason": null,
+            "known_robot_contacts": null,
+            "grasp_observation_complete": true,
+            "held_objects": []
+          }
+        ],
+        "orientation_min_rad": 0.20023613669565996,
+        "orientation_max_rad": 1.8530433489294915,
+        "orientation_final_rad": 0.20023613669565996,
+        "orientation_monotonic_nondecreasing": false,
+        "orientation_monotonic_nonincreasing": true,
+        "position_min_m": 0.00043858929912450205,
+        "position_max_m": 0.010627353578224448,
+        "position_final_m": 0.0005864267522675095,
+        "missing_fields": [
+          "current_orientation",
+          "known_robot_contacts"
+        ]
+      },
+      "video": {
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_04_helper_after_wine/job/rollout.mp4",
+        "sha256": "c4e26dcf5e98f20f2ee6efb1a06c3c0b05b0c3cb24fe4766c606f40d8d9506b9",
+        "frame_count": 225,
+        "fps": 20.0,
+        "actions_plus_initial_frame_verified": true,
+        "frames": [
+          {
+            "label": "first",
+            "index": 0,
+            "path": "evidence/frames/case04/first.png",
+            "sha256": "79c15ae154ba935f0b18ca50cb2b1f48d58689c2da5043804efd13f66b631989",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          },
+          {
+            "label": "middle",
+            "index": 112,
+            "path": "evidence/frames/case04/middle.png",
+            "sha256": "14afbc0fedc6d02795572bfe2af139f4b249786b1f20514be803c94654793949",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          },
+          {
+            "label": "last",
+            "index": 224,
+            "path": "evidence/frames/case04/last.png",
+            "sha256": "fdd16b999f554ba99e74c8a22f4ef24b023804a7683118c46540c1e6d077bff1",
+            "shape": [
+              256,
+              256,
+              3
+            ],
+            "decoded_pixels_exact": true
+          }
+        ]
+      }
+    }
+  ],
+  "physical_calls": 0,
+  "model_calls": 0,
+  "api_calls": 0,
+  "reference_cut_reading": {
+    "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/cut/reading.json",
+    "sha256": "8f69fd5b86d71cc2510f6a62a1656260beb903d335830e6f09e5d46aaa583d2e",
+    "pose": {
+      "position": [
+        -0.06482413292410762,
+        0.05001658421739147,
+        1.0121087732479783
+      ],
+      "orientation_matrix": [
+        [
+          0.04724960793903395,
+          0.994656794110724,
+          -0.09178963165293264
+        ],
+        [
+          0.9982114983787649,
+          -0.0503872353201195,
+          -0.0321703438155817
+        ],
+        [
+          -0.03662347681508973,
+          -0.09010542961535878,
+          -0.9952586259358936
+        ]
+      ],
+      "orientation": [
+        [
+          0.04724960793903395,
+          0.994656794110724,
+          -0.09178963165293264
+        ],
+        [
+          0.9982114983787649,
+          -0.0503872353201195,
+          -0.0321703438155817
+        ],
+        [
+          -0.03662347681508973,
+          -0.09010542961535878,
+          -0.9952586259358936
+        ]
+      ]
+    },
+    "gripper_gap_m": 0.07936711463696174,
+    "object_positions": {
+      "akita_black_bowl_1": [
+        -0.09762606039235144,
+        -0.008583423299852446,
+        0.8984070750980836
+      ],
+      "cream_cheese_1": [
+        -0.04602629144396026,
+        0.13447270946529477,
+        0.9089214774186077
+      ],
+      "wine_bottle_1": [
+        -0.20423290037391095,
+        -0.06165089486055362,
+        0.8988754774203452
+      ],
+      "plate_1": [
+        0.062073867819834094,
+        -0.009382152565275154,
+        0.902506338529415
+      ]
+    },
+    "robot_contacts": []
+  }
+}

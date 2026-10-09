@@ -1,0 +1,415 @@
+{
+  "case": "case_02_native_mid_resume",
+  "operational_errors": [],
+  "unknown": [],
+  "physical_success": true,
+  "new_hermes_calls": 0,
+  "model_seed": 0,
+  "init_state_index": 0,
+  "gold": [
+    [
+      "on",
+      "akita_black_bowl_1",
+      "plate_1"
+    ]
+  ],
+  "assist_enabled": false,
+  "replay_actions": 30,
+  "session": {
+    "ok": true,
+    "session_id": "8d10e585949146518c2c38a655b91695",
+    "scene_id": "goal_table",
+    "state": "ready",
+    "scene_version": 0,
+    "env_instance_id": 2,
+    "episode_resets": 1,
+    "policy_resets": 0,
+    "total_steps": 0,
+    "seed": 0,
+    "init_state_index": 0,
+    "description": "Shared original bowl, wine and stove scene; no trash bin exists here.",
+    "storage_policy": {
+      "akita_black_bowl_1": "plate_1",
+      "wine_bottle_1": "wine_rack_1_top_region"
+    },
+    "capabilities": [
+      {
+        "instruction": "put the bowl on the plate",
+        "goals": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ]
+        ],
+        "object_id": "akita_black_bowl_1",
+        "target_id": "plate_1",
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "v0.1.0 single-task success in libero_goal/8; sequence and shifted-layout reliability unverified",
+        "audit_only": false,
+        "exclusive_target": true,
+        "capability_id": "bowl_to_plate"
+      },
+      {
+        "instruction": "put the wine bottle on the rack",
+        "goals": [
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ]
+        ],
+        "object_id": "wine_bottle_1",
+        "target_id": "wine_rack_1_top_region",
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "candidate here; v0.1.0 single-task wine success used libero_goal/9, a different task initialization",
+        "audit_only": false,
+        "exclusive_target": true,
+        "capability_id": "wine_to_rack"
+      },
+      {
+        "instruction": "turn on the stove",
+        "goals": [
+          [
+            "turnon",
+            "flat_stove_1"
+          ]
+        ],
+        "object_id": "flat_stove_1",
+        "target_id": null,
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "candidate here; v0.1.0 single-task stove success used libero_goal/7, a different task initialization",
+        "audit_only": false,
+        "exclusive_target": false,
+        "capability_id": "stove_on"
+      }
+    ],
+    "images": [
+      {
+        "view": "agentview",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T091921Z_goal_table_8d10e585/agentview.png",
+        "sha256": "576c32456ea62e6a4d828240ce9d0c8ceb207618fade6a9b2014e29e71ef0d71",
+        "kind": "vla_observation"
+      },
+      {
+        "view": "wrist",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T091921Z_goal_table_8d10e585/wrist.png",
+        "sha256": "09c739380d345eb82aa70d3fc9cc5ae60cdd01fb111b64d6cb891f4236c5329c",
+        "kind": "vla_observation"
+      }
+    ],
+    "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T091921Z_goal_table_8d10e585/latest.png",
+    "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T091921Z_goal_table_8d10e585",
+    "active_request_id": null,
+    "error": null
+  },
+  "origin_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "prefix_after_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+  "model_rng": {
+    "ok": true,
+    "seeded": true,
+    "seed": 0
+  },
+  "job": {
+    "job_id": "a7f2f2d6aca14fb59646d64ff4b6b544",
+    "request_id": "39f462b13f23425fb937d228e8d8465d",
+    "session_id": "8d10e585949146518c2c38a655b91695",
+    "capability_id": "bowl_to_plate",
+    "state": "completed",
+    "steps": 61,
+    "total_steps": 91,
+    "success": true,
+    "ended_reason": "success",
+    "error": null,
+    "instruction": "put the bowl on the plate",
+    "scene_version_before": 0,
+    "scene_version_after": 1,
+    "state_before_sha": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+    "state_after_sha": "ba3ad34ee1370e1b20395fe374c0a707455fd7bd6aab7a8341ce3c5f9745ca0c",
+    "env_instance_id": null,
+    "episode_resets": null,
+    "completion_mode": null,
+    "phase": "not_holding",
+    "held_objects": [],
+    "grasp_observation_complete": true,
+    "completion_ready": true,
+    "grasp_guard_mode": null,
+    "grasp_stage": null,
+    "grasp_guard_status": null,
+    "semantic_spec_id": null,
+    "semantic_state": null,
+    "semantic_candidate_streak": null,
+    "semantic_success": null,
+    "native_wine_predicate": null,
+    "semantic_observation_samples": 0,
+    "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job",
+    "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/latest.png",
+    "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/rollout.mp4",
+    "wall_s": 36.217
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "39f462b13f23425fb937d228e8d8465d",
+    "session_id": "8d10e585949146518c2c38a655b91695",
+    "state": "completed",
+    "decision": "execute",
+    "capability_ids": [
+      "bowl_to_plate"
+    ],
+    "original_capability_ids": [
+      "bowl_to_plate"
+    ],
+    "rationale": "Five-gate entry compatibility diagnostic; no new Hermes request.",
+    "job_ids": [
+      "a7f2f2d6aca14fb59646d64ff4b6b544"
+    ],
+    "completed_capability_ids": [
+      "bowl_to_plate"
+    ],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": null,
+    "repair_history": [],
+    "scene_version": 0
+  },
+  "scene_error": null,
+  "score": {
+    "gold": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ],
+    "final_predicates": {
+      "on|akita_black_bowl_1|plate_1": true
+    },
+    "last5_strict_samples": true,
+    "final_strict_candidate": true,
+    "empty_hand": true,
+    "all_physical_objects_unheld": true,
+    "stove_off": true,
+    "protected_displacement_m": {
+      "wine_bottle_1": 1.3877787807814457e-17,
+      "cream_cheese_1": 0.0
+    },
+    "protection_ok": true,
+    "unknown": [],
+    "physical_gold_success": true
+  },
+  "prepare_confirmed": false,
+  "prepare_actions": 0,
+  "new_vla_actions": 61,
+  "source_counts": {
+    "prepare": 0,
+    "local_grasp": 0,
+    "vla": 61
+  },
+  "new_motion_actions": 61,
+  "physical_actions": 91,
+  "before_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+  "after_sha256": "ba3ad34ee1370e1b20395fe374c0a707455fd7bd6aab7a8341ce3c5f9745ca0c",
+  "handoff_capture": {
+    "directory": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff",
+    "state_before_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+    "state_after_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+    "readonly_state_unchanged": true,
+    "capture_count": 1,
+    "before_first_vla": true,
+    "current_batch_saved": true,
+    "comparison": {
+      "reference_cut_step": 30,
+      "eef_position_error_m": 0.0,
+      "eef_orientation_error_rad": 0.0,
+      "gripper_gap_difference_m": 0.0,
+      "qpos_l2": 0.0,
+      "qvel_l2": 0.0,
+      "reference_state_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+      "actual_state_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+      "complete_state_equality_required": false
+    },
+    "session_id": "8d10e585949146518c2c38a655b91695",
+    "job_id": null,
+    "case": "case_02_native_mid_resume"
+  },
+  "handoff_capture_count": 1,
+  "telemetry_paths": [
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/telemetry.jsonl"
+  ],
+  "assistance_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/subtask_assist.json",
+  "diagnostic_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/diagnostic.json",
+  "rollout": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/rollout.mp4",
+  "gate_pass": true,
+  "evidence": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/after_snapshot.json",
+      "bytes": 2869,
+      "sha256": "9463a1f005129990e095b3f92cc35ec205c81fb193c8e88a3d8975f43c55dab6"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/before_snapshot.json",
+      "bytes": 2867,
+      "sha256": "104900f41560de499ef1bb909518298cd627c14fd2b5ff4c3c41a99febb4640d"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/agentview.png",
+      "bytes": 66994,
+      "sha256": "46baf7a42954389ba8520c37a68b3160795810f0c59b35f8daf012b3e4e7b419"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/capture.json",
+      "bytes": 984,
+      "sha256": "d99a4cf58dc914cb86ae81b34b72272c86a9823099d2e58633e2ed3e6d1af958"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/comparison.json",
+      "bytes": 402,
+      "sha256": "4b32ea821a213eefcda39bb13d46466c25e89e0e8455840b0f03faaba8cb8ffe"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/observation.keys.json",
+      "bytes": 423,
+      "sha256": "b650366cd4885dc238dd7edceffa85051fb00ce6c42614a5338d2213a5b165bb"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/observation.npz",
+      "bytes": 161532,
+      "sha256": "4df7bd447780ec40d9e7fde65dd27d2019517548af9d7109a02528483d21ed48"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/policy_batch.keys.json",
+      "bytes": 280,
+      "sha256": "ee71df633526b30e0187832bf4e91632f785768a5d9b138830e7fa836cbf71e3"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/policy_batch.npz",
+      "bytes": 275670,
+      "sha256": "acaf9bf3b2b104a2859a437f1841681e6177b8009acf1c24d1b52e29cafed2bb"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/pose.json",
+      "bytes": 708,
+      "sha256": "283a4f0a76b861a8729b6371b9325f284db488a642742acff2142ebd848f386a"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/qpos_qvel.npz",
+      "bytes": 970,
+      "sha256": "e95db634fa0bc66df1f21e4f170c0d7ddd78157defbce9de35a0b3a54d46f856"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/reading.json",
+      "bytes": 235304,
+      "sha256": "3bd08e02eaa50e1d63365b40400952ea95a3a0c1a6089954825c2ea3c89ec763"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/sim_state.npy",
+      "bytes": 760,
+      "sha256": "209be1cfa70c4877b317947e4c7d3d5a158e4bd49084b320b6c6e6ff6e67030f"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/snapshot.json",
+      "bytes": 2867,
+      "sha256": "104900f41560de499ef1bb909518298cd627c14fd2b5ff4c3c41a99febb4640d"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/handoff/wrist.png",
+      "bytes": 64746,
+      "sha256": "b603b6f6b572219a8127c74d70a884e0963b729e7b19089638bbc9afb1e4b498"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/action_sources.jsonl",
+      "bytes": 18295,
+      "sha256": "390cfd4fb23c19d63622e01be9e5a8e2878a10c940db16d553d5673580f3e9ca"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/diagnostic.json",
+      "bytes": 217098,
+      "sha256": "b65807c03a3a5ad544aab945bf044ea2b023e10eac23c16e4634fdf27d9710ea"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/events.jsonl",
+      "bytes": 37019,
+      "sha256": "f83c7cf602411b81eb5cc788d86f62746521b76601700ce966711b77bdfdcb20"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/first.png",
+      "bytes": 66994,
+      "sha256": "46baf7a42954389ba8520c37a68b3160795810f0c59b35f8daf012b3e4e7b419"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/last.png",
+      "bytes": 67251,
+      "sha256": "9c4fda7b5511e8b061885f68946ad608f7051ccb94592ce696d6ed56039c4ecf"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/latest.png",
+      "bytes": 67251,
+      "sha256": "9c4fda7b5511e8b061885f68946ad608f7051ccb94592ce696d6ed56039c4ecf"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/result.json",
+      "bytes": 1781,
+      "sha256": "d5fa7babce2ab80f2a2155865a773c287f2a6b4f6f901df7b97d696bf5868037"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/rollout.mp4",
+      "bytes": 40232,
+      "sha256": "16f731d59f3ca941ff73efca3b64278cb3d92e804e2966d48a6c2d38096c3a70"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/subtask_assist.json",
+      "bytes": 698,
+      "sha256": "c97a0e5041dcb2fc279c716f642502b0fd3b990ac9650fff48590bc79d9dd6fc"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/telemetry.jsonl",
+      "bytes": 271905,
+      "sha256": "17476306a7f70e4136006be59e7b55f0297b6e8dd3916260c45f68cbbd1c27bc"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/wine_diagnostic.json",
+      "bytes": 3073,
+      "sha256": "31b868f8de43302fe4abcdaf7d7d4b5c7dd4a713b0bc5a19eb6829655c5d9d26"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/job/wine_telemetry.jsonl",
+      "bytes": 353427,
+      "sha256": "696dde8e3755e9408b2655a45bf2ad1f4d86e220fdd1580d7418ea1269d1cc8b"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/raw_job.json",
+      "bytes": 1487,
+      "sha256": "861126b5e729b6f7af412231c302611ab77862295286e15a97aa0f5e5035c79b"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/raw_plan.json",
+      "bytes": 611,
+      "sha256": "aef93cbcff23a157abaa80cf38a0a27992a8d005bbb46a8c29e2fcc7e939e02e"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/replay.jsonl",
+      "bytes": 71184,
+      "sha256": "884f19a579bca4e14d3ceff4eec1020bef4548d99fa19c26561fd894db3e53fe"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/replay_after.json",
+      "bytes": 2867,
+      "sha256": "6c181d959994db00381658f33db8a0ad13a8497ae6060f24eb84b225249a9890"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_02_native_mid_resume/replay_before.json",
+      "bytes": 2866,
+      "sha256": "827afbee5a20847a8f67b9f373051db6988b64353fce6187ec6facf30c9e8cc5"
+    }
+  ]
+}

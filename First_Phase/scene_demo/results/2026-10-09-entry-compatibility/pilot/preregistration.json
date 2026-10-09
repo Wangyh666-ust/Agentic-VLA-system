@@ -1,0 +1,223 @@
+{
+  "cases": [
+    "case_01_reference_replay",
+    "case_02_native_mid_resume",
+    "case_03_helper_native_entry",
+    "case_04_helper_after_wine",
+    "case_05_helper_native_holdout"
+  ],
+  "max_physical_cases": 5,
+  "case01_reference_actions": 102,
+  "cut_step": 30,
+  "case02_replay_actions": 30,
+  "case04_wine_replay_actions": 346,
+  "case05_init_state_index": 1,
+  "cut_origin_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "wine_handoff_sha256": "2a4521602e384127e079782f4ff0b9ba8537548aabce2ba348a9c7320129c857",
+  "gold_by_case": {
+    "case_01_reference_replay": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ],
+    "case_02_native_mid_resume": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ],
+    "case_03_helper_native_entry": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ],
+    "case_04_helper_after_wine": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ],
+      [
+        "on",
+        "wine_bottle_1",
+        "wine_rack_1_top_region"
+      ]
+    ],
+    "case_05_helper_native_holdout": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ]
+  },
+  "stop_rule": "Stop remaining cases unless previous physical_success is strictly True and no operation/unknown/cancel errors; no retry.",
+  "enabled_cases": [
+    "case_03_helper_native_entry",
+    "case_04_helper_after_wine",
+    "case_05_helper_native_holdout"
+  ],
+  "generic_prepare_cap": 200,
+  "entry_bridge_cap": 100,
+  "total_action_budget": 500,
+  "prepare_position_tolerance_m": 0.005,
+  "prepare_orientation_tolerance_rad": 0.05,
+  "post_samples": 5,
+  "shape_dimension_profile_tolerance": 0.1,
+  "protected_objects": [
+    "wine_bottle_1",
+    "cream_cheese_1"
+  ],
+  "protected_displacement_m": 0.005,
+  "stove_goal": [
+    "not",
+    "turnon",
+    "flat_stove_1"
+  ],
+  "env_seed": 0,
+  "model_seed": 0,
+  "model_seed_limit": "Fresh continuation seed0 is not recreation of old random sampling stream.",
+  "profile": "baseline_bf16",
+  "profile_config": {
+    "use_amp": true,
+    "num_steps": 10,
+    "n_action_steps": 1
+  },
+  "instruction": "put the bowl on the plate",
+  "completion_mode": "release_verified",
+  "grasp_guard_mode": "shadow",
+  "checkpoint_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+  "new_hermes_calls": 0,
+  "new_baseline_jobs": 0,
+  "retries": 0,
+  "extra_physical_preflight": 0,
+  "source_sha256": {
+    "app.py": "075943ba23c30149db736c9693d4d6cfdfcc699cb124dcef2c2f4888881d2cfb",
+    "catalog.py": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02",
+    "collision_geometry.py": "a5e54ab21b6943b47b177691cf1691d0e8a775ad4ea36d59f7bf53eb04c0c202",
+    "collision_grasp.py": "451d31c6e671b86c6f6fde4407de60d937107b6f6dd2c226245de1c5762f4898",
+    "collision_grasp_pilot.py": "1113abbf99c8f51953aebfea9af6f4390ec87bdd380ce85eb21efa8b84fc6354",
+    "entry_compatibility.py": "1004d20e00a46ff3ef392ae8658ffd994a1bacd0f9b559588fb47951d008b5aa",
+    "export_grasp_config_results.py": "402552073a5ba7d6cbaa3fe12924daaf65eaa3b2846e9de55e95c2d89da05148",
+    "grasp_assist_service.py": "c97e2279b05868862cbfe2d364ab58ed65130aa72550f937756a86f2c88b32fa",
+    "grasp_calibration.py": "71ea59c5ba411d4cab7370825bb2bc8928c2db43d55816d6d5c2ab6d0e375ac4",
+    "grasp_guard.py": "cdfd81215e2feee7d3d1d538a739518c405f3ca64646ac82d955630ab6f77eaf",
+    "guard_validation.py": "bfca3cea9ae380210c432a174a989e5991728e83f1c48bd22092ceb6f3f62169",
+    "local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d",
+    "mcp_server.py": "add14a4258f4de0e5e102aab21245697cee427131d7d5b1815c1b099a8d03668",
+    "oracle.py": "2e51f77bba85ef4d51f751dc8b59babc11d7635f92d9c546f30975e75b0cfd8f",
+    "paired_config_experiments.py": "90483620089b23241d5eb30f335d0f0a70035add25e099257880e558b34508b1",
+    "placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+    "placement_experiments.py": "bc4959ace0e534644e655b2fda7f1fcde22f022a35d9e587e378e9936a57bc10",
+    "planning_diagnostics.py": "13e48f7e507f8493a98e36d8a415d988c87fea4eae25d7d253c882dcac8d5cf8",
+    "preparation_diagnostics.py": "00861b6cc8f9619c630dacced029fdcd8733a195c5f4027de92cc70ae0e87eb7",
+    "run_agent.py": "7097f7535aecebb91d820e6cde9bfe03af7838368c0b827c78155b96e14d0281",
+    "run_experiments.py": "c239dcbbaf8d759eb8f1104d24b3f43159ab8045d29ec0e6d5964b6d4951320e",
+    "service.py": "42a449191890aeafd64c48647c79223cc36d11a2fba386a40c2cae28ebfcd6b4",
+    "setup_profile.py": "c26606d648adc34f83f5161142a29f00c739999097cc335a4937b3e52881ad20",
+    "side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+    "side_grasp_calibration.py": "eb33d07264b8aae3d6cbeca41e5611490a5c5ca603c5a537ee258ce42f97a275",
+    "side_grasp_pilot.py": "8e26e9c5c4830c3b593396a660faa50a1adfceb5bc8286276592d34e4ac62e91",
+    "skill_context_diagnostics.py": "5f4212a458920e4b5d32e69a837cf4edc9597f448749278da24439f2669169a5",
+    "subtask_assist_service.py": "e36e38c48d88e81209ab62e6c7cd9d0453c36234161faa49f7fe86ebdbb079ff",
+    "subtask_context.py": "7bbb5679a8b1ead97bbae5f933ea0578f6b518be7d45383f62c4f4ac26625c2e",
+    "subtask_geometry.py": "02292b9750b8bbfed44308f56861f2186e1d2cc4764c7ba88779bde9197dfd05",
+    "subtask_preparation.py": "0c5c64e4be692feb52241aeb01793752783b10ce24a90da2f155c74c349a6ecf",
+    "test_entry_compatibility.py": "230e0d6cbfb3673f688a0b763ba000db95b584f4e874da7fe6f51dee5dd48be1",
+    "test_subtask_assist.py": "cfb068def1760ed9cfcfb83291f844e48b4eca6529670246ff78e6ff0b7d3686",
+    "test_subtask_prepare_repair.py": "07006976550d421e879a776dd0ed58f2970c109158930fb306fea8e566b62a33",
+    "wine_diagnostics.py": "236ed46af5d36e65ad48fa3dc8fa175ad9234180ed2a972f17cfe64e5e6419ef",
+    "wine_pose_diagnostics.py": "3308b4cee00d5a5ca6db10dc31ac2a13a6a019f069764f9bee6b99ed3ad8de51",
+    "wine_semantic.py": "e7741154b96f7a20e25f29ac5ef4965f905fc22adef84f4e271c34260775b508"
+  },
+  "historical_sha256": {
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-07/artifacts/release_verified_bowls/baseline_bf16/bowl_control/job_01/telemetry.jsonl.gz": "6251b61a36b99354a816bd8430ac6f920cf11fbba01f6799c9fa306b1776a1a7",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-07/artifacts/release_verified_bowls/baseline_bf16/bowl_control/job_01/diagnostic.json.gz": "ee48cc361f05e308e17ffef8e93c2af7ef9049e974b0072f1a2b21bf75af1019",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/action_sources.jsonl.gz": "7f9eb55c35ecf515a9a357298d82d113b1865a8092848b6851069225394be777",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-collision-chain/pilot_v2/case_02/job_01/result.json": "687a5ac37a795cc3977b6ef7f7f26f083d0f40c3fbccc907b2b3a290be2ae344"
+  },
+  "fixed_files_sha256": {
+    "/mnt/d/FYP/First_Phase/scene_demo/subtask_assist_profiles.json": "af2dba656f02c2a6c5cc1d6056ec2d0047b5a182b61b9d028854e5a787ccc6a2",
+    "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-09-entry-compatibility.md": "519e97bed74cf008664d836b9105100fc8ac5cbe3a3516fd2c43a56c2bf7882e",
+    "/mnt/d/FYP/First_Phase/tmp/entry_compat_20261009_run.py": "8c750127785334135a767c285501e7a3792e082ee298932a644e4b7f8dfe7212",
+    "/mnt/d/FYP/First_Phase/tmp/entry_compat_20261009_inputs.json": "cc10a65fcfeedfe9131ced14a70c432936e527a7073d795958ed0e780719c688",
+    "/mnt/d/FYP/First_Phase/tmp/entry_compat_20261009_software_proof.json": "8eae3e24d9833b349739042d3b91fa9c141eff4058cf4ca68f77bf357efa482a"
+  },
+  "inputs_before": {
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-07\\artifacts\\release_verified_bowls\\baseline_bf16\\bowl_control\\job_01\\telemetry.jsonl.gz": {
+      "path": "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-07\\artifacts\\release_verified_bowls\\baseline_bf16\\bowl_control\\job_01\\telemetry.jsonl.gz",
+      "bytes": 58012,
+      "sha256": "6251b61a36b99354a816bd8430ac6f920cf11fbba01f6799c9fa306b1776a1a7"
+    },
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-07\\artifacts\\release_verified_bowls\\baseline_bf16\\bowl_control\\job_01\\diagnostic.json.gz": {
+      "path": "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-07\\artifacts\\release_verified_bowls\\baseline_bf16\\bowl_control\\job_01\\diagnostic.json.gz",
+      "bytes": 50811,
+      "sha256": "ee48cc361f05e308e17ffef8e93c2af7ef9049e974b0072f1a2b21bf75af1019"
+    },
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-collision-chain\\pilot_v2\\case_02\\job_01\\action_sources.jsonl.gz": {
+      "path": "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-collision-chain\\pilot_v2\\case_02\\job_01\\action_sources.jsonl.gz",
+      "bytes": 211659,
+      "sha256": "7f9eb55c35ecf515a9a357298d82d113b1865a8092848b6851069225394be777"
+    },
+    "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-collision-chain\\pilot_v2\\case_02\\job_01\\result.json": {
+      "path": "D:\\FYP\\First_Phase\\scene_demo\\results\\2026-10-09-collision-chain\\pilot_v2\\case_02\\job_01\\result.json",
+      "bytes": 2060,
+      "sha256": "687a5ac37a795cc3977b6ef7f7f26f083d0f40c3fbccc907b2b3a290be2ae344"
+    },
+    "D:\\FYP\\First_Phase\\tmp\\subtask_assist_git_publish_proof.json": {
+      "path": "D:\\FYP\\First_Phase\\tmp\\subtask_assist_git_publish_proof.json",
+      "bytes": 159223,
+      "sha256": "c2935523b0c2c92cfc52e514a0880f859cfe481fbbc83bf6d3a2a603b258cf85"
+    }
+  },
+  "user8_before": [
+    {
+      "path": "D:\\FYP\\1",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "D:\\FYP\\proposal\\FYP_Research_Proposal_v1.md",
+      "bytes": 29604,
+      "sha256": "40bbf46f73ba67cf0b9a62671821934a8c65d0b9a1cff40ab0bb9ae80b093223"
+    },
+    {
+      "path": "D:\\FYP\\proposal\\research_proposal_draft_v0.1.md",
+      "bytes": 20228,
+      "sha256": "856d1105f3dccc2f399f0e15978f02e489720668642ad6c668b5559fc796613f"
+    },
+    {
+      "path": "D:\\FYP\\\u9009\u9898\\38_JZ1_Prop.pdf",
+      "bytes": 458559,
+      "sha256": "edf38cef1f6e1ecdce54c5be2a3bdd4fb7ad87483b9ed20c6ec1aae8b93980a7"
+    },
+    {
+      "path": "D:\\FYP\\\u9009\u9898\\\u539f\u7a3f\u5907\u4efd\\\u9009\u9898\u4e00_IL\u9884\u8bad\u7ec3\u4e0eRL\u5fae\u8c03\u7ba1\u7ebf\u7684\u5173\u952e\u8bbe\u8ba1\u95ee\u9898\u5b9e\u8bc1\u7814\u7a76.md",
+      "bytes": 20210,
+      "sha256": "4fd453ba5d282abe9670553cd8b145e224876d5a915fee2a5d18b181463b9f99"
+    },
+    {
+      "path": "D:\\FYP\\\u9009\u9898\\\u539f\u7a3f\u5907\u4efd\\\u9009\u9898\u4e09_\u90e8\u7f72\u4e2d\u81ea\u6211\u6539\u8fdb\u7684\u4e2a\u6027\u5316\u5177\u8eab\u667a\u80fd\u4f53.md",
+      "bytes": 29793,
+      "sha256": "f20184013c9adea10729b964c1474c358dc19ccc0802583fafac71ce16acbdcc"
+    },
+    {
+      "path": "D:\\FYP\\\u9009\u9898\\\u9009\u9898\u4e00_IL\u9884\u8bad\u7ec3\u4e0eRL\u5fae\u8c03\u7ba1\u7ebf\u7684\u5173\u952e\u8bbe\u8ba1\u95ee\u9898\u5b9e\u8bc1\u7814\u7a76.md",
+      "bytes": 13801,
+      "sha256": "bcdc9ce2cf3fff97a11dae05e93a8d9e9def3b77fd5e94c68e89c627152ea8eb"
+    },
+    {
+      "path": "D:\\FYP\\\u9009\u9898\\\u9009\u9898\u4e09_\u90e8\u7f72\u4e2d\u81ea\u6211\u6539\u8fdb\u7684\u4e2a\u6027\u5316\u5177\u8eab\u667a\u80fd\u4f53.md",
+      "bytes": 16159,
+      "sha256": "8e8eda94675eb3d7a35d7e1ffc9239fb14827a667b2335aefa88126668517ca8"
+    }
+  ],
+  "entry_profile": "object-local normalized position, relative orientation/gap at preregistered step30; no retuning",
+  "no_production_changes": true,
+  "full_arm_ik_or_collision_guarantee": false
+}

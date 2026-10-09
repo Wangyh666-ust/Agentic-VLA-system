@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "protocol_ok": true,
+  "protocol_ok_is_not_all_tasks_success": true,
+  "argv": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu",
+    "--cd",
+    "/mnt/d/FYP/First_Phase/scene_demo",
+    "--exec",
+    "env",
+    "MUJOCO_GL=egl",
+    "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+    "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+    "HF_HUB_OFFLINE=1",
+    "TRANSFORMERS_OFFLINE=1",
+    "PYTHONPATH=/home/yhwang/fyp/vla/lerobot/src:/mnt/d/FYP/First_Phase/scene_demo",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/yhwang/fyp/libero_demo/venv/bin/python",
+    "/mnt/d/FYP/First_Phase/tmp/entry_compat_20261009_run.py",
+    "--output-dir",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot",
+    "--profiles",
+    "/mnt/d/FYP/First_Phase/scene_demo/subtask_assist_profiles.json",
+    "--software-proof",
+    "/mnt/d/FYP/First_Phase/tmp/entry_compat_20261009_software_proof.json",
+    "--inputs",
+    "/mnt/d/FYP/First_Phase/tmp/entry_compat_20261009_inputs.json"
+  ],
+  "cli_exit_code": 0,
+  "wall_s": 297.17272909999883,
+  "planned_cases": 5,
+  "executed_cases": 4,
+  "case_results": [
+    {
+      "case": "case_01_reference_replay",
+      "physical_success": true,
+      "gate_pass": true,
+      "replay_actions": 102,
+      "prepare_actions": 0,
+      "new_vla_actions": 0,
+      "job": {
+        "steps": null,
+        "success": null,
+        "ended_reason": null,
+        "error": null
+      },
+      "handoff_capture_count": null
+    },
+    {
+      "case": "case_02_native_mid_resume",
+      "physical_success": true,
+      "gate_pass": true,
+      "replay_actions": 30,
+      "prepare_actions": 0,
+      "new_vla_actions": 61,
+      "job": {
+        "steps": 61,
+        "success": true,
+        "ended_reason": "success",
+        "error": null
+      },
+      "handoff_capture_count": 1
+    },
+    {
+      "case": "case_03_helper_native_entry",
+      "physical_success": true,
+      "gate_pass": true,
+      "replay_actions": 0,
+      "prepare_actions": 165,
+      "new_vla_actions": 59,
+      "job": {
+        "steps": 224,
+        "success": true,
+        "ended_reason": "success",
+        "error": null
+      },
+      "handoff_capture_count": 1
+    },
+    {
+      "case": "case_04_helper_after_wine",
+      "physical_success": false,
+      "gate_pass": false,
+      "replay_actions": 346,
+      "prepare_actions": 224,
+      "new_vla_actions": 0,
+      "job": {
+        "steps": 224,
+        "success": false,
+        "ended_reason": "subtask_prepare_failed",
+        "error": "stage_timeout"
+      },
+      "handoff_capture_count": 0
+    }
+  ],
+  "not_run": [
+    {
+      "case": "case_05_helper_native_holdout",
+      "reason": "previous_case_gate_failed:case_04_helper_after_wine"
+    }
+  ],
+  "gate_stopped_at": "case_04_helper_after_wine",
+  "operational_errors": [],
+  "close_env": {
+    "ok": true
+  },
+  "source_inputs_profile_plan_user8_unchanged": true,
+  "stdout_sha256": "082577a28746ca8c089a400eab7eba125e0a289b0d7ca015ece05cd2c2bd18a5",
+  "stderr_sha256": "83dc9538f857715f1245eaefc44c285fef67eecaf094a0f3f76320f3e45ad8bd",
+  "report_sha256": "3a4ce35f392b95400d4740656752435fdb32149167f6e941d41ce8faf2d37ccf",
+  "preregistration_sha256": "2d3633fbe2c9421b625f4af7c52d959763785414cd047036d379532ffe8ef72a",
+  "fresh_hermes_calls": 0,
+  "training_calls": 0
+}

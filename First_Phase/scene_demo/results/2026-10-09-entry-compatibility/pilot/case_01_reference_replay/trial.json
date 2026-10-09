@@ -1,0 +1,226 @@
+{
+  "case": "case_01_reference_replay",
+  "operational_errors": [],
+  "unknown": [],
+  "physical_success": true,
+  "new_hermes_calls": 0,
+  "model_seed": 0,
+  "init_state_index": 0,
+  "gold": [
+    [
+      "on",
+      "akita_black_bowl_1",
+      "plate_1"
+    ]
+  ],
+  "assist_enabled": false,
+  "replay_actions": 102,
+  "session": {
+    "ok": true,
+    "session_id": "e54fc0cca88c4993aa32a63d35fdfe48",
+    "scene_id": "goal_table",
+    "state": "ready",
+    "scene_version": 0,
+    "env_instance_id": 1,
+    "episode_resets": 1,
+    "policy_resets": 0,
+    "total_steps": 0,
+    "seed": 0,
+    "init_state_index": 0,
+    "description": "Shared original bowl, wine and stove scene; no trash bin exists here.",
+    "storage_policy": {
+      "akita_black_bowl_1": "plate_1",
+      "wine_bottle_1": "wine_rack_1_top_region"
+    },
+    "capabilities": [
+      {
+        "instruction": "put the bowl on the plate",
+        "goals": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ]
+        ],
+        "object_id": "akita_black_bowl_1",
+        "target_id": "plate_1",
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "v0.1.0 single-task success in libero_goal/8; sequence and shifted-layout reliability unverified",
+        "audit_only": false,
+        "exclusive_target": true,
+        "capability_id": "bowl_to_plate"
+      },
+      {
+        "instruction": "put the wine bottle on the rack",
+        "goals": [
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ]
+        ],
+        "object_id": "wine_bottle_1",
+        "target_id": "wine_rack_1_top_region",
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "candidate here; v0.1.0 single-task wine success used libero_goal/9, a different task initialization",
+        "audit_only": false,
+        "exclusive_target": true,
+        "capability_id": "wine_to_rack"
+      },
+      {
+        "instruction": "turn on the stove",
+        "goals": [
+          [
+            "turnon",
+            "flat_stove_1"
+          ]
+        ],
+        "object_id": "flat_stove_1",
+        "target_id": null,
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "candidate here; v0.1.0 single-task stove success used libero_goal/7, a different task initialization",
+        "audit_only": false,
+        "exclusive_target": false,
+        "capability_id": "stove_on"
+      }
+    ],
+    "images": [
+      {
+        "view": "agentview",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T091904Z_goal_table_e54fc0cc/agentview.png",
+        "sha256": "576c32456ea62e6a4d828240ce9d0c8ceb207618fade6a9b2014e29e71ef0d71",
+        "kind": "vla_observation"
+      },
+      {
+        "view": "wrist",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T091904Z_goal_table_e54fc0cc/wrist.png",
+        "sha256": "09c739380d345eb82aa70d3fc9cc5ae60cdd01fb111b64d6cb891f4236c5329c",
+        "kind": "vla_observation"
+      }
+    ],
+    "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T091904Z_goal_table_e54fc0cc/latest.png",
+    "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T091904Z_goal_table_e54fc0cc",
+    "active_request_id": null,
+    "error": null
+  },
+  "origin_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "new_vla_actions": 0,
+  "prepare_actions": 0,
+  "score": {
+    "gold": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ],
+    "final_predicates": {
+      "on|akita_black_bowl_1|plate_1": true
+    },
+    "last5_strict_samples": true,
+    "final_strict_candidate": true,
+    "empty_hand": true,
+    "all_physical_objects_unheld": true,
+    "stove_off": true,
+    "protected_displacement_m": {
+      "wine_bottle_1": 3.2907010479152855e-13,
+      "cream_cheese_1": 1.4210854715202004e-14
+    },
+    "protection_ok": true,
+    "unknown": [],
+    "physical_gold_success": true
+  },
+  "new_motion_actions": 0,
+  "physical_actions": 102,
+  "new_model_calls": 0,
+  "cut_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+  "after_sha256": "f0a5c0e135015071b7eaee75cffefb5f50f3ac07516240e03795e48d189e405e",
+  "replay_before_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "gate_pass": true,
+  "evidence": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/cut/agentview.png",
+      "bytes": 66994,
+      "sha256": "46baf7a42954389ba8520c37a68b3160795810f0c59b35f8daf012b3e4e7b419"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/cut/observation.keys.json",
+      "bytes": 423,
+      "sha256": "b650366cd4885dc238dd7edceffa85051fb00ce6c42614a5338d2213a5b165bb"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/cut/observation.npz",
+      "bytes": 161532,
+      "sha256": "4df7bd447780ec40d9e7fde65dd27d2019517548af9d7109a02528483d21ed48"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/cut/pose.json",
+      "bytes": 708,
+      "sha256": "283a4f0a76b861a8729b6371b9325f284db488a642742acff2142ebd848f386a"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/cut/qpos_qvel.npz",
+      "bytes": 970,
+      "sha256": "e95db634fa0bc66df1f21e4f170c0d7ddd78157defbce9de35a0b3a54d46f856"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/cut/reading.json",
+      "bytes": 235295,
+      "sha256": "8f69fd5b86d71cc2510f6a62a1656260beb903d335830e6f09e5d46aaa583d2e"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/cut/sim_state.npy",
+      "bytes": 760,
+      "sha256": "209be1cfa70c4877b317947e4c7d3d5a158e4bd49084b320b6c6e6ff6e67030f"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/cut/snapshot.json",
+      "bytes": 2867,
+      "sha256": "6c181d959994db00381658f33db8a0ad13a8497ae6060f24eb84b225249a9890"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/cut/wrist.png",
+      "bytes": 64746,
+      "sha256": "b603b6f6b572219a8127c74d70a884e0963b729e7b19089638bbc9afb1e4b498"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/first.png",
+      "bytes": 65446,
+      "sha256": "405ab89e7a8c0d283bbd99d00e886606ccd7d7b81d6ac228cf9f22c7338e6914"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/last.png",
+      "bytes": 67124,
+      "sha256": "fe53d862feb78e075f6623f778712d5e14b0d1cdf1248f945b0f4957c03fedb8"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/replay.jsonl",
+      "bytes": 241698,
+      "sha256": "b881a542a3dfdea69620aba035bbced91b758b01faecea8f6a407fb985eefacc"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/replay_after.json",
+      "bytes": 2876,
+      "sha256": "2e3fd8931132f58a20597712801169f4a44e59340c8bac4dab9059e269aaab54"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/replay_before.json",
+      "bytes": 2866,
+      "sha256": "827afbee5a20847a8f67b9f373051db6988b64353fce6187ec6facf30c9e8cc5"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_01_reference_replay/rollout.mp4",
+      "bytes": 71713,
+      "sha256": "1bd6d5ab79f8837a6b90c402422140f6e27e447c0b03e58d215c4cf0a6e7135f"
+    }
+  ]
+}

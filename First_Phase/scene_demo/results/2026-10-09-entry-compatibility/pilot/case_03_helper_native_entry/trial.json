@@ -1,0 +1,399 @@
+{
+  "case": "case_03_helper_native_entry",
+  "operational_errors": [],
+  "unknown": [],
+  "physical_success": true,
+  "new_hermes_calls": 0,
+  "model_seed": 0,
+  "init_state_index": 0,
+  "gold": [
+    [
+      "on",
+      "akita_black_bowl_1",
+      "plate_1"
+    ]
+  ],
+  "assist_enabled": true,
+  "replay_actions": 0,
+  "session": {
+    "ok": true,
+    "session_id": "24ca0723f094408b87483f5a1dc1af80",
+    "scene_id": "goal_table",
+    "state": "ready",
+    "scene_version": 0,
+    "env_instance_id": 3,
+    "episode_resets": 1,
+    "policy_resets": 0,
+    "total_steps": 0,
+    "seed": 0,
+    "init_state_index": 0,
+    "description": "Shared original bowl, wine and stove scene; no trash bin exists here.",
+    "storage_policy": {
+      "akita_black_bowl_1": "plate_1",
+      "wine_bottle_1": "wine_rack_1_top_region"
+    },
+    "capabilities": [
+      {
+        "instruction": "put the bowl on the plate",
+        "goals": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ]
+        ],
+        "object_id": "akita_black_bowl_1",
+        "target_id": "plate_1",
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "v0.1.0 single-task success in libero_goal/8; sequence and shifted-layout reliability unverified",
+        "audit_only": false,
+        "exclusive_target": true,
+        "capability_id": "bowl_to_plate"
+      },
+      {
+        "instruction": "put the wine bottle on the rack",
+        "goals": [
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ]
+        ],
+        "object_id": "wine_bottle_1",
+        "target_id": "wine_rack_1_top_region",
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "candidate here; v0.1.0 single-task wine success used libero_goal/9, a different task initialization",
+        "audit_only": false,
+        "exclusive_target": true,
+        "capability_id": "wine_to_rack"
+      },
+      {
+        "instruction": "turn on the stove",
+        "goals": [
+          [
+            "turnon",
+            "flat_stove_1"
+          ]
+        ],
+        "object_id": "flat_stove_1",
+        "target_id": null,
+        "scene_ids": [
+          "goal_table",
+          "goal_table_shifted"
+        ],
+        "evidence": "candidate here; v0.1.0 single-task stove success used libero_goal/7, a different task initialization",
+        "audit_only": false,
+        "exclusive_target": false,
+        "capability_id": "stove_on"
+      }
+    ],
+    "images": [
+      {
+        "view": "agentview",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T092004Z_goal_table_24ca0723/agentview.png",
+        "sha256": "576c32456ea62e6a4d828240ce9d0c8ceb207618fade6a9b2014e29e71ef0d71",
+        "kind": "vla_observation"
+      },
+      {
+        "view": "wrist",
+        "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T092004Z_goal_table_24ca0723/wrist.png",
+        "sha256": "09c739380d345eb82aa70d3fc9cc5ae60cdd01fb111b64d6cb891f4236c5329c",
+        "kind": "vla_observation"
+      }
+    ],
+    "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T092004Z_goal_table_24ca0723/latest.png",
+    "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/sessions/20261009T092004Z_goal_table_24ca0723",
+    "active_request_id": null,
+    "error": null
+  },
+  "origin_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "model_rng": {
+    "ok": true,
+    "seeded": true,
+    "seed": 0
+  },
+  "job": {
+    "job_id": "82895ce4f8ab4380b6b8cc29e6a8ee29",
+    "request_id": "087fe6ef0b6a4876a6cfe633c017d467",
+    "session_id": "24ca0723f094408b87483f5a1dc1af80",
+    "capability_id": "bowl_to_plate",
+    "state": "completed",
+    "steps": 224,
+    "total_steps": 224,
+    "success": true,
+    "ended_reason": "success",
+    "error": null,
+    "instruction": "put the bowl on the plate",
+    "scene_version_before": 0,
+    "scene_version_after": 1,
+    "state_before_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+    "state_after_sha": "8c7bcbb89130dab22867d413ce25abb7968d931448804445c001c23e675c0ec7",
+    "env_instance_id": null,
+    "episode_resets": null,
+    "completion_mode": null,
+    "phase": "not_holding",
+    "held_objects": [],
+    "grasp_observation_complete": true,
+    "completion_ready": true,
+    "grasp_guard_mode": null,
+    "grasp_stage": null,
+    "grasp_guard_status": null,
+    "semantic_spec_id": null,
+    "semantic_state": null,
+    "semantic_candidate_streak": null,
+    "semantic_success": null,
+    "native_wine_predicate": null,
+    "semantic_observation_samples": 0,
+    "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job",
+    "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/latest.png",
+    "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/rollout.mp4",
+    "wall_s": 85.057
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "087fe6ef0b6a4876a6cfe633c017d467",
+    "session_id": "24ca0723f094408b87483f5a1dc1af80",
+    "state": "completed",
+    "decision": "execute",
+    "capability_ids": [
+      "bowl_to_plate"
+    ],
+    "original_capability_ids": [
+      "bowl_to_plate"
+    ],
+    "rationale": "Five-gate entry compatibility diagnostic; no new Hermes request.",
+    "job_ids": [
+      "82895ce4f8ab4380b6b8cc29e6a8ee29"
+    ],
+    "completed_capability_ids": [
+      "bowl_to_plate"
+    ],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": null,
+    "repair_history": [],
+    "scene_version": 0
+  },
+  "scene_error": null,
+  "score": {
+    "gold": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ],
+    "final_predicates": {
+      "on|akita_black_bowl_1|plate_1": true
+    },
+    "last5_strict_samples": true,
+    "final_strict_candidate": true,
+    "empty_hand": true,
+    "all_physical_objects_unheld": true,
+    "stove_off": true,
+    "protected_displacement_m": {
+      "wine_bottle_1": 3.290701063278474e-13,
+      "cream_cheese_1": 1.4210854715202004e-14
+    },
+    "protection_ok": true,
+    "unknown": [],
+    "physical_gold_success": true
+  },
+  "prepare_confirmed": true,
+  "prepare_actions": 165,
+  "new_vla_actions": 59,
+  "source_counts": {
+    "prepare": 165,
+    "local_grasp": 0,
+    "vla": 59
+  },
+  "new_motion_actions": 224,
+  "physical_actions": 224,
+  "before_sha256": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "after_sha256": "8c7bcbb89130dab22867d413ce25abb7968d931448804445c001c23e675c0ec7",
+  "handoff_capture": {
+    "directory": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff",
+    "state_before_sha256": "1094b69366067fd13454af2fd54256418b486d105af0f16412eb7223dae3398e",
+    "state_after_sha256": "1094b69366067fd13454af2fd54256418b486d105af0f16412eb7223dae3398e",
+    "readonly_state_unchanged": true,
+    "capture_count": 1,
+    "before_first_vla": true,
+    "current_batch_saved": true,
+    "comparison": {
+      "reference_cut_step": 30,
+      "eef_position_error_m": 0.002814610563430374,
+      "eef_orientation_error_rad": 0.0046822198128507585,
+      "gripper_gap_difference_m": 0.0006078076511826097,
+      "qpos_l2": 0.01833591877550054,
+      "qvel_l2": 0.4895278034385409,
+      "reference_state_sha256": "5b3c33bb9f50f656ab72c18875df5233f8fdceb94339e401d3375af8e3090b5f",
+      "actual_state_sha256": "1094b69366067fd13454af2fd54256418b486d105af0f16412eb7223dae3398e",
+      "complete_state_equality_required": false
+    },
+    "session_id": "24ca0723f094408b87483f5a1dc1af80",
+    "job_id": "82895ce4f8ab4380b6b8cc29e6a8ee29",
+    "case": "case_03_helper_native_entry"
+  },
+  "handoff_capture_count": 1,
+  "telemetry_paths": [
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/telemetry.jsonl"
+  ],
+  "assistance_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/subtask_assist.json",
+  "diagnostic_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/diagnostic.json",
+  "rollout": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/rollout.mp4",
+  "gate_pass": true,
+  "evidence": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/after_snapshot.json",
+      "bytes": 2870,
+      "sha256": "7fa42f59a37e0b761e8923e85cda132f21c890d24b10c6d41b75f42ed05178e2"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/before_snapshot.json",
+      "bytes": 2866,
+      "sha256": "827afbee5a20847a8f67b9f373051db6988b64353fce6187ec6facf30c9e8cc5"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/agentview.png",
+      "bytes": 67096,
+      "sha256": "280fe6f64e3a909efab668f93d8a20a1f085da0eae8ad27e0a37154c4457ff68"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/capture.json",
+      "bytes": 1102,
+      "sha256": "e07656c4bdfb949861651318a5e57163bed2a2c2824fa3cee93c4ff780eee1b5"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/comparison.json",
+      "bytes": 486,
+      "sha256": "26d966d0ea58e62db85e1b03c4a67b5c20dc6b2fa0f7ea91af47fb2a95a921e3"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/observation.keys.json",
+      "bytes": 423,
+      "sha256": "b650366cd4885dc238dd7edceffa85051fb00ce6c42614a5338d2213a5b165bb"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/observation.npz",
+      "bytes": 161369,
+      "sha256": "aa2bc847717ba2a2733f0cdc12c80e14f96ed5b4136dedbea177927490c52b84"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/policy_batch.keys.json",
+      "bytes": 280,
+      "sha256": "ee71df633526b30e0187832bf4e91632f785768a5d9b138830e7fa836cbf71e3"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/policy_batch.npz",
+      "bytes": 275338,
+      "sha256": "e6a5a856197de53258500ab26fccaf47fa07924dbc58d8160742087d3b0fbfff"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/pose.json",
+      "bytes": 707,
+      "sha256": "bdd593037dbc4d68c553ba72100c619338b5c6a96bb1dd1c68d8453d15c9c05e"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/qpos_qvel.npz",
+      "bytes": 972,
+      "sha256": "7ec7109a5051c9d5d185743462f398f5bf777e7d193735f4d1c31a94c31407cb"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/reading.json",
+      "bytes": 235340,
+      "sha256": "150f2327b86f05d37624b922a737b295d8842c354e7d5eaf7cc73c164073b5a5"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/sim_state.npy",
+      "bytes": 760,
+      "sha256": "4a489f0274f0729008a73af933d719da3fd2d5c8dc5914632005f95221e67135"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/snapshot.json",
+      "bytes": 2863,
+      "sha256": "86c5d31ce570757290b8a9b96659947814ce71a092e6c8f72e9c2b0fe1d10909"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/handoff/wrist.png",
+      "bytes": 64443,
+      "sha256": "cb1646d4ee94eec4f36100bacbf403b09c9846ad35015194cfb37a954ef03f38"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/action_sources.jsonl",
+      "bytes": 899787,
+      "sha256": "243d4dda79bbc032fb2e8b6f0114e0ac74242cc0cc27ba7f434ea7f69c816209"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/diagnostic.json",
+      "bytes": 766630,
+      "sha256": "91c559bb535285601b347f83e9ec0995e1f6ec96e968b14a8bc328a268ad3a15"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/events.jsonl",
+      "bytes": 135200,
+      "sha256": "41a7a0dcf3df9ac13bc657caea79575df222c2cad2ba4d036e4243f41cebf754"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/first.png",
+      "bytes": 65446,
+      "sha256": "405ab89e7a8c0d283bbd99d00e886606ccd7d7b81d6ac228cf9f22c7338e6914"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/last.png",
+      "bytes": 66828,
+      "sha256": "cec99709881ddd25e3070f2089c416fbe1f69344c3af2fc05db373c817be35f2"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/latest.png",
+      "bytes": 66828,
+      "sha256": "cec99709881ddd25e3070f2089c416fbe1f69344c3af2fc05db373c817be35f2"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/result.json",
+      "bytes": 1790,
+      "sha256": "300119fef565b02d6673e276660848a424da744c5a2d55b305cdc7b228a06c68"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/rollout.mp4",
+      "bytes": 77491,
+      "sha256": "d470f2485285ed89b793352f980bada3a7efba306c477bb7f654fff7b0c824a6"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/subtask_assist.json",
+      "bytes": 9906,
+      "sha256": "1b9a70ec7466f9da1196bbd9f623114df14c347f749ec9363c0468e9a219b227"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/telemetry.jsonl",
+      "bytes": 997396,
+      "sha256": "471023946e73ccb44fae37da271701a0fd3d2643856ce8922dadcefb9c14f14e"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/wine_diagnostic.json",
+      "bytes": 3112,
+      "sha256": "3d304a1a6b18d0b1fd76d8db7dde50b7f771569794554a1b11d7f5533bc92d50"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/job/wine_telemetry.jsonl",
+      "bytes": 1215951,
+      "sha256": "067e7ce36ac0191d2168c53a0e23ce93a98407ac1bb651091eb0927fb0a52f76"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/raw_job.json",
+      "bytes": 1495,
+      "sha256": "499754a136431c97a535118ad67b1bcf68dc9b29c486948a7cbed3c5c1ee1702"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-09-entry-compatibility/pilot/case_03_helper_native_entry/raw_plan.json",
+      "bytes": 611,
+      "sha256": "28755161f402fc1d194f11ef1c5fa599fbdfe1d959eb7db3b565567c0ebb51b9"
+    }
+  ]
+}
