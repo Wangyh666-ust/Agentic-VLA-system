@@ -1,0 +1,66 @@
+[
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+      "MUJOCO_GL=egl",
+      "PYOPENGL_PLATFORM=egl",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "-m",
+      "scene_demo.finish_v1.handoff_pilot",
+      "--help"
+    ],
+    "exit_code": 0,
+    "stdout": "usage: handoff_pilot.py [-h] --proposal PROPOSAL --inputs INPUTS --output\n                        OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                        [--max-qwen-calls MAX_QWEN_CALLS]\n\nfinish_v1 fixed five-case historical-state pilot runner\n\noptions:\n  -h, --help            show this help message and exit\n  --proposal PROPOSAL\n  --inputs INPUTS\n  --output OUTPUT\n  --limit LIMIT\n  --start-index START_INDEX\n  --max-qwen-calls MAX_QWEN_CALLS\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+      "MUJOCO_GL=egl",
+      "PYOPENGL_PLATFORM=egl",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "scene_demo.finish_v1.tests.test_pilot",
+      "scene_demo.finish_v1.tests.test_handoff_pilot",
+      "scene_demo.finish_v1.tests.test_runtime",
+      "scene_demo.finish_v1.tests.test_relation_images"
+    ],
+    "exit_code": 1,
+    "stdout": "[case-begin] case1\n[case-end] case1 status=blocked\n[case-begin] case2\n[case-end] case2 status=blocked\n[case-begin] case0\n[case-end] case0 status=blocked\n",
+    "stderr": "...........usage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index + --limit must not exceed 5\n.....................E....................................................\n======================================================================\nERROR: test_actual_monitor_binding_and_calls (scene_demo.finish_v1.tests.test_handoff_pilot.HandoffTests.test_actual_monitor_binding_and_calls)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests/test_handoff_pilot.py\", line 17, in test_actual_monitor_binding_and_calls\n    tree=ast.parse(inspect.getsource(handoff_pilot.PilotRunner.run_case))\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ast.py\", line 52, in parse\n    return compile(source, filename, mode, flags,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<unknown>\", line 1\n    def run_case(self, case, case_idx, qwen_client, qwen_budget):\nIndentationError: unexpected indent\n\n----------------------------------------------------------------------\nRan 85 tests in 0.109s\n\nFAILED (errors=1)\n"
+  },
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+      "MUJOCO_GL=egl",
+      "PYOPENGL_PLATFORM=egl",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/.agents/skills/fyp-experiment-review/scripts/review.py",
+      "check",
+      "--proposal",
+      "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-handoff.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"ok\": true, \"intent\": \"new_experiment\", \"matched_history_ids\": [\"20261007-placement\", \"20261010-visual-finish\", \"20261010-finish-takeover-v2\", \"20261010-shape-home\"], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\n",
+    "stderr": ""
+  }
+]

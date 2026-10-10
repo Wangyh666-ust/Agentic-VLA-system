@@ -1,0 +1,596 @@
+{
+  "commands": [
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+        "MUJOCO_GL=egl",
+        "PYOPENGL_PLATFORM=egl",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-m",
+        "scene_demo.finish_v1.handoff_pilot",
+        "--help"
+      ],
+      "exit_code": 0,
+      "stdout": "usage: handoff_pilot.py [-h] --proposal PROPOSAL --inputs INPUTS --output\n                        OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                        [--max-qwen-calls MAX_QWEN_CALLS]\n\nfinish_v1 fixed five-case historical-state pilot runner\n\noptions:\n  -h, --help            show this help message and exit\n  --proposal PROPOSAL\n  --inputs INPUTS\n  --output OUTPUT\n  --limit LIMIT\n  --start-index START_INDEX\n  --max-qwen-calls MAX_QWEN_CALLS\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+        "MUJOCO_GL=egl",
+        "PYOPENGL_PLATFORM=egl",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "scene_demo.finish_v1.tests.test_pilot",
+        "scene_demo.finish_v1.tests.test_handoff_pilot",
+        "scene_demo.finish_v1.tests.test_runtime",
+        "scene_demo.finish_v1.tests.test_relation_images"
+      ],
+      "exit_code": 0,
+      "stdout": "[case-begin] case1\n[case-end] case1 status=blocked\n[case-begin] case2\n[case-end] case2 status=blocked\n[case-begin] case0\n[case-end] case0 status=blocked\n",
+      "stderr": "...........usage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index + --limit must not exceed 5\n..........................................................................\n----------------------------------------------------------------------\nRan 85 tests in 0.146s\n\nOK\n"
+    },
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+        "MUJOCO_GL=egl",
+        "PYOPENGL_PLATFORM=egl",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "/mnt/d/FYP/.agents/skills/fyp-experiment-review/scripts/review.py",
+        "check",
+        "--proposal",
+        "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-handoff.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"ok\": true, \"intent\": \"new_experiment\", \"matched_history_ids\": [\"20261007-placement\", \"20261010-visual-finish\", \"20261010-finish-takeover-v2\", \"20261010-shape-home\"], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\n",
+      "stderr": ""
+    }
+  ],
+  "proposal_sha256": "b146938c35fddbb308e263b02aded608a034634e9255439c0a3781761132383f",
+  "inputs_sha256": "288254d8c5fdc8cf425db56a03527d78d0a75080e1b6ccfb361255f5711c5093",
+  "source_map": {
+    "finish_v1/pilot.py": "3a5b9319df692f308b2813441bdb5c24c5dfb6959eb51a7c94d77e56ce5d30cc",
+    "finish_v1/handoff_pilot.py": "87faa0f5403a742a62cb8a05a3b16de1f1feb423dc6b9fb6ef91fb88385aa1a8",
+    "finish_v1/runtime.py": "c5b3eab66b1f0c592cdb280d420fb14a5c77283a4edb7f9a69b6bf85ab285631",
+    "finish_v1/vision.py": "3fb6b174495321990d11fdc76631133607ef16c19b3699e36099b0334c6c796f",
+    "finish_v1/relation_images.py": "cb4c1187f28b9ee61b1688d8961e37dfab4a6c9bd73eb33559b88e4ac24173b6",
+    "finish_v1/control.py": "1154ca0ea7ccb6a69c4afcaa4950a80f4564c336d389ac0a2d1152ad7890490c",
+    "finish_v1/sensors.py": "403576acee777920f98c58d51cccdcde4b1c818ebf24dd3db71efbf511b204bf",
+    "finish_v1/geometry.py": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70",
+    "joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21"
+  },
+  "frozen_files": {
+    "First_Phase/scene_demo/results/2026-10-07/artifacts/candidate_comparisons/fp32_h5/bowl_control/job_01/telemetry.jsonl.gz": {
+      "path": "First_Phase/scene_demo/results/2026-10-07/artifacts/candidate_comparisons/fp32_h5/bowl_control/job_01/telemetry.jsonl.gz",
+      "bytes": 46025,
+      "sha256": "1c4340899b6e483f7543b3071a7fcd1144bf88352c05772299791c4dc7f87343"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/native_home.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/native_home.json",
+      "bytes": 2006,
+      "sha256": "52d3690d1650abcba5ebb5ef280f7d62d7431d4784cf9755a0e9ce78f99606da"
+    },
+    "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/evidence/inputs.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/evidence/inputs.json",
+      "bytes": 72860,
+      "sha256": "6ed04b29b202098e286d57270b492345b561348240e366d9f3a5f5e9886f1b6c"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/job/action_sources.jsonl.gz": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/job/action_sources.jsonl.gz",
+      "bytes": 13266,
+      "sha256": "91692e75ec35329b5e80b4e4ff381cc069dd8042d65d590cc0d4e7245e243be6"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/native_home.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/native_home.json",
+      "bytes": 2027,
+      "sha256": "90cf95875023322a3f5ed49dffecdf550c89b94b6cd6ccf91506d190875e0cef"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/vla_final_snapshot.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/vla_final_snapshot.json",
+      "bytes": 3002,
+      "sha256": "a9031102aa4dc5222223291bdbd7884fb157607fcc97536f98abd46ce8640dec"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/observer.jsonl.gz": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/observer.jsonl.gz",
+      "bytes": 87650,
+      "sha256": "7ed0cc3da1f8e7a2af4c983792f962e0a9b413ddc4a564b6d2e2669aaf52b5e2"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/trial.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/trial.json",
+      "bytes": 22656,
+      "sha256": "194f6ad4f6102d460ea81241e44a01537563cff7f65978827f2628f0b9098960"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/job/action_sources.jsonl.gz": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/job/action_sources.jsonl.gz",
+      "bytes": 5995,
+      "sha256": "c03124365fcc36bd2dd86da0ff65f66981050474a197a67c5e16f8d6eb5c9293"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/vla_final_snapshot.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/vla_final_snapshot.json",
+      "bytes": 2954,
+      "sha256": "ae595e0279ca1d160f0ee5881b5bf0fdb58e523db7e8ffb78a87292a16c47ca0"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/observer.jsonl.gz": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/observer.jsonl.gz",
+      "bytes": 34432,
+      "sha256": "544db97bca481c1e380776c3896663dd1419889a2428cebb44417c89816a2b96"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/trial.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/trial.json",
+      "bytes": 28787,
+      "sha256": "9c32637f17673fbad675af204fa63af2b41e3213e6f9df5dc05e8f7f62429228"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/job/action_sources.jsonl.gz": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/job/action_sources.jsonl.gz",
+      "bytes": 24356,
+      "sha256": "49c32fd56f44aa736a900a475f9716d02932005d5c506e78c156fb5514fc0b04"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/native_home.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/native_home.json",
+      "bytes": 2049,
+      "sha256": "916d8e854f75038622721bdcf78ba4d4f183fc59ccf628f92825d04480d33546"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/native_origin/capture.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/native_origin/capture.json",
+      "bytes": 362,
+      "sha256": "263c7561bc6053c9fb8706de41fd23f2154f0f15a40238af2cd806390e53da05"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/vla_final_snapshot.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/vla_final_snapshot.json",
+      "bytes": 5384,
+      "sha256": "f2d243bf3559e530c671ab823924d6e4f4d41d4a2662c6e22be714f49126fed3"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/observer.jsonl.gz": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/observer.jsonl.gz",
+      "bytes": 258584,
+      "sha256": "bf26bed3494e6d6258a685f94cd150176723a6dbe5d26cf63c326c6d8bf63a0d"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/trial.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/trial.json",
+      "bytes": 9352,
+      "sha256": "32575e31ff0dac8c88e27e5f5a86438e09e74291fdb11bfed17fb9a54b788791"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/job/action_sources.jsonl.gz": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/job/action_sources.jsonl.gz",
+      "bytes": 24529,
+      "sha256": "e32957fad70b28ce88676a7c77c9108df76e07103c330e73b19128f2bc500221"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/native_home.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/native_home.json",
+      "bytes": 2049,
+      "sha256": "6322a67fa9421b1d5ff911c98260be8adedbffa4735256973386fd94a150ddfa"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/native_origin/capture.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/native_origin/capture.json",
+      "bytes": 362,
+      "sha256": "776e7ece3be752038be4e97723ae9ef254a204fc0f1082a004dbf040eabffed8"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/vla_final_snapshot.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/vla_final_snapshot.json",
+      "bytes": 5385,
+      "sha256": "3d7872244ed3067c82a2a50afcaec19095c7ba741f86f05042b9dc6efe158008"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/observer.jsonl.gz": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/observer.jsonl.gz",
+      "bytes": 273492,
+      "sha256": "bdaeb0997421075c4a9583e5be39fba3ddd1ae02deb955d63b23d3fdeae6104e"
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/trial.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/trial.json",
+      "bytes": 9306,
+      "sha256": "6c88b0fe2a1e1d9924f2f351315bed7a15c8c020821d36746e6a30e606fe527f"
+    },
+    "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/registry_at_launch.json": {
+      "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/registry_at_launch.json",
+      "bytes": 121835,
+      "sha256": "72a89fc0f919b14579187b1672a8ce609fb0bd1525d36d8723c899b302f4180a"
+    }
+  },
+  "fixed_control_sha256": {
+    "finish_v1/control.py": "1154ca0ea7ccb6a69c4afcaa4950a80f4564c336d389ac0a2d1152ad7890490c",
+    "finish_v1/sensors.py": "403576acee777920f98c58d51cccdcde4b1c818ebf24dd3db71efbf511b204bf",
+    "finish_v1/geometry.py": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70",
+    "joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21"
+  },
+  "source_zip_sha256": "30a96d67acf6ceb1a4debb3985e97f780c5649d356c9a38df74595b73f64d93f",
+  "new_qwen_calls": 0,
+  "new_actions": 0,
+  "initial_test_failure": {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+      "MUJOCO_GL=egl",
+      "PYOPENGL_PLATFORM=egl",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "scene_demo.finish_v1.tests.test_pilot",
+      "scene_demo.finish_v1.tests.test_handoff_pilot",
+      "scene_demo.finish_v1.tests.test_runtime",
+      "scene_demo.finish_v1.tests.test_relation_images"
+    ],
+    "exit_code": 1,
+    "stdout": "[case-begin] case1\n[case-end] case1 status=blocked\n[case-begin] case2\n[case-end] case2 status=blocked\n[case-begin] case0\n[case-end] case0 status=blocked\n",
+    "stderr": "...........usage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index + --limit must not exceed 5\n.....................E....................................................\n======================================================================\nERROR: test_actual_monitor_binding_and_calls (scene_demo.finish_v1.tests.test_handoff_pilot.HandoffTests.test_actual_monitor_binding_and_calls)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests/test_handoff_pilot.py\", line 17, in test_actual_monitor_binding_and_calls\n    tree=ast.parse(inspect.getsource(handoff_pilot.PilotRunner.run_case))\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/ast.py\", line 52, in parse\n    return compile(source, filename, mode, flags,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<unknown>\", line 1\n    def run_case(self, case, case_idx, qwen_client, qwen_budget):\nIndentationError: unexpected indent\n\n----------------------------------------------------------------------\nRan 85 tests in 0.109s\n\nFAILED (errors=1)\n"
+  },
+  "test_source_sha256": "936e0e515e7bb0d0ed97d089bd5a4c0b1ca70c1e51f4425bc7d1f65a4619d89f",
+  "verified_frozen_files": {
+    "First_Phase/scene_demo/results/2026-10-07/artifacts/candidate_comparisons/fp32_h5/bowl_control/job_01/telemetry.jsonl.gz": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/native_home.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/evidence/inputs.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/job/action_sources.jsonl.gz": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/native_home.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/vla_final_snapshot.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/observer.jsonl.gz": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/trial.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/job/action_sources.jsonl.gz": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/vla_final_snapshot.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/observer.jsonl.gz": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/trial.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/job/action_sources.jsonl.gz": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/native_home.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/native_origin/capture.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/vla_final_snapshot.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/observer.jsonl.gz": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/trial.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/job/action_sources.jsonl.gz": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/native_home.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/native_origin/capture.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/vla_final_snapshot.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/observer.jsonl.gz": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/trial.json": {
+      "matches": true
+    },
+    "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/registry_at_launch.json": {
+      "matches": true
+    }
+  },
+  "launch_ready": true,
+  "source_sha256": {
+    "First_Phase/scene_demo/finish_v1/pilot.py": "3a5b9319df692f308b2813441bdb5c24c5dfb6959eb51a7c94d77e56ce5d30cc",
+    "First_Phase/scene_demo/finish_v1/handoff_pilot.py": "87faa0f5403a742a62cb8a05a3b16de1f1feb423dc6b9fb6ef91fb88385aa1a8",
+    "First_Phase/scene_demo/finish_v1/runtime.py": "c5b3eab66b1f0c592cdb280d420fb14a5c77283a4edb7f9a69b6bf85ab285631",
+    "First_Phase/scene_demo/finish_v1/vision.py": "06e1f2ab8a623cb69b20629ba1571a401a3b0e7360f4e53e440b7f101aa634fc",
+    "First_Phase/scene_demo/finish_v1/relation_images.py": "cb4c1187f28b9ee61b1688d8961e37dfab4a6c9bd73eb33559b88e4ac24173b6",
+    "First_Phase/scene_demo/finish_v1/control.py": "1154ca0ea7ccb6a69c4afcaa4950a80f4564c336d389ac0a2d1152ad7890490c",
+    "First_Phase/scene_demo/finish_v1/sensors.py": "403576acee777920f98c58d51cccdcde4b1c818ebf24dd3db71efbf511b204bf",
+    "First_Phase/scene_demo/finish_v1/geometry.py": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70",
+    "First_Phase/scene_demo/joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21",
+    "First_Phase/scene_demo/results/2026-10-07/artifacts/candidate_comparisons/fp32_h5/bowl_control/job_01/telemetry.jsonl.gz": "1c4340899b6e483f7543b3071a7fcd1144bf88352c05772299791c4dc7f87343",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/native_home.json": "52d3690d1650abcba5ebb5ef280f7d62d7431d4784cf9755a0e9ce78f99606da",
+    "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/evidence/inputs.json": "6ed04b29b202098e286d57270b492345b561348240e366d9f3a5f5e9886f1b6c",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/job/action_sources.jsonl.gz": "91692e75ec35329b5e80b4e4ff381cc069dd8042d65d590cc0d4e7245e243be6",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/native_home.json": "90cf95875023322a3f5ed49dffecdf550c89b94b6cd6ccf91506d190875e0cef",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/vla_final_snapshot.json": "a9031102aa4dc5222223291bdbd7884fb157607fcc97536f98abd46ce8640dec",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/subtask_01_wine_to_rack/observer.jsonl.gz": "7ed0cc3da1f8e7a2af4c983792f962e0a9b413ddc4a564b6d2e2669aaf52b5e2",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_02/trial.json": "194f6ad4f6102d460ea81241e44a01537563cff7f65978827f2628f0b9098960",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/job/action_sources.jsonl.gz": "c03124365fcc36bd2dd86da0ff65f66981050474a197a67c5e16f8d6eb5c9293",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/vla_final_snapshot.json": "ae595e0279ca1d160f0ee5881b5bf0fdb58e523db7e8ffb78a87292a16c47ca0",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/subtask_01_stove_on/observer.jsonl.gz": "544db97bca481c1e380776c3896663dd1419889a2428cebb44417c89816a2b96",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_07/trial.json": "9c32637f17673fbad675af204fa63af2b41e3213e6f9df5dc05e8f7f62429228",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/job/action_sources.jsonl.gz": "49c32fd56f44aa736a900a475f9716d02932005d5c506e78c156fb5514fc0b04",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/native_home.json": "916d8e854f75038622721bdcf78ba4d4f183fc59ccf628f92825d04480d33546",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/native_origin/capture.json": "263c7561bc6053c9fb8706de41fd23f2154f0f15a40238af2cd806390e53da05",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/vla_final_snapshot.json": "f2d243bf3559e530c671ab823924d6e4f4d41d4a2662c6e22be714f49126fed3",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/subtask_01_soup_to_basket/observer.jsonl.gz": "bf26bed3494e6d6258a685f94cd150176723a6dbe5d26cf63c326c6d8bf63a0d",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_09/trial.json": "32575e31ff0dac8c88e27e5f5a86438e09e74291fdb11bfed17fb9a54b788791",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/job/action_sources.jsonl.gz": "e32957fad70b28ce88676a7c77c9108df76e07103c330e73b19128f2bc500221",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/native_home.json": "6322a67fa9421b1d5ff911c98260be8adedbffa4735256973386fd94a150ddfa",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/native_origin/capture.json": "776e7ece3be752038be4e97723ae9ef254a204fc0f1082a004dbf040eabffed8",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/vla_final_snapshot.json": "3d7872244ed3067c82a2a50afcaec19095c7ba741f86f05042b9dc6efe158008",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/subtask_01_sauce_to_basket/observer.jsonl.gz": "bdaeb0997421075c4a9583e5be39fba3ddd1ae02deb955d63b23d3fdeae6104e",
+    "First_Phase/scene_demo/results/2026-10-09-joint-home-20/pilot/case_11/trial.json": "6c88b0fe2a1e1d9924f2f351315bed7a15c8c020821d36746e6a30e606fe527f",
+    "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/registry_at_launch.json": "72a89fc0f919b14579187b1672a8ce609fb0bd1525d36d8723c899b302f4180a",
+    "First_Phase/scene_demo/finish_v1/tests/test_place_review_trigger.py": "f40da6182b0ddc92aed41b1e61cc7445d8e8889d79dde9e7d2f6bda2e100339c",
+    "First_Phase/scene_demo/finish_v1/tests/test_joint_verifier.py": "4e48f66498e9282019da44e28729c91b26fc831b4844a76dc8c3975e9e4eb663"
+  },
+  "source_fix": {
+    "old_mutable_registry": {
+      "path": "First_Phase/scene_demo/experiment_registry.json",
+      "bytes": 50623,
+      "sha256": "816a5bda2aaa290d8dcbb40b575e6f746f794ebef158bf8b4d87885b7389d091"
+    },
+    "new_immutable_registry": {
+      "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/registry_at_launch.json",
+      "bytes": 121835,
+      "sha256": "72a89fc0f919b14579187b1672a8ce609fb0bd1525d36d8723c899b302f4180a"
+    },
+    "reason": "旧registry过期仅导航问题，不是原物理来源失配；其他来源不变。"
+  },
+  "source_fix_review": {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/.agents/skills/fyp-experiment-review/scripts/review.py",
+      "check",
+      "--proposal",
+      "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-handoff.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"ok\": true, \"intent\": \"new_experiment\", \"matched_history_ids\": [\"20261007-placement\", \"20261010-visual-finish\", \"20261010-finish-takeover-v2\", \"20261010-shape-home\"], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\n",
+    "stderr": ""
+  },
+  "zero_action_runner_gate": {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "-c",
+      "from scene_demo.finish_v1.handoff_pilot import PilotRunner,_parse_args; import json; args=_parse_args(['--proposal','/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-handoff.json','--inputs','/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/inputs.json','--output','/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot','--start-index','1','--limit','1','--max-qwen-calls','10']); runner=PilotRunner(args); pre=runner.verify_preflight(); data,cases=runner.load_inputs(); print(json.dumps({'verify_preflight':True,'cases':len(cases),'source_sha256_count':len(pre['source_sha256']),'actions':0,'model_calls':0}))"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"verify_preflight\": true, \"cases\": 5, \"source_sha256_count\": 34, \"actions\": 0, \"model_calls\": 0}\n",
+    "stderr": ""
+  },
+  "zero_action_probe_initial_error": {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "-c",
+      "from scene_demo.finish_v1.handoff_pilot import PilotRunner,_parse_args; import json; args=_parse_args(['--proposal','/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-handoff.json','--inputs','/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/inputs.json','--output','/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot','--start-index','1','--limit','1','--max-qwen-calls','10']); runner=PilotRunner(args); pre=runner.verify_preflight(); data=runner.load_inputs(); print(json.dumps({'verify_preflight':True,'cases':len(data['cases']),'source_sha256_count':len(pre['source_sha256']),'actions':0,'model_calls':0}))"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nTypeError: tuple indices must be integers or slices, not str\n"
+  },
+  "revision2_commands": [
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "scene_demo.finish_v1.tests.test_place_review_trigger",
+        "scene_demo.finish_v1.tests.test_runtime",
+        "scene_demo.finish_v1.tests.test_joint_verifier",
+        "scene_demo.finish_v1.tests.test_pilot",
+        "scene_demo.finish_v1.tests.test_handoff_pilot"
+      ],
+      "exit_code": 0,
+      "stdout": "[case-begin] case1\n[case-end] case1 status=blocked\n[case-begin] case2\n[case-end] case2 status=blocked\n[case-begin] case0\n[case-end] case0 status=blocked\n",
+      "stderr": ".......................................................................................usage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index + --limit must not exceed 5\n.......................\n----------------------------------------------------------------------\nRan 110 tests in 0.184s\n\nOK\n"
+    },
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "/mnt/d/FYP/.agents/skills/fyp-experiment-review/scripts/review.py",
+        "check",
+        "--proposal",
+        "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-handoff-repair.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"ok\": true, \"intent\": \"new_experiment\", \"matched_history_ids\": [\"20261007-placement\", \"20261010-visual-finish\", \"20261010-finish-takeover-v2\", \"20261010-shape-home\"], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-c",
+        "from scene_demo.finish_v1.handoff_pilot import PilotRunner,_parse_args; import json; args=_parse_args(['--proposal', '/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-handoff-repair.json', '--inputs', '/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/revision2/inputs.json', '--output', '/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2', '--start-index', '1', '--limit', '1', '--max-qwen-calls', '10']); runner=PilotRunner(args); pre=runner.verify_preflight(); data,cases=runner.load_inputs(); print(json.dumps({'verify_preflight':True,'cases':len(cases),'sources':len(pre['source_sha256']),'wine_expected_release':cases[1]['expected_release'],'model_calls':0,'actions':0}))"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"verify_preflight\": true, \"cases\": 5, \"sources\": 35, \"wine_expected_release\": true, \"model_calls\": 0, \"actions\": 0}\n",
+      "stderr": ""
+    }
+  ],
+  "initial_software_failure": [
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "scene_demo.finish_v1.tests.test_place_review_trigger",
+        "scene_demo.finish_v1.tests.test_runtime",
+        "scene_demo.finish_v1.tests.test_joint_verifier",
+        "scene_demo.finish_v1.tests.test_pilot",
+        "scene_demo.finish_v1.tests.test_handoff_pilot"
+      ],
+      "exit_code": 1,
+      "stdout": "[case-begin] case1\n[case-end] case1 status=blocked\n[case-begin] case2\n[case-end] case2 status=blocked\n[case-begin] case0\n[case-end] case0 status=blocked\n",
+      "stderr": ".........................................F............................F................usage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index + --limit must not exceed 5\n.......................\n======================================================================\nFAIL: test_relation_trigger_and_exclusions (scene_demo.finish_v1.tests.test_joint_verifier.RelationReviewTests.test_relation_trigger_and_exclusions)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests/test_joint_verifier.py\", line 81, in test_relation_trigger_and_exclusions\n    self.assertFalse(vision.needs_relation_review(c,r,rb,self.reference),mode)\nAssertionError: True is not false : unsupported\n\n======================================================================\nFAIL: test_relation_trigger_and_exclusions (scene_demo.finish_v1.tests.test_joint_verifier.TurnRelationTests.test_relation_trigger_and_exclusions)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests/test_joint_verifier.py\", line 81, in test_relation_trigger_and_exclusions\n    self.assertFalse(vision.needs_relation_review(c,r,rb,self.reference),mode)\nAssertionError: True is not false : unsupported\n\n----------------------------------------------------------------------\nRan 110 tests in 0.245s\n\nFAILED (failures=2)\n"
+    },
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "/mnt/d/FYP/.agents/skills/fyp-experiment-review/scripts/review.py",
+        "check",
+        "--proposal",
+        "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-handoff-repair.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"ok\": true, \"intent\": \"new_experiment\", \"matched_history_ids\": [\"20261007-placement\", \"20261010-visual-finish\", \"20261010-finish-takeover-v2\", \"20261010-shape-home\"], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-c",
+        "from scene_demo.finish_v1.handoff_pilot import PilotRunner,_parse_args; import json; args=_parse_args(['--proposal', '/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-handoff-repair.json', '--inputs', '/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/revision2/inputs.json', '--output', '/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2', '--start-index', '1', '--limit', '1', '--max-qwen-calls', '10']); runner=PilotRunner(args); pre=runner.verify_preflight(); data,cases=runner.load_inputs(); print(json.dumps({'verify_preflight':True,'cases':len(cases),'sources':len(pre['source_sha256']),'wine_expected_release':cases[1]['expected_release'],'model_calls':0,'actions':0}))"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"verify_preflight\": true, \"cases\": 5, \"sources\": 35, \"wine_expected_release\": true, \"model_calls\": 0, \"actions\": 0}\n",
+      "stderr": ""
+    }
+  ],
+  "stove_launch_command": [
+    "wsl",
+    "--exec",
+    "env",
+    "LIBERO_CONFIG_PATH=/home/yhwang/fyp/libero_demo/libero_config",
+    "MUJOCO_GL=egl",
+    "PYOPENGL_PLATFORM=egl",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONPATH=/mnt/d/FYP/First_Phase",
+    "/home/yhwang/fyp/libero_demo/venv/bin/python",
+    "-B",
+    "-m",
+    "scene_demo.finish_v1.handoff_pilot",
+    "--proposal",
+    "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-stove-independent.json",
+    "--inputs",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/stove_independent/inputs.json",
+    "--output",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent",
+    "--start-index",
+    "2",
+    "--limit",
+    "1",
+    "--max-qwen-calls",
+    "10"
+  ],
+  "stove_independent_gate": [
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "/mnt/d/FYP/.agents/skills/fyp-experiment-review/scripts/review.py",
+        "check",
+        "--proposal",
+        "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-stove-independent.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"ok\": true, \"intent\": \"new_experiment\", \"matched_history_ids\": [\"20261007-placement\", \"20261010-visual-finish\", \"20261010-finish-takeover-v2\", \"20261010-shape-home\"], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-c",
+        "from scene_demo.finish_v1.handoff_pilot import PilotRunner,_parse_args; import json; runner=PilotRunner(_parse_args(['--proposal', '/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-live-stove-independent.json', '--inputs', '/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/stove_independent/inputs.json', '--output', '/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent', '--start-index', '2', '--limit', '1', '--max-qwen-calls', '10'])); pre=runner.verify_preflight(); data,cases=runner.load_inputs(); print(json.dumps({'verify_preflight':True,'cases':len(cases),'sources':len(pre['source_sha256']),'stove_expected_release':cases[2]['expected_release'],'model_calls':0,'actions':0}))"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"verify_preflight\": true, \"cases\": 5, \"sources\": 36, \"stove_expected_release\": true, \"model_calls\": 0, \"actions\": 0}\n",
+      "stderr": ""
+    }
+  ]
+}

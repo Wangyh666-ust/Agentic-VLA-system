@@ -512,6 +512,13 @@ def needs_relation_review(context, raw, robot, reference):
         views = {f["view"] for f in frames if f["timestamp"] == latest}
         if subtask["operation"] == "turn":
             return clean["target_visible"] is True and clean["operation_achieved"] is not True and sum(clean["boxes"].get(v, {}).get("target") is not None for v in views) >= 2
+        if len(views) >= 2 and clean["target_visible"] is True and clean["destination_visible"] is True and (clean["at_destination"] is not True or clean["supported"] is not True):
+            for view in views:
+                boxes = clean["boxes"].get(view, {})
+                target, destination = boxes.get("target"), boxes.get("destination")
+                if target is not None and destination is not None:
+                    if min(target[2], destination[2]) - max(target[0], destination[0]) > 0 and min(target[3], destination[3]) - max(target[1], destination[1]) > 0:
+                        return True
         if not all(clean[k] is True for k in ("target_visible", "destination_visible", "at_destination", "supported")):
             return False
         if clean["released"] is not None or clean["clear_of_target"] is not False or clean["stable"] is not None:

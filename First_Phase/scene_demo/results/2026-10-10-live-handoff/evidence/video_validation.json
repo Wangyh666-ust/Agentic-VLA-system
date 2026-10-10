@@ -1,0 +1,15 @@
+{
+  "command": [
+    "wsl",
+    "--exec",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/yhwang/fyp/libero_demo/venv/bin/python",
+    "-B",
+    "-c",
+    "import imageio.v2 as i,json; from pathlib import Path; out=[];\nfor p in Path('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff').glob('pilot*/**/all_actions.mp4'):\n r=i.get_reader(p); meta=r.get_meta_data(); n=sum(1 for f in r);r.close();out.append({'path':str(p),'frames':n,'fps':meta.get('fps'),'decoded':True})\nprint(json.dumps(out))"
+  ],
+  "exit_code": 0,
+  "stdout": "[{\"path\": \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/all_actions.mp4\", \"frames\": 181, \"fps\": 20.0, \"decoded\": true}, {\"path\": \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/all_actions.mp4\", \"frames\": 181, \"fps\": 20.0, \"decoded\": true}, {\"path\": \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/all_actions.mp4\", \"frames\": 89, \"fps\": 20.0, \"decoded\": true}]\n",
+  "stderr": ""
+}

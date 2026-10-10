@@ -51,3 +51,5 @@
 | 20261010-joint-verifier | 视觉与同步夹爪反馈 | 五保存状态4准确1unknown，十Qwen、多版本复用；整体未通过，UIoff，动作0 | [报告](results/2026-10-10-joint-verifier/README.md) |
 
 当前联合检查：旧酒瓶无编码器视觉误判历史保留；当前同步融合及动态细节已使四保存状态准确，番茄酱身份仍unknown，整体未通过，自动收尾off。
+
+| 20261010-live-handoff | 实际接管小试 | wine未触发，stove许可后10闭爪等待阻断，actualopen/move/confirm/home0；整体未通过，两chain未运行 | [报告](results/2026-10-10-live-handoff/README.md) |

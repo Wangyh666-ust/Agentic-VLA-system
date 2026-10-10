@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "id": "20261010-live-handoff-repair",
+  "intent": "new_experiment",
+  "question_key": "release-stop",
+  "purpose": "先wine/stove当前检查器真正触发松手退离并旧home；两例physicalsuccess之后才wine→bowl与bowl→stove每种1例。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261010-visual-finish",
+    "20261010-finish-takeover-v2",
+    "20261010-shape-home",
+    "20261009-joint-home",
+    "20261009-joint-home-12",
+    "20261010-vision-grounding",
+    "20261010-joint-verifier"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "复用原release停点与目标状态，不重跑原生基线。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "旧zero-action接管、开火误判；新增当前检查器实际目标触发。"
+    },
+    {
+      "experiment_id": "20261010-finish-takeover-v2",
+      "disposition": "reuse",
+      "reason": "碗open11/move60/home0，不能证明成功；保留旧阻断。"
+    },
+    {
+      "experiment_id": "20261010-shape-home",
+      "disposition": "reuse",
+      "reason": "碗open11/move89/home137真实达标，final视觉误判；沿用已成功控制/home。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "旧wine归位→bowl两例成功，复用既有home流程。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "组合3/12，wine/stove两个出口阻断；不重跑基线。"
+    },
+    {
+      "experiment_id": "20261010-vision-grounding",
+      "disposition": "reuse",
+      "reason": "旧wine误报complete，需同步编码器否决未达到标准开口。"
+    },
+    {
+      "experiment_id": "20261010-joint-verifier",
+      "disposition": "reuse",
+      "reason": "四saved状态准确一unknown，动作0；本轮必须真实目标触发与独立效果。"
+    }
+  ],
+  "new_physical_actions": 5472,
+  "hypothesis": "当前同步视觉与编码器检查能触发旧wine/stove状态实际释放/退离，随后沿用旧home并完成独立判据。",
+  "information_gain": "首真实wine SHA匹配但视觉ad/support误判且无fallback；唯一修正后真实尝试核对目标是否实际触发，非savedcheck/机械盲retry。",
+  "success_criteria": "初决策目标触发；actualrelease_open>0、movement>0、confirm>0、home>0；编码器达到标准开口、独立目标/释放稳定/无持物/contact0，真实五posthome及finalvisualcomplete。",
+  "failure_criteria": "wine未通过立即stopstove+组合；stove未通过stop组合；应触发零目标动作记目标链路未验证，不用home替代；不自动修改已成功下游。",
+  "unknown_criteria": "unknown/接口SHA/网络/缺图/安全阻断归unknown，保存原错误并停止，无retry。",
+  "changed_factors": [
+    {
+      "name": "generic_overlap_review_trigger",
+      "before": "closed placement ad/support false gets no relation fallback",
+      "after": "valid synchronized two-view/two-time visible target/destination with positive 2D box overlap schedules one independent review",
+      "reason": "真实首wine初态SHA匹配，但ad/support误判，零helpers；增加观察不改支持/decide/encoder/安全/home判据。"
+    }
+  ],
+  "fixed_factors": {
+    "control": "old unchanged control/sensors/geometry/joint_home protection and configuration",
+    "fixtures": {
+      "wine": {
+        "init": 1,
+        "env_seed": 0,
+        "replay": 180
+      },
+      "stove": {
+        "init": 0,
+        "env_seed": 0,
+        "replay": 78
+      }
+    },
+    "chains": {
+      "scene": "native",
+      "init": 0,
+      "env_seed": 0,
+      "model_seed": 2,
+      "weights": "baseline bf16",
+      "planning": "fixed wine→bowl and bowl→stove, not Hermes autonomous planning"
+    },
+    "finish_budget": {
+      "release": 20,
+      "movement": 120,
+      "confirm": 20,
+      "home": 360
+    }
+  },
+  "scope": {
+    "max_cases": 5,
+    "max_vla_actions_per_case": 672,
+    "max_helper_actions_per_case": 1050,
+    "max_qwen_calls": 70,
+    "stop_rule": "首failedwine保留；唯一repairwine若零目标动作或非physicalsuccess停止stove/两chain，禁止第三wine尝试；其他原stop规则不变。"
+  },
+  "configuration": {
+    "checker_commit": "18cdf73",
+    "fixtures": {
+      "wine": {
+        "replay": 180,
+        "init_actions": 10,
+        "finish_max": 520
+      },
+      "stove": {
+        "replay": 78,
+        "init_actions": 10,
+        "finish_max": 520
+      }
+    },
+    "chains": {
+      "cases": 2,
+      "subtasks_per_case": 2,
+      "vla_per_subtask": 336,
+      "finish_per_subtask": 520,
+      "entry": "not_built; configuration is scope preregistration only; both fixtures must pass then main review/preflight before execution",
+      "initialization_actions": 10
+    },
+    "qwen": {
+      "model": "qwen3-vl-plus",
+      "temperature": 0,
+      "max_tokens": 1600,
+      "timeout": 90,
+      "fixture_calls_each": 10,
+      "chain_calls_each": 20,
+      "campaign_max": 70
+    },
+    "total_case_action_cap": 8610,
+    "model": "baseline bf16",
+    "seed": 2,
+    "source_inputs_sha256": "b3898cf2b963f921248da3f11c1e9bec0af25957ecf5a3fc9eae5fc92ca23781",
+    "case_action_caps": {
+      "wine": 710,
+      "stove": 608,
+      "each_chain": 1722
+    },
+    "repair_wine": {
+      "max_calls": 10,
+      "output": "pilot_revision2",
+      "physical_cap": 710,
+      "only_corrective_attempt": true
+    }
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "current actual handoff differs from historical saved checker; no repeat baseline"
+  },
+  "implementation_model": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low"
+  },
+  "initial_failed_pilot": {
+    "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/result.json",
+    "sha256": "47aa611f95a53a19ff0d055d85edcd8f67cb15a925d1c95db7a1d4f67722bc35",
+    "requests": 1,
+    "tokens": 3058,
+    "initialization": 10,
+    "replay": 180,
+    "helpers": 0,
+    "status": "blocked",
+    "reason": "initial stop"
+  }
+}

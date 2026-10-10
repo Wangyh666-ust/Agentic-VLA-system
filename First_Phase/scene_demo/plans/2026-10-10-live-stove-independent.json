@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "id": "20261010-live-stove-independent",
+  "intent": "new_experiment",
+  "question_key": "release-stop",
+  "purpose": "wine两次实际接管未触发已失败，停止所有依赖chain；stove作为用户原指定不同operation独立单例，一次actualcheck→open→withdraw→旧home，不依赖或宣称wine通过。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261010-visual-finish",
+    "20261010-finish-takeover-v2",
+    "20261010-shape-home",
+    "20261009-joint-home",
+    "20261009-joint-home-12",
+    "20261010-vision-grounding",
+    "20261010-joint-verifier"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "复用原release停点与目标状态，不重跑原生基线。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "旧zero-action接管、开火误判；新增当前检查器实际目标触发。"
+    },
+    {
+      "experiment_id": "20261010-finish-takeover-v2",
+      "disposition": "reuse",
+      "reason": "碗open11/move60/home0，不能证明成功；保留旧阻断。"
+    },
+    {
+      "experiment_id": "20261010-shape-home",
+      "disposition": "reuse",
+      "reason": "碗open11/move89/home137真实达标，final视觉误判；沿用已成功控制/home。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "旧wine归位→bowl两例成功，复用既有home流程。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "组合3/12，wine/stove两个出口阻断；不重跑基线。"
+    },
+    {
+      "experiment_id": "20261010-vision-grounding",
+      "disposition": "reuse",
+      "reason": "旧wine误报complete，需同步编码器否决未达到标准开口。"
+    },
+    {
+      "experiment_id": "20261010-joint-verifier",
+      "disposition": "reuse",
+      "reason": "四saved状态准确一unknown，动作0；本轮必须真实目标触发与独立效果。"
+    }
+  ],
+  "new_physical_actions": 608,
+  "hypothesis": "当前turn检查器识别stoveon并依当前反馈触发开口退离，沿原streaminghome独立验收。",
+  "information_gain": "savedstove正确不证明实际接管，本次独立turn真实动作验证，不依赖已失败wine。",
+  "success_criteria": "actual_open/movement/confirm/home>0，编码器标准开口，stoveon维持/无持物/contact0，五actual post ready，finalvisualcomplete。",
+  "failure_criteria": "目标未触发/零helper/阻断即独立stove未通过；不能替代wine失败，不能继续chain。",
+  "unknown_criteria": "unknown/接口SHA/网络/缺图/安全阻断归unknown，保存原错误并停止，无retry。",
+  "changed_factors": [
+    {
+      "name": "independent_stove_scope",
+      "before": "wine失败连同独立stove全部停止",
+      "after": "允许原授权不同operation stove独立单例，chain仍禁止",
+      "reason": "独立状态可回答不同operation当前检查器实际触发，不依赖wine效果。"
+    }
+  ],
+  "fixed_factors": {
+    "control": "old unchanged control/sensors/geometry/joint_home protection and configuration",
+    "fixtures": {
+      "wine": {
+        "init": 1,
+        "env_seed": 0,
+        "replay": 180
+      },
+      "stove": {
+        "init": 0,
+        "env_seed": 0,
+        "replay": 78
+      }
+    },
+    "chains": {
+      "scene": "native",
+      "init": 0,
+      "env_seed": 0,
+      "model_seed": 2,
+      "weights": "baseline bf16",
+      "planning": "fixed wine→bowl and bowl→stove, not Hermes autonomous planning"
+    },
+    "finish_budget": {
+      "release": 20,
+      "movement": 120,
+      "confirm": 20,
+      "home": 360
+    }
+  },
+  "scope": {
+    "max_cases": 1,
+    "max_vla_actions_per_case": 0,
+    "max_helper_actions_per_case": 608,
+    "max_qwen_calls": 10,
+    "stop_rule": "独立stove唯一一次，触发零/阻断/非physicalsuccess停止；不savedcheck、不重试、不第三wine、不chain；stove通过仍禁止wine依赖组合。"
+  },
+  "configuration": {
+    "fixtures": {
+      "stove": {
+        "init": 0,
+        "env_seed": 0,
+        "replay": 78,
+        "initialization": 10,
+        "finish_max": 520
+      }
+    },
+    "chains": {
+      "status": "not_run; wine failed; forbidden"
+    },
+    "qwen": {
+      "model": "qwen3-vl-plus",
+      "temperature": 0,
+      "max_tokens": 1600,
+      "timeout": 90,
+      "campaign_max": 10,
+      "review_included": true
+    },
+    "total_case_action_cap": 608,
+    "model": "baseline bf16",
+    "seed": 2,
+    "source_inputs_sha256": "b3898cf2b963f921248da3f11c1e9bec0af25957ecf5a3fc9eae5fc92ca23781",
+    "case_action_caps": {
+      "stove": 608
+    },
+    "repair_wine": {
+      "status": "failed; no further attempt"
+    },
+    "base_checker_commit": "18cdf73",
+    "checker_revision": "current_worktree_verified_source_sha256"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "current actual handoff differs from historical saved checker; no repeat baseline"
+  },
+  "implementation_model": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low"
+  },
+  "initial_failed_pilot": {
+    "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/result.json",
+    "sha256": "47aa611f95a53a19ff0d055d85edcd8f67cb15a925d1c95db7a1d4f67722bc35",
+    "requests": 1,
+    "tokens": 3058,
+    "initialization": 10,
+    "replay": 180,
+    "helpers": 0,
+    "status": "blocked",
+    "reason": "initial stop"
+  },
+  "scope_revision_reason": "原stop规则过度把不同operation独立fixture当wine依赖；本轮明确预登记修订后才能启动，非静默绕过；所有chain依赖gate保留禁止。",
+  "initial_failed_wine_records": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/result.json",
+      "sha256": "47aa611f95a53a19ff0d055d85edcd8f67cb15a925d1c95db7a1d4f67722bc35",
+      "api": 1,
+      "tokens": 3058,
+      "helpers": 0,
+      "terminal_state_sha": "bd21e55c973071f49692c80e0349ad094ab982917031c2f5e7c6492e48f2d222",
+      "status": "blocked"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/result.json",
+      "sha256": "8f345a6a0daffe8d838b91c206ab25e9d0ca528cc8a310df50566d6144e5efc5",
+      "api": 2,
+      "tokens": 5963,
+      "helpers": 0,
+      "terminal_state_sha": "bd21e55c973071f49692c80e0349ad094ab982917031c2f5e7c6492e48f2d222",
+      "status": "blocked"
+    }
+  ]
+}

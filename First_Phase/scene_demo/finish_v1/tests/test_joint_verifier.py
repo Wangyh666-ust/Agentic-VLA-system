@@ -78,7 +78,12 @@ class RelationReviewTests(JointVerifierTests):
             if mode=='unsupported':r['supported']=False
             if mode=='away':r['at_destination']=False
             if mode=='gap':r['boxes']['wrist']['gripper']=[0.31,0.1,0.4,0.2]
-            self.assertFalse(vision.needs_relation_review(c,r,rb,self.reference),mode)
+            if mode in ('unsupported','away'):
+                self.assertTrue(vision.needs_relation_review(c,r,rb,self.reference),mode)
+                decision=vision.decide(c,vision.reconcile_verdict(c,r,rb,self.reference))
+                self.assertFalse(decision['allow_release']);self.assertFalse(decision['allow_retreat'])
+            else:
+                self.assertFalse(vision.needs_relation_review(c,r,rb,self.reference),mode)
 
     def test_independent_prompt(self):
         ctx,_=self.eligible();ctx['user_request']='SECRET_REQUEST';ctx['current_subtask']['phase']='SECRET_PHASE';ctx['actuator_measurements']['stage']='SECRET_STAGE'

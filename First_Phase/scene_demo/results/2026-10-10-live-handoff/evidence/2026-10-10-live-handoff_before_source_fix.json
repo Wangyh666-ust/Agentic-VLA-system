@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "id": "20261010-live-handoff",
+  "intent": "new_experiment",
+  "question_key": "release-stop",
+  "purpose": "先wine/stove当前检查器真正触发松手退离并旧home；两例physicalsuccess之后才wine→bowl与bowl→stove每种1例。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261010-visual-finish",
+    "20261010-finish-takeover-v2",
+    "20261010-shape-home",
+    "20261009-joint-home",
+    "20261009-joint-home-12",
+    "20261010-vision-grounding",
+    "20261010-joint-verifier"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "复用原来源状态及已验证控制/归位与保存检查证据；本轮新增当前同步检查器实际接管触发和独立效果，不重测旧基线。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "复用原来源状态及已验证控制/归位与保存检查证据；本轮新增当前同步检查器实际接管触发和独立效果，不重测旧基线。"
+    },
+    {
+      "experiment_id": "20261010-finish-takeover-v2",
+      "disposition": "reuse",
+      "reason": "复用原来源状态及已验证控制/归位与保存检查证据；本轮新增当前同步检查器实际接管触发和独立效果，不重测旧基线。"
+    },
+    {
+      "experiment_id": "20261010-shape-home",
+      "disposition": "reuse",
+      "reason": "复用原来源状态及已验证控制/归位与保存检查证据；本轮新增当前同步检查器实际接管触发和独立效果，不重测旧基线。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "复用原来源状态及已验证控制/归位与保存检查证据；本轮新增当前同步检查器实际接管触发和独立效果，不重测旧基线。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用原来源状态及已验证控制/归位与保存检查证据；本轮新增当前同步检查器实际接管触发和独立效果，不重测旧基线。"
+    },
+    {
+      "experiment_id": "20261010-vision-grounding",
+      "disposition": "reuse",
+      "reason": "复用原来源状态及已验证控制/归位与保存检查证据；本轮新增当前同步检查器实际接管触发和独立效果，不重测旧基线。"
+    },
+    {
+      "experiment_id": "20261010-joint-verifier",
+      "disposition": "reuse",
+      "reason": "复用原来源状态及已验证控制/归位与保存检查证据；本轮新增当前同步检查器实际接管触发和独立效果，不重测旧基线。"
+    }
+  ],
+  "new_physical_actions": 4000,
+  "hypothesis": "当前同步视觉与编码器检查能触发旧wine/stove状态实际释放/退离，随后沿用旧home并完成独立判据。",
+  "information_gain": "saved checker分支不证明实际接管，本轮核对真实目标动作与独立效果；组合仅两fixture通过后主审核启动。",
+  "success_criteria": "初决策目标触发；actualrelease_open>0、movement>0、confirm>0、home>0；编码器达到标准开口、独立目标/释放稳定/无持物/contact0，真实五posthome及finalvisualcomplete。",
+  "failure_criteria": "wine未通过立即stopstove+组合；stove未通过stop组合；应触发零目标动作记目标链路未验证，不用home替代；不自动修改已成功下游。",
+  "unknown_criteria": "unknown/接口SHA/网络/缺图/安全阻断归unknown，保存原错误并停止，无retry。",
+  "changed_factors": [
+    {
+      "name": "checker",
+      "before": "historical checker saved-only",
+      "after": "18cdf73 current synchronized feedback fusion and generic review/crop actual handoff",
+      "reason": "验证当前检查器真实目标触发与执行。"
+    }
+  ],
+  "fixed_factors": {
+    "control": "old unchanged control/sensors/geometry/joint_home protection and configuration",
+    "fixtures": {
+      "wine": {
+        "init": 1,
+        "env_seed": 0,
+        "replay": 180
+      },
+      "stove": {
+        "init": 0,
+        "env_seed": 0,
+        "replay": 78
+      }
+    },
+    "chains": {
+      "scene": "native",
+      "init": 0,
+      "env_seed": 0,
+      "model_seed": 2,
+      "weights": "baseline bf16",
+      "planning": "fixed wine→bowl and bowl→stove, not Hermes autonomous planning"
+    },
+    "finish_budget": {
+      "release": 20,
+      "movement": 120,
+      "confirm": 20,
+      "home": 360
+    }
+  },
+  "scope": {
+    "max_cases": 4,
+    "max_vla_actions_per_case": 672,
+    "max_helper_actions_per_case": 1040,
+    "max_qwen_calls": 40,
+    "stop_rule": "wine首例任何未通过stopstove与组合；stove未通过stop组合；两fixture physicalsuccess后主审preflight才运行各chain1例；无retry/savedcheck/训练/扩大。"
+  },
+  "configuration": {
+    "checker_commit": "18cdf73",
+    "fixtures": {
+      "wine": {
+        "replay": 180,
+        "init_actions": 10,
+        "finish_max": 520
+      },
+      "stove": {
+        "replay": 78,
+        "init_actions": 10,
+        "finish_max": 520
+      }
+    },
+    "chains": {
+      "cases": 2,
+      "subtasks_per_case": 2,
+      "vla_per_subtask": 336,
+      "finish_per_subtask": 520,
+      "entry": "not_built; requires both fixtures pass and main review"
+    },
+    "qwen": {
+      "model": "qwen3-vl-plus",
+      "temperature": 0,
+      "max_tokens": 1600,
+      "timeout": 90,
+      "fixture_calls_each": 10,
+      "chain_calls_each": 20,
+      "campaign_max": 40
+    },
+    "total_case_action_cap": 6848,
+    "model": "baseline bf16",
+    "seed": 2,
+    "source_inputs_sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "current actual handoff differs from historical saved checker; no repeat baseline"
+  },
+  "implementation_model": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low"
+  }
+}

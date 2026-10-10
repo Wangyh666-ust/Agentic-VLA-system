@@ -2475,6 +2475,309 @@
           "sha256": "2fee01fbbaf2e0d5b2d9c847255c09023cbbfec74f0c29e176556bc82f9ccb62"
         }
       ]
+    },
+    {
+      "id": "20261010-live-handoff",
+      "title": "当前检查器实际接管：wine未触发，stove许可后闭爪等待阻断",
+      "date": "2026-10-10",
+      "question_keys": [
+        "release-stop",
+        "visual-completion"
+      ],
+      "tags": [
+        "handoff",
+        "actual-actions",
+        "blocked"
+      ],
+      "conditions": [
+        "wine原版及修正版同原状态，各初始化10+回放180；独立stove初始化10+回放78+settle10。Qwen5，tokens15009，newVLA/Hermes0。"
+      ],
+      "findings": [
+        "wine修正版独立关系复核实际触发，仍incomplete，无开口/退离/确认/home。",
+        "stove复核needs_release允许，实际仅10闭爪settle后not stable；actualopen/movement/confirm/home0。"
+      ],
+      "limits": [
+        "整体未通过，chainnot_run不计失败，UIoff；不评价home效果，不据速度阻断断言等待更久必成功。",
+        "同wine两版本不能合并可靠性；Git只选必要模型输入PNG，中间恢复RGBD本地保留。"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-live-handoff-repair.json",
+          "sha256": "f0c1865f16dd0cd781c20724fd5561a1c17e28eac5be4631fc15ef9dfa4d9452"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-live-handoff.json",
+          "sha256": "4838d009a1efd06e6f0cb14a9d8a58447229d7d007e3d26a24b18255a3217461"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-live-stove-independent.json",
+          "sha256": "d824a2d2a3a992aad23ae1dfaaa309bc04bf1dc95a53071e39082e459a8ae3d6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/2026-10-10-live-handoff_before_source_fix.json",
+          "sha256": "4e5fa70934e1b734bae915290e260dcebc16a3e41cb05bcf9a79154b8f970943"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/commands.json",
+          "sha256": "3342383d16cfc9724f327a5ad610c951c32a94f0baf0a65e5741490694669d28"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/inputs.json",
+          "sha256": "b3898cf2b963f921248da3f11c1e9bec0af25957ecf5a3fc9eae5fc92ca23781"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/inputs_before_source_fix.json",
+          "sha256": "1d50ebcdaeb98a3a28bddb93ee334565789a0e66afc21dca8dd6e5761100b0fa"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/launch_wine.json",
+          "sha256": "25254037f35c841db9b959d8a5289a1d75d5179159c8787250c2c0f3569a67c1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/launch_wine.log",
+          "sha256": "b985f46ba2f224365819c90e702898f32a710e5abba9bb84ec3871e77e32c137"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/manifest.json",
+          "sha256": "cfba4206df2e8984206b86ce03374a1cd3946af9117961b4ea55ba5ce2d58237"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/preflight.json",
+          "sha256": "86a098eb0317e67b75826c200be7b77972131e4663f65e8b33343040e4219107"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/preflight_before_source_fix.json",
+          "sha256": "b7948603fbda4880fdf7b9a79c622e90a5373e7ecd37554a297e0a9225073b99"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/registry_at_launch.json",
+          "sha256": "72a89fc0f919b14579187b1672a8ce609fb0bd1525d36d8723c899b302f4180a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/revision2/inputs.json",
+          "sha256": "f79d091cb34863fe5f5d69ebb2b71b88d009cf1c0a491fdc48afc73317b4a6b7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/revision2/launch_wine.json",
+          "sha256": "3f4504ada6a5333b78148109978861099986276ca51d88270908e8525ecedec4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/revision2/launch_wine.log",
+          "sha256": "b985f46ba2f224365819c90e702898f32a710e5abba9bb84ec3871e77e32c137"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/revision2/preflight.json",
+          "sha256": "c796831ef7b100ba79953cc7dc1b0ffb08f1a86551ce80adc33547ca6a43adba"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/revision2/source_snapshot.zip",
+          "sha256": "30a96d67acf6ceb1a4debb3985e97f780c5649d356c9a38df74595b73f64d93f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/source_snapshot.zip",
+          "sha256": "d1be74dd7655b8236192398450aadade88964e9069c156a6ca32167c6d6ca9e5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/source_snapshot_final.zip",
+          "sha256": "faff26bcfe51ff056e26f2de389ab073740824ddeead07f471f6d1e0f334c08d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/stove_independent/inputs.json",
+          "sha256": "288254d8c5fdc8cf425db56a03527d78d0a75080e1b6ccfb361255f5711c5093"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/stove_independent/launch_stove.json",
+          "sha256": "3479c589633f5e84a0c5c2d41bc57096539eb7827c43b8b9cebb11d5a343d231"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/stove_independent/launch_stove.log",
+          "sha256": "7a3417f05c67f76846752cdd649023c8f74f4d47b880804a236e85d72cb9e387"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/stove_independent/preflight.json",
+          "sha256": "bdcac429a7e08a883de47fa0ab8491a42912d64718f96ad49c6c80b1ad1bd079"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/stove_independent/preflight_before_launch_description_fix.json",
+          "sha256": "307483cd81e50cb11b15284f2ad4cc242aa3d89e8bff169c5fa7a9cf751d9ed1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/stove_independent/source_snapshot.zip",
+          "sha256": "30a96d67acf6ceb1a4debb3985e97f780c5649d356c9a38df74595b73f64d93f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/summary.json",
+          "sha256": "681e5f87ad21b704522a2f26905ff5d08f28ca59a5717437f6301a3c521fcccd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/evidence/video_validation.json",
+          "sha256": "299b7489209cffc3e0548ebb2a88cb7fb92a11a4021ed9640e7e4fefccf73ea3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/summary.json",
+          "sha256": "34da53c223893cdc740a950a80408239946571776b2c0390b7676d5845e8d064"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/all_actions.mp4",
+          "sha256": "b74ea1f9a0fc230b016ad85a976e30358b818a06da83515e3f1dbc7e34c3a436"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/checks.jsonl",
+          "sha256": "95a8c90ad0179940a3854ae63d919d14b57820157c55ba4d6711f1533d61ba08"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/events.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/helper.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/oracle.jsonl",
+          "sha256": "22121382a919503be8940d4c40135ca0e4c85cd1e5e3a9c3cfd9f5ac999b0fef"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/result.json",
+          "sha256": "47aa611f95a53a19ff0d055d85edcd8f67cb15a925d1c95db7a1d4f67722bc35"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/runtime_checks/checks.jsonl",
+          "sha256": "522d607e1cc1e1db6b6a6ef621902269e9078b21c50bb6e7bb1acd2096c5aa02"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/sensors/cap000535_agentview.png",
+          "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/sensors/cap000537_sideview.png",
+          "sha256": "9613bad5639b88b03231b9b7af2eab2dfffd422974c8cd95bacca9b7e9d7a2d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/sensors/cap000544_agentview.png",
+          "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot/wine_exit/sensors/cap000546_sideview.png",
+          "sha256": "20e16b5b9746c4f6c2b8c5190154c418afff8d4d817366863de185cf2b356ae4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/summary.json",
+          "sha256": "6e09e57752a2d9693cbcd7ec62aad53c06966744d3703acaf1ce8478a7ddf241"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/all_actions.mp4",
+          "sha256": "b74ea1f9a0fc230b016ad85a976e30358b818a06da83515e3f1dbc7e34c3a436"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/checks.jsonl",
+          "sha256": "779b54496f911120b0d6f1d53ed996cc2f487a10236a48255adb143f833f86fd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/events.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/helper.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/oracle.jsonl",
+          "sha256": "22121382a919503be8940d4c40135ca0e4c85cd1e5e3a9c3cfd9f5ac999b0fef"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/result.json",
+          "sha256": "8f345a6a0daffe8d838b91c206ab25e9d0ca528cc8a310df50566d6144e5efc5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/runtime_checks/checks.jsonl",
+          "sha256": "3938edffffc7d7ff75075e4468eac1afead5f977e46ae5e6c171e2d66db9e05a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/runtime_checks/relation_details/1/detail_0.png",
+          "sha256": "b0dcb6faa9c988ab65bd369830a2583c829cdc13e705dc7273a27893afcb58de"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/runtime_checks/relation_details/1/detail_1.png",
+          "sha256": "4782a6b875722fb7c0b3d2f44d9da27d3c203935a1906e077a95190bf5221245"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/sensors/cap000535_agentview.png",
+          "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/sensors/cap000537_sideview.png",
+          "sha256": "9613bad5639b88b03231b9b7af2eab2dfffd422974c8cd95bacca9b7e9d7a2d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/sensors/cap000544_agentview.png",
+          "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_revision2/wine_exit/sensors/cap000546_sideview.png",
+          "sha256": "20e16b5b9746c4f6c2b8c5190154c418afff8d4d817366863de185cf2b356ae4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/all_actions.mp4",
+          "sha256": "7eb3a15cad9be94ec8ce8ae46f4e6793b11eb90ecfff83bb84b9a95bde34391f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/checks.jsonl",
+          "sha256": "dcad0fc9965503fd2905ecde60f49a6454c682efde9ab94734a7f53330342346"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/events.jsonl",
+          "sha256": "4c3549d6ee1caeb127b6b2adcc2ee79f7e80f135713dc4f5e6792f672fa0c12d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/helper.jsonl",
+          "sha256": "1f12410b895198e7a2dcbe07fb03d64c6daf07b431595d09f85453248ebc9199"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/oracle.jsonl",
+          "sha256": "5404aef341be4c74e939ffc2c469d2dc6ada57d9bf68d05c914b5104f7cd5604"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/result.json",
+          "sha256": "1abc64ca31aa9f3f693a4013adac43771c291722086e898eb9359d265610bae9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/runtime_checks/checks.jsonl",
+          "sha256": "db7dec3a4c133276fe668a4db7ce599cb57fccf9fe0fbd0c3bdca8eb7a1a89c6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/runtime_checks/relation_details/1/detail_0.png",
+          "sha256": "0cb837ea2558f1c08e1b58de597c05d736a9cb148475f15881b67a33eca1176b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/runtime_checks/relation_details/1/detail_1.png",
+          "sha256": "1dbeb976a1ae1bca68329ebc8ce2bc27308e2d90f7237270ef57581fe01f8091"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/sensors/cap000229_agentview.png",
+          "sha256": "c9a17e22c7a80554e86bed5cff71fdf41024adbe51ad412ea56d8584f41b36be"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/sensors/cap000231_sideview.png",
+          "sha256": "86093d48a2025b4fd47594b215f8b3edb133875ab978140b0881231363a453ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/sensors/cap000238_agentview.png",
+          "sha256": "e0f6149f37010db3e7aca0d491f810ec0b9eb493c3438958631c78bbe7ce1efd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/stove_exit/sensors/cap000240_sideview.png",
+          "sha256": "e6e7288f091cb872ce123e139f29acddf816341755e5ba91e6f6390b88ee277e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/pilot_stove_independent/summary.json",
+          "sha256": "f8b2cd432d7385b9bc736077834ec3cc68078909917c8df5f311d65d0643c6ec"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/README.md",
+          "sha256": "15389ce47263ff2a40cc7fc193a68ebec69a6da6d31fcd5dfb50e488512f9e01"
+        }
+      ]
     }
   ]
 }
