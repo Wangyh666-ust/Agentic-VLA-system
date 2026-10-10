@@ -1,0 +1,548 @@
+{
+  "case_id": "bowl_held83",
+  "context_origin": "fixed_historical_subtask_fixture",
+  "origin_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_sha": null,
+  "origin_check": null,
+  "terminal_check": "embedded_match",
+  "phase_counts": {
+    "replay": 83,
+    "release": 17,
+    "movement": 30,
+    "confirm": 0,
+    "home": 0
+  },
+  "release_open_actions": 11,
+  "initial_vision_decision": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": true,
+    "supported": true,
+    "released": false,
+    "stable": null,
+    "operation_achieved": null,
+    "clear_of_target": false,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.41,
+          0.58,
+          0.72,
+          0.8
+        ],
+        "destination": [
+          0.2,
+          0.38,
+          0.85,
+          0.75
+        ],
+        "gripper": [
+          0.38,
+          0.2,
+          0.65,
+          0.6
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.35,
+          0.55,
+          0.95,
+          0.85
+        ],
+        "destination": [
+          0.25,
+          0.4,
+          0.85,
+          0.75
+        ],
+        "gripper": [
+          0.4,
+          0.25,
+          0.75,
+          0.6
+        ]
+      }
+    },
+    "evidence": [
+      "In agentview frames 0 and 2, the black bowl (akita_black_bowl_1) is resting on the white plate with red stripes (plate_1).",
+      "In wrist frames 1 and 3, the bowl is visible in contact with the plate surface.",
+      "The gripper remains in close proximity to the bowl in all frames; fingers are not visibly separated from the bowl.",
+      "encoder fingers not at standard open position; this does not prove object grasp",
+      "gripper is within 0.03 normalized distance of the target or support surface"
+    ],
+    "unknown_reasons": [
+      "Release not observable: gripper fingers are not clearly separated from the bowl in any frame.",
+      "Stability cannot be judged: only two timestamps (4.60 and 4.65 s) with no evidence of sustained support across multiple distinct frames.",
+      "Operation achievement ambiguous: placement appears complete but release and withdrawal not confirmed."
+    ]
+  },
+  "finish": {
+    "ready": false,
+    "ok": false,
+    "reason": "movement screen blocked",
+    "counts": {
+      "release": 17,
+      "movement": 30,
+      "confirm": 0,
+      "home": 0
+    },
+    "release_settle_actions": 6,
+    "release_open_actions": 11,
+    "plan": {
+      "ok": true,
+      "reason": "ok",
+      "waypoints": [
+        [
+          0.019288831344107638,
+          1.053729260173449,
+          6.864091829531176e-05,
+          -1.191462685059534,
+          -0.027031994547741047,
+          2.0793956186081117,
+          0.9430520331516843
+        ],
+        [
+          0.019285121187662693,
+          1.04971897413653,
+          8.658645745541567e-05,
+          -1.1934146386585807,
+          -0.02701768525337912,
+          2.0773359219739627,
+          0.9430038698474563
+        ],
+        [
+          0.01928045856785762,
+          1.0456374864497566,
+          0.0001043559016027319,
+          -1.1954669090147525,
+          -0.027003623352211126,
+          2.0753068465618365,
+          0.9429561045224846
+        ],
+        [
+          0.01927583662777817,
+          1.0415753724041126,
+          0.00012211231545746274,
+          -1.1974796378294932,
+          -0.026989279975110834,
+          2.073257961836143,
+          0.9429078647538932
+        ],
+        [
+          0.01927127639486813,
+          1.0375387303468944,
+          0.00013986079263184742,
+          -1.199442115059203,
+          -0.026974593509899406,
+          2.0711843315158585,
+          0.9428590335275396
+        ],
+        [
+          0.01926678146659995,
+          1.0335279183097335,
+          0.00015759846556688892,
+          -1.201353801483992,
+          -0.02695956442680371,
+          2.069085747609767,
+          0.9428096078007484
+        ],
+        [
+          0.019262354156941712,
+          1.0295428466732486,
+          0.00017532186165314506,
+          -1.203214959094443,
+          -0.026944198159677784,
+          2.0669623803687713,
+          0.9427595937617558
+        ],
+        [
+          0.01925799667494963,
+          1.0255833965016277,
+          0.0001930274785590344,
+          -1.205025902349061,
+          -0.02692850051887147,
+          2.0648144251705047,
+          0.9427089982052804
+        ],
+        [
+          0.01925371121883498,
+          1.0216494526678574,
+          0.00021071182919865883,
+          -1.2067869388578287,
+          -0.02691247732852237,
+          2.0626420745087737,
+          0.9426578278491097
+        ],
+        [
+          0.019249499982817005,
+          1.0177409062948821,
+          0.00022837144565954047,
+          -1.2084983650113896,
+          -0.02689613439941206,
+          2.0604455159190898,
+          0.9426060892835709
+        ],
+        [
+          0.019245365156985526,
+          1.01385765476939,
+          0.0002460028799770598,
+          -1.2101604659557088,
+          -0.026879477528241637,
+          2.058224931955703,
+          0.9425537889709575
+        ]
+      ],
+      "candidate_reports": [
+        {
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "distance": 0.02,
+          "reason": "clear"
+        }
+      ],
+      "sensor_screen": {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": 0.002040768206396315,
+        "endpoint_hand_clear": true,
+        "limitation": "visible geometry only"
+      }
+    },
+    "checks": [
+      {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": true,
+        "supported": true,
+        "released": false,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": false,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.38,
+              0.42,
+              0.99,
+              0.8
+            ],
+            "destination": [
+              0.2,
+              0.35,
+              0.85,
+              0.75
+            ],
+            "gripper": [
+              0.35,
+              0.0,
+              0.65,
+              0.4
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.25,
+              0.45,
+              0.95,
+              0.85
+            ],
+            "destination": [
+              0.15,
+              0.3,
+              0.8,
+              0.7
+            ],
+            "gripper": [
+              0.3,
+              0.0,
+              0.7,
+              0.5
+            ]
+          }
+        },
+        "evidence": [
+          "In agentview frames 0, 2, 4: black bowl (akita_black_bowl_1) is held by gripper and positioned directly above plate_1.",
+          "In wrist frames 1, 3, 5: bowl is visible in gripper, aligned over plate; no separation between fingers and bowl.",
+          "Plate_1 is visible in all agentview and wrist frames as a white plate with red stripes, supporting the bowl in later frames (e.g., frame 2 agentview shows bowl resting on plate).",
+          "Gripper remains in contact with the bowl across all frames; no visible release event.",
+          "gripper is within 0.03 normalized distance of the target or support surface"
+        ],
+        "unknown_reasons": [
+          "Stability cannot be judged because only single-frame snapshots are available; no multi-frame support observation over distinct timestamps.",
+          "Release status is false because fingers remain in contact with bowl; however, whether the bowl is fully supported by the plate without gripper assistance is ambiguous in some frames due to occlusion by gripper."
+        ]
+      }
+    ],
+    "restored": true,
+    "limitation": "visible geometry only",
+    "opening_confirmed": true,
+    "object_release_not_yet_confirmed": true,
+    "_release_path": true
+  },
+  "final_snapshot": {
+    "state_sha": "4238a0783b4f057692c89b89dd55cffd5b3fd33d6f326557a7ea5c8056c084ac",
+    "gold": {
+      "predicates": {
+        "on|akita_black_bowl_1|plate_1": true
+      },
+      "objects": {
+        "akita_black_bowl_1": {
+          "position": [
+            0.05714233259269742,
+            -0.03750487951790418,
+            0.908540866677881
+          ],
+          "quaternion": [
+            0.6793103041304754,
+            -0.03694890747399692,
+            0.03399248165509067,
+            0.7321316822331665
+          ],
+          "linear_velocity": [
+            -1.540183507817302e-08,
+            1.0711315607509212e-07,
+            -2.2676344617793603e-08
+          ],
+          "angular_velocity": [
+            2.4838444794945494e-07,
+            -1.0973787743033538e-06,
+            -1.9595387026960972e-06
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "cream_cheese_1": {
+          "position": [
+            -0.04602629144396026,
+            0.13447270946529477,
+            0.9089214774186077
+          ],
+          "quaternion": [
+            -3.82360069559625e-18,
+            -7.480657764089636e-17,
+            4.249308645745082e-18,
+            1.0
+          ],
+          "linear_velocity": [
+            -4.2917100290253753e-19,
+            -5.698433443476073e-18,
+            1.76859858728196e-14
+          ],
+          "angular_velocity": [
+            -6.308330674232621e-16,
+            9.55710730414702e-17,
+            -2.0260333866612221e-16
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "wine_bottle_1": {
+          "position": [
+            -0.20423290037391095,
+            -0.06165089486055361,
+            0.8988754774203452
+          ],
+          "quaternion": [
+            1.1093590903965734e-08,
+            -6.2040910799471005e-06,
+            3.8784043987321194e-07,
+            0.9999999999806799
+          ],
+          "linear_velocity": [
+            -6.656426299920614e-19,
+            1.0859689997854014e-17,
+            1.770989076341464e-14
+          ],
+          "angular_velocity": [
+            -1.1904278174344882e-15,
+            -1.880636583395792e-17,
+            3.5827678379638325e-18
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "plate_1": {
+          "position": [
+            0.05959239966632053,
+            -0.012024221646141892,
+            0.9025033957096377
+          ],
+          "quaternion": [
+            0.6862173193605955,
+            1.1299445032873044e-05,
+            -1.476393081890159e-05,
+            0.727396583896231
+          ],
+          "linear_velocity": [
+            -3.622318401382259e-13,
+            1.0474446350460339e-12,
+            -9.165094085919456e-13
+          ],
+          "angular_velocity": [
+            -2.4007263406922885e-11,
+            3.0773866725411624e-10,
+            7.414994972401739e-11
+          ],
+          "grasped": false,
+          "error": null
+        }
+      },
+      "held_objects": [],
+      "gripper_qpos": [
+        0.0383876468106964,
+        -0.03848976047514841
+      ],
+      "eef_position": [
+        0.06061516964591826,
+        0.01024616832661249,
+        0.9512664752422265
+      ],
+      "grasp_observation_complete": true,
+      "strict_candidate": true,
+      "phases": {
+        "on|akita_black_bowl_1|plate_1": "released_stable"
+      },
+      "goal_objects": [
+        "akita_black_bowl_1"
+      ]
+    },
+    "home": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.009287663745007375,
+        1.1957394468827247,
+        0.0061095137620789395,
+        1.2324221218575206,
+        0.02674984960762045,
+        0.1451913915368621,
+        0.1519630531179499
+      ],
+      "arm_speed_rad_s": [
+        1.1941898692765952e-07,
+        0.01461688077331412,
+        9.255447624676648e-06,
+        0.006750414826128249,
+        6.028766266752239e-06,
+        0.00786227536889682,
+        1.768107349033312e-05
+      ],
+      "max_joint_error_rad": 1.2324221218575206,
+      "max_joint_speed_rad_s": 0.01461688077331412,
+      "finger_error_m": [
+        0.000342929054332565,
+        0.00023800350353833655
+      ],
+      "finger_speed_m_s": [
+        0.0002569393992526144,
+        0.00025284102453234535
+      ],
+      "max_finger_error_m": 0.000342929054332565,
+      "max_finger_speed_m_s": 0.0002569393992526144,
+      "ready": false
+    },
+    "contacts": []
+  },
+  "home": {
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "arm_error_rad": [
+      0.009287663745007375,
+      1.1957394468827247,
+      0.0061095137620789395,
+      1.2324221218575206,
+      0.02674984960762045,
+      0.1451913915368621,
+      0.1519630531179499
+    ],
+    "arm_speed_rad_s": [
+      1.1941898692765952e-07,
+      0.01461688077331412,
+      9.255447624676648e-06,
+      0.006750414826128249,
+      6.028766266752239e-06,
+      0.00786227536889682,
+      1.768107349033312e-05
+    ],
+    "max_joint_error_rad": 1.2324221218575206,
+    "max_joint_speed_rad_s": 0.01461688077331412,
+    "finger_error_m": [
+      0.000342929054332565,
+      0.00023800350353833655
+    ],
+    "finger_speed_m_s": [
+      0.0002569393992526144,
+      0.00025284102453234535
+    ],
+    "max_finger_error_m": 0.000342929054332565,
+    "max_finger_speed_m_s": 0.0002569393992526144,
+    "ready": false
+  },
+  "contacts": [],
+  "physical_streak": 0,
+  "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/all_actions.mp4",
+  "errors": [],
+  "status": "blocked",
+  "initialization_steps": 10,
+  "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_state_sha": "da8146858acf03be45fca8804e9936a0a1a21905a23f58c2644c49cf61032d6b",
+  "core_counts": {
+    "release": 17,
+    "movement": 30,
+    "confirm": 0,
+    "home": 0
+  },
+  "actual_helper_counts": {
+    "release": 17,
+    "movement": 30,
+    "confirm": 0,
+    "home": 0
+  },
+  "target_metrics": {
+    "eligible": true,
+    "expected_release": true,
+    "expected_retreat": true,
+    "release_actions": 17,
+    "actual_release_open_actions": 11,
+    "movement_actions": 30,
+    "confirm_actions": 0,
+    "home_actions": 0,
+    "target_executed": true
+  }
+}

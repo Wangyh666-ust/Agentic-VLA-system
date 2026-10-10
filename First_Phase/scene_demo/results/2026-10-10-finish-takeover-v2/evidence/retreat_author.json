@@ -1,0 +1,52 @@
+{
+  "actual_deepseek_calls": 1,
+  "http_status": 200,
+  "model": "deepseek-flash",
+  "usage": {
+    "input_tokens": 982,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1129,
+    "service_tier": "standard"
+  },
+  "stop_reason": "end_turn",
+  "request_sha256": "c1a4c682e3d3631df9c93a182a0c63b2dc2e591a47656f1ec9c73892cb111685",
+  "response_sha256": "ac602fe909f510b110a1c549ee0b623068f37ddbb68d2780e8c5c5e6a953e9f5",
+  "request_path": "First_Phase\\tmp\\takeover_v2_retreat_request.json",
+  "response_path": "First_Phase\\tmp\\takeover_v2_retreat_response.json",
+  "applied": true,
+  "template_assisted": true,
+  "physical_actions": 0,
+  "qwen_calls": 0,
+  "before_sha256": "daafe1c5a8b163b5a7c7007a11321cfd7009d198c3d573d61b59c78081f0696f",
+  "after_sha256": "625c1c23a9652cc1ce0f9236ee2831050fe8bfca4a434be4c7f298be1f0bad41",
+  "edits": [
+    {
+      "path": "First_Phase/scene_demo/finish_v1/control.py",
+      "old": "    def route_screen(remaining, delta):\n        fresh = port.capture()\n        actualq = np.asarray(port.read_robot()['arm_qpos'])\n        poses = []\n        previous = actualq\n        for q in remaining:\n            q = np.asarray(q)\n            n = max(1, int(np.ceil(np.max(np.abs(q - previous)) / delta)))\n            for alpha in np.linspace(0, 1, n + 1)[1:]:\n                poses.append(port.robot_spheres(previous + (q - previous) * alpha))\n            previous = q\n        return screen(clouds(fresh['frames']), port.robot_spheres(actualq), poses)['ok']\n",
+      "new": "    def route_screen(remaining, delta):\n        fresh = port.capture()\n        actualq = np.asarray(port.read_robot()['arm_qpos'])\n        poses = []\n        previous = actualq\n        for q in remaining:\n            q = np.asarray(q)\n            n = max(1, int(np.ceil(np.max(np.abs(q - previous)) / delta)))\n            for alpha in np.linspace(0, 1, n + 1)[1:]:\n                poses.append(port.robot_spheres(previous + (q - previous) * alpha))\n            previous = q\n        report = dict(screen(clouds(fresh['frames']), port.robot_spheres(actualq), poses))\n        report['frames'] = fresh['frames']\n        if 'depth_path' in fresh:\n            report['depth_path'] = fresh['depth_path']\n        if 'calibration_path' in fresh:\n            report['calibration_path'] = fresh['calibration_path']\n        if 'json_path' in fresh:\n            report['json_path'] = fresh['json_path']\n        return report\n"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/control.py",
+      "old": "            p = plan_retreat(port, port.capture(), v)\n            r['plan'] = p\n            if not p['ok']:\n                r['reason'] = 'retreat plan blocked'\n                return r\n            qs = p['waypoints']\n\n            for i in range(1, len(qs)):\n                while np.max(np.abs(np.asarray(port.read_robot()['arm_qpos']) - np.asarray(qs[i]))) > 0.004:\n                    if r['counts']['movement'] >= 80:\n                        r['reason'] = 'movement budget'\n                        return r\n                    st = act('movement', qs[i])\n                    if r['counts']['movement'] % 10 == 0 and not route_screen(qs[i:], 0.003):\n                        r['reason'] = 'movement screen blocked'\n                        return r\n",
+      "new": "            p = plan_retreat(port, port.capture(), v)\n            r['plan'] = p\n            r['active_retreat_plan'] = p\n            if not p['ok']:\n                r['reason'] = 'retreat plan blocked'\n                return r\n            qs = p['waypoints']\n\n            i = 1\n            while i < len(qs):\n                while np.max(np.abs(np.asarray(port.read_robot()['arm_qpos']) - np.asarray(qs[i]))) > 0.004:\n                    if r['counts']['movement'] >= 80:\n                        r['reason'] = 'movement budget'\n                        return r\n                    st = act('movement', qs[i])\n                    if r['counts']['movement'] % 10 == 0:\n                        check = route_screen(qs[i:], 0.003)\n                        r.setdefault('movement_screens', []).append(check)\n                        if not check['ok']:\n                            if check['reason'] == 'endpoint_hand_clear_fail' and not r.get('retreat_replans'):\n                                r.setdefault('retreat_replans', []).append({'failed_screen': check, 'new_plan': None})\n                                newp = plan_retreat(port, port.capture(), v)\n                                r['retreat_replans'][-1]['new_plan'] = newp\n                                if newp['ok']:\n                                    r['active_retreat_plan'] = newp\n                                    qs = newp['waypoints']\n                                    i = 1\n                                    break\n                                else:\n                                    r['reason'] = 'movement screen blocked'\n                                    return r\n                            else:\n                                r['reason'] = 'movement screen blocked'\n                                return r\n                else:\n                    i += 1\n                    continue\n                continue\n"
+    }
+  ],
+  "software_tests": {
+    "chunk_id": "4a8628",
+    "wall_time_seconds": 4.9932941,
+    "exit_code": 0,
+    "original_token_count": 30,
+    "output": "..................\n----------------------------------------------------------------------\nRan 18 tests in 0.015s\n\nOK\n",
+    "command": "wsl --exec env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/mnt/d/FYP/First_Phase /home/yhwang/fyp/libero_demo/venv/bin/python -B -m unittest scene_demo.finish_v1.tests.test_core scene_demo.finish_v1.tests.test_release_regression",
+    "tests": 18,
+    "tests_origin": "GPT fixed regression design; native worker mechanical tests. Actual DeepSeek authored two production edits.",
+    "physical_actions": 0,
+    "qwen_calls": 0
+  },
+  "final_source_sha256": {
+    "control.py": "625c1c23a9652cc1ce0f9236ee2831050fe8bfca4a434be4c7f298be1f0bad41",
+    "tests/test_release_regression.py": "c4f2b8c89cff9a9f93267e7c119ebe7e14079c8f6c2e87752730559306149132"
+  },
+  "syntax_compile": "2 changed files compiled in memory"
+}

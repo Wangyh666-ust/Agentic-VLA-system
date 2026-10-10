@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "id": "20261010-finish-takeover-v2",
+  "intent": "new_experiment",
+  "question_key": "release-stop",
+  "purpose": "修正检查器接管，让收尾器真正松手和退离，再复用此前成功的joint_home完整执行流程；先首例验收，不微调、不新VLA、不扩样",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261009-joint-home",
+    "20261009-joint-home-12",
+    "20261009-safe-exit-3",
+    "20261010-safe-exit-sdk-3",
+    "20261010-visual-finish"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "原95/83停点与102/104释放确认已配对；重用未释放/未稳的原始证据，不重做VLA。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "已验证真实归位控制器在部分旧状态有效，复用控制器结果。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用原case02/07及失败09/11动作与旧评分，不重跑原生基线。"
+    },
+    {
+      "experiment_id": "20261009-safe-exit-3",
+      "disposition": "reuse",
+      "reason": "保留SDK错误后零辅助动作的unknown；不能作为退出有效性证据。"
+    },
+    {
+      "experiment_id": "20261010-safe-exit-sdk-3",
+      "disposition": "reuse",
+      "reason": "复用退离预算用尽与新浅接触的结果，作为本轮收尾问题来源。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "旧三正例release/movement/confirm均0，视觉误判和新home执行偏离已核对；复用原终态与失败来源，不把0/3算收尾效果"
+    }
+  ],
+  "new_physical_actions": 2503,
+  "hypothesis": "明确操作语义与编码器矛盾否决可触发合法收尾；松手后独立短退离能保留操作成果，并交给已验证归位流",
+  "information_gain": "旧回放停点不变，验证此前从未发生的真实release/retreat；修复包含多个变化，不能单独归因或声称VLA/真机泛化",
+  "success_criteria": "首例必须actual_release_open_actions>0、movement>0、confirm>0，真实动作日志相符；最终效果须独立goal、释放稳定、无抓持、无机器人接触、连续五post home ready及最终视觉complete另行验收；confirm为零时不得以target_metrics为真代替完整成功。wine至少movement>0，stove release>0/movement>0；各目标阶段与最终效果分开评分，不能用home代替收尾。负例禁止helper，unknown只算保守拒绝。",
+  "failure_criteria": "应接管却未触发或目标动作0记trigger_failed/effect_not_tested并停止依赖的剩余样例；已执行但保护/视觉/规划/归位不通过分别记effect_blocked，保留真实阶段",
+  "unknown_criteria": "来源SHA或回放终态不匹配、缺必需相机、SDK接口/协议/网络错误或cleanup异常记unknown，停止campaign剩余not_run；视觉看不清的unknown是正常阻断，可以继续下一个冻结case。",
+  "changed_factors": [
+    {
+      "name": "completion_judgement",
+      "before": "旧模糊纯图布尔",
+      "after": "明确turn语义与编码器/支撑物近距否决",
+      "reason": "修正接管触发与语义；不改变独立效果判据"
+    },
+    {
+      "name": "release_handoff",
+      "before": "旧未实际启动分支",
+      "after": "先确认目标到位与可见目标支撑面承托，停稳，再实际开启夹爪；编码器确认开启后执行RGBD退离，最后视觉确认",
+      "reason": "真正验证此前零动作的松手与退离"
+    },
+    {
+      "name": "home_execution",
+      "before": "逐点等待与RGBD home筛查",
+      "after": "恢复旧joint_waypoints逐step推进+原screen_joint_path+五postready",
+      "reason": "复用此前成功完整归位流程；原RGBD退离规划和阈值、逐步保护不变"
+    },
+    {
+      "name": "retreat_online_endpoint",
+      "before": "原online screen失败即stop",
+      "after": "仅endpoint_hand_clear_fail允许使用新RGBD从实际姿态重规划1次，movement80全局预算不重置",
+      "reason": "离线同screen末端7.959mm不足10mm，属于终点清场不足而非接近超限；保持geometry原阈值"
+    }
+  ],
+  "fixed_factors": {
+    "cases": [
+      "bowl_held83",
+      "wine_exit",
+      "stove_exit",
+      "soup_negative",
+      "sauce_negative"
+    ],
+    "historical_initial_states": "inputs逐例origin_sha与reference.origin_sha256；四个terminal_sha精确匹配；碗只匹配原embedded目标谓词/持物/target,eef,finger位置1e-7，不宣称全态同一",
+    "actions": "原gzip日志浮点7维按原顺序真实回放，1013历史动作；无新VLA/模型加载",
+    "policy_weights": "不改变、不读取、不微调；本轮无新policy推理",
+    "initialization": "原env.reset内10settle no-op每例，50初始化动作独立记录",
+    "vision": "qwen3-vl-plus、temperature0、max_tokens1600、最多18API调用、无retry",
+    "scene": "LIBERO robosuite/MuJoCo Franka Panda，env_seed与init保持inputs",
+    "contexts": "GPT固定历史Hermes子任务fixture，不新增Hermes调用",
+    "inputs_sha256": "8ecb43e7009312a41f5e08f1294c37fe3bd92367808f76ddfef42e9910d8d613",
+    "safety": "已真谓词保留；非目标jointed物体位置变化5mm上限；new contact/deepening50um上限；最后成功仍必须无任何robotcontact",
+    "retreat_geometry_and_protection": "原RGBD退离规划和阈值、逐步保护不变；归位执行作为显式改变因素恢复旧完整流程",
+    "inputs_path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/inputs.json"
+  },
+  "scope": {
+    "max_cases": 5,
+    "max_vla_actions_per_case": 0,
+    "max_helper_actions_per_case": 826,
+    "stop_rule": "首例新output为pilot_first_retreatfix，start_index0/limit1/max_qwen_calls6；余例仍须GPT实测验收后另起独立output，start_index1/limit4/max_qwen_calls8；本campaign已发生Qwen4+本次最多6+剩余最多8合计18。仅上一步保持安全且当前endpoint_hand_clear_fail允许实际姿态重规划一次，movement80总预算不重置；其他screen失败即时stop，不自动重跑案例。应接管却未触发、expected_release但实际开口为零、目标动作0立即停止依赖的剩余样例。负例禁止helper；软件/来源/接口/网络unknown沿原规则停止全部剩余。"
+  },
+  "configuration": {
+    "campaign": "20261010-finish-takeover-v2",
+    "inputs_sha256": "8ecb43e7009312a41f5e08f1294c37fe3bd92367808f76ddfef42e9910d8d613",
+    "case_order": [
+      "bowl_held83",
+      "wine_exit",
+      "stove_exit",
+      "soup_negative",
+      "sauce_negative"
+    ],
+    "initialization_actions": 50,
+    "historical_replay_actions": 1013,
+    "max_finish_actions": 1440,
+    "finish_caps_per_eligible": {
+      "release": 20,
+      "movement": 80,
+      "confirm": 20,
+      "home": 360
+    },
+    "eligible_cases": [
+      "bowl_held83",
+      "wine_exit",
+      "stove_exit"
+    ],
+    "negative_cases": [
+      "soup_negative",
+      "sauce_negative"
+    ],
+    "runtime_sensors": "two-camera actual RGBD render, calibration, arm joint encoders, finger position; no object poses/predicates/contact lists in visual or path planning",
+    "oracle_emergency_supervision": "privileged simulation predicate/object displacement/contact probes after actual helper steps; logged separately, remains simulation-only emergency supervision",
+    "independent_gold": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ],
+      [
+        "on",
+        "wine_bottle_1",
+        "wine_rack_1_top_region"
+      ],
+      [
+        "turnon",
+        "flat_stove_1"
+      ],
+      [
+        "in",
+        "alphabet_soup_1",
+        "basket_1_contain_region"
+      ],
+      [
+        "in",
+        "tomato_sauce_1",
+        "basket_1_contain_region"
+      ]
+    ],
+    "context_contract": "context is a GPT-fixed historical Hermes subtask fixture, not a newly generated Hermes plan. Gold is independent offline oracle and forbidden to vision decision.",
+    "vision_model": "qwen3-vl-plus",
+    "vision_max_calls": 18,
+    "vision_max_tokens": 1600,
+    "vision_temperature": 0,
+    "new_vla_inferences": 0,
+    "new_hermes_calls": 0,
+    "weights_loaded": 0,
+    "training": false,
+    "physical_streak": 5,
+    "repeat_measurements": 0,
+    "source_freeze": "preflight.json source_sha256 must match before launch and before eachcase; no silent refreeze",
+    "revision": "takeover_v2_retreatfix",
+    "old_home_source": "First_Phase/scene_demo/results/2026-10-09-joint-home/evidence/joint_home_20261009_run.py",
+    "home_mode": "joint_home",
+    "inputs_path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/inputs.json",
+    "runtime_env": {
+      "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+      "MUJOCO_GL": "egl",
+      "PYOPENGL_PLATFORM": "egl"
+    },
+    "release_gate": "visible destination support, stable not false; settle then encoder-open; final complete still visual",
+    "previous_revision_physical_actions": 239,
+    "previous_revision_physical_actions_breakdown": {
+      "entryfix": 99,
+      "releasefix": 140
+    }
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": true,
+    "reason": "首入口EOF零物理零Qwen保留；已发生entryfix99+releasefix140=239个历史物理动作，保留原输出且不进入新revision效果分母。离线同screen判定末端7.959mm未达到10mm清场，非接近超限；本次仅终点不足允许实际姿态一次重规划的新机制验证，不是重复旧配置或自动重跑案例。"
+  }
+}

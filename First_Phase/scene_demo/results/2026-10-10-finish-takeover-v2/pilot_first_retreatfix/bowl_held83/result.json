@@ -1,0 +1,1537 @@
+{
+  "case_id": "bowl_held83",
+  "context_origin": "fixed_historical_subtask_fixture",
+  "origin_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_sha": null,
+  "origin_check": null,
+  "terminal_check": "embedded_match",
+  "phase_counts": {
+    "replay": 83,
+    "release": 17,
+    "movement": 60,
+    "confirm": 0,
+    "home": 0
+  },
+  "release_open_actions": 11,
+  "initial_vision_decision": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": true,
+    "supported": true,
+    "released": false,
+    "stable": null,
+    "operation_achieved": false,
+    "clear_of_target": false,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.42,
+          0.58,
+          0.85,
+          0.85
+        ],
+        "destination": [
+          0.2,
+          0.45,
+          0.8,
+          0.75
+        ],
+        "gripper": [
+          0.38,
+          0.2,
+          0.65,
+          0.6
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.45,
+          0.55,
+          1.0,
+          0.95
+        ],
+        "destination": [
+          0.25,
+          0.4,
+          0.9,
+          0.8
+        ],
+        "gripper": [
+          0.35,
+          0.0,
+          0.75,
+          0.5
+        ]
+      }
+    },
+    "evidence": [
+      "In agentview frames 0 and 2, the black bowl (akita_black_bowl_1) is held by the gripper and positioned directly above the plate (plate_1), indicating it has reached the destination location.",
+      "In wrist frames 1 and 3, the bowl is still in contact with the gripper fingers; no separation is visible.",
+      "The bowl appears to be resting on the plate in agentview frames 0 and 2, but the gripper remains in contact, so supported=true is inferred from visual contact with plate surface, though release not yet occurred.",
+      "Gripper has not withdrawn: in all frames, gripper is still near or touching the bowl and plate.",
+      "encoder fingers not at standard open position; this does not prove object grasp",
+      "gripper is within 0.03 normalized distance of the target or support surface"
+    ],
+    "unknown_reasons": [
+      "Stability cannot be judged because only two timestamps are present and no multi-frame support observation is available.",
+      "Release status is false because fingers remain in contact with bowl in all frames; no visible separation.",
+      "Clear_of_target is false because gripper is still near/over the bowl and plate in all frames."
+    ]
+  },
+  "finish": {
+    "ready": false,
+    "ok": false,
+    "reason": "movement screen blocked",
+    "counts": {
+      "release": 17,
+      "movement": 60,
+      "confirm": 0,
+      "home": 0
+    },
+    "release_settle_actions": 6,
+    "release_open_actions": 11,
+    "plan": {
+      "ok": true,
+      "reason": "ok",
+      "waypoints": [
+        [
+          0.019288831344107638,
+          1.053729260173449,
+          6.864091829531176e-05,
+          -1.191462685059534,
+          -0.027031994547741047,
+          2.0793956186081117,
+          0.9430520331516843
+        ],
+        [
+          0.019285121187662693,
+          1.04971897413653,
+          8.658645745541567e-05,
+          -1.1934146386585807,
+          -0.02701768525337912,
+          2.0773359219739627,
+          0.9430038698474563
+        ],
+        [
+          0.01928045856785762,
+          1.0456374864497566,
+          0.0001043559016027319,
+          -1.1954669090147525,
+          -0.027003623352211126,
+          2.0753068465618365,
+          0.9429561045224846
+        ],
+        [
+          0.01927583662777817,
+          1.0415753724041126,
+          0.00012211231545746274,
+          -1.1974796378294932,
+          -0.026989279975110834,
+          2.073257961836143,
+          0.9429078647538932
+        ],
+        [
+          0.01927127639486813,
+          1.0375387303468944,
+          0.00013986079263184742,
+          -1.199442115059203,
+          -0.026974593509899406,
+          2.0711843315158585,
+          0.9428590335275396
+        ],
+        [
+          0.01926678146659995,
+          1.0335279183097335,
+          0.00015759846556688892,
+          -1.201353801483992,
+          -0.02695956442680371,
+          2.069085747609767,
+          0.9428096078007484
+        ],
+        [
+          0.019262354156941712,
+          1.0295428466732486,
+          0.00017532186165314506,
+          -1.203214959094443,
+          -0.026944198159677784,
+          2.0669623803687713,
+          0.9427595937617558
+        ],
+        [
+          0.01925799667494963,
+          1.0255833965016277,
+          0.0001930274785590344,
+          -1.205025902349061,
+          -0.02692850051887147,
+          2.0648144251705047,
+          0.9427089982052804
+        ],
+        [
+          0.01925371121883498,
+          1.0216494526678574,
+          0.00021071182919865883,
+          -1.2067869388578287,
+          -0.02691247732852237,
+          2.0626420745087737,
+          0.9426578278491097
+        ],
+        [
+          0.019249499982817005,
+          1.0177409062948821,
+          0.00022837144565954047,
+          -1.2084983650113896,
+          -0.02689613439941206,
+          2.0604455159190898,
+          0.9426060892835709
+        ],
+        [
+          0.019245365156985526,
+          1.01385765476939,
+          0.0002460028799770598,
+          -1.2101604659557088,
+          -0.026879477528241637,
+          2.058224931955703,
+          0.9425537889709575
+        ]
+      ],
+      "candidate_reports": [
+        {
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "distance": 0.02,
+          "reason": "clear"
+        }
+      ],
+      "sensor_screen": {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": 0.002040768206396315,
+        "endpoint_hand_clear": true,
+        "limitation": "visible geometry only"
+      }
+    },
+    "checks": [
+      {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": true,
+        "supported": true,
+        "released": false,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": false,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.38,
+              0.42,
+              0.95,
+              0.8
+            ],
+            "destination": [
+              0.2,
+              0.35,
+              0.85,
+              0.75
+            ],
+            "gripper": [
+              0.35,
+              0.0,
+              0.65,
+              0.4
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.25,
+              0.45,
+              0.9,
+              0.85
+            ],
+            "destination": [
+              0.15,
+              0.3,
+              0.8,
+              0.7
+            ],
+            "gripper": [
+              0.3,
+              0.0,
+              0.7,
+              0.5
+            ]
+          }
+        },
+        "evidence": [
+          "In agentview frames 0, 2, 4: black bowl is held by gripper and positioned directly above plate_1.",
+          "In wrist frames 1, 3, 5: bowl is visible in gripper, aligned over plate; no separation between fingers and bowl.",
+          "Plate_1 (destination) is visible in all agentview and wrist frames as a white plate with red stripes.",
+          "Bowl appears to be resting on plate in agentview frames 2 and 4, but gripper still contacts it \u2014 not released.",
+          "gripper is within 0.03 normalized distance of the target or support surface"
+        ],
+        "unknown_reasons": [
+          "No frame shows clear separation between gripper fingers and bowl; release not observed.",
+          "Stability cannot be judged because only single-frame contact is visible; no multi-frame support without gripper.",
+          "Gripper has not withdrawn from target or support surface; clear_of_target is false."
+        ]
+      }
+    ],
+    "restored": true,
+    "limitation": "visible geometry only",
+    "opening_confirmed": true,
+    "object_release_not_yet_confirmed": true,
+    "_release_path": true,
+    "active_retreat_plan": {
+      "ok": true,
+      "reason": "ok",
+      "waypoints": [
+        [
+          0.019283134773143088,
+          1.0295616775471454,
+          7.682332261399276e-05,
+          -1.2025526321891324,
+          -0.027025616242153595,
+          2.068114994068409,
+          0.9430339762104699
+        ],
+        [
+          0.019279101343029216,
+          1.0257217270819543,
+          9.452446869198447e-05,
+          -1.2042107967476297,
+          -0.027009308190187858,
+          2.065932152129641,
+          0.9429818128895392
+        ],
+        [
+          0.01927497951747163,
+          1.0217962999655708,
+          0.00011215462033434712,
+          -1.2059575539360632,
+          -0.02699326072845126,
+          2.0637537189006236,
+          0.9429301586554516
+        ],
+        [
+          0.019270914252848003,
+          1.0178902879467107,
+          0.00012975371641886092,
+          -1.2076651334204747,
+          -0.026976954879117217,
+          2.061555827490722,
+          0.9428780519447874
+        ],
+        [
+          0.019266922483797116,
+          1.0140091388430905,
+          0.00014732435622213174,
+          -1.209324168517941,
+          -0.026960338988397108,
+          2.0593342847583043,
+          0.9428253911786694
+        ],
+        [
+          0.019263007647743677,
+          1.0101531779222404,
+          0.00016486359192168377,
+          -1.2109341801402351,
+          -0.02694341431626922,
+          2.057088913736412,
+          0.9427721740902747
+        ],
+        [
+          0.01925917203841594,
+          1.006322347356707,
+          0.00018236805075960672,
+          -1.2124953732154848,
+          -0.026926186288442677,
+          2.0548198597246086,
+          0.9427184062384921
+        ],
+        [
+          0.019255417852517224,
+          1.0025165647794054,
+          0.00019983434788553673,
+          -1.2140079965157755,
+          -0.026908660644811122,
+          2.052527289004146,
+          0.9426640936828751
+        ],
+        [
+          0.019251747272285596,
+          0.9987357510689566,
+          0.00021725911793261788,
+          -1.2154722929579653,
+          -0.026890843140862375,
+          2.0502113653766414,
+          0.9426092424147647
+        ],
+        [
+          0.019248162471451686,
+          0.9949798323715803,
+          0.00023463901781464727,
+          -1.2168884959847928,
+          -0.026872739525463336,
+          2.0478722484463816,
+          0.9425538583156339
+        ],
+        [
+          0.019244665615183565,
+          0.9912487401249468,
+          0.000251970727360697,
+          -1.2182568295191054,
+          -0.0268543555399772,
+          2.0455100935890718,
+          0.9424979471562273
+        ]
+      ],
+      "candidate_reports": [
+        {
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "distance": 0.02,
+          "reason": "clear"
+        }
+      ],
+      "sensor_screen": {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": 0.002012776196478286,
+        "endpoint_hand_clear": true,
+        "limitation": "visible geometry only"
+      }
+    },
+    "movement_screens": [
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": 0.0020334973766798353,
+        "endpoint_hand_clear": true,
+        "limitation": "visible geometry only",
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000231_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000231_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000232_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000232_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -0.11867585965722721,
+                -0.9794921116235018,
+                -0.16282273674751158,
+                0.12531450675020836
+              ],
+              [
+                -0.9918446745783986,
+                0.12461681011022036,
+                -0.026735597027588168,
+                0.006641469243677067
+              ],
+              [
+                0.046477756454958455,
+                0.15832199438260186,
+                -0.9862930417728937,
+                1.0308607760575055
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": 0.0021033016004132626,
+        "endpoint_hand_clear": true,
+        "limitation": "visible geometry only",
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000253_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000253_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000254_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000254_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -0.11876639760705976,
+                -0.9795192192685527,
+                -0.16259348659452194,
+                0.12535866095117287
+              ],
+              [
+                -0.9918323934736013,
+                0.12470480603533096,
+                -0.026780862721611676,
+                0.0066255652989317525
+              ],
+              [
+                0.04650855895278948,
+                0.1580848203820079,
+                -0.9863296322776272,
+                1.0350122951483525
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "ok": false,
+        "reason": "endpoint_hand_clear_fail",
+        "min_distance": 0.002012776196478286,
+        "endpoint_hand_clear": false,
+        "limitation": "visible geometry only",
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000275_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000275_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000276_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000276_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -0.11884760828612229,
+                -0.9795116065732273,
+                -0.16258000674437656,
+                0.12536101362203425
+              ],
+              [
+                -0.991819805954414,
+                0.12479429261708441,
+                -0.026830151821190598,
+                0.006609039174767284
+              ],
+              [
+                0.046569502050323314,
+                0.15806137136737297,
+                -0.9863305147668545,
+                1.0390227399250052
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": 0.0020287996424979693,
+        "endpoint_hand_clear": true,
+        "limitation": "visible geometry only",
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000299_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000299_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000300_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000300_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -0.11899675496724543,
+                -0.9797466794208396,
+                -0.16104724918824498,
+                0.12567106688120822
+              ],
+              [
+                -0.9918091927198169,
+                0.12487490687062003,
+                -0.026847399697471117,
+                0.00659859672764381
+              ],
+              [
+                0.046414410948833085,
+                0.15653338876383305,
+                -0.9865814718807464,
+                1.0437860479511143
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": 0.0020167126312753553,
+        "endpoint_hand_clear": true,
+        "limitation": "visible geometry only",
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000321_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000321_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000322_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000322_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -0.11910382632019811,
+                -0.979770770835996,
+                -0.16082137659938986,
+                0.12571675501418053
+              ],
+              [
+                -0.991794372796651,
+                0.12498103101410207,
+                -0.026901003244232807,
+                0.00657924357469557
+              ],
+              [
+                0.046456438141362626,
+                0.15629772391844596,
+                -0.9866168561570026,
+                1.048345003228178
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "ok": false,
+        "reason": "endpoint_hand_clear_fail",
+        "min_distance": 0.0020198997993108037,
+        "endpoint_hand_clear": false,
+        "limitation": "visible geometry only",
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000343_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000343_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000344_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000344_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -0.11920317876386916,
+                -0.9797608874076826,
+                -0.16080797765874633,
+                0.12571927711850692
+              ],
+              [
+                -0.9917790325136588,
+                0.1250901795361457,
+                -0.02695918488905745,
+                0.006559031649356571
+              ],
+              [
+                0.046529053706867884,
+                0.15627235996721123,
+                -0.9866174520407687,
+                1.0528408049584734
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "retreat_replans": [
+      {
+        "failed_screen": {
+          "ok": false,
+          "reason": "endpoint_hand_clear_fail",
+          "min_distance": 0.002012776196478286,
+          "endpoint_hand_clear": false,
+          "limitation": "visible geometry only",
+          "frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000275_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000275_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ]
+            },
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000276_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/sensors/cap000276_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -0.11884760828612229,
+                  -0.9795116065732273,
+                  -0.16258000674437656,
+                  0.12536101362203425
+                ],
+                [
+                  -0.991819805954414,
+                  0.12479429261708441,
+                  -0.026830151821190598,
+                  0.006609039174767284
+                ],
+                [
+                  0.046569502050323314,
+                  0.15806137136737297,
+                  -0.9863305147668545,
+                  1.0390227399250052
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ]
+            }
+          ]
+        },
+        "new_plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.019283134773143088,
+              1.0295616775471454,
+              7.682332261399276e-05,
+              -1.2025526321891324,
+              -0.027025616242153595,
+              2.068114994068409,
+              0.9430339762104699
+            ],
+            [
+              0.019279101343029216,
+              1.0257217270819543,
+              9.452446869198447e-05,
+              -1.2042107967476297,
+              -0.027009308190187858,
+              2.065932152129641,
+              0.9429818128895392
+            ],
+            [
+              0.01927497951747163,
+              1.0217962999655708,
+              0.00011215462033434712,
+              -1.2059575539360632,
+              -0.02699326072845126,
+              2.0637537189006236,
+              0.9429301586554516
+            ],
+            [
+              0.019270914252848003,
+              1.0178902879467107,
+              0.00012975371641886092,
+              -1.2076651334204747,
+              -0.026976954879117217,
+              2.061555827490722,
+              0.9428780519447874
+            ],
+            [
+              0.019266922483797116,
+              1.0140091388430905,
+              0.00014732435622213174,
+              -1.209324168517941,
+              -0.026960338988397108,
+              2.0593342847583043,
+              0.9428253911786694
+            ],
+            [
+              0.019263007647743677,
+              1.0101531779222404,
+              0.00016486359192168377,
+              -1.2109341801402351,
+              -0.02694341431626922,
+              2.057088913736412,
+              0.9427721740902747
+            ],
+            [
+              0.01925917203841594,
+              1.006322347356707,
+              0.00018236805075960672,
+              -1.2124953732154848,
+              -0.026926186288442677,
+              2.0548198597246086,
+              0.9427184062384921
+            ],
+            [
+              0.019255417852517224,
+              1.0025165647794054,
+              0.00019983434788553673,
+              -1.2140079965157755,
+              -0.026908660644811122,
+              2.052527289004146,
+              0.9426640936828751
+            ],
+            [
+              0.019251747272285596,
+              0.9987357510689566,
+              0.00021725911793261788,
+              -1.2154722929579653,
+              -0.026890843140862375,
+              2.0502113653766414,
+              0.9426092424147647
+            ],
+            [
+              0.019248162471451686,
+              0.9949798323715803,
+              0.00023463901781464727,
+              -1.2168884959847928,
+              -0.026872739525463336,
+              2.0478722484463816,
+              0.9425538583156339
+            ],
+            [
+              0.019244665615183565,
+              0.9912487401249468,
+              0.000251970727360697,
+              -1.2182568295191054,
+              -0.0268543555399772,
+              2.0455100935890718,
+              0.9424979471562273
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.02,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": 0.002012776196478286,
+            "endpoint_hand_clear": true,
+            "limitation": "visible geometry only"
+          }
+        }
+      }
+    ]
+  },
+  "final_snapshot": {
+    "state_sha": "b7f368417e4420cc541f1e4629412689dfe08335bb6fd947ad40946d7706f5bd",
+    "gold": {
+      "predicates": {
+        "on|akita_black_bowl_1|plate_1": true
+      },
+      "objects": {
+        "akita_black_bowl_1": {
+          "position": [
+            0.05714230948979238,
+            -0.037504718847993015,
+            0.9085408326632506
+          ],
+          "quaternion": [
+            0.6793114149760605,
+            -0.03694822831301288,
+            0.0339920046430405,
+            0.7321307079532299
+          ],
+          "linear_velocity": [
+            -1.5402038019047604e-08,
+            1.0711339296444439e-07,
+            -2.2676490012786126e-08
+          ],
+          "angular_velocity": [
+            2.483839460338034e-07,
+            -1.0973845570413615e-06,
+            -1.959560877798361e-06
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "cream_cheese_1": {
+          "position": [
+            -0.04602629144396026,
+            0.13447270946529477,
+            0.9089214774186077
+          ],
+          "quaternion": [
+            -6.080241403787681e-18,
+            -7.668318440941337e-17,
+            8.998450045182588e-18,
+            1.0
+          ],
+          "linear_velocity": [
+            4.2715796867527477e-19,
+            -6.03597365824535e-18,
+            1.7683745643995812e-14
+          ],
+          "angular_velocity": [
+            -9.510192069435063e-16,
+            7.526794976436509e-17,
+            -1.1578367474115394e-16
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "wine_bottle_1": {
+          "position": [
+            -0.20423290037391095,
+            -0.061650894860553626,
+            0.8988754774203452
+          ],
+          "quaternion": [
+            1.1093590914591273e-08,
+            -6.204091079947085e-06,
+            3.878404398761374e-07,
+            0.9999999999806799
+          ],
+          "linear_velocity": [
+            -3.668677758052139e-18,
+            4.404180080922057e-19,
+            1.7706284229166943e-14
+          ],
+          "angular_velocity": [
+            -9.57803514104174e-16,
+            -3.7377577004837003e-17,
+            4.9469679744159814e-18
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "plate_1": {
+          "position": [
+            0.0595923996657793,
+            -0.012024221644570232,
+            0.9025033957082834
+          ],
+          "quaternion": [
+            0.686217319320152,
+            1.1299264786094036e-05,
+            -1.4763785533540917e-05,
+            0.7273965839343912
+          ],
+          "linear_velocity": [
+            -3.6222546501322746e-13,
+            1.0474551756060519e-12,
+            -9.14357531537676e-13
+          ],
+          "angular_velocity": [
+            -2.400427622651192e-11,
+            3.077442020673106e-10,
+            7.4150790882319e-11
+          ],
+          "grasped": false,
+          "error": null
+        }
+      },
+      "held_objects": [],
+      "gripper_qpos": [
+        0.03860182816489492,
+        -0.038700566091005396
+      ],
+      "eef_position": [
+        0.06113286232427376,
+        0.01019841471655316,
+        0.9649712558489167
+      ],
+      "grasp_observation_complete": true,
+      "strict_candidate": true,
+      "phases": {
+        "on|akita_black_bowl_1|plate_1": "released_stable"
+      },
+      "goal_objects": [
+        "akita_black_bowl_1"
+      ]
+    },
+    "home": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.00928754339171073,
+        1.1698695921604851,
+        0.006119066314953725,
+        1.2221362170397048,
+        0.026742703292784782,
+        0.15897982143945066,
+        0.15194320832696318
+      ],
+      "arm_speed_rad_s": [
+        2.767746962588664e-09,
+        0.017767728352994522,
+        1.056275850043701e-05,
+        0.006994930565238944,
+        7.696301822952585e-06,
+        0.01076868434352504,
+        2.1917573712224324e-05
+      ],
+      "max_joint_error_rad": 1.2221362170397048,
+      "max_joint_speed_rad_s": 0.017767728352994522,
+      "finger_error_m": [
+        0.00012874770013404646,
+        2.7197887681351673e-05
+      ],
+      "finger_speed_m_s": [
+        6.901525775260191e-05,
+        6.783020404724432e-05
+      ],
+      "max_finger_error_m": 0.00012874770013404646,
+      "max_finger_speed_m_s": 6.901525775260191e-05,
+      "ready": false
+    },
+    "contacts": []
+  },
+  "home": {
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "arm_error_rad": [
+      0.00928754339171073,
+      1.1698695921604851,
+      0.006119066314953725,
+      1.2221362170397048,
+      0.026742703292784782,
+      0.15897982143945066,
+      0.15194320832696318
+    ],
+    "arm_speed_rad_s": [
+      2.767746962588664e-09,
+      0.017767728352994522,
+      1.056275850043701e-05,
+      0.006994930565238944,
+      7.696301822952585e-06,
+      0.01076868434352504,
+      2.1917573712224324e-05
+    ],
+    "max_joint_error_rad": 1.2221362170397048,
+    "max_joint_speed_rad_s": 0.017767728352994522,
+    "finger_error_m": [
+      0.00012874770013404646,
+      2.7197887681351673e-05
+    ],
+    "finger_speed_m_s": [
+      6.901525775260191e-05,
+      6.783020404724432e-05
+    ],
+    "max_finger_error_m": 0.00012874770013404646,
+    "max_finger_speed_m_s": 6.901525775260191e-05,
+    "ready": false
+  },
+  "contacts": [],
+  "physical_streak": 0,
+  "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/all_actions.mp4",
+  "errors": [],
+  "status": "blocked",
+  "initialization_steps": 10,
+  "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_state_sha": "da8146858acf03be45fca8804e9936a0a1a21905a23f58c2644c49cf61032d6b",
+  "core_counts": {
+    "release": 17,
+    "movement": 60,
+    "confirm": 0,
+    "home": 0
+  },
+  "actual_helper_counts": {
+    "release": 17,
+    "movement": 60,
+    "confirm": 0,
+    "home": 0
+  },
+  "target_metrics": {
+    "eligible": true,
+    "expected_release": true,
+    "expected_retreat": true,
+    "release_actions": 17,
+    "actual_release_open_actions": 11,
+    "movement_actions": 60,
+    "confirm_actions": 0,
+    "home_actions": 0,
+    "target_executed": true
+  }
+}

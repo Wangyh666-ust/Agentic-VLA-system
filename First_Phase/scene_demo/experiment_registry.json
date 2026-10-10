@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "updated_at": "2026-10-10",
-  "root_note": "16 registered campaigns; reused samples overlap; safe-exit trial stopped on SDK error; no pooled success rate",
+  "root_note": "19 registered campaigns; reused samples overlap; takeover final revision has one sample and four not_run cases; no pooled success rate",
   "entries": [
     {
       "id": "20261006-persistent-pilot",
@@ -971,6 +971,248 @@
         {
           "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/source_format_normalization.json",
           "sha256": "7818bdec90db4ac2508150b86e8cd677c45d380b09f36cb853d8dbfef1da3019"
+        }
+      ]
+    },
+    {
+      "id": "20261010-finish-takeover-v2",
+      "date": "2026-10-10",
+      "title": "接管松手退离修正：最终原碗样例完整交接0/1，余四暂停",
+      "question_keys": [
+        "release-stop",
+        "joint-home-handoff",
+        "visual-completion"
+      ],
+      "tags": [
+        "LIBERO",
+        "Panda",
+        "接管",
+        "松手",
+        "退离",
+        "视觉检查",
+        "小范围验证"
+      ],
+      "conditions": [
+        "三个不同源码版本各恢复同一个原碗失败状态，不能合并为可靠性；最终版本独立分母1，酒瓶/灶台/汤罐/番茄酱四例暂停not_run。首次导入EOF零物理零Qwen不计效果分母。",
+        "固定目标是碗on plate子任务，非完整场景或新Hermes多任务链；原权重不变，新VLA/新Hermes0，无训练。LIBERO/robosuite/MuJoCo/Panda，独立oracle评分与紧急监督不输入视觉和传感路线。",
+        "到位且支撑→停稳→真实开启夹爪并编码器确认→受保护RGBD退离→独立检查→旧home。仅endpoint_hand_clear_fail允许实际姿态新RGBD重规划1次，movement80不重置，geometry阈值不变。",
+        "累计409实际动作=初始化30+历史回放249+辅助130；Qwen6次/11152tokens；实际DeepSeek8次input33503/output22014。三个旧版本的物理动作不合并计算最终版成功率。"
+      ],
+      "findings": [
+        "本轮修正了接管触发与松手/退离顺序，已真实发出开口和退离动作，但完整子任务交接仍未通过。最终原碗样例11个控制周期持续标准开口命令/60退离/确认0/归位0，完整交接0/1，余四暂停。",
+        "入口版release6只是闭合等待，实际开口0，release denied；释放版等待6/开口11/退离30；最后版等待6/开口11/退离60，均在确认和归位前停止。target_metrics true仅证明open+move，不能当完整通过。",
+        "末版碗onTrue/strictTrue/released_stable/held[]/contacts0保持；physical_streak0/homeFalse。是退离阶段阻断，不是已执行归位的失败。",
+        "首次末端间隙7.959mm不足10mm是保存RGBD/CAD离线FK复算；原runtime只保存布尔阻断，不冒称当时记录精确底层原因。新版在线两次endpoint_hand_clear_fail，一次重规划后停止，不能强制home。",
+        "释放DS请求9951input/6000output截断，整体未应用；12完整生产对象由GPT审阅，恢复11+1noop，测试worker按固定规格。退离短请求982input/1129output end_turn，未重生成全模块。离线三次均zero动力，前两guard失败保留，第三构建mj_step1一次被替换noop。"
+      ],
+      "limits": [
+        "最终仅一个原碗状态，不能宣称完整修复成功、可靠性改善或泛化；确认和归位0，四其他case未测。尚未改UI默认链路，不是新VLA/Hermes能力实验，没有训练因果结论。",
+        "独立oracle仍有仿真特权监督，未真机验收；当前只有间隙否决证据，不证明实际新碰撞或已定位训练缺陷。",
+        "下一步限离线核对约119mm手部保守球包络与RGBD自身点剔除是否造成新观测反复否决终点；不扩样、不新增物理、不降低阈值、不微调。",
+        "原请求响应私有保留、公开SHA/usage；不能由DeepSeek调用量估计GPT账户消耗。"
+      ],
+      "configuration": {
+        "campaign": "20261010-finish-takeover-v2",
+        "inputs_sha256": "8ecb43e7009312a41f5e08f1294c37fe3bd92367808f76ddfef42e9910d8d613",
+        "case_order": [
+          "bowl_held83",
+          "wine_exit",
+          "stove_exit",
+          "soup_negative",
+          "sauce_negative"
+        ],
+        "initialization_actions": 50,
+        "historical_replay_actions": 1013,
+        "max_finish_actions": 1440,
+        "finish_caps_per_eligible": {
+          "release": 20,
+          "movement": 80,
+          "confirm": 20,
+          "home": 360
+        },
+        "eligible_cases": [
+          "bowl_held83",
+          "wine_exit",
+          "stove_exit"
+        ],
+        "negative_cases": [
+          "soup_negative",
+          "sauce_negative"
+        ],
+        "runtime_sensors": "two-camera actual RGBD render, calibration, arm joint encoders, finger position; no object poses/predicates/contact lists in visual or path planning",
+        "oracle_emergency_supervision": "privileged simulation predicate/object displacement/contact probes after actual helper steps; logged separately, remains simulation-only emergency supervision",
+        "independent_gold": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ],
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ],
+          [
+            "turnon",
+            "flat_stove_1"
+          ],
+          [
+            "in",
+            "alphabet_soup_1",
+            "basket_1_contain_region"
+          ],
+          [
+            "in",
+            "tomato_sauce_1",
+            "basket_1_contain_region"
+          ]
+        ],
+        "context_contract": "context is a GPT-fixed historical Hermes subtask fixture, not a newly generated Hermes plan. Gold is independent offline oracle and forbidden to vision decision.",
+        "vision_model": "qwen3-vl-plus",
+        "vision_max_calls": 18,
+        "vision_max_tokens": 1600,
+        "vision_temperature": 0,
+        "new_vla_inferences": 0,
+        "new_hermes_calls": 0,
+        "weights_loaded": 0,
+        "training": false,
+        "physical_streak": 5,
+        "repeat_measurements": 0,
+        "source_freeze": "preflight.json source_sha256 must match before launch and before eachcase; no silent refreeze",
+        "revision": "takeover_v2_retreatfix",
+        "old_home_source": "First_Phase/scene_demo/results/2026-10-09-joint-home/evidence/joint_home_20261009_run.py",
+        "home_mode": "joint_home",
+        "inputs_path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/inputs.json",
+        "runtime_env": {
+          "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+          "MUJOCO_GL": "egl",
+          "PYOPENGL_PLATFORM": "egl"
+        },
+        "release_gate": "visible destination support, stable not false; settle then encoder-open; final complete still visual",
+        "previous_revision_physical_actions": 239,
+        "previous_revision_physical_actions_breakdown": {
+          "entryfix": 99,
+          "releasefix": 140
+        },
+        "runtime_preflight_sha256": "a063534145a66f4053987446bb81f50dfc5951e7b8f6a47e14136b8321461337",
+        "tested_revision_declarations": [
+          {
+            "revision": "takeover_v2",
+            "output": "pilot_first_entry_fix",
+            "actual_physical_actions": 99,
+            "separate_effect_denominator": 1
+          },
+          {
+            "revision": "takeover_v2_releasefix",
+            "output": "pilot_first_releasefix",
+            "actual_physical_actions": 140,
+            "separate_effect_denominator": 1
+          },
+          {
+            "revision": "takeover_v2_retreatfix",
+            "output": "pilot_first_retreatfix",
+            "actual_physical_actions": 170,
+            "separate_effect_denominator": 1
+          }
+        ]
+      },
+      "configuration_complete": true,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/README.md",
+          "sha256": "dcebb2bb1fd334f88dc984feaf94808f3b31d47613c43495b8a082765c1bd635"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/observed_results.json",
+          "sha256": "c0753f4ed927119acd71afb36c41b91af533a988116ee07dc9beef3b3cec57ee"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_entry_fix/summary.json",
+          "sha256": "436cb37bc9a7e7d540707e9bbd618dda259bf54dfe5247dcedf866145ddb976c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/summary.json",
+          "sha256": "e5036378b48d43fcc2c4d147edfe82a00f07b7ab453617399b28a70dd9a7345c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/summary.json",
+          "sha256": "69c8849839939e3fb8cac2a21ff050b6d62db280878327eced398fc6ae6d90eb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first/summary.json",
+          "sha256": "48fe87c08301aded06d11ce9dd2a4db06de2b9a1fb33f5f613fe9b98380cb3f0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/inputs.json",
+          "sha256": "8ecb43e7009312a41f5e08f1294c37fe3bd92367808f76ddfef42e9910d8d613"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/preflight.json",
+          "sha256": "a063534145a66f4053987446bb81f50dfc5951e7b8f6a47e14136b8321461337"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/preflight_at_entry_failure.json",
+          "sha256": "937180c66a03dbb35fdfe79dd9b1ba49be52bc660ace095f98387ac537b9b7dd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/preflight_at_entry_fix.json",
+          "sha256": "f8fd287427bb6694aa2871f28eadf7c579af0db3567cb19f808adf45a4e6b6f8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/preflight_at_releasefix.json",
+          "sha256": "1a3b1f6fc9a3281017aae48d66c177261596918e90eac0fc6eef954951a53b11"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/runtime_sources_at_launch.zip",
+          "sha256": "f04e34bfaf180b1d1019362df01c8ca2982f2d9efd74152cf47d2ffd94b8ef66"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/runtime_sources_releasefix.zip",
+          "sha256": "d8dfcfc17bd46bc58d9f130f38046a49ea9f84475726f3aa36865ab07d73f8bc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/runtime_sources_retreatfix.zip",
+          "sha256": "d94b578fdf35a71255ba067c733bfdd4b4dc6f399387d779ac6dab14ff7fd8ab"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/vision_author.json",
+          "sha256": "4dbaf5a3356b52bf8479bd2dac6e9b58bcaa01007401ac62866d50e05059c072"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/control_author.json",
+          "sha256": "92764db462ede71f15ac58b9f280947d8b32d106c78db8aee05080e68e785df6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/pilot_author.json",
+          "sha256": "0afccb68fd37a356ba7387ba3eae9325e42c4573ee2d119fcb0a16e403b41571"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/release_author.json",
+          "sha256": "d3367bffc29e168bff4ba1ec84aa7f3ddadd5fa7f4109f100739fced2ad3eb01"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/retreat_author.json",
+          "sha256": "870c33bcf43cfa46924af6345200fc87722a54eba1a18b536295a5a500515d9e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/movement_screen_fk.json",
+          "sha256": "158da3bf0588b8224f989949a3be30aa71c1aeda104769e041ace2b10792ed75"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/proposal_at_entry_fix.json",
+          "sha256": "cd62abd66dbc7cc328c4da5f47a9d93b577eddefb26fc4b918d00d999990c6c6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/proposal_at_releasefix.json",
+          "sha256": "048cac0d166d56d54d679717995a0e1db4432243198f0e9835f9607313f0223f"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-finish-takeover-v2.json",
+          "sha256": "428bfeffe5f2f99d6cb8cdd3e95c1203adecd0c71f7e20f466deb722d3291d5f"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-finish-takeover-v2-offline.json",
+          "sha256": "8428f9cedb6f8b50809892452042579fb93fda8fbc172bb707082d886a32048f"
         }
       ]
     }

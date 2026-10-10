@@ -1,0 +1,658 @@
+{
+  "schema_version": 1,
+  "final_revision": "takeover_v2_retreatfix",
+  "final_effect_denominator": 1,
+  "final_complete_handoff_successes": 0,
+  "not_pooled_across_revisions": true,
+  "not_run_cases": [
+    {
+      "case_id": "wine_exit",
+      "status": "not_run",
+      "effect": "unknown"
+    },
+    {
+      "case_id": "stove_exit",
+      "status": "not_run",
+      "effect": "unknown"
+    },
+    {
+      "case_id": "soup_negative",
+      "status": "not_run",
+      "effect": "unknown"
+    },
+    {
+      "case_id": "sauce_negative",
+      "status": "not_run",
+      "effect": "unknown"
+    }
+  ],
+  "initial_import_failure": {
+    "source": {
+      "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first/summary.json",
+      "bytes": 781,
+      "sha256": "48fe87c08301aded06d11ce9dd2a4db06de2b9a1fb33f5f613fe9b98380cb3f0"
+    },
+    "status": "unknown",
+    "reason": "EOFError: EOF when reading a line",
+    "physical_actions": 0,
+    "qwen_calls": 0,
+    "excluded_from_effect_denominator": true
+  },
+  "versions": [
+    {
+      "revision": "takeover_v2",
+      "output": "pilot_first_entry_fix",
+      "case_id": "bowl_held83",
+      "status": "blocked",
+      "initialization_actions": 10,
+      "historical_replay_actions": 83,
+      "actual_helper_actions": 6,
+      "phase_counts": {
+        "replay": 83,
+        "release": 6,
+        "movement": 0,
+        "confirm": 0,
+        "home": 0
+      },
+      "release_wait_actions": 6,
+      "actual_release_open_actions": 0,
+      "reason": "release denied",
+      "helper_phase_rows": {
+        "release": 6
+      },
+      "event_phase_rows": {
+        "release": 6
+      },
+      "target_metrics_original": {
+        "eligible": true,
+        "expected_release": true,
+        "expected_retreat": true,
+        "release_actions": 6,
+        "movement_actions": 0,
+        "confirm_actions": 0,
+        "home_actions": 0,
+        "target_executed": false
+      },
+      "complete_handoff": false,
+      "physical_streak": 0,
+      "home_ready": false,
+      "goal_predicates": {
+        "on|akita_black_bowl_1|plate_1": true
+      },
+      "strict_candidate": true,
+      "phases": {
+        "on|akita_black_bowl_1|plate_1": "released_stable"
+      },
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "robot_contacts_count": 5,
+      "final_visual_completion_sampled": false,
+      "movement_screens": [],
+      "retreat_replans": 0,
+      "qwen_checks": [
+        {
+          "usage": {
+            "prompt_tokens": 1285,
+            "completion_tokens": 437,
+            "total_tokens": 1722,
+            "completion_tokens_details": {
+              "text_tokens": 437
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 264,
+              "text_tokens": 1021,
+              "cached_tokens": 0
+            }
+          },
+          "request_sha256": "84342151b03f2f69d1be684a54cebbb352fb010428ba4451a112dc7fa624157f",
+          "response_sha256": "3214cc6b7fa03f7fe036cf2ba579d2f8888b6877d09fefe7318b8ddc839a3a6f",
+          "image_count": 4,
+          "timestamps": [
+            4.599999999999715,
+            4.64999999999971
+          ]
+        },
+        {
+          "usage": {
+            "prompt_tokens": 1546,
+            "completion_tokens": 438,
+            "total_tokens": 1984,
+            "completion_tokens_details": {
+              "text_tokens": 438
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 396,
+              "text_tokens": 1150,
+              "cached_tokens": 0
+            }
+          },
+          "request_sha256": "0406fd2d1a906d91986957fc13f46772d23bff7b2361db201c5053c855da634f",
+          "response_sha256": "d940a0a9552f061c17c3535b1e77b77ff93227be9d55751d07faa39fafe2c035",
+          "image_count": 6,
+          "timestamps": [
+            4.849999999999688,
+            4.899999999999682,
+            4.949999999999677
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_entry_fix/summary.json",
+          "bytes": 791,
+          "sha256": "436cb37bc9a7e7d540707e9bbd618dda259bf54dfe5247dcedf866145ddb976c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_entry_fix/bowl_held83/result.json",
+          "bytes": 17759,
+          "sha256": "371c4962eeb1d125eca78ec3c1e17a8dfd2ec49ab8002370cbb975ff7c170e4e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_entry_fix/bowl_held83/checks.jsonl",
+          "bytes": 10696,
+          "sha256": "193dc3fce03bbfedd2252fd083f87fbe803b6ebada2285568697efe2e9781cf4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_entry_fix/bowl_held83/helper.jsonl",
+          "bytes": 8431,
+          "sha256": "c1fa07bbfdd47c45eca65fa931f8350a3288dabb4484bb48fb22c73823ad7dd1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_entry_fix/bowl_held83/events.jsonl",
+          "bytes": 6925,
+          "sha256": "feed6e8f29151b386b48c2565034f553a84c9379fee1f29f31a336822416d3fb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_entry_fix/bowl_held83/oracle.jsonl",
+          "bytes": 64976,
+          "sha256": "59438abfa8ad648fd200319a74f944017c742e70460170af17e095ce9b1caf01"
+        }
+      ]
+    },
+    {
+      "revision": "takeover_v2_releasefix",
+      "output": "pilot_first_releasefix",
+      "case_id": "bowl_held83",
+      "status": "blocked",
+      "initialization_actions": 10,
+      "historical_replay_actions": 83,
+      "actual_helper_actions": 47,
+      "phase_counts": {
+        "replay": 83,
+        "release": 17,
+        "movement": 30,
+        "confirm": 0,
+        "home": 0
+      },
+      "release_wait_actions": 6,
+      "actual_release_open_actions": 11,
+      "reason": "movement screen blocked",
+      "helper_phase_rows": {
+        "release": 17,
+        "movement": 30
+      },
+      "event_phase_rows": {
+        "release": 17,
+        "movement": 30
+      },
+      "target_metrics_original": {
+        "eligible": true,
+        "expected_release": true,
+        "expected_retreat": true,
+        "release_actions": 17,
+        "actual_release_open_actions": 11,
+        "movement_actions": 30,
+        "confirm_actions": 0,
+        "home_actions": 0,
+        "target_executed": true
+      },
+      "complete_handoff": false,
+      "physical_streak": 0,
+      "home_ready": false,
+      "goal_predicates": {
+        "on|akita_black_bowl_1|plate_1": true
+      },
+      "strict_candidate": true,
+      "phases": {
+        "on|akita_black_bowl_1|plate_1": "released_stable"
+      },
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "robot_contacts_count": 0,
+      "final_visual_completion_sampled": false,
+      "movement_screens": [],
+      "retreat_replans": 0,
+      "qwen_checks": [
+        {
+          "usage": {
+            "prompt_tokens": 1285,
+            "completion_tokens": 419,
+            "total_tokens": 1704,
+            "completion_tokens_details": {
+              "text_tokens": 419
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 264,
+              "text_tokens": 1021,
+              "cached_tokens": 128
+            }
+          },
+          "request_sha256": "84342151b03f2f69d1be684a54cebbb352fb010428ba4451a112dc7fa624157f",
+          "response_sha256": "b1a7160ef3acaf7e71441bd100ee7f98df23132a5caaf26b15f137ac021b3092",
+          "image_count": 4,
+          "timestamps": [
+            4.599999999999715,
+            4.64999999999971
+          ]
+        },
+        {
+          "usage": {
+            "prompt_tokens": 1546,
+            "completion_tokens": 458,
+            "total_tokens": 2004,
+            "completion_tokens_details": {
+              "text_tokens": 458
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 396,
+              "text_tokens": 1150,
+              "cached_tokens": 0
+            }
+          },
+          "request_sha256": "dc6933e542d23ecd780fa6dc2e0a74b75f4af7775f56871713d67ce7bb5a930e",
+          "response_sha256": "7d3fda31bec7ff00eedacece997d3d5de23b6bd431c3abf59b953ffea01cb502",
+          "image_count": 6,
+          "timestamps": [
+            5.399999999999627,
+            5.449999999999622,
+            5.499999999999616
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/summary.json",
+          "bytes": 780,
+          "sha256": "e5036378b48d43fcc2c4d147edfe82a00f07b7ab453617399b28a70dd9a7345c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/result.json",
+          "bytes": 14751,
+          "sha256": "e63fd5eac37756a32cc4a2693399175947a4cf2323a291a508abcccd63c22bf8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/checks.jsonl",
+          "bytes": 10586,
+          "sha256": "6cd89de9c9a707a203bf66c496540c699ab4bf6c2ec59ddaa91a74dbabda362c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/helper.jsonl",
+          "bytes": 64789,
+          "sha256": "27b3f8d1253393fbfcd317172840646008820d96558ab5fc502dec67885b5ef3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/events.jsonl",
+          "bytes": 54915,
+          "sha256": "3fe5c4fe67dc2404ea752923fe5df9fa4bf56e184a1a8d363b3362e79f5ca0a4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/oracle.jsonl",
+          "bytes": 190245,
+          "sha256": "54db2f2460cd88e8d74f75f445704fdbf6fd598ec29b7aec82fff747299e0bb5"
+        }
+      ]
+    },
+    {
+      "revision": "takeover_v2_retreatfix",
+      "output": "pilot_first_retreatfix",
+      "case_id": "bowl_held83",
+      "status": "blocked",
+      "initialization_actions": 10,
+      "historical_replay_actions": 83,
+      "actual_helper_actions": 77,
+      "phase_counts": {
+        "replay": 83,
+        "release": 17,
+        "movement": 60,
+        "confirm": 0,
+        "home": 0
+      },
+      "release_wait_actions": 6,
+      "actual_release_open_actions": 11,
+      "reason": "movement screen blocked",
+      "helper_phase_rows": {
+        "release": 17,
+        "movement": 60
+      },
+      "event_phase_rows": {
+        "release": 17,
+        "movement": 60
+      },
+      "target_metrics_original": {
+        "eligible": true,
+        "expected_release": true,
+        "expected_retreat": true,
+        "release_actions": 17,
+        "actual_release_open_actions": 11,
+        "movement_actions": 60,
+        "confirm_actions": 0,
+        "home_actions": 0,
+        "target_executed": true
+      },
+      "complete_handoff": false,
+      "physical_streak": 0,
+      "home_ready": false,
+      "goal_predicates": {
+        "on|akita_black_bowl_1|plate_1": true
+      },
+      "strict_candidate": true,
+      "phases": {
+        "on|akita_black_bowl_1|plate_1": "released_stable"
+      },
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "robot_contacts_count": 0,
+      "final_visual_completion_sampled": false,
+      "movement_screens": [
+        {
+          "ok": true,
+          "reason": "clear",
+          "min_distance": 0.0020334973766798353,
+          "endpoint_hand_clear": true
+        },
+        {
+          "ok": true,
+          "reason": "clear",
+          "min_distance": 0.0021033016004132626,
+          "endpoint_hand_clear": true
+        },
+        {
+          "ok": false,
+          "reason": "endpoint_hand_clear_fail",
+          "min_distance": 0.002012776196478286,
+          "endpoint_hand_clear": false
+        },
+        {
+          "ok": true,
+          "reason": "clear",
+          "min_distance": 0.0020287996424979693,
+          "endpoint_hand_clear": true
+        },
+        {
+          "ok": true,
+          "reason": "clear",
+          "min_distance": 0.0020167126312753553,
+          "endpoint_hand_clear": true
+        },
+        {
+          "ok": false,
+          "reason": "endpoint_hand_clear_fail",
+          "min_distance": 0.0020198997993108037,
+          "endpoint_hand_clear": false
+        }
+      ],
+      "retreat_replans": 1,
+      "qwen_checks": [
+        {
+          "usage": {
+            "prompt_tokens": 1285,
+            "completion_tokens": 473,
+            "total_tokens": 1758,
+            "completion_tokens_details": {
+              "text_tokens": 473
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 264,
+              "text_tokens": 1021,
+              "cached_tokens": 0
+            }
+          },
+          "request_sha256": "84342151b03f2f69d1be684a54cebbb352fb010428ba4451a112dc7fa624157f",
+          "response_sha256": "e56e9941fc93f65f24c827436d7272ac3c550314054bd5f318c9b7dbb0e31c0e",
+          "image_count": 4,
+          "timestamps": [
+            4.599999999999715,
+            4.64999999999971
+          ]
+        },
+        {
+          "usage": {
+            "prompt_tokens": 1546,
+            "completion_tokens": 434,
+            "total_tokens": 1980,
+            "completion_tokens_details": {
+              "text_tokens": 434
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 396,
+              "text_tokens": 1150,
+              "cached_tokens": 0
+            }
+          },
+          "request_sha256": "dc6933e542d23ecd780fa6dc2e0a74b75f4af7775f56871713d67ce7bb5a930e",
+          "response_sha256": "dcc32c88f6ec1a2d8b072e60306ce52c633dbccaf41f5ef61f3903eef6ad017b",
+          "image_count": 6,
+          "timestamps": [
+            5.399999999999627,
+            5.449999999999622,
+            5.499999999999616
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/summary.json",
+          "bytes": 780,
+          "sha256": "69c8849839939e3fb8cac2a21ff050b6d62db280878327eced398fc6ae6d90eb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/result.json",
+          "bytes": 43730,
+          "sha256": "f005c2eb028d8172545b194335c8b0b6d7b3b0caf48fa181610bf9056b08027b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/checks.jsonl",
+          "bytes": 10873,
+          "sha256": "281c7fb5692bdb86af008d903ccf9c07f1e0348d07614777bafc8c45b536b6ef"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/helper.jsonl",
+          "bytes": 105764,
+          "sha256": "ecae9838e79961369152122f467dc6103e6d3c913dba3ef216c469053a32a36d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/events.jsonl",
+          "bytes": 89661,
+          "sha256": "8d9fbbc6627f79058c93eb864ad9035a0a080f09c7c2110388bb7a66ed70f45b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/bowl_held83/oracle.jsonl",
+          "bytes": 283558,
+          "sha256": "66f471a1751c627561ed51903bf85c9aaa62ebc5fb5eea6219e5dad4c4d61f26"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "initialization_actions": 30,
+    "historical_replay_actions": 249,
+    "actual_helper_actions": 130,
+    "all_actual_physical_actions": 409,
+    "helper_wait_actions": 18,
+    "helper_open_actions": 22,
+    "helper_movement_actions": 90,
+    "helper_confirm_actions": 0,
+    "helper_home_actions": 0,
+    "new_vla_calls": 0,
+    "new_hermes_calls": 0,
+    "qwen_calls": 6,
+    "qwen_total_tokens": 11152,
+    "deepseek_calls": 8,
+    "deepseek_input_tokens": 33503,
+    "deepseek_output_tokens": 22014
+  },
+  "deepseek_calls": [
+    {
+      "model": "deepseek-flash",
+      "http_status": 200,
+      "usage": {
+        "input_tokens": 6208,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 4286,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "b2c55f6cd5a11ed18d4e171e731b641230897ca15c0a40b73875f0a840d27af8",
+      "response_sha256": "965b4fdf1a1fe12c5d447af9faf6f1675aebf3cfc2e48547f151c0f643234892"
+    },
+    {
+      "model": "deepseek-flash",
+      "http_status": 200,
+      "usage": {
+        "input_tokens": 1162,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 435,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "cc83b896e39c3995de7a5f61f75ffefa992a24930128d823bae25e7573f8a22e",
+      "response_sha256": "f566edd34e10d226fa1d9548f78715dfadce94041e6bda0419ec9f43b496d4d0"
+    },
+    {
+      "model": "deepseek-flash",
+      "http_status": 200,
+      "usage": {
+        "input_tokens": 6960,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 4228,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "a5523e2a8aafdbbd8816a9e5dcfa145802e01aa8fb2cc8d6edb2f9a62163f36b",
+      "response_sha256": "6580c191b67143b1b52a0b9cd7b964e4978e0b488e4aa6d93f9eb66bbd1a5414"
+    },
+    {
+      "model": "deepseek-flash",
+      "http_status": 200,
+      "usage": {
+        "input_tokens": 2662,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 1813,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "7f1f0f5c3a204b7b9f1940793cc7d8750ce87a71450a97e79c881dd5183b62a1",
+      "response_sha256": "1a0e3036424521a822a74db09368cb0d594d1de3f1afbeff6458b1310eb82ea0"
+    },
+    {
+      "model": "deepseek-flash",
+      "http_status": 200,
+      "usage": {
+        "input_tokens": 406,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 131,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "470e6928a74ac74238b06fe7bbee535cd74b681ceb90af9f7798358b40548686",
+      "response_sha256": "8181507e11c6957be7a16cb9447f72571860b9012cb91b05cd65a8b8fe9b0eaa"
+    },
+    {
+      "model": "deepseek-flash",
+      "http_status": 200,
+      "usage": {
+        "input_tokens": 5172,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 3992,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "4197d3522914eaf459c978b429985727feb917bfbec617689bb3fad36c27900c",
+      "response_sha256": "32c1b33d513c09f4d9af2353af2dbccbe6020c0a2a70f81f348227e60b024a89"
+    },
+    {
+      "model": "deepseek-flash",
+      "http_status": 200,
+      "usage": {
+        "input_tokens": 9951,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 6000,
+        "service_tier": "standard"
+      },
+      "stop_reason": "max_tokens",
+      "request_sha256": "565d4d541303185c5061362e5d977b599db004fe2f43567ab7e434d2e0c4f9db",
+      "response_sha256": "e2c74e40cfa35df812d199bbdf4b8572392514daf804eaf232ee11055fd377a0"
+    },
+    {
+      "model": "deepseek-flash",
+      "http_status": 200,
+      "usage": {
+        "input_tokens": 982,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 1129,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "c1a4c682e3d3631df9c93a182a0c63b2dc2e591a47656f1ec9c73892cb111685",
+      "response_sha256": "ac602fe909f510b110a1c549ee0b623068f37ddbb68d2780e8c5c5e6a953e9f5"
+    }
+  ],
+  "offline_diagnostics": [
+    {
+      "source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/movement_screen_offline.json",
+        "bytes": 4989,
+        "sha256": "81c1f8e51e267ca5dd4aed9b0c3916eebcf46bce90b80b46ef65f8fbbe7fdc19"
+      },
+      "status": "unknown",
+      "actual_dynamics_function_executions": 0,
+      "forbidden_attempts": [
+        "mujoco.mj_step1"
+      ],
+      "suppressed_constructor_dynamics": {}
+    },
+    {
+      "source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/movement_screen_kinematics.json",
+        "bytes": 6643,
+        "sha256": "936d6b4f8b7adb50014029a8b5918bfbb6ea53cc655ecdfffa49c56b12f704d9"
+      },
+      "status": "unknown",
+      "actual_dynamics_function_executions": 0,
+      "forbidden_attempts": [
+        "MjSim.render"
+      ],
+      "suppressed_constructor_dynamics": {
+        "mujoco.mj_step1": 1
+      }
+    },
+    {
+      "source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/movement_screen_fk.json",
+        "bytes": 4747,
+        "sha256": "158da3bf0588b8224f989949a3be30aa71c1aeda104769e041ace2b10792ed75"
+      },
+      "status": "reconstructed",
+      "actual_dynamics_function_executions": 0,
+      "forbidden_attempts": [],
+      "suppressed_constructor_dynamics": {
+        "mujoco.mj_step1": 1
+      }
+    }
+  ],
+  "offline_endpoint_clearance_m": 0.007958783597683858,
+  "offline_endpoint_required_clearance_m": 0.01,
+  "original_runtime_underlying_reason_logged": false,
+  "new_analysis_model_calls": 0,
+  "new_analysis_physical_actions": 0,
+  "note": "Three different code revisions are not pooled as reliability samples. target_metrics true does not include confirm/home/final visual completeness. All original raw evidence stays unchanged.",
+  "actual_release_open_actions_definition": "Number of actual release-phase control cycles commanding standard finger_home; eleven cycles continuously command opening, not eleven open-close repetitions."
+}

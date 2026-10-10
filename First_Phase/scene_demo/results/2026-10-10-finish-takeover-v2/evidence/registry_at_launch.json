@@ -1,0 +1,978 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-10",
+  "root_note": "16 registered campaigns; reused samples overlap; safe-exit trial stopped on SDK error; no pooled success rate",
+  "entries": [
+    {
+      "id": "20261006-persistent-pilot",
+      "title": "持久场景初版与Hermes意图/容量试点",
+      "date": "2026-10-06",
+      "question_keys": [
+        "hermes-intent-planning",
+        "wine-start-context",
+        "basket-full-vs-atomic",
+        "mug-placement"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "hermes-intent-planning",
+        "wine-start-context",
+        "basket-full-vs-atomic",
+        "mug-placement",
+        "持久场景初版与Hermes意图/容量试点",
+        "Hermes"
+      ],
+      "conditions": [
+        "原生/共享场景pilot，env seed0/init0，n=1/条件",
+        "旧native完成判据,含真实Hermes与固定manual/direct分支"
+      ],
+      "findings": [
+        "碗95步曾报告原生成功，后酒瓶300失败并修复再失败",
+        "桌面完整指令600失败，篮子/杯子物理试点失败",
+        "缺垃圾桶/容量满的正确拒绝是决策成功，不是物理成功"
+      ],
+      "limits": [
+        "旧native成功尚不能作为释放稳定成功",
+        "单样本不能证明Hermes物理增益"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-06/README.md",
+          "sha256": "48e37aa7fa5459605e8fda66143651d0e5677a0c2d89c58b99ab7de8b96da1ba"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261007-placement",
+      "title": "停止判据与篮子完整/拆分指令对照",
+      "date": "2026-10-07",
+      "question_keys": [
+        "release-stop",
+        "basket-full-vs-atomic",
+        "bowl-native-baseline"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "release-stop",
+        "basket-full-vs-atomic",
+        "bowl-native-baseline",
+        "停止判据与篮子完整/拆分指令对照",
+        "篮子"
+      ],
+      "conditions": [
+        "同checkpoint与状态0/模型seed0，17 trials/19 jobs，另有独立live检查",
+        "完整篮子指令与原子指令、预算300/600/300+300，停止判据对照"
+      ],
+      "findings": [
+        "碗在旧95/83步停点未达到释放稳定，新102/104步达标，动作前缀完全相同",
+        "完整篮子指令中汤罐第212步稳定放置，但全任务失败",
+        "原子汤罐300、600、300+300均失败，番茄酱原子失败"
+      ],
+      "limits": [
+        "每条件n=1",
+        "完整/拆分行为差异不能直接证明语言因果",
+        "本轮非训练"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-07/README.md",
+          "sha256": "aec6a3122e509eda1c4f9c0f043f69443805dc783f20631fabfad1110bacfb14"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-07/baseline_comparison_statistics.json",
+          "sha256": "f3e45aeeeb6c06cf8ccdfaf8e6326b0157bad0224fdf9d7fb318a4de9a637529"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261007-wine-stages",
+      "title": "原生/共享酒瓶抓取与放置六次诊断",
+      "date": "2026-10-07",
+      "question_keys": [
+        "wine-native-baseline",
+        "wine-grasp-placement"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "wine-native-baseline",
+        "wine-grasp-placement",
+        "原生/共享酒瓶抓取与放置六次诊断",
+        "酒瓶",
+        "抓取"
+      ],
+      "conditions": [
+        "native_goal9与shared_goal8，各seed/init0:0、1:1、2:2",
+        "每轮300动作，直接固定指令、无Hermes"
+      ],
+      "findings": [
+        "六次：1次严格成功、2次抓取阶段失败、3次已释放接触架但目标区外",
+        "native0:0在178动作完成"
+      ],
+      "limits": [
+        "这些小样本不能推断一般成功率",
+        "确切训练覆盖未知，不能认定缺释放段"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-07-wine/README.md",
+          "sha256": "b923d4c4683becee7571a58cc6ff15410324676bc51df29931efee4fc2da1fdc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-07-wine/summary.csv",
+          "sha256": "a0a94cebe6e72517695fb6f5a7a86bfe14e1c3811e82951b29c94d87aa748006"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261008-grasp-config",
+      "title": "酒瓶抓取守卫与三推理配置配对",
+      "date": "2026-10-08",
+      "question_keys": [
+        "wine-native-baseline",
+        "wine-inference-config",
+        "wine-grasp-placement"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "wine-native-baseline",
+        "wine-inference-config",
+        "wine-grasp-placement",
+        "酒瓶抓取守卫与三推理配置配对",
+        "酒瓶",
+        "抓取",
+        "配置"
+      ],
+      "conditions": [
+        "3配置×6配对条件，共18 discovery",
+        "胜出默认配置另3次留出",
+        "同实际初态/输入核查，直接指令"
+      ],
+      "findings": [
+        "默认baseline严格2/6、评估后语义4/6",
+        "fp32严格2/6，fp32_h5严格1/6",
+        "默认留出3/3严格成功，默认未变",
+        "守卫能更早停止部分空手撤退，不提升技能"
+      ],
+      "limits": [
+        "次级语义分含额外评估动作，不可混成主分",
+        "初态和模型种子同时变化，不证明单一因素",
+        "未训练"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-08-grasp-config/README.md",
+          "sha256": "d54ff9e306d67950a60c499fc5ac452b117bd164b104d78a1f65e9ced2208fb2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-08-grasp-config/summary.csv",
+          "sha256": "a52a778ae80656e33340f22fe1b0027c78002b8ecfa8b82cf4472886efb7ec51"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261008-skill-context",
+      "title": "Hermes规划与酒瓶起始条件六次对照",
+      "date": "2026-10-08",
+      "question_keys": [
+        "hermes-intent-planning",
+        "wine-native-baseline",
+        "wine-start-context"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "hermes-intent-planning",
+        "wine-native-baseline",
+        "wine-start-context",
+        "Hermes规划与酒瓶起始条件六次对照",
+        "Hermes",
+        "酒瓶"
+      ],
+      "conditions": [
+        "同物理XML，原生/共享初始/放碗后，model seed0/1",
+        "放碗后以102动作历史回放重建"
+      ],
+      "findings": [
+        "原生酒瓶2/2、共享初始1/2、放碗后0/2",
+        "Hermes五次规划检查四次正确提交，另一项没有实际提交",
+        "准备分支阻断，VLA未启动"
+      ],
+      "limits": [
+        "2/2等是两个种子的小样本",
+        "物体/机械臂/画面条件一起变化，不能归因于单个关节",
+        "回放不算新完整组合"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-08-skill-context/README.md",
+          "sha256": "8f892ffe91820d4a522b6a0049695003995cfb9b052fd5d550f3e8033e79ad26"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261008-wine-start-pose",
+      "title": "放碗后酒瓶：直接执行与夹爪位姿准备",
+      "date": "2026-10-08",
+      "question_keys": [
+        "wine-start-context",
+        "eef-pose-return"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "wine-start-context",
+        "eef-pose-return",
+        "放碗后酒瓶：直接执行与夹爪位姿准备",
+        "酒瓶",
+        "碗",
+        "准备"
+      ],
+      "conditions": [
+        "同一已保存碗轨迹真实重建，seed0/1，四条300动作酒瓶rollout",
+        "准备125真实辅助动作"
+      ],
+      "findings": [
+        "直接0/2、准备0/2，均无稳定抓取确认",
+        "准备位姿误差2.03mm/0.535度、空手与碗保护通过"
+      ],
+      "limits": [
+        "只恢复末端空间位姿，不等于全部关节归位",
+        "此前原生酒瓶2/2仍有效",
+        "未训练"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-08-wine-start-pose/README.md",
+          "sha256": "6e7e28935077b59ac1581073e3075deea8e20df0165d07422fed485c0dc0a397"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261008-local-grasp",
+      "title": "顶部抓取辅助标定失败",
+      "date": "2026-10-08",
+      "question_keys": [
+        "local-grasp-top-approach"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "local-grasp-top-approach",
+        "顶部抓取辅助标定失败",
+        "抓取"
+      ],
+      "conditions": [
+        "重放旧碗102/酒瓶91动作",
+        "124辅助动作，无新VLA/Hermes"
+      ],
+      "findings": [
+        "下降超时，离抓取目标约3.3cm，未进入闭合",
+        "五条组合请求全部未运行"
+      ],
+      "limits": [
+        "不是VLA失败或五次组合失败",
+        "不能确定训练/可达性/控制根因"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-08-local-grasp/README.md",
+          "sha256": "b91781d72febd7ebd25f63e1bce5b15133feccf5196abf48cfccfc1e9a223901"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-side-grasp",
+      "title": "侧向抓取五条组合请求试点",
+      "date": "2026-10-09",
+      "question_keys": [
+        "local-grasp-side-approach",
+        "wine-bowl-chain"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "local-grasp-side-approach",
+        "wine-bowl-chain",
+        "侧向抓取五条组合请求试点",
+        "抓取"
+      ],
+      "conditions": [
+        "原生共享桌面init0/env0，model seed0..4",
+        "Hermes+VLA+侧抓辅助，五条各一次"
+      ],
+      "findings": [
+        "全链1/5，两个酒瓶完成搬运与释放",
+        "三例辅助接近时偏转超限，另一例先瓶后碗拾取失败"
+      ],
+      "limits": [
+        "辅助读取仿真几何，非RGBD实机",
+        "偏转超限先只是观测，碰撞根因在后续配对诊断中验证"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-side-grasp/README.md",
+          "sha256": "5e2b33d9c215c3f23ca1d909e6f9eb787a210d4093ce531206fe0642f70fe941"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-collision-approach",
+      "title": "同失败状态旧路线/v1/v2避碰抓取对照",
+      "date": "2026-10-09",
+      "question_keys": [
+        "local-grasp-side-approach",
+        "wine-collision-approach"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "local-grasp-side-approach",
+        "wine-collision-approach",
+        "同失败状态旧路线/v1/v2避碰抓取对照",
+        "抓取"
+      ],
+      "conditions": [
+        "同224真实回放动作恢复的完整状态",
+        "旧/v1/v2同哈希",
+        "无新VLA/Hermes"
+      ],
+      "findings": [
+        "旧路线实际推碰瓶身20.18度",
+        "v1超时",
+        "v2用191辅助动作抓起2.73cm",
+        "本轮未测运输/置架"
+      ],
+      "limits": [
+        "一个状态，抓起不等于放架",
+        "动作后接触0不证明所有物理子步无碰撞"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-collision-approach/README.md",
+          "sha256": "45230097d3e4c2ee8b2fdc19e12b6f13b0695a1f62568bf478811394222e69d3"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-collision-chain",
+      "title": "避碰抓取后放架与两步组合五例",
+      "date": "2026-10-09",
+      "question_keys": [
+        "wine-collision-approach",
+        "wine-bowl-chain",
+        "bowl-start-context"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "wine-collision-approach",
+        "wine-bowl-chain",
+        "bowl-start-context",
+        "避碰抓取后放架与两步组合五例",
+        "抓取"
+      ],
+      "conditions": [
+        "原生桌面init0/env0，seed0..4，Hermes+VLA+酒瓶辅助",
+        "新鲜五例与单旧状态回放后续另计"
+      ],
+      "findings": [
+        "酒瓶5/5按原生释放稳定完成，全链3/5",
+        "两例酒瓶后碗500动作未抓起",
+        "单旧状态经191辅助+82新VLA完成置架"
+      ],
+      "limits": [
+        "独立20采样支撑确认未获得，观察不足不自动等于失败",
+        "旧1/5与新3/5不构成严格配对"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-collision-chain/README.md",
+          "sha256": "6c645fce23a905b05067876b5a128db3c0b1c64e850cfe4cdddaa0f9123e3329"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-subtask-assist",
+      "title": "统一子任务辅助入口四分支对照",
+      "date": "2026-10-09",
+      "question_keys": [
+        "bowl-start-context",
+        "bowl-helper-compatibility",
+        "subtask-assist-router"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "bowl-start-context",
+        "bowl-helper-compatibility",
+        "subtask-assist-router",
+        "统一子任务辅助入口四分支对照"
+      ],
+      "conditions": [
+        "两个保存的酒瓶后状态，seed2/3",
+        "各关闭/开启辅助，真实state与种子配对",
+        "复用旧Hermes计划"
+      ],
+      "findings": [
+        "关闭各500新VLA失败",
+        "开启143/144准备朝向超时，VLA0",
+        "统一入口已接通，但没有有效准备后VLA样本"
+      ],
+      "limits": [
+        "不能把VLA未启动算作VLA失败",
+        "不能由软件通过推出技能改善"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-subtask-assist/README.md",
+          "sha256": "00706942d1645c34f4eeff7206ec420228ac643c16915df9cbf455166abe241d"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-assist-repair",
+      "title": "碗上方接近准备修正两例",
+      "date": "2026-10-09",
+      "question_keys": [
+        "bowl-start-context",
+        "bowl-helper-compatibility"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "bowl-start-context",
+        "bowl-helper-compatibility",
+        "碗上方接近准备修正两例",
+        "碗",
+        "准备"
+      ],
+      "conditions": [
+        "同两个旧酒瓶后状态，回放346/348恢复",
+        "各164准备+336新VLA，总500"
+      ],
+      "findings": [
+        "两例准备达标，但都未抓起碗",
+        "位置误差2.70/2.63mm，酒瓶目标保留"
+      ],
+      "limits": [
+        "靠近碗不等于适合VLA接续",
+        "旧无辅助500VLA与新336VLA额度不同",
+        "两个路线修改未分离归因"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-subtask-assist-repair/README.md",
+          "sha256": "cf43a058fd490859169cba201341d728a1c75e34432b9d1865b3061d61a4eceb"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-entry-compatibility",
+      "title": "参考轨迹入口兼容性四例",
+      "date": "2026-10-09",
+      "question_keys": [
+        "bowl-helper-compatibility",
+        "bowl-native-baseline"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "bowl-helper-compatibility",
+        "bowl-native-baseline",
+        "参考轨迹入口兼容性四例"
+      ],
+      "conditions": [
+        "最多5例实际4例，第5按门禁未运行",
+        "恢复/辅助/新推理分开计数"
+      ],
+      "findings": [
+        "原轨迹重放通过",
+        "原第30步接续61新VLA通过",
+        "原生辅助准备165后59新VLA通过",
+        "酒瓶后224准备朝向超时，VLA0"
+      ],
+      "limits": [
+        "证明一个辅助器+VLA兼容入口存在，不证明任意入口有效",
+        "不能把第4例当VLA失败"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-entry-compatibility/README.md",
+          "sha256": "451ad3eff2c2428b225ba2d83a7f4063ed0bb0060b705cd58268ce7ff77c599c"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-joint-home",
+      "title": "两旧酒瓶后状态完整关节归位再抓碗",
+      "date": "2026-10-09",
+      "question_keys": [
+        "joint-home-handoff",
+        "bowl-start-context"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "joint-home-handoff",
+        "bowl-start-context",
+        "两旧酒瓶后状态完整关节归位再抓碗",
+        "酒瓶",
+        "碗",
+        "归位"
+      ],
+      "conditions": [
+        "同两个旧交接状态，seed2/3",
+        "全部7关节+夹爪真实归位",
+        "旧酒瓶历史动作回放"
+      ],
+      "findings": [
+        "243/241归位后，93/105新VLA放碗完成，两例成功",
+        "旧直接/碗上方准备失败背景保留"
+      ],
+      "limits": [
+        "首酒瓶不是本轮新VLA",
+        "只有两个状态，非普遍保证",
+        "旧500VLA背景不是相同总预算"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-joint-home/README.md",
+          "sha256": "162edd099f1300b79d79a395732b80234dcb1005ce3bdacd9aa872b136406c29"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-joint-home-12",
+      "title": "关节归位六种组合×两条件，前12例",
+      "date": "2026-10-09",
+      "question_keys": [
+        "joint-home-handoff",
+        "joint-home-multitask",
+        "wine-start-context",
+        "basket-atomic-execution",
+        "wine-grasp-placement"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "joint-home-handoff",
+        "joint-home-multitask",
+        "wine-start-context",
+        "basket-atomic-execution",
+        "wine-grasp-placement",
+        "关节归位六种组合×两条件，前12例",
+        "归位"
+      ],
+      "conditions": [
+        "全为新VLA，无辅助/回放/Hermes",
+        "goal_table与basket_two，A init0/model2、B init1/model3",
+        "VLA336/归位360",
+        "12完整，第13中止164动作且排除，第14–20未启动"
+      ],
+      "findings": [
+        "全链3/12",
+        "首技能失败4、归位入口受阻3、归位后酒瓶失败2",
+        "实际17VLA：碗5/5、酒瓶2/4、灶台4/4、汤0/2、番茄酱0/2",
+        "5次归位达标后接续3成功",
+        "六个VLA失败目标谓词从未真"
+      ],
+      "limits": [
+        "没有无归位配对组，init与seed同时改变，后续策略随机流未单独控制",
+        "相关前缀不能当独立随机样本",
+        "杯子/三步未取得本轮结果",
+        "不能证实训练缺陷"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/README.md",
+          "sha256": "93debc649e87a463fb752b07c12e2f90356fca198f77009e4f7bf28cded4e370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/case_summary12.csv",
+          "sha256": "dd588b7bccc2099f0a520078d800d86d791b4299eefd08d2601b24b36af6f432"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/scope12.json",
+          "sha256": "1c719ccf0dff3f80675f928269a2eb90edac7e11b91ba36d417544195d156c7b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/metrics12.json",
+          "sha256": "8a331d7433dfcbd36de0be6027905b0711e43a9f50076c60bbf7b4079cc038bb"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-safe-exit-3",
+      "title": "保持夹爪开口安全退离三旧终态试点",
+      "date": "2026-10-10",
+      "question_keys": [
+        "joint-home-handoff",
+        "wine-start-context"
+      ],
+      "tags": [
+        "LIBERO",
+        "关节归位",
+        "安全退离",
+        "SDK",
+        "离线酒瓶"
+      ],
+      "conditions": [
+        "LIBERO goal8；env seed0；固定case02/07/08，init1/0/1；历史model seed3/2/3。",
+        "历史动作回放预算180/78/76；每例退离80、归位360；零新VLA/Hermes。",
+        "成功要求真实退离与原严格归位、5次真实post-action确认、全部保护及旧成果保持；未知即停止campaign。"
+      ],
+      "findings": [
+        "case02真实回放180、退离0、归位0，SDK字段缺失使结果unknown；case07/08 not_run。",
+        "case02原态和终态SHA吻合；2cm退离候选在scratch规划中接受，未执行。",
+        "运行后修正SDK字段并通过35项SDK软件测试；未复测物理。",
+        "旧酒瓶case01/02成功，case03/04归位后失败；离线分析仍有两路策略输入及子任务RNG记录缺口。"
+      ],
+      "limits": [
+        "没有有效退离或归位结果；完整最终guard未保存。",
+        "接口错误不算VLA失败，不能归因于训练；离线四例不严格配对，不能pool或合并成功率。",
+        "configuration是原冻结实验方法；实际运行前后源码版本见proof，修正源码未物理运行。"
+      ],
+      "configuration": {
+        "actual_vla_cap": 0,
+        "retries": 0,
+        "cases": [
+          "case_02",
+          "case_07",
+          "case_08"
+        ],
+        "frozen_inputs_sha256": "5fae1983b80eedbc38f4db30ce6ac5607ebb7ed24b612fbe5814085e1fbc0f71",
+        "mechanism": "actual_gap_safe_exit_then_strict_home",
+        "retreat_cap_per_case": 80,
+        "home_cap_per_case": 360,
+        "replay_actions": [
+          180,
+          78,
+          76
+        ],
+        "candidate_distances_m": [
+          0.02,
+          0.04,
+          0.06
+        ],
+        "cart_step_m": 0.001,
+        "joint_screen_step_rad": 0.003,
+        "ik_iterations": 50,
+        "ik_damping": 0.03,
+        "ik_joint_clip_rad": 0.015,
+        "ik_pos_tol_m": 0.0001,
+        "ik_ori_tol_rad": 0.005,
+        "penetration_slack_m": 5e-05,
+        "real_waypoint_joint_error_rad": 0.004,
+        "confirm_postaction_samples": 5,
+        "gripper_hold": "actual qpos normalized by corresponding position-actuator ctrlrange; zero gripper action holds command",
+        "weight": "not_loaded",
+        "language": "none",
+        "new_policy_rng": "none",
+        "source_freeze": "all current top-level Python SHA map locked in accepted software proof before launch"
+      },
+      "configuration_complete": true,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/README.md",
+          "sha256": "7c01c64119743592571b4154de8b6330b6c5d6b5c0066ef3e22c8a032f016556"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/pilot/summary.json",
+          "sha256": "1de2984187938a8322acc865a6b2278cd97acb0f7bf11c204a0da137e4523532"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/evidence/pilot_real_postflight.json",
+          "sha256": "b1764eb6e4260793eed5de52c58d76d683a8ee03c5bb88f222314d8144128692"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/evidence/software_proof_entry.json",
+          "sha256": "3240c9d6f42f93b416b41a70805976493d48bed478d2a3dc12012c63ad1ddc05"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/evidence/gripper_sdk_fix_final_proof.json",
+          "sha256": "9757cb4fa3c614a219cb2e201e868e035be430f1e7b8df70d71b65b72956a5aa"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/analysis/wine_existing.json",
+          "sha256": "26759f4f527726e3f36389b03648efaf7f280b20ed60e59c343f3b39130804da"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-09-safe-exit.json",
+          "sha256": "945856a400eeef019cf122ad962f91b4548422c52fb7750cd5b00d1a4b6a1bc9"
+        }
+      ]
+    },
+    {
+      "id": "20261010-safe-exit-sdk-3",
+      "date": "2026-10-10",
+      "title": "SDK修正后三旧终态退离实测：零归位通过",
+      "question_keys": [
+        "joint-home-handoff"
+      ],
+      "tags": [
+        "LIBERO",
+        "安全退离",
+        "归位",
+        "SDK",
+        "试点"
+      ],
+      "conditions": [
+        "与旧试点相同的三个原生结束状态：case02/07/08，初态1/0/1；历史动作回放180/78/76，合计334。",
+        "实际SDK字段修正为_ref_joint_gripper_actuator_indexes；每例退离上限80、归位上限360，保护与确认判据保持。",
+        "没有新VLA或Hermes调用、模型加载、重试、调参或训练；复用97项软件测试与3项子测试证据。"
+      ],
+      "findings": [
+        "完整退离并归位0/3；case02退离80后exit_budget，case07退离14、case08退离9后contact_blocked，归位均0。",
+        "case02末尾无机器人接触但仅3次连续稳定确认，要求5次，预算耗尽；两个灶台新接触均为finger1_pad_collision与stove_g19，末深度约0.52/2.84微米。",
+        "三个原任务目标最终均真，物体与原成果保护通过，控制器均恢复；灶台完整无机器人接触保护未通过。",
+        "实际85.53980326652527秒，334回放+103退离+0归位=437步；exit0/summary.ok=true仅表示既定流程完成，接口异常消除但修复效果未证明。"
+      ],
+      "limits": [
+        "没有后续VLA任务；0/3归位不是VLA失败，不能推出微调必要或组合成功。",
+        "退离有进展不证明增加两步即可归位；极浅新接触不能直接宣称严重碰撞或放宽保护。",
+        "仅三个已有失败结束状态，无随机扩展或单因素贡献对照；旧unknown记录独立保留。"
+      ],
+      "configuration": {
+        "actual_vla_cap": 0,
+        "retries": 0,
+        "cases": [
+          "case_02",
+          "case_07",
+          "case_08"
+        ],
+        "frozen_inputs_sha256": "6ed04b29b202098e286d57270b492345b561348240e366d9f3a5f5e9886f1b6c",
+        "mechanism": "actual_gap_safe_exit_then_strict_home",
+        "retreat_cap_per_case": 80,
+        "home_cap_per_case": 360,
+        "replay_actions": [
+          180,
+          78,
+          76
+        ],
+        "candidate_distances_m": [
+          0.02,
+          0.04,
+          0.06
+        ],
+        "cart_step_m": 0.001,
+        "joint_screen_step_rad": 0.003,
+        "ik_iterations": 50,
+        "ik_damping": 0.03,
+        "ik_joint_clip_rad": 0.015,
+        "ik_pos_tol_m": 0.0001,
+        "ik_ori_tol_rad": 0.005,
+        "penetration_slack_m": 5e-05,
+        "real_waypoint_joint_error_rad": 0.004,
+        "confirm_postaction_samples": 5,
+        "gripper_hold": "actual qpos normalized by corresponding position-actuator ctrlrange; zero gripper action holds command",
+        "weight": "not_loaded",
+        "language": "none",
+        "new_policy_rng": "none",
+        "source_freeze": "all current top-level Python SHA map locked in accepted software proof before launch",
+        "sdk_index_attribute": "_ref_joint_gripper_actuator_indexes",
+        "runtime_sources": {
+          "safe_exit.py": "54824e433307a5eb9634783f66b9cb654967f35cec7ec661ff0e70b6c3f635b5",
+          "safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+          "safe_exit_planner.py": "e1ded8ff1c310ff0e128945b8fec0ec36c13ff9ab41fee8c610b6d9ac7fd4de7",
+          "safe_exit_pilot.py": "791a73d33999b63b7eeb226010b2c77a70c727081b2b06fd86ea9b9618cc9ea8",
+          "safe_exit_pilot_io.py": "d77244763b9a4eb772fc61c0ea938197678d3a68545e67c773d3eefed0bc7ad9",
+          "joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21"
+        },
+        "launcher_sha256": "0fce0d44ac164ae2dc487fae81ee17f40694ddebaad270c559bf074fee4691ee"
+      },
+      "configuration_complete": true,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/README.md",
+          "sha256": "2294047afea1c9f62782af2ee660839a60fbae7ca1c44c13a9e025278c129fdc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/pilot/summary.json",
+          "sha256": "5ed86fe953764143a586054c423c8b3ecadbdc28058a560e7f8a8fbef04aa955"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/evidence/run_command.json",
+          "sha256": "8b109e5d24d38ded68a7739dbcc2d6085d87696d65a864b369a38fd8e10fcfd4"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-safe-exit-sdk.json",
+          "sha256": "055d86177d6e75efb0978c9416ffdedf3d50da86827946bb5f85c517f3b06e66"
+        }
+      ]
+    },
+    {
+      "id": "20261010-visual-finish",
+      "date": "2026-10-10",
+      "title": "视觉完成检查与通用收尾五例试点：完整子任务交接0/3",
+      "question_keys": [
+        "release-stop",
+        "joint-home-handoff",
+        "visual-completion"
+      ],
+      "tags": [
+        "LIBERO",
+        "Panda",
+        "视觉检查",
+        "松手",
+        "退离",
+        "归位",
+        "试点"
+      ],
+      "conditions": [
+        "五个冻结历史样例：bowl_held83、wine_exit、stove_exit允许收尾；soup_negative、sauce_negative为负例。原初态真实恢复后回放83/180/78/336/336动作，碗终态只有嵌入快照部分身份核对，其他四例有完整终态SHA。",
+        "独立literal评分目标是每个受测子任务的on/in/turnon，不是场景全部BDDL目标或完整多任务指令。交接要求目标保持、所有抓持解除、无机器人接触及标准关节归位连续五个真实post-action样本满足。",
+        "运行期Qwen3-VL检查实际RGBD相机图像，传感路线使用RGBD/编码器；独立oracle评分及紧急监督不传入检查器或路线规划。当前仍有仿真特权紧急监督，独立CLI模块未启用为演示UI默认收尾。",
+        "无新VLA推理、无新Hermes规划、无训练。固定历史子任务上下文；实际Qwen5次，每次初查4图2时间点。实际动作1423=初始化50+历史回放1013+辅助归位360，运行406.86秒。"
+      ],
+      "findings": [
+        "三个eligible完整子任务交接0/3，v1尚不通过物理验收；两个负例2/2零辅助，汤罐incomplete、番茄酱unknown保守拒绝，不称两例都准确辨识。",
+        "碗回放83后执行home360因home budget阻断。初查视觉全部true与原图/冻结graspedTrue矛盾，错误跳过松手及退离。归位动作打开夹爪，末nativeTrue/released_stable/contacts=[]，但关节最大误差0.8124311325333802rad约46.55度，未归位，不是仅少确认。",
+        "酒瓶回放180，辅助0，home screen blocked；clear_of_target不覆盖支撑架及其他障碍，Qwen声称open/retracted与图中仍近架不一致。未启动退离，不能宣称退离规划已验证。",
+        "灶台回放78，辅助0，initial stop；native turnonTrue和红炉圈可见，Qwen把开火当作开盖，是检查器语义错误。release/movement/confirm五例实际均0，这些分支尚无物理验证。",
+        "51软件测试通过仅是软件证据；训练来源本地README datasets unknown、train_config及准确dataset/episode/preprocessing截断manifest缺失，末段抽查0episode，不能判断训练缺松手。"
+      ],
+      "limits": [
+        "没有新VLA或完整Hermes规划链，0/3不是VLA能力成功率或完整多任务系统成功率；两个负例不能证明普适视觉准确。",
+        "本轮改变视觉检查与传感收尾多个因素，不能单独归因。oracle紧急监督仍限仿真，尚非已验收真机方案；碗完整历史终态SHA未知。",
+        "松手、退离、确认分支未发生物理动作；末段真实训练episode身份未核实，不能用一般LIBERO数据替代实际训练数据，也不据此开始微调。",
+        "下一步仅计划复用存帧离线校准语义/遮挡/目标与支撑物区别，加夹爪传感及时序矛盾否决，复用既有成功归位流程并核对新分段速度；之后同规模旧失败样例复验，不扩大不训练。",
+        "原campaign不可覆盖或直接重跑；后续测量需新proposal、inputs、输出目录。软件传感及控制组单独原始输出有缺口，既有结构化记录保留并标明，不补造输出。"
+      ],
+      "configuration": {
+        "campaign": "20261010-visual-finish-pilot",
+        "inputs_sha256": "85229f96c05aa97073cecacb4de524e3f539594879ec39a80720da4fb67d086b",
+        "case_order": [
+          "bowl_held83",
+          "wine_exit",
+          "stove_exit",
+          "soup_negative",
+          "sauce_negative"
+        ],
+        "initialization_actions": 50,
+        "historical_replay_actions": 1013,
+        "max_finish_actions": 1440,
+        "finish_caps_per_eligible": {
+          "release": 20,
+          "movement": 80,
+          "confirm": 20,
+          "home": 360
+        },
+        "eligible_cases": [
+          "bowl_held83",
+          "wine_exit",
+          "stove_exit"
+        ],
+        "negative_cases": [
+          "soup_negative",
+          "sauce_negative"
+        ],
+        "runtime_sensors": "two-camera actual RGBD render, calibration, arm joint encoders, finger position; no object poses/predicates/contact lists in visual or path planning",
+        "oracle_emergency_supervision": "privileged simulation predicate/object displacement/contact probes after actual helper steps; logged separately, remains simulation-only emergency supervision",
+        "independent_gold": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ],
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ],
+          [
+            "turnon",
+            "flat_stove_1"
+          ],
+          [
+            "in",
+            "alphabet_soup_1",
+            "basket_1_contain_region"
+          ],
+          [
+            "in",
+            "tomato_sauce_1",
+            "basket_1_contain_region"
+          ]
+        ],
+        "context_contract": "context is a GPT-fixed historical Hermes subtask fixture, not a newly generated Hermes plan. Gold is independent offline oracle and forbidden to vision decision.",
+        "vision_model": "qwen3-vl-plus",
+        "vision_max_calls": 18,
+        "vision_max_tokens": 1600,
+        "vision_temperature": 0,
+        "new_vla_inferences": 0,
+        "new_hermes_calls": 0,
+        "weights_loaded": 0,
+        "training": false,
+        "physical_streak": 5,
+        "repeat_measurements": 0,
+        "source_freeze": "preflight.json source_sha256 must match before launch and before eachcase; no silent refreeze"
+      },
+      "configuration_complete": true,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/README.md",
+          "sha256": "59690e1a722b0315381919dfb9589887c196ca1344d06046f911e4f2252744ee"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/summary.json",
+          "sha256": "eb33bffbb8590f972bdd2df84072c1cc73adb4215f4d62683edad3fba86637cd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/observed_results.json",
+          "sha256": "e56a10e40077124fd7fd5f5158baca09226d1d81d9054c7d79967c87c75ca571"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/inputs.json",
+          "sha256": "85229f96c05aa97073cecacb4de524e3f539594879ec39a80720da4fb67d086b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/preflight.json",
+          "sha256": "e9a88c764cb1836ce9f822e0097b6050ed88c40dc7eaed091f7cbb6824114049"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/training_source_audit.json",
+          "sha256": "3cf90ff304ce65c3d3c0fadd98364c28e3ce476d37df831822bbb416be5653ec"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/software_checks.json",
+          "sha256": "b3f73dd8f25ae013282d2d001fdf95274bf91a34c2ca6b7bc346029acef1cea0"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-visual-finish-analysis.json",
+          "sha256": "68a4622ad36dbffb7a45faf885bbff9038932f935805d0aa0295f710e9ad6f71"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-visual-finish-pilot.json",
+          "sha256": "2bd527ca7c4fbb1381784c9edf40e8a7328ec9ff5a44917391f16e7e7b40ba07"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/runtime_sources_at_launch.zip",
+          "sha256": "12c2c1a85b9cd771770018c8b54964018aaf8714c3b08845745186d52254c326"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/source_format_normalization.json",
+          "sha256": "7818bdec90db4ac2508150b86e8cd677c45d380b09f36cb853d8dbfef1da3019"
+        }
+      ]
+    }
+  ]
+}

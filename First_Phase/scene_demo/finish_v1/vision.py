@@ -121,6 +121,27 @@ def build_prompt(context):
         "geometry is insufficient.",
         "evidence and unknown_reasons must be lists of strings.",
         "Do not add fields. Do not add confidence. Do not add commentary outside JSON.",
+        "place.at_destination means only that the object's position has reached the",
+        "destination; it does NOT mean the gripper has released.",
+        "place.supported requires a visible destination or support surface",
+        "(shelf, plate, table) carrying the target; gripper support does not count.",
+        "place.released requires visible separation between the fingers and the",
+        "object; a stopped arm or planned opening is not a release.",
+        "place.clear_of_target requires the gripper to be away from the target,",
+        "from the support surface (shelf/plate), and from any nearby knob; do not",
+        "judge clearance only by distance to the bottle.",
+        "Set these fields to null when they cannot be judged from the images.",
+        "For turn, judge operation_achieved strictly by",
+        "criteria.operation_semantics and the desired_state (on/off). A turn/on of",
+        "a stove means rotating the knob to ignite the burner; a visible red burner",
+        "ring may be evidence that the stove is on, and this is NOT a lid removal.",
+        "Treat opening and closing as defined by the current desired_state; never",
+        "invent observations that are not visible.",
+        "stable=true requires support across several frames with distinct",
+        "timestamps, not a single frame.",
+        "Use two stages: after the operation is achieved but the gripper still",
+        "holds or touches the object, hand off to a release/recovery stage; call",
+        "complete only after the release and retreat are observed.",
         "Never infer task completion from a commanded gripper opening alone.",
         "Actual image-observed release, support, and stability decide completion.",
         "Ignore and do not use any plan claim of success; judge only images and",
@@ -265,7 +286,7 @@ def _decide_place(verdict):
             )
         if supported is None:
             return _decision("unknown", "support state unknown before release")
-        allow = stable is True
+        allow = stable is not False
         return _decision(
             "needs_release",
             "target in place and supported; release required",
@@ -296,6 +317,7 @@ def _decide_turn(verdict):
     tv = verdict["target_visible"]
     achieved = verdict["operation_achieved"]
     clear = verdict["clear_of_target"]
+    released = verdict["released"]
 
     if tv is None:
         return _decision("unknown", "target visibility unknown for turn")
@@ -305,6 +327,12 @@ def _decide_turn(verdict):
         return _decision("unknown", "turn completion unknown")
     if achieved is False:
         return _decision("incomplete", "turn not yet achieved")
+    if released is False:
+        return _decision(
+            "needs_release",
+            "knob-operation done release fingers",
+            allow_release=True,
+        )
     if clear is False:
         return _decision(
             "needs_retreat",
@@ -313,7 +341,91 @@ def _decide_turn(verdict):
         )
     if clear is None:
         return _decision("unknown", "clearance unknown after turn")
+    if released is None:
+        return _decision("unknown", "release state unknown before retreat")
     return _decision("complete", "turn achieved and clear")
+
+
+def _finite_pair(value, name):
+    if not isinstance(value, (list, tuple)) or len(value) != 2:
+        raise ValueError(f"{name} must be a pair of two finite numbers")
+    out = []
+    for index, item in enumerate(value):
+        if isinstance(item, bool) or not isinstance(item, (int, float)):
+            raise TypeError(f"{name}[{index}] must be numeric")
+        number = float(item)
+        if not math.isfinite(number):
+            raise ValueError(f"{name}[{index}] must be finite")
+        out.append(number)
+    return out
+
+
+def _box_separation_norm(box_a, box_b):
+    dx = max(
+        0.0,
+        max(box_a[0], box_b[0]) - min(box_a[2], box_b[2]),
+    )
+    dy = max(
+        0.0,
+        max(box_a[1], box_b[1]) - min(box_a[3], box_b[3]),
+    )
+    return (dx * dx + dy * dy) ** 0.5
+
+
+def reconcile_verdict(context, verdict, robot, reference):
+    _validate_context(context)
+    clean = validate_verdict(verdict)
+    out = {
+        field: clean[field]
+        for field in _BOOL_FIELDS
+    }
+    out["boxes"] = {
+        camera: dict(entry) for camera, entry in clean["boxes"].items()
+    }
+    out["evidence"] = list(clean["evidence"])
+    out["unknown_reasons"] = list(clean["unknown_reasons"])
+
+    if not isinstance(robot, dict):
+        raise TypeError("robot must be a dict")
+    if not isinstance(reference, dict):
+        raise TypeError("reference must be a dict")
+
+    finger_qpos = _finite_pair(robot.get("finger_qpos"), "robot.finger_qpos")
+    finger_home = _finite_pair(reference.get("finger_home"), "reference.finger_home")
+
+    deviation = max(
+        abs(finger_qpos[0] - finger_home[0]),
+        abs(finger_qpos[1] - finger_home[1]),
+    )
+    if deviation > 0.002:
+        out["released"] = False
+        out["clear_of_target"] = False
+        out["evidence"].append(
+            "encoder fingers not at standard open position; this does not prove object grasp"
+        )
+
+    clear_blocked = False
+    for entry in out["boxes"].values():
+        gripper = entry["gripper"]
+        if gripper is None:
+            continue
+        for key in ("target", "destination"):
+            box = entry[key]
+            if box is None:
+                continue
+            if _box_separation_norm(gripper, box) <= 0.03:
+                clear_blocked = True
+                break
+        if clear_blocked:
+            break
+
+    if clear_blocked:
+        out["clear_of_target"] = False
+        out["evidence"].append(
+            "gripper is within 0.03 normalized distance of the target or support surface"
+        )
+
+    return out
 
 
 def decide(context, verdict):

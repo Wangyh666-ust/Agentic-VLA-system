@@ -1,0 +1,693 @@
+{
+  "case_id": "bowl_held83",
+  "context_origin": "fixed_historical_subtask_fixture",
+  "origin_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_sha": null,
+  "origin_check": null,
+  "terminal_check": "embedded_match",
+  "phase_counts": {
+    "replay": 83,
+    "release": 6,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  },
+  "initial_vision_decision": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": true,
+    "supported": true,
+    "released": false,
+    "stable": null,
+    "operation_achieved": null,
+    "clear_of_target": false,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.42,
+          0.58,
+          0.78,
+          0.8
+        ],
+        "destination": [
+          0.2,
+          0.4,
+          0.8,
+          0.65
+        ],
+        "gripper": [
+          0.38,
+          0.2,
+          0.62,
+          0.55
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.3,
+          0.5,
+          0.9,
+          0.85
+        ],
+        "destination": [
+          0.15,
+          0.35,
+          0.85,
+          0.6
+        ],
+        "gripper": [
+          0.4,
+          0.1,
+          0.7,
+          0.45
+        ]
+      }
+    },
+    "evidence": [
+      "In agentview frames 0 and 2, the black bowl (akita_black_bowl_1) is positioned on top of the white plate with red stripes (plate_1).",
+      "In wrist frames 1 and 3, the bowl is visible resting on the plate, with gripper still in contact or very close to the bowl.",
+      "The bowl remains stationary across frames 0\u20133 relative to the plate, suggesting placement has occurred.",
+      "encoder fingers not at standard open position; this does not prove object grasp",
+      "gripper is within 0.03 normalized distance of the target or support surface"
+    ],
+    "unknown_reasons": [
+      "Gripper-object contact cannot be definitively resolved in wrist view due to occlusion and low resolution; release status unknown.",
+      "No multi-frame stability evidence (e.g., >2 distinct timestamps with no motion) is available to confirm stable support after release.",
+      "Gripper has not retreated from target or support surface; clear_of_target is false because gripper remains near/over the bowl and plate."
+    ]
+  },
+  "finish": {
+    "ready": false,
+    "ok": false,
+    "reason": "release denied",
+    "counts": {
+      "release": 6,
+      "movement": 0,
+      "confirm": 0,
+      "home": 0
+    },
+    "plan": null,
+    "checks": [
+      {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": true,
+        "supported": true,
+        "released": false,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": false,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.4,
+              0.55,
+              0.8,
+              0.85
+            ],
+            "destination": [
+              0.2,
+              0.4,
+              0.6,
+              0.7
+            ],
+            "gripper": [
+              0.35,
+              0.2,
+              0.55,
+              0.5
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.3,
+              0.6,
+              0.9,
+              0.95
+            ],
+            "destination": [
+              0.1,
+              0.3,
+              0.7,
+              0.6
+            ],
+            "gripper": [
+              0.4,
+              0.1,
+              0.6,
+              0.4
+            ]
+          }
+        },
+        "evidence": [
+          "In agentview frames 0,2,4: black bowl (akita_black_bowl_1) is held by gripper and positioned directly above plate_1.",
+          "In wrist frames 1,3,5: bowl is visible in gripper, partially occluding plate; no separation between fingers and bowl.",
+          "Plate_1 (red-rimmed) is visible in agentview and wrist views; bowl appears to be resting on or very near it in later frames, but gripper still contacts bowl.",
+          "No frame shows gripper fully retracted or fingers open with visible gap from bowl.",
+          "encoder fingers not at standard open position; this does not prove object grasp",
+          "gripper is within 0.03 normalized distance of the target or support surface"
+        ],
+        "unknown_reasons": [
+          "Stability cannot be judged: only single-frame snapshots; no multi-frame support observation over time.",
+          "Released status is false because gripper still contacts bowl in all frames; no visible separation.",
+          "Clear_of_target is false because gripper remains near bowl and plate in all frames."
+        ]
+      }
+    ],
+    "restored": true,
+    "limitation": "visible geometry only"
+  },
+  "final_snapshot": {
+    "state_sha": "e5ef1ecd08e6e01d4433daa6a8adf8d0ff9baaee97fb6383ab2ca1e302248daa",
+    "gold": {
+      "predicates": {
+        "on|akita_black_bowl_1|plate_1": true
+      },
+      "objects": {
+        "akita_black_bowl_1": {
+          "position": [
+            0.057127767565499574,
+            -0.03748559264154034,
+            0.9090773492279625
+          ],
+          "quaternion": [
+            0.6794397890910392,
+            -0.012245473587678347,
+            0.04035729104155185,
+            0.7325181980239976
+          ],
+          "linear_velocity": [
+            0.0006881037829396791,
+            -1.0673334525852492e-05,
+            0.001431938684255104
+          ],
+          "angular_velocity": [
+            -0.018805797084573576,
+            -0.05828852486708239,
+            -0.054635714904885634
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "cream_cheese_1": {
+          "position": [
+            -0.04602629144396026,
+            0.13447270946529477,
+            0.9089214774186077
+          ],
+          "quaternion": [
+            3.388608757751809e-18,
+            -4.1195342834077845e-17,
+            -5.4569922687315626e-17,
+            1.0
+          ],
+          "linear_velocity": [
+            1.465126244057312e-18,
+            3.1550873880917377e-17,
+            1.7735270906942795e-14
+          ],
+          "angular_velocity": [
+            -3.3283540701611033e-15,
+            -1.2553953945779151e-15,
+            -2.00432302866842e-23
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "wine_bottle_1": {
+          "position": [
+            -0.20423290037391095,
+            -0.06165089486055361,
+            0.8988754774203452
+          ],
+          "quaternion": [
+            1.1093590905809513e-08,
+            -6.204091079943106e-06,
+            3.878404398731865e-07,
+            0.9999999999806799
+          ],
+          "linear_velocity": [
+            -1.6295029011690544e-17,
+            -1.4884434263255558e-17,
+            1.7706292167636672e-14
+          ],
+          "angular_velocity": [
+            -4.035935045696238e-16,
+            -3.091276443344531e-17,
+            7.898197507268691e-18
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "plate_1": {
+          "position": [
+            0.05959132285247106,
+            -0.012026006348267834,
+            0.9025410346795562
+          ],
+          "quaternion": [
+            0.6861920437976012,
+            0.0005787632887423746,
+            -0.0003818303154483661,
+            0.7274200975141775
+          ],
+          "linear_velocity": [
+            0.0006965956450323508,
+            -0.0006726433260180612,
+            0.001440611819339353
+          ],
+          "angular_velocity": [
+            0.017316548406803196,
+            -0.04990381605142467,
+            -0.020325392624039457
+          ],
+          "grasped": false,
+          "error": null
+        }
+      },
+      "held_objects": [],
+      "gripper_qpos": [
+        0.004158590326264188,
+        -0.007550007335573526
+      ],
+      "eef_position": [
+        0.0597163976325185,
+        0.010918859017358116,
+        0.9382592502245949
+      ],
+      "grasp_observation_complete": true,
+      "strict_candidate": true,
+      "phases": {
+        "on|akita_black_bowl_1|plate_1": "released_stable"
+      },
+      "goal_objects": [
+        "akita_black_bowl_1"
+      ]
+    },
+    "home": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.010218253485788776,
+        1.219898254091914,
+        0.006116102993180173,
+        1.241515909752126,
+        0.027094220387102668,
+        0.13203488409694275,
+        0.15261623178278716
+      ],
+      "arm_speed_rad_s": [
+        0.0027955187665387664,
+        1.6389421398280167e-05,
+        6.677206281900149e-06,
+        0.01192737903033832,
+        0.0022440893432854113,
+        0.007153427738179423,
+        0.0029270887896962064
+      ],
+      "max_joint_error_rad": 1.241515909752126,
+      "max_joint_speed_rad_s": 0.01192737903033832,
+      "finger_error_m": [
+        0.03457198553876478,
+        0.031177756643113223
+      ],
+      "finger_speed_m_s": [
+        0.0008260291899085417,
+        0.000611158393830287
+      ],
+      "max_finger_error_m": 0.03457198553876478,
+      "max_finger_speed_m_s": 0.0008260291899085417,
+      "ready": false
+    },
+    "contacts": [
+      {
+        "geom1": 113,
+        "geom2": 73,
+        "pair": [
+          73,
+          113
+        ],
+        "geom1_name": "akita_black_bowl_1_g30",
+        "geom2_name": "gripper0_finger1_collision",
+        "dist": -6.284577557914783e-05,
+        "pos": [
+          0.05237190147202366,
+          0.007287152939927865,
+          0.9303397738364945
+        ],
+        "normal": [
+          0.11906458286477392,
+          -0.939390669509641,
+          0.3215101789142391
+        ],
+        "outward_normal": [
+          0.11906458286477392,
+          -0.939390669509641,
+          0.3215101789142391
+        ],
+        "self": false
+      },
+      {
+        "geom1": 114,
+        "geom2": 73,
+        "pair": [
+          73,
+          114
+        ],
+        "geom1_name": "akita_black_bowl_1_g31",
+        "geom2_name": "gripper0_finger1_collision",
+        "dist": -6.284577557914783e-05,
+        "pos": [
+          0.05237190147202366,
+          0.007287152939927865,
+          0.9303397738364945
+        ],
+        "normal": [
+          0.11906458286477392,
+          -0.939390669509641,
+          0.3215101789142391
+        ],
+        "outward_normal": [
+          0.11906458286477392,
+          -0.939390669509641,
+          0.3215101789142391
+        ],
+        "self": false
+      },
+      {
+        "geom1": 112,
+        "geom2": 76,
+        "pair": [
+          76,
+          112
+        ],
+        "geom1_name": "akita_black_bowl_1_g29",
+        "geom2_name": "gripper0_finger2_collision",
+        "dist": -0.00017411883077337074,
+        "pos": [
+          0.06268107286180437,
+          0.019982443980512597,
+          0.9561706250796205
+        ],
+        "normal": [
+          0.14456057172128498,
+          0.9839246854881714,
+          -0.10485444382866278
+        ],
+        "outward_normal": [
+          0.14456057172128498,
+          0.9839246854881714,
+          -0.10485444382866278
+        ],
+        "self": false
+      },
+      {
+        "geom1": 113,
+        "geom2": 76,
+        "pair": [
+          76,
+          113
+        ],
+        "geom1_name": "akita_black_bowl_1_g30",
+        "geom2_name": "gripper0_finger2_collision",
+        "dist": -9.586560172721563e-05,
+        "pos": [
+          0.06217277801382451,
+          0.020018963034716328,
+          0.9561856861448479
+        ],
+        "normal": [
+          0.14456057172119818,
+          0.9839246854881466,
+          -0.10485444382901483
+        ],
+        "outward_normal": [
+          0.14456057172119818,
+          0.9839246854881466,
+          -0.10485444382901483
+        ],
+        "self": false
+      },
+      {
+        "geom1": 114,
+        "geom2": 76,
+        "pair": [
+          76,
+          114
+        ],
+        "geom1_name": "akita_black_bowl_1_g31",
+        "geom2_name": "gripper0_finger2_collision",
+        "dist": -9.586560172721563e-05,
+        "pos": [
+          0.06217277801382451,
+          0.020018963034716328,
+          0.9561856861448479
+        ],
+        "normal": [
+          0.14456057172119818,
+          0.9839246854881466,
+          -0.10485444382901483
+        ],
+        "outward_normal": [
+          0.14456057172119818,
+          0.9839246854881466,
+          -0.10485444382901483
+        ],
+        "self": false
+      }
+    ]
+  },
+  "home": {
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "arm_error_rad": [
+      0.010218253485788776,
+      1.219898254091914,
+      0.006116102993180173,
+      1.241515909752126,
+      0.027094220387102668,
+      0.13203488409694275,
+      0.15261623178278716
+    ],
+    "arm_speed_rad_s": [
+      0.0027955187665387664,
+      1.6389421398280167e-05,
+      6.677206281900149e-06,
+      0.01192737903033832,
+      0.0022440893432854113,
+      0.007153427738179423,
+      0.0029270887896962064
+    ],
+    "max_joint_error_rad": 1.241515909752126,
+    "max_joint_speed_rad_s": 0.01192737903033832,
+    "finger_error_m": [
+      0.03457198553876478,
+      0.031177756643113223
+    ],
+    "finger_speed_m_s": [
+      0.0008260291899085417,
+      0.000611158393830287
+    ],
+    "max_finger_error_m": 0.03457198553876478,
+    "max_finger_speed_m_s": 0.0008260291899085417,
+    "ready": false
+  },
+  "contacts": [
+    {
+      "geom1": 113,
+      "geom2": 73,
+      "pair": [
+        73,
+        113
+      ],
+      "geom1_name": "akita_black_bowl_1_g30",
+      "geom2_name": "gripper0_finger1_collision",
+      "dist": -6.284577557914783e-05,
+      "pos": [
+        0.05237190147202366,
+        0.007287152939927865,
+        0.9303397738364945
+      ],
+      "normal": [
+        0.11906458286477392,
+        -0.939390669509641,
+        0.3215101789142391
+      ],
+      "outward_normal": [
+        0.11906458286477392,
+        -0.939390669509641,
+        0.3215101789142391
+      ],
+      "self": false
+    },
+    {
+      "geom1": 114,
+      "geom2": 73,
+      "pair": [
+        73,
+        114
+      ],
+      "geom1_name": "akita_black_bowl_1_g31",
+      "geom2_name": "gripper0_finger1_collision",
+      "dist": -6.284577557914783e-05,
+      "pos": [
+        0.05237190147202366,
+        0.007287152939927865,
+        0.9303397738364945
+      ],
+      "normal": [
+        0.11906458286477392,
+        -0.939390669509641,
+        0.3215101789142391
+      ],
+      "outward_normal": [
+        0.11906458286477392,
+        -0.939390669509641,
+        0.3215101789142391
+      ],
+      "self": false
+    },
+    {
+      "geom1": 112,
+      "geom2": 76,
+      "pair": [
+        76,
+        112
+      ],
+      "geom1_name": "akita_black_bowl_1_g29",
+      "geom2_name": "gripper0_finger2_collision",
+      "dist": -0.00017411883077337074,
+      "pos": [
+        0.06268107286180437,
+        0.019982443980512597,
+        0.9561706250796205
+      ],
+      "normal": [
+        0.14456057172128498,
+        0.9839246854881714,
+        -0.10485444382866278
+      ],
+      "outward_normal": [
+        0.14456057172128498,
+        0.9839246854881714,
+        -0.10485444382866278
+      ],
+      "self": false
+    },
+    {
+      "geom1": 113,
+      "geom2": 76,
+      "pair": [
+        76,
+        113
+      ],
+      "geom1_name": "akita_black_bowl_1_g30",
+      "geom2_name": "gripper0_finger2_collision",
+      "dist": -9.586560172721563e-05,
+      "pos": [
+        0.06217277801382451,
+        0.020018963034716328,
+        0.9561856861448479
+      ],
+      "normal": [
+        0.14456057172119818,
+        0.9839246854881466,
+        -0.10485444382901483
+      ],
+      "outward_normal": [
+        0.14456057172119818,
+        0.9839246854881466,
+        -0.10485444382901483
+      ],
+      "self": false
+    },
+    {
+      "geom1": 114,
+      "geom2": 76,
+      "pair": [
+        76,
+        114
+      ],
+      "geom1_name": "akita_black_bowl_1_g31",
+      "geom2_name": "gripper0_finger2_collision",
+      "dist": -9.586560172721563e-05,
+      "pos": [
+        0.06217277801382451,
+        0.020018963034716328,
+        0.9561856861448479
+      ],
+      "normal": [
+        0.14456057172119818,
+        0.9839246854881466,
+        -0.10485444382901483
+      ],
+      "outward_normal": [
+        0.14456057172119818,
+        0.9839246854881466,
+        -0.10485444382901483
+      ],
+      "self": false
+    }
+  ],
+  "physical_streak": 0,
+  "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_entry_fix/bowl_held83/all_actions.mp4",
+  "errors": [],
+  "status": "blocked",
+  "initialization_steps": 10,
+  "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_state_sha": "da8146858acf03be45fca8804e9936a0a1a21905a23f58c2644c49cf61032d6b",
+  "core_counts": {
+    "release": 6,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  },
+  "actual_helper_counts": {
+    "release": 6,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  },
+  "target_metrics": {
+    "eligible": true,
+    "expected_release": true,
+    "expected_retreat": true,
+    "release_actions": 6,
+    "movement_actions": 0,
+    "confirm_actions": 0,
+    "home_actions": 0,
+    "target_executed": false
+  }
+}

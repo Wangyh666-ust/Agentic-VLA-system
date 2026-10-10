@@ -25,6 +25,47 @@ ROOT = Path(__file__).resolve().parents[3]
 # ---------------------------------------------------------------------------
 # argparse (help / import path must not touch heavy imports)
 # ---------------------------------------------------------------------------
+def takeover_metrics(case, phase_counts, actual_release_open_actions=None):
+    counts = phase_counts or {}
+    eligible = bool(case.get("allow_helper"))
+    expected_release = bool(case.get("expected_release", False))
+    expected_retreat = bool(case.get("expected_retreat", False))
+    release_actions = int(counts.get("release", 0))
+    movement_actions = int(counts.get("movement", 0))
+    confirm_actions = int(counts.get("confirm", 0))
+    home_actions = int(counts.get("home", 0))
+    if actual_release_open_actions is None:
+        actual_release_open_actions = int(counts.get("release_open_actions", 0))
+    actual_release_open_actions = int(actual_release_open_actions)
+    target_executed = None
+    if eligible:
+        target_executed = True
+        if expected_release and actual_release_open_actions <= 0:
+            target_executed = False
+        if expected_retreat and movement_actions <= 0:
+            target_executed = False
+    return {
+        "eligible": eligible,
+        "expected_release": expected_release,
+        "expected_retreat": expected_retreat,
+        "release_actions": release_actions,
+        "actual_release_open_actions": actual_release_open_actions,
+        "movement_actions": movement_actions,
+        "confirm_actions": confirm_actions,
+        "home_actions": home_actions,
+        "target_executed": target_executed,
+    }
+
+
+def should_stop_after_case(case, result):
+    if result.get("status") == "unknown":
+        return True
+    metrics = takeover_metrics(case, result.get("phase_counts") or {}, result.get("release_open_actions"))
+    if metrics["eligible"] and metrics["target_executed"] is False:
+        return True
+    return False
+
+
 def _parse_args(argv=None):
     p = argparse.ArgumentParser(
         description="finish_v1 fixed five-case historical-state pilot runner"
@@ -33,9 +74,17 @@ def _parse_args(argv=None):
     p.add_argument("--inputs", required=True)
     p.add_argument("--output", required=True)
     p.add_argument("--limit", type=int, default=5)
+    p.add_argument("--start-index", type=int, default=0)
+    p.add_argument("--max-qwen-calls", type=int, default=18)
     a = p.parse_args(argv)
     if a.limit < 1 or a.limit > 5:
         p.error("--limit must be between 1 and 5")
+    if a.start_index < 0 or a.start_index > 4:
+        p.error("--start-index must be between 0 and 4")
+    if a.start_index + a.limit > 5:
+        p.error("--start-index + --limit must not exceed 5")
+    if a.max_qwen_calls < 1 or a.max_qwen_calls > 18:
+        p.error("--max-qwen-calls must be between 1 and 18")
     return a
 
 
@@ -197,6 +246,8 @@ class PilotRunner:
         self.inputs_path = Path(args.inputs).resolve()
         self.output_dir = Path(args.output).resolve()
         self.limit = args.limit
+        self.start_index = getattr(args, "start_index", 0)
+        self.max_qwen_calls = getattr(args, "max_qwen_calls", 18)
         self.campaign_summary = {
             "cases": [],
             "statuses": [],
@@ -214,15 +265,7 @@ class PilotRunner:
 
     # --- preflight ---------------------------------------------------------
     def verify_preflight(self):
-        evidence = (
-            ROOT
-            / "First_Phase"
-            / "scene_demo"
-            / "results"
-            / "2026-10-10-visual-finish"
-            / "evidence"
-        )
-        preflight_path = evidence / "preflight.json"
+        preflight_path = self.inputs_path.parent / "preflight.json"
         if not preflight_path.is_file():
             raise RuntimeError(f"preflight not found: {preflight_path}")
         with open(preflight_path, "r", encoding="utf-8") as f:
@@ -341,6 +384,7 @@ class PilotRunner:
             "origin_check": None,
             "terminal_check": None,
             "phase_counts": {"replay": 0, "release": 0, "movement": 0, "confirm": 0, "home": 0},
+            "release_open_actions": 0,
             "initial_vision_decision": None,
             "finish": None,
             "final_snapshot": None,
@@ -525,7 +569,11 @@ class PilotRunner:
                 if qwen_budget["n"] > qwen_budget["max"]:
                     raise RuntimeError("qwen call budget exceeded")
                 meta = qwen_client.analyze(safe_ctx, image_paths)
-                verdict = meta.get("verdict", {}) if isinstance(meta, dict) else {}
+                raw_verdict = meta.get("verdict", {}) if isinstance(meta, dict) else {}
+                robot = port.read_robot()
+                verdict = vision.reconcile_verdict(
+                    context_arg, raw_verdict, robot, reference
+                )
                 row = {
                     "call_index": call_index,
                     "status": meta.get("status") if isinstance(meta, dict) else None,
@@ -536,7 +584,9 @@ class PilotRunner:
                     "response_sha256": meta.get("response_sha256") if isinstance(meta, dict) else None,
                     "sensor_paths": image_paths,
                     "sensor_frames": sensor_frames,
+                    "raw_verdict": raw_verdict,
                     "verdict": verdict,
+                    "robot": robot,
                 }
                 _append_jsonl(checks_fp, row)
                 last_verdict = verdict
@@ -583,6 +633,8 @@ class PilotRunner:
 
             def emit(row):
                 _append_jsonl(events_fp, row)
+                if row.get("command_kind") == "release_open":
+                    result["release_open_actions"] = result.get("release_open_actions", 0) + 1
 
             try:
                 finish_result = control.run_finish(
@@ -907,11 +959,12 @@ class PilotRunner:
 
         self.import_runtime()
 
-        qwen_budget = {"n": 0, "max": 18}
-        qwen_client = self.vision.QwenClient(max_calls=18)
+        qwen_budget = {"n": 0, "max": self.max_qwen_calls}
+        qwen_client = self.vision.QwenClient(max_calls=self.max_qwen_calls)
 
         stop_remaining = False
-        for idx, case in enumerate(cases[: self.limit]):
+        _selected = cases[self.start_index : self.start_index + self.limit]
+        for idx, case in enumerate(_selected, start=self.start_index):
             if stop_remaining:
                 self.campaign_summary["cases"].append({
                     "case_id": case["case_id"],
@@ -930,6 +983,8 @@ class PilotRunner:
                     "errors": [f"{type(exc).__name__}: {exc}"],
                     "context_origin": "fixed_historical_subtask_fixture",
                 }
+            phase_counts = res.get("phase_counts") or {}
+            res["target_metrics"] = takeover_metrics(case, phase_counts, res.get("release_open_actions"))
             status = res.get("status", "unknown")
             self.campaign_summary["statuses"].append(status)
             self.campaign_summary["cases"].append({
@@ -937,14 +992,19 @@ class PilotRunner:
                 "status": status,
                 "phase_counts": res.get("phase_counts"),
                 "errors": res.get("errors"),
+                "target_metrics": res["target_metrics"],
             })
             for k, v in (res.get("phase_counts") or {}).items():
                 if k in self.campaign_summary["phase_counts"]:
                     self.campaign_summary["phase_counts"][k] += int(v)
             _log(f"[case-end] {case_id} status={status}")
             _write_json(self.output_dir / case_id / "result.json", res)
-            if status == "unknown":
+            if should_stop_after_case(case, res):
                 stop_remaining = True
+                if status != "unknown":
+                    self.campaign_summary["stop_reason"] = (
+                        "expected takeover actions not executed"
+                    )
 
         self.campaign_summary["qwen_calls"] = qwen_budget["n"]
         self.campaign_summary["new_vla"] = 0

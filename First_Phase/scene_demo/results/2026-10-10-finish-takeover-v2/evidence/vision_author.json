@@ -1,0 +1,88 @@
+{
+  "calls": [
+    {
+      "model_requested": "deepseek-flash",
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 7500,
+      "calls": 1,
+      "request_sha256": "b2c55f6cd5a11ed18d4e171e731b641230897ca15c0a40b73875f0a840d27af8",
+      "original_vision_sha256": "1ca6c1af70529f68f408c460a09442e50db8594d8480fe112cfb1dba9ba82b8e",
+      "source_origin": "Actual DeepSeek implementation; worker mechanical unique-match application only",
+      "new_qwen_calls": 0,
+      "new_physical_actions": 0,
+      "software_test_runs": 0,
+      "http_status": 200,
+      "response_sha256": "965b4fdf1a1fe12c5d447af9faf6f1675aebf3cfc2e48547f151c0f643234892",
+      "model": "deepseek-flash",
+      "usage": {
+        "input_tokens": 6208,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 4286,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "error": "RuntimeError: Edit old unique-match failed at index 0: matches=0",
+      "status": "FAILED_NO_RETRY"
+    },
+    {
+      "model_requested": "deepseek-flash",
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 2200,
+      "request_sha256": "cc83b896e39c3995de7a5f61f75ffefa992a24930128d823bae25e7573f8a22e",
+      "http_status": 200,
+      "response_sha256": "f566edd34e10d226fa1d9548f78715dfadce94041e6bda0419ec9f43b496d4d0",
+      "model": "deepseek-flash",
+      "usage": {
+        "input_tokens": 1162,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 435,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "status": "APPLIED"
+    }
+  ],
+  "actual_model_calls": 2,
+  "source_origin": "Actual DeepSeek two calls; first response first-line string wrapping mechanically bound by GPT instruction; second actual DeepSeek function correction",
+  "new_qwen_calls": 0,
+  "new_physical_actions": 0,
+  "software_test_runs": 1,
+  "status": "SOFTWARE_TESTS_PASSED",
+  "ast_parse": "two files passed",
+  "first_failure_correction": "Only first edit first-line Python string quote/comma wrapping; exact unique matching then applied",
+  "new_test_addition": "GPT fixed closed-null veto expectation mechanically appended",
+  "applied_files": {
+    "First_Phase/scene_demo/finish_v1/vision.py": "2bd061a08b21de9737e6278583361bc5f5dd4c58aaa4dd4892cc179944c79225",
+    "First_Phase/scene_demo/finish_v1/tests/test_takeover_vision.py": "53778e26f7f5eb9d8b67f840084660c667f74144f01f641c3e7305d730715329"
+  },
+  "test": {
+    "command": [
+      "wsl.exe",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests",
+      "-p",
+      "test*vision.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_prompt_contains_turn_support_and_no_gold (test_takeover_vision.BuildPromptTest.test_prompt_contains_turn_support_and_no_gold) ... ok\ntest_prompt_mentions_stove_semantics (test_takeover_vision.BuildPromptTest.test_prompt_mentions_stove_semantics) ... ok\ntest_closed_fingers_downgrade_release_and_clear (test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_downgrade_release_and_clear) ... ok\ntest_closed_fingers_override_null_release_and_clear (test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_override_null_release_and_clear) ... ok\ntest_invalid_finger_data_is_rejected_without_mutation (test_takeover_vision.ReconcileVerdictTest.test_invalid_finger_data_is_rejected_without_mutation) ... ok\ntest_near_support_box_forces_retreat (test_takeover_vision.ReconcileVerdictTest.test_near_support_box_forces_retreat) ... ok\ntest_open_fingers_do_not_change_null_release (test_takeover_vision.ReconcileVerdictTest.test_open_fingers_do_not_change_null_release) ... ok\ntest_turn_achieved_and_clear_and_released_is_complete (test_takeover_vision.TurnDecisionTest.test_turn_achieved_and_clear_and_released_is_complete) ... ok\ntest_turn_clear_unknown_release_unknown_is_unknown (test_takeover_vision.TurnDecisionTest.test_turn_clear_unknown_release_unknown_is_unknown) ... ok\ntest_turn_not_achieved_is_incomplete (test_takeover_vision.TurnDecisionTest.test_turn_not_achieved_is_incomplete) ... ok\ntest_turn_on_with_closed_fingers_needs_release (test_takeover_vision.TurnDecisionTest.test_turn_on_with_closed_fingers_needs_release) ... ok\ntest_place_complete_ignores_operation_achieved (test_vision.DecideTests.test_place_complete_ignores_operation_achieved) ... ok\ntest_supported_held_needs_release (test_vision.DecideTests.test_supported_held_needs_release) ... ok\ntest_turn_needs_retreat (test_vision.DecideTests.test_turn_needs_retreat) ... ok\ntest_unknown_denies (test_vision.DecideTests.test_unknown_denies) ... ok\ntest_unsupported_blocks_release (test_vision.DecideTests.test_unsupported_blocks_release) ... ok\ntest_constructor_no_io (test_vision.ImportSafetyTests.test_constructor_no_io) ... ok\ntest_naked_and_fence (test_vision.ParseTests.test_naked_and_fence) ... ok\ntest_reject_prose (test_vision.ParseTests.test_reject_prose) ... ok\ntest_leading_trailing_prose_rejected (test_vision.ParserFinalTests.test_leading_trailing_prose_rejected) ... ok\ntest_multiple_fences_rejected (test_vision.ParserFinalTests.test_multiple_fences_rejected) ... ok\ntest_naked_and_fenced_success (test_vision.ParserFinalTests.test_naked_and_fenced_success) ... ok\ntest_non_dict_rejected (test_vision.ParserFinalTests.test_non_dict_rejected) ... ok\ntest_excludes_hidden_fields (test_vision.PromptTests.test_excludes_hidden_fields) ... ok\ntest_frames_strip_extra (test_vision.PromptTests.test_frames_strip_extra) ... ok\ntest_validates_context (test_vision.PromptTests.test_validates_context) ... ok\ntest_bad_schema (test_vision.QwenTests.test_bad_schema) ... ok\ntest_budget_charge_on_http_error (test_vision.QwenTests.test_budget_charge_on_http_error) ... ok\ntest_success (test_vision.QwenTests.test_success) ... ok\ntest_boxes (test_vision.VerdictTests.test_boxes) ... ok\ntest_null_and_bool_rejections (test_vision.VerdictTests.test_null_and_bool_rejections) ... ok\n\n----------------------------------------------------------------------\nRan 31 tests in 0.008s\n\nOK\n",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "891ed380f79df2fe509aa8918cbbd1bb9e6ff140c123ebd824ca3ed1c4233da9"
+  }
+}

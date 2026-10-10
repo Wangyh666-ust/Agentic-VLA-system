@@ -83,6 +83,10 @@ class SensorPort:
     def read_robot(self):
         return jh.read_robot_state(self.env)
 
+    def home_screen(self, waypoints):
+        from scene_demo import joint_home as jh
+        return jh.screen_joint_path(self.env, self.reference, waypoints)
+
     def close(self):
         if not self._started:
             return

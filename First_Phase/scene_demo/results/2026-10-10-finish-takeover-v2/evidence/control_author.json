@@ -1,0 +1,173 @@
+{
+  "actual_deepseek_calls": 3,
+  "model_requested": "deepseek-flash",
+  "request_sha256": "a5523e2a8aafdbbd8816a9e5dcfa145802e01aa8fb2cc8d6edb2f9a62163f36b",
+  "before_sources": {
+    "First_Phase/scene_demo/finish_v1/control.py": "077f4728b11b032c447691d43c7fabd502b268e2dc638ff44a10f735e1faa75b",
+    "First_Phase/scene_demo/finish_v1/sensors.py": "87110be98b2186383e645231b8e728d085c7edf79f50f273f2e0855fc3c8c83a",
+    "First_Phase/scene_demo/finish_v1/tests/test_core.py": "0afcce0cb8a2ce1de01454093a12a52117ec49b585dedfa6c979a3b59e91fb40"
+  },
+  "gpt_design": "restore original streaming home loop and release-withdrawal sequence; fixed full six-section task",
+  "new_physical_actions": 0,
+  "new_qwen_calls": 0,
+  "applied": true,
+  "http_status": 200,
+  "model": "deepseek-flash",
+  "usage": {
+    "input_tokens": 6960,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 4228,
+    "service_tier": "standard"
+  },
+  "stop_reason": "end_turn",
+  "response_sha256": "6580c191b67143b1b52a0b9cd7b964e4978e0b488e4aa6d93f9eb66bbd1a5414",
+  "failure": "('old match not unique', 'First_Phase/scene_demo/finish_v1/control.py')",
+  "calls": [
+    {
+      "actual_deepseek_calls": 1,
+      "model_requested": "deepseek-flash",
+      "request_sha256": "a5523e2a8aafdbbd8816a9e5dcfa145802e01aa8fb2cc8d6edb2f9a62163f36b",
+      "before_sources": {
+        "First_Phase/scene_demo/finish_v1/control.py": "077f4728b11b032c447691d43c7fabd502b268e2dc638ff44a10f735e1faa75b",
+        "First_Phase/scene_demo/finish_v1/sensors.py": "87110be98b2186383e645231b8e728d085c7edf79f50f273f2e0855fc3c8c83a",
+        "First_Phase/scene_demo/finish_v1/tests/test_core.py": "0afcce0cb8a2ce1de01454093a12a52117ec49b585dedfa6c979a3b59e91fb40"
+      },
+      "gpt_design": "restore original streaming home loop and release-withdrawal sequence; fixed full six-section task",
+      "new_physical_actions": 0,
+      "new_qwen_calls": 0,
+      "applied": false,
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "usage": {
+        "input_tokens": 6960,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 4228,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "response_sha256": "6580c191b67143b1b52a0b9cd7b964e4978e0b488e4aa6d93f9eb66bbd1a5414",
+      "failure": "('old match not unique', 'First_Phase/scene_demo/finish_v1/control.py')"
+    },
+    {
+      "call_index": 2,
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "usage": {
+        "input_tokens": 2662,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 1813,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "7f1f0f5c3a204b7b9f1940793cc7d8750ce87a71450a97e79c881dd5183b62a1",
+      "response_sha256": "1a0e3036424521a822a74db09368cb0d594d1de3f1afbeff6458b1310eb82ea0",
+      "request_path": "First_Phase\\tmp\\takeover_v2_control_fix_request.json",
+      "response_path": "First_Phase\\tmp\\takeover_v2_control_fix_response.json",
+      "applied": true,
+      "template_assisted": true,
+      "before_sha256": "077f4728b11b032c447691d43c7fabd502b268e2dc638ff44a10f735e1faa75b",
+      "after_sha256": "8b9734f6e78fb87992fa2b1d1e18cee186db9e12b884e740c0810844b7dfb663",
+      "function_text_sha256": "9d226723931780bffd2541214984f8a252a0c3700011b4945edf851278010685"
+    },
+    {
+      "call_index": 3,
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "usage": {
+        "input_tokens": 406,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 131,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_path": "First_Phase\\tmp\\takeover_v2_control_release_request.json",
+      "response_path": "First_Phase\\tmp\\takeover_v2_control_release_response.json",
+      "request_sha256": "470e6928a74ac74238b06fe7bbee535cd74b681ceb90af9f7798358b40548686",
+      "response_sha256": "8181507e11c6957be7a16cb9447f72571860b9012cb91b05cd65a8b8fe9b0eaa",
+      "applied": true,
+      "purpose": "fix known place versus turn release acceptance and unconditional withdrawal",
+      "before_sha256": "8b9734f6e78fb87992fa2b1d1e18cee186db9e12b884e740c0810844b7dfb663",
+      "after_sha256": "eca7beb76af529ce777c51ccaa0ece684eb57ee313a1aeb507f4a27a5f78dbf4"
+    }
+  ],
+  "accepted_first_response_edits": [
+    {
+      "edit_index": 4,
+      "path": "First_Phase/scene_demo/finish_v1/sensors.py",
+      "before_sha256": "87110be98b2186383e645231b8e728d085c7edf79f50f273f2e0855fc3c8c83a",
+      "after_sha256": "934d281cb619e81a670f455e942b8f9be50c50add8b46645d92f5597dd569405"
+    },
+    {
+      "edit_index": 5,
+      "path": "First_Phase/scene_demo/finish_v1/tests/test_core.py",
+      "before_sha256": "0afcce0cb8a2ce1de01454093a12a52117ec49b585dedfa6c979a3b59e91fb40",
+      "after_sha256": "76fea966fded8dfdda2032350656b870508b3f1b0d185eed3ebdce2f3b7d8099"
+    },
+    {
+      "edit_index": 6,
+      "path": "First_Phase/scene_demo/finish_v1/tests/test_core.py",
+      "before_sha256": "76fea966fded8dfdda2032350656b870508b3f1b0d185eed3ebdce2f3b7d8099",
+      "after_sha256": "d0bced4cd8cad1b39ecc928d8165f09d6008969a59d22fec10474fc41b8af743"
+    }
+  ],
+  "rejected_first_response_edits": [
+    0,
+    1,
+    2,
+    3,
+    7,
+    8
+  ],
+  "software_tests_before_release_fix": {
+    "stage": "second_call",
+    "core": {
+      "chunk_id": "a440af",
+      "wall_time_seconds": 5.3669278,
+      "exit_code": 1,
+      "original_token_count": 599,
+      "output": "test_close_error_propagates (test_core.CoreTests.test_close_error_propagates) ... ok\ntest_cloud_transform_and_invalid_shape (test_core.CoreTests.test_cloud_transform_and_invalid_shape) ... ok\ntest_confirmation_separate_from_movement (test_core.CoreTests.test_confirmation_separate_from_movement) ... ok\ntest_first_segment_approach_blocked (test_core.CoreTests.test_first_segment_approach_blocked) ... ok\ntest_home_approach_plus_five_posts (test_core.CoreTests.test_home_approach_plus_five_posts) ... ok\ntest_home_screen_blocked_zero_home_actions (test_core.CoreTests.test_home_screen_blocked_zero_home_actions) ... ok\ntest_home_streaming_delayed_follow (test_core.CoreTests.test_home_streaming_delayed_follow) ... ok\ntest_incomplete_zero_actions_restored (test_core.CoreTests.test_incomplete_zero_actions_restored) ... ok\ntest_movement_global_budget (test_core.CoreTests.test_movement_global_budget) ... ok\ntest_release_requires_five_actual_posts (test_core.CoreTests.test_release_requires_five_actual_posts) ... ok\ntest_release_retreat_home_order (test_core.CoreTests.test_release_retreat_home_order) ... ok\ntest_turn_release_does_not_require_place_fields (test_core.CoreTests.test_turn_release_does_not_require_place_fields) ... FAIL\n\n======================================================================\nFAIL: test_turn_release_does_not_require_place_fields (test_core.CoreTests.test_turn_release_does_not_require_place_fields)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests/test_core.py\", line 150, in test_turn_release_does_not_require_place_fields\n    self.assertGreater(result[\"counts\"][phase], 0, result)\nAssertionError: 0 not greater than 0 : {'ready': False, 'ok': False, 'reason': 'release visual failed', 'counts': {'release': 5, 'movement': 0, 'confirm': 0, 'home': 0}, 'plan': None, 'checks': [{'target_visible': True, 'destination_visible': True, 'at_destination': None, 'supported': None, 'released': True, 'stable': None, 'operation_achieved': True, 'clear_of_target': True, 'decision': {'state': 'needs_retreat', 'allow_release': False, 'allow_retreat': True, 'reason': 'fixture'}}], 'restored': True, 'limitation': 'visible geometry only'}\n\n----------------------------------------------------------------------\nRan 12 tests in 0.017s\n\nFAILED (failures=1)\n"
+    },
+    "sensors": {
+      "chunk_id": "687087",
+      "wall_time_seconds": 6.0932554,
+      "exit_code": 1,
+      "original_token_count": 866,
+      "output": "FFFFFF                                                                   [100%]\n=================================== FAILURES ===================================\n___________________________ test_missing_eef_rejects ___________________________\n\n    def test_missing_eef_rejects():\n>       from sensors import SensorPort\nE       ModuleNotFoundError: No module named 'sensors'\n\nFirst_Phase/scene_demo/finish_v1/tests/test_sensors.py:7: ModuleNotFoundError\n________________________ test_scratch_uses_qpos_indexes ________________________\n\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77ba5774aa20>\ntmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_scratch_uses_qpos_indexes0')\n\n    def test_scratch_uses_qpos_indexes(monkeypatch, tmp_path):\n>       from sensors import SensorPort\nE       ModuleNotFoundError: No module named 'sensors'\n\nFirst_Phase/scene_demo/finish_v1/tests/test_sensors.py:24: ModuleNotFoundError\n__________________________ test_start_close_restores ___________________________\n\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77ba57785bb0>\ntmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_start_close_restores0')\n\n    def test_start_close_restores(monkeypatch, tmp_path):\n>       from sensors import SensorPort\nE       ModuleNotFoundError: No module named 'sensors'\n\nFirst_Phase/scene_demo/finish_v1/tests/test_sensors.py:58: ModuleNotFoundError\n__________________________ test_capture_rejects_bad_T __________________________\n\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77ba57786300>\ntmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_capture_rejects_bad_T0')\n\n    def test_capture_rejects_bad_T(monkeypatch, tmp_path):\n>       from sensors import SensorPort\nE       ModuleNotFoundError: No module named 'sensors'\n\nFirst_Phase/scene_demo/finish_v1/tests/test_sensors.py:92: ModuleNotFoundError\n__________________________ test_capture_writes_files ___________________________\n\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77ba57786ae0>\ntmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_capture_writes_files0')\n\n    def test_capture_writes_files(monkeypatch, tmp_path):\n>       from sensors import SensorPort\nE       ModuleNotFoundError: No module named 'sensors'\n\nFirst_Phase/scene_demo/finish_v1/tests/test_sensors.py:128: ModuleNotFoundError\n_________________________ test_start_failure_preserves _________________________\n\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77ba57787320>\ntmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_start_failure_preserves0')\n\n    def test_start_failure_preserves(monkeypatch, tmp_path):\n>       from sensors import SensorPort\nE       ModuleNotFoundError: No module named 'sensors'\n\nFirst_Phase/scene_demo/finish_v1/tests/test_sensors.py:181: ModuleNotFoundError\n=========================== short test summary info ============================\nFAILED First_Phase/scene_demo/finish_v1/tests/test_sensors.py::test_missing_eef_rejects\nFAILED First_Phase/scene_demo/finish_v1/tests/test_sensors.py::test_scratch_uses_qpos_indexes\nFAILED First_Phase/scene_demo/finish_v1/tests/test_sensors.py::test_start_close_restores\nFAILED First_Phase/scene_demo/finish_v1/tests/test_sensors.py::test_capture_rejects_bad_T\nFAILED First_Phase/scene_demo/finish_v1/tests/test_sensors.py::test_capture_writes_files\nFAILED First_Phase/scene_demo/finish_v1/tests/test_sensors.py::test_start_failure_preserves\n6 failed in 0.73s\n"
+    },
+    "tests_origin": "GPT fixed acceptance design; native worker mechanical implementation",
+    "physical_actions": 0,
+    "qwen_calls": 0
+  },
+  "software_tests_final": {
+    "core": {
+      "chunk_id": "ad7054",
+      "wall_time_seconds": 3.4154118,
+      "exit_code": 0,
+      "original_token_count": 334,
+      "output": "test_close_error_propagates (test_core.CoreTests.test_close_error_propagates) ... ok\ntest_cloud_transform_and_invalid_shape (test_core.CoreTests.test_cloud_transform_and_invalid_shape) ... ok\ntest_confirmation_separate_from_movement (test_core.CoreTests.test_confirmation_separate_from_movement) ... ok\ntest_first_segment_approach_blocked (test_core.CoreTests.test_first_segment_approach_blocked) ... ok\ntest_home_approach_plus_five_posts (test_core.CoreTests.test_home_approach_plus_five_posts) ... ok\ntest_home_screen_blocked_zero_home_actions (test_core.CoreTests.test_home_screen_blocked_zero_home_actions) ... ok\ntest_home_streaming_delayed_follow (test_core.CoreTests.test_home_streaming_delayed_follow) ... ok\ntest_incomplete_zero_actions_restored (test_core.CoreTests.test_incomplete_zero_actions_restored) ... ok\ntest_movement_global_budget (test_core.CoreTests.test_movement_global_budget) ... ok\ntest_release_requires_five_actual_posts (test_core.CoreTests.test_release_requires_five_actual_posts) ... ok\ntest_release_retreat_home_order (test_core.CoreTests.test_release_retreat_home_order) ... ok\ntest_turn_release_does_not_require_place_fields (test_core.CoreTests.test_turn_release_does_not_require_place_fields) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.011s\n\nOK\n",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/mnt/d/FYP/First_Phase /home/yhwang/fyp/libero_demo/venv/bin/python -B -m unittest discover -s /mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests -p test_core.py -v"
+    },
+    "sensors": {
+      "chunk_id": "e0cdfe",
+      "wall_time_seconds": 4.4954186,
+      "exit_code": 0,
+      "original_token_count": 25,
+      "output": "......                                                                   [100%]\n6 passed in 0.97s\n",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/mnt/d/FYP/First_Phase:/mnt/d/FYP/First_Phase/scene_demo/finish_v1 /home/yhwang/fyp/libero_demo/venv/bin/python -B -m pytest /mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests/test_sensors.py -q -p no:cacheprovider"
+    },
+    "tests_origin": "GPT fixed acceptance design; native worker mechanical implementation",
+    "sensor_first_failure_reason": "Parent-specified initial PYTHONPATH omitted the direct sensors module directory; corrected command was explicitly authorized. No sensors test source/expectations changed.",
+    "physical_actions": 0,
+    "qwen_calls": 0
+  },
+  "final_source_sha256": {
+    "First_Phase/scene_demo/finish_v1/control.py": "eca7beb76af529ce777c51ccaa0ece684eb57ee313a1aeb507f4a27a5f78dbf4",
+    "First_Phase/scene_demo/finish_v1/sensors.py": "934d281cb619e81a670f455e942b8f9be50c50add8b46645d92f5597dd569405",
+    "First_Phase/scene_demo/finish_v1/tests/test_core.py": "0cc1381a866ae49fef17a19fd91affe6dc77f610e4073fbd7e65e0ac0257f4a5"
+  },
+  "syntax_compile": "3 files compiled in memory; no bytecode written"
+}

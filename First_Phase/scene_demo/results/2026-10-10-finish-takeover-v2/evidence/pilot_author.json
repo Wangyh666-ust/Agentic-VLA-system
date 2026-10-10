@@ -1,0 +1,50 @@
+{
+  "http_status": 200,
+  "model": "deepseek-flash",
+  "usage": {
+    "input_tokens": 5172,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 3992,
+    "service_tier": "standard"
+  },
+  "stop_reason": "end_turn",
+  "actual_calls": 1,
+  "request_sha256": "4197d3522914eaf459c978b429985727feb917bfbec617689bb3fad36c27900c",
+  "response_sha256": "32c1b33d513c09f4d9af2353af2dbccbe6020c0a2a70f81f348227e60b024a89",
+  "source_before_sha256": {
+    "First_Phase/scene_demo/finish_v1/pilot.py": "84b4238f8e5e37f3c22ebfcb12ea4818b1f720ff9e81ba6d1e3a1448b7b47633",
+    "First_Phase/scene_demo/finish_v1/tests/test_pilot.py": "1e35ce0cfe03c02b896c20295838614c31e9d21c48039156d2ba3897a49050c9"
+  },
+  "status": "applied",
+  "edits_count": 11,
+  "source_after_sha256": {
+    "First_Phase/scene_demo/finish_v1/pilot.py": "ed3f5f93a32bec28ca938a36bbce08703b58ec9da8a499ae9fbd0d0cde38d7f0",
+    "First_Phase/scene_demo/finish_v1/tests/test_pilot.py": "d005ed901c120b4a05c547e4313b7c53d09c4657918a1b7ea81c981bba3242a2"
+  },
+  "mechanical_runner_tests": {
+    "origin": "GPT-defined two actual runner.run integration tests; worker mechanical append, no new DeepSeek call",
+    "new_model_calls": 0,
+    "tests_sha256": "97496453168d2e5425bc09d07d8abf1c39b65e030515642b77cedccd06078068",
+    "command": [
+      "wsl.exe",
+      "-e",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests",
+      "-p",
+      "test_pilot.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "[case-begin] case1\n[case-end] case1 status=blocked\n[case-begin] case2\n[case-end] case2 status=blocked\n[case-begin] case0\n[case-end] case0 status=blocked\n",
+    "stderr": "test_compute_unique_actual_streak (test_pilot.TestPureHelpers.test_compute_unique_actual_streak) ... ok\ntest_compute_unique_actual_streak_rejects_duplicate (test_pilot.TestPureHelpers.test_compute_unique_actual_streak_rejects_duplicate) ... ok\ntest_dedup_last_n_ordered_dedups_timestamp (test_pilot.TestPureHelpers.test_dedup_last_n_ordered_dedups_timestamp) ... ok\ntest_eligible_branch_uses_allow_helper (test_pilot.TestPureHelpers.test_eligible_branch_uses_allow_helper) ... ok\ntest_eval_gold_predicates_missing_key_raises (test_pilot.TestPureHelpers.test_eval_gold_predicates_missing_key_raises) ... ok\ntest_fake_runner_slicing (test_pilot.TestPureHelpers.test_fake_runner_slicing) ... ok\ntest_false_goal_predicate_is_not_unknown (test_pilot.TestPureHelpers.test_false_goal_predicate_is_not_unknown) ... ok\ntest_negative_routing (test_pilot.TestPureHelpers.test_negative_routing) ... ok\ntest_negative_routing_all_fixed_states (test_pilot.TestPureHelpers.test_negative_routing_all_fixed_states) ... ok\ntest_no_phantom_state_or_bare_sha_call (test_pilot.TestPureHelpers.test_no_phantom_state_or_bare_sha_call) ... ok\ntest_parse_args_defaults_and_bounds (test_pilot.TestPureHelpers.test_parse_args_defaults_and_bounds) ... ok\ntest_parse_args_rejects_bad_bounds (test_pilot.TestPureHelpers.test_parse_args_rejects_bad_bounds) ... usage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index must be between 0 and 4\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --max-qwen-calls must be between 1 and 18\nusage: python -m unittest [-h] --proposal PROPOSAL --inputs INPUTS --output\n                          OUTPUT [--limit LIMIT] [--start-index START_INDEX]\n                          [--max-qwen-calls MAX_QWEN_CALLS]\npython -m unittest: error: --start-index + --limit must not exceed 5\nok\ntest_predicate_key (test_pilot.TestPureHelpers.test_predicate_key) ... ok\ntest_preflight_source_validation_with_tempfile (test_pilot.TestPureHelpers.test_preflight_source_validation_with_tempfile) ... ok\ntest_run_case_source_reconciliation (test_pilot.TestPureHelpers.test_run_case_source_reconciliation) ... ok\ntest_run_slice_executes_only_indices_one_and_two (test_pilot.TestPureHelpers.test_run_slice_executes_only_indices_one_and_two) ... ok\ntest_run_stops_remaining_after_expected_retreat_not_executed (test_pilot.TestPureHelpers.test_run_stops_remaining_after_expected_retreat_not_executed) ... ok\ntest_sensor_frames_list_existing_merged (test_pilot.TestPureHelpers.test_sensor_frames_list_existing_merged) ... ok\ntest_sensor_frames_list_orders_and_sets_frame (test_pilot.TestPureHelpers.test_sensor_frames_list_orders_and_sets_frame) ... ok\ntest_should_stop_after_case_eligible_satisfied (test_pilot.TestPureHelpers.test_should_stop_after_case_eligible_satisfied) ... ok\ntest_should_stop_after_case_eligible_untriggered (test_pilot.TestPureHelpers.test_should_stop_after_case_eligible_untriggered) ... ok\ntest_should_stop_after_case_noneligible_zero_not_failure (test_pilot.TestPureHelpers.test_should_stop_after_case_noneligible_zero_not_failure) ... ok\ntest_should_stop_after_case_unknown (test_pilot.TestPureHelpers.test_should_stop_after_case_unknown) ... ok\ntest_takeover_metrics_both_positive (test_pilot.TestPureHelpers.test_takeover_metrics_both_positive) ... ok\ntest_takeover_metrics_missing_release (test_pilot.TestPureHelpers.test_takeover_metrics_missing_release) ... ok\ntest_takeover_metrics_missing_retreat (test_pilot.TestPureHelpers.test_takeover_metrics_missing_retreat) ... ok\ntest_takeover_metrics_negative_zero_not_failure (test_pilot.TestPureHelpers.test_takeover_metrics_negative_zero_not_failure) ... ok\ntest_takeover_metrics_noneligible_none (test_pilot.TestPureHelpers.test_takeover_metrics_noneligible_none) ... ok\ntest_turn_ready_real_gold_layer_home_outside (test_pilot.TestPureHelpers.test_turn_ready_real_gold_layer_home_outside) ... ok\ntest_turn_ready_without_static_entry (test_pilot.TestPureHelpers.test_turn_ready_without_static_entry) ... ok\ntest_validate_context_origin_bad (test_pilot.TestPureHelpers.test_validate_context_origin_bad) ... ok\ntest_validate_context_origin_ok (test_pilot.TestPureHelpers.test_validate_context_origin_ok) ... ok\n\n----------------------------------------------------------------------\nRan 32 tests in 0.171s\n\nOK\n"
+  }
+}

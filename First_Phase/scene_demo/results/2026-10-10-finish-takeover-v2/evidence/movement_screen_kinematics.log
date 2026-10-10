@@ -1,0 +1,46 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+WARNING:robosuite_logs:No private macro file found!
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+WARNING:robosuite_logs:It is recommended to use a private macro file
+[robosuite WARNING] To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+WARNING:robosuite_logs:To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+SceneError: invalid_fixture: could not build the LIBERO environment from '/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl': Current sensor for observable agentview_image is invalid.
+{"status": "unknown", "new_physics_actions": 0, "new_qwen_calls": 0, "new_deepseek_calls": 0, "forbidden_attempts": ["MjSim.render"], "limitation": "Saved visible geometry and robot CAD only; pixel object identity is unknown.", "suppressed_constructor_dynamics": {"mujoco.mj_step1": 1}, "actual_dynamics_function_executions": 0, "model_initialization_note": "mj_resetData permitted only for CAD model initialization; all dynamics calls suppressed; saved RGBD alone provides obstacles.", "saved_input_files": [{"path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/result.json", "sha256": "e63fd5eac37756a32cc4a2693399175947a4cf2323a291a508abcccd63c22bf8"}, {"path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/helper.jsonl", "sha256": "27b3f8d1253393fbfcd317172840646008820d96558ab5fc502dec67885b5ef3"}, {"path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000275_agentview.json", "sha256": "c1386c19462cc94bec364fa2fc03bdbdf832bb28ba30db0ad07b35a68bdf9b43"}, {"path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000276_wrist.json", "sha256": "d63e6b794005c5c0d7d28ae411ef3493f43457070eb7358382ac7658ba942dc1"}, {"path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000275_agentview.npy", "sha256": "648c00239bb30eea64d2151d0175951d58e0c209342fae2792ea1980fa667bf4"}, {"path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000276_wrist.npy", "sha256": "1c1219f2581314e3d0bee4ed3e40bfb86fd0d192533e5644421e0aea80bbccd3"}, {"path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000275_agentview.png", "sha256": "c26e58a9818270133391153ed173252fadfccfdd890d0b415a4e628a567cc479"}, {"path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000276_wrist.png", "sha256": "771e25804fbc9f6ec50a988e125246d0c7872453998417d52db0c433b3df3179"}], "error": "SceneError: invalid_fixture: could not build the LIBERO environment from '/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl': Current sensor for observable agentview_image is invalid.", "traceback": "Traceback (most recent call last):\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/utils/observables.py\", line 377, in _check_sensor_validity\n    self._data_shape = np.array(self._sensor({})).shape\n                                ^^^^^^^^^^^^^^^^\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/environments/robot_env.py\", line 404, in camera_rgb\n    img = self.sim.render(\n          ^^^^^^^^^^^^^^^^\n  File \"/mnt/d/FYP/First_Phase/tmp/takeover_v2_screen_kinematics.py\", line 21, in blocked\n    raise RuntimeError('offline forbidden call: ' + name)\nRuntimeError: offline forbidden call: MjSim.render\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/service.py\", line 642, in _ensure_env\n    self._env = OffScreenRenderEnv(\n                ^^^^^^^^^^^^^^^^^^^\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/libero/libero/envs/env_wrapper.py\", line 161, in __init__\n    super().__init__(**kwargs)\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/libero/libero/envs/env_wrapper.py\", line 56, in __init__\n    self.env = TASK_MAPPING[self.problem_name](\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/libero/libero/envs/problems/libero_tabletop_manipulation.py\", line 40, in __init__\n    super().__init__(bddl_file_name, *args, **kwargs)\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/libero/libero/envs/bddl_base_domain.py\", line 137, in __init__\n    super().__init__(\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/environments/manipulation/manipulation_env.py\", line 162, in __init__\n    super().__init__(\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/environments/robot_env.py\", line 214, in __init__\n    super().__init__(\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/environments/base.py\", line 149, in __init__\n    self._observables = self._setup_observables()\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/libero/libero/envs/bddl_base_domain.py\", line 436, in _setup_observables\n    observables = super()._setup_observables()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/environments/robot_env.py\", line 361, in _setup_observables\n    observables[name] = Observable(\n                        ^^^^^^^^^^^\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/utils/observables.py\", line 206, in __init__\n    self._check_sensor_validity()\n  File \"/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/utils/observables.py\", line 380, in _check_sensor_validity\n    raise ValueError(\"Current sensor for observable {} is invalid.\".format(self.name))\nValueError: Current sensor for observable agentview_image is invalid.\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/tmp/takeover_v2_screen_kinematics.py\", line 129, in <module>\n    env._ensure_env()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/service.py\", line 656, in _ensure_env\n    raise SceneError(\nscene_demo.service.SceneError: invalid_fixture: could not build the LIBERO environment from '/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl': Current sensor for observable agentview_image is invalid.\n"}
+Exception ignored in: <function MjRenderContext.__del__ at 0x741d6f486480>
+Traceback (most recent call last):
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/utils/binding_utils.py", line 199, in __del__
+    self.gl_ctx.free()
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/renderers/context/egl_context.py", line 150, in free
+    EGL.eglDestroyContext(EGL_DISPLAY, self._context)
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/OpenGL/platform/baseplatform.py", line 487, in __call__
+    return self(*args, **named)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/OpenGL/error.py", line 230, in glCheckError
+    raise self._errorClass(
+OpenGL.raw.EGL._errors.EGLError: EGLError(
+	err = EGL_NOT_INITIALIZED,
+	baseOperation = eglDestroyContext,
+	cArguments = (
+		<OpenGL._opaque.EGLDisplay_pointer object at 0x741d81038250>,
+		<OpenGL._opaque.EGLContext_pointer object at 0x741d81039150>,
+	),
+	result = 0
+)
+Exception ignored in: <function EGLGLContext.__del__ at 0x741d6f486340>
+Traceback (most recent call last):
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/renderers/context/egl_context.py", line 155, in __del__
+    self.free()
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/renderers/context/egl_context.py", line 150, in free
+    EGL.eglDestroyContext(EGL_DISPLAY, self._context)
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/OpenGL/error.py", line 230, in glCheckError
+    raise self._errorClass(
+OpenGL.raw.EGL._errors.EGLError: EGLError(
+	err = EGL_NOT_INITIALIZED,
+	baseOperation = eglDestroyContext,
+	cArguments = (
+		<OpenGL._opaque.EGLDisplay_pointer object at 0x741d81038250>,
+		<OpenGL._opaque.EGLContext_pointer object at 0x741d81039150>,
+	),
+	result = 0
+)
