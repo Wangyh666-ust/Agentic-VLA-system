@@ -1,5 +1,5 @@
 import numpy as np
-from .geometry import clouds, screen, plan_retreat
+from .geometry import clouds, screen, plan_retreat, screen_shapes
 from scene_demo import joint_home as jh
 
 
@@ -14,7 +14,7 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit):
         'object_release_not_yet_confirmed': False
     }
     v = initial_verdict
-    caps = {'release': 20, 'movement': 80, 'confirm': 20, 'home': 360}
+    caps = {'release': 20, 'movement': 120, 'confirm': 20, 'home': 360}
 
     def act(ph, q, f=None, command_kind=None):
         if r['counts'][ph] >= caps[ph]:
@@ -45,9 +45,9 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit):
             q = np.asarray(q)
             n = max(1, int(np.ceil(np.max(np.abs(q - previous)) / delta)))
             for alpha in np.linspace(0, 1, n + 1)[1:]:
-                poses.append(port.robot_spheres(previous + (q - previous) * alpha))
+                poses.append(port.robot_shapes(previous + (q - previous) * alpha))
             previous = q
-        report = dict(screen(clouds(fresh['frames']), port.robot_spheres(actualq), poses))
+        report = dict(screen_shapes(port.obstacle_cloud(fresh['frames']), port.robot_shapes(actualq), poses))
         report['frames'] = fresh['frames']
         if 'depth_path' in fresh:
             report['depth_path'] = fresh['depth_path']
@@ -155,7 +155,7 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit):
             i = 1
             while i < len(qs):
                 while np.max(np.abs(np.asarray(port.read_robot()['arm_qpos']) - np.asarray(qs[i]))) > 0.004:
-                    if r['counts']['movement'] >= 80:
+                    if r['counts']['movement'] >= 120:
                         r['reason'] = 'movement budget'
                         return r
                     st = act('movement', qs[i])
@@ -198,9 +198,83 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit):
                 return r
             v, d = verify()
 
-        if d['state'] != 'complete' or v.get('released') is not True:
+        r['home_entry'] = {
+            'visible_semantics': False,
+            'measured_open': False,
+            'settled': False,
+            'task_complete_before_home': False,
+            'label': 'safety eligibility under review; task completion pending final verification',
+        }
+        semantic_ok = False
+        try:
+            if v.get('target_visible') is True:
+                if op == 'place':
+                    semantic_ok = (
+                        v.get('destination_visible') is True
+                        and v.get('at_destination') is True
+                        and v.get('supported') is True
+                        and v.get('stable') is not False
+                    )
+                elif op == 'turn':
+                    semantic_ok = (
+                        v.get('operation_achieved') is True
+                        and v.get('stable') is not False
+                    )
+        except (TypeError, ValueError, KeyError):
+            semantic_ok = False
+        r['home_entry']['visible_semantics'] = bool(semantic_ok)
+        decided_complete = False
+        try:
+            decided_complete = d['state'] == 'complete' and v.get('released') is True
+        except (TypeError, ValueError, KeyError):
+            decided_complete = False
+        r['home_entry']['task_complete_before_home'] = bool(decided_complete)
+
+        actuator_ok = True
+        try:
+            st = port.read_robot()
+            arm_qpos = np.asarray(st['arm_qpos'], dtype=float)
+            arm_qvel = np.asarray(st['arm_qvel'], dtype=float)
+            finger_qpos = np.asarray(st['finger_qpos'], dtype=float)
+            finger_home = np.asarray(ref['finger_home'], dtype=float)
+            if not (
+                arm_qpos.shape == (7,)
+                and arm_qvel.shape == (7,)
+                and finger_qpos.shape == (2,)
+                and finger_home.shape == (2,)
+                and np.all(np.isfinite(arm_qpos))
+                and np.all(np.isfinite(arm_qvel))
+                and np.all(np.isfinite(finger_qpos))
+                and np.all(np.isfinite(finger_home))
+            ):
+                actuator_ok = False
+            else:
+                measured_open = bool(
+                    np.max(np.abs(finger_qpos - finger_home)) <= 0.002
+                )
+                settled = bool(np.max(np.abs(arm_qvel)) <= 0.02)
+                r['home_entry']['measured_open'] = measured_open
+                r['home_entry']['settled'] = settled
+                if not (measured_open and settled):
+                    actuator_ok = False
+        except (TypeError, ValueError, KeyError):
+            actuator_ok = False
+        if not actuator_ok:
+            r['reason'] = 'home recovery actuator gate'
+            return r
+
+        if not semantic_ok:
             r['reason'] = 'not eligible for home'
             return r
+
+        actualq = np.asarray(port.read_robot()['arm_qpos'])
+        clearance_screen = route_screen([actualq], 0.003)
+        r['home_entry']['clearance_screen'] = clearance_screen
+        clearance_ok = clearance_screen.get('ok') if isinstance(clearance_screen, dict) else None
+        if clearance_ok is not True:
+            r['reason'] = 'home recovery clearance gate'
+            return r
+
 
         actualq = np.asarray(port.read_robot()['arm_qpos'])
         points = jh.joint_waypoints(actualq, ref['homeq'])

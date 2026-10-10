@@ -1,0 +1,96 @@
+{
+  "actual_deepseek_calls": 1,
+  "http_status": 200,
+  "model": "deepseek-flash",
+  "usage": {
+    "input_tokens": 2176,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 545,
+    "service_tier": "standard"
+  },
+  "stop_reason": "end_turn",
+  "request_sha256": "9d78de1ad2ba7dacc8d70165d1375585f3ec21926a43b6ac3ff1ef4cc889072d",
+  "response_sha256": "262bd42f08d229547086515e1ca415bac6632be0754ca06eca3c0f5fd13bdedf",
+  "request_path": "First_Phase\\tmp\\shape_home_observation_request.json",
+  "response_path": "First_Phase\\tmp\\shape_home_observation_response.json",
+  "applied": true,
+  "design": "GPT specified observation and budget change; DS exact implementation; worker mechanical execution",
+  "physical_actions": 0,
+  "qwen_calls": 0,
+  "source_sha256": {
+    "First_Phase\\scene_demo\\finish_v1\\control.py": {
+      "before": "b5da89a3b4191848945bb0e903aec5ff3e9f5ba7b2997a08eca88f479aaf3493",
+      "after": "30e8787eb4877647a101903b0e22711947a9d1bd66a59b22af1f682ac1d7e56f"
+    },
+    "First_Phase\\scene_demo\\finish_v1\\sensors.py": {
+      "before": "4593b443f72083e3b259b2b360a04b2f9f943570b4b9e6d1c5dc7b3123dfe457",
+      "after": "403576acee777920f98c58d51cccdcde4b1c818ebf24dd3db71efbf511b204bf"
+    },
+    "First_Phase\\scene_demo\\finish_v1\\pilot.py": {
+      "before": "8f423fe2f501409fbe5e061a5073cc1ac06ea679b2cf007394246d389354d19c",
+      "after": "3a5b9319df692f308b2813441bdb5c24c5dfb6959eb51a7c94d77e56ce5d30cc"
+    },
+    "First_Phase\\scene_demo\\finish_v1\\geometry.py": {
+      "before": "95876e5e50027b5e4985c2ba8e2bed8bdeaa6d8960fcfe75877f6ea48dedf2f0",
+      "after": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70"
+    }
+  },
+  "edits": [
+    {
+      "path": "First_Phase/scene_demo/finish_v1/sensors.py",
+      "old": "        out['robot'] = jh.read_robot_state(self.env)",
+      "new": "        if 'sideview' not in sim.model.camera_names:\n            raise RuntimeError('sideview camera missing')\n        self._count += 1\n        base = os.path.join(self.output_dir, 'cap%06d_sideview' % self._count)\n        rp = base + '.png'\n        side = sim.render(width=512, height=512, camera_name='sideview', depth=False)\n        side = np.asarray(side)[::-1]\n        Image.fromarray(side.astype(np.uint8)).save(rp)\n        out['verification_frames'] = [out['frames'][0], {'view': 'sideview', 'rgb_path': rp}]\n        out['robot'] = jh.read_robot_state(self.env)"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/pilot.py",
+      "old": "                    for fr in cap.get(\"frames\", []):",
+      "new": "                    for fr in cap.get('verification_frames', cap.get('frames', [])):"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/geometry.py",
+      "old": "    for dist in (0.02, 0.04, 0.06):",
+      "new": "    for dist in (0.04, 0.06):"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/control.py",
+      "old": "    caps = {'release': 20, 'movement': 80, 'confirm': 20, 'home': 360}",
+      "new": "    caps = {'release': 20, 'movement': 120, 'confirm': 20, 'home': 360}"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/control.py",
+      "old": "                    if r['counts']['movement'] >= 80:",
+      "new": "                    if r['counts']['movement'] >= 120:"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/pilot.py",
+      "old": "            caps = {\"release\": 20, \"movement\": 80, \"confirm\": 20, \"home\": 360}",
+      "new": "            caps = {\"release\": 20, \"movement\": 120, \"confirm\": 20, \"home\": 360}"
+    }
+  ],
+  "application_diff_path": "First_Phase\\tmp\\shape_home_observation_applied.diff",
+  "application_diff_sha256": "5bfeb267fdedbcbf57a1719586b376e4ec708b3be7a4f3bb46cf11f49627bce5",
+  "home_bytes_equal": true,
+  "software_tests": {
+    "chunk_id": "5ffd98",
+    "wall_time_seconds": 4.772368,
+    "exit_code": 0,
+    "original_token_count": 41,
+    "output": "................................................................\n----------------------------------------------------------------------\nRan 64 tests in 0.044s\n\nOK\n",
+    "command": "wsl --exec env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/mnt/d/FYP/First_Phase /home/yhwang/fyp/libero_demo/venv/bin/python -B -m unittest scene_demo.finish_v1.tests.test_vision scene_demo.finish_v1.tests.test_takeover_vision scene_demo.finish_v1.tests.test_core scene_demo.finish_v1.tests.test_release_regression scene_demo.finish_v1.tests.test_shape_screen",
+    "test_count": 64,
+    "tests_origin": "GPT specified candidate-distance regression and precise old budget fixture120/131; worker mechanically applied. DS authored production edits.",
+    "physical_actions": 0,
+    "qwen_calls": 0
+  },
+  "final_source_sha256": {
+    "sensors.py": "403576acee777920f98c58d51cccdcde4b1c818ebf24dd3db71efbf511b204bf",
+    "pilot.py": "3a5b9319df692f308b2813441bdb5c24c5dfb6959eb51a7c94d77e56ce5d30cc",
+    "geometry.py": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70",
+    "control.py": "30e8787eb4877647a101903b0e22711947a9d1bd66a59b22af1f682ac1d7e56f",
+    "tests/test_core.py": "7b5dbeae899a848d7af0d6cfdfc636b3743e09824cf77042f2402c72a34680c3",
+    "tests/test_shape_screen.py": "b46f3ad9ce02bea48621424a398d5ce23f49a3e0ea953b6c997fd4dff29ecbf3"
+  },
+  "syntax_compile": "6 changed files compiled in memory",
+  "budget_interface_binding": "movement120 consistent in control caps, movement loop and pilot wrapper; other caps unchanged"
+}

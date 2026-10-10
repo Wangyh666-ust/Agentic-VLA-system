@@ -137,9 +137,19 @@ class SensorPort:
             Image.fromarray(rgb.astype(np.uint8)).save(rp)
             np.save(dp, dmap.astype(np.float32))
             with open(cp, 'w') as f:
-                json.dump({'K': K.tolist(), 'T': T.tolist(), 'view': out_view}, f)
+                json.dump({'K': K.tolist(), 'T': T.tolist(), 'view': out_view, 'pixel_center_offset': 0.5}, f)
             out['frames'].append({'view': out_view, 'rgb_path': rp, 'depth_path': dp,
-                                  'K': K.tolist(), 'T_world_camera': T.tolist()})
+                                  'K': K.tolist(), 'T_world_camera': T.tolist(),
+                                  'pixel_center_offset': 0.5})
+        if 'sideview' not in sim.model.camera_names:
+            raise RuntimeError('sideview camera missing')
+        self._count += 1
+        base = os.path.join(self.output_dir, 'cap%06d_sideview' % self._count)
+        rp = base + '.png'
+        side = sim.render(width=512, height=512, camera_name='sideview', depth=False)
+        side = np.asarray(side)[::-1]
+        Image.fromarray(side.astype(np.uint8)).save(rp)
+        out['verification_frames'] = [out['frames'][0], {'view': 'sideview', 'rgb_path': rp}]
         out['robot'] = jh.read_robot_state(self.env)
         sid = self._site_id()
         out['eef_position'] = np.asarray(robot.sim.data.site_xpos[sid], float).tolist()
@@ -160,6 +170,80 @@ class SensorPort:
         data.qpos[idx] = np.asarray(q, float)
         mujoco.mj_forward(raw, data)
         return raw, data
+
+    def _shape_bounds(self, raw, gid):
+        import mujoco
+        gt = raw.geom_type[gid]
+        size = np.asarray(raw.geom_size[gid], float)
+        if gt == mujoco.mjtGeom.mjGEOM_BOX:
+            h = size[:3]
+            lo = -h
+            hi = h
+        elif gt == mujoco.mjtGeom.mjGEOM_SPHERE:
+            r = float(size[0])
+            lo = np.array([-r, -r, -r], float)
+            hi = np.array([r, r, r], float)
+        elif gt == mujoco.mjtGeom.mjGEOM_CAPSULE:
+            r = float(size[0])
+            half = float(size[1])
+            lo = np.array([-r, -r, -r - half], float)
+            hi = np.array([r, r, r + half], float)
+        elif gt == mujoco.mjtGeom.mjGEOM_CYLINDER:
+            r = float(size[0])
+            half = float(size[1])
+            lo = np.array([-r, -r, -half], float)
+            hi = np.array([r, r, half], float)
+        elif gt == mujoco.mjtGeom.mjGEOM_MESH:
+            meshid = int(raw.geom_dataid[gid])
+            adr = int(raw.mesh_vertadr[meshid])
+            num = int(raw.mesh_vertnum[meshid])
+            vert = np.asarray(raw.mesh_vert[adr:adr + num], float)
+            lo = np.min(vert, axis=0)
+            hi = np.max(vert, axis=0)
+        elif gt == mujoco.mjtGeom.mjGEOM_ELLIPSOID:
+            h = size[:3]
+            lo = -h
+            hi = h
+        else:
+            raise RuntimeError('unsupported geom type for shape bounds')
+        if not np.all(np.isfinite(lo)) or not np.all(np.isfinite(hi)):
+            raise RuntimeError('bad shape bounds')
+        return lo, hi
+
+    def robot_shapes(self, q):
+        import mujoco
+        robot = self._robot_()
+        sim = robot.sim
+        mdl = sim.model
+        raw = mdl._model
+        rm = getattr(robot, 'robot_model', None)
+        gr = getattr(robot, 'gripper', None)
+        if rm is None or not hasattr(rm, 'contact_geoms'):
+            raise RuntimeError('robot_model.contact_geoms missing')
+        arm_names = list(rm.contact_geoms)
+        hand_names = list(gr.contact_geoms) if (gr is not None and hasattr(gr, 'contact_geoms')) else []
+        raw, rd = self._scratch(q)
+        out = []
+        for name, hand in [(n, False) for n in arm_names] + [(n, True) for n in hand_names]:
+            gid = mdl.geom_name2id(name)
+            if gid < 0:
+                raise RuntimeError('geom not found: ' + name)
+            lo, hi = self._shape_bounds(raw, gid)
+            half_extents = (hi - lo) / 2.0
+            local_center = (hi + lo) / 2.0
+            xmat = np.asarray(rd.geom_xmat[gid], float).reshape(3, 3)
+            xpos = np.asarray(rd.geom_xpos[gid], float)
+            center = xmat @ local_center + xpos
+            if not np.all(np.isfinite(center)) or not np.all(np.isfinite(xmat)) or not np.all(np.isfinite(half_extents)):
+                raise RuntimeError('bad shape for ' + name)
+            out.append({
+                'id': name,
+                'center': center.tolist(),
+                'rotation': xmat.tolist(),
+                'half_extents': half_extents.tolist(),
+                'hand': bool(hand),
+            })
+        return out
 
     def ik(self, target_xyz, orientation, seedq):
         import mujoco
@@ -240,3 +324,79 @@ class SensorPort:
             c = np.asarray(rd.geom_xpos[gid], float)
             out.append({'id': name, 'center': c.tolist(), 'radius': float(r), 'hand': bool(hand)})
         return out
+
+    def obstacle_cloud(self, frames):
+        import mujoco
+        import numpy as np
+        from .geometry import clouds, mesh_surface_distance, shape_distance
+        robot = self._robot_()
+        mdl = robot.sim.model
+        raw, rd = self._scratch(jh.read_robot_state(self.env)['arm_qpos'])
+        names = list(robot.robot_model.visual_geoms) + list(robot.gripper.visual_geoms)
+        geoms = []
+        for name in names:
+            gid = mdl.geom_name2id(name)
+            if gid < 0:
+                raise RuntimeError('geom not found: ' + name)
+            geoms.append((name, gid))
+        if not hasattr(self, '_mesh_surface_cache'):
+            self._mesh_surface_cache = {}
+        out = []
+        input_points = 0
+        self_mask_removed = 0
+        for frame in frames:
+            points = clouds([frame])
+            if points is None or len(points) == 0:
+                continue
+            points = np.asarray(points, dtype=float).reshape(-1, 3)
+            input_points += len(points)
+            mask = np.zeros(len(points), dtype=bool)
+            for name, gid in geoms:
+                lo, hi = self._shape_bounds(raw, gid)
+                rel = points - rd.geom_xpos[gid]
+                local = rel @ rd.geom_xmat[gid].reshape(3, 3)
+                cand = np.all((local >= lo - 0.003) & (local <= hi + 0.003), axis=1) & (~mask)
+                if not np.any(cand):
+                    continue
+                loc = local[cand]
+                gtype = raw.geom_type[gid]
+                if gtype == mujoco.mjtGeom.mjGEOM_MESH:
+                    if gid not in self._mesh_surface_cache:
+                        va = raw.mesh_vertadr[raw.geom_dataid[gid]]
+                        vn = raw.mesh_vertnum[raw.geom_dataid[gid]]
+                        fa = raw.mesh_faceadr[raw.geom_dataid[gid]]
+                        fn = raw.mesh_facenum[raw.geom_dataid[gid]]
+                        self._mesh_surface_cache[gid] = (
+                            raw.mesh_vert[va:va + vn].copy(),
+                            raw.mesh_face[fa:fa + fn].copy(),
+                        )
+                    verts, faces = self._mesh_surface_cache[gid]
+                    dist = mesh_surface_distance(loc, verts, faces)
+                elif gtype == mujoco.mjtGeom.mjGEOM_BOX:
+                    dist = np.abs(shape_distance(loc, {
+                        'center': [0, 0, 0],
+                        'rotation': np.eye(3).tolist(),
+                        'half_extents': raw.geom_size[gid].tolist(),
+                        'id': name,
+                        'hand': False,
+                    }))
+                elif gtype == mujoco.mjtGeom.mjGEOM_SPHERE:
+                    dist = np.abs(np.linalg.norm(loc, axis=1) - raw.geom_size[gid][0])
+                else:
+                    raise ValueError('unsupported primitive geom type: %s' % gtype)
+                hit = dist <= 0.003
+                if np.any(hit):
+                    idx = np.where(cand)[0][hit]
+                    mask[idx] = True
+            self_mask_removed += int(np.sum(mask))
+            kept = points[~mask]
+            if len(kept) > 0:
+                out.append(kept)
+        self.last_cloud_stats = {
+            'input_points': input_points,
+            'self_mask_removed': self_mask_removed,
+            'policy': 'CAD triangle surface <=3mm',
+        }
+        if not out:
+            return np.zeros((0, 3), dtype=float)
+        return np.concatenate(out, axis=0)

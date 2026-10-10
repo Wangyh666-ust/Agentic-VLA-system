@@ -52,6 +52,12 @@ class FakePort:
     def robot_spheres(self, q):
         return [{"id": "hand", "center": [0, 0, 0], "radius": .001, "hand": True}]
 
+    def robot_shapes(self, q):
+        return [{"id": "hand", "center": [0, 0, 0], "rotation": np.eye(3).tolist(), "half_extents": [.001, .001, .001], "hand": True}]
+
+    def obstacle_cloud(self, frames):
+        return np.array([[10., 10., 10.]])
+
     def close(self):
         self.closed = True
         if self.fail_close:
@@ -88,17 +94,17 @@ class CoreTests(unittest.TestCase):
 
     def test_movement_global_budget(self):
         port = FakePort()
-        path = [np.full(7, i * .01) for i in range(91)]
-        with patch.object(control, "plan_retreat", return_value={"ok": True, "waypoints": path}), patch.object(control, "clouds", return_value=np.array([[10, 10, 10]])), patch.object(control, "screen", return_value={"ok": True}):
+        path = [np.full(7, i * .01) for i in range(131)]
+        with patch.object(control, "plan_retreat", return_value={"ok": True, "waypoints": path}), patch.object(control, "screen_shapes", return_value={"ok": True}):
             result = self.run_case(port, "needs_retreat")
-        self.assertEqual(result["counts"], {"release": 0, "movement": 80, "confirm": 0, "home": 0})
+        self.assertEqual(result["counts"], {"release": 0, "movement": 120, "confirm": 0, "home": 0})
         self.assertEqual(result["reason"], "movement budget")
-        self.assertEqual(len(port.phases), 80)
+        self.assertEqual(len(port.phases), 120)
         self.assertTrue(port.closed)
 
     def test_confirmation_separate_from_movement(self):
         port = FakePort()
-        with patch.object(control, "plan_retreat", return_value={"ok": True, "waypoints": [np.zeros(7), np.full(7, .02)]}), patch.object(control, "clouds", return_value=np.array([[10, 10, 10]])), patch.object(control, "screen", return_value={"ok": True}):
+        with patch.object(control, "plan_retreat", return_value={"ok": True, "waypoints": [np.zeros(7), np.full(7, .02)]}), patch.object(control, "screen_shapes", return_value={"ok": True}):
             result = self.run_case(port, "needs_retreat")
         self.assertEqual(result["counts"], {"release": 0, "movement": 1, "confirm": 5, "home": 0})
         self.assertEqual(port.phases, ["movement"] + ["confirm"] * 5)
@@ -106,6 +112,7 @@ class CoreTests(unittest.TestCase):
 
     def test_home_approach_plus_five_posts(self):
         port = FakePort(np.full(7, .02))
+        port.f = np.asarray(port.reference['finger_home']).copy()
         with patch.object(control.jh, "home_metrics", side_effect=lambda ref, st: {"ready": np.max(np.abs(st["arm_qpos"])) < 1e-12}):
             result = self.run_case(port, "complete", "complete")
         self.assertEqual(result["counts"], {"release": 0, "movement": 0, "confirm": 0, "home": 6})
@@ -118,6 +125,7 @@ class CoreTests(unittest.TestCase):
 
     def test_home_streaming_delayed_follow(self):
         port = FakePort(np.full(7, .02), follow=.25)
+        port.f = np.asarray(port.reference['finger_home']).copy()
         with patch.object(control.jh, "home_metrics", side_effect=lambda ref, st: {"ready": np.max(np.abs(st["arm_qpos"])) <= .002}):
             result = self.run_case(port, "complete", "complete")
         points = control.jh.joint_waypoints(np.full(7, .02), np.zeros(7))
@@ -135,7 +143,7 @@ class CoreTests(unittest.TestCase):
                 for key in ("at_destination", "supported", "stable"):
                     value[key] = None
         responses = iter(checks)
-        with patch.object(control, "plan_retreat", return_value={"ok": True, "waypoints": [np.zeros(7), np.full(7, .02)]}), patch.object(control, "clouds", return_value=np.array([[10, 10, 10]])), patch.object(control, "screen", return_value={"ok": True}), patch.object(control.jh, "home_metrics", side_effect=lambda ref, st: {"ready": np.max(np.abs(st["arm_qpos"])) < 1e-12}):
+        with patch.object(control, "plan_retreat", return_value={"ok": True, "waypoints": [np.zeros(7), np.full(7, .02)]}), patch.object(control, "screen_shapes", return_value={"ok": True}), patch.object(control.jh, "home_metrics", side_effect=lambda ref, st: {"ready": np.max(np.abs(st["arm_qpos"])) < 1e-12}):
             result = control.run_finish(port, {"current_subtask": {"operation": operation}}, initial, lambda context, value: value["decision"], lambda context, observations: next(responses), lambda row: None)
         return port, result
 
@@ -154,11 +162,58 @@ class CoreTests(unittest.TestCase):
 
     def test_home_screen_blocked_zero_home_actions(self):
         port = FakePort(np.full(7, .02), screen_ok=False)
+        port.f = np.asarray(port.reference['finger_home']).copy()
         result = self.run_case(port, "complete", "complete")
         self.assertEqual(result["counts"]["home"], 0)
         self.assertEqual(port.phases, [])
         self.assertEqual(result["reason"], "home screen blocked")
         self.assertTrue(port.closed)
+
+    def run_home_gate_case(self, final_state='complete', overrides=None, current_clear=True, opened=True):
+        port = FakePort()
+        if opened:
+            port.f = np.asarray(port.reference['finger_home']).copy()
+        post = verdict('unknown')
+        post.update(released=None, stable=None, clear_of_target=False)
+        post.update(overrides or {})
+        responses = iter([post, verdict(final_state)])
+        with patch.object(control, 'plan_retreat', return_value={'ok': True, 'waypoints': [np.zeros(7), np.full(7, .02)]}), patch.object(control, 'screen_shapes', return_value={'ok': current_clear, 'reason': 'clear' if current_clear else 'endpoint_hand_clear_fail'}), patch.object(control.jh, 'home_metrics', side_effect=lambda ref, st: {'ready': np.max(np.abs(st['arm_qpos'])) < 1e-12}):
+            result = control.run_finish(port, {'current_subtask': {'operation': 'place'}}, verdict('needs_retreat'), lambda context, value: value['decision'], lambda context, observations: next(responses), lambda row: None)
+        return port, result
+
+    def test_home_recovery_unknown_visual_then_final_complete(self):
+        port, result = self.run_home_gate_case()
+        self.assertGreater(result['counts']['home'], 0)
+        self.assertFalse(result['home_entry']['task_complete_before_home'])
+        self.assertTrue(result['home_entry']['measured_open'])
+        self.assertTrue(result['home_entry']['settled'])
+        self.assertTrue(result['home_entry']['clearance_screen']['ok'])
+        self.assertTrue(result['ready'])
+
+    def test_home_recovery_final_unknown_cannot_complete(self):
+        port, result = self.run_home_gate_case(final_state='unknown')
+        self.assertGreater(result['counts']['home'], 0)
+        self.assertFalse(result['ready'])
+        self.assertFalse(result['ok'])
+
+    def test_home_recovery_invalid_semantics_blocked(self):
+        for overrides in ({'supported': False}, {'at_destination': None}):
+            with self.subTest(overrides=overrides):
+                port, result = self.run_home_gate_case(overrides=overrides)
+                self.assertEqual(result['counts']['home'], 0)
+                self.assertFalse(result['ready'])
+
+    def test_home_recovery_current_clearance_blocked(self):
+        port, result = self.run_home_gate_case(current_clear=False)
+        self.assertEqual(result['counts']['home'], 0)
+        self.assertEqual(result['reason'], 'home recovery clearance gate')
+        self.assertFalse(result['ready'])
+
+    def test_home_recovery_closed_fingers_blocked(self):
+        port, result = self.run_home_gate_case(opened=False)
+        self.assertEqual(result['counts']['home'], 0)
+        self.assertEqual(result['reason'], 'home recovery actuator gate')
+        self.assertFalse(result['ready'])
 
     def test_close_error_propagates(self):
         port = FakePort(fail_close=True)

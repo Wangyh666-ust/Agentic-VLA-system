@@ -85,6 +85,37 @@ def _validate_frames(frames):
     return cleaned
 
 
+def _validate_actuator_measurements(value):
+    if value is None:
+        return None
+    if not isinstance(value, dict):
+        raise TypeError("actuator_measurements must be a dict or None")
+    stage = value.get("stage")
+    finger_qpos = value.get("finger_qpos")
+    max_abs_arm_qvel = value.get("max_abs_arm_qvel")
+    if not isinstance(stage, str) or not stage:
+        raise ValueError("actuator_measurements.stage must be a non-empty str")
+    if not isinstance(finger_qpos, list) or len(finger_qpos) != 2:
+        raise ValueError("actuator_measurements.finger_qpos must be a list of length 2")
+    norm_fingers = []
+    for item in finger_qpos:
+        if isinstance(item, bool) or not isinstance(item, (int, float)):
+            raise TypeError("actuator_measurements.finger_qpos entries must be numbers")
+        f = float(item)
+        if not math.isfinite(f):
+            raise ValueError("actuator_measurements.finger_qpos entries must be finite")
+        norm_fingers.append(f)
+    if isinstance(max_abs_arm_qvel, bool) or not isinstance(max_abs_arm_qvel, (int, float)):
+        raise TypeError("actuator_measurements.max_abs_arm_qvel must be a number")
+    max_speed = float(max_abs_arm_qvel)
+    if not math.isfinite(max_speed) or max_speed < 0.0:
+        raise ValueError("actuator_measurements.max_abs_arm_qvel must be finite and non-negative")
+    return {
+        "stage": stage,
+        "finger_qpos": norm_fingers,
+        "max_abs_arm_qvel": max_speed,
+    }
+
 def build_prompt(context):
     user_request, subtask, criteria = _validate_context(context)
     frames = _validate_frames(context.get("sensor_frames"))
@@ -102,12 +133,15 @@ def build_prompt(context):
     }
     if frames:
         safe["sensor_frames"] = frames
+    measurements = _validate_actuator_measurements(context.get("actuator_measurements"))
+    if measurements is not None:
+        safe["actuator_measurements"] = measurements
 
     lines = [
         "You are the Hermes vision verifier for a robot task.",
         "Read the user's original request and the fixed completion criteria below.",
         "You must NEVER modify, reinterpret, or replace the user's original request",
-        "or the fixed completion criteria. Judge only what the provided images show.",
+        "or the fixed completion criteria. Judge provided images with the measured actuator context; never treat controller stage as task success.",
         "Return exactly one JSON object with EXACTLY these keys and no others:",
         "target_visible, destination_visible, at_destination, supported, released,",
         "stable, operation_achieved, clear_of_target, boxes, evidence, unknown_reasons.",
@@ -164,6 +198,9 @@ def build_prompt(context):
             lines.append(
                 f"- frame={entry['frame']} view={entry['view']} timestamp={entry['timestamp']}"
             )
+    if measurements is not None:
+        lines.append("Measurement context: actuator_measurements are actual joint encoder measurements and the current controller stage, not a claim that the task succeeded. An open gripper does not alone prove release. Inspect actual object support and separation in both camera views. Do not mistake projected overlap or an overhead gripper for grasp contact. Stable means observed support and no visible target motion across the supplied distinct timestamps; no perturbation experiment is required. If the fingers/object gap is occluded, return null, not an invented claim of holding.")
+        lines.append("Controller stage confirm is the post-retreat stopped-arm confirmation stage; stage home is the return-to-home stage. A stage label does not prove the preceding actions succeeded.")
     return "\n".join(lines)
 
 
@@ -404,7 +441,7 @@ def reconcile_verdict(context, verdict, robot, reference):
             "encoder fingers not at standard open position; this does not prove object grasp"
         )
 
-    clear_blocked = False
+    clear_near = False
     for entry in out["boxes"].values():
         gripper = entry["gripper"]
         if gripper is None:
@@ -414,15 +451,14 @@ def reconcile_verdict(context, verdict, robot, reference):
             if box is None:
                 continue
             if _box_separation_norm(gripper, box) <= 0.03:
-                clear_blocked = True
+                clear_near = True
                 break
-        if clear_blocked:
+        if clear_near:
             break
 
-    if clear_blocked:
-        out["clear_of_target"] = False
+    if clear_near:
         out["evidence"].append(
-            "gripper is within 0.03 normalized distance of the target or support surface"
+            "2D projection overlap near target/support; not 3D contact evidence"
         )
 
     return out

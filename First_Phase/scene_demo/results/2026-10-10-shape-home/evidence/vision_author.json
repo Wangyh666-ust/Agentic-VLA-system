@@ -1,0 +1,102 @@
+{
+  "actual_deepseek_calls": 1,
+  "http_status": 200,
+  "model": "deepseek-flash",
+  "usage": {
+    "input_tokens": 3110,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1971,
+    "service_tier": "standard"
+  },
+  "stop_reason": "end_turn",
+  "request_path": "First_Phase\\tmp\\shape_home_vision_request.json",
+  "response_path": "First_Phase\\tmp\\shape_home_vision_response.json",
+  "request_sha256": "0ddbaffc2c8c6d4a70e7d06680e3375b526ad062e76045de79bce624fb27ed55",
+  "response_sha256": "b3495e0be1aea594677695ec37d519a26ec38ed5e0334a50acc2b321bd1c4fbf",
+  "applied": true,
+  "design": "GPT specification; actual DS implementation; worker mechanical application",
+  "physical_actions": 0,
+  "qwen_calls": 0,
+  "source_sha256": {
+    "First_Phase\\scene_demo\\finish_v1\\pilot.py": {
+      "before": "bdc22f1eadce2c9b2b367a52e256110e3c734039e4d82953a09cc550ecad1e26",
+      "after": "8f423fe2f501409fbe5e061a5073cc1ac06ea679b2cf007394246d389354d19c"
+    },
+    "First_Phase\\scene_demo\\finish_v1\\vision.py": {
+      "before": "b0425d218df9d2be5bea87f23fd5e5caf29629be89ae4a27befc7b09db8567f3",
+      "after": "24122f3eaf807ba732efcbf11e5bfb52c74ab508be7568e25b82c91bb6661ef7"
+    },
+    "First_Phase\\scene_demo\\finish_v1\\tests\\test_takeover_vision.py": {
+      "before": "5f2f0f8626f45d7db5ede4001c50d144c44c8bbee65ef3ccf00eaf9814e21f6c",
+      "after": "8ef2df87a98ee8b49467d59ed74f311138dba4bf8bf620795af1062204ebe948"
+    }
+  },
+  "application_diff_path": "First_Phase\\tmp\\shape_home_vision_applied.diff",
+  "application_diff_sha256": "d41fe5cbbe7f4d50800b32c17f89f215a6219d5d91bcb3c05574438f4e8edb3b",
+  "edits": [
+    {
+      "path": "First_Phase/scene_demo/finish_v1/vision.py",
+      "old": "def build_prompt(context):",
+      "new": "def _validate_actuator_measurements(value):\n    if value is None:\n        return None\n    if not isinstance(value, dict):\n        raise TypeError(\"actuator_measurements must be a dict or None\")\n    stage = value.get(\"stage\")\n    finger_qpos = value.get(\"finger_qpos\")\n    max_abs_arm_qvel = value.get(\"max_abs_arm_qvel\")\n    if not isinstance(stage, str) or not stage:\n        raise ValueError(\"actuator_measurements.stage must be a non-empty str\")\n    if not isinstance(finger_qpos, list) or len(finger_qpos) != 2:\n        raise ValueError(\"actuator_measurements.finger_qpos must be a list of length 2\")\n    norm_fingers = []\n    for item in finger_qpos:\n        if isinstance(item, bool) or not isinstance(item, (int, float)):\n            raise TypeError(\"actuator_measurements.finger_qpos entries must be numbers\")\n        f = float(item)\n        if not math.isfinite(f):\n            raise ValueError(\"actuator_measurements.finger_qpos entries must be finite\")\n        norm_fingers.append(f)\n    if isinstance(max_abs_arm_qvel, bool) or not isinstance(max_abs_arm_qvel, (int, float)):\n        raise TypeError(\"actuator_measurements.max_abs_arm_qvel must be a number\")\n    max_speed = float(max_abs_arm_qvel)\n    if not math.isfinite(max_speed) or max_speed < 0.0:\n        raise ValueError(\"actuator_measurements.max_abs_arm_qvel must be finite and non-negative\")\n    return {\n        \"stage\": stage,\n        \"finger_qpos\": norm_fingers,\n        \"max_abs_arm_qvel\": max_speed,\n    }\n\ndef build_prompt(context):"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/vision.py",
+      "old": "    if frames:\n        safe[\"sensor_frames\"] = frames\n",
+      "new": "    if frames:\n        safe[\"sensor_frames\"] = frames\n    measurements = _validate_actuator_measurements(context.get(\"actuator_measurements\"))\n    if measurements is not None:\n        safe[\"actuator_measurements\"] = measurements\n"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/vision.py",
+      "old": "        \"or the fixed completion criteria. Judge only what the provided images show.\",",
+      "new": "        \"or the fixed completion criteria. Judge provided images with the measured actuator context; never treat controller stage as task success.\","
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/vision.py",
+      "old": "    return \"\\n\".join(lines)",
+      "new": "    if measurements is not None:\n        lines.append(\"Measurement context: actuator_measurements are actual joint encoder measurements and the current controller stage, not a claim that the task succeeded. An open gripper does not alone prove release. Inspect actual object support and separation in both camera views. Do not mistake projected overlap or an overhead gripper for grasp contact. Stable means observed support and no visible target motion across the supplied distinct timestamps; no perturbation experiment is required. If the fingers/object gap is occluded, return null, not an invented claim of holding.\")\n    return \"\\n\".join(lines)"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/pilot.py",
+      "old": "                safe_ctx = {\n                    \"user_request\": copy.deepcopy(context_arg.get(\"user_request\")),\n                    \"current_subtask\": copy.deepcopy(context_arg.get(\"current_subtask\")),\n                    \"criteria\": copy.deepcopy(context_arg.get(\"criteria\")),\n                    \"sensor_frames\": copy.deepcopy(sensor_frames),\n                }",
+      "new": "                robot = port.read_robot()\n                measurements = {\n                    \"stage\": port.phase or \"post_execution\",\n                    \"finger_qpos\": [float(x) for x in robot[\"finger_qpos\"]],\n                    \"max_abs_arm_qvel\": max(abs(float(x)) for x in robot[\"arm_qvel\"]),\n                }\n                safe_ctx = {\n                    \"user_request\": copy.deepcopy(context_arg.get(\"user_request\")),\n                    \"current_subtask\": copy.deepcopy(context_arg.get(\"current_subtask\")),\n                    \"criteria\": copy.deepcopy(context_arg.get(\"criteria\")),\n                    \"sensor_frames\": copy.deepcopy(sensor_frames),\n                    \"actuator_measurements\": measurements,\n                }"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/pilot.py",
+      "old": "                meta = qwen_client.analyze(safe_ctx, image_paths)\n                raw_verdict = meta.get(\"verdict\", {}) if isinstance(meta, dict) else {}\n                robot = port.read_robot()\n                verdict = vision.reconcile_verdict(",
+      "new": "                meta = qwen_client.analyze(safe_ctx, image_paths)\n                raw_verdict = meta.get(\"verdict\", {}) if isinstance(meta, dict) else {}\n                verdict = vision.reconcile_verdict("
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/pilot.py",
+      "old": "                    \"robot\": robot,\n                }",
+      "new": "                    \"robot\": robot,\n                    \"actuator_measurements\": measurements,\n                }"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/tests/test_takeover_vision.py",
+      "old": "class BuildPromptTest(unittest.TestCase):",
+      "new": "class BuildPromptTest(unittest.TestCase):\n    def test_measurement_whitelist_prompt_and_extra_dropped(self):\n        context = _place_context()\n        context[\"actuator_measurements\"] = {\n            \"stage\": \"confirm\",\n            \"finger_qpos\": [0.04, -0.04],\n            \"max_abs_arm_qvel\": 0.0,\n            \"sim_truth\": \"truth\",\n            \"gold\": \"gold\",\n        }\n        prompt = vision.build_prompt(context)\n        self.assertIn(\"Measurement context:\", prompt)\n        self.assertIn(\"Max Abs Arm Qvel\", prompt.replace(\"max_abs_arm_qvel\", \"Max Abs Arm Qvel\"))\n        self.assertNotIn(\"sim_truth\", prompt)\n        self.assertNotIn(\"gold\", prompt)\n\n    def test_measurement_invalid_values_raise(self):\n        for bad in [\n            {\"stage\": \"confirm\", \"finger_qpos\": [float(\"nan\"), 0.0], \"max_abs_arm_qvel\": 0.0},\n            {\"stage\": \"confirm\", \"finger_qpos\": [0.0, 0.0], \"max_abs_arm_qvel\": -0.1},\n            {\"stage\": \"confirm\", \"finger_qpos\": [True, 0.0], \"max_abs_arm_qvel\": 0.0},\n            {\"stage\": \"confirm\", \"finger_qpos\": [0.0], \"max_abs_arm_qvel\": 0.0},\n        ]:\n            context = _place_context()\n            context[\"actuator_measurements\"] = bad\n            with self.assertRaises((ValueError, TypeError)):\n                vision.build_prompt(context)\n\n    def test_measurement_absent_compatible(self):\n        context = _place_context()\n        prompt = vision.build_prompt(context)\n        self.assertNotIn(\"Measurement context:\", prompt)\n\n    def test_open_measurements_released_none_not_complete(self):\n        context = _place_context()\n        context[\"actuator_measurements\"] = {\n            \"stage\": \"confirm\",\n            \"finger_qpos\": [0.04, -0.04],\n            \"max_abs_arm_qvel\": 0.0,\n        }\n        verdict = _verdict(released=None)\n        result = vision.decide(context, verdict, {})\n        self.assertNotEqual(result.get(\"status\"), \"complete\")\n"
+    }
+  ],
+  "software_tests": {
+    "chunk_id": "5ca8a5",
+    "wall_time_seconds": 4.8864484,
+    "exit_code": 0,
+    "original_token_count": 41,
+    "output": "...............................................................\n----------------------------------------------------------------------\nRan 63 tests in 0.032s\n\nOK\n",
+    "command": "wsl --exec env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/mnt/d/FYP/First_Phase /home/yhwang/fyp/libero_demo/venv/bin/python -B -m unittest scene_demo.finish_v1.tests.test_vision scene_demo.finish_v1.tests.test_takeover_vision scene_demo.finish_v1.tests.test_core scene_demo.finish_v1.tests.test_release_regression scene_demo.finish_v1.tests.test_shape_screen",
+    "tests": 63,
+    "physical_actions": 0,
+    "qwen_calls": 0
+  },
+  "final_source_sha256": {
+    "vision.py": "f3096d346438edfd343e8d2818a09b743a780e855f34b1f59dbfdd8e732e535e",
+    "pilot.py": "8f423fe2f501409fbe5e061a5073cc1ac06ea679b2cf007394246d389354d19c",
+    "tests/test_takeover_vision.py": "4ffd6f370064ff9255e09ca48db0fe7593f83d62effeff3d184ae0bf9c5e6d2c"
+  },
+  "syntax_compile": "3 affected files compiled in memory",
+  "mechanical_bindings": [
+    "DS test vision.decide(context,verdict,{}) corrected to actual two-argument signature; result status corrected to state",
+    "Parent final stage-description text appended after sole DS call completed, no extra model call"
+  ],
+  "final_diff_path": "First_Phase\\tmp\\shape_home_vision_final.diff",
+  "final_diff_sha256": "5b3403f1ade6879816aaabd3adbfd175d0854b276123cf7f9b8876eb19c55d11"
+}

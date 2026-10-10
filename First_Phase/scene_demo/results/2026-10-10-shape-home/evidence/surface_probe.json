@@ -1,0 +1,582 @@
+{
+  "status": "compared",
+  "new_physics_actions": 0,
+  "new_qwen_calls": 0,
+  "new_deepseek_calls": 0,
+  "forbidden_attempts": [],
+  "limitation": "Saved visible geometry and robot CAD only; pixel object identity is unknown.",
+  "suppressed_constructor_dynamics": {
+    "mujoco.mj_step1": 1
+  },
+  "actual_dynamics_function_executions": 0,
+  "model_initialization_note": "mj_resetData permitted only for CAD model initialization; all dynamics calls suppressed; saved RGBD alone provides obstacles.",
+  "saved_input_files": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/result.json",
+      "sha256": "e63fd5eac37756a32cc4a2693399175947a4cf2323a291a508abcccd63c22bf8"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/helper.jsonl",
+      "sha256": "27b3f8d1253393fbfcd317172840646008820d96558ab5fc502dec67885b5ef3"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000275_agentview.json",
+      "sha256": "c1386c19462cc94bec364fa2fc03bdbdf832bb28ba30db0ad07b35a68bdf9b43"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000276_wrist.json",
+      "sha256": "d63e6b794005c5c0d7d28ae411ef3493f43457070eb7358382ac7658ba942dc1"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000275_agentview.npy",
+      "sha256": "648c00239bb30eea64d2151d0175951d58e0c209342fae2792ea1980fa667bf4"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000276_wrist.npy",
+      "sha256": "1c1219f2581314e3d0bee4ed3e40bfb86fd0d192533e5644421e0aea80bbccd3"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000275_agentview.png",
+      "sha256": "c26e58a9818270133391153ed173252fadfccfdd890d0b415a4e628a567cc479"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/bowl_held83/sensors/cap000276_wrist.png",
+      "sha256": "771e25804fbc9f6ec50a988e125246d0c7872453998417d52db0c433b3df3179"
+    }
+  ],
+  "use_camera_obs_false": true,
+  "old_sphere_screen": {
+    "ok": false,
+    "reason": "endpoint_hand_clear_fail",
+    "min_distance": 0.0020037744415121322,
+    "endpoint_hand_clear": false,
+    "limitation": "visible geometry only"
+  },
+  "new_box_screen": {
+    "ok": true,
+    "reason": "clear",
+    "min_distance": -0.011791809108238668,
+    "endpoint_hand_clear": true,
+    "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+    "diagnostic": {
+      "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+    }
+  },
+  "last_cloud_stats": {
+    "input_points": 6389,
+    "self_mask_removed": 631,
+    "policy": "CAD triangle surface <=3mm"
+  },
+  "hand_shapes_start": [
+    {
+      "id": "gripper0_hand_collision",
+      "center": [
+        0.0730182576138347,
+        0.01384355223623752,
+        1.0254057255733573
+      ],
+      "rotation": [
+        [
+          0.9794638944783011,
+          -0.15992239801075414,
+          0.12278153781366695
+        ],
+        [
+          -0.12457981363332195,
+          -0.0012287433634701251,
+          0.992208828939167
+        ],
+        [
+          -0.15852554825164855,
+          -0.9871288248269504,
+          -0.021126612300072505
+        ]
+      ],
+      "half_extents": [
+        0.031624890863895416,
+        0.04652947373688221,
+        0.10291652753949165
+      ],
+      "hand": true
+    },
+    {
+      "id": "gripper0_finger1_collision",
+      "center": [
+        0.057691206164778935,
+        -0.03816733786704623,
+        0.9713741408542782
+      ],
+      "rotation": [
+        [
+          0.9817907812344718,
+          -0.1270917018069049,
+          -0.14118980563350325
+        ],
+        [
+          -0.10641569698702014,
+          -0.9836290050349975,
+          0.1454292951527429
+        ],
+        [
+          -0.15736124464990858,
+          -0.12775632972843914,
+          -0.9792424413272466
+        ]
+      ],
+      "half_extents": [
+        0.01064224261790514,
+        0.013013954740017653,
+        0.02868663426488638
+      ],
+      "hand": true
+    },
+    {
+      "id": "gripper0_finger1_pad_collision",
+      "center": [
+        0.05622219865711826,
+        -0.031202238288415004,
+        0.9567679614327517
+      ],
+      "rotation": [
+        [
+          -0.9795115724155389,
+          0.11884790284947164,
+          -0.1625799972085051
+        ],
+        [
+          0.1247946191709319,
+          0.991819760013854,
+          -0.026830331195114982
+        ],
+        [
+          0.1580613252190967,
+          -0.04656972873380341,
+          -0.986330511459338
+        ]
+      ],
+      "half_extents": [
+        0.008,
+        0.004,
+        0.008
+      ],
+      "hand": true
+    },
+    {
+      "id": "gripper0_finger2_collision",
+      "center": [
+        0.06942316298859671,
+        0.05972998263972663,
+        0.9667773054250779
+      ],
+      "rotation": [
+        [
+          -0.9812854249982932,
+          0.07081833396528311,
+          -0.17906333589067627
+        ],
+        [
+          0.10649909516281664,
+          0.9743422961988614,
+          -0.19828018702691413
+        ],
+        [
+          0.16042710935317897,
+          -0.21363954084463943,
+          -0.9636499827075552
+        ]
+      ],
+      "half_extents": [
+        0.01064224261790514,
+        0.013013954740017653,
+        0.02868663426488638
+      ],
+      "hand": true
+    },
+    {
+      "id": "gripper0_finger2_pad_collision",
+      "center": [
+        0.0661908526094919,
+        0.051989031676415734,
+        0.9528618133285551
+      ],
+      "rotation": [
+        [
+          -0.9795115724155389,
+          0.11884790284947164,
+          -0.1625799972085051
+        ],
+        [
+          0.1247946191709319,
+          0.991819760013854,
+          -0.026830331195114982
+        ],
+        [
+          0.1580613252190967,
+          -0.04656972873380341,
+          -0.986330511459338
+        ]
+      ],
+      "half_extents": [
+        0.008,
+        0.004,
+        0.008
+      ],
+      "hand": true
+    }
+  ],
+  "hand_shapes_endpoint": [
+    {
+      "id": "gripper0_hand_collision",
+      "center": [
+        0.07265005836892686,
+        0.01387849331957949,
+        1.0330661434648833
+      ],
+      "rotation": [
+        [
+          0.9792043471673864,
+          -0.16170333040892662,
+          0.12251889414762646
+        ],
+        [
+          -0.1243360207427973,
+          -0.001127262984384652,
+          0.9922395291581634
+        ],
+        [
+          -0.16031032541399964,
+          -0.9868387721471166,
+          -0.02120936945861401
+        ]
+      ],
+      "half_extents": [
+        0.031624890863895416,
+        0.04652947373688221,
+        0.10291652753949165
+      ],
+      "hand": true
+    },
+    {
+      "id": "gripper0_finger1_collision",
+      "center": [
+        0.05723727963542213,
+        -0.03812832807181595,
+        0.9790550323562567
+      ],
+      "rotation": [
+        [
+          0.981529224850208,
+          -0.12709968023794863,
+          -0.14298969210527412
+        ],
+        [
+          -0.10617154048727336,
+          -0.9836399163288839,
+          0.14553391012085581
+        ],
+        [
+          -0.15914768221846387,
+          -0.12766435010572558,
+          -0.9789656934523158
+        ]
+      ],
+      "half_extents": [
+        0.01064224261790514,
+        0.013013954740017653,
+        0.02868663426488638
+      ],
+      "hand": true
+    },
+    {
+      "id": "gripper0_finger1_pad_collision",
+      "center": [
+        0.05574034010373245,
+        -0.03116152408826469,
+        0.9644525022061464
+      ],
+      "rotation": [
+        [
+          -0.9792529113727254,
+          0.11853943637082082,
+          -0.16435369662082225
+        ],
+        [
+          0.12455088022730251,
+          0.9918531185162622,
+          -0.02672956273808779
+        ],
+        [
+          0.1598462192316268,
+          -0.04664539971372684,
+          -0.9860392451028006
+        ]
+      ],
+      "half_extents": [
+        0.008,
+        0.004,
+        0.008
+      ],
+      "hand": true
+    },
+    {
+      "id": "gripper0_finger2_collision",
+      "center": [
+        0.0689387890225191,
+        0.05977228535291006,
+        0.9744507258491938
+      ],
+      "rotation": [
+        [
+          -0.981018355327804,
+          0.07021238669092912,
+          -0.18075731593795621
+        ],
+        [
+          0.10625462543900148,
+          0.974388086201977,
+          -0.1981863063898875
+        ],
+        [
+          0.16221264156269752,
+          -0.21363070524344646,
+          -0.963352988625893
+        ]
+      ],
+      "half_extents": [
+        0.01064224261790514,
+        0.013013954740017653,
+        0.02868663426488638
+      ],
+      "hand": true
+    },
+    {
+      "id": "gripper0_finger2_pad_collision",
+      "center": [
+        0.06568312068764227,
+        0.05203254390125912,
+        0.9605400070163471
+      ],
+      "rotation": [
+        [
+          -0.9792529113727254,
+          0.11853943637082082,
+          -0.16435369662082225
+        ],
+        [
+          0.12455088022730251,
+          0.9918531185162622,
+          -0.02672956273808779
+        ],
+        [
+          0.1598462192316268,
+          -0.04664539971372684,
+          -0.9860392451028006
+        ]
+      ],
+      "half_extents": [
+        0.008,
+        0.004,
+        0.008
+      ],
+      "hand": true
+    }
+  ],
+  "last_waypoint_index": 7,
+  "interpolated_poses": 8,
+  "raw_cloud_points": 6389,
+  "obstacle_cloud_points": 5758,
+  "original_runtime_reason": "movement screen blocked",
+  "interpretation": "Same saved RGBD and robot records; comparison only, not physical success.",
+  "plan_verdict": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": true,
+    "supported": true,
+    "released": false,
+    "stable": null,
+    "operation_achieved": false,
+    "clear_of_target": false,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.38,
+          0.42,
+          0.99,
+          0.8
+        ],
+        "destination": [
+          0.2,
+          0.35,
+          0.85,
+          0.75
+        ],
+        "gripper": [
+          0.35,
+          0.0,
+          0.65,
+          0.4
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.25,
+          0.45,
+          0.95,
+          0.85
+        ],
+        "destination": [
+          0.15,
+          0.3,
+          0.8,
+          0.7
+        ],
+        "gripper": [
+          0.3,
+          0.0,
+          0.7,
+          0.5
+        ]
+      }
+    },
+    "evidence": [
+      "In agentview frames 0, 2, 4: black bowl (akita_black_bowl_1) is held by gripper and positioned directly above plate_1.",
+      "In wrist frames 1, 3, 5: bowl is visible in gripper, aligned over plate; no separation between fingers and bowl.",
+      "Plate_1 is visible in all agentview and wrist frames as a white plate with red stripes, supporting the bowl in later frames (e.g., frame 2 agentview shows bowl resting on plate).",
+      "Gripper remains in contact with the bowl across all frames; no visible release event.",
+      "gripper is within 0.03 normalized distance of the target or support surface"
+    ],
+    "unknown_reasons": [
+      "Stability cannot be judged because only single-frame snapshots are available; no multi-frame support observation over distinct timestamps.",
+      "Release status is false because fingers remain in contact with bowl; however, whether the bowl is fully supported by the plate without gripper assistance is ambiguous in some frames due to occlusion by gripper."
+    ]
+  },
+  "new_plan": {
+    "ok": true,
+    "reason": "ok",
+    "waypoints": [
+      [
+        0.019283134773143088,
+        1.0295616775471454,
+        7.682332261399276e-05,
+        -1.2025526321891324,
+        -0.027025616242153595,
+        2.068114994068409,
+        0.9430339762104699
+      ],
+      [
+        0.019279133736658897,
+        1.025693223772041,
+        9.449724084645492e-05,
+        -1.2042231350419987,
+        -0.02700924417728868,
+        2.0659159849827904,
+        0.9429817445777308
+      ],
+      [
+        0.019275012274847698,
+        1.0217674577476048,
+        0.00011212670539168747,
+        -1.205970292758637,
+        -0.026993198715987776,
+        2.0637376235528215,
+        0.942930093020335
+      ],
+      [
+        0.019270947724226738,
+        1.0178615992626607,
+        0.00012972536450774823,
+        -1.2076775663963932,
+        -0.026976891038365192,
+        2.0615395816196282,
+        0.9428779824263163
+      ],
+      [
+        0.01926695676828712,
+        1.013980633681498,
+        0.00014729557560815728,
+        -1.2093362435823225,
+        -0.026960273038845958,
+        2.0593178646850654,
+        0.9428253172105089
+      ],
+      [
+        0.019263042766085647,
+        1.0101248579518705,
+        0.00016483436022229285,
+        -1.2109458950594978,
+        -0.026943346275283515,
+        2.05707231876606,
+        0.9427720956696531
+      ],
+      [
+        0.019259208004847143,
+        1.006294212113306,
+        0.00018233834336336618,
+        -1.212506729567231,
+        -0.026926116196583465,
+        2.05480309096045,
+        0.9427183234061898
+      ],
+      [
+        0.01925545468072161,
+        1.0024886136714668,
+        0.00019980414017971586,
+        -1.2140189961048176,
+        -0.026908588544355995,
+        2.0525103476588304,
+        0.9426640064822517
+      ],
+      [
+        0.019251784975857892,
+        0.9987079835325611,
+        0.0002172283854751515,
+        -1.215482937539393,
+        -0.0268907690741451,
+        2.050194252641404,
+        0.9426091508885935
+      ],
+      [
+        0.019248201063929524,
+        0.9949522478814042,
+        0.00023460773634850543,
+        -1.2168987872442665,
+        -0.026872663534753347,
+        2.0478549654816747,
+        0.9425537625058747
+      ],
+      [
+        0.01924470511004558,
+        0.9912213381941605,
+        0.00025193887281865296,
+        -1.2182667690730196,
+        -0.026854277667475404,
+        2.0454926415245724,
+        0.9424978471040253
+      ]
+    ],
+    "candidate_reports": [
+      {
+        "direction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "distance": 0.02,
+        "reason": "clear"
+      }
+    ],
+    "sensor_screen": {
+      "ok": true,
+      "reason": "clear",
+      "min_distance": -0.011791809108238668,
+      "endpoint_hand_clear": true,
+      "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+      "diagnostic": {
+        "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+      }
+    }
+  },
+  "new_plan_seconds": 1.801164086,
+  "saved_frame_pixel_center_offset": 0.5,
+  "production_label_mechanically_synchronized": true
+}

@@ -16,13 +16,13 @@ class ReleaseRegression(unittest.TestCase):
             value.update(overrides)
             self.assertFalse(vision.decide(context, value)["allow_release"])
 
-    def run_sequence(self, postretreat):
+    def run_sequence(self, postretreat, final=None):
         port = FakePort()
         initial = _verdict(released=False, stable=None, clear_of_target=False)
         postopen = _verdict(released=None, stable=None, clear_of_target=False)
-        checks = iter([postopen, postretreat, _verdict()])
+        checks = iter([postopen, postretreat, _verdict() if final is None else final])
         events = []
-        with patch.object(control, "plan_retreat", return_value={"ok": True, "waypoints": [np.zeros(7), np.full(7, .02)]}), patch.object(control, "clouds", return_value=np.array([[10, 10, 10]])), patch.object(control, "screen", return_value={"ok": True}), patch.object(control.jh, "home_metrics", side_effect=lambda ref, st: {"ready": np.max(np.abs(st["arm_qpos"])) < 1e-12}):
+        with patch.object(control, "plan_retreat", return_value={"ok": True, "waypoints": [np.zeros(7), np.full(7, .02)]}), patch.object(control, "screen_shapes", return_value={"ok": True}), patch.object(control.jh, "home_metrics", side_effect=lambda ref, st: {"ready": np.max(np.abs(st["arm_qpos"])) < 1e-12}):
             result = control.run_finish(port, _place_context(), initial, vision.decide, lambda context, observations: next(checks), events.append)
         return port, result, events
 
@@ -40,11 +40,15 @@ class ReleaseRegression(unittest.TestCase):
         self.assertIsNone(result["checks"][0]["released"])
         self.assertTrue(result["opening_confirmed"])
 
-    def test_postretreat_unknown_release_blocks_home(self):
-        port, result, events = self.run_sequence(_verdict(released=None))
+    def test_protected_home_allowed_but_final_unknown_blocks_completion(self):
+        port, result, events = self.run_sequence(_verdict(released=None), final=_verdict(released=None))
         self.assertGreater(result["counts"]["movement"], 0)
-        self.assertEqual(result["counts"]["home"], 0)
+        self.assertGreater(result["counts"]["home"], 0)
+        self.assertTrue(result['home_entry']['measured_open'])
+        self.assertTrue(result['home_entry']['clearance_screen']['ok'])
+        self.assertTrue(result['home_entry']['visible_semantics'])
         self.assertFalse(result["ready"])
+        self.assertFalse(result['ok'])
 
     def test_phase_only_waiting_is_not_actual_release(self):
         case = {"allow_helper": True, "expected_release": True, "expected_retreat": True}
@@ -66,7 +70,7 @@ class ReleaseRegression(unittest.TestCase):
         failed_screen = {"ok": False, "reason": reason, "min_distance": .005, "endpoint_hand_clear": False}
         clear_screen = {"ok": True, "reason": "clear", "min_distance": .02, "endpoint_hand_clear": True}
         checks = iter([_verdict(released=None, stable=None, clear_of_target=False), _verdict(), _verdict()])
-        with patch.object(control, "plan_retreat", side_effect=[initial_plan, replacement_plan]) as planning, patch.object(control, "clouds", return_value=np.array([[10, 10, 10]])), patch.object(control, "screen", side_effect=[failed_screen, clear_screen]) as screening, patch.object(control.jh, "home_metrics", side_effect=lambda ref, st: {"ready": np.max(np.abs(st["arm_qpos"])) < 1e-12}):
+        with patch.object(control, "plan_retreat", side_effect=[initial_plan, replacement_plan]) as planning, patch.object(control, "screen_shapes", side_effect=[failed_screen, clear_screen, clear_screen]) as screening, patch.object(control.jh, "home_metrics", side_effect=lambda ref, st: {"ready": np.max(np.abs(st["arm_qpos"])) < 1e-12}):
             result = control.run_finish(port, _place_context(), _verdict(released=False, stable=None, clear_of_target=False), vision.decide, lambda context, observations: next(checks), lambda row: None)
         return port, result, planning, screening, initial_plan, replacement_plan
 
@@ -75,7 +79,7 @@ class ReleaseRegression(unittest.TestCase):
         self.assertTrue(result["ready"], result)
         self.assertEqual(len(result["retreat_replans"]), 1)
         self.assertEqual(planning.call_count, 2)
-        self.assertEqual(screening.call_count, 2)
+        self.assertEqual(screening.call_count, 3)
         self.assertEqual(result["counts"]["movement"], 20)
         self.assertEqual(port.phases.count("movement"), 20)
         self.assertIs(result["plan"], initial_plan)

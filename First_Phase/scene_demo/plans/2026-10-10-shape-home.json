@@ -1,0 +1,323 @@
+{
+  "schema_version": 1,
+  "id": "20261010-shape-home",
+  "intent": "new_experiment",
+  "question_key": "release-stop",
+  "purpose": "修正粗球和投影框误阻断，在原bowl83停点真实完成松手、退离、确认及已有归位流程。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261009-joint-home",
+    "20261009-joint-home-12",
+    "20261009-safe-exit-3",
+    "20261010-safe-exit-sdk-3",
+    "20261010-visual-finish",
+    "20261010-finish-takeover-v2"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "原95/83停点与102/104释放确认已配对；重用未释放/未稳的原始证据，不重做VLA。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "已验证真实归位控制器在部分旧状态有效，复用控制器结果。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用原case02/07及失败09/11动作与旧评分，不重跑原生基线。"
+    },
+    {
+      "experiment_id": "20261009-safe-exit-3",
+      "disposition": "reuse",
+      "reason": "保留SDK错误后零辅助动作的unknown；不能作为退出有效性证据。"
+    },
+    {
+      "experiment_id": "20261010-safe-exit-sdk-3",
+      "disposition": "reuse",
+      "reason": "复用退离预算用尽与新浅接触的结果，作为本轮收尾问题来源。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "旧三正例release/movement/confirm均0，视觉误判和新home执行偏离已核对；复用原终态与失败来源，不把0/3算收尾效果"
+    },
+    {
+      "experiment_id": "20261010-finish-takeover-v2",
+      "disposition": "reuse",
+      "reason": "末版实际标准开口命令11个控制周期、movement60，但confirm/home0，两次endpoint球筛查阻断；复用原日志和保存RGBD，不再跑原VLA。最后版本0/1与前三版本修正过程不合并可靠性。"
+    }
+  ],
+  "new_physical_actions": 613,
+  "hypothesis": "用更贴近实际几何的机械臂代理、自遮罩与投影语义，可减少假阻断，使原碗停点完成受保护收尾和归位。",
+  "information_gain": "固定同一原碗83停点及历史动作，只试一个样例；机械臂几何代理、CAD三角表面自遮罩、投影提示语义与深度像素中心共四项变化，不能单独归因，也不是可靠性统计。；首版实际标准开口命令11个周期/movement44/confirm5/home0，全链0/1；4路几何screen通过，最后视觉误认仍夹持，home未启动，不能计归位物理失败。pilot_first原输出保留为修正依据。零物理vision_probe仅一次输出改变，不算物理效果或可靠性。；第二版真实11个周期标准开口/44movement/5confirm/home0，最终视觉仍因遮挡unknown；独立released_stable/contact0，home未启动，非归位执行失败。本版检查视角、退离距离与movement预算显式改变，所有改变为多因素包不能单独归因，目标是使间隙可观察而非降低完成门槛。camera_probe只静态部分状态重建证明原生相机接口，不算物理成功样本。；第三版真实11个标准开口控制周期/89movement/5confirm/home0，8次几何screen clear，独立on/released_stable/contact0保持，最终visual因遮挡为null。home未启动，非home动作失败。本次仅新增安全恢复资格与最终完成分离；最终完整任务标准保留，多个既有改变不能合并可靠性或单独归因。",
+  "success_criteria": "实际标准开口命令>0且编码器确认开启、movement>0、confirm>0、home>0；独立on目标为真、释放稳定、所有物体无抓持、robotcontact=0、连续五个真实post-action home ready、最终视觉complete均通过，才算完整交接。open/move计数不能代替成功。；同时必须有日志home_entry被触发且physicalhome>0；安全归位资格本身不算任务完成。",
+  "failure_criteria": "任何应接管目标未触发，或实际开口/movement/confirm/home任一为零，立即停止，不运行其他fixture；已执行而独立目标、释放、接触、视觉或home未通过，按实际阶段记录阻断，不以计数替代效果。；即使允许并执行home，最终视觉unknown或任一独立效果不满足仍记录wholeblocked，不能宣布success。",
+  "unknown_criteria": "来源SHA或回放终态不匹配、缺必需相机、SDK/协议/网络/cleanup异常记unknown并停止；视觉证据不足为正常阻断。其他四fixture保持not_run，不顺延。",
+  "changed_factors": [
+    {
+      "name": "robot_proxy",
+      "before": "机器人碰撞几何粗球代理",
+      "after": "旋转mesh局部保守bbox代理",
+      "reason": "修正粗球对手部实际外形的过度包络"
+    },
+    {
+      "name": "self_mask",
+      "before": "删除粗球内的所有点",
+      "after": "only robot visual CAD triangle surface distance<=0.003m",
+      "reason": "保存点visual hand ray差3.052/3.723mm；掠射角沿ray差不是真实表面距离，改用CAD三角表面距离。原bbox/ray探针仍blocked，不是修复成功；不扩大识别3mm或保护10mm。"
+    },
+    {
+      "name": "projected_clearance",
+      "before": "2D框靠近强制否决",
+      "after": "2D靠近仅提示，不改raw视觉判定",
+      "reason": "避免投影接近直接当作真实三维接触或清场否决"
+    },
+    {
+      "name": "depth_pixel_center",
+      "before": "反投影整数像素未标注",
+      "after": "新simcapture声明pixel_center_offset=0.5，旧未标帧默认0；realcamera不默认+0.5",
+      "reason": "已安装SDK主点W/2,H/2；旧pixelprobe加0.5后残差3.052→1.472mm，但仍blocked，不构成物理修复成功，也不能单独归因。"
+    },
+    {
+      "name": "actuator_measurement_context",
+      "before": "Qwen仅图像、未收到实际执行阶段与夹爪编码器",
+      "after": "真实controller stage与finger_qpos及max_abs_arm_qvel白名单，图像仍须确认支撑/释放/稳定/清场；不允许开口自动判成功",
+      "reason": "同图诊断误判纠正；需单例真实全链验证"
+    },
+    {
+      "name": "verification_views",
+      "before": "检查agentview+wrist两路256图像",
+      "after": "仅检查器使用agentview256+native sideview512；路线/VLA保持原两路256RGBD",
+      "reason": "让手指与物体间隙有清晰侧视证据，不降低支撑/释放/稳定/清场完成门槛"
+    },
+    {
+      "name": "retreat_visibility_distance",
+      "before": "首候选20mm",
+      "after": "首候选40mm，后备60mm；原10mm保护不变",
+      "reason": "让完成检查可观察夹爪离物间隙，多因素一起变化不能单独归因"
+    },
+    {
+      "name": "movement_budget",
+      "before": "80",
+      "after": "120；release20/confirm20/home360固定",
+      "reason": "覆盖增加的可观察退离距离，不自动重试、不扩大单例范围"
+    },
+    {
+      "name": "home_entry",
+      "before": "confirm后必须视觉complete且releasedtrue才可home",
+      "after": "confirm后目标/到位/支撑(place)或操作完成(turn)须视觉为真且stable非False；实际编码器标准开口<=2mm、停稳<=.02rad/s、当前姿态RGBD/CAD handclear>=10mm及原home route screen全通过允许安全归位；completion pending，归位后视觉complete与独立5posts/goal/释放/无持有contact0才宣布完成",
+      "reason": "三版视觉遮挡致home0，当前无接触且已释放稳定；安全恢复资格不应等同最终任务完成，最终完成标准保留"
+    }
+  ],
+  "fixed_factors": {
+    "cases": [
+      "bowl_held83"
+    ],
+    "historical_initial_states": "inputs逐例origin_sha与reference.origin_sha256；四个terminal_sha精确匹配；碗只匹配原embedded目标谓词/持物/target,eef,finger位置1e-7，不宣称全态同一",
+    "actions": "原gzip日志浮点7维按原顺序真实回放83历史动作，无新VLA推理或模型加载",
+    "policy_weights": "不改变、不读取、不微调；本轮无新policy推理",
+    "initialization": "原env.reset内10settle no-op，仅一个样例，初始化独立计数",
+    "vision": "原qwen3-vl-plus、temperature0、max_tokens1600固定；本版最多6 calls；前3版各3与零物理诊断1共10已发生，campaign最多16；不retry。",
+    "scene": "LIBERO robosuite/MuJoCo Franka Panda，env_seed与init保持inputs",
+    "contexts": "GPT固定历史Hermes子任务fixture，不新增Hermes调用",
+    "inputs_sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9",
+    "safety": "已真谓词保留；非目标jointed物体位置变化5mm上限；new contact/deepening50um上限；最后成功仍必须无任何robotcontact",
+    "retreat_geometry_and_protection": "原碰撞screen判据/10mm保护、自身识别3mm与所有逐步保护固定；本版movement120、首候选40mm/后备60mm为显式变化；旧home执行循环与控制器不变。",
+    "inputs_path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/inputs.json",
+    "stage_budgets": {
+      "release": 20,
+      "movement": 120,
+      "confirm": 20,
+      "home": 360
+    },
+    "pixel_offset_contract": "新模拟capture声明sim_pixel_offset=0.5；旧未标帧默认0；真实相机按明确标定声明，不默认+0.5",
+    "verification_and_route_views": "仅检查器agentview256+实时native sideview512，3timestamps6图；路线/VLA仍原agentview256+wrist256RGBD；视觉上下文白名单固定。",
+    "camera_probe_scope": "静态probe仅以部分恢复GT初始化渲染，证明真实相机接口；该GT不送运行检查器，实际侧视为实时render，不把probe算成功样本。"
+  },
+  "scope": {
+    "max_cases": 1,
+    "max_vla_actions_per_case": 0,
+    "max_helper_actions_per_case": 613,
+    "stop_rule": "本修正版仅一次index0/limit1原碗83停点试点，未来上限613=10初始化+83历史回放+520收尾，release20/movement120/confirm20/home360；侧视512+agent256及原RGBD/40mm退离/控制器执行固定。confirm后按新home_entry安全资格门槛允许恢复，资格不表示完成；日志必须home_entry触发且实际home>0，最终原视觉complete与独立效果全部通过才成功。任一目标未执行或最终未通过立即停止，不扩其他fixture/多任务、不自动retry、不训练。本版最多6Qwen，已发生10，campaign最多16；允许home但final unknown记录wholeblocked而非success。"
+  },
+  "configuration": {
+    "campaign": "20261010-shape-home",
+    "inputs_sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9",
+    "case_order": [
+      "bowl_held83"
+    ],
+    "initialization_actions": 10,
+    "historical_replay_actions": 83,
+    "max_finish_actions": 520,
+    "finish_caps_per_eligible": {
+      "release": 20,
+      "movement": 120,
+      "confirm": 20,
+      "home": 360
+    },
+    "eligible_cases": [
+      "bowl_held83"
+    ],
+    "negative_cases": [],
+    "runtime_sensors": "route/VLA remain original agentview256+wrist256 RGBD; verifier uses realtime native sideview512+agentview256, latest 3 timestamps / 6 images, plus actual controller stage/finger_qpos/max_abs_arm_qvel allowlist; no GT",
+    "oracle_emergency_supervision": "privileged simulation predicate/object displacement/contact probes after actual helper steps; logged separately, remains simulation-only emergency supervision",
+    "independent_gold": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ],
+    "context_contract": "context is a GPT-fixed historical Hermes subtask fixture, not a newly generated Hermes plan. Gold is independent offline oracle and forbidden to vision decision.",
+    "vision_model": "qwen3-vl-plus",
+    "vision_max_calls": 6,
+    "vision_max_tokens": 1600,
+    "vision_temperature": 0,
+    "new_vla_inferences": 0,
+    "new_hermes_calls": 0,
+    "weights_loaded": 0,
+    "training": false,
+    "physical_streak": 5,
+    "repeat_measurements": 0,
+    "source_freeze": "preflight.json source_sha256 must match before launch and before eachcase; no silent refreeze",
+    "revision": "shape_home_safe_return_gate",
+    "old_home_source": "First_Phase/scene_demo/results/2026-10-09-joint-home/evidence/joint_home_20261009_run.py",
+    "home_mode": "joint_home",
+    "inputs_path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/inputs.json",
+    "runtime_env": {
+      "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+      "MUJOCO_GL": "egl",
+      "PYOPENGL_PLATFORM": "egl"
+    },
+    "release_gate": "visible destination support, stable not false; settle then encoder-open; final complete still visual",
+    "fixture_selection": {
+      "start_index": 0,
+      "limit": 1,
+      "available_fixtures": 5
+    },
+    "robot_proxy": "rotated mesh-local conservative bbox",
+    "self_mask": "robot visual CAD triangle_surface distance<=0.003m",
+    "projected_clearance": "advisory only; does not alter raw visual verdict",
+    "sim_pixel_offset": 0.5,
+    "pixel_center_offset_contract": "new simulation renderframe explicitly declares pixel_center_offset=0.5; old unmarked frames default 0; real camera has no default +0.5",
+    "actuator_context_contract": {
+      "allowed_fields": [
+        "stage",
+        "finger_qpos",
+        "max_abs_arm_qvel"
+      ],
+      "source": "actual controller stage and measured finger encoders/arm joint velocity only",
+      "zero_gold": true,
+      "only_sensor_facts": true,
+      "image_requirements": "support, release, stability and clearance still require image evidence; standard opening alone cannot prove success",
+      "forbidden_inputs": [
+        "gold",
+        "sim_truth",
+        "goal_predicates",
+        "contact_lists",
+        "object_poses"
+      ]
+    },
+    "prior_revision_qwen_calls": [
+      3,
+      3,
+      3
+    ],
+    "offline_diagnostic_qwen_calls": 1,
+    "campaign_max_calls": 16,
+    "prior_revision_qwen_calls_breakdown": {
+      "shape_first": 3,
+      "visual_context": 3,
+      "clear_observation": 3
+    },
+    "verification_views": [
+      {
+        "view": "agentview",
+        "resolution": [
+          256,
+          256
+        ]
+      },
+      {
+        "view": "sideview",
+        "resolution": [
+          512,
+          512
+        ]
+      }
+    ],
+    "retreat_candidate_distances_m": [
+      0.04,
+      0.06
+    ],
+    "home_entry_contract": {
+      "phase": "after confirm",
+      "visual_place_required_true": [
+        "target_visible",
+        "at_destination",
+        "supported"
+      ],
+      "visual_turn_required_true": [
+        "target_visible",
+        "operation_achieved"
+      ],
+      "stable_requirement": "not False",
+      "encoder_standard_open_max_error_m": 0.002,
+      "max_abs_arm_qvel_rad_s": 0.02,
+      "rgbd_cad_current_hand_clearance_m": 0.01,
+      "original_home_route_screen_required": true,
+      "eligibility_is_completion": false,
+      "completion_during_return": "pending",
+      "final_requirements": "vision complete plus independent goal/released stable/no held/contact0/five post-action home ready",
+      "forbidden_checker_inputs": [
+        "gold",
+        "sim_truth",
+        "goal_predicates",
+        "contact_lists",
+        "object_poses"
+      ]
+    }
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": true,
+    "reason": "首版全链0/1保留，实际11周期开口/44退离/5确认，home0因最终视觉仍误判持有而未启动。一次同图、零物理vision_probe已证实增加实际阶段及编码器上下文会改变检查器输出；本次视觉链路明确变化后的单例真实全链验证，不抹掉首版失败、不当可靠性统计、不重跑原VLA。；第二版全链仍0/1，11open控制周期/44movement/5confirm/home0且独立释放稳定/contact0，因视觉遮挡unknown而未启动home，原记录保留。本次明确增加实时侧视、退离距离和预算的单例全链验证，不作可靠性统计；静态camera_probe不是成功样本。；第三版8次几何screen clear且独立目标/释放稳定/无接触，但最终视觉遮挡null导致home0。原结果保留，单例验证安全恢复资格与最终完成分离，不把home资格当成功；最终判据不降低。"
+  },
+  "diagnostic_evidence": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_first/bowl_held83/result.json",
+      "sha256": "b3093870e26fde70e23bddbbc5f781487c836209dbef239d02ede44c3f14e964"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_first/bowl_held83/checks.jsonl",
+      "sha256": "0c9d8899fadcd5af04cca4fbf85c18af84e2ddb931dc109d48183bb4c2f3ef80"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/vision_probe.json",
+      "sha256": "0ec1be6112f880fa99594cc1588ccc97d761f585d470b7ba1f75be0b5baa1a52"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/result.json",
+      "sha256": "aeb7659f78651457e3024d1903b3140bf3a0880a2d4e08aa10fdc9e604fefab8"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/checks.jsonl",
+      "sha256": "8593463b7a63d63661ca292af3781893ed9cdebf75384f5cf4a2da53c56a41a3"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/camera_probe.json",
+      "sha256": "0f1621d18dc08d7959195be346efdbb1bf3244052335f6c3ca5442b9692d64ee"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_observation/bowl_held83/result.json",
+      "sha256": "e7be5dad368b20e4e2a7ffc4021be9242f1ec7e05dba9c4508d24eef9ab1b574"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_observation/bowl_held83/checks.jsonl",
+      "sha256": "5ad815dfc79eeb6bb18bc730dc014522594eef3ff1ff1fef4cbfc49472480252"
+    }
+  ]
+}

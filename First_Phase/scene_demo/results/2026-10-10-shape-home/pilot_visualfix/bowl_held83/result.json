@@ -1,0 +1,1168 @@
+{
+  "case_id": "bowl_held83",
+  "context_origin": "fixed_historical_subtask_fixture",
+  "origin_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_sha": null,
+  "origin_check": null,
+  "terminal_check": "embedded_match",
+  "phase_counts": {
+    "replay": 83,
+    "release": 17,
+    "movement": 44,
+    "confirm": 5,
+    "home": 0
+  },
+  "release_open_actions": 11,
+  "initial_vision_decision": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": true,
+    "supported": true,
+    "released": false,
+    "stable": true,
+    "operation_achieved": true,
+    "clear_of_target": false,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.4,
+          0.6,
+          0.85,
+          0.85
+        ],
+        "destination": [
+          0.25,
+          0.6,
+          0.75,
+          0.85
+        ],
+        "gripper": [
+          0.35,
+          0.2,
+          0.65,
+          0.5
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.3,
+          0.5,
+          0.9,
+          0.85
+        ],
+        "destination": [
+          0.2,
+          0.5,
+          0.8,
+          0.8
+        ],
+        "gripper": null
+      }
+    },
+    "evidence": [
+      "In agentview frames 0 and 2, the black bowl (akita_black_bowl_1) is fully resting on the white plate (plate_1) with no gripper contact visible.",
+      "In wrist frames 1 and 3, the bowl is clearly seated on the plate; gripper is retracted above and not touching the bowl.",
+      "Finger qpos values indicate open gripper (~0.003, -0.006), consistent with release.",
+      "No motion of the bowl between timestamps 4.60 and 4.65 confirms stability.",
+      "Gripper is visibly clear of bowl, plate edge, and nearby objects in both views.",
+      "encoder fingers not at standard open position; this does not prove object grasp"
+    ],
+    "unknown_reasons": []
+  },
+  "finish": {
+    "ready": false,
+    "ok": false,
+    "reason": "not eligible for home",
+    "counts": {
+      "release": 17,
+      "movement": 44,
+      "confirm": 5,
+      "home": 0
+    },
+    "release_settle_actions": 6,
+    "release_open_actions": 11,
+    "plan": {
+      "ok": true,
+      "reason": "ok",
+      "waypoints": [
+        [
+          0.019288831344107638,
+          1.053729260173449,
+          6.864091829531176e-05,
+          -1.191462685059534,
+          -0.027031994547741047,
+          2.0793956186081117,
+          0.9430520331516843
+        ],
+        [
+          0.019285121187662693,
+          1.04971897413653,
+          8.658645745541567e-05,
+          -1.1934146386585807,
+          -0.02701768525337912,
+          2.0773359219739627,
+          0.9430038698474563
+        ],
+        [
+          0.01928045856785762,
+          1.0456374864497566,
+          0.0001043559016027319,
+          -1.1954669090147525,
+          -0.027003623352211126,
+          2.0753068465618365,
+          0.9429561045224846
+        ],
+        [
+          0.01927583662777817,
+          1.0415753724041126,
+          0.00012211231545746274,
+          -1.1974796378294932,
+          -0.026989279975110834,
+          2.073257961836143,
+          0.9429078647538932
+        ],
+        [
+          0.01927127639486813,
+          1.0375387303468944,
+          0.00013986079263184742,
+          -1.199442115059203,
+          -0.026974593509899406,
+          2.0711843315158585,
+          0.9428590335275396
+        ],
+        [
+          0.01926678146659995,
+          1.0335279183097335,
+          0.00015759846556688892,
+          -1.201353801483992,
+          -0.02695956442680371,
+          2.069085747609767,
+          0.9428096078007484
+        ],
+        [
+          0.019262354156941712,
+          1.0295428466732486,
+          0.00017532186165314506,
+          -1.203214959094443,
+          -0.026944198159677784,
+          2.0669623803687713,
+          0.9427595937617558
+        ],
+        [
+          0.01925799667494963,
+          1.0255833965016277,
+          0.0001930274785590344,
+          -1.205025902349061,
+          -0.02692850051887147,
+          2.0648144251705047,
+          0.9427089982052804
+        ],
+        [
+          0.01925371121883498,
+          1.0216494526678574,
+          0.00021071182919865883,
+          -1.2067869388578287,
+          -0.02691247732852237,
+          2.0626420745087737,
+          0.9426578278491097
+        ],
+        [
+          0.019249499982817005,
+          1.0177409062948821,
+          0.00022837144565954047,
+          -1.2084983650113896,
+          -0.02689613439941206,
+          2.0604455159190898,
+          0.9426060892835709
+        ],
+        [
+          0.019245365156985526,
+          1.01385765476939,
+          0.0002460028799770598,
+          -1.2101604659557088,
+          -0.026879477528241637,
+          2.058224931955703,
+          0.9425537889709575
+        ]
+      ],
+      "candidate_reports": [
+        {
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "distance": 0.02,
+          "reason": "clear"
+        }
+      ],
+      "sensor_screen": {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        }
+      }
+    },
+    "checks": [
+      {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": true,
+        "supported": true,
+        "released": true,
+        "stable": true,
+        "operation_achieved": true,
+        "clear_of_target": true,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.38,
+              0.42,
+              0.85,
+              0.8
+            ],
+            "destination": [
+              0.25,
+              0.4,
+              0.75,
+              0.78
+            ],
+            "gripper": [
+              0.35,
+              0.1,
+              0.65,
+              0.45
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.2,
+              0.5,
+              0.9,
+              0.95
+            ],
+            "destination": [
+              0.15,
+              0.45,
+              0.85,
+              0.9
+            ],
+            "gripper": null
+          }
+        },
+        "evidence": [
+          "In agentview frames 0, 2, 4: black bowl is resting on white plate with red rim (plate_1), no gripper contact visible.",
+          "In wrist frames 1, 3, 5: bowl is fully supported by plate; gripper is retracted and not touching bowl or plate.",
+          "Finger qpos shows open state (~0.038, -0.038), consistent with release; visual separation confirms release across all frames.",
+          "Target remains stationary across timestamps 5.40, 5.45, 5.50 \u2014 stable support observed over distinct frames.",
+          "Gripper is clearly withdrawn above and away from both bowl and plate in all agentview frames.",
+          "2D projection overlap near target/support; not 3D contact evidence"
+        ],
+        "unknown_reasons": []
+      },
+      {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": true,
+        "supported": true,
+        "released": null,
+        "stable": null,
+        "operation_achieved": null,
+        "clear_of_target": false,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.4,
+              0.55,
+              0.85,
+              0.85
+            ],
+            "destination": [
+              0.25,
+              0.4,
+              0.75,
+              0.7
+            ],
+            "gripper": [
+              0.35,
+              0.2,
+              0.65,
+              0.5
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.3,
+              0.45,
+              0.9,
+              0.95
+            ],
+            "destination": [
+              0.2,
+              0.35,
+              0.8,
+              0.75
+            ],
+            "gripper": [
+              0.4,
+              0.1,
+              0.7,
+              0.4
+            ]
+          }
+        },
+        "evidence": [
+          "In agentview frames 0,2,4: black bowl is positioned on top of red/white plate (plate_1), indicating at_destination and supported.",
+          "In wrist frames 1,3,5: bowl is visually resting on plate surface; gripper is above but not clearly separated from bowl.",
+          "Gripper fingers are partially occluded in all views; cannot confirm release (no visible gap between fingers and bowl).",
+          "Gripper remains positioned directly over the bowl in all frames; not clear_of_target.",
+          "2D projection overlap near target/support; not 3D contact evidence"
+        ],
+        "unknown_reasons": [
+          "Release cannot be confirmed: finger-object separation is occluded in both views across all frames.",
+          "Stability cannot be judged: only static snapshots provided; no motion evidence across timestamps to confirm no target movement.",
+          "Operation_achieved depends on release and clearance, both unconfirmed."
+        ]
+      }
+    ],
+    "restored": true,
+    "limitation": "visible geometry only",
+    "opening_confirmed": true,
+    "object_release_not_yet_confirmed": true,
+    "_release_path": true,
+    "active_retreat_plan": {
+      "ok": true,
+      "reason": "ok",
+      "waypoints": [
+        [
+          0.019288831344107638,
+          1.053729260173449,
+          6.864091829531176e-05,
+          -1.191462685059534,
+          -0.027031994547741047,
+          2.0793956186081117,
+          0.9430520331516843
+        ],
+        [
+          0.019285121187662693,
+          1.04971897413653,
+          8.658645745541567e-05,
+          -1.1934146386585807,
+          -0.02701768525337912,
+          2.0773359219739627,
+          0.9430038698474563
+        ],
+        [
+          0.01928045856785762,
+          1.0456374864497566,
+          0.0001043559016027319,
+          -1.1954669090147525,
+          -0.027003623352211126,
+          2.0753068465618365,
+          0.9429561045224846
+        ],
+        [
+          0.01927583662777817,
+          1.0415753724041126,
+          0.00012211231545746274,
+          -1.1974796378294932,
+          -0.026989279975110834,
+          2.073257961836143,
+          0.9429078647538932
+        ],
+        [
+          0.01927127639486813,
+          1.0375387303468944,
+          0.00013986079263184742,
+          -1.199442115059203,
+          -0.026974593509899406,
+          2.0711843315158585,
+          0.9428590335275396
+        ],
+        [
+          0.01926678146659995,
+          1.0335279183097335,
+          0.00015759846556688892,
+          -1.201353801483992,
+          -0.02695956442680371,
+          2.069085747609767,
+          0.9428096078007484
+        ],
+        [
+          0.019262354156941712,
+          1.0295428466732486,
+          0.00017532186165314506,
+          -1.203214959094443,
+          -0.026944198159677784,
+          2.0669623803687713,
+          0.9427595937617558
+        ],
+        [
+          0.01925799667494963,
+          1.0255833965016277,
+          0.0001930274785590344,
+          -1.205025902349061,
+          -0.02692850051887147,
+          2.0648144251705047,
+          0.9427089982052804
+        ],
+        [
+          0.01925371121883498,
+          1.0216494526678574,
+          0.00021071182919865883,
+          -1.2067869388578287,
+          -0.02691247732852237,
+          2.0626420745087737,
+          0.9426578278491097
+        ],
+        [
+          0.019249499982817005,
+          1.0177409062948821,
+          0.00022837144565954047,
+          -1.2084983650113896,
+          -0.02689613439941206,
+          2.0604455159190898,
+          0.9426060892835709
+        ],
+        [
+          0.019245365156985526,
+          1.01385765476939,
+          0.0002460028799770598,
+          -1.2101604659557088,
+          -0.026879477528241637,
+          2.058224931955703,
+          0.9425537889709575
+        ]
+      ],
+      "candidate_reports": [
+        {
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "distance": 0.02,
+          "reason": "clear"
+        }
+      ],
+      "sensor_screen": {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        }
+      }
+    },
+    "movement_screens": [
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000231_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000231_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000232_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000232_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -0.11867585965722721,
+                -0.9794921116235018,
+                -0.16282273674751158,
+                0.12531450675020836
+              ],
+              [
+                -0.9918446745783986,
+                0.12461681011022036,
+                -0.026735597027588168,
+                0.006641469243677067
+              ],
+              [
+                0.046477756454958455,
+                0.15832199438260186,
+                -0.9862930417728937,
+                1.0308607760575055
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000253_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000253_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000254_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000254_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -0.11876639760705976,
+                -0.9795192192685527,
+                -0.16259348659452194,
+                0.12535866095117287
+              ],
+              [
+                -0.9918323934736013,
+                0.12470480603533096,
+                -0.026780862721611676,
+                0.0066255652989317525
+              ],
+              [
+                0.04650855895278948,
+                0.1580848203820079,
+                -0.9863296322776272,
+                1.0350122951483525
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000275_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000275_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000276_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000276_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -0.11884760828612229,
+                -0.9795116065732273,
+                -0.16258000674437656,
+                0.12536101362203425
+              ],
+              [
+                -0.991819805954414,
+                0.12479429261708441,
+                -0.026830151821190598,
+                0.006609039174767284
+              ],
+              [
+                0.046569502050323314,
+                0.15806137136737297,
+                -0.9863305147668545,
+                1.0390227399250052
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000297_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000297_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000298_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/sensors/cap000298_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -0.11893496888263189,
+                -0.9795011931796919,
+                -0.16257886005395505,
+                0.12536102717100475
+              ],
+              [
+                -0.9918061763179612,
+                0.12489118160848978,
+                -0.026883105735321433,
+                0.006591391551496332
+              ],
+              [
+                0.046636700080823,
+                0.15804937619614742,
+                -0.9863292619047537,
+                1.0433359773118889
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "final_snapshot": {
+    "state_sha": "b3875ec5f3b24eaaeb5aa4be91e54318fbaa6bad917f6b9ccabe964d03babd06",
+    "gold": {
+      "predicates": {
+        "on|akita_black_bowl_1|plate_1": true
+      },
+      "objects": {
+        "akita_black_bowl_1": {
+          "position": [
+            0.05714231796089297,
+            -0.03750477776033576,
+            0.9085408451353041
+          ],
+          "quaternion": [
+            0.6793110076648082,
+            -0.03694847733898912,
+            0.033992179547908154,
+            0.7321310651907457
+          ],
+          "linear_velocity": [
+            -1.5401963246915874e-08,
+            1.0711330519903896e-07,
+            -2.2676448584556205e-08
+          ],
+          "angular_velocity": [
+            2.4838414222725555e-07,
+            -1.0973823334444852e-06,
+            -1.95955273090319e-06
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "cream_cheese_1": {
+          "position": [
+            -0.04602629144396026,
+            0.13447270946529477,
+            0.9089214774186077
+          ],
+          "quaternion": [
+            1.0306826232299163e-18,
+            -7.289906753561162e-17,
+            5.628530418034556e-18,
+            1.0
+          ],
+          "linear_velocity": [
+            1.560968437463395e-18,
+            -7.293634841765096e-18,
+            1.7683745643995812e-14
+          ],
+          "angular_velocity": [
+            -8.06777869042958e-16,
+            2.657753911351827e-16,
+            1.2921537196016782e-16
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "wine_bottle_1": {
+          "position": [
+            -0.20423290037391095,
+            -0.061650894860553626,
+            0.8988754774203452
+          ],
+          "quaternion": [
+            1.109359091507732e-08,
+            -6.204091079947406e-06,
+            3.8784043987676265e-07,
+            0.9999999999806799
+          ],
+          "linear_velocity": [
+            4.5505652222431624e-18,
+            1.5808687725336675e-18,
+            1.7706298442215773e-14
+          ],
+          "angular_velocity": [
+            -9.432869831458926e-16,
+            3.531925584144165e-17,
+            -2.6038013746080296e-18
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "plate_1": {
+          "position": [
+            0.05959239966597775,
+            -0.012024221645146507,
+            0.90250339570878
+          ],
+          "quaternion": [
+            0.6862173193349808,
+            1.1299330876596714e-05,
+            -1.4763838804819115e-05,
+            0.7273965839203986
+          ],
+          "linear_velocity": [
+            -3.6223108613289374e-13,
+            1.0474448655287444e-12,
+            -9.15047716736063e-13
+          ],
+          "angular_velocity": [
+            -2.40085200992962e-11,
+            3.0773984267965886e-10,
+            7.415047105231381e-11
+          ],
+          "grasped": false,
+          "error": null
+        }
+      },
+      "held_objects": [],
+      "gripper_qpos": [
+        0.038553053953883074,
+        -0.03865270779708518
+      ],
+      "eef_position": [
+        0.06061453807717292,
+        0.010217603207623261,
+        0.9584325706967394
+      ],
+      "grasp_observation_complete": true,
+      "strict_candidate": true,
+      "phases": {
+        "on|akita_black_bowl_1|plate_1": "released_stable"
+      },
+      "goal_objects": [
+        "akita_black_bowl_1"
+      ]
+    },
+    "home": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.009287727853420307,
+        1.181683832664115,
+        0.006120857838254157,
+        1.2261845486299336,
+        0.026742365952724893,
+        0.1530084807561085,
+        0.15194102666285658
+      ],
+      "arm_speed_rad_s": [
+        9.402737992255804e-09,
+        0.0049104305204869855,
+        1.261821417967823e-05,
+        0.0021276058513309977,
+        8.428469026888479e-06,
+        0.0027835512736709414,
+        2.4848068518683166e-05
+      ],
+      "max_joint_error_rad": 1.2261845486299336,
+      "max_joint_speed_rad_s": 0.0049104305204869855,
+      "finger_error_m": [
+        0.00017752191114589477,
+        7.505618160157101e-05
+      ],
+      "finger_speed_m_s": [
+        0.00011164484242181859,
+        0.00010999813554663899
+      ],
+      "max_finger_error_m": 0.00017752191114589477,
+      "max_finger_speed_m_s": 0.00011164484242181859,
+      "ready": false
+    },
+    "contacts": []
+  },
+  "home": {
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "arm_error_rad": [
+      0.009287727853420307,
+      1.181683832664115,
+      0.006120857838254157,
+      1.2261845486299336,
+      0.026742365952724893,
+      0.1530084807561085,
+      0.15194102666285658
+    ],
+    "arm_speed_rad_s": [
+      9.402737992255804e-09,
+      0.0049104305204869855,
+      1.261821417967823e-05,
+      0.0021276058513309977,
+      8.428469026888479e-06,
+      0.0027835512736709414,
+      2.4848068518683166e-05
+    ],
+    "max_joint_error_rad": 1.2261845486299336,
+    "max_joint_speed_rad_s": 0.0049104305204869855,
+    "finger_error_m": [
+      0.00017752191114589477,
+      7.505618160157101e-05
+    ],
+    "finger_speed_m_s": [
+      0.00011164484242181859,
+      0.00010999813554663899
+    ],
+    "max_finger_error_m": 0.00017752191114589477,
+    "max_finger_speed_m_s": 0.00011164484242181859,
+    "ready": false
+  },
+  "contacts": [],
+  "physical_streak": 0,
+  "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/all_actions.mp4",
+  "errors": [],
+  "status": "blocked",
+  "initialization_steps": 10,
+  "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_state_sha": "da8146858acf03be45fca8804e9936a0a1a21905a23f58c2644c49cf61032d6b",
+  "core_counts": {
+    "release": 17,
+    "movement": 44,
+    "confirm": 5,
+    "home": 0
+  },
+  "actual_helper_counts": {
+    "release": 17,
+    "movement": 44,
+    "confirm": 5,
+    "home": 0
+  },
+  "target_metrics": {
+    "eligible": true,
+    "expected_release": true,
+    "expected_retreat": true,
+    "release_actions": 17,
+    "actual_release_open_actions": 11,
+    "movement_actions": 44,
+    "confirm_actions": 5,
+    "home_actions": 0,
+    "target_executed": true
+  }
+}

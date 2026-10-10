@@ -477,7 +477,7 @@ class PilotRunner:
             frame_deque = deque(maxlen=3)
             actual_counts = {"release": 0, "movement": 0, "confirm": 0, "home": 0}
             replay_counter = {"n": 0}
-            caps = {"release": 20, "movement": 80, "confirm": 20, "home": 360}
+            caps = {"release": 20, "movement": 120, "confirm": 20, "home": 360}
             actual_step_counter = {"n": 0}
             last_capture = {"cap": None}
 
@@ -555,14 +555,21 @@ class PilotRunner:
                 sensor_frames = []
                 image_paths = []
                 for cap in selected:
-                    for fr in cap.get("frames", []):
+                    for fr in cap.get('verification_frames', cap.get('frames', [])):
                         sensor_frames.append({"frame": len(sensor_frames), "view": fr.get("view"), "timestamp": cap.get("timestamp")})
                         image_paths.append(fr.get("rgb_path"))
+                robot = port.read_robot()
+                measurements = {
+                    "stage": port.phase or "post_execution",
+                    "finger_qpos": [float(x) for x in robot["finger_qpos"]],
+                    "max_abs_arm_qvel": max(abs(float(x)) for x in robot["arm_qvel"]),
+                }
                 safe_ctx = {
                     "user_request": copy.deepcopy(context_arg.get("user_request")),
                     "current_subtask": copy.deepcopy(context_arg.get("current_subtask")),
                     "criteria": copy.deepcopy(context_arg.get("criteria")),
                     "sensor_frames": copy.deepcopy(sensor_frames),
+                    "actuator_measurements": measurements,
                 }
                 call_index = qwen_budget["n"]
                 qwen_budget["n"] += 1
@@ -570,7 +577,6 @@ class PilotRunner:
                     raise RuntimeError("qwen call budget exceeded")
                 meta = qwen_client.analyze(safe_ctx, image_paths)
                 raw_verdict = meta.get("verdict", {}) if isinstance(meta, dict) else {}
-                robot = port.read_robot()
                 verdict = vision.reconcile_verdict(
                     context_arg, raw_verdict, robot, reference
                 )
@@ -587,6 +593,7 @@ class PilotRunner:
                     "raw_verdict": raw_verdict,
                     "verdict": verdict,
                     "robot": robot,
+                    "actuator_measurements": measurements,
                 }
                 _append_jsonl(checks_fp, row)
                 last_verdict = verdict

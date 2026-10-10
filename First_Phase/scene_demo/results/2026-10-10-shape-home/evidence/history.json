@@ -1,0 +1,780 @@
+{
+  "schema_version": 1,
+  "campaign_id": "20261010-shape-home",
+  "question_key": "release-stop",
+  "registry_sha256": "816a5bda2aaa290d8dcbb40b575e6f746f794ebef158bf8b4d87885b7389d091",
+  "registry_entry_count": 19,
+  "items": [
+    {
+      "entry": {
+        "id": "20261007-placement",
+        "title": "停止判据与篮子完整/拆分指令对照",
+        "date": "2026-10-07",
+        "question_keys": [
+          "release-stop",
+          "basket-full-vs-atomic",
+          "bowl-native-baseline"
+        ],
+        "tags": [
+          "LIBERO",
+          "SmolVLA",
+          "release-stop",
+          "basket-full-vs-atomic",
+          "bowl-native-baseline",
+          "停止判据与篮子完整/拆分指令对照",
+          "篮子"
+        ],
+        "conditions": [
+          "同checkpoint与状态0/模型seed0，17 trials/19 jobs，另有独立live检查",
+          "完整篮子指令与原子指令、预算300/600/300+300，停止判据对照"
+        ],
+        "findings": [
+          "碗在旧95/83步停点未达到释放稳定，新102/104步达标，动作前缀完全相同",
+          "完整篮子指令中汤罐第212步稳定放置，但全任务失败",
+          "原子汤罐300、600、300+300均失败，番茄酱原子失败"
+        ],
+        "limits": [
+          "每条件n=1",
+          "完整/拆分行为差异不能直接证明语言因果",
+          "本轮非训练"
+        ],
+        "evidence": [
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-07/README.md",
+            "sha256": "aec6a3122e509eda1c4f9c0f043f69443805dc783f20631fabfad1110bacfb14"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-07/baseline_comparison_statistics.json",
+            "sha256": "f3e45aeeeb6c06cf8ccdfaf8e6326b0157bad0224fdf9d7fb318a4de9a637529"
+          }
+        ],
+        "configuration_complete": false
+      },
+      "disposition": "reuse",
+      "reason": "原95/83停点与102/104释放确认已配对；重用未释放/未稳的原始证据，不重做VLA。"
+    },
+    {
+      "entry": {
+        "id": "20261009-joint-home",
+        "title": "两旧酒瓶后状态完整关节归位再抓碗",
+        "date": "2026-10-09",
+        "question_keys": [
+          "joint-home-handoff",
+          "bowl-start-context"
+        ],
+        "tags": [
+          "LIBERO",
+          "SmolVLA",
+          "joint-home-handoff",
+          "bowl-start-context",
+          "两旧酒瓶后状态完整关节归位再抓碗",
+          "酒瓶",
+          "碗",
+          "归位"
+        ],
+        "conditions": [
+          "同两个旧交接状态，seed2/3",
+          "全部7关节+夹爪真实归位",
+          "旧酒瓶历史动作回放"
+        ],
+        "findings": [
+          "243/241归位后，93/105新VLA放碗完成，两例成功",
+          "旧直接/碗上方准备失败背景保留"
+        ],
+        "limits": [
+          "首酒瓶不是本轮新VLA",
+          "只有两个状态，非普遍保证",
+          "旧500VLA背景不是相同总预算"
+        ],
+        "evidence": [
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-joint-home/README.md",
+            "sha256": "162edd099f1300b79d79a395732b80234dcb1005ce3bdacd9aa872b136406c29"
+          }
+        ],
+        "configuration_complete": false
+      },
+      "disposition": "reuse",
+      "reason": "已验证真实归位控制器在部分旧状态有效，复用控制器结果。"
+    },
+    {
+      "entry": {
+        "id": "20261009-joint-home-12",
+        "title": "关节归位六种组合×两条件，前12例",
+        "date": "2026-10-09",
+        "question_keys": [
+          "joint-home-handoff",
+          "joint-home-multitask",
+          "wine-start-context",
+          "basket-atomic-execution",
+          "wine-grasp-placement"
+        ],
+        "tags": [
+          "LIBERO",
+          "SmolVLA",
+          "joint-home-handoff",
+          "joint-home-multitask",
+          "wine-start-context",
+          "basket-atomic-execution",
+          "wine-grasp-placement",
+          "关节归位六种组合×两条件，前12例",
+          "归位"
+        ],
+        "conditions": [
+          "全为新VLA，无辅助/回放/Hermes",
+          "goal_table与basket_two，A init0/model2、B init1/model3",
+          "VLA336/归位360",
+          "12完整，第13中止164动作且排除，第14–20未启动"
+        ],
+        "findings": [
+          "全链3/12",
+          "首技能失败4、归位入口受阻3、归位后酒瓶失败2",
+          "实际17VLA：碗5/5、酒瓶2/4、灶台4/4、汤0/2、番茄酱0/2",
+          "5次归位达标后接续3成功",
+          "六个VLA失败目标谓词从未真"
+        ],
+        "limits": [
+          "没有无归位配对组，init与seed同时改变，后续策略随机流未单独控制",
+          "相关前缀不能当独立随机样本",
+          "杯子/三步未取得本轮结果",
+          "不能证实训练缺陷"
+        ],
+        "evidence": [
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/README.md",
+            "sha256": "93debc649e87a463fb752b07c12e2f90356fca198f77009e4f7bf28cded4e370"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/case_summary12.csv",
+            "sha256": "dd588b7bccc2099f0a520078d800d86d791b4299eefd08d2601b24b36af6f432"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/scope12.json",
+            "sha256": "1c719ccf0dff3f80675f928269a2eb90edac7e11b91ba36d417544195d156c7b"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/metrics12.json",
+            "sha256": "8a331d7433dfcbd36de0be6027905b0711e43a9f50076c60bbf7b4079cc038bb"
+          }
+        ],
+        "configuration_complete": false
+      },
+      "disposition": "reuse",
+      "reason": "复用原case02/07及失败09/11动作与旧评分，不重跑原生基线。"
+    },
+    {
+      "entry": {
+        "id": "20261009-safe-exit-3",
+        "title": "保持夹爪开口安全退离三旧终态试点",
+        "date": "2026-10-10",
+        "question_keys": [
+          "joint-home-handoff",
+          "wine-start-context"
+        ],
+        "tags": [
+          "LIBERO",
+          "关节归位",
+          "安全退离",
+          "SDK",
+          "离线酒瓶"
+        ],
+        "conditions": [
+          "LIBERO goal8；env seed0；固定case02/07/08，init1/0/1；历史model seed3/2/3。",
+          "历史动作回放预算180/78/76；每例退离80、归位360；零新VLA/Hermes。",
+          "成功要求真实退离与原严格归位、5次真实post-action确认、全部保护及旧成果保持；未知即停止campaign。"
+        ],
+        "findings": [
+          "case02真实回放180、退离0、归位0，SDK字段缺失使结果unknown；case07/08 not_run。",
+          "case02原态和终态SHA吻合；2cm退离候选在scratch规划中接受，未执行。",
+          "运行后修正SDK字段并通过35项SDK软件测试；未复测物理。",
+          "旧酒瓶case01/02成功，case03/04归位后失败；离线分析仍有两路策略输入及子任务RNG记录缺口。"
+        ],
+        "limits": [
+          "没有有效退离或归位结果；完整最终guard未保存。",
+          "接口错误不算VLA失败，不能归因于训练；离线四例不严格配对，不能pool或合并成功率。",
+          "configuration是原冻结实验方法；实际运行前后源码版本见proof，修正源码未物理运行。"
+        ],
+        "configuration": {
+          "actual_vla_cap": 0,
+          "retries": 0,
+          "cases": [
+            "case_02",
+            "case_07",
+            "case_08"
+          ],
+          "frozen_inputs_sha256": "5fae1983b80eedbc38f4db30ce6ac5607ebb7ed24b612fbe5814085e1fbc0f71",
+          "mechanism": "actual_gap_safe_exit_then_strict_home",
+          "retreat_cap_per_case": 80,
+          "home_cap_per_case": 360,
+          "replay_actions": [
+            180,
+            78,
+            76
+          ],
+          "candidate_distances_m": [
+            0.02,
+            0.04,
+            0.06
+          ],
+          "cart_step_m": 0.001,
+          "joint_screen_step_rad": 0.003,
+          "ik_iterations": 50,
+          "ik_damping": 0.03,
+          "ik_joint_clip_rad": 0.015,
+          "ik_pos_tol_m": 0.0001,
+          "ik_ori_tol_rad": 0.005,
+          "penetration_slack_m": 5e-05,
+          "real_waypoint_joint_error_rad": 0.004,
+          "confirm_postaction_samples": 5,
+          "gripper_hold": "actual qpos normalized by corresponding position-actuator ctrlrange; zero gripper action holds command",
+          "weight": "not_loaded",
+          "language": "none",
+          "new_policy_rng": "none",
+          "source_freeze": "all current top-level Python SHA map locked in accepted software proof before launch"
+        },
+        "configuration_complete": true,
+        "evidence": [
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/README.md",
+            "sha256": "7c01c64119743592571b4154de8b6330b6c5d6b5c0066ef3e22c8a032f016556"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/pilot/summary.json",
+            "sha256": "1de2984187938a8322acc865a6b2278cd97acb0f7bf11c204a0da137e4523532"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/evidence/pilot_real_postflight.json",
+            "sha256": "b1764eb6e4260793eed5de52c58d76d683a8ee03c5bb88f222314d8144128692"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/evidence/software_proof_entry.json",
+            "sha256": "3240c9d6f42f93b416b41a70805976493d48bed478d2a3dc12012c63ad1ddc05"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/evidence/gripper_sdk_fix_final_proof.json",
+            "sha256": "9757cb4fa3c614a219cb2e201e868e035be430f1e7b8df70d71b65b72956a5aa"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/analysis/wine_existing.json",
+            "sha256": "26759f4f527726e3f36389b03648efaf7f280b20ed60e59c343f3b39130804da"
+          },
+          {
+            "path": "First_Phase/scene_demo/plans/2026-10-09-safe-exit.json",
+            "sha256": "945856a400eeef019cf122ad962f91b4548422c52fb7750cd5b00d1a4b6a1bc9"
+          }
+        ]
+      },
+      "disposition": "reuse",
+      "reason": "保留SDK错误后零辅助动作的unknown；不能作为退出有效性证据。"
+    },
+    {
+      "entry": {
+        "id": "20261010-safe-exit-sdk-3",
+        "date": "2026-10-10",
+        "title": "SDK修正后三旧终态退离实测：零归位通过",
+        "question_keys": [
+          "joint-home-handoff"
+        ],
+        "tags": [
+          "LIBERO",
+          "安全退离",
+          "归位",
+          "SDK",
+          "试点"
+        ],
+        "conditions": [
+          "与旧试点相同的三个原生结束状态：case02/07/08，初态1/0/1；历史动作回放180/78/76，合计334。",
+          "实际SDK字段修正为_ref_joint_gripper_actuator_indexes；每例退离上限80、归位上限360，保护与确认判据保持。",
+          "没有新VLA或Hermes调用、模型加载、重试、调参或训练；复用97项软件测试与3项子测试证据。"
+        ],
+        "findings": [
+          "完整退离并归位0/3；case02退离80后exit_budget，case07退离14、case08退离9后contact_blocked，归位均0。",
+          "case02末尾无机器人接触但仅3次连续稳定确认，要求5次，预算耗尽；两个灶台新接触均为finger1_pad_collision与stove_g19，末深度约0.52/2.84微米。",
+          "三个原任务目标最终均真，物体与原成果保护通过，控制器均恢复；灶台完整无机器人接触保护未通过。",
+          "实际85.53980326652527秒，334回放+103退离+0归位=437步；exit0/summary.ok=true仅表示既定流程完成，接口异常消除但修复效果未证明。"
+        ],
+        "limits": [
+          "没有后续VLA任务；0/3归位不是VLA失败，不能推出微调必要或组合成功。",
+          "退离有进展不证明增加两步即可归位；极浅新接触不能直接宣称严重碰撞或放宽保护。",
+          "仅三个已有失败结束状态，无随机扩展或单因素贡献对照；旧unknown记录独立保留。"
+        ],
+        "configuration": {
+          "actual_vla_cap": 0,
+          "retries": 0,
+          "cases": [
+            "case_02",
+            "case_07",
+            "case_08"
+          ],
+          "frozen_inputs_sha256": "6ed04b29b202098e286d57270b492345b561348240e366d9f3a5f5e9886f1b6c",
+          "mechanism": "actual_gap_safe_exit_then_strict_home",
+          "retreat_cap_per_case": 80,
+          "home_cap_per_case": 360,
+          "replay_actions": [
+            180,
+            78,
+            76
+          ],
+          "candidate_distances_m": [
+            0.02,
+            0.04,
+            0.06
+          ],
+          "cart_step_m": 0.001,
+          "joint_screen_step_rad": 0.003,
+          "ik_iterations": 50,
+          "ik_damping": 0.03,
+          "ik_joint_clip_rad": 0.015,
+          "ik_pos_tol_m": 0.0001,
+          "ik_ori_tol_rad": 0.005,
+          "penetration_slack_m": 5e-05,
+          "real_waypoint_joint_error_rad": 0.004,
+          "confirm_postaction_samples": 5,
+          "gripper_hold": "actual qpos normalized by corresponding position-actuator ctrlrange; zero gripper action holds command",
+          "weight": "not_loaded",
+          "language": "none",
+          "new_policy_rng": "none",
+          "source_freeze": "all current top-level Python SHA map locked in accepted software proof before launch",
+          "sdk_index_attribute": "_ref_joint_gripper_actuator_indexes",
+          "runtime_sources": {
+            "safe_exit.py": "54824e433307a5eb9634783f66b9cb654967f35cec7ec661ff0e70b6c3f635b5",
+            "safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+            "safe_exit_planner.py": "e1ded8ff1c310ff0e128945b8fec0ec36c13ff9ab41fee8c610b6d9ac7fd4de7",
+            "safe_exit_pilot.py": "791a73d33999b63b7eeb226010b2c77a70c727081b2b06fd86ea9b9618cc9ea8",
+            "safe_exit_pilot_io.py": "d77244763b9a4eb772fc61c0ea938197678d3a68545e67c773d3eefed0bc7ad9",
+            "joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21"
+          },
+          "launcher_sha256": "0fce0d44ac164ae2dc487fae81ee17f40694ddebaad270c559bf074fee4691ee"
+        },
+        "configuration_complete": true,
+        "evidence": [
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/README.md",
+            "sha256": "2294047afea1c9f62782af2ee660839a60fbae7ca1c44c13a9e025278c129fdc"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/pilot/summary.json",
+            "sha256": "5ed86fe953764143a586054c423c8b3ecadbdc28058a560e7f8a8fbef04aa955"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/evidence/run_command.json",
+            "sha256": "8b109e5d24d38ded68a7739dbcc2d6085d87696d65a864b369a38fd8e10fcfd4"
+          },
+          {
+            "path": "First_Phase/scene_demo/plans/2026-10-10-safe-exit-sdk.json",
+            "sha256": "055d86177d6e75efb0978c9416ffdedf3d50da86827946bb5f85c517f3b06e66"
+          }
+        ]
+      },
+      "disposition": "reuse",
+      "reason": "复用退离预算用尽与新浅接触的结果，作为本轮收尾问题来源。"
+    },
+    {
+      "entry": {
+        "id": "20261010-visual-finish",
+        "date": "2026-10-10",
+        "title": "视觉完成检查与通用收尾五例试点：完整子任务交接0/3",
+        "question_keys": [
+          "release-stop",
+          "joint-home-handoff",
+          "visual-completion"
+        ],
+        "tags": [
+          "LIBERO",
+          "Panda",
+          "视觉检查",
+          "松手",
+          "退离",
+          "归位",
+          "试点"
+        ],
+        "conditions": [
+          "五个冻结历史样例：bowl_held83、wine_exit、stove_exit允许收尾；soup_negative、sauce_negative为负例。原初态真实恢复后回放83/180/78/336/336动作，碗终态只有嵌入快照部分身份核对，其他四例有完整终态SHA。",
+          "独立literal评分目标是每个受测子任务的on/in/turnon，不是场景全部BDDL目标或完整多任务指令。交接要求目标保持、所有抓持解除、无机器人接触及标准关节归位连续五个真实post-action样本满足。",
+          "运行期Qwen3-VL检查实际RGBD相机图像，传感路线使用RGBD/编码器；独立oracle评分及紧急监督不传入检查器或路线规划。当前仍有仿真特权紧急监督，独立CLI模块未启用为演示UI默认收尾。",
+          "无新VLA推理、无新Hermes规划、无训练。固定历史子任务上下文；实际Qwen5次，每次初查4图2时间点。实际动作1423=初始化50+历史回放1013+辅助归位360，运行406.86秒。"
+        ],
+        "findings": [
+          "三个eligible完整子任务交接0/3，v1尚不通过物理验收；两个负例2/2零辅助，汤罐incomplete、番茄酱unknown保守拒绝，不称两例都准确辨识。",
+          "碗回放83后执行home360因home budget阻断。初查视觉全部true与原图/冻结graspedTrue矛盾，错误跳过松手及退离。归位动作打开夹爪，末nativeTrue/released_stable/contacts=[]，但关节最大误差0.8124311325333802rad约46.55度，未归位，不是仅少确认。",
+          "酒瓶回放180，辅助0，home screen blocked；clear_of_target不覆盖支撑架及其他障碍，Qwen声称open/retracted与图中仍近架不一致。未启动退离，不能宣称退离规划已验证。",
+          "灶台回放78，辅助0，initial stop；native turnonTrue和红炉圈可见，Qwen把开火当作开盖，是检查器语义错误。release/movement/confirm五例实际均0，这些分支尚无物理验证。",
+          "51软件测试通过仅是软件证据；训练来源本地README datasets unknown、train_config及准确dataset/episode/preprocessing截断manifest缺失，末段抽查0episode，不能判断训练缺松手。"
+        ],
+        "limits": [
+          "没有新VLA或完整Hermes规划链，0/3不是VLA能力成功率或完整多任务系统成功率；两个负例不能证明普适视觉准确。",
+          "本轮改变视觉检查与传感收尾多个因素，不能单独归因。oracle紧急监督仍限仿真，尚非已验收真机方案；碗完整历史终态SHA未知。",
+          "松手、退离、确认分支未发生物理动作；末段真实训练episode身份未核实，不能用一般LIBERO数据替代实际训练数据，也不据此开始微调。",
+          "下一步仅计划复用存帧离线校准语义/遮挡/目标与支撑物区别，加夹爪传感及时序矛盾否决，复用既有成功归位流程并核对新分段速度；之后同规模旧失败样例复验，不扩大不训练。",
+          "原campaign不可覆盖或直接重跑；后续测量需新proposal、inputs、输出目录。软件传感及控制组单独原始输出有缺口，既有结构化记录保留并标明，不补造输出。"
+        ],
+        "configuration": {
+          "campaign": "20261010-visual-finish-pilot",
+          "inputs_sha256": "85229f96c05aa97073cecacb4de524e3f539594879ec39a80720da4fb67d086b",
+          "case_order": [
+            "bowl_held83",
+            "wine_exit",
+            "stove_exit",
+            "soup_negative",
+            "sauce_negative"
+          ],
+          "initialization_actions": 50,
+          "historical_replay_actions": 1013,
+          "max_finish_actions": 1440,
+          "finish_caps_per_eligible": {
+            "release": 20,
+            "movement": 80,
+            "confirm": 20,
+            "home": 360
+          },
+          "eligible_cases": [
+            "bowl_held83",
+            "wine_exit",
+            "stove_exit"
+          ],
+          "negative_cases": [
+            "soup_negative",
+            "sauce_negative"
+          ],
+          "runtime_sensors": "two-camera actual RGBD render, calibration, arm joint encoders, finger position; no object poses/predicates/contact lists in visual or path planning",
+          "oracle_emergency_supervision": "privileged simulation predicate/object displacement/contact probes after actual helper steps; logged separately, remains simulation-only emergency supervision",
+          "independent_gold": [
+            [
+              "on",
+              "akita_black_bowl_1",
+              "plate_1"
+            ],
+            [
+              "on",
+              "wine_bottle_1",
+              "wine_rack_1_top_region"
+            ],
+            [
+              "turnon",
+              "flat_stove_1"
+            ],
+            [
+              "in",
+              "alphabet_soup_1",
+              "basket_1_contain_region"
+            ],
+            [
+              "in",
+              "tomato_sauce_1",
+              "basket_1_contain_region"
+            ]
+          ],
+          "context_contract": "context is a GPT-fixed historical Hermes subtask fixture, not a newly generated Hermes plan. Gold is independent offline oracle and forbidden to vision decision.",
+          "vision_model": "qwen3-vl-plus",
+          "vision_max_calls": 18,
+          "vision_max_tokens": 1600,
+          "vision_temperature": 0,
+          "new_vla_inferences": 0,
+          "new_hermes_calls": 0,
+          "weights_loaded": 0,
+          "training": false,
+          "physical_streak": 5,
+          "repeat_measurements": 0,
+          "source_freeze": "preflight.json source_sha256 must match before launch and before eachcase; no silent refreeze"
+        },
+        "configuration_complete": true,
+        "evidence": [
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/README.md",
+            "sha256": "59690e1a722b0315381919dfb9589887c196ca1344d06046f911e4f2252744ee"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/summary.json",
+            "sha256": "eb33bffbb8590f972bdd2df84072c1cc73adb4215f4d62683edad3fba86637cd"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/observed_results.json",
+            "sha256": "e56a10e40077124fd7fd5f5158baca09226d1d81d9054c7d79967c87c75ca571"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/inputs.json",
+            "sha256": "85229f96c05aa97073cecacb4de524e3f539594879ec39a80720da4fb67d086b"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/preflight.json",
+            "sha256": "e9a88c764cb1836ce9f822e0097b6050ed88c40dc7eaed091f7cbb6824114049"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/training_source_audit.json",
+            "sha256": "3cf90ff304ce65c3d3c0fadd98364c28e3ce476d37df831822bbb416be5653ec"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/software_checks.json",
+            "sha256": "b3f73dd8f25ae013282d2d001fdf95274bf91a34c2ca6b7bc346029acef1cea0"
+          },
+          {
+            "path": "First_Phase/scene_demo/plans/2026-10-10-visual-finish-analysis.json",
+            "sha256": "68a4622ad36dbffb7a45faf885bbff9038932f935805d0aa0295f710e9ad6f71"
+          },
+          {
+            "path": "First_Phase/scene_demo/plans/2026-10-10-visual-finish-pilot.json",
+            "sha256": "2bd527ca7c4fbb1381784c9edf40e8a7328ec9ff5a44917391f16e7e7b40ba07"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/runtime_sources_at_launch.zip",
+            "sha256": "12c2c1a85b9cd771770018c8b54964018aaf8714c3b08845745186d52254c326"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/source_format_normalization.json",
+            "sha256": "7818bdec90db4ac2508150b86e8cd677c45d380b09f36cb853d8dbfef1da3019"
+          }
+        ]
+      },
+      "disposition": "reuse",
+      "reason": "旧三正例release/movement/confirm均0，视觉误判和新home执行偏离已核对；复用原终态与失败来源，不把0/3算收尾效果"
+    },
+    {
+      "entry": {
+        "id": "20261010-finish-takeover-v2",
+        "date": "2026-10-10",
+        "title": "接管松手退离修正：最终原碗样例完整交接0/1，余四暂停",
+        "question_keys": [
+          "release-stop",
+          "joint-home-handoff",
+          "visual-completion"
+        ],
+        "tags": [
+          "LIBERO",
+          "Panda",
+          "接管",
+          "松手",
+          "退离",
+          "视觉检查",
+          "小范围验证"
+        ],
+        "conditions": [
+          "三个不同源码版本各恢复同一个原碗失败状态，不能合并为可靠性；最终版本独立分母1，酒瓶/灶台/汤罐/番茄酱四例暂停not_run。首次导入EOF零物理零Qwen不计效果分母。",
+          "固定目标是碗on plate子任务，非完整场景或新Hermes多任务链；原权重不变，新VLA/新Hermes0，无训练。LIBERO/robosuite/MuJoCo/Panda，独立oracle评分与紧急监督不输入视觉和传感路线。",
+          "到位且支撑→停稳→真实开启夹爪并编码器确认→受保护RGBD退离→独立检查→旧home。仅endpoint_hand_clear_fail允许实际姿态新RGBD重规划1次，movement80不重置，geometry阈值不变。",
+          "累计409实际动作=初始化30+历史回放249+辅助130；Qwen6次/11152tokens；实际DeepSeek8次input33503/output22014。三个旧版本的物理动作不合并计算最终版成功率。"
+        ],
+        "findings": [
+          "本轮修正了接管触发与松手/退离顺序，已真实发出开口和退离动作，但完整子任务交接仍未通过。最终原碗样例11个控制周期持续标准开口命令/60退离/确认0/归位0，完整交接0/1，余四暂停。",
+          "入口版release6只是闭合等待，实际开口0，release denied；释放版等待6/开口11/退离30；最后版等待6/开口11/退离60，均在确认和归位前停止。target_metrics true仅证明open+move，不能当完整通过。",
+          "末版碗onTrue/strictTrue/released_stable/held[]/contacts0保持；physical_streak0/homeFalse。是退离阶段阻断，不是已执行归位的失败。",
+          "首次末端间隙7.959mm不足10mm是保存RGBD/CAD离线FK复算；原runtime只保存布尔阻断，不冒称当时记录精确底层原因。新版在线两次endpoint_hand_clear_fail，一次重规划后停止，不能强制home。",
+          "释放DS请求9951input/6000output截断，整体未应用；12完整生产对象由GPT审阅，恢复11+1noop，测试worker按固定规格。退离短请求982input/1129output end_turn，未重生成全模块。离线三次均zero动力，前两guard失败保留，第三构建mj_step1一次被替换noop。"
+        ],
+        "limits": [
+          "最终仅一个原碗状态，不能宣称完整修复成功、可靠性改善或泛化；确认和归位0，四其他case未测。尚未改UI默认链路，不是新VLA/Hermes能力实验，没有训练因果结论。",
+          "独立oracle仍有仿真特权监督，未真机验收；当前只有间隙否决证据，不证明实际新碰撞或已定位训练缺陷。",
+          "下一步限离线核对约119mm手部保守球包络与RGBD自身点剔除是否造成新观测反复否决终点；不扩样、不新增物理、不降低阈值、不微调。",
+          "原请求响应私有保留、公开SHA/usage；不能由DeepSeek调用量估计GPT账户消耗。"
+        ],
+        "configuration": {
+          "campaign": "20261010-finish-takeover-v2",
+          "inputs_sha256": "8ecb43e7009312a41f5e08f1294c37fe3bd92367808f76ddfef42e9910d8d613",
+          "case_order": [
+            "bowl_held83",
+            "wine_exit",
+            "stove_exit",
+            "soup_negative",
+            "sauce_negative"
+          ],
+          "initialization_actions": 50,
+          "historical_replay_actions": 1013,
+          "max_finish_actions": 1440,
+          "finish_caps_per_eligible": {
+            "release": 20,
+            "movement": 80,
+            "confirm": 20,
+            "home": 360
+          },
+          "eligible_cases": [
+            "bowl_held83",
+            "wine_exit",
+            "stove_exit"
+          ],
+          "negative_cases": [
+            "soup_negative",
+            "sauce_negative"
+          ],
+          "runtime_sensors": "two-camera actual RGBD render, calibration, arm joint encoders, finger position; no object poses/predicates/contact lists in visual or path planning",
+          "oracle_emergency_supervision": "privileged simulation predicate/object displacement/contact probes after actual helper steps; logged separately, remains simulation-only emergency supervision",
+          "independent_gold": [
+            [
+              "on",
+              "akita_black_bowl_1",
+              "plate_1"
+            ],
+            [
+              "on",
+              "wine_bottle_1",
+              "wine_rack_1_top_region"
+            ],
+            [
+              "turnon",
+              "flat_stove_1"
+            ],
+            [
+              "in",
+              "alphabet_soup_1",
+              "basket_1_contain_region"
+            ],
+            [
+              "in",
+              "tomato_sauce_1",
+              "basket_1_contain_region"
+            ]
+          ],
+          "context_contract": "context is a GPT-fixed historical Hermes subtask fixture, not a newly generated Hermes plan. Gold is independent offline oracle and forbidden to vision decision.",
+          "vision_model": "qwen3-vl-plus",
+          "vision_max_calls": 18,
+          "vision_max_tokens": 1600,
+          "vision_temperature": 0,
+          "new_vla_inferences": 0,
+          "new_hermes_calls": 0,
+          "weights_loaded": 0,
+          "training": false,
+          "physical_streak": 5,
+          "repeat_measurements": 0,
+          "source_freeze": "preflight.json source_sha256 must match before launch and before eachcase; no silent refreeze",
+          "revision": "takeover_v2_retreatfix",
+          "old_home_source": "First_Phase/scene_demo/results/2026-10-09-joint-home/evidence/joint_home_20261009_run.py",
+          "home_mode": "joint_home",
+          "inputs_path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/inputs.json",
+          "runtime_env": {
+            "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+            "MUJOCO_GL": "egl",
+            "PYOPENGL_PLATFORM": "egl"
+          },
+          "release_gate": "visible destination support, stable not false; settle then encoder-open; final complete still visual",
+          "previous_revision_physical_actions": 239,
+          "previous_revision_physical_actions_breakdown": {
+            "entryfix": 99,
+            "releasefix": 140
+          },
+          "runtime_preflight_sha256": "a063534145a66f4053987446bb81f50dfc5951e7b8f6a47e14136b8321461337",
+          "tested_revision_declarations": [
+            {
+              "revision": "takeover_v2",
+              "output": "pilot_first_entry_fix",
+              "actual_physical_actions": 99,
+              "separate_effect_denominator": 1
+            },
+            {
+              "revision": "takeover_v2_releasefix",
+              "output": "pilot_first_releasefix",
+              "actual_physical_actions": 140,
+              "separate_effect_denominator": 1
+            },
+            {
+              "revision": "takeover_v2_retreatfix",
+              "output": "pilot_first_retreatfix",
+              "actual_physical_actions": 170,
+              "separate_effect_denominator": 1
+            }
+          ]
+        },
+        "configuration_complete": true,
+        "evidence": [
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/README.md",
+            "sha256": "dcebb2bb1fd334f88dc984feaf94808f3b31d47613c43495b8a082765c1bd635"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/observed_results.json",
+            "sha256": "c0753f4ed927119acd71afb36c41b91af533a988116ee07dc9beef3b3cec57ee"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_entry_fix/summary.json",
+            "sha256": "436cb37bc9a7e7d540707e9bbd618dda259bf54dfe5247dcedf866145ddb976c"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_releasefix/summary.json",
+            "sha256": "e5036378b48d43fcc2c4d147edfe82a00f07b7ab453617399b28a70dd9a7345c"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first_retreatfix/summary.json",
+            "sha256": "69c8849839939e3fb8cac2a21ff050b6d62db280878327eced398fc6ae6d90eb"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/pilot_first/summary.json",
+            "sha256": "48fe87c08301aded06d11ce9dd2a4db06de2b9a1fb33f5f613fe9b98380cb3f0"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/inputs.json",
+            "sha256": "8ecb43e7009312a41f5e08f1294c37fe3bd92367808f76ddfef42e9910d8d613"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/preflight.json",
+            "sha256": "a063534145a66f4053987446bb81f50dfc5951e7b8f6a47e14136b8321461337"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/preflight_at_entry_failure.json",
+            "sha256": "937180c66a03dbb35fdfe79dd9b1ba49be52bc660ace095f98387ac537b9b7dd"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/preflight_at_entry_fix.json",
+            "sha256": "f8fd287427bb6694aa2871f28eadf7c579af0db3567cb19f808adf45a4e6b6f8"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/preflight_at_releasefix.json",
+            "sha256": "1a3b1f6fc9a3281017aae48d66c177261596918e90eac0fc6eef954951a53b11"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/runtime_sources_at_launch.zip",
+            "sha256": "f04e34bfaf180b1d1019362df01c8ca2982f2d9efd74152cf47d2ffd94b8ef66"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/runtime_sources_releasefix.zip",
+            "sha256": "d8dfcfc17bd46bc58d9f130f38046a49ea9f84475726f3aa36865ab07d73f8bc"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/runtime_sources_retreatfix.zip",
+            "sha256": "d94b578fdf35a71255ba067c733bfdd4b4dc6f399387d779ac6dab14ff7fd8ab"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/vision_author.json",
+            "sha256": "4dbaf5a3356b52bf8479bd2dac6e9b58bcaa01007401ac62866d50e05059c072"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/control_author.json",
+            "sha256": "92764db462ede71f15ac58b9f280947d8b32d106c78db8aee05080e68e785df6"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/pilot_author.json",
+            "sha256": "0afccb68fd37a356ba7387ba3eae9325e42c4573ee2d119fcb0a16e403b41571"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/release_author.json",
+            "sha256": "d3367bffc29e168bff4ba1ec84aa7f3ddadd5fa7f4109f100739fced2ad3eb01"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/retreat_author.json",
+            "sha256": "870c33bcf43cfa46924af6345200fc87722a54eba1a18b536295a5a500515d9e"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/movement_screen_fk.json",
+            "sha256": "158da3bf0588b8224f989949a3be30aa71c1aeda104769e041ace2b10792ed75"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/proposal_at_entry_fix.json",
+            "sha256": "cd62abd66dbc7cc328c4da5f47a9d93b577eddefb26fc4b918d00d999990c6c6"
+          },
+          {
+            "path": "First_Phase/scene_demo/results/2026-10-10-finish-takeover-v2/evidence/proposal_at_releasefix.json",
+            "sha256": "048cac0d166d56d54d679717995a0e1db4432243198f0e9835f9607313f0223f"
+          },
+          {
+            "path": "First_Phase/scene_demo/plans/2026-10-10-finish-takeover-v2.json",
+            "sha256": "428bfeffe5f2f99d6cb8cdd3e95c1203adecd0c71f7e20f466deb722d3291d5f"
+          },
+          {
+            "path": "First_Phase/scene_demo/plans/2026-10-10-finish-takeover-v2-offline.json",
+            "sha256": "8428f9cedb6f8b50809892452042579fb93fda8fbc172bb707082d886a32048f"
+          }
+        ]
+      },
+      "disposition": "reuse",
+      "reason": "末版实际标准开口命令11个控制周期、movement60，但confirm/home0，两次endpoint球筛查阻断；复用原日志和保存RGBD，不再跑原VLA。最后版本0/1与前三版本修正过程不合并可靠性。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "new_model_calls": 0
+}

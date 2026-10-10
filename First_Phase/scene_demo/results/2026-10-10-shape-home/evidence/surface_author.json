@@ -1,0 +1,115 @@
+{
+  "actual_deepseek_calls": 2,
+  "http_status": 200,
+  "model": "deepseek-flash",
+  "usage": {
+    "input_tokens": 3379,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 4000,
+    "service_tier": "standard"
+  },
+  "stop_reason": "max_tokens",
+  "request_path": "First_Phase\\tmp\\shape_home_surface_request.json",
+  "response_path": "First_Phase\\tmp\\shape_home_surface_response.json",
+  "request_sha256": "8d9a847e86b8de2ab1f6e6ed0fc677a18d76736ee2cf9aa11dcd3399872c09c7",
+  "response_sha256": "1338b9163cc58cd0be3090e494f73fedf0d6010d8c5eacf4f5dffd7ae9535189",
+  "applied": false,
+  "design": "GPT fixed specification; actual DeepSeek implementation; native worker mechanical application",
+  "physical_actions": 0,
+  "qwen_calls": 0,
+  "failure": "truncated response",
+  "calls": [
+    {
+      "actual_deepseek_calls": 1,
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "usage": {
+        "input_tokens": 3379,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 4000,
+        "service_tier": "standard"
+      },
+      "stop_reason": "max_tokens",
+      "request_path": "First_Phase\\tmp\\shape_home_surface_request.json",
+      "response_path": "First_Phase\\tmp\\shape_home_surface_response.json",
+      "request_sha256": "8d9a847e86b8de2ab1f6e6ed0fc677a18d76736ee2cf9aa11dcd3399872c09c7",
+      "response_sha256": "1338b9163cc58cd0be3090e494f73fedf0d6010d8c5eacf4f5dffd7ae9535189",
+      "applied": false,
+      "design": "GPT fixed specification; actual DeepSeek implementation; native worker mechanical application",
+      "physical_actions": 0,
+      "qwen_calls": 0,
+      "failure": "truncated response"
+    },
+    {
+      "call_index": 2,
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "usage": {
+        "input_tokens": 850,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 1420,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_path": "First_Phase\\tmp\\shape_home_surface_fix_request.json",
+      "response_path": "First_Phase\\tmp\\shape_home_surface_fix_response.json",
+      "request_sha256": "abd8baa41f448dfca69e147ccbf54005ee8cb7dfb844740a24d2bbae88940741",
+      "response_sha256": "c5d5d1c93102ed86c373c68677faf86c9c6f4a3064c3686fd478022c1f67815a",
+      "applied": false,
+      "failure": "unexpected indent (<unknown>, line 39)",
+      "mechanical_indent_binding": "GPT explicitly authorized clouds try/except/if block left shift8 spaces; no logic change",
+      "applied_after_binding": true
+    }
+  ],
+  "partial_response_recovery": {
+    "original_whole_response_applied": false,
+    "source_response_sha256": "1338b9163cc58cd0be3090e494f73fedf0d6010d8c5eacf4f5dffd7ae9535189",
+    "text_character_offset": 17,
+    "end_offset": 3347,
+    "mesh_function_sha256": "d96e4af104ca52864200732e42eea1185f97cc572276e975443b4bced7ed6e9b",
+    "algorithm_review": "GPT approved complete new_function; truncated obstacle_cloud rejected"
+  },
+  "partial_implementation_applied": true,
+  "source_sha256": {
+    "First_Phase\\scene_demo\\finish_v1\\sensors.py": {
+      "before": "419a3ca620a9c7ddf45a7f3e9240a63b5b16dce87120bf96c321b26834129f54",
+      "after": "8aad83911b6771fb7252e7e100fc800e7a3762c71708addab4855b25a3728ce1"
+    },
+    "First_Phase\\scene_demo\\finish_v1\\geometry.py": {
+      "before": "a77a972e4bc26639bd58bb9e6f95dbd21652757c0c27367bfddf35981cfe48aa",
+      "after": "e966f3d7dfa32ddba1ec26b2841e49ed9df4ac1d972f67b124d3ef2179b7d9ae"
+    }
+  },
+  "application_diff_path": "First_Phase\\tmp\\shape_home_surface_applied.diff",
+  "application_diff_sha256": "97f61709e0f9ba9774e55db20173d09096785c47b5c8a73fa13ddf4c36579158",
+  "software_tests": {
+    "chunk_id": "e75f32",
+    "wall_time_seconds": 5.1275188,
+    "exit_code": 0,
+    "original_token_count": 35,
+    "output": ".......................................\n----------------------------------------------------------------------\nRan 39 tests in 0.033s\n\nOK\n",
+    "command": "wsl --exec env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/mnt/d/FYP/First_Phase /home/yhwang/fyp/libero_demo/venv/bin/python -B -m unittest scene_demo.finish_v1.tests.test_core scene_demo.finish_v1.tests.test_release_regression scene_demo.finish_v1.tests.test_takeover_vision scene_demo.finish_v1.tests.test_shape_screen",
+    "test_count": 39,
+    "tests_origin": "GPT exact surface/pixel examples, worker mechanically added4tests. Prior35tests unchanged.",
+    "physical_actions": 0,
+    "qwen_calls": 0
+  },
+  "final_source_sha256": {
+    "sensors.py": "4593b443f72083e3b259b2b360a04b2f9f943570b4b9e6d1c5dc7b3123dfe457",
+    "geometry.py": "e966f3d7dfa32ddba1ec26b2841e49ed9df4ac1d972f67b124d3ef2179b7d9ae",
+    "tests/test_shape_screen.py": "d08c3d9a2dac1fa5ab6a30c668f63c627484fecc2395db82b43258370dcf175a"
+  },
+  "syntax_compile": "3 affected files compiled in memory",
+  "GPT_interface_corrections": [
+    "remove import json as jh, retain module joint_home import",
+    "relative .geometry only, remove fallback",
+    "names=list(visual_geoms)+list(gripper.visual_geoms)",
+    "gid=mdl.geom_name2id; negative id raises",
+    "gtype/raw.geom_dataid use raw MuJoCo model"
+  ],
+  "interface_diff_path": "First_Phase\\tmp\\shape_home_surface_interface.diff",
+  "interface_diff_sha256": "b4f30953f6ae500633060bdd2ee361ba4f722435b1ab6cc1102823bd4bc20614"
+}

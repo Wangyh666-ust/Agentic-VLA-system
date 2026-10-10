@@ -1215,6 +1215,492 @@
           "sha256": "8428f9cedb6f8b50809892452042579fb93fda8fbc172bb707082d886a32048f"
         }
       ]
+    },
+    {
+      "id": "20261010-shape-home",
+      "date": "2026-10-10",
+      "title": "收尾与安全归位定点验证：归位1/1，最终视觉误判，全链0/1",
+      "question_keys": [
+        "release-stop",
+        "joint-home-handoff",
+        "visual-completion"
+      ],
+      "tags": [
+        "LIBERO",
+        "Panda",
+        "RGBD",
+        "OBB",
+        "Qwen",
+        "home",
+        "finish"
+      ],
+      "conditions": [
+        "仅同一历史bowl_held83停点四个修订；每次10初始化+83历史动作回放，非四个独立可靠性样本。仅case0，余四fixture未运行；无新VLA/Hermes/训练，LIBERO/robosuite/MuJoCo + Franka Panda。",
+        "机器人几何代理、3mm CAD表面自身点过滤、深度像素中心、视觉测量上下文、实时侧视、4/6cm退离及安全归位资格存在多因素变化；原成功归位实际循环保持。",
+        "独立native on/释放稳定/所有物体不持有/robot contact0与五真实posthome-ready评分不进入Qwen；最终视觉完整仍必需。",
+        "最后版本仅归位验证1/1，完整验收0/1；当前final configuration按最终proposal原样记录，三个更早修订不以它声称配置相同。"
+      ],
+      "findings": [
+        "四版真实标准开口均11控制周期，另6停稳；movement44/44/89/89、confirm均5、home0/0/0/137；前三版未执行归位，不是归位动作失败。",
+        "最终home_entry到位支撑/实际开口/停稳/current clear通过；原home_screen123采样无碰撞，原streaming执行137动作后home_streak5和independent physical_streak5。",
+        "最后5条actual采样均目标on=true、释放稳定、held[]、contacts[]、home ready；终点最大关节误差0.0026315311rad。全链原status blocked / final visual failed。",
+        "GPT直接复核最终真实agentview/sideview，碗在盘上、夹爪远离未持碗；Qwen却误判盘为空、碗在桌上。保留错误原输出，不把归位通过替代全任务验收。",
+        "实际DeepSeek确定实现7调用有作者记录；最终软件69项68通过，旧mock缺第三次screen精确补齐后仅失败1项重跑通过；单次离线Qwen诊断只改变输出，不计新物理效果。"
+      ],
+      "limits": [
+        "同一个历史状态四个修订不合并为可靠性四样本；多个因素一起变化，不能单独归因或声称泛化。",
+        "其余四fixture、多任务与真机未测试；finish_v1.pilot未接入默认演示UI；OBB仍为近似。",
+        "最终视觉验收未修复；下一步仅复用保存终态图像校准目标/盘子识别与最终判据，再考虑其余失败样例，不立即再跑归位、不微调。"
+      ],
+      "configuration": {
+        "campaign": "20261010-shape-home",
+        "inputs_sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9",
+        "case_order": [
+          "bowl_held83"
+        ],
+        "initialization_actions": 10,
+        "historical_replay_actions": 83,
+        "max_finish_actions": 520,
+        "finish_caps_per_eligible": {
+          "release": 20,
+          "movement": 120,
+          "confirm": 20,
+          "home": 360
+        },
+        "eligible_cases": [
+          "bowl_held83"
+        ],
+        "negative_cases": [],
+        "runtime_sensors": "route/VLA remain original agentview256+wrist256 RGBD; verifier uses realtime native sideview512+agentview256, latest 3 timestamps / 6 images, plus actual controller stage/finger_qpos/max_abs_arm_qvel allowlist; no GT",
+        "oracle_emergency_supervision": "privileged simulation predicate/object displacement/contact probes after actual helper steps; logged separately, remains simulation-only emergency supervision",
+        "independent_gold": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ]
+        ],
+        "context_contract": "context is a GPT-fixed historical Hermes subtask fixture, not a newly generated Hermes plan. Gold is independent offline oracle and forbidden to vision decision.",
+        "vision_model": "qwen3-vl-plus",
+        "vision_max_calls": 6,
+        "vision_max_tokens": 1600,
+        "vision_temperature": 0,
+        "new_vla_inferences": 0,
+        "new_hermes_calls": 0,
+        "weights_loaded": 0,
+        "training": false,
+        "physical_streak": 5,
+        "repeat_measurements": 0,
+        "source_freeze": "preflight.json source_sha256 must match before launch and before eachcase; no silent refreeze",
+        "revision": "shape_home_safe_return_gate",
+        "old_home_source": "First_Phase/scene_demo/results/2026-10-09-joint-home/evidence/joint_home_20261009_run.py",
+        "home_mode": "joint_home",
+        "inputs_path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/inputs.json",
+        "runtime_env": {
+          "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+          "MUJOCO_GL": "egl",
+          "PYOPENGL_PLATFORM": "egl"
+        },
+        "release_gate": "visible destination support, stable not false; settle then encoder-open; final complete still visual",
+        "fixture_selection": {
+          "start_index": 0,
+          "limit": 1,
+          "available_fixtures": 5
+        },
+        "robot_proxy": "rotated mesh-local conservative bbox",
+        "self_mask": "robot visual CAD triangle_surface distance<=0.003m",
+        "projected_clearance": "advisory only; does not alter raw visual verdict",
+        "sim_pixel_offset": 0.5,
+        "pixel_center_offset_contract": "new simulation renderframe explicitly declares pixel_center_offset=0.5; old unmarked frames default 0; real camera has no default +0.5",
+        "actuator_context_contract": {
+          "allowed_fields": [
+            "stage",
+            "finger_qpos",
+            "max_abs_arm_qvel"
+          ],
+          "source": "actual controller stage and measured finger encoders/arm joint velocity only",
+          "zero_gold": true,
+          "only_sensor_facts": true,
+          "image_requirements": "support, release, stability and clearance still require image evidence; standard opening alone cannot prove success",
+          "forbidden_inputs": [
+            "gold",
+            "sim_truth",
+            "goal_predicates",
+            "contact_lists",
+            "object_poses"
+          ]
+        },
+        "prior_revision_qwen_calls": [
+          3,
+          3,
+          3
+        ],
+        "offline_diagnostic_qwen_calls": 1,
+        "campaign_max_calls": 16,
+        "prior_revision_qwen_calls_breakdown": {
+          "shape_first": 3,
+          "visual_context": 3,
+          "clear_observation": 3
+        },
+        "verification_views": [
+          {
+            "view": "agentview",
+            "resolution": [
+              256,
+              256
+            ]
+          },
+          {
+            "view": "sideview",
+            "resolution": [
+              512,
+              512
+            ]
+          }
+        ],
+        "retreat_candidate_distances_m": [
+          0.04,
+          0.06
+        ],
+        "home_entry_contract": {
+          "phase": "after confirm",
+          "visual_place_required_true": [
+            "target_visible",
+            "at_destination",
+            "supported"
+          ],
+          "visual_turn_required_true": [
+            "target_visible",
+            "operation_achieved"
+          ],
+          "stable_requirement": "not False",
+          "encoder_standard_open_max_error_m": 0.002,
+          "max_abs_arm_qvel_rad_s": 0.02,
+          "rgbd_cad_current_hand_clearance_m": 0.01,
+          "original_home_route_screen_required": true,
+          "eligibility_is_completion": false,
+          "completion_during_return": "pending",
+          "final_requirements": "vision complete plus independent goal/released stable/no held/contact0/five post-action home ready",
+          "forbidden_checker_inputs": [
+            "gold",
+            "sim_truth",
+            "goal_predicates",
+            "contact_lists",
+            "object_poses"
+          ]
+        }
+      },
+      "configuration_complete": true,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_first/bowl_held83/result.json",
+          "sha256": "b3093870e26fde70e23bddbbc5f781487c836209dbef239d02ede44c3f14e964"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_first/bowl_held83/checks.jsonl",
+          "sha256": "0c9d8899fadcd5af04cca4fbf85c18af84e2ddb931dc109d48183bb4c2f3ef80"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_first/bowl_held83/helper.jsonl",
+          "sha256": "4b339fba5c1541e82ba2c668b5da7d2240c6e0b990b19721f5aabf8678a2cc88"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_first/bowl_held83/events.jsonl",
+          "sha256": "46152e3a7085e32c28c53daef87a934ee1f1097c13e2fdefc2a5ce7f641b6669"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_first/bowl_held83/oracle.jsonl",
+          "sha256": "e487c5e2eb2e0376e3d0db9f8452aec5c4be72569a9491eea1c48dd30ef72694"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_first/bowl_held83/all_actions.mp4",
+          "sha256": "37da3b798d54c8396705b3f68a6c4360f7569b9a688fa3a44aa9e7c2f57e003d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_first/summary.json",
+          "sha256": "1a9baa7328c69c79929a0f78d7b156a9151a082002f7fcfcceb95ca1f3d05122"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/launch_audit.json",
+          "sha256": "a1b3aece7eb0a446321623096ec7bad8ae6158cd50c3cde1285a741bbe3c0155"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/physical_launch.log",
+          "sha256": "2c3cc07b8e4e90c09f1e248ffc75cd3951f3a64ce91c296f4229276445e8d9d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/result.json",
+          "sha256": "aeb7659f78651457e3024d1903b3140bf3a0880a2d4e08aa10fdc9e604fefab8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/checks.jsonl",
+          "sha256": "8593463b7a63d63661ca292af3781893ed9cdebf75384f5cf4a2da53c56a41a3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/helper.jsonl",
+          "sha256": "4b339fba5c1541e82ba2c668b5da7d2240c6e0b990b19721f5aabf8678a2cc88"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/events.jsonl",
+          "sha256": "46152e3a7085e32c28c53daef87a934ee1f1097c13e2fdefc2a5ce7f641b6669"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/oracle.jsonl",
+          "sha256": "e487c5e2eb2e0376e3d0db9f8452aec5c4be72569a9491eea1c48dd30ef72694"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/bowl_held83/all_actions.mp4",
+          "sha256": "37da3b798d54c8396705b3f68a6c4360f7569b9a688fa3a44aa9e7c2f57e003d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_visualfix/summary.json",
+          "sha256": "1a9baa7328c69c79929a0f78d7b156a9151a082002f7fcfcceb95ca1f3d05122"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/launch_audit_visual.json",
+          "sha256": "f6fe7e00b682dd838719a264a01da0a5c065b92a012a4bbcc9ab0f1e5b3db06d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/physical_launch_visual.log",
+          "sha256": "2c3cc07b8e4e90c09f1e248ffc75cd3951f3a64ce91c296f4229276445e8d9d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_observation/bowl_held83/result.json",
+          "sha256": "e7be5dad368b20e4e2a7ffc4021be9242f1ec7e05dba9c4508d24eef9ab1b574"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_observation/bowl_held83/checks.jsonl",
+          "sha256": "5ad815dfc79eeb6bb18bc730dc014522594eef3ff1ff1fef4cbfc49472480252"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_observation/bowl_held83/helper.jsonl",
+          "sha256": "5fd29f884ef1ccc634f2d0e07b1cd76a69a13f1123512df019dad91fdc539268"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_observation/bowl_held83/events.jsonl",
+          "sha256": "0f6b914d3d76e4f4349b92b76d4240c14e7650547427b7e5211e0f0e8b7ed193"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_observation/bowl_held83/oracle.jsonl",
+          "sha256": "6c14f5def0c210c4e8ff02a9ecc1fff83f8dab4efaed2263c31897cab135abba"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_observation/bowl_held83/all_actions.mp4",
+          "sha256": "72f058559d2d7cf1813781adbb956d8ac0be3cde1793b6f1138f3a600e66b277"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_observation/summary.json",
+          "sha256": "b1569e7ca400a373a1480978b09999c9129c96aafbc399bfb78775bc1ad838ca"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/launch_audit_observation.json",
+          "sha256": "3363541e1122ca9e375db49ce76adcb4b32610683638645704f5f051b0906cfe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/physical_launch_observation.log",
+          "sha256": "2c3cc07b8e4e90c09f1e248ffc75cd3951f3a64ce91c296f4229276445e8d9d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/result.json",
+          "sha256": "f0d19e2299c36459f8aaf0ab779d70669de212e6491c96af97a6b66ddb4ffef3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/checks.jsonl",
+          "sha256": "b91f6a16b3d62b54e8c1f7ef90d99e743b72c2dc2c34d35c2eab7ca5ff3d281c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/helper.jsonl",
+          "sha256": "3f0995681eebac8304dabf0faadbf15d8e6e2624819989c52bcbfb746257f0e6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/events.jsonl",
+          "sha256": "da6792de9b35bfc9b854164cad3acdf12652309808b4c380cfc70886388bb1d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/oracle.jsonl",
+          "sha256": "60d7bc5a66a1462bd7a241d140e5861d243bfed4cea8a72ed6919050529dddab"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/all_actions.mp4",
+          "sha256": "212221f6d435d6c46647fc1e9d2497edccb696c6b7149d69fdc2dde6d3e04c23"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/summary.json",
+          "sha256": "137d94a17333d20f56cda8274880f49be43fb123160987ed3469929fb203c0ae"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/launch_audit_home_gate.json",
+          "sha256": "3c09eb967dc898066ed0370a07e34fd5f7e323a4a5872c1f1026e68d8cc3e701"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/physical_launch_home_gate.log",
+          "sha256": "2c3cc07b8e4e90c09f1e248ffc75cd3951f3a64ce91c296f4229276445e8d9d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-shape-home.json",
+          "sha256": "910315b5b4a827703a12ea01a24d6fcab3e13d751119d86d907b721cdf6d833d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/README.md",
+          "sha256": "b29580274d42a284261632654ed13f543fe0c6223bc433c1101d33cacac4187c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/observed.json",
+          "sha256": "b6deb7d858746fc89ba4bf40cece4f415efede2b8a2a60e2ac1320ad55838a2b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/author.json",
+          "sha256": "e6807683826b130552b2e749302dd4d47c132c03acb49e3f51666e1ac4bdd92d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/camera_probe.json",
+          "sha256": "0f1621d18dc08d7959195be346efdbb1bf3244052335f6c3ca5442b9692d64ee"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/camera_probe.log",
+          "sha256": "474f0b7739077b1b2aa0cae91e9714852841adb54eee9119e1e980415b1eadf0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/history.json",
+          "sha256": "2128671a860b9edaaf899665cb9663770afc3a5b69442090d73228d616b6907b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/home_gate_author.json",
+          "sha256": "3cb293ea8ed4a47659066e994f12d7dc02500c6b607025c97716c25fadcb5c03"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/inputs.json",
+          "sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/mask_probe.json",
+          "sha256": "0034654b282b2bcbfb40355404135eb493b94bb841afeb2dd4e2d2bf58d9d28b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/mask_probe.log",
+          "sha256": "4f05b57060fe419def97be71a0af3d1acdd7749ac671a430f1f96a7beda70244"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/observation_author.json",
+          "sha256": "16538db0ce49fa22d8c9bca4eba9e862b49538458e3af53a43d43d3badfd2971"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/offline.log",
+          "sha256": "7cd0067d2195629f86f4f5492dd3f25d0276ef327475598b5800c0596af2b835"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/offline_geometry.json",
+          "sha256": "7bcfcdc3fe0c6d418ab9db8f54b430a5a939b84b8c9e9cea516e4ad50e4e709d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/pixel_probe.json",
+          "sha256": "14e9d88c6347af230d06e683a43600c7567870c3a87d454c533dcbdce66623f9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/pixel_probe.log",
+          "sha256": "fc663c185bd17f917e751cadef98666f5acac3a6f55b0483bbf74b654b498b4a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/preflight.json",
+          "sha256": "9abdb16eb6a7de957c80c216b6d41cd5b1319323907cba0d9539685d97a78873"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/preflight_bbox_ray.json",
+          "sha256": "3129087db77451f997b85f3c9c923d4ca5da70cbcbe1e87f81fe32546a0844e3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/preflight_observation.json",
+          "sha256": "5a118f6527058479bf026793c87acc8bd8bdb096db180722c6a8a36055d32a93"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/preflight_shape_first.json",
+          "sha256": "84d8e50c3df932511d07e74f8122e9e03a174c9d5e1bd0cd1d3ec045ff7ffa03"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/preflight_visual_context.json",
+          "sha256": "ee159f743d2c589a3ab549cc66650a65deb2fc0ab0a8921c8f52dab47dc830b1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/proposal_bbox_ray.json",
+          "sha256": "76ea5fe32fe011953e19260a33da63846b5e3dbeb58e0fad37e3e7a6cdf4a7d4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/proposal_observation.json",
+          "sha256": "2bfa46c03801e351556669876118a2cd2ab5da1c87fb7e240828fe763148fbb8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/proposal_shape_first.json",
+          "sha256": "e6193645af6f24614f39664f709d870f6c23245728c6933e0889f7bbca79f7e1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/proposal_visual_context.json",
+          "sha256": "ea2036fd16b0781294c8dbb4ac8bab41ff114b96beed37fdc02a6b8b975735fa"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/review_check.json",
+          "sha256": "f624cf62b2628ae2d427aef1fe4404131fedbf476cae83fa98ed5a8fb151759b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/review_check_home_gate.json",
+          "sha256": "f624cf62b2628ae2d427aef1fe4404131fedbf476cae83fa98ed5a8fb151759b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/review_check_observation.json",
+          "sha256": "f624cf62b2628ae2d427aef1fe4404131fedbf476cae83fa98ed5a8fb151759b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/review_check_visual.json",
+          "sha256": "f624cf62b2628ae2d427aef1fe4404131fedbf476cae83fa98ed5a8fb151759b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/runtime_sources.zip",
+          "sha256": "62d9d6c32a403e338d1e715bf5fb0d49f07252b06767daa4f104c01797ae283e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/runtime_sources_bbox_ray.zip",
+          "sha256": "8d41078fc9eb9a3691a2baaaccccbfea5bce24711ec83adbe81e53e8efadf7da"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/runtime_sources_observation.zip",
+          "sha256": "1ba6ec05f52e7070dfe7f6f474b3c8bd14f92c94d7aba189aeff180f27f36451"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/runtime_sources_shape_first.zip",
+          "sha256": "e5d02143b843777b7637be25cd01a1c4d815700adba189373aad7558b146875a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/runtime_sources_visual_context.zip",
+          "sha256": "db0d25a839c6a6c3af371dc6c18c2b7a7480f2675fca143ee3432bb4b3b3b36a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/surface_author.json",
+          "sha256": "8ea1a1f2a792187b4c8d18f828047e1fd039bfd70e5fbe0b72d6bf548e3cc7b7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/surface_probe.json",
+          "sha256": "c77c39108519cf793553291e779d34ad27f8fcca6d2aa29b32830ec64cda34ba"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/surface_probe.log",
+          "sha256": "46f59cd9a3b8261317dbc4ca0496a408558fef4869967e48180e164126f107ed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/vision_author.json",
+          "sha256": "6ed997799d0278bbcd03b300e5cf2db4cecfc0808c14d80fa169e3ab5609d44a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/vision_probe.json",
+          "sha256": "0ec1be6112f880fa99594cc1588ccc97d761f585d470b7ba1f75be0b5baa1a52"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001045_agentview.png",
+          "sha256": "d08f16397fe9152739339a899b15f26913bb1d7eb168669358b3102773ffc095"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001047_sideview.png",
+          "sha256": "5c6c45ef48c5f6b0526bf854f50dc126704cf0ef7eccb29a2af80d034c176052"
+        }
+      ]
     }
   ]
 }

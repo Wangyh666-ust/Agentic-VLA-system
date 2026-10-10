@@ -1,0 +1,65 @@
+{
+  "actual_deepseek_calls": 1,
+  "http_status": 200,
+  "model": "deepseek-flash",
+  "usage": {
+    "input_tokens": 1898,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 880,
+    "service_tier": "standard"
+  },
+  "stop_reason": "end_turn",
+  "request_sha256": "f97eb4a4ab62a78ca0f9057a0efab3cd55ca282710fea11933c93cb23b0df9b5",
+  "response_sha256": "9f603498464fe27463c8d7a4c3561d3b691963ce5d4e8f92df8a589278ec80a1",
+  "request_path": "First_Phase\\tmp\\shape_home_home_gate_request.json",
+  "response_path": "First_Phase\\tmp\\shape_home_home_gate_response.json",
+  "applied": true,
+  "design": "GPT exact semantic/actuator/current-clearance gate; DS implementation; worker mechanical tests",
+  "physical_actions": 0,
+  "qwen_calls": 0,
+  "before_sha256": "30e8787eb4877647a101903b0e22711947a9d1bd66a59b22af1f682ac1d7e56f",
+  "after_sha256": "3b525e5e042235bd95f5eb1f9f0c955ef07a3ccd0f745c7cfb516ffcb3bd995e",
+  "home_bytes_equal": true,
+  "application_diff_path": "First_Phase\\tmp\\shape_home_home_gate_applied.diff",
+  "application_diff_sha256": "69f9eb276dee34f3d9c4f3539b8dbe0d33da4fb60303f9a081e392abd19f6ab7",
+  "edit": {
+    "path": "First_Phase/scene_demo/finish_v1/control.py",
+    "old": "        if d['state'] != 'complete' or v.get('released') is not True:\n            r['reason'] = 'not eligible for home'\n            return r\n",
+    "new": "        r['home_entry'] = {\n            'visible_semantics': False,\n            'measured_open': False,\n            'settled': False,\n            'task_complete_before_home': False,\n            'label': 'execution permitted; task completion pending final verification',\n        }\n        semantic_ok = False\n        try:\n            if v.get('target_visible') is True:\n                if op == 'place':\n                    semantic_ok = (\n                        v.get('destination_visible') is True\n                        and v.get('at_destination') is True\n                        and v.get('supported') is True\n                        and v.get('stable') is not False\n                    )\n                elif op == 'turn':\n                    semantic_ok = (\n                        v.get('operation_achieved') is True\n                        and v.get('stable') is not False\n                    )\n        except (TypeError, ValueError, KeyError):\n            semantic_ok = False\n        r['home_entry']['visible_semantics'] = bool(semantic_ok)\n        decided_complete = False\n        try:\n            decided_complete = d['state'] == 'complete' and v.get('released') is True\n        except (TypeError, ValueError, KeyError):\n            decided_complete = False\n        r['home_entry']['task_complete_before_home'] = bool(decided_complete)\n\n        actuator_ok = True\n        try:\n            st = port.read_robot()\n            arm_qpos = np.asarray(st['arm_qpos'], dtype=float)\n            arm_qvel = np.asarray(st['arm_qvel'], dtype=float)\n            finger_qpos = np.asarray(st['finger_qpos'], dtype=float)\n            finger_home = np.asarray(ref['finger_home'], dtype=float)\n            if not (\n                arm_qpos.shape == (7,)\n                and arm_qvel.shape == (7,)\n                and finger_qpos.shape == (2,)\n                and finger_home.shape == (2,)\n                and np.all(np.isfinite(arm_qpos))\n                and np.all(np.isfinite(arm_qvel))\n                and np.all(np.isfinite(finger_qpos))\n                and np.all(np.isfinite(finger_home))\n            ):\n                actuator_ok = False\n            else:\n                measured_open = bool(\n                    np.max(np.abs(finger_qpos - finger_home)) <= 0.002\n                )\n                settled = bool(np.max(np.abs(arm_qvel)) <= 0.02)\n                r['home_entry']['measured_open'] = measured_open\n                r['home_entry']['settled'] = settled\n                if not (measured_open and settled):\n                    actuator_ok = False\n        except (TypeError, ValueError, KeyError):\n            actuator_ok = False\n        if not actuator_ok:\n            r['reason'] = 'home recovery actuator gate'\n            return r\n\n        if not semantic_ok:\n            r['reason'] = 'not eligible for home'\n            return r\n\n        actualq = np.asarray(port.read_robot()['arm_qpos'])\n        clearance_screen = route_screen([actualq], 0.003)\n        r['home_entry']['clearance_screen'] = clearance_screen\n        clearance_ok = clearance_screen.get('ok') if isinstance(clearance_screen, dict) else None\n        if clearance_ok is not True:\n            r['reason'] = 'home recovery clearance gate'\n            return r\n\n"
+  },
+  "first_software_tests": {
+    "chunk_id": "0418bf",
+    "wall_time_seconds": 4.9824878,
+    "exit_code": 1,
+    "original_token_count": 1179,
+    "output": ".....................................................F...............\n======================================================================\nFAIL: test_endpoint_clear_failure_replans_once_without_resetting_counts (scene_demo.finish_v1.tests.test_release_regression.ReleaseRegression.test_endpoint_clear_failure_replans_once_without_resetting_counts)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests/test_release_regression.py\", line 79, in test_endpoint_clear_failure_replans_once_without_resetting_counts\n    self.assertTrue(result[\"ready\"], result)\nAssertionError: False is not true : {'ready': False, 'ok': False, 'reason': 'exception:', 'counts': {'release': 10, 'movement': 20, 'confirm': 5, 'home': 0}, 'release_settle_actions': 5, 'release_open_actions': 5, 'plan': {'ok': True, 'waypoints': [array([0., 0., 0., 0., 0., 0., 0.]), array([0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01]), array([0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02]), array([0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03]), array([0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04]), array([0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05]), array([0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06]), array([0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07]), array([0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08]), array([0.09, 0.09, 0.09, 0.09, 0.09, 0.09, 0.09]), array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]), array([0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.11]), array([0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12]), array([0.13, 0.13, 0.13, 0.13, 0.13, 0.13, 0.13]), array([0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14]), array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15]), array([0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16]), array([0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17]), array([0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18]), array([0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19]), array([0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2])]}, 'checks': [{'target_visible': True, 'destination_visible': True, 'at_destination': True, 'supported': True, 'released': None, 'stable': None, 'operation_achieved': True, 'clear_of_target': False, 'boxes': {'front': {'target': [0.1, 0.1, 0.2, 0.2], 'destination': [0.3, 0.3, 0.4, 0.4], 'gripper': [0.8, 0.8, 0.9, 0.9]}}, 'evidence': [], 'unknown_reasons': []}, {'target_visible': True, 'destination_visible': True, 'at_destination': True, 'supported': True, 'released': True, 'stable': True, 'operation_achieved': True, 'clear_of_target': True, 'boxes': {'front': {'target': [0.1, 0.1, 0.2, 0.2], 'destination': [0.3, 0.3, 0.4, 0.4], 'gripper': [0.8, 0.8, 0.9, 0.9]}}, 'evidence': [], 'unknown_reasons': []}], 'restored': True, 'limitation': 'visible geometry only', 'opening_confirmed': True, 'object_release_not_yet_confirmed': True, '_release_path': True, 'active_retreat_plan': {'ok': True, 'waypoints': [array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]), array([0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.11]), array([0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12]), array([0.13, 0.13, 0.13, 0.13, 0.13, 0.13, 0.13]), array([0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14]), array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15]), array([0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16]), array([0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17]), array([0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18]), array([0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19]), array([0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2])]}, 'movement_screens': [{'ok': False, 'reason': 'endpoint_hand_clear_fail', 'min_distance': 0.005, 'endpoint_hand_clear': False, 'frames': []}, {'ok': True, 'reason': 'clear', 'min_distance': 0.02, 'endpoint_hand_clear': True, 'frames': []}], 'retreat_replans': [{'failed_screen': {'ok': False, 'reason': 'endpoint_hand_clear_fail', 'min_distance': 0.005, 'endpoint_hand_clear': False, 'frames': []}, 'new_plan': {'ok': True, 'waypoints': [array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]), array([0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.11]), array([0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12]), array([0.13, 0.13, 0.13, 0.13, 0.13, 0.13, 0.13]), array([0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14]), array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15]), array([0.16, 0.16, 0.16, 0.16, 0.16, 0.16, 0.16]), array([0.17, 0.17, 0.17, 0.17, 0.17, 0.17, 0.17]), array([0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18]), array([0.19, 0.19, 0.19, 0.19, 0.19, 0.19, 0.19]), array([0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2])]}}], 'home_entry': {'visible_semantics': True, 'measured_open': True, 'settled': True, 'task_complete_before_home': True, 'label': 'execution permitted; task completion pending final verification'}}\n\n----------------------------------------------------------------------\nRan 69 tests in 0.052s\n\nFAILED (failures=1)\n",
+    "command": "wsl --exec env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/mnt/d/FYP/First_Phase /home/yhwang/fyp/libero_demo/venv/bin/python -B -m unittest scene_demo.finish_v1.tests.test_vision scene_demo.finish_v1.tests.test_takeover_vision scene_demo.finish_v1.tests.test_core scene_demo.finish_v1.tests.test_release_regression scene_demo.finish_v1.tests.test_shape_screen",
+    "tests": 69,
+    "passed": 68,
+    "failure_reason": "Old online screen mock supplied only2screens, newly required current-pose home gate calls screen_shapes a third time; StopIteration. Core implementation not changed.",
+    "physical_actions": 0,
+    "qwen_calls": 0
+  },
+  "failed_test_rerun": {
+    "chunk_id": "90fea7",
+    "wall_time_seconds": 3.6450711,
+    "exit_code": 0,
+    "original_token_count": 25,
+    "output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nOK\n",
+    "command": "wsl --exec env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/mnt/d/FYP/First_Phase /home/yhwang/fyp/libero_demo/venv/bin/python -B -m unittest scene_demo.finish_v1.tests.test_release_regression.ReleaseRegression.test_endpoint_clear_failure_replans_once_without_resetting_counts",
+    "tests": 1,
+    "mechanical_binding": "Parent approved adding third clear_screen for actual current-pose home gate and screening call_count3; original movement screen2/replan1/movement20 assertions preserved. Only failed test rerun.",
+    "physical_actions": 0,
+    "qwen_calls": 0
+  },
+  "final_source_sha256": {
+    "control.py": "1154ca0ea7ccb6a69c4afcaa4950a80f4564c336d389ac0a2d1152ad7890490c",
+    "tests/test_core.py": "c04ec1e9775275c06f4aa6d9a24516aaf4432c6214081d20f164315cf7c860f2",
+    "tests/test_release_regression.py": "808f8b5afe38f2e2c01cb3055c8ef4fa8e4cbc81c24be9191109f2fc81474d5e"
+  },
+  "syntax_compile": "3 affected files compiled in memory",
+  "acceptance": "68 of69 passed initial run; sole fixture shortage repaired under GPT authorization and affected1rerun passed",
+  "tests_origin": "GPT exact gate regression definitions mechanically implemented by worker; DS authored production gate",
+  "log_label_correction": "GPT approved exact text replacement: safety eligibility under review; task completion pending final verification. Log text only, no algorithm/home change, compiled without test/model rerun."
+}

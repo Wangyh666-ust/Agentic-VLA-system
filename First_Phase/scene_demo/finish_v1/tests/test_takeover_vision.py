@@ -100,7 +100,7 @@ class ReconcileVerdictTest(unittest.TestCase):
         self.assertIsNone(out["released"])
         self.assertIsNone(out["clear_of_target"])
 
-    def test_near_support_box_forces_retreat(self):
+    def test_near_support_projection_retains_raw_clear(self):
         context = _place_context()
         verdict = _verdict(
             released=True,
@@ -117,14 +117,14 @@ class ReconcileVerdictTest(unittest.TestCase):
         robot = {"finger_qpos": [0.04, 0.04]}
         reference = {"finger_home": [0.04, 0.04]}
         out = vision.reconcile_verdict(context, verdict, robot, reference)
-        self.assertIs(out["clear_of_target"], False)
+        self.assertIs(out["clear_of_target"], True)
         self.assertIn(
-            "gripper is within 0.03 normalized distance of the target or support surface",
+            "2D projection overlap near target/support; not 3D contact evidence",
             out["evidence"],
         )
         decision = vision.decide(context, out)
-        self.assertEqual(decision["state"], "needs_retreat")
-        self.assertTrue(decision["allow_retreat"])
+        self.assertEqual(decision["state"], "complete")
+        self.assertFalse(decision["allow_retreat"])
 
     def test_invalid_finger_data_is_rejected_without_mutation(self):
         context = _place_context()
@@ -182,6 +182,49 @@ class TurnDecisionTest(unittest.TestCase):
 
 
 class BuildPromptTest(unittest.TestCase):
+    def test_measurement_whitelist_prompt_and_extra_dropped(self):
+        context = _place_context()
+        context["actuator_measurements"] = {
+            "stage": "confirm",
+            "finger_qpos": [0.04, -0.04],
+            "max_abs_arm_qvel": 0.0,
+            "sim_truth": "truth",
+            "gold": "gold",
+        }
+        prompt = vision.build_prompt(context)
+        self.assertIn("Measurement context:", prompt)
+        self.assertIn("Max Abs Arm Qvel", prompt.replace("max_abs_arm_qvel", "Max Abs Arm Qvel"))
+        self.assertNotIn("sim_truth", prompt)
+        self.assertNotIn("gold", prompt)
+
+    def test_measurement_invalid_values_raise(self):
+        for bad in [
+            {"stage": "confirm", "finger_qpos": [float("nan"), 0.0], "max_abs_arm_qvel": 0.0},
+            {"stage": "confirm", "finger_qpos": [0.0, 0.0], "max_abs_arm_qvel": -0.1},
+            {"stage": "confirm", "finger_qpos": [True, 0.0], "max_abs_arm_qvel": 0.0},
+            {"stage": "confirm", "finger_qpos": [0.0], "max_abs_arm_qvel": 0.0},
+        ]:
+            context = _place_context()
+            context["actuator_measurements"] = bad
+            with self.assertRaises((ValueError, TypeError)):
+                vision.build_prompt(context)
+
+    def test_measurement_absent_compatible(self):
+        context = _place_context()
+        prompt = vision.build_prompt(context)
+        self.assertNotIn("Measurement context:", prompt)
+
+    def test_open_measurements_released_none_not_complete(self):
+        context = _place_context()
+        context["actuator_measurements"] = {
+            "stage": "confirm",
+            "finger_qpos": [0.04, -0.04],
+            "max_abs_arm_qvel": 0.0,
+        }
+        verdict = _verdict(released=None)
+        result = vision.decide(context, verdict)
+        self.assertNotEqual(result.get("state"), "complete")
+
     def test_prompt_contains_turn_support_and_no_gold(self):
         context = _place_context()
         context["sim_truth"] = "secret"

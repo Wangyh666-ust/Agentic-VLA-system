@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "id": "20261010-shape-home",
+  "intent": "new_experiment",
+  "question_key": "release-stop",
+  "purpose": "修正粗球和投影框误阻断，在原bowl83停点真实完成松手、退离、确认及已有归位流程。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261009-joint-home",
+    "20261009-joint-home-12",
+    "20261009-safe-exit-3",
+    "20261010-safe-exit-sdk-3",
+    "20261010-visual-finish",
+    "20261010-finish-takeover-v2"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "原95/83停点与102/104释放确认已配对；重用未释放/未稳的原始证据，不重做VLA。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "已验证真实归位控制器在部分旧状态有效，复用控制器结果。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用原case02/07及失败09/11动作与旧评分，不重跑原生基线。"
+    },
+    {
+      "experiment_id": "20261009-safe-exit-3",
+      "disposition": "reuse",
+      "reason": "保留SDK错误后零辅助动作的unknown；不能作为退出有效性证据。"
+    },
+    {
+      "experiment_id": "20261010-safe-exit-sdk-3",
+      "disposition": "reuse",
+      "reason": "复用退离预算用尽与新浅接触的结果，作为本轮收尾问题来源。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "旧三正例release/movement/confirm均0，视觉误判和新home执行偏离已核对；复用原终态与失败来源，不把0/3算收尾效果"
+    },
+    {
+      "experiment_id": "20261010-finish-takeover-v2",
+      "disposition": "reuse",
+      "reason": "末版实际标准开口命令11个控制周期、movement60，但confirm/home0，两次endpoint球筛查阻断；复用原日志和保存RGBD，不再跑原VLA。最后版本0/1与前三版本修正过程不合并可靠性。"
+    }
+  ],
+  "new_physical_actions": 573,
+  "hypothesis": "用更贴近实际几何的机械臂代理、自遮罩与投影语义，可减少假阻断，使原碗停点完成受保护收尾和归位。",
+  "information_gain": "固定同一旧停点及历史动作，只试原碗单例；几何、自遮罩和投影语义多因素同时变化，不能单独归因，也不是可靠性统计。",
+  "success_criteria": "实际标准开口命令>0且编码器确认开启、movement>0、confirm>0、home>0；独立on目标为真、释放稳定、所有物体无抓持、robotcontact=0、连续五个真实post-action home ready、最终视觉complete均通过，才算完整交接。open/move计数不能代替成功。",
+  "failure_criteria": "任何应接管目标未触发，或实际开口/movement/confirm/home任一为零，立即停止，不运行其他fixture；已执行而独立目标、释放、接触、视觉或home未通过，按实际阶段记录阻断，不以计数替代效果。",
+  "unknown_criteria": "来源SHA或回放终态不匹配、缺必需相机、SDK/协议/网络/cleanup异常记unknown并停止；视觉证据不足为正常阻断。其他四fixture保持not_run，不顺延。",
+  "changed_factors": [
+    {
+      "name": "robot_proxy",
+      "before": "机器人碰撞几何粗球代理",
+      "after": "旋转mesh局部保守bbox代理",
+      "reason": "修正粗球对手部实际外形的过度包络"
+    },
+    {
+      "name": "self_mask",
+      "before": "删除粗球内的所有点",
+      "after": "仅actualrobot视觉CAD射线与RGBD表面3mm一致时删除自身点",
+      "reason": "将实际机器人自身表面与邻近环境点区分，保留不一致点"
+    },
+    {
+      "name": "projected_clearance",
+      "before": "2D框靠近强制否决",
+      "after": "2D靠近仅提示，不改raw视觉判定",
+      "reason": "避免投影接近直接当作真实三维接触或清场否决"
+    }
+  ],
+  "fixed_factors": {
+    "cases": [
+      "bowl_held83"
+    ],
+    "historical_initial_states": "inputs逐例origin_sha与reference.origin_sha256；四个terminal_sha精确匹配；碗只匹配原embedded目标谓词/持物/target,eef,finger位置1e-7，不宣称全态同一",
+    "actions": "原gzip日志浮点7维按原顺序真实回放83历史动作，无新VLA推理或模型加载",
+    "policy_weights": "不改变、不读取、不微调；本轮无新policy推理",
+    "initialization": "原env.reset内10settle no-op，仅一个样例，初始化独立计数",
+    "vision": "qwen3-vl-plus、temperature0、max_tokens1600、最多6API调用、无retry",
+    "scene": "LIBERO robosuite/MuJoCo Franka Panda，env_seed与init保持inputs",
+    "contexts": "GPT固定历史Hermes子任务fixture，不新增Hermes调用",
+    "inputs_sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9",
+    "safety": "已真谓词保留；非目标jointed物体位置变化5mm上限；new contact/deepening50um上限；最后成功仍必须无任何robotcontact",
+    "retreat_geometry_and_protection": "仅changed_factors三项变化，原碰撞screen判据/阈值与所有逐步保护、movement80全局预算固定；旧home执行循环与控制器固定",
+    "inputs_path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/inputs.json",
+    "stage_budgets": {
+      "release": 20,
+      "movement": 80,
+      "confirm": 20,
+      "home": 360
+    }
+  },
+  "scope": {
+    "max_cases": 1,
+    "max_vla_actions_per_case": 0,
+    "max_helper_actions_per_case": 573,
+    "stop_rule": "仅index0/limit1原碗样例，Qwen最多6次。任何目标未触发或来源/接口/网络异常立即停止，其他四fixture不运行；不自动重试、不扩大样例、不训练。573=10初始化+83历史回放+480收尾，是未来动作上限而非已发生动作。"
+  },
+  "configuration": {
+    "campaign": "20261010-shape-home",
+    "inputs_sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9",
+    "case_order": [
+      "bowl_held83"
+    ],
+    "initialization_actions": 10,
+    "historical_replay_actions": 83,
+    "max_finish_actions": 480,
+    "finish_caps_per_eligible": {
+      "release": 20,
+      "movement": 80,
+      "confirm": 20,
+      "home": 360
+    },
+    "eligible_cases": [
+      "bowl_held83"
+    ],
+    "negative_cases": [],
+    "runtime_sensors": "two-camera actual RGBD render, calibration, arm joint encoders, finger position; no object poses/predicates/contact lists in visual or path planning",
+    "oracle_emergency_supervision": "privileged simulation predicate/object displacement/contact probes after actual helper steps; logged separately, remains simulation-only emergency supervision",
+    "independent_gold": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ],
+    "context_contract": "context is a GPT-fixed historical Hermes subtask fixture, not a newly generated Hermes plan. Gold is independent offline oracle and forbidden to vision decision.",
+    "vision_model": "qwen3-vl-plus",
+    "vision_max_calls": 6,
+    "vision_max_tokens": 1600,
+    "vision_temperature": 0,
+    "new_vla_inferences": 0,
+    "new_hermes_calls": 0,
+    "weights_loaded": 0,
+    "training": false,
+    "physical_streak": 5,
+    "repeat_measurements": 0,
+    "source_freeze": "preflight.json source_sha256 must match before launch and before eachcase; no silent refreeze",
+    "revision": "shape_home",
+    "old_home_source": "First_Phase/scene_demo/results/2026-10-09-joint-home/evidence/joint_home_20261009_run.py",
+    "home_mode": "joint_home",
+    "inputs_path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/inputs.json",
+    "runtime_env": {
+      "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+      "MUJOCO_GL": "egl",
+      "PYOPENGL_PLATFORM": "egl"
+    },
+    "release_gate": "visible destination support, stable not false; settle then encoder-open; final complete still visual",
+    "fixture_selection": {
+      "start_index": 0,
+      "limit": 1,
+      "available_fixtures": 5
+    },
+    "robot_proxy": "rotated mesh-local conservative bbox",
+    "self_mask": "actual robot visual CAD ray agreement with RGBD surface within 0.003m",
+    "projected_clearance": "advisory only; does not alter raw visual verdict"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": true,
+    "reason": "修复后复用原碗83停点进行单例能力试点，实际几何代理/自遮罩/投影语义已改变；不是相同配置盲重跑，也不是可靠性统计，不重做VLA。"
+  }
+}
