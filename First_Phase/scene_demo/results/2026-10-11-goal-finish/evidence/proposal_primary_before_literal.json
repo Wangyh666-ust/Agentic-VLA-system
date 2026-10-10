@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "20261011-home-primary-existing",
+  "intent": "analyze_existing",
+  "question_key": "release-stop",
+  "purpose": "已真实完成酒瓶开爪/退离/home并独立五连通过，复用其实际终态与同步编码器，移除被手臂遮挡的侧视图修正最后视觉判读，不重复归位。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261010-visual-finish",
+    "20261010-finish-takeover-v2",
+    "20261010-shape-home",
+    "20261010-live-handoff",
+    "20261010-simple-checker"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    },
+    {
+      "experiment_id": "20261010-finish-takeover-v2",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    },
+    {
+      "experiment_id": "20261010-shape-home",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    },
+    {
+      "experiment_id": "20261010-live-handoff",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    },
+    {
+      "experiment_id": "20261010-simple-checker",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "读取本轮wine_atomic原始最终请求和actual post五连验收。",
+    "按最终运行期同一规则保留agentview两时刻原图及其同步编码器，无对象oracle进入模型。",
+    "共最多三次不同条件的新Qwen检查：先主视角、再名称映射均保留否决；第三改用已有catalog自然语言子任务，移除内部region ID附加位置要求。照片/编码器不变，机器人动作0；所有原始请求/响应保留。",
+    "新检查通过只说明终态复核修正，不改原blocked结果或宣称最终同版全链联测。"
+  ],
+  "configuration": {
+    "changed_condition": "home place: two main original frames instead of main+occluded side",
+    "runtime_sha256": "0bf0afc56541801f3e78ab248971d519b39064820cdc4dc5f3142d9b7b161a35",
+    "semantic_change": "current_subtask description uses catalog capability instruction; internal region ID remains in scoring context but excluded from model purpose",
+    "catalog_sha256": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02",
+    "checker_sha256": "1d714f0294b654993e8b5b1ef2b6278fb9bc962c6c1831ecc47b2c8afda5864b"
+  }
+}

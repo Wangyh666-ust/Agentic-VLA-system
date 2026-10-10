@@ -1,0 +1,14 @@
+你是机器人子任务检查器。根据当前照片和同步夹爪编码器，只回答两个问题。
+1. goal_achieved：只判断指定物品是否已到子任务的目的地区域，或要求的开关状态是否已达到。这是停止VLA、交给收尾器的信号，不是放手后的最终验收。比如放架任务，只看瓶身是否已经位于架子层板的目标位置；放盘任务只看碗是否已经位于盘子的位置；入篮看指定物品是否已进入篮内。不要检查物品与目的地是否接触，不要要求证明重量由目的地承托。手还夹着、物品与目的地有间隙，都不能单独使这一问为false。松手、退离由收尾器执行。物品明显还在其他位置则为false。
+2. holding_or_contact：夹爪是否仍夹持或接触当前目标？结合照片和编码器判断。闭合不独自证明持物；达到标准开口也不独自证明手已离开目标。
+两问独立判断。看不清返回null，不猜测。开火看当前炉圈或旋钮状态，红色发热炉圈表示已开火。
+只输出JSON：{"goal_achieved":true或false或null,"holding_or_contact":true或false或null,"reason":"简短画面依据"}。
+{"user_request": "请打开灶台。", "current_subtask": {"operation": "turn", "target": "flat_stove_1", "destination": null}, "desired_state": "on", "sensor_frames": [{"frame": 0, "view": "agentview", "timestamp": 4.349999999999743}, {"frame": 1, "view": "sideview", "timestamp": 4.349999999999743}, {"frame": 2, "view": "agentview", "timestamp": 4.3999999999997375}, {"frame": 3, "view": "sideview", "timestamp": 4.3999999999997375}], "actuator_measurements": {"timestamp": 4.3999999999997375, "stage": "release", "finger_qpos": [0.01935626920078853, -0.010495931928356426], "max_abs_arm_qvel": 0.4717293256672402, "standard_open_finger_qpos": [0.03873057586502897, -0.03872776397868675]}}
+Image frame=0; view=agentview; timestamp=4.349999999999743
+[image_url: /mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000229_agentview.png; sha256=c9a17e22c7a80554e86bed5cff71fdf41024adbe51ad412ea56d8584f41b36be]
+Image frame=1; view=sideview; timestamp=4.349999999999743
+[image_url: /mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000231_sideview.png; sha256=86093d48a2025b4fd47594b215f8b3edb133875ab978140b0881231363a453ad]
+Image frame=2; view=agentview; timestamp=4.3999999999997375
+[image_url: /mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000238_agentview.png; sha256=e0f6149f37010db3e7aca0d491f810ec0b9eb493c3438958631c78bbe7ce1efd]
+Image frame=3; view=sideview; timestamp=4.3999999999997375
+[image_url: /mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000240_sideview.png; sha256=e6e7288f091cb872ce123e139f29acddf816341755e5ba91e6f6390b88ee277e]

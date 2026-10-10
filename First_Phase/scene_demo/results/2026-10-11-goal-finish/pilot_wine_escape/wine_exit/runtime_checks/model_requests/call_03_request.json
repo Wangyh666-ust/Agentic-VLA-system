@@ -1,0 +1,92 @@
+{
+  "prompt": "你是机器人子任务检查器。根据当前照片和同步夹爪编码器，只回答两个问题。\n1. goal_achieved：只判断指定物品是否已到子任务的目的地区域，或要求的开关状态是否已达到。这是停止VLA、交给收尾器的信号，不是放手后的最终验收。比如放架任务，只看瓶身是否已经位于架子层板的目标位置；放盘任务只看碗是否已经位于盘子的位置；入篮看指定物品是否已进入篮内。不要检查物品与目的地是否接触，不要要求证明重量由目的地承托。手还夹着、物品与目的地有间隙，都不能单独使这一问为false。松手、退离由收尾器执行。物品明显还在其他位置则为false。\n2. holding_or_contact：夹爪是否仍夹持或接触当前目标？结合照片和编码器判断。闭合不独自证明持物；达到标准开口也不独自证明手已离开目标。\n两问独立判断。看不清返回null，不猜测。开火看当前炉圈或旋钮状态，红色发热炉圈表示已开火。\n只输出JSON：{\"goal_achieved\":true或false或null,\"holding_or_contact\":true或false或null,\"reason\":\"简短画面依据\"}。\n{\"user_request\": \"请把酒瓶放到架子上。\", \"current_subtask\": {\"operation\": \"place\", \"target\": \"wine_bottle_1\", \"destination\": \"wine_rack_1_top_region\"}, \"desired_state\": null, \"sensor_frames\": [{\"frame\": 0, \"view\": \"agentview\", \"timestamp\": 17.05000000000143}, {\"frame\": 1, \"view\": \"sideview\", \"timestamp\": 17.05000000000143}, {\"frame\": 2, \"view\": \"wrist\", \"timestamp\": 17.05000000000143}, {\"frame\": 3, \"view\": \"agentview\", \"timestamp\": 17.1000000000014}, {\"frame\": 4, \"view\": \"sideview\", \"timestamp\": 17.1000000000014}, {\"frame\": 5, \"view\": \"wrist\", \"timestamp\": 17.1000000000014}], \"actuator_measurements\": {\"timestamp\": 17.1000000000014, \"stage\": \"confirm\", \"finger_qpos\": [0.03895040992560821, -0.03850262422875467], \"max_abs_arm_qvel\": 0.0024218763151198828, \"standard_open_finger_qpos\": [0.03872783560654059, -0.038730509939092383]}}",
+  "context": {
+    "user_request": "请把酒瓶放到架子上。",
+    "current_subtask": {
+      "operation": "place",
+      "target": "wine_bottle_1",
+      "destination": "wine_rack_1_top_region",
+      "phase": "post_execution"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "根据子任务，指定物品在目的地位置或要求开关状态达到即可交给收尾器。"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 17.05000000000143
+      },
+      {
+        "frame": 1,
+        "view": "sideview",
+        "timestamp": 17.05000000000143
+      },
+      {
+        "frame": 2,
+        "view": "wrist",
+        "timestamp": 17.05000000000143
+      },
+      {
+        "frame": 3,
+        "view": "agentview",
+        "timestamp": 17.1000000000014
+      },
+      {
+        "frame": 4,
+        "view": "sideview",
+        "timestamp": 17.1000000000014
+      },
+      {
+        "frame": 5,
+        "view": "wrist",
+        "timestamp": 17.1000000000014
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 17.1000000000014,
+      "stage": "confirm",
+      "finger_qpos": [
+        0.03895040992560821,
+        -0.03850262422875467
+      ],
+      "max_abs_arm_qvel": 0.0024218763151198828,
+      "standard_open_finger_qpos": [
+        0.03872783560654059,
+        -0.038730509939092383
+      ]
+    }
+  },
+  "http_status": 200,
+  "request_sha256": "7e68e6730a3f0a2778be6e6f1d08bba468f0b7e0264fe0ad6f80c22aa2ad8bc0",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001045_agentview.png",
+      "sha256": "711bc1508fc05bfaec889dd502a076021ef10230fae4f52744df521bf4de4746"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001047_sideview.png",
+      "sha256": "9def6443521e1a2b2f8eee552e676355d16ab44c4e38ab587c11e343cd065fce"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001046_wrist.png",
+      "sha256": "c01955c34d168fae55189ab64618bf35fed66785d10db33902d9834e60f341d0"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001054_agentview.png",
+      "sha256": "d737217e5a68365182f2b03686162f9621b156104687de32ecfe5a76c2ef0182"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001056_sideview.png",
+      "sha256": "5bd07762fb41f1d0cf1ef309d0eb104a3b0b5d64879101ed2cef5bc925361aeb"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001055_wrist.png",
+      "sha256": "45f27e59efa07c46cc09dfc494da12c660f33cb8b87efdd1a06792df086bc215"
+    }
+  ]
+}

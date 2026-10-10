@@ -1,0 +1,56 @@
+{
+  "prompt": "你是机器人子任务检查器。根据当前照片和同步夹爪编码器，只回答两个问题。\n1. goal_achieved：只判断指定物品是否已到子任务的目的地区域，或要求的开关状态是否已达到。这是停止VLA、交给收尾器的信号，不是放手后的最终验收。比如放架任务，只看瓶身是否已经位于架子层板的目标位置；放盘任务只看碗是否已经位于盘子的位置；入篮看指定物品是否已进入篮内。不要检查物品与目的地是否接触，不要要求证明重量由目的地承托。手还夹着、物品与目的地有间隙，都不能单独使这一问为false。松手、退离由收尾器执行。物品明显还在其他位置则为false。\n2. holding_or_contact：夹爪是否仍夹持或接触当前目标？看手指与目标的实际位置关系，并结合编码器。腕部镜头下方或照片中央出现物品，不代表物品被夹持。闭合不独自证明持物；达到标准开口也不独自证明手已离开目标。阶段标签不是动作已完成的证据。\n两问独立判断。看不清返回null，不猜测。开火看当前炉圈或旋钮状态，红色发热炉圈表示已开火。\nobject_names给出程序ID对应的可见物体/区域名称；它们是同一物体，不是另一个待寻找的目的地。照片没有程序ID标签时，按这些名称和用户的自然语言核对，不要求看见ID文字。\n只输出JSON：{\"goal_achieved\":true或false或null,\"holding_or_contact\":true或false或null,\"reason\":\"简短画面依据\"}。\n{\"user_request\": \"请把酒瓶放到架子上。\", \"current_subtask\": {\"operation\": \"place\", \"target\": \"wine_bottle_1\", \"destination\": \"wine_rack_1_top_region\"}, \"object_names\": {\"target\": \"wine bottle\", \"destination\": \"wine rack top region\"}, \"desired_state\": null, \"sensor_frames\": [{\"frame\": 0, \"view\": \"agentview\", \"timestamp\": 27.7499999999955}, {\"frame\": 1, \"view\": \"agentview\", \"timestamp\": 27.79999999999547}], \"actuator_measurements\": {\"timestamp\": 27.79999999999547, \"stage\": \"home\", \"finger_qpos\": [0.03873285724285482, -0.03872561670119503], \"max_abs_arm_qvel\": 0.005736911051342238, \"standard_open_finger_qpos\": [0.03872783560654059, -0.038730509939092383]}}",
+  "context": {
+    "user_request": "请把酒瓶放到架子上。",
+    "current_subtask": {
+      "operation": "place",
+      "target": "wine_bottle_1",
+      "destination": "wine_rack_1_top_region",
+      "phase": "post_execution"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "根据子任务，指定物品在目的地位置或要求开关状态达到即可交给收尾器。"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 27.7499999999955
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": 27.79999999999547
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 27.79999999999547,
+      "stage": "home",
+      "finger_qpos": [
+        0.03873285724285482,
+        -0.03872561670119503
+      ],
+      "max_abs_arm_qvel": 0.005736911051342238,
+      "standard_open_finger_qpos": [
+        0.03872783560654059,
+        -0.038730509939092383
+      ]
+    }
+  },
+  "http_status": 200,
+  "request_sha256": "3afddbcf1a611d9f116a502b3783d1f0b307e6a79eebcf10e7296216537f5fb5",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001684_agentview.png",
+      "sha256": "b484e4b8eb2135f3f809760e457ea5afe4ea9910ee84ac4e20bff68f493fb244"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001693_agentview.png",
+      "sha256": "790c648552808b33c1f4ca349b1de822ffa69fa0cb643f7be5d78909f4317717"
+    }
+  ]
+}

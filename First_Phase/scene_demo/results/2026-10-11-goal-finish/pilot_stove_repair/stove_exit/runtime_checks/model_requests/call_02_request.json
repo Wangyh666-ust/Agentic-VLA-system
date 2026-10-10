@@ -1,0 +1,75 @@
+{
+  "prompt": "你是机器人子任务检查器。根据当前照片和同步夹爪编码器，只回答两个问题。\n1. goal_achieved：只判断指定物品是否已到子任务的目的地区域，或要求的开关状态是否已达到。这是停止VLA、交给收尾器的信号，不是放手后的最终验收。比如放架任务，只看瓶身是否已经位于架子层板的目标位置；放盘任务只看碗是否已经位于盘子的位置；入篮看指定物品是否已进入篮内。不要检查物品与目的地是否接触，不要要求证明重量由目的地承托。手还夹着、物品与目的地有间隙，都不能单独使这一问为false。松手、退离由收尾器执行。物品明显还在其他位置则为false。\n2. holding_or_contact：夹爪是否仍夹持或接触当前目标？结合照片和编码器判断。闭合不独自证明持物；达到标准开口也不独自证明手已离开目标。\n两问独立判断。看不清返回null，不猜测。开火看当前炉圈或旋钮状态，红色发热炉圈表示已开火。\n只输出JSON：{\"goal_achieved\":true或false或null,\"holding_or_contact\":true或false或null,\"reason\":\"简短画面依据\"}。\n{\"user_request\": \"请打开灶台。\", \"current_subtask\": {\"operation\": \"turn\", \"target\": \"flat_stove_1\", \"destination\": null}, \"desired_state\": \"on\", \"sensor_frames\": [{\"frame\": 0, \"view\": \"agentview\", \"timestamp\": 5.199999999999649}, {\"frame\": 1, \"view\": \"sideview\", \"timestamp\": 5.199999999999649}, {\"frame\": 2, \"view\": \"agentview\", \"timestamp\": 5.249999999999644}, {\"frame\": 3, \"view\": \"sideview\", \"timestamp\": 5.249999999999644}], \"actuator_measurements\": {\"timestamp\": 5.249999999999644, \"stage\": \"release\", \"finger_qpos\": [0.037633895792249836, -0.03788524343961562], \"max_abs_arm_qvel\": 0.027053956731341356, \"standard_open_finger_qpos\": [0.03873057586502897, -0.03872776397868675]}}",
+  "context": {
+    "user_request": "请打开灶台。",
+    "current_subtask": {
+      "operation": "turn",
+      "target": "flat_stove_1",
+      "destination": null,
+      "phase": "post_execution"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "根据子任务，指定物品在目的地位置或要求开关状态达到即可交给收尾器。",
+      "desired_state": "on"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 5.199999999999649
+      },
+      {
+        "frame": 1,
+        "view": "sideview",
+        "timestamp": 5.199999999999649
+      },
+      {
+        "frame": 2,
+        "view": "agentview",
+        "timestamp": 5.249999999999644
+      },
+      {
+        "frame": 3,
+        "view": "sideview",
+        "timestamp": 5.249999999999644
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 5.249999999999644,
+      "stage": "release",
+      "finger_qpos": [
+        0.037633895792249836,
+        -0.03788524343961562
+      ],
+      "max_abs_arm_qvel": 0.027053956731341356,
+      "standard_open_finger_qpos": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ]
+    }
+  },
+  "http_status": 200,
+  "request_sha256": "e31bc9adbfc743b23e78a4f6e127eafbcc0abbb2b95027f96ebcb709ce57e55e",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000286_agentview.png",
+      "sha256": "18ded115abf0908e2ab2e4545fbfdd4e007f3af866ac3b5ae82db457c3cddd83"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000288_sideview.png",
+      "sha256": "658c4be3fc64d4f1f0b9fe0ca7c3da7b8cae65294df54a007929ec0d14497de2"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000295_agentview.png",
+      "sha256": "c738622b8d133052e0282d04d625b32fdf3849c600fdcb1b4be16f662a33c4c7"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000297_sideview.png",
+      "sha256": "c6b5a22ad19e46525d1ca32b9a89d36955e359a8b6f649dc56b8faa099960b6e"
+    }
+  ]
+}

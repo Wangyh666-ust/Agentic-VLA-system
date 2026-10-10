@@ -788,6 +788,7 @@ class QwenClient:
             "max_tokens": 1600,
             "messages": [{"role": "user", "content": content}],
         }
+        body.update(getattr(self, 'request_options', {}))
         request_bytes = json.dumps(body).encode("utf-8")
         endpoint = self.base_url.rstrip("/") + "/chat/completions"
         request = urllib.request.Request(

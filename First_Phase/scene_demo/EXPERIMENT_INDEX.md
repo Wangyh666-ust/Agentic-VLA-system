@@ -57,3 +57,7 @@
 当前联合检查：旧酒瓶无编码器视觉误判历史保留；当前同步融合及动态细节已使四保存状态准确，番茄酱身份仍unknown，整体未通过，自动收尾off。
 
 | 20261010-live-handoff | 实际接管小试 | wine未触发，stove许可后10闭爪等待阻断，actualopen/move/confirm/home0；整体未通过，两chain未运行 | [报告](results/2026-10-10-live-handoff/README.md) |
+
+## 2026-10-11 最新修复
+
+[酒瓶/灶台收尾与归位实测](results/2026-10-11-goal-finish/README.md)：以逐阶段动作和独立效果记录为准；保留所有先前失败，不合并版本成功率。

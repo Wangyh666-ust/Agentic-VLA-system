@@ -273,11 +273,23 @@ class FinishMonitor:
 
     def _check(self, context, observations):
         selected = self._collect_observations(observations)
+        simple = bool(getattr(self.call_client, 'simple_handoff', False))
+        if simple:
+            selected = selected[-2:]
         paths = []
         sensor_frames = []
         for cap in selected:
             frames = cap.get('verification_frames') or cap.get('frames') or []
-            for fr in frames[:2]:
+            if simple and context['current_subtask']['operation'] == 'place' and self.port.phase == 'home':
+                # At home, the fixed primary scene view preserves target/hand
+                # separation; the side view may be occluded by the arm.
+                frames = [fr for fr in frames if fr['view'] == 'agentview']
+            if simple and context['current_subtask']['operation'] == 'place' and self.port.phase == 'release':
+                frames = list(frames[:2])
+                wrist = next((fr for fr in cap.get('frames', []) if fr['view'] in ('wrist', 'robot0_eye_in_hand')), None)
+                if wrist is not None and not any(fr['view'] == wrist['view'] for fr in frames):
+                    frames.append(wrist)
+            for fr in frames[:3 if simple else 2]:
                 frame = len(paths)
                 if frame >= 6:
                     raise RuntimeError('maximum six frames exceeded')

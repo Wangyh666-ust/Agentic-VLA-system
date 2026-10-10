@@ -14,7 +14,7 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
         'object_release_not_yet_confirmed': False
     }
     v = initial_verdict
-    caps = {'release': 20, 'movement': 120, 'confirm': 20, 'home': 360}
+    caps = {'release': 20, 'movement': 480 if simple_handoff else 120, 'confirm': 20, 'home': 360}
 
     def act(ph, q, f=None, command_kind=None):
         if r['counts'][ph] >= caps[ph]:
@@ -69,7 +69,8 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
         if simple_handoff:
             # Purpose reached: explicitly open, including already-open fingers.
             d = {'state': 'needs_release', 'allow_release': True, 'allow_retreat': False}
-            r['handoff_mode'] = 'simple_goal_contact_v1'
+            r['handoff_mode'] = 'two_question_goal_contact_v2'
+            r['handoff_goal_latched'] = v.get('operation_achieved') is True
 
         if d['state'] == 'needs_release':
             q = np.asarray(port.read_robot()['arm_qpos'])
@@ -104,6 +105,27 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                     np.max(np.abs(np.asarray(ref['finger_home']) - np.asarray(st['finger_qpos']))) <= 0.002 and
                     (simple_handoff or np.max(np.abs(st['arm_qvel'])) <= 0.02)
                 )
+                if simple_handoff and not condition:
+                    measured = np.abs(np.asarray(st['finger_qpos'], float))
+                    standard = np.abs(np.asarray(ref['finger_home'], float))
+                    # Near-full opening can be constrained by a support surface.
+                    # This only permits screened withdrawal with open still commanded;
+                    # it does NOT establish release or bypass the exact home gate.
+                    partial = bool(
+                        np.all(standard > .001) and
+                        measured.sum() >= .90 * standard.sum() and
+                        np.all(measured >= .85 * standard) and
+                        np.max(np.abs(st.get('finger_qvel', [float('inf')] * 2))) <= .005 and
+                        np.max(np.abs(st['arm_qvel'])) <= .02
+                    )
+                    if partial:
+                        condition = True
+                        r['withdraw_with_partial_open'] = {
+                            'finger_qpos': list(st['finger_qpos']),
+                            'aperture_fraction': float(measured.sum() / standard.sum()),
+                            'standard_open_pending': True,
+                            'release_proven': False,
+                        }
                 if condition:
                     streak += 1
                 else:
@@ -113,8 +135,14 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
             if streak < (2 if simple_handoff else 5):
                 r['reason'] = 'release not confirmed'
                 return r
-            v, d = verify()
-            if op == 'place':
+            if simple_handoff:
+                # Once accepted, finishing is an atomic recovery sequence.
+                # Task acceptance is checked again after home, not used to
+                # strand an open, safe robot midway through recovery.
+                opening_confirmed = r['handoff_goal_latched']
+            else:
+                v, d = verify()
+            if not simple_handoff and op == 'place':
                 opening_confirmed = (
                     v.get('target_visible') is True and
                     v.get('destination_visible') is True and
@@ -122,7 +150,7 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                     v.get('supported') is True and
                     v.get('stable') is not False
                 )
-            else:
+            elif not simple_handoff:
                 opening_confirmed = (
                     v.get('target_visible') is True and
                     v.get('operation_achieved') is True
@@ -156,14 +184,27 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                 r['reason'] = 'retreat plan blocked'
                 return r
             qs = p['waypoints']
+            movement_limit = min(480, max(120, 16 * (len(qs) - 1) + 40)) if simple_handoff else 120
+            r['movement_budget'] = movement_limit
 
             i = 1
             while i < len(qs):
+                best_error = float('inf')
+                stagnant = 0
                 while np.max(np.abs(np.asarray(port.read_robot()['arm_qpos']) - np.asarray(qs[i]))) > 0.004:
-                    if r['counts']['movement'] >= 120:
+                    if r['counts']['movement'] >= movement_limit:
                         r['reason'] = 'movement budget'
                         return r
                     st = act('movement', qs[i])
+                    error = float(np.max(np.abs(np.asarray(st['arm_qpos']) - np.asarray(qs[i]))))
+                    r['movement_progress'] = {'waypoint': i, 'waypoints': len(qs), 'joint_error': error}
+                    if error < best_error - 0.0002:
+                        best_error, stagnant = error, 0
+                    else:
+                        stagnant += 1
+                    if simple_handoff and stagnant >= 40:
+                        r['reason'] = 'movement no progress'
+                        return r
                     if r['counts']['movement'] % 10 == 0:
                         check = route_screen(qs[i:], 0.003)
                         r.setdefault('movement_screens', []).append(check)
@@ -175,6 +216,9 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                                 if newp['ok']:
                                     r['active_retreat_plan'] = newp
                                     qs = newp['waypoints']
+                                    if simple_handoff:
+                                        movement_limit = min(480, r['counts']['movement'] + max(120, 16 * (len(qs) - 1) + 40))
+                                        r['movement_budget'] = movement_limit
                                     i = 1
                                     break
                                 else:
@@ -201,7 +245,8 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
             if streak < 5:
                 r['reason'] = 'confirm not stable'
                 return r
-            v, d = verify()
+            if not simple_handoff:
+                v, d = verify()
 
         r['home_entry'] = {
             'visible_semantics': False,
@@ -227,6 +272,9 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                     )
         except (TypeError, ValueError, KeyError):
             semantic_ok = False
+        if simple_handoff:
+            semantic_ok = r.get('handoff_goal_latched') is True
+            r['home_entry']['semantic_basis'] = 'initial handoff purpose; final task acceptance pending'
         r['home_entry']['visible_semantics'] = bool(semantic_ok)
         decided_complete = False
         try:

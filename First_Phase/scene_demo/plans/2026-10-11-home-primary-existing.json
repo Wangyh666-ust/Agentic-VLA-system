@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "20261011-home-primary-existing",
+  "intent": "analyze_existing",
+  "question_key": "release-stop",
+  "purpose": "已真实完成酒瓶开爪/退离/home并独立五连通过，复用其实际终态与同步编码器，移除被手臂遮挡的侧视图修正最后视觉判读，不重复归位。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261010-visual-finish",
+    "20261010-finish-takeover-v2",
+    "20261010-shape-home",
+    "20261010-live-handoff",
+    "20261010-simple-checker"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    },
+    {
+      "experiment_id": "20261010-finish-takeover-v2",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    },
+    {
+      "experiment_id": "20261010-shape-home",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    },
+    {
+      "experiment_id": "20261010-live-handoff",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    },
+    {
+      "experiment_id": "20261010-simple-checker",
+      "disposition": "reuse",
+      "reason": "复用已归位原始真实末帧与同步反馈；只改变最终检查视角，保留错误原判断，不充当新物理实验。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "读取本轮wine_atomic原始最终请求和actual post五连验收。",
+    "按最终运行期同一规则保留agentview两时刻原图及其同步编码器，无对象oracle进入模型。",
+    "共最多四次条件不同的新Qwen检查。前三次分别缩小视角、映射ID、原任务文本，仍保留否决。第四删除提示词中残余目的地区域/目标位置措辞，字面要求在架子上即达成，并启用Qwen支持的thinking_budget1024。照片/编码器固定，动作0；两项改动不能分开归因。",
+    "新检查通过只说明终态复核修正，不改原blocked结果或宣称最终同版全链联测。",
+    "第五次为唯一已确认未入篮的番茄酱负例回归，沿用历史原图与同步反馈，只检查新检查器不会无条件说目的达成，动作0。false/null均不允许收尾，但null不算准确识别。"
+  ],
+  "configuration": {
+    "changed_condition": "home place: two main original frames instead of main+occluded side",
+    "runtime_sha256": "0bf0afc56541801f3e78ab248971d519b39064820cdc4dc5f3142d9b7b161a35",
+    "semantic_change": "literal user purpose without invented destination region; enable_thinking=true, thinking_budget=1024",
+    "catalog_sha256": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02",
+    "checker_sha256": "b4d6de78395d9b3f378741ea710947d016196e19faed1380350b3a7b7faa96d8",
+    "api_parameter_source": "https://docs.qwencloud.com/api-reference/chat/openai-chat",
+    "digest_correction": {
+      "previous_checker_sha256": "b4d6de78395d9b3f378741ea710947d016196e19faed1380350b3a7b7faa96d8",
+      "reason": "previous digest inherited before literal/thinking patch; checked unchanged current source and actual request_options/response reasoning_tokens, preserve prior proposal"
+    },
+    "vision_sha256": "47b900dfb70aa270679e1dbf2e8399410f2b551abce3811570e09de2c32023c3"
+  }
+}

@@ -150,6 +150,37 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual([frame['frame'] for frame in ctx['sensor_frames']], list(range(6)))
         json.loads(Path(self.temp.name, 'checks.jsonl').read_text().splitlines()[0])
 
+    def test_simple_checker_receives_two_synced_three_view_samples(self):
+        client = FakeClient()
+        client.simple_handoff = True
+        monitor = self.monitor(client)
+        monitor.port.phase = 'release'
+        original_capture = monitor.port.capture
+        def capture():
+            cap = original_capture()
+            cap['verification_frames'] = [cap['frames'][0], {'view': 'sideview', 'rgb_path': 'side.png'}]
+            return cap
+        monitor.port.capture = capture
+        for step in (5, 10, 15):
+            monitor.port.timestamp = float(step)
+            monitor.record(step)
+        monitor._check(self.context, [])
+        ctx, paths = client.calls[-1]
+        self.assertEqual(len(paths), 6)
+        self.assertEqual([fr['view'] for fr in ctx['sensor_frames']], ['agentview', 'sideview', 'wrist'] * 2)
+        self.assertEqual([fr['timestamp'] for fr in ctx['sensor_frames']], [10.] * 3 + [15.] * 3)
+        self.assertEqual(ctx['actuator_measurements']['timestamp'], 15.)
+        monitor.port.phase = 'confirm'
+        monitor._check(self.context, [])
+        ctx, paths = client.calls[-1]
+        self.assertEqual(len(paths), 4)
+        self.assertEqual([fr['view'] for fr in ctx['sensor_frames']], ['agentview','sideview'] * 2)
+        monitor.port.phase = 'home'
+        monitor._check(self.context, [])
+        ctx, paths = client.calls[-1]
+        self.assertEqual(len(paths),2)
+        self.assertEqual([fr['view'] for fr in ctx['sensor_frames']],['agentview'] * 2)
+
     def test_latest_capture_overwrites_same_timestamp(self):
         monitor = self.monitor()
         monitor.port.timestamp = 5.0

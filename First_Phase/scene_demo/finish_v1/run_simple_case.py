@@ -16,14 +16,16 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('case', choices=['wine', 'bowl', 'sauce', 'stove'])
     parser.add_argument('--revision', default='')
+    parser.add_argument('--campaign', default='2026-10-10-simple-checker')
     args = parser.parse_args()
+    base = ROOT / 'First_Phase/scene_demo/results' / args.campaign
     indices = {'wine': 1, 'bowl': 0, 'sauce': 4, 'stove': 2}
-    evidence = BASE / 'evidence'
-    proposal = ROOT / 'First_Phase/scene_demo/plans/2026-10-10-simple-checker.json'
+    evidence = base / 'evidence'
+    proposal = ROOT / 'First_Phase/scene_demo/plans' / (args.campaign + '.json')
     inputs = evidence / 'inputs.json'
     run_name = args.case + args.revision
     cmd = [sys.executable, '-B', '-m', 'scene_demo.finish_v1.handoff_pilot', '--proposal', str(proposal),
-           '--inputs', str(inputs), '--output', str(BASE / ('pilot_' + run_name)),
+           '--inputs', str(inputs), '--output', str(base / ('pilot_' + run_name)),
            '--start-index', str(indices[args.case]), '--limit', '1', '--max-qwen-calls', '6', '--simple-checker']
     env = dict(os.environ, LIBERO_CONFIG_PATH='/home/yhwang/fyp/libero_demo/libero_config', MUJOCO_GL='egl',
                PYOPENGL_PLATFORM='egl', PYTHONDONTWRITEBYTECODE='1', PYTHONPATH=str(ROOT / 'First_Phase'))
@@ -38,7 +40,7 @@ def main():
     record.update(exit_code=run.returncode, end_utc=datetime.now(timezone.utc).isoformat())
     (evidence / ('launch_' + run_name + '.json')).write_text(json.dumps(record, indent=2) + '\n')
     print(json.dumps(record), flush=True)
-    summary = BASE / ('pilot_' + run_name) / 'summary.json'
+    summary = base / ('pilot_' + run_name) / 'summary.json'
     if summary.exists(): print(summary.read_text(), flush=True)
     return run.returncode
 

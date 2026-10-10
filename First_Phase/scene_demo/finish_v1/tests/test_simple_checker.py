@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 import numpy as np
 from scene_demo.finish_v1 import simple_checker as checker, control
 
@@ -33,9 +34,25 @@ class SimpleCheckerTests(unittest.TestCase):
 
     def test_decoder_missing_fields_never_claims_success(self):
         client = checker.SimpleQwenClient(max_calls=0)
-        result = client.parse_verdict('{"operation_achieved":true,"boxes":{"sideview":{"target":[0.1,0.1,0.2,0.2]}}}')
+        result = client.parse_verdict('{"holding_or_contact":true,"reason":"目标遮挡"}')
         self.assertIsNone(result['supported'])
         self.assertFalse(checker.decide(self.ctx, result)['allow_release'])
+
+    def test_goal_alone_can_trigger_without_support_conditions(self):
+        client = checker.SimpleQwenClient(max_calls=0)
+        result = client.parse_verdict('{"goal_achieved":true,"holding_or_contact":true,"reason":"瓶子已在架上"}')
+        self.assertIsNone(result['supported'])
+        self.assertTrue(checker.decide(self.ctx, result)['allow_release'])
+
+    def test_prompt_requests_only_two_observations(self):
+        prompt = checker.build_prompt(self.ctx)
+        self.assertNotIn('仅悬在', prompt)
+        self.assertNotIn('supported', prompt)
+        self.assertNotIn('boxes', prompt)
+        self.assertIn('goal_achieved', prompt)
+        self.assertIn('put the wine bottle on the rack',prompt)
+        self.assertNotIn('wine_rack_1_top_region',prompt)
+        self.assertNotIn('top region',prompt)
 
     def test_first_action_really_opens_without_settle_gate(self):
         class Port:
@@ -50,12 +67,69 @@ class SimpleCheckerTests(unittest.TestCase):
             def close(self): pass
         port = Port()
         fail_after_open = dict(self.v, operation_achieved=False, at_destination=False)
-        result = control.run_finish(port, self.ctx, self.v, checker.decide,
-                                    lambda *_: fail_after_open, lambda _: None, simple_handoff=True)
+        with patch.object(control, 'plan_retreat', return_value={'ok':False}):
+            result = control.run_finish(port, self.ctx, self.v, checker.decide,
+                                        lambda *_: fail_after_open, lambda _: None, simple_handoff=True)
         self.assertEqual(port.commands[0], [.04, -.04])
         self.assertEqual(result['release_settle_actions'], 0)
         self.assertEqual(result['release_open_actions'], 2)
-        self.assertEqual(result['reason'], 'release visual failed')
+        self.assertEqual(result['reason'], 'retreat plan blocked')
+
+    def run_retreat(self, follow):
+        from scene_demo.finish_v1.tests.test_core import FakePort
+        port = FakePort(follow=follow)
+        path = [np.full(7, i * .025) for i in range(21)]
+        initial = checker.SimpleQwenClient(max_calls=0).parse_verdict('{"goal_achieved":true,"holding_or_contact":true}')
+        final = checker.SimpleQwenClient(max_calls=0).parse_verdict('{"goal_achieved":true,"holding_or_contact":false}')
+        with patch.object(control, 'plan_retreat', return_value={'ok': True, 'waypoints': path}), patch.object(control, 'screen_shapes', return_value={'ok': True}), patch.object(control.jh, 'home_metrics', side_effect=lambda ref, st: {'ready': np.max(np.abs(st['arm_qpos'])) < .004}):
+            result = control.run_finish(port, self.ctx, initial, checker.decide, lambda *_: final, lambda _: None, simple_handoff=True)
+        return result
+
+    def test_progressing_retreat_can_exceed_old_cap(self):
+        result = self.run_retreat(.2)
+        self.assertGreater(result['counts']['movement'], 120)
+        self.assertGreater(result['counts']['home'], 0, result)
+        self.assertTrue(result['ready'], result)
+
+    def test_stalled_retreat_stops_without_starting_home(self):
+        result = self.run_retreat(0.)
+        self.assertEqual(result['reason'], 'movement no progress')
+        self.assertEqual(result['counts']['home'], 0)
+
+    def test_atomic_finish_latches_handoff_but_final_failure_is_retained(self):
+        from scene_demo.finish_v1.tests.test_core import FakePort
+        port = FakePort()
+        initial = checker.SimpleQwenClient(max_calls=0).parse_verdict('{"goal_achieved":true,"holding_or_contact":true}')
+        rejected = checker.SimpleQwenClient(max_calls=0).parse_verdict('{"goal_achieved":false,"holding_or_contact":false}')
+        check = unittest.mock.Mock(return_value=rejected)
+        with patch.object(control,'plan_retreat',return_value={'ok':True,'waypoints':[np.zeros(7),np.full(7,.04)]}), patch.object(control,'screen_shapes',return_value={'ok':True}), patch.object(control.jh,'home_metrics',side_effect=lambda ref,st:{'ready':np.max(np.abs(st['arm_qpos']))<.004}):
+            result = control.run_finish(port,self.ctx,initial,checker.decide,check,lambda _:None,simple_handoff=True)
+        self.assertGreater(result['counts']['home'],0)
+        check.assert_called_once()
+        self.assertFalse(result['ready'])
+        self.assertEqual(result['reason'],'final visual failed')
+
+    def test_near_open_feedback_allows_withdrawal_but_not_automatic_completion(self):
+        from scene_demo.finish_v1.tests.test_core import FakePort
+        class RackPort(FakePort):
+            def step(self, q, f=None):
+                out = super().step(q, f)
+                if self.phase == 'release':
+                    self.q = np.asarray(q) + .018
+                    out['arm_qpos'] = self.q.copy()
+                self.f = np.asarray([.035, -.039])
+                out['finger_qpos'] = self.f.copy()
+                out['finger_qvel'] = [0., 0.]
+                return out
+        port = RackPort()
+        initial = checker.SimpleQwenClient(max_calls=0).parse_verdict('{"goal_achieved":true,"holding_or_contact":true}')
+        final = checker.SimpleQwenClient(max_calls=0).parse_verdict('{"goal_achieved":true,"holding_or_contact":false}')
+        with patch.object(control, 'plan_retreat', return_value={'ok': True, 'waypoints':[np.zeros(7),np.full(7,.04)]}), patch.object(control, 'screen_shapes', return_value={'ok':True}):
+            result = control.run_finish(port,self.ctx,initial,checker.decide,lambda *_:final,lambda _:None,simple_handoff=True)
+        self.assertGreater(result['counts']['movement'],0)
+        self.assertEqual(result['counts']['home'],0)
+        self.assertFalse(result['ready'])
+        self.assertFalse(result['withdraw_with_partial_open']['release_proven'])
 
 
 if __name__ == '__main__':

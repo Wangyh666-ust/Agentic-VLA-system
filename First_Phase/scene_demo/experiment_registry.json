@@ -3236,6 +3236,2289 @@
           "sha256": "f9b92226fed5e94297706c4d367c3d2f2c133ed6585872371f34a572ed1e5993"
         }
       ]
+    },
+    {
+      "id": "20261011-goal-finish",
+      "title": "目的区域检查、三视角接管与退离预算修复：酒瓶/灶台真实小试",
+      "date": "2026-10-11",
+      "question_keys": [
+        "release-stop",
+        "visual-completion",
+        "joint-home-handoff"
+      ],
+      "tags": [
+        "LIBERO",
+        "Qwen",
+        "收尾",
+        "归位",
+        "两问检查器"
+      ],
+      "conditions": [
+        "same wine init1/replay180 and stove init0/replay78, task8 libero_10 seed0; exact original terminal SHA checked",
+        "goal-only handoff separate from final acceptance; place uses agent/side/wrist, turn preserves agent/side; synchronous encoders",
+        "path-dependent bounded movement budget; near-open stable feedback permits screened withdrawal, not completion; exact home opening gate and original streaming home unchanged",
+        "actual helper commands and independent post-action gold/contacts/home are recorded; no simulator object truth sent to Qwen"
+      ],
+      "findings": [
+        "酒瓶放架最终pilot_wine_atomic：actual_open=12、movement=135、home=214；home_ready=True、physical_streak=5、status=blocked、reason=final visual failed。",
+        "灶台开火最终pilot_stove_repair：actual_open=17、movement=182、home=68；home_ready=True、physical_streak=5、status=physical_success、reason=complete。",
+        "原归位执行后缀核对相同；实际Qwen20次/30759tokens，新VLA0、子agent0。",
+        "前两次酒瓶纯提示词修正未触发；增加实际腕部视角后触发，实际开爪后又揭示标准全开先于退离的阻断。所有中间版本和失败保留，不能合并为最终同版成功率。",
+        "酒瓶wine_atomic物理五连通过、home ready但在线最后Qwen误判，原blocked保留。终态仅主视图/名称映射/任务文本三次否决保留；最后字面任务目的+1024短推理复核complete，动作0，不冒称新完整在线成功。",
+        "补充番茄罐未入篮负例启动一次，进程输出及模型响应未保留，判定/usage未知；不重试、不计作通过。有响应的20次与这次未核实尝试分开计数。"
+      ],
+      "limits": [
+        "仅两个历史末态的小范围接管，非新VLA从头或组合实验，不证明泛化。",
+        "灶台在预算修复版通过，酒瓶后续修复版；各有来源快照，不是最终同版联测。",
+        "相机、交接语义和收尾门槛多项修正，不能分别估计各项因果效果。",
+        "演示自动收尾未在本轮启用，先保留小试证据。"
+      ],
+      "configuration": {
+        "physical_trial_configuration": {
+          "inputs_sha256": "687a69542fe0269dcc5d2515e6fd158334b87f673c2fcd68456e86ec0edae1c9",
+          "source_sha256": {
+            "First_Phase/scene_demo/finish_v1/handoff_pilot.py": "be01997b0bfd8e1107635f541769a907d5da05558d0f5d29e2fce04e14869924",
+            "First_Phase/scene_demo/finish_v1/control.py": "66f6741def59c8a6f92cbe3af5108d20d57b185114c097aa801bfbb803d77d20",
+            "First_Phase/scene_demo/finish_v1/runtime.py": "412f6bca5f07108c52d16a8cf5c64bdf1b8520b15eafbe7801f432ccf3cad9fd",
+            "First_Phase/scene_demo/finish_v1/vision.py": "d4bc9be7118c7c2bcbada3c025d8946a471a47ad2ab1518875aa1919d13d68c3",
+            "First_Phase/scene_demo/finish_v1/simple_checker.py": "e053fd5d5f71fce4599ae774ca354bd845730053ed02ee1b822d1a1d6ca2f9b6",
+            "First_Phase/scene_demo/finish_v1/sensors.py": "403576acee777920f98c58d51cccdcde4b1c818ebf24dd3db71efbf511b204bf",
+            "First_Phase/scene_demo/finish_v1/geometry.py": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70",
+            "First_Phase/scene_demo/finish_v1/prepare_simple_pilot.py": "950e15a7668fb845e72f743f475f4d7eb36a729e895c58d8a604ac1ab2d3e7ad",
+            "First_Phase/scene_demo/joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21",
+            "First_Phase/scene_demo/finish_v1/prepare_goal_pilot.py": "a193d159aa1d41ba7e2a964ce38609f7c82787c730de57376ccf6f1efa1985ab",
+            "First_Phase/scene_demo/finish_v1/run_simple_case.py": "70a7d8c8505d4a48cfb15906d1ccc93af9ecc7a4f24db6211f2ba486aea1ea1f"
+          },
+          "cases": [
+            "wine_exit",
+            "stove_exit"
+          ],
+          "qwen_max_per_case": 6,
+          "release": 20,
+          "movement_max": 480,
+          "movement_formula": "min(480,max(120,16*segments+40))",
+          "no_progress_samples": 40,
+          "confirm": 20,
+          "home": 360,
+          "simple_checker": true,
+          "prompt_revision": "two independent purposes; wrist-centered object is not hold evidence; stage label not completion proof",
+          "visual_views": "place release checks: agent+side+wrist; confirm/home and turn checks: agent+side; latest two timestamps",
+          "withdraw_partial_open": "total aperture>=90%, each finger>=85%reference, finger speed<=.005 and arm speed<=.02; plan from measured pose; exact2mm standard-open still required before home; not release proof",
+          "handoff_latch": "initial goal true initiates atomic open/sensor-screened withdrawal/measured-open settled screened original home; no intermediate semantic veto; final fresh Qwen and independent goal/hand/home acceptance remain mandatory"
+        },
+        "final_checker_recheck": {
+          "changed_condition": "home place: two main original frames instead of main+occluded side",
+          "runtime_sha256": "0bf0afc56541801f3e78ab248971d519b39064820cdc4dc5f3142d9b7b161a35",
+          "semantic_change": "literal user purpose without invented destination region; enable_thinking=true, thinking_budget=1024",
+          "catalog_sha256": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02",
+          "checker_sha256": "b4d6de78395d9b3f378741ea710947d016196e19faed1380350b3a7b7faa96d8",
+          "api_parameter_source": "https://docs.qwencloud.com/api-reference/chat/openai-chat",
+          "digest_correction": {
+            "previous_checker_sha256": "b4d6de78395d9b3f378741ea710947d016196e19faed1380350b3a7b7faa96d8",
+            "reason": "previous digest inherited before literal/thinking patch; checked unchanged current source and actual request_options/response reasoning_tokens, preserve prior proposal"
+          },
+          "vision_sha256": "47b900dfb70aa270679e1dbf2e8399410f2b551abce3811570e09de2c32023c3"
+        },
+        "launches": [
+          {
+            "argv": [
+              "/home/yhwang/fyp/libero_demo/venv/bin/python",
+              "-B",
+              "-m",
+              "scene_demo.finish_v1.handoff_pilot",
+              "--proposal",
+              "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-11-goal-finish.json",
+              "--inputs",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs.json",
+              "--output",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove",
+              "--start-index",
+              "2",
+              "--limit",
+              "1",
+              "--max-qwen-calls",
+              "6",
+              "--simple-checker"
+            ],
+            "environment": {
+              "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+              "MUJOCO_GL": "egl",
+              "PYOPENGL_PLATFORM": "egl",
+              "PYTHONDONTWRITEBYTECODE": "1",
+              "PYTHONPATH": "/mnt/d/FYP/First_Phase"
+            },
+            "start_utc": "2026-10-10T16:29:41.269803+00:00",
+            "proposal_sha256": "c5a45ef42e771a10794f9a17d3cec3f2e17ceb43bb093b129ad47dcb4aa42e87",
+            "inputs_sha256": "586a877d845817e202e0193cfdf04ade3805c82fa733dfbe6a0bd943c7f9f656",
+            "subagents": 0,
+            "exit_code": 0,
+            "end_utc": "2026-10-10T16:30:30.916841+00:00"
+          },
+          {
+            "argv": [
+              "/home/yhwang/fyp/libero_demo/venv/bin/python",
+              "-B",
+              "-m",
+              "scene_demo.finish_v1.handoff_pilot",
+              "--proposal",
+              "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-11-goal-finish.json",
+              "--inputs",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs.json",
+              "--output",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair",
+              "--start-index",
+              "2",
+              "--limit",
+              "1",
+              "--max-qwen-calls",
+              "6",
+              "--simple-checker"
+            ],
+            "environment": {
+              "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+              "MUJOCO_GL": "egl",
+              "PYOPENGL_PLATFORM": "egl",
+              "PYTHONDONTWRITEBYTECODE": "1",
+              "PYTHONPATH": "/mnt/d/FYP/First_Phase"
+            },
+            "start_utc": "2026-10-10T16:33:35.029532+00:00",
+            "proposal_sha256": "d6879b1fe1c82203da1f87fd10bf1de3810b42acdedd6c2b3ef3e0c2c305dce2",
+            "inputs_sha256": "c4d17106442f9a5a6493819f094f174508885b8f3dc64d5a68906e2f4edd3c58",
+            "subagents": 0,
+            "exit_code": 0,
+            "end_utc": "2026-10-10T16:36:58.786232+00:00"
+          },
+          {
+            "argv": [
+              "/home/yhwang/fyp/libero_demo/venv/bin/python",
+              "-B",
+              "-m",
+              "scene_demo.finish_v1.handoff_pilot",
+              "--proposal",
+              "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-11-goal-finish.json",
+              "--inputs",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs.json",
+              "--output",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine",
+              "--start-index",
+              "1",
+              "--limit",
+              "1",
+              "--max-qwen-calls",
+              "6",
+              "--simple-checker"
+            ],
+            "environment": {
+              "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+              "MUJOCO_GL": "egl",
+              "PYOPENGL_PLATFORM": "egl",
+              "PYTHONDONTWRITEBYTECODE": "1",
+              "PYTHONPATH": "/mnt/d/FYP/First_Phase"
+            },
+            "start_utc": "2026-10-10T16:21:28.884638+00:00",
+            "proposal_sha256": "4f5f01118ec121ccaa8f742a3b749004383771f3da33d5b9ca387c55025d958d",
+            "inputs_sha256": "debc09c176e15397b0f9f82906874b6bc8647ba738da1f4290dcce07fc82e969",
+            "subagents": 0,
+            "exit_code": 0,
+            "end_utc": "2026-10-10T16:23:01.775772+00:00"
+          },
+          {
+            "argv": [
+              "/home/yhwang/fyp/libero_demo/venv/bin/python",
+              "-B",
+              "-m",
+              "scene_demo.finish_v1.handoff_pilot",
+              "--proposal",
+              "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-11-goal-finish.json",
+              "--inputs",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs.json",
+              "--output",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic",
+              "--start-index",
+              "1",
+              "--limit",
+              "1",
+              "--max-qwen-calls",
+              "6",
+              "--simple-checker"
+            ],
+            "environment": {
+              "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+              "MUJOCO_GL": "egl",
+              "PYOPENGL_PLATFORM": "egl",
+              "PYTHONDONTWRITEBYTECODE": "1",
+              "PYTHONPATH": "/mnt/d/FYP/First_Phase"
+            },
+            "start_utc": "2026-10-10T16:50:17.251421+00:00",
+            "proposal_sha256": "a4d462fda4716e7e7a66efd2903d5b9351f85825a174b05ea595e4b393cdf533",
+            "inputs_sha256": "687a69542fe0269dcc5d2515e6fd158334b87f673c2fcd68456e86ec0edae1c9",
+            "subagents": 0,
+            "exit_code": 0,
+            "end_utc": "2026-10-10T16:54:45.846895+00:00"
+          },
+          {
+            "argv": [
+              "/home/yhwang/fyp/libero_demo/venv/bin/python",
+              "-B",
+              "-m",
+              "scene_demo.finish_v1.handoff_pilot",
+              "--proposal",
+              "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-11-goal-finish.json",
+              "--inputs",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs.json",
+              "--output",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape",
+              "--start-index",
+              "1",
+              "--limit",
+              "1",
+              "--max-qwen-calls",
+              "6",
+              "--simple-checker"
+            ],
+            "environment": {
+              "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+              "MUJOCO_GL": "egl",
+              "PYOPENGL_PLATFORM": "egl",
+              "PYTHONDONTWRITEBYTECODE": "1",
+              "PYTHONPATH": "/mnt/d/FYP/First_Phase"
+            },
+            "start_utc": "2026-10-10T16:38:16.066836+00:00",
+            "proposal_sha256": "54253d6f2a48588d8c79745160dde360527d7d50f863d6c58586f4d254c8ac5b",
+            "inputs_sha256": "22f6843c30144bcd4e75c710411716a6477219e66869f4b0df648ffc6b38335a",
+            "subagents": 0,
+            "exit_code": 0,
+            "end_utc": "2026-10-10T16:41:36.098387+00:00"
+          },
+          {
+            "argv": [
+              "/home/yhwang/fyp/libero_demo/venv/bin/python",
+              "-B",
+              "-m",
+              "scene_demo.finish_v1.handoff_pilot",
+              "--proposal",
+              "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-11-goal-finish.json",
+              "--inputs",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs.json",
+              "--output",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair",
+              "--start-index",
+              "1",
+              "--limit",
+              "1",
+              "--max-qwen-calls",
+              "6",
+              "--simple-checker"
+            ],
+            "environment": {
+              "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+              "MUJOCO_GL": "egl",
+              "PYOPENGL_PLATFORM": "egl",
+              "PYTHONDONTWRITEBYTECODE": "1",
+              "PYTHONPATH": "/mnt/d/FYP/First_Phase"
+            },
+            "start_utc": "2026-10-10T16:24:19.851061+00:00",
+            "proposal_sha256": "7e9b228e981c7766ade89030a060cfbd2c103e5afd0c9ab3662aa4c2303f0585",
+            "inputs_sha256": "36cfa7708d8c36bbdc1d17a6317136f1f2d909134b1b6073f5983a0271e98e97",
+            "subagents": 0,
+            "exit_code": 0,
+            "end_utc": "2026-10-10T16:25:54.443384+00:00"
+          },
+          {
+            "argv": [
+              "/home/yhwang/fyp/libero_demo/venv/bin/python",
+              "-B",
+              "-m",
+              "scene_demo.finish_v1.handoff_pilot",
+              "--proposal",
+              "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-11-goal-finish.json",
+              "--inputs",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs.json",
+              "--output",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views",
+              "--start-index",
+              "1",
+              "--limit",
+              "1",
+              "--max-qwen-calls",
+              "6",
+              "--simple-checker"
+            ],
+            "environment": {
+              "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+              "MUJOCO_GL": "egl",
+              "PYOPENGL_PLATFORM": "egl",
+              "PYTHONDONTWRITEBYTECODE": "1",
+              "PYTHONPATH": "/mnt/d/FYP/First_Phase"
+            },
+            "start_utc": "2026-10-10T16:44:06.704651+00:00",
+            "proposal_sha256": "e7c3370397acbd17b9c83cdf77064d31abe64c7204d6f5849c6459160b0f3227",
+            "inputs_sha256": "c999cc21303b699f6a62b6c149dbf791cb74302403b8b62c2b47b36018d2af5a",
+            "subagents": 0,
+            "exit_code": 0,
+            "end_utc": "2026-10-10T16:45:49.352934+00:00"
+          },
+          {
+            "argv": [
+              "/home/yhwang/fyp/libero_demo/venv/bin/python",
+              "-B",
+              "-m",
+              "scene_demo.finish_v1.handoff_pilot",
+              "--proposal",
+              "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-11-goal-finish.json",
+              "--inputs",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs.json",
+              "--output",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views",
+              "--start-index",
+              "1",
+              "--limit",
+              "1",
+              "--max-qwen-calls",
+              "6",
+              "--simple-checker"
+            ],
+            "environment": {
+              "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+              "MUJOCO_GL": "egl",
+              "PYOPENGL_PLATFORM": "egl",
+              "PYTHONDONTWRITEBYTECODE": "1",
+              "PYTHONPATH": "/mnt/d/FYP/First_Phase"
+            },
+            "start_utc": "2026-10-10T16:27:31.855785+00:00",
+            "proposal_sha256": "c5a45ef42e771a10794f9a17d3cec3f2e17ceb43bb093b129ad47dcb4aa42e87",
+            "inputs_sha256": "586a877d845817e202e0193cfdf04ade3805c82fa733dfbe6a0bd943c7f9f656",
+            "subagents": 0,
+            "exit_code": 0,
+            "end_utc": "2026-10-10T16:29:25.143827+00:00"
+          },
+          {
+            "argv": [
+              "/home/yhwang/fyp/libero_demo/venv/bin/python",
+              "-B",
+              "-m",
+              "scene_demo.finish_v1.handoff_pilot",
+              "--proposal",
+              "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-11-goal-finish.json",
+              "--inputs",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs.json",
+              "--output",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw",
+              "--start-index",
+              "1",
+              "--limit",
+              "1",
+              "--max-qwen-calls",
+              "6",
+              "--simple-checker"
+            ],
+            "environment": {
+              "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/libero_demo/libero_config",
+              "MUJOCO_GL": "egl",
+              "PYOPENGL_PLATFORM": "egl",
+              "PYTHONDONTWRITEBYTECODE": "1",
+              "PYTHONPATH": "/mnt/d/FYP/First_Phase"
+            },
+            "start_utc": "2026-10-10T16:32:47.252676+00:00",
+            "proposal_sha256": "d6879b1fe1c82203da1f87fd10bf1de3810b42acdedd6c2b3ef3e0c2c305dce2",
+            "inputs_sha256": "c4d17106442f9a5a6493819f094f174508885b8f3dc64d5a68906e2f4edd3c58",
+            "subagents": 0,
+            "exit_code": 0,
+            "end_utc": "2026-10-10T16:34:33.247253+00:00"
+          }
+        ]
+      },
+      "configuration_complete": false,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-11-goal-finish.json",
+          "sha256": "a4d462fda4716e7e7a66efd2903d5b9351f85825a174b05ea595e4b393cdf533"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-11-home-primary-existing.json",
+          "sha256": "ca0dba1e349cdb359e7fdfdc95792aa6152c11cbbe69158fa8aacfe46076916a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/README.md",
+          "sha256": "c5bb4e8c06172534abfb67aab66ff8d08d3fdacc94b5b66e09cc0d0bf9a89f45"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/actual_old_prompt.txt",
+          "sha256": "0d9351974e41460f5e652316cbfec38a421f2df2368995649b9185f9c8541c0f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/delivery_source.json",
+          "sha256": "a0f561a5c6aa14f9423d7078ea50e64c0aa1f4a041e2c62955b96f097a01dad8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/final_checker_source.json",
+          "sha256": "d70bb0b5f4022aed81561698771a1b74b822935562a356369d7ccdee92c5a406"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/final_fusion_verification.json",
+          "sha256": "e19a5722530e8f5dbe261dd26a03658b6ed1bb2e4b0ed4ba5d979e20c39a90a5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs.json",
+          "sha256": "687a69542fe0269dcc5d2515e6fd158334b87f673c2fcd68456e86ec0edae1c9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs_escape.json",
+          "sha256": "22f6843c30144bcd4e75c710411716a6477219e66869f4b0df648ffc6b38335a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs_initial.json",
+          "sha256": "debc09c176e15397b0f9f82906874b6bc8647ba738da1f4290dcce07fc82e969"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs_prompt_repair.json",
+          "sha256": "36cfa7708d8c36bbdc1d17a6317136f1f2d909134b1b6073f5983a0271e98e97"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs_stage_views.json",
+          "sha256": "c999cc21303b699f6a62b6c149dbf791cb74302403b8b62c2b47b36018d2af5a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs_views.json",
+          "sha256": "586a877d845817e202e0193cfdf04ade3805c82fa733dfbe6a0bd943c7f9f656"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/inputs_withdraw.json",
+          "sha256": "c4d17106442f9a5a6493819f094f174508885b8f3dc64d5a68906e2f4edd3c58"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_stove.json",
+          "sha256": "62dfbc25610eb6a82563cbebc6ada43f67f7b9b996d83ef06703f6cf8cdec025"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_stove.log",
+          "sha256": "a8ac3300f855e10b7f5d40267178d1885bef6fb19dfe4babe77134e8f73e83fd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_stove_repair.json",
+          "sha256": "9c491d31eb52772158bf08fb291a58ea8c2fd4c1d748fbb74e9393a3807b68c6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_stove_repair.log",
+          "sha256": "f3ebbbf57cc8bf775559497c3f2ea80b383978060d07f3ccfc143cdb9cc16f76"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine.json",
+          "sha256": "125720299105b6d3695e55cea45da2e4b1c7da023711e379fd6baee61acf4031"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine.log",
+          "sha256": "3a16b9f5a4e09168696ebd4d4c8a311e773feb6a8b442ceb389270079f7f0ab5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_atomic.json",
+          "sha256": "172578a0a0b766025b662dc404f44a255ff30292d7718a2cfdaecc53492990e7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_atomic.log",
+          "sha256": "3a16b9f5a4e09168696ebd4d4c8a311e773feb6a8b442ceb389270079f7f0ab5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_escape.json",
+          "sha256": "00d300bd2757b6ff4acf98f76b0a4abedaa41c8816725ecdabe186ec54c9d443"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_escape.log",
+          "sha256": "3a16b9f5a4e09168696ebd4d4c8a311e773feb6a8b442ceb389270079f7f0ab5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_repair.json",
+          "sha256": "106bd9ceef071a4aa70cc6ae6c02a9ccde3e71c98d58e2777c9d50e9573941ce"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_repair.log",
+          "sha256": "3a16b9f5a4e09168696ebd4d4c8a311e773feb6a8b442ceb389270079f7f0ab5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_stage_views.json",
+          "sha256": "7ac4c65ff3d8bf6292bf5dc7f6b120cef55606e80653034a6c8f3f3ea459cbe5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_stage_views.log",
+          "sha256": "3a16b9f5a4e09168696ebd4d4c8a311e773feb6a8b442ceb389270079f7f0ab5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_views.json",
+          "sha256": "3aa6fa28140d892e0b23c6ec42f09c3944eebfd86ace180dc6d0bea7df814734"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_views.log",
+          "sha256": "3a16b9f5a4e09168696ebd4d4c8a311e773feb6a8b442ceb389270079f7f0ab5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_withdraw.json",
+          "sha256": "fa720af593d38cb15b5a1b5b9ff62674a5e1a6821a79c5e8263013697c9ec5f4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/launch_wine_withdraw.log",
+          "sha256": "3a16b9f5a4e09168696ebd4d4c8a311e773feb6a8b442ceb389270079f7f0ab5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/preflight.json",
+          "sha256": "0b0398c8cb4544bba6efb2b9e118b7fdb303cd77036e60fbc52180222d4892a3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/preflight_escape.json",
+          "sha256": "b46df97a11903f395540e414f66c155a2c7f67517f3709a0725773a42a8e06c8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/preflight_initial.json",
+          "sha256": "35a40151ed3624fc539fff601d07a7357c43fd14ea174c2407b4bfbf4453d783"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/preflight_prompt_repair.json",
+          "sha256": "b9b95b28d04d3f81b6a02667d71d3f1f53672d5283f0f877408ec759412a17b1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/preflight_stage_views.json",
+          "sha256": "64dd777f16e08211210f34548980d8946f48060a8ae7dcdf81c58853fc82b598"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/preflight_views.json",
+          "sha256": "bc0d246e36414ba5dae7713d67701f8242a451c816c400a1371f6c1e153d6a04"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/preflight_withdraw.json",
+          "sha256": "4e70872603fe3de6f462eaaeaf53485979bee166847d2cee93e3eb0679bc8e56"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/proposal_escape.json",
+          "sha256": "54253d6f2a48588d8c79745160dde360527d7d50f863d6c58586f4d254c8ac5b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/proposal_initial.json",
+          "sha256": "4f5f01118ec121ccaa8f742a3b749004383771f3da33d5b9ca387c55025d958d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/proposal_primary_before_literal.json",
+          "sha256": "b1b0f73e0e23ab31af2b5e03e9ef8d81a1aa7bd79bb274c833093375852cbcb8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/proposal_primary_before_names.json",
+          "sha256": "923ba59974a3daeeb40ddc10f97bd97715f236b83273418ebdf992bf22e2f9ff"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/proposal_primary_before_task_text.json",
+          "sha256": "d4b883bfa2a0179fc0ded001f74e1da85352e3aa2a6cc211a0f6690798b094d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/proposal_primary_run_literal.json",
+          "sha256": "5079bbc7e1f417aadf6e401c3dee72ac3313306d741599fccfe4a20a7513f44b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/proposal_prompt_repair.json",
+          "sha256": "7e9b228e981c7766ade89030a060cfbd2c103e5afd0c9ab3662aa4c2303f0585"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/proposal_stage_views.json",
+          "sha256": "e7c3370397acbd17b9c83cdf77064d31abe64c7204d6f5849c6459160b0f3227"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/proposal_views.json",
+          "sha256": "c5a45ef42e771a10794f9a17d3cec3f2e17ceb43bb093b129ad47dcb4aa42e87"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/proposal_withdraw.json",
+          "sha256": "d6879b1fe1c82203da1f87fd10bf1de3810b42acdedd6c2b3ef3e0c2c305dce2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/software_checks.json",
+          "sha256": "c69908fd06e69785aa71b31e0184167078b8c06711e894bef360836dfa5d70d2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/source_snapshot.zip",
+          "sha256": "86f6b1835fbf204d5ccce86e5e1539cb8193ebbf20ff2bbdbc17ddb304efaaa9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/source_snapshot_atomic.zip",
+          "sha256": "79d0495c700047dc996afcf0bba2dc9b831a235a32748b7f629f57db8bc7915f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/source_snapshot_delivery.zip",
+          "sha256": "daa0c3acef1f54340c6887790b36f1fae861bcdb8458982c8dabc246a98c2ea2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/source_snapshot_escape.zip",
+          "sha256": "d0436d207244e9fb46223c1450be32bf91b308c9c9048d9d94658cf928b08b8d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/source_snapshot_final_checker.zip",
+          "sha256": "7cd5f600841ad1275d39a1ef78a8c1059a3360b943679b6aa5e41c6c6f503bc2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/source_snapshot_repair.zip",
+          "sha256": "0fccc82d592cf9a476db2b3327e9555983c421ac5f2bcfd35d8fa93c6e5d9179"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/source_snapshot_stage_views.zip",
+          "sha256": "228e53407d03c22e81ac02e2f1fd7ce3b4ea1973ea54d8ccfb050b4cf850b88f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/source_snapshot_views.zip",
+          "sha256": "fb53bdc731c9b46f893eb3354f376e91994284c7890f5f0aee2a43ab5dfa837c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/source_snapshot_withdraw.zip",
+          "sha256": "2e3fc6d21b0b11cf33197598709b9ffdb61078cda9335138e00d7a91f3437a74"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/summary.json",
+          "sha256": "2baaa64f570cadbe4d87ddedd99376fa38800fdb0fe8018fdd3b5fdb5001556b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/all_actions.mp4",
+          "sha256": "e0666833c4b399919a022498fabe29feae4944b7b84f18a1ec2a1b5c97e73fd7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/checks.jsonl",
+          "sha256": "3bbbc5e237a220fadb73afc9280d31e5ac6468d1e6ae38306225ff5d37b7bfe5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/complete_prompt.txt",
+          "sha256": "eb50e54993c20a4a1405fab178eefc67b3aecfb46b8b59ec12d6c4ce87433b91"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/events.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/final_frame.png",
+          "sha256": "95fef715a243e4b8dc2d38e1b02d0279460d6cd8bb0944d17952c065bf79e0af"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/helper.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/oracle.jsonl",
+          "sha256": "6bb17d73bae5ea4db4bec9355233d83a83fbc720e6b1040748bc0a7f5d20e557"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/result.json",
+          "sha256": "1850ae4872cb41ead3fdf16553934d6dc57c3e5d84de3d390fd763fea2f5a864"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/runtime_checks/checks.jsonl",
+          "sha256": "2e3d96ac0de5aaa10837955453584e9d87cbf2fd4fb1ae1147678efb93b5ee43"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "36a604cacba651b614ce51445d7d19f101f7193e78a882be2a1c67d4ca937f01"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "7b503eed3af3621559a0ced1fca41234bbce4e86077f419c8e6ba9612a3a557d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/sensors/cap000229_agentview.png",
+          "sha256": "c9a17e22c7a80554e86bed5cff71fdf41024adbe51ad412ea56d8584f41b36be"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/sensors/cap000230_wrist.png",
+          "sha256": "987555a93e6f8ab9719a824b3d518b6d50d7e6f997e1e48275a3c50cc5d0ebf8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/sensors/cap000231_sideview.png",
+          "sha256": "86093d48a2025b4fd47594b215f8b3edb133875ab978140b0881231363a453ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/sensors/cap000238_agentview.png",
+          "sha256": "e0f6149f37010db3e7aca0d491f810ec0b9eb493c3438958631c78bbe7ce1efd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/sensors/cap000239_wrist.png",
+          "sha256": "17640b9c91d12afb392cecad128cb7e240f73ded31ce7686f6c4b5261889747e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/stove_exit/sensors/cap000240_sideview.png",
+          "sha256": "e6e7288f091cb872ce123e139f29acddf816341755e5ba91e6f6390b88ee277e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove/summary.json",
+          "sha256": "e61d5baa58abbdf38a723b361f3f5c34020dd8bd9c7c2837e8f9cb12ca45de09"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/all_actions.mp4",
+          "sha256": "88baddb4cfa7546cc3ab08f4bd1133a6ef642f638cfd295b460d58e1d694f73c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/checks.jsonl",
+          "sha256": "9e139979c84088ab5ed655cc363e8f553e45d5d585158f50a6da844d5a8bf3c6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/complete_prompt.txt",
+          "sha256": "f104756b69470745f3ba3fbc6f7deff130e8a25e89a58fd94785e339a2fda596"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/events.jsonl",
+          "sha256": "6f43ff867f5d02ea0b48041d2aea1618ffa1e444315e2d745b1edd8bc1b85e61"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/final_frame.png",
+          "sha256": "8018e463d003a80eef85ce529351c01d8eae398343a791ee732d46458345903a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/finish_only.mp4",
+          "sha256": "d9cc79e111ce04def91df5ee992cff07b4207bf59bbf040043d3f9d97f4b17ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/helper.jsonl",
+          "sha256": "a3575bc641495f7c17c78e85f4776d39994425c23b3a02b289e1f0334cd554df"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/oracle.jsonl",
+          "sha256": "1c82f5136e3d9d94babe9aedb3df0aa71e1f87683c38e0ed3b51d976738762dd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/result.json",
+          "sha256": "75fedecf01d83cc3f6202ab132efc5da615537b4c86176905b6391aa92c523d9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/runtime_checks/checks.jsonl",
+          "sha256": "e32b5b80b22faf1021536b4b43d0679128015ded18f77250323da41e1ce274a3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "4827433776408e8692b978dd510f67ab9f8e4180c7b6dece92a5d18a2d6da4f2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "f6c12ae6a0452929c9cc36874ebec03749366167ce62ef5dbc47ee9a2123fd56"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/runtime_checks/model_requests/call_02_request.json",
+          "sha256": "db6cded5e377053f33f990d355877eda974c1e4f3e4758b8cbbeaaa15b71ca05"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/runtime_checks/model_requests/call_02_response.json",
+          "sha256": "4d3bd46f7fbfdf9935cf3686c5a81216ec9156cac65006712e4c42b43f29a79f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/runtime_checks/model_requests/call_03_request.json",
+          "sha256": "ff5b78367fe2f7e0614c0ba0dd9c3a1558bfe99a9d5ca83404f8e923d5ecce34"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/runtime_checks/model_requests/call_03_response.json",
+          "sha256": "e3817512d90ebcf3e369ae3e29c898159258d7046568cbf4b9f51f41dd25aed2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/runtime_checks/model_requests/call_04_request.json",
+          "sha256": "e1ac42222e4a80c7448b7232a3271747b9cda074a0d233260ddb0fc7cbbc9262"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/runtime_checks/model_requests/call_04_response.json",
+          "sha256": "9f3f9bf5030611d98b974ec680fd6f84e762849390b2225d9ed1ef2f13c61c2c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000229_agentview.png",
+          "sha256": "c9a17e22c7a80554e86bed5cff71fdf41024adbe51ad412ea56d8584f41b36be"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000231_sideview.png",
+          "sha256": "86093d48a2025b4fd47594b215f8b3edb133875ab978140b0881231363a453ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000238_agentview.png",
+          "sha256": "e0f6149f37010db3e7aca0d491f810ec0b9eb493c3438958631c78bbe7ce1efd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000240_sideview.png",
+          "sha256": "e6e7288f091cb872ce123e139f29acddf816341755e5ba91e6f6390b88ee277e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000286_agentview.png",
+          "sha256": "18ded115abf0908e2ab2e4545fbfdd4e007f3af866ac3b5ae82db457c3cddd83"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000288_sideview.png",
+          "sha256": "658c4be3fc64d4f1f0b9fe0ca7c3da7b8cae65294df54a007929ec0d14497de2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000295_agentview.png",
+          "sha256": "c738622b8d133052e0282d04d625b32fdf3849c600fdcb1b4be16f662a33c4c7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000297_sideview.png",
+          "sha256": "c6b5a22ad19e46525d1ca32b9a89d36955e359a8b6f649dc56b8faa099960b6e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000331_agentview.npy",
+          "sha256": "9f6ec3103ce7d223c95678b9b09f1d3dc7b0a60a68c54c41ebd7e4dff34ca4a4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000331_agentview.png",
+          "sha256": "0e14cf3daad4b3317b906abdab9ef5bed8b734ec76ab97892db0606f5ebd887f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000332_wrist.npy",
+          "sha256": "8fb121ddcd098dd26ac3db577b024c2359f35163fe245dafd50090adbc03e2bc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000332_wrist.png",
+          "sha256": "2264600ebf54a4dc1a662137e6c56629ab1d2bdbd28bf0ce75363b0bb1c2fb69"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000364_agentview.npy",
+          "sha256": "1c527448043d1bbd7d9c832ef9fd86d3870c07bf8ebf85566cd3fce89ad421ba"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000364_agentview.png",
+          "sha256": "d23cbc7eea2270982ffd8618e5598361513f88f3333a2c9405d1ab03bf5ae805"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000365_wrist.npy",
+          "sha256": "8e229023fe1bf940aabe87bd56ff59d83273b39fae8e3ab37c31efae1037caaa"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000365_wrist.png",
+          "sha256": "717e0580289038d6d8606579cc40a3e9dce41d8f2533eac0ee505470a345b67a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000397_agentview.npy",
+          "sha256": "2040d2c7323f8b6dcaf78f3b8350311a4a770de723a3d8cbeaad6745ff4fe30b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000397_agentview.png",
+          "sha256": "6427d31644a7329384b57a9824ba1b54cd9cff95bd367c9a5197e60afdc31372"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000398_wrist.npy",
+          "sha256": "25078588c6221a5881acb90a82588d39d847793dd42c8c15556841ca9e88df17"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000398_wrist.png",
+          "sha256": "5ac0f553a18771ff21ae1f67ed4e491551c616f8bbd982a8ec99e34680d28d99"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000430_agentview.npy",
+          "sha256": "3918f31cd45a3083166054f6d063015c8ee86430df69e8df98c684aa8b5b1582"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000430_agentview.png",
+          "sha256": "97b9a6af87c0923a7a0b0bb14cd03fa99f11af001eb39a94b18b33c92069f545"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000431_wrist.npy",
+          "sha256": "3f8b57e5963da8ba68053c925d2a13133a2942646bc30974b99a6565ac42bf5d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000431_wrist.png",
+          "sha256": "5e39f74f476a1a2aa54bdb2707b9334984969409e0e9eb4ef371dd2a83d68a2c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000463_agentview.npy",
+          "sha256": "945571dc2b48c9b749fb96ab756c3ee331191776fe9b9ab64ed62dcfbf45cdba"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000463_agentview.png",
+          "sha256": "c3dd984bbd4d95f2d525a73c5dd32649216732b567121290030215d0441c4cd9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000464_wrist.npy",
+          "sha256": "34119f9d9d9dc511b55d03511a1c26040e43f211bfff7e6141b89740af6456ed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000464_wrist.png",
+          "sha256": "e4b653130d780d4753e7af46c1b673ce0c77552d0f4fb6ac1906b60a9a2a1800"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000496_agentview.npy",
+          "sha256": "c0ab11f6b62d8375b8ad1fc142db4440df95bc4a4794e0d36b80bc3de44a6be2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000496_agentview.png",
+          "sha256": "36da56aca9f949d155fb86ca41fc2232edcf6e6e9f8ecb5cda7535637db2db95"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000497_wrist.npy",
+          "sha256": "b9f6bc7d8317c27be79cde50435aab15a3bdd3238412be85ad18c82713e14912"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000497_wrist.png",
+          "sha256": "5cdcec7077402058d69d22ab159bc1496893e9e517d12f88013df30e4dd540dc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000529_agentview.npy",
+          "sha256": "37be5054399f21600d5d1db4eece7f45ff91aafe719401748b3841c94d7ba354"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000529_agentview.png",
+          "sha256": "405e316ff15e8feab74dab4bf614e52fa847b82226bf3024271c4ce57cbd8b48"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000530_wrist.npy",
+          "sha256": "5092d693d3b7e5ab0b97889146eca2d55c43fcb44955b8b2b2aecbbd9dec9cc8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000530_wrist.png",
+          "sha256": "673e929cd2814927aef328652660b20caa936e6d2fdbeb1135fd8291e2fac4d4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000562_agentview.npy",
+          "sha256": "d05e38ccad33e8f878c96f8ac7db40461f22813337cb26e1ff5a19a467797ddb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000562_agentview.png",
+          "sha256": "ebb3e2f4c242ada40cd07bfba1e5357e738d0f234ea5a69e129c1230b810f2ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000563_wrist.npy",
+          "sha256": "7c2757c0bac78e63e571b163e297ab4c444e865a467a07a64efe59f92c19f9fb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000563_wrist.png",
+          "sha256": "ebf35ce8c3fc8dd2402ddd03dd1af15ee3161708f5d48b32395dcc1157713197"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000595_agentview.npy",
+          "sha256": "b9e349f2dba51f8f931ccaeefbdf1836030ea05c03510c1ec2feaf959b91ba8e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000595_agentview.png",
+          "sha256": "91107755fa8026941c64997873b8022aa1b4a1dbe8278260b5351e906c591a18"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000596_wrist.npy",
+          "sha256": "a15fe9044da77171744e40f6146f282884a69d92bc75641cfbb844557265ac9a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000596_wrist.png",
+          "sha256": "8b9ee98a8f526d21f4928fd1fbee6285d4c7a1329d14e7d5168cb9dc27122df1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000628_agentview.npy",
+          "sha256": "ce61d81a4f5291632d86813ff1b9e5f31dee0329fcf98a4fb66a9f223b3c75b5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000628_agentview.png",
+          "sha256": "8079cbdee259e49f37dd98be71dadbd067c9c8265a5517719901cc6e730a291f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000629_wrist.npy",
+          "sha256": "908f3a76eee39a45415ad7bfae6c071befd37c14ccbb07732ad56de484a08738"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000629_wrist.png",
+          "sha256": "94a0852481a40e7fcbe1186a30e96386f2bc1c6a265b2a43f1f15aa71f471f5d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000661_agentview.npy",
+          "sha256": "bf5a85bfd203e12caddd02011c459bec939c15ccb7533610a22016683862804e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000661_agentview.png",
+          "sha256": "dbe9269b00867384ef457af8c538d3cadbb0f0e4532ab0f3ed72f9320339d75a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000662_wrist.npy",
+          "sha256": "e5ca7fc84ad64ee230293b8cf0f10a62f86f484c6e7d47e39e218e04f115e958"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000662_wrist.png",
+          "sha256": "d4f838059801cf8ec13f6bc4b2da6804b28ae21f7aec352c2efc311a63fd531a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000694_agentview.npy",
+          "sha256": "0a89f6b4d28eb48a942cbb8ec88f7eaa9a8db9f127cdb1f89c9ab8ac8201d92b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000694_agentview.png",
+          "sha256": "3c472c16b07e4818f4a4964a1cf676d248464420250b79e518bbcde287771577"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000695_wrist.npy",
+          "sha256": "505f674fc1fd06e02c14b712d5a90f0c1dab96317a4a3ef6db984afb4814d929"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000695_wrist.png",
+          "sha256": "762f0b004ad7f7801eb4ba534586bcdfd22ab627219eaa7605db6ffbc2f8bb39"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000727_agentview.npy",
+          "sha256": "f3f2ad36fea99659ecae8e5f17e676ac704eee85f9e1166ee0fb3c2da02d33cc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000727_agentview.png",
+          "sha256": "cf144a7ea74bfb84727f1d61ad9e926286201531c351337ed5977396cea874cf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000728_wrist.npy",
+          "sha256": "a6f871dd7452b59855b701f0b01c5b9cca475fff1f13381e8cd3fdfec123b514"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000728_wrist.png",
+          "sha256": "45681575e47373f889b4508109bb51fa5a19f21cb586887d7bc9f0a458c5cf0a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000760_agentview.npy",
+          "sha256": "9075cc955855f906d86efc2e8623ff8fe8e888ebb9d3714ffb9d1a4f5446ff90"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000760_agentview.png",
+          "sha256": "6d6b404bb25787a10056eeeb1b7dcc8588e5b8607af96db80c17be5fd314e63e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000761_wrist.npy",
+          "sha256": "1826d87eb456736a22264956b3179356cf8c56c2f8974f609c04fc905183b8cc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000761_wrist.png",
+          "sha256": "8bcc076859b1d48bfe72b6dcc424d7aa248feb74ced7d7b710bc1880ce880a90"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000793_agentview.npy",
+          "sha256": "6e090dc17b7e878283a855ffc8fe37db2460d77b0e7f55d9b54baa839eee11be"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000793_agentview.png",
+          "sha256": "d2ee46f3624363c80cace9ffa887f422cc1407f8e2aa0e8944aa718abf77b5cf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000794_wrist.npy",
+          "sha256": "f757b66a6d5048a89a7f64736b79056b99888552940b522351fd0ab40a6731db"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000794_wrist.png",
+          "sha256": "07df281ac20fc5609f3cb208abe1d713cc7678f15dcce8cc136c7ab66b9c41f4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000826_agentview.npy",
+          "sha256": "211fc526d5633e9121b051a11f3f71309e1284ac3fc5ff5583084040f7ce8fb8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000826_agentview.png",
+          "sha256": "62e8497f3b0d1b43e29f1fe08ce894247c4696b05d36e34fc7e1a74175e3bc8e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000827_wrist.npy",
+          "sha256": "bdd9d2c70c2f8e69857c6993334df3656977a5ee48da1b2066c1309f197d5a1a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000827_wrist.png",
+          "sha256": "a4fa0abad0cd6aae35baf871826808ae980d8e8167848ecca585e043f38dbbcd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000859_agentview.npy",
+          "sha256": "ddc51a5af3ae9f4f7e5990a3fd2b9847826df9a203af9ee939fad560ea7db2ec"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000859_agentview.png",
+          "sha256": "f7df8e509bd4c21e0a85272eb5263ea57b149b594920885f1bba8fed9ef0d520"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000860_wrist.npy",
+          "sha256": "61e2e2e4b8584b2760d300e0e32a35379990a052832be070c0b7640c2d5127cf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000860_wrist.png",
+          "sha256": "a61a22f3581201a140084967d66ba6712aca47621795c5c5dec28d663f9d38ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000892_agentview.npy",
+          "sha256": "b28ce618f566c9cb5d132e1be3c2dce68eb6ee48e040a0e1e8ad72d7ca15c5cb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000892_agentview.png",
+          "sha256": "72d804259ded0ddf268bdb045a02e25fad0c4d90dc93151249ae0bf793184bab"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000893_wrist.npy",
+          "sha256": "fad33d077a00b98871eff18a0537d0d7853988deb67020097bf54e2828461bc1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000893_wrist.png",
+          "sha256": "79730206c9a950c1e31382b52a8049503931feab72392d2785bb319a7924da06"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000910_agentview.png",
+          "sha256": "ec090b46096e0b36ddea70052a59cb315e51ac988ee41c373018ec39819ad2d4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000912_sideview.png",
+          "sha256": "ba53d4bd78ea68dcf5821bf56e0f75e04e1b9cac73bf784f085686e3ccba9d3a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000919_agentview.png",
+          "sha256": "68fbd4499d38ee94c4fa29730b8dbeae8a27c5306373293e29a079e712fc183f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000921_sideview.png",
+          "sha256": "cc58f215a6808c57ff936a19697d75ab28b6d76b4200c67a3dd368d49bdc37ca"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000922_agentview.npy",
+          "sha256": "97547c9dd0c5ce04fe202338ba4edcdaa3029515ca15191734e03d98c1a2fdc0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000922_agentview.png",
+          "sha256": "68fbd4499d38ee94c4fa29730b8dbeae8a27c5306373293e29a079e712fc183f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000923_wrist.npy",
+          "sha256": "aa38016e02727b0cea9d3df534cd08b1208dbb2bacc12739329598a2d2d3a3dc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap000923_wrist.png",
+          "sha256": "4ab0bfcc1d6a12bd90dac2f4a8fd4a4f2a80670bafe6a64333828bc06c672990"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap001123_agentview.png",
+          "sha256": "fa012682a1bbdb04d176fbe985dba08cec9028edeb7b44f9cee94bc33b72e830"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap001125_sideview.png",
+          "sha256": "ceb1455c8ac24695c3be839b658a9d67199ae16f1e3e8b2028367303c9ac378e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap001132_agentview.png",
+          "sha256": "82cd7176d499b6089e69728383b8c55229f45464498d6af33a07858e17519cdf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/stove_exit/sensors/cap001134_sideview.png",
+          "sha256": "2722647ab620fadd58730f9e4e8352ec46d282d166935eb9293e1c2be8964259"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_stove_repair/summary.json",
+          "sha256": "49c3001d6227ff9aa1062ba27d018b430d50417e7a07c805569a4ebf4cf5946e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/summary.json",
+          "sha256": "86f4c56cfffd77da6f350bd7cf5886f99c48c996d56e9ea99ab43cd65ffb9974"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/all_actions.mp4",
+          "sha256": "b74ea1f9a0fc230b016ad85a976e30358b818a06da83515e3f1dbc7e34c3a436"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/checks.jsonl",
+          "sha256": "5a85e859dd6d0a6436a62e628c58795ed44e2c512b530059824ffd624420a8fd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/complete_prompt.txt",
+          "sha256": "860df381cfbac484fc74991cfa57e5256de7f9d0e8ca938a135dceddeb3f460e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/events.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/final_frame.png",
+          "sha256": "425f43e86597e2c025ed86ee4647e28e167b6d740f1b001b4afbea3d7a2f5aa1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/helper.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/oracle.jsonl",
+          "sha256": "22121382a919503be8940d4c40135ca0e4c85cd1e5e3a9c3cfd9f5ac999b0fef"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/result.json",
+          "sha256": "90962f775731836edf463387834d3569ad727ef94944c4048c19424199092f6c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/runtime_checks/checks.jsonl",
+          "sha256": "724db3e2946c98ab377e6e8299eac6024703e3c31edaa3da28cc17d726d67d7c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "7519c139f02ca6e79748373d1f1d26fcfa035b3108d9d68a8bc2da3d25a09ddc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "935f62fd7aed102a21e500d5047f00dddb777cfed168dd7974a0e5a363c5ab60"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/sensors/cap000535_agentview.png",
+          "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/sensors/cap000537_sideview.png",
+          "sha256": "9613bad5639b88b03231b9b7af2eab2dfffd422974c8cd95bacca9b7e9d7a2d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/sensors/cap000544_agentview.png",
+          "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine/wine_exit/sensors/cap000546_sideview.png",
+          "sha256": "20e16b5b9746c4f6c2b8c5190154c418afff8d4d817366863de185cf2b356ae4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/summary.json",
+          "sha256": "385f5c4769943e1e1405b930b6bb6fec5a4d320ea9b862855471ac7e2ea5500f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/all_actions.mp4",
+          "sha256": "516bba61c1e78636f1f07dbe19e02304de2625a19d8993ce0557db167ab7bc67"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/checks.jsonl",
+          "sha256": "dbf5367c0ae704b507083a832931a430a0142c454d8087b4f869efa4f73137c0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/complete_prompt.txt",
+          "sha256": "6895329563770bd30afb493c3af1fc98b1c6dd08fb08fe54efa430ef1d30487c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/events.jsonl",
+          "sha256": "5978fe44eeee7a80ffbaf36a1973d88ff48b846621b93411aea57d9dcc7f8da9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/final_frame.png",
+          "sha256": "a266802c56c03aa5210fb405581578e64a6bb8a335d0726e3513b744a99b9810"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/finish_only.mp4",
+          "sha256": "08a2a3193fe65b22c6457945dc67f53ccd6736c4db128fb72a009e9dd02b8152"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/helper.jsonl",
+          "sha256": "d0c28cf6e8cb119180a8c0613ae0752ef3e15fcec57317813cc7852de2a22b22"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/oracle.jsonl",
+          "sha256": "41c1f521fc8b764433e6a96db48dc55a626137d2ddc4fbb72701ba2ccb3d4d79"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/result.json",
+          "sha256": "c103cefa9f9be20b6f0a76ed1104f8c4e305802cb473a783abd5736ee82de898"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/runtime_checks/checks.jsonl",
+          "sha256": "a2fdab80c6f5c47580dc07e9f2509cda2369e0178a1bbb0b1d39f2c3c2aa80ca"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "0425ebbd9030e941c141724495068f8ae597dd3c56b4694274b7736ce86fe7c6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "c6e2e72e43b0ec4c521667a4b50c40eaa39c7732c880885d3100f0272a68672f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/runtime_checks/model_requests/call_02_request.json",
+          "sha256": "be5efdd2c27cf7904c0e3b0913bfaafde22991e9378dd818e0cdbd7c0e0da8bf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/runtime_checks/model_requests/call_02_response.json",
+          "sha256": "79bf3cff3f583c78410db473c5a480680c4a3758693220eea92a086f9db3cdf4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000535_agentview.png",
+          "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000536_wrist.png",
+          "sha256": "48790f4731d89650094e2575d2b28380dbf57f67490beca99ae82234d9553c8f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000537_sideview.png",
+          "sha256": "9613bad5639b88b03231b9b7af2eab2dfffd422974c8cd95bacca9b7e9d7a2d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000544_agentview.png",
+          "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000545_wrist.png",
+          "sha256": "943fed259ab9ed0d5003032ffc7247c96fe44546085d5e81d313fe5898afbfb9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000546_sideview.png",
+          "sha256": "20e16b5b9746c4f6c2b8c5190154c418afff8d4d817366863de185cf2b356ae4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000616_agentview.npy",
+          "sha256": "d92f166b075005e476769b0509112f91c64bed6a11a7c3a05b502aa37a75cfac"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000616_agentview.png",
+          "sha256": "a3321f4aa57590cb5a17e028c83bdf5ac479a31cc30285a545fc13cff8c66830"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000617_wrist.npy",
+          "sha256": "28de99b0d069deb33f1863ceaaf80d8b7baa9bb4b64a743e53d2fd618d71b4eb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000617_wrist.png",
+          "sha256": "5adf1a9ddc7d298a36fcbc9b73d731fae1947d4f4c183af26f8dc9091bc8a2bb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000649_agentview.npy",
+          "sha256": "fc5a780b1e667b032d06448763c1166d1198e314e0aaa279c4070196893ea117"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000649_agentview.png",
+          "sha256": "7e3d01b0a0617d0a386d94cc9c41d43b5fde14609d3b9d63b8fac6e60cf3bfd2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000650_wrist.npy",
+          "sha256": "338e32ad19a296089cd6f83b93aed7848be545f3767ad290bdc1a8153f01710a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000650_wrist.png",
+          "sha256": "df6175fc236470d119f301f4e50f51110c9ffd0840939791d310a5e92e5ef885"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000682_agentview.npy",
+          "sha256": "866a3fc1bdc67ee8181c90653e93055c06800aa46097302e446d56d81e640837"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000682_agentview.png",
+          "sha256": "4416b36988d62bfa7912a451d61a311a2b0750c94e2aded045bc454104996046"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000683_wrist.npy",
+          "sha256": "ce8eb4a552001f3f0952d56fb207874498f178748977499f00e7fcec3aa56522"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000683_wrist.png",
+          "sha256": "88369489ff7ecdc953f90c585d74a0ad0c90fef3068e3c0f8718bd216887e6ed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000715_agentview.npy",
+          "sha256": "362888b0d874719a847f7cec0100b295139fcce4ba56e72d771cffdb5b9c93d2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000715_agentview.png",
+          "sha256": "afcfa6dbceac4c43bd8232b89ab4f488e8d8364a5caea56fe97fa9a9e59d20bd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000716_wrist.npy",
+          "sha256": "5dc5cba7a4ef15e8dbb30d253a5d36ed7d5c2f1ee69e5082e789077976d6c4da"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000716_wrist.png",
+          "sha256": "29b0441ec8ac72172c5ed1d6d45fb359c64756c3306077bb83ec1d34e336cc5f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000748_agentview.npy",
+          "sha256": "484a4c7d63eba59e323c1562dcc8c6b7761dea511c4ab4ca3acc933f82d190de"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000748_agentview.png",
+          "sha256": "aede7f507e34491497fd3a0dd725360a056fc6db1b1ca0dd5612dc3df84c5c1f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000749_wrist.npy",
+          "sha256": "368e2b7a39f97233fc043e565e233585ce2d79901217ebe111d4cceb99ac82c4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000749_wrist.png",
+          "sha256": "760e8f1424d5cd33eacc190d114e11867d3a3f314fa7b819e4467bf6a57ee66e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000781_agentview.npy",
+          "sha256": "2298e5614d36c6b1d5dd39b54df759543628c368bf71db00edc88d8eed97c3a3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000781_agentview.png",
+          "sha256": "6e24224546802aaa29ea6e91d90008738bf18cc8d64bc8e887efd46e4448d48a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000782_wrist.npy",
+          "sha256": "b1e51a8d4612ae64bf90bbe6b741fbc7ec0a0b8ca7aa7dad6711498aa3355cb2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000782_wrist.png",
+          "sha256": "8add66b9c6e4ae0a6a83f7ffc8cf0080e8c202d06df61ef0b3e6d1bf04b130f1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000814_agentview.npy",
+          "sha256": "21a140396caae5152ff450cfd38c0200295c15f14330496182fcac99e85eb4df"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000814_agentview.png",
+          "sha256": "f779b6328c6905c6d9d2e8285041c98a1ce433ee4cdad3a9bf65b10450aee42f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000815_wrist.npy",
+          "sha256": "bbee33b1ba6b0a50eefcb44114d4bba748b23ae1767ee293c6132d26781efeab"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000815_wrist.png",
+          "sha256": "540323368343d86cb9f3a708d38ee3a8802118cf598b433a87d9739d517d4d21"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000847_agentview.npy",
+          "sha256": "e25eaecc638c9e1b5ddc0428a20807604076cd20c8e6af4c2517c612fdb43717"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000847_agentview.png",
+          "sha256": "a5994162d01742c10d4a4112d1d33ad92b264fb086a72fc93a812da18566e7f3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000848_wrist.npy",
+          "sha256": "7ef7bcee63e83d8d00915cc33ed17de7bb0b76910474c00c9dfed0e12186dfa1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000848_wrist.png",
+          "sha256": "71ba111e00f21657df66ad51e612c8c6e2f7424699c4f5051ba7ec9d1bb86114"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000880_agentview.npy",
+          "sha256": "8cdbffe6df0b73ec38b0b371460f2ac22e09ecf8150bdbc7ee0e942abb86134b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000880_agentview.png",
+          "sha256": "0b64c0597e0e46ca5901d613e6c3133d60c31363ac401b161dcf84d19e3ee511"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000881_wrist.npy",
+          "sha256": "517ab5663b15497667301631a5c32eff626512e80c4c78631feaa95f0b58f51e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000881_wrist.png",
+          "sha256": "cc2a317a684268a2fe54b454a8ac97bb245346a694e8d61ad5874ea8160179bf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000913_agentview.npy",
+          "sha256": "43b0b889360d83c87a45aa52afba57bc8a871bdeabecda5f191218c7999a3761"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000913_agentview.png",
+          "sha256": "fe4748dcddba9cf1da709c08e34ccc83c442fc4b9a62c47b695a3facf3a3625b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000914_wrist.npy",
+          "sha256": "4299b4dc3b3d266fe92fac04f6063bfe3a41fa03cdc1aa566b9cee7c5cdc9228"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000914_wrist.png",
+          "sha256": "e622835ab1ffc483c3f3181139691e49e90a001f817fb46f7432504baddadce5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000946_agentview.npy",
+          "sha256": "e399422d6f4eede497b3e7e9bd1dc9aac251462380c236f17808ac0d5cd23fd8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000946_agentview.png",
+          "sha256": "79bbd78145cca51464b8e1c9e643b6ce69423192e722a1787e092f814b9b671c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000947_wrist.npy",
+          "sha256": "87d58b0e36a1bfa932b805525d71c6ca7be454abd8ada8245f51294e0a6f1e09"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000947_wrist.png",
+          "sha256": "da9f44aa95716d3c353a3e7bbf3548fcdf971b19b362f07dc0d41746a4318ddb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000979_agentview.npy",
+          "sha256": "560c6bbca7c75319cf3d685a3ebaa6431b150a9c91c4eff91497d546a2cf5a6c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000979_agentview.png",
+          "sha256": "ea2dd226cb85a555d5b1eb14096e2e5e71a90d24c9e399b4116a5b829d859d6c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000980_wrist.npy",
+          "sha256": "92d1fe176d82b6d078e643c0f90b396c4911dfae37febfc4affef4bb5c71b2d9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap000980_wrist.png",
+          "sha256": "94ae8aa0de3a73ce93fd4d9f2326b383fa1d5965be280b664385e2677a77be41"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001012_agentview.npy",
+          "sha256": "164ddd50bff59e6e1a83b93da703558ba8803b048b780f632bf7b565c2cbfa2c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001012_agentview.png",
+          "sha256": "d34a7126187cd1c1b5c039bf4353d570ddd5e6e35fe89c889e08092dd0b2c966"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001013_wrist.npy",
+          "sha256": "3071c0125586d249f52068f43dca3111f6cdddc24e82f6ed70007e4100d9dd89"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001013_wrist.png",
+          "sha256": "bb4e35338d6f01ec538fb4709d23412dab5faf83f9f10457944f0e2ee68f9f1c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001045_agentview.npy",
+          "sha256": "ee909f48c9a30bd9959f16d07a4839ae46d5b0ea3f7a709b300047c736190629"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001045_agentview.png",
+          "sha256": "d737217e5a68365182f2b03686162f9621b156104687de32ecfe5a76c2ef0182"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001046_wrist.npy",
+          "sha256": "bdb120407b269c618f51a073c2457b6aa16ebcef8b81ef1ac64805d66033db60"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001046_wrist.png",
+          "sha256": "45f27e59efa07c46cc09dfc494da12c660f33cb8b87efdd1a06792df086bc215"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001684_agentview.png",
+          "sha256": "b484e4b8eb2135f3f809760e457ea5afe4ea9910ee84ac4e20bff68f493fb244"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001686_sideview.png",
+          "sha256": "8507ace45da08c341f482a0acd5e96ebc1398875a0900afbebf590f830037020"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001693_agentview.png",
+          "sha256": "790c648552808b33c1f4ca349b1de822ffa69fa0cb643f7be5d78909f4317717"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_atomic/wine_exit/sensors/cap001695_sideview.png",
+          "sha256": "32d15d47efd7cb191482802c652d1d971bcf613c90f71b6b7c862e00be5210f0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/summary.json",
+          "sha256": "08b95f888661c1572ee875ae20728c007edc1b2950150079834c80a809286d65"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/all_actions.mp4",
+          "sha256": "99240fca9d048ff498e8f176516f9411f57d0bdf093662334d4f3ba870cb7aff"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/checks.jsonl",
+          "sha256": "bf783ecc8a284ba3c7d92c5430ed249f3fd5216f14073778f423cc2593177cef"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/complete_prompt.txt",
+          "sha256": "88a5cc9c97636ef1509f1f2f440518e1cdcff2d58a40bd9b62193ebe772f28f3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/events.jsonl",
+          "sha256": "eb20e137291bd28b2859277bbba511b14887c3491f8523a16c92768ab341a08d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/final_frame.png",
+          "sha256": "f32e65f7359e1a1e5f5b4f4658482f3efaa5273d90c713a69d10b6be10184694"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/finish_only.mp4",
+          "sha256": "f41d043aeaf71ea146c068d76c8b13a17b34b8d5d94e078777195d79a4255932"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/helper.jsonl",
+          "sha256": "4f4f2e34919ba9e45505fbcc03c720c10d6ab0a1535ad8343ac0680887807a17"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/oracle.jsonl",
+          "sha256": "5381a7a1ddcc2ff2c9ab90465de3c7a3973ece1bd14014d00db2980c4f3b5021"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/result.json",
+          "sha256": "80bd7f89c13814d3e34e71891ed76d6b890cac1a50ead7b5f5dc90fcbdc48ad8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/runtime_checks/checks.jsonl",
+          "sha256": "aebd564019bca0d89317ca8f864e3d3f45d40a9bae63962ff634f5e4cff985f3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "967d441c9701e989c0957373f4931da46548f4bfc7f72906f0b849c759c9a155"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "d4075bb00a83e8a26fa49a2870109ea3c77984689d8158f9c904bd15ce922218"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/runtime_checks/model_requests/call_02_request.json",
+          "sha256": "744d5d8befa3240bb2b0f1c075f6c3eef754d1abe4fc1093919db37c0bf117a2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/runtime_checks/model_requests/call_02_response.json",
+          "sha256": "4a90a3833e4a59f365f7e59eed88377c400bebbfc4da5d9ccf789bfea1eaf0cb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/runtime_checks/model_requests/call_03_request.json",
+          "sha256": "9b22eda517b0386716793a8f3c703dc300227b305eea73bc19c5bce88f34fc96"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/runtime_checks/model_requests/call_03_response.json",
+          "sha256": "5988190014d611e0f5a9013f48f329cac5724ce55a2f27476721e7dc759c2395"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000535_agentview.png",
+          "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000536_wrist.png",
+          "sha256": "48790f4731d89650094e2575d2b28380dbf57f67490beca99ae82234d9553c8f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000537_sideview.png",
+          "sha256": "9613bad5639b88b03231b9b7af2eab2dfffd422974c8cd95bacca9b7e9d7a2d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000544_agentview.png",
+          "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000545_wrist.png",
+          "sha256": "943fed259ab9ed0d5003032ffc7247c96fe44546085d5e81d313fe5898afbfb9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000546_sideview.png",
+          "sha256": "20e16b5b9746c4f6c2b8c5190154c418afff8d4d817366863de185cf2b356ae4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000577_agentview.png",
+          "sha256": "8613c68d3b2a736ca3b5b03bbeb28dd309b4516565fc761c4fc41bff39bf01c9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000578_wrist.png",
+          "sha256": "4605c1bdc921bc2c078bd33ca12a5e8c22e6e49ef1953d3af895ab42b02e72ab"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000579_sideview.png",
+          "sha256": "afacf3f535ef2575d49e050081f8119d9ef1d83e01114e5ca0a9a3d02dacb779"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000586_agentview.png",
+          "sha256": "6dc8a52a07650cad98aa4a4dbcbacb39018803d992778cced93df9efb70b1ee7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000587_wrist.png",
+          "sha256": "a9f36801dac684426f1a443d43d727ee1d9d80ca6629227d8f03a5d4fd71518f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000588_sideview.png",
+          "sha256": "9a2bf87678536243e4708b8b9d4dc8fc05c4c719370a45b89141b236b2d5849b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000622_agentview.npy",
+          "sha256": "d92f166b075005e476769b0509112f91c64bed6a11a7c3a05b502aa37a75cfac"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000622_agentview.png",
+          "sha256": "a3321f4aa57590cb5a17e028c83bdf5ac479a31cc30285a545fc13cff8c66830"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000623_wrist.npy",
+          "sha256": "28de99b0d069deb33f1863ceaaf80d8b7baa9bb4b64a743e53d2fd618d71b4eb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000623_wrist.png",
+          "sha256": "5adf1a9ddc7d298a36fcbc9b73d731fae1947d4f4c183af26f8dc9091bc8a2bb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000655_agentview.npy",
+          "sha256": "fc5a780b1e667b032d06448763c1166d1198e314e0aaa279c4070196893ea117"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000655_agentview.png",
+          "sha256": "7e3d01b0a0617d0a386d94cc9c41d43b5fde14609d3b9d63b8fac6e60cf3bfd2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000656_wrist.npy",
+          "sha256": "338e32ad19a296089cd6f83b93aed7848be545f3767ad290bdc1a8153f01710a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000656_wrist.png",
+          "sha256": "df6175fc236470d119f301f4e50f51110c9ffd0840939791d310a5e92e5ef885"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000688_agentview.npy",
+          "sha256": "866a3fc1bdc67ee8181c90653e93055c06800aa46097302e446d56d81e640837"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000688_agentview.png",
+          "sha256": "4416b36988d62bfa7912a451d61a311a2b0750c94e2aded045bc454104996046"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000689_wrist.npy",
+          "sha256": "ce8eb4a552001f3f0952d56fb207874498f178748977499f00e7fcec3aa56522"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000689_wrist.png",
+          "sha256": "88369489ff7ecdc953f90c585d74a0ad0c90fef3068e3c0f8718bd216887e6ed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000721_agentview.npy",
+          "sha256": "362888b0d874719a847f7cec0100b295139fcce4ba56e72d771cffdb5b9c93d2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000721_agentview.png",
+          "sha256": "afcfa6dbceac4c43bd8232b89ab4f488e8d8364a5caea56fe97fa9a9e59d20bd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000722_wrist.npy",
+          "sha256": "5dc5cba7a4ef15e8dbb30d253a5d36ed7d5c2f1ee69e5082e789077976d6c4da"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000722_wrist.png",
+          "sha256": "29b0441ec8ac72172c5ed1d6d45fb359c64756c3306077bb83ec1d34e336cc5f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000754_agentview.npy",
+          "sha256": "484a4c7d63eba59e323c1562dcc8c6b7761dea511c4ab4ca3acc933f82d190de"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000754_agentview.png",
+          "sha256": "aede7f507e34491497fd3a0dd725360a056fc6db1b1ca0dd5612dc3df84c5c1f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000755_wrist.npy",
+          "sha256": "368e2b7a39f97233fc043e565e233585ce2d79901217ebe111d4cceb99ac82c4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000755_wrist.png",
+          "sha256": "760e8f1424d5cd33eacc190d114e11867d3a3f314fa7b819e4467bf6a57ee66e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000787_agentview.npy",
+          "sha256": "2298e5614d36c6b1d5dd39b54df759543628c368bf71db00edc88d8eed97c3a3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000787_agentview.png",
+          "sha256": "6e24224546802aaa29ea6e91d90008738bf18cc8d64bc8e887efd46e4448d48a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000788_wrist.npy",
+          "sha256": "b1e51a8d4612ae64bf90bbe6b741fbc7ec0a0b8ca7aa7dad6711498aa3355cb2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000788_wrist.png",
+          "sha256": "8add66b9c6e4ae0a6a83f7ffc8cf0080e8c202d06df61ef0b3e6d1bf04b130f1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000820_agentview.npy",
+          "sha256": "21a140396caae5152ff450cfd38c0200295c15f14330496182fcac99e85eb4df"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000820_agentview.png",
+          "sha256": "f779b6328c6905c6d9d2e8285041c98a1ce433ee4cdad3a9bf65b10450aee42f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000821_wrist.npy",
+          "sha256": "bbee33b1ba6b0a50eefcb44114d4bba748b23ae1767ee293c6132d26781efeab"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000821_wrist.png",
+          "sha256": "540323368343d86cb9f3a708d38ee3a8802118cf598b433a87d9739d517d4d21"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000853_agentview.npy",
+          "sha256": "e25eaecc638c9e1b5ddc0428a20807604076cd20c8e6af4c2517c612fdb43717"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000853_agentview.png",
+          "sha256": "a5994162d01742c10d4a4112d1d33ad92b264fb086a72fc93a812da18566e7f3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000854_wrist.npy",
+          "sha256": "7ef7bcee63e83d8d00915cc33ed17de7bb0b76910474c00c9dfed0e12186dfa1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000854_wrist.png",
+          "sha256": "71ba111e00f21657df66ad51e612c8c6e2f7424699c4f5051ba7ec9d1bb86114"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000886_agentview.npy",
+          "sha256": "8cdbffe6df0b73ec38b0b371460f2ac22e09ecf8150bdbc7ee0e942abb86134b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000886_agentview.png",
+          "sha256": "0b64c0597e0e46ca5901d613e6c3133d60c31363ac401b161dcf84d19e3ee511"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000887_wrist.npy",
+          "sha256": "517ab5663b15497667301631a5c32eff626512e80c4c78631feaa95f0b58f51e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000887_wrist.png",
+          "sha256": "cc2a317a684268a2fe54b454a8ac97bb245346a694e8d61ad5874ea8160179bf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000919_agentview.npy",
+          "sha256": "43b0b889360d83c87a45aa52afba57bc8a871bdeabecda5f191218c7999a3761"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000919_agentview.png",
+          "sha256": "fe4748dcddba9cf1da709c08e34ccc83c442fc4b9a62c47b695a3facf3a3625b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000920_wrist.npy",
+          "sha256": "4299b4dc3b3d266fe92fac04f6063bfe3a41fa03cdc1aa566b9cee7c5cdc9228"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000920_wrist.png",
+          "sha256": "e622835ab1ffc483c3f3181139691e49e90a001f817fb46f7432504baddadce5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000952_agentview.npy",
+          "sha256": "e399422d6f4eede497b3e7e9bd1dc9aac251462380c236f17808ac0d5cd23fd8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000952_agentview.png",
+          "sha256": "79bbd78145cca51464b8e1c9e643b6ce69423192e722a1787e092f814b9b671c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000953_wrist.npy",
+          "sha256": "87d58b0e36a1bfa932b805525d71c6ca7be454abd8ada8245f51294e0a6f1e09"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000953_wrist.png",
+          "sha256": "da9f44aa95716d3c353a3e7bbf3548fcdf971b19b362f07dc0d41746a4318ddb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000985_agentview.npy",
+          "sha256": "560c6bbca7c75319cf3d685a3ebaa6431b150a9c91c4eff91497d546a2cf5a6c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000985_agentview.png",
+          "sha256": "ea2dd226cb85a555d5b1eb14096e2e5e71a90d24c9e399b4116a5b829d859d6c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000986_wrist.npy",
+          "sha256": "92d1fe176d82b6d078e643c0f90b396c4911dfae37febfc4affef4bb5c71b2d9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap000986_wrist.png",
+          "sha256": "94ae8aa0de3a73ce93fd4d9f2326b383fa1d5965be280b664385e2677a77be41"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001018_agentview.npy",
+          "sha256": "164ddd50bff59e6e1a83b93da703558ba8803b048b780f632bf7b565c2cbfa2c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001018_agentview.png",
+          "sha256": "d34a7126187cd1c1b5c039bf4353d570ddd5e6e35fe89c889e08092dd0b2c966"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001019_wrist.npy",
+          "sha256": "3071c0125586d249f52068f43dca3111f6cdddc24e82f6ed70007e4100d9dd89"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001019_wrist.png",
+          "sha256": "bb4e35338d6f01ec538fb4709d23412dab5faf83f9f10457944f0e2ee68f9f1c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001045_agentview.png",
+          "sha256": "711bc1508fc05bfaec889dd502a076021ef10230fae4f52744df521bf4de4746"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001046_wrist.png",
+          "sha256": "c01955c34d168fae55189ab64618bf35fed66785d10db33902d9834e60f341d0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001047_sideview.png",
+          "sha256": "9def6443521e1a2b2f8eee552e676355d16ab44c4e38ab587c11e343cd065fce"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001054_agentview.png",
+          "sha256": "d737217e5a68365182f2b03686162f9621b156104687de32ecfe5a76c2ef0182"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001055_wrist.png",
+          "sha256": "45f27e59efa07c46cc09dfc494da12c660f33cb8b87efdd1a06792df086bc215"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_escape/wine_exit/sensors/cap001056_sideview.png",
+          "sha256": "5bd07762fb41f1d0cf1ef309d0eb104a3b0b5d64879101ed2cef5bc925361aeb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/summary.json",
+          "sha256": "86f4c56cfffd77da6f350bd7cf5886f99c48c996d56e9ea99ab43cd65ffb9974"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/all_actions.mp4",
+          "sha256": "b74ea1f9a0fc230b016ad85a976e30358b818a06da83515e3f1dbc7e34c3a436"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/checks.jsonl",
+          "sha256": "a31dffd0914962b09b389a75b54713b2107cf5a641e70359830aeb66053095c9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/complete_prompt.txt",
+          "sha256": "f2d7243010650971c86e71bdc121169cdb58dc7789e4be71baafdded06c0da58"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/events.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/final_frame.png",
+          "sha256": "425f43e86597e2c025ed86ee4647e28e167b6d740f1b001b4afbea3d7a2f5aa1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/helper.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/oracle.jsonl",
+          "sha256": "22121382a919503be8940d4c40135ca0e4c85cd1e5e3a9c3cfd9f5ac999b0fef"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/result.json",
+          "sha256": "2a104e1eb23e1adb472032483c9bab82e6e1a658c499c35673e1af884cef4a84"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/runtime_checks/checks.jsonl",
+          "sha256": "72f1adf9ea8bd63d302f2b375109a7d3b6477d1276e227909e1d7086c0612e2e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "63926d352652291f81aae76177c92c0fe0c3d3ea3682e72906d9f555470679aa"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "269215b68597ebb3e6ac298dcd56fabae56d5e4acccc2e1a7197f9685a2a6d74"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/sensors/cap000535_agentview.png",
+          "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/sensors/cap000537_sideview.png",
+          "sha256": "9613bad5639b88b03231b9b7af2eab2dfffd422974c8cd95bacca9b7e9d7a2d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/sensors/cap000544_agentview.png",
+          "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_repair/wine_exit/sensors/cap000546_sideview.png",
+          "sha256": "20e16b5b9746c4f6c2b8c5190154c418afff8d4d817366863de185cf2b356ae4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/summary.json",
+          "sha256": "287ce120652200b6734d4e1fea165d058b2632fe6aef1f516f20ce0f2ae53775"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/all_actions.mp4",
+          "sha256": "08b797b7c9cafda609f15f1949739e697f6c9d2d5275db3a30cef689f5df5613"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/checks.jsonl",
+          "sha256": "0dd87039ffb8f1c014b9f857af6fffa594df302f8c3ad788d02f114bf51db885"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/complete_prompt.txt",
+          "sha256": "5b011a314696f480511e2827357735e5a8e2c26e1fbc6ae89698c56298b47501"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/events.jsonl",
+          "sha256": "37a7e77e496cb0ac4f7b0080d20ef62ad5c615282ca0b9f52d8a256b7f4cba1d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/final_frame.png",
+          "sha256": "36f38e0da5729f7e095ca7abd6bd89dd9f70f83c1546218c8baa71e67e0aa3d6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/finish_only.mp4",
+          "sha256": "9f01f9dd49a7e5ea17a8f1b152ec2c899bd1c1dafda2160e9d9f56e6c6702f11"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/helper.jsonl",
+          "sha256": "43b3e0be65788a3d56538662689e4070ad25c3919ff742e11b76d7f85e9c8dd6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/oracle.jsonl",
+          "sha256": "70565616436e5b90d5cf6154be5fb9e1b8722c3be3f87553bb9a26620836ff75"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/result.json",
+          "sha256": "0bfbef4888afbdfcf225b1e1b8f77a7a7dd3ed3cdd7eca03c8ba0c3d5ac32e8b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/runtime_checks/checks.jsonl",
+          "sha256": "a6bdb4c83e7b5ef2b97781d407dd4e636fb6309c3660cdc2d2d04899b39c0750"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "80d3cd266e68c63d0113a443ec61d3ba0e39b60fc82fc57461de2ef2429972f6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "12a52236b977969a71a5f2909cff1cc1c2ab11cf3ad54d60d6510be30f81d197"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/runtime_checks/model_requests/call_02_request.json",
+          "sha256": "f1d832eeda5174c0940e421d8e7da1c679f1db378a796b0f65b8c1732d81f342"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/runtime_checks/model_requests/call_02_response.json",
+          "sha256": "8a25ada69374e47dd15be620fef09d050f26657de50d19fb8c86dce797942800"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000535_agentview.png",
+          "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000536_wrist.png",
+          "sha256": "48790f4731d89650094e2575d2b28380dbf57f67490beca99ae82234d9553c8f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000537_sideview.png",
+          "sha256": "9613bad5639b88b03231b9b7af2eab2dfffd422974c8cd95bacca9b7e9d7a2d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000544_agentview.png",
+          "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000545_wrist.png",
+          "sha256": "943fed259ab9ed0d5003032ffc7247c96fe44546085d5e81d313fe5898afbfb9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000546_sideview.png",
+          "sha256": "20e16b5b9746c4f6c2b8c5190154c418afff8d4d817366863de185cf2b356ae4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000577_agentview.png",
+          "sha256": "8613c68d3b2a736ca3b5b03bbeb28dd309b4516565fc761c4fc41bff39bf01c9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000578_wrist.png",
+          "sha256": "4605c1bdc921bc2c078bd33ca12a5e8c22e6e49ef1953d3af895ab42b02e72ab"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000579_sideview.png",
+          "sha256": "afacf3f535ef2575d49e050081f8119d9ef1d83e01114e5ca0a9a3d02dacb779"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000586_agentview.png",
+          "sha256": "6dc8a52a07650cad98aa4a4dbcbacb39018803d992778cced93df9efb70b1ee7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000587_wrist.png",
+          "sha256": "a9f36801dac684426f1a443d43d727ee1d9d80ca6629227d8f03a5d4fd71518f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_stage_views/wine_exit/sensors/cap000588_sideview.png",
+          "sha256": "9a2bf87678536243e4708b8b9d4dc8fc05c4c719370a45b89141b236b2d5849b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/summary.json",
+          "sha256": "2ce9318db0789260787e4b214ffbcd62ae3d81f946def392162b15d3ba4c0a2d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/all_actions.mp4",
+          "sha256": "d80d0e95b6c77d4778f0ef7eb804a6665dff37f50f6ce02d0c15d9b3250fcdc7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/checks.jsonl",
+          "sha256": "66b0492f86a2720d4b164e9d43692f162390cba09781b8c167a69cd0e10efc1e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/complete_prompt.txt",
+          "sha256": "82859a91573cf24d6df38db8d911e2047167ed3410f71df7a56859ace103e4cc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/events.jsonl",
+          "sha256": "9a9bd20c5472855072ef3d3e006b7156a304754c51222ad8531daffc7df94208"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/final_frame.png",
+          "sha256": "cd4eaceb0acc1abc182f32564175b07c5d3a65aa4e21bf618e04a57a1418b7be"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/finish_only.mp4",
+          "sha256": "f07a40b2fba18393c4a2b74b614fa174a870e8a97f5935c79dfd21aaf96ecc4d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/helper.jsonl",
+          "sha256": "bf5ad3ecba7c7ec9a9933bedae60cf94bc8c02f2a856b5339c2fcb06bfe0b339"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/oracle.jsonl",
+          "sha256": "bc4d80fe2685011a635e96b5d21ac7888789ce19a3c14d8046875c499322afbf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/result.json",
+          "sha256": "a764cf16bdebcc520d79325da3166e14b178c1a4db1703c496e67a61bdd29ba6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/runtime_checks/checks.jsonl",
+          "sha256": "dfe92b822098549aed3f363569210b3a72c8f809c8608d047b9679af3a63f567"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "0ad4abb7ea4bc43db6df76c47b65bf8ee66f3958686791fc1257e8a1161a4356"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "0f6421bba32ddef7ca7083fe69a24bf8ef2a6b4de88906ee37473d754c543caf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/sensors/cap000535_agentview.png",
+          "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/sensors/cap000536_wrist.png",
+          "sha256": "48790f4731d89650094e2575d2b28380dbf57f67490beca99ae82234d9553c8f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/sensors/cap000537_sideview.png",
+          "sha256": "9613bad5639b88b03231b9b7af2eab2dfffd422974c8cd95bacca9b7e9d7a2d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/sensors/cap000544_agentview.png",
+          "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/sensors/cap000545_wrist.png",
+          "sha256": "943fed259ab9ed0d5003032ffc7247c96fe44546085d5e81d313fe5898afbfb9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_views/wine_exit/sensors/cap000546_sideview.png",
+          "sha256": "20e16b5b9746c4f6c2b8c5190154c418afff8d4d817366863de185cf2b356ae4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/summary.json",
+          "sha256": "2ce9318db0789260787e4b214ffbcd62ae3d81f946def392162b15d3ba4c0a2d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/all_actions.mp4",
+          "sha256": "d80d0e95b6c77d4778f0ef7eb804a6665dff37f50f6ce02d0c15d9b3250fcdc7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/checks.jsonl",
+          "sha256": "08f4fb7f43b72b4f07088e0e9efea062f99a679a8b27d07c58b673faa5b2d7e6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/complete_prompt.txt",
+          "sha256": "9d1f317742246a01df7961656826e221af1caf33cd0344e09e93a9e2be317fc0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/events.jsonl",
+          "sha256": "9a9bd20c5472855072ef3d3e006b7156a304754c51222ad8531daffc7df94208"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/final_frame.png",
+          "sha256": "cd4eaceb0acc1abc182f32564175b07c5d3a65aa4e21bf618e04a57a1418b7be"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/finish_only.mp4",
+          "sha256": "f07a40b2fba18393c4a2b74b614fa174a870e8a97f5935c79dfd21aaf96ecc4d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/helper.jsonl",
+          "sha256": "bf5ad3ecba7c7ec9a9933bedae60cf94bc8c02f2a856b5339c2fcb06bfe0b339"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/oracle.jsonl",
+          "sha256": "bc4d80fe2685011a635e96b5d21ac7888789ce19a3c14d8046875c499322afbf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/result.json",
+          "sha256": "e69a1ba7c71e73ba0a7956c1057028ff50472fbd8cc1d25a9c73bb7e5cc9ea69"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/runtime_checks/checks.jsonl",
+          "sha256": "4ab308a88136e146cc3bdc99a7d34b46db2e8f40b51366e45930b3f07567dcdd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "e70b7cf53eeddfcc050b26db871ac7c6a4d350b208fff1dc4a144ab33dcaaa47"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "6dedf744926c397e2a774a8a7c171edc0e4a86f9b1442fd68a6008b6840d03ff"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/sensors/cap000535_agentview.png",
+          "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/sensors/cap000536_wrist.png",
+          "sha256": "48790f4731d89650094e2575d2b28380dbf57f67490beca99ae82234d9553c8f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/sensors/cap000537_sideview.png",
+          "sha256": "9613bad5639b88b03231b9b7af2eab2dfffd422974c8cd95bacca9b7e9d7a2d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/sensors/cap000544_agentview.png",
+          "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/sensors/cap000545_wrist.png",
+          "sha256": "943fed259ab9ed0d5003032ffc7247c96fe44546085d5e81d313fe5898afbfb9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/pilot_wine_withdraw/wine_exit/sensors/cap000546_sideview.png",
+          "sha256": "20e16b5b9746c4f6c2b8c5190154c418afff8d4d817366863de185cf2b356ae4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary/call_01_request.json",
+          "sha256": "57862c0ddac058dc14549575ec66a540f0e0a0ba4b15ed33275ac47e1ab5a7d0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary/call_01_response.json",
+          "sha256": "547ca4611a48292fd9fd51aafe1d7d10aff6ded17ca3c06e8c70487785f68f37"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary/complete_prompt.txt",
+          "sha256": "79c760fde15258b12b48ddc431dd0cd22854fa8dcb10b51ad67107495d629a94"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary/result.json",
+          "sha256": "7a0a37f68edbafae2a1c11e7cc766586611129956b87e2a1ca59e93ab6704c64"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_literal_thinking/call_01_request.json",
+          "sha256": "ff4b69253d0b94ceb90a7933938234fd43005aeb3321e2caeb8c9047dd40f397"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_literal_thinking/call_01_response.json",
+          "sha256": "3c6658f1eb0d81bb84222243d53d420aa3a21629b7ce6d2caab3127f93df580a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_literal_thinking/complete_prompt.txt",
+          "sha256": "ec32db9ab8a64808f4318d053bdeb2ec1f59d2bbe13d08f89e527e380f4d49c7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_literal_thinking/result.json",
+          "sha256": "00e1b5287c44481c5283067919cc802ef3ebe10b639a60062e4446099b078c98"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_names/call_01_request.json",
+          "sha256": "ce87f170d8503f5d522420c880859844a0cd10a074c1f30e8ee3e7c9c7f09593"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_names/call_01_response.json",
+          "sha256": "508a9853a0595718bb83039827f0d986f2d0a018cff441c60df58c457a60c38d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_names/complete_prompt.txt",
+          "sha256": "dd3e91e54c5c3443e5f4d68f5c02c17bf78d4936f2ae13f19bff2824c432a3a8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_names/result.json",
+          "sha256": "78812fdb38de250a01e12f8a2edbc462fdfd9e25ba6448a7e14d1d590612aa12"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_negative/failure.json",
+          "sha256": "61f301d06cba0df3a26ef3f475f744fc9cf5e7775d9013ffa6f1cdc5d842a84c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_task_text/call_01_request.json",
+          "sha256": "d7e79ccf41807c83ec1dd8da8d44c4dbc0b82b83154f8b0e0151a1d73045048f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_task_text/call_01_response.json",
+          "sha256": "c53e5c7b126b2335effdd5edfe100ea24268930574682c879f507aa4bd6b7a0f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_task_text/complete_prompt.txt",
+          "sha256": "071d0076fcb9cd430ed8170cd545091c21cf24326038076aaf9e9d4472e2cfe6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/posthoc_primary_task_text/result.json",
+          "sha256": "4e2667b3eeba29f952bd9c8801248f9b1c2f9c12aa201051bddc8d6da546e7c8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-goal-finish/evidence/manifest.json",
+          "sha256": "fd2826c8b9062f99d544739fd96d9305fff68faa1fabb61c77ea1fc22f0b94e6"
+        }
+      ]
     }
   ]
 }

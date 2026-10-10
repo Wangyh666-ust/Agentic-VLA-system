@@ -484,7 +484,7 @@ class PilotRunner:
             frame_deque = deque(maxlen=3)
             actual_counts = {"release": 0, "movement": 0, "confirm": 0, "home": 0}
             replay_counter = {"n": 0}
-            caps = {"release": 20, "movement": 120, "confirm": 20, "home": 360}
+            caps = {"release": 20, "movement": 480 if self.simple_checker else 120, "confirm": 20, "home": 360}
             actual_step_counter = {"n": 0}
             last_capture = {"cap": None}
 
