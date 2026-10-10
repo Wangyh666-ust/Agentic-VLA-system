@@ -819,6 +819,8 @@ class QwenClient:
         except Exception:
             raise RuntimeError("Qwen response read failure") from None
 
+        if hasattr(self, 'record_response'):
+            self.record_response(context, image_paths, prompt, request_bytes, raw, call_index, status)
         try:
             payload = json.loads(raw.decode("utf-8"))
         except Exception:
@@ -826,7 +828,8 @@ class QwenClient:
 
         try:
             response_content = _extract_content(payload)
-            raw_verdict = _parse_verdict_content(response_content)
+            parser = getattr(self, 'parse_verdict', _parse_verdict_content)
+            raw_verdict = parser(response_content)
             verdict = validate_verdict(raw_verdict)
         except ValueError:
             raise RuntimeError("Qwen response parse failure") from None

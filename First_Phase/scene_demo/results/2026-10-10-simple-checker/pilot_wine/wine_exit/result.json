@@ -1,0 +1,42 @@
+{
+  "case_id": "wine_exit",
+  "context_origin": "fixed_historical_subtask_fixture",
+  "origin_sha": "bd974baeab772df43c3db589b35e6885d3428363a8dbbbbcbe4c07171fcad859",
+  "terminal_sha": "bd21e55c973071f49692c80e0349ad094ab982917031c2f5e7c6492e48f2d222",
+  "origin_check": null,
+  "terminal_check": "sha_match",
+  "phase_counts": {
+    "replay": 180,
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  },
+  "release_open_actions": 0,
+  "initial_vision_decision": null,
+  "finish": null,
+  "final_snapshot": null,
+  "home": null,
+  "contacts": null,
+  "physical_streak": 0,
+  "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine/wine_exit/all_actions.mp4",
+  "errors": [
+    "RuntimeError: Qwen response parse failure"
+  ],
+  "status": "unknown",
+  "initialization_steps": 10,
+  "initial_state_sha": "bd974baeab772df43c3db589b35e6885d3428363a8dbbbbcbe4c07171fcad859",
+  "terminal_state_sha": "bd21e55c973071f49692c80e0349ad094ab982917031c2f5e7c6492e48f2d222",
+  "traceback": "Traceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/handoff_pilot.py\", line 580, in run_case\n    initial_verdict = check_fn(initial_ctx, [])\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/handoff_pilot.py\", line 566, in check_fn\n    verdict = monitor._check(context_arg, observations)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/runtime.py\", line 312, in _check\n    meta = self.call_client.analyze(ctx, paths)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/simple_checker.py\", line 35, in analyze\n    result = self._request(context, image_paths, prompt)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/vision.py\", line 834, in _request\n    raise RuntimeError(\"Qwen response parse failure\") from None\nRuntimeError: Qwen response parse failure\n",
+  "target_metrics": {
+    "eligible": true,
+    "expected_release": false,
+    "expected_retreat": true,
+    "release_actions": 0,
+    "actual_release_open_actions": 0,
+    "movement_actions": 0,
+    "confirm_actions": 0,
+    "home_actions": 0,
+    "target_executed": false
+  }
+}

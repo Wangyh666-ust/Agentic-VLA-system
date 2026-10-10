@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-10",
-  "root_note": "19 registered campaigns; reused samples overlap; takeover final revision has one sample and four not_run cases; no pooled success rate",
+  "updated_at": "2026-10-11",
+  "root_note": "24 registered campaigns; reused states and revisions overlap; no pooled success rate",
   "entries": [
     {
       "id": "20261006-persistent-pilot",
@@ -2776,6 +2776,464 @@
         {
           "path": "First_Phase/scene_demo/results/2026-10-10-live-handoff/README.md",
           "sha256": "15389ce47263ff2a40cc7fc193a68ebec69a6da6d31fcd5dfb50e488512f9e01"
+        }
+      ]
+    },
+    {
+      "id": "20261010-simple-checker",
+      "title": "用户两问检查器四项实测：灶台实际开爪，完整归位0/3，番茄未达目标拒绝",
+      "date": "2026-10-10",
+      "question_keys": [
+        "release-stop",
+        "visual-completion",
+        "joint-home-handoff"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "Qwen",
+        "两问检查器",
+        "收尾",
+        "归位"
+      ],
+      "conditions": [
+        "wine init1 replay180；bowl init0 replay83；stove init0 replay78，均libero_10 task8/envseed0；sauce task0/init0/replay336。真实恢复旧轨迹末态SHA一致，检查和辅助动作新执行。",
+        "第一次wine解析失败后一次协议修正，冻结新源码；最终四项同版各一次，失败停止本例，仅独立样例继续。没有新VLA、Hermes、训练、子agent或组合。",
+        "Qwen主视256与侧视512，两个时刻；同步夹爪编码器。目的达成直接开爪，删除新模式开爪前五连停稳；原退离路径和归位streaming实现/参数保留。",
+        "独立效果记录不进入Qwen；开爪与保持闭合等待分开计数；原始图片、响应、动作、视频归档。"
+      ],
+      "findings": [
+        "酒瓶/碗目的独立记录均真，Qwen误判悬空；开爪、退离、归位均0。不能据此否定原归位能力。",
+        "灶台目的判对，实际开爪17周期、退离120、确认0、归位0。实测标准开口，开火维持、手部接触0；退离预算耗尽，归位未启动。",
+        "番茄目标确实未入篮，正确拒绝收尾，但Qwen错误描述仍夹持；不是完整检查器或完整任务成功。",
+        "三项应接管正例实际开爪1/3、完整归位0/3；番茄为未达目标负例，不合并入正例成功率。",
+        "5仿真启动、4状态；实际Qwen6次，保留usage9602tokens为下限（首次解析失败usage丢失），新VLA/Hermes/子agent0。"
+      ],
+      "limits": [
+        "四状态小试，不证明泛化；从旧末态恢复，不是新完整VLA或多任务执行。",
+        "简化了两组判断，但仍通过旧多字段接口兼容；模型返回未带视角的boxes被忽略为未知，未臆造视角。",
+        "酒瓶和碗视觉误判未消除；灶台退离跟踪未完成；自动演示收尾保持off，原成功碗归位记录不作废。",
+        "首次解析失败响应/usage在旧客户端被丢弃，不补造。其后请求、原始响应、哈希与实际图像均保存。"
+      ],
+      "configuration": {
+        "inputs_sha256": "b44444c69fb6bf6adad4364f3476a8b8eb7a133a49f1dd45c27b26218e719bff",
+        "source_sha256": {
+          "First_Phase/scene_demo/finish_v1/handoff_pilot.py": "7cd1a5e94d2c95e30de972a06b13d4ff75bd58509ef54086a78a472e9cf81a4a",
+          "First_Phase/scene_demo/finish_v1/control.py": "fc10430e707fae0732793a00a24a921dd7b9e9ba7a8c6177e7ff6ec124980759",
+          "First_Phase/scene_demo/finish_v1/runtime.py": "763ad147aa442fd31e0cfd5a1b65bfca243d4fd6f0d367311de2384c4a0bd139",
+          "First_Phase/scene_demo/finish_v1/vision.py": "d4bc9be7118c7c2bcbada3c025d8946a471a47ad2ab1518875aa1919d13d68c3",
+          "First_Phase/scene_demo/finish_v1/simple_checker.py": "9c12afc346dd75f77fd28961e41ae7a75305f07a201e3a5b19f023ab6d7b0f34",
+          "First_Phase/scene_demo/finish_v1/sensors.py": "403576acee777920f98c58d51cccdcde4b1c818ebf24dd3db71efbf511b204bf",
+          "First_Phase/scene_demo/finish_v1/geometry.py": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70",
+          "First_Phase/scene_demo/finish_v1/prepare_simple_pilot.py": "950e15a7668fb845e72f743f475f4d7eb36a729e895c58d8a604ac1ab2d3e7ad",
+          "First_Phase/scene_demo/joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21"
+        },
+        "cases": [
+          "wine_exit",
+          "bowl_held83",
+          "sauce_negative",
+          "stove_exit"
+        ],
+        "qwen_max_per_case": 6,
+        "release": 20,
+        "movement": 120,
+        "confirm": 20,
+        "home": 360,
+        "init_steps": 10,
+        "replay_steps": [
+          180,
+          83,
+          336,
+          78
+        ],
+        "simple_checker": true,
+        "protocol_repair": "archive raw response before parsing; missing schema metadata remains null, no invented positives"
+      },
+      "configuration_complete": true,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-simple-checker.json",
+          "sha256": "cba1bbd717cdde295db2bd4c7bc3121cc71e0fbec4fb7c87d94cdc62111048fe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/README.md",
+          "sha256": "38af6940eb43357af5aafd604045069ccb08e4b7cda03ba383fcfc311366423e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/acceptance.json",
+          "sha256": "eac5d3fd6f3c119e3c17820c228b5cd8915ec277e6bfd50490f9ffb68b32e639"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/inputs.json",
+          "sha256": "b44444c69fb6bf6adad4364f3476a8b8eb7a133a49f1dd45c27b26218e719bff"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/inputs_initial.json",
+          "sha256": "0ab44404ccb2d5a6ab20d812c4e5e523b3008fefa245c07de9e6f3e894eec16f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/launch_bowl.json",
+          "sha256": "6b48b75d112dd207df099d37df79252cfe5173c5ba4d1aadc987bc63dbc2fa1e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/launch_bowl.log",
+          "sha256": "07b3c1341b98ad3f2e86df6803cae6d4b94c16e7e80faee51edf60a6a9ba9a06"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/launch_sauce.json",
+          "sha256": "c0104100a14d141c01bca3585caa10f61d852e4f5fcc9443ba7160b983c138e2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/launch_sauce.log",
+          "sha256": "e18f15b44c83966fdc06f6fcc950507de465770d6097bbde699f46b84f2e6dd5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/launch_stove.json",
+          "sha256": "56be54ed3e4e06216e3ace9984307d6b76f29a53e6d9cd002bd95e762ecb1d99"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/launch_stove.log",
+          "sha256": "36fda2257281443e111a5c42acbdf329967894dc6c811574ec3a45e54dbe4bbc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/launch_wine.json",
+          "sha256": "9d58929e81a7f19f746221b6f2eaf05dd6f7720759a7e795da0d3e32cfd44376"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/launch_wine.log",
+          "sha256": "edd56eb007205d879033fc386ae03ac943a17074709742c93bc9f78eac106be6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/launch_wine_repair.json",
+          "sha256": "70a25568a6ef79036f242b7563699bf573ec8bfe35b7c09631772f8480ddb18c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/launch_wine_repair.log",
+          "sha256": "a3e25a1b228300c743ec1ed2b705826f8f21f418b8b79d30dd3ecd51c0a67473"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/model_inputs.json",
+          "sha256": "9273e6b75b5dca4a9e786972071033ba8d6a8c392c464406ea7b1758f671df04"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/preflight.json",
+          "sha256": "02b6dcbb8de54dccce999b9ba8a6d12abee6c3198fb37be03036029220a7e6fe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/preflight_initial.json",
+          "sha256": "66c60225942e1b28c60c746f646c5bbed48ac1e9009c5c8dd8c7088431b10c2a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/proposal_initial.json",
+          "sha256": "4d59ee75ccdcdfbd443b58ebfaf8bc46c1daaca118cb45a249598c2b8ed57207"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/registry_at_launch.json",
+          "sha256": "4f47b8e062503e2ddb03111db5731a8176dfb985ab66c0977ee92387c8a6a52f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/source_snapshot.zip",
+          "sha256": "11b64acaffa38c18b7de054477546660e6a5f80d140e4f4149507c3f54817494"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/source_snapshot_repair.zip",
+          "sha256": "90d32b4cd4c1219fe4f3474538e158bba8ab1761d9c120ccd7803c3f0efd767d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/summary.json",
+          "sha256": "5e26cac72e3543ca95a7e87fc4b1015534125cd2bb033c5d15959cc5cddfc363"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/video_validation.json",
+          "sha256": "1369412dd7759a1080aed7a4804a9fe55524314536a2c61f4f8746e072210a00"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/all_actions.mp4",
+          "sha256": "7be19f04fb1b4b444082223775a0b14fe95a0c8d087b99e8a21c9627d07bd661"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/checks.jsonl",
+          "sha256": "cdb6cc4141639a2bd32aa7aa2a8ef3b876a00cfc238191e3eb86abf49aec1037"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/events.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/helper.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/oracle.jsonl",
+          "sha256": "db62b049c525156ae701504be49008e0d6f04fd6632b1fbb30c3275690f22d8b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/result.json",
+          "sha256": "eb21fa0184ed4dd4a28daa0455b84d2370892fef38c888d23cad784f1904a913"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/runtime_checks/checks.jsonl",
+          "sha256": "f110d6c11cb2570e77409550ce663df2f8f18aa011b9280c98161447322f9c62"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "4443cb3b582fbb3442dfc8c0bc4add253e05747f8ecebe4571635b3cf8e995c0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "4e161c74f3ad5f9215e61d054122650cbef86037b248e855f37d3dccb5f19122"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/sensors/cap000244_agentview.png",
+          "sha256": "757d7738ec8f8ea2f6bdebe3f940aa7347854c7cca9997095c4f4ba8e83d7883"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/sensors/cap000246_sideview.png",
+          "sha256": "5e130af4a81cd7588eab157cdae7c5abb90621220bc1940f96d44d863cf13bb6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/sensors/cap000253_agentview.png",
+          "sha256": "7adf78b63e05764b0ec2c7aec0c0229558ee4a6478a5965384d60f3882dc4c8c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/sensors/cap000255_sideview.png",
+          "sha256": "748c16d41de7b799f1fa043040568f834888b756ae7369fdacaa7831653521a7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/summary.json",
+          "sha256": "49f4a5272ab499bcab22687878d2f9a60bdc7d03eb6cab576ce89741a521bdf9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/all_actions.mp4",
+          "sha256": "31989daabde593f54c22a3e09e5b48035f594e3734ea9cb01b33e1d8e25b09f9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/checks.jsonl",
+          "sha256": "76e302eb6186ad27c1118ca39cc0f49c7be03254dffb7805dbdf89461c075934"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/events.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/helper.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/oracle.jsonl",
+          "sha256": "688090d406135a303170ab0680c94cc778e706b30285ed4fca8625d642f87ae3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/result.json",
+          "sha256": "06bf10d42328a1b5cfe74a5e77b7c8e7841a1ea07977f4b6070f306fc1eba9b2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/runtime_checks/checks.jsonl",
+          "sha256": "169bea9663a86c3e4fe5486af9c56343f2e1dc9646908f1d8c7bd3a2b15f29a6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "0e6ad2ca4ac9bf83e026af38f7cb47300edc9bda582ceadea11a3f85c29f145a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "1a0ace7638378f3d4e83c3be52c230990d79d6e2f1105de8a6cfa653549ca5b8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/sensors/cap001003_agentview.png",
+          "sha256": "ed93096559c0e0f48157c0ea3bb27b7d2791418c6d16c89356b1736ba1ad0010"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/sensors/cap001005_sideview.png",
+          "sha256": "ea1f9b2aa2bab8eaefec566b2333c9ebc161f91a5880ba81bbe917234477a0f8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/sensors/cap001012_agentview.png",
+          "sha256": "57e92e4e4981c1f92779c68908593fdec85a6216a7167ec6e5c0446e1b652593"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/sauce_negative/sensors/cap001014_sideview.png",
+          "sha256": "0f787a5d1f83f0b9b2eecacf7a92a885285f1de4fd16f83cc49d8683c26a2658"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_sauce/summary.json",
+          "sha256": "42aaaae7f2db50488837f3046a4c5ef80cdffb8619288fc9886366dc7f9e8f82"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/all_actions.mp4",
+          "sha256": "cdccb0c8c3c6d6bb5ba8085dda8ef7ee7ea1b73839263554918fa19fcca4ed11"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/checks.jsonl",
+          "sha256": "0c63683cbe72e74f75cc10b96d2df9c96497b8df8f299ef2b38e66146d54eed8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/events.jsonl",
+          "sha256": "54f241a98c861f02cf9f59f7527f648464467a46362bb7ac3fdf12b62b50ee26"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/helper.jsonl",
+          "sha256": "a65179d1f7a9c104ffafd7991f5c2ed180398b8edd09dce975bd4120a4bf6271"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/oracle.jsonl",
+          "sha256": "e00847fe0dc4c3a4b4185bdaf9e8cbb6c0a821779ff3800d6155605b573cf8d8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/result.json",
+          "sha256": "f1a7230cbbb203983ea771aaddd9e51aee8605f819a4b74ec48b8901aad1c4a7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/runtime_checks/checks.jsonl",
+          "sha256": "55d8489195b8768df13b975d4bcecf300aa28bba34c935a8b7793c73bbb80f36"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "6c49c9dd6d14d6bd789b80949deae6b96657e7818307340ad388390927c0d00e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "bbaed2603350db1f565fa5064dbbae7ff52b2f4d2cb5d2ac8eaba694f1baa6f9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/runtime_checks/model_requests/call_02_request.json",
+          "sha256": "c2d58787d294c35f4db355ecc5820df7758b31d9ae0a970f3b5dfb3d711369e4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/runtime_checks/model_requests/call_02_response.json",
+          "sha256": "ca5289ce65b02b398eaa6024a1192a5ffabe271676ee8ad10e78bb8beabc0165"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000229_agentview.png",
+          "sha256": "c9a17e22c7a80554e86bed5cff71fdf41024adbe51ad412ea56d8584f41b36be"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000231_sideview.png",
+          "sha256": "86093d48a2025b4fd47594b215f8b3edb133875ab978140b0881231363a453ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000238_agentview.png",
+          "sha256": "e0f6149f37010db3e7aca0d491f810ec0b9eb493c3438958631c78bbe7ce1efd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000240_sideview.png",
+          "sha256": "e6e7288f091cb872ce123e139f29acddf816341755e5ba91e6f6390b88ee277e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000283_agentview.png",
+          "sha256": "c15743e68c6708cea5079c92e490db764898d16a42f0a16c1ace62d226d2ce83"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000285_sideview.png",
+          "sha256": "792266a0bc48af5811c28049df853784e713c943d11945c54a5898a84ed28dd4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000286_agentview.png",
+          "sha256": "18ded115abf0908e2ab2e4545fbfdd4e007f3af866ac3b5ae82db457c3cddd83"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000288_sideview.png",
+          "sha256": "658c4be3fc64d4f1f0b9fe0ca7c3da7b8cae65294df54a007929ec0d14497de2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000295_agentview.png",
+          "sha256": "c738622b8d133052e0282d04d625b32fdf3849c600fdcb1b4be16f662a33c4c7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000297_sideview.png",
+          "sha256": "c6b5a22ad19e46525d1ca32b9a89d36955e359a8b6f649dc56b8faa099960b6e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/summary.json",
+          "sha256": "f6d65b7b0a97537d42eecb3a2146a73d789bf9f22da1e2b5f673fef350f9bed6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine/summary.json",
+          "sha256": "eb32cb8c923f5a04e6e5fcdc6528e7e9301193a0ba5dc768e22f4798313c4560"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine/wine_exit/all_actions.mp4",
+          "sha256": "b74ea1f9a0fc230b016ad85a976e30358b818a06da83515e3f1dbc7e34c3a436"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine/wine_exit/checks.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine/wine_exit/events.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine/wine_exit/helper.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine/wine_exit/oracle.jsonl",
+          "sha256": "63c161ec701f861f96dc7aff85608a9dad103e60894e518e8c9afa9f658b80ec"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine/wine_exit/result.json",
+          "sha256": "3c5de1a8860a7fee6135f1ac271f264fa0e7a04ed07a040df6b27d3de26c2f7d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/summary.json",
+          "sha256": "86f4c56cfffd77da6f350bd7cf5886f99c48c996d56e9ea99ab43cd65ffb9974"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/all_actions.mp4",
+          "sha256": "b74ea1f9a0fc230b016ad85a976e30358b818a06da83515e3f1dbc7e34c3a436"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/checks.jsonl",
+          "sha256": "04c374816298f89858e3c0048469950ffd4dcd90a41ce7df86eced94a22deb30"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/events.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/helper.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/oracle.jsonl",
+          "sha256": "22121382a919503be8940d4c40135ca0e4c85cd1e5e3a9c3cfd9f5ac999b0fef"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/result.json",
+          "sha256": "8e731e5b1675c62f19238766ace784a1eaec628022c635516db05485570f9d04"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/runtime_checks/checks.jsonl",
+          "sha256": "644188659bb82a37ea40932d699b98dc898fed50d082c4580bfb1b77514bddde"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/runtime_checks/model_requests/call_01_request.json",
+          "sha256": "4c7be778414bf95e15956190fef7e279fb8c5f58b2ee0cd88dd59b28cf5f3084"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/runtime_checks/model_requests/call_01_response.json",
+          "sha256": "6de12b64e53f59d4e846928ed6aa185c714578124d0176a33b0baf84acb81e7a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/sensors/cap000535_agentview.png",
+          "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/sensors/cap000537_sideview.png",
+          "sha256": "9613bad5639b88b03231b9b7af2eab2dfffd422974c8cd95bacca9b7e9d7a2d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/sensors/cap000544_agentview.png",
+          "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_wine_repair/wine_exit/sensors/cap000546_sideview.png",
+          "sha256": "20e16b5b9746c4f6c2b8c5190154c418afff8d4d817366863de185cf2b356ae4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-simple-checker/evidence/manifest.json",
+          "sha256": "f9b92226fed5e94297706c4d367c3d2f2c133ed6585872371f34a572ed1e5993"
         }
       ]
     }

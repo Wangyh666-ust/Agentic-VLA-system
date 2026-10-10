@@ -3,7 +3,7 @@ from .geometry import clouds, screen, plan_retreat, screen_shapes
 from scene_demo import joint_home as jh
 
 
-def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit):
+def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple_handoff=False):
     r = {
         'ready': False, 'ok': False, 'reason': '',
         'counts': {'release': 0, 'movement': 0, 'confirm': 0, 'home': 0},
@@ -66,12 +66,17 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit):
             r['reason'] = 'initial stop'
             return r
 
+        if simple_handoff:
+            # Purpose reached: explicitly open, including already-open fingers.
+            d = {'state': 'needs_release', 'allow_release': True, 'allow_retreat': False}
+            r['handoff_mode'] = 'simple_goal_contact_v1'
+
         if d['state'] == 'needs_release':
             q = np.asarray(port.read_robot()['arm_qpos'])
             f = np.asarray(port.read_robot()['finger_qpos'])
 
             settle_streak = 0
-            for _ in range(10):
+            for _ in range(0 if simple_handoff else 10):
                 st = act('release', q, f, command_kind='release_settle')
                 r['release_settle_actions'] += 1
                 if np.max(np.abs(st['arm_qvel'])) <= 0.02:
@@ -80,7 +85,7 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit):
                     settle_streak = 0
                 if settle_streak >= 5:
                     break
-            if settle_streak < 5:
+            if not simple_handoff and settle_streak < 5:
                 r['reason'] = 'settle not stable'
                 return r
 
@@ -97,15 +102,15 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit):
                 condition = (
                     np.max(np.abs(q - st['arm_qpos'])) <= 0.01 and
                     np.max(np.abs(np.asarray(ref['finger_home']) - np.asarray(st['finger_qpos']))) <= 0.002 and
-                    np.max(np.abs(st['arm_qvel'])) <= 0.02
+                    (simple_handoff or np.max(np.abs(st['arm_qvel'])) <= 0.02)
                 )
                 if condition:
                     streak += 1
                 else:
                     streak = 0
-                if streak >= 5:
+                if streak >= (2 if simple_handoff else 5):
                     break
-            if streak < 5:
+            if streak < (2 if simple_handoff else 5):
                 r['reason'] = 'release not confirmed'
                 return r
             v, d = verify()

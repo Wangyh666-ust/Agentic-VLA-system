@@ -1,0 +1,75 @@
+{
+  "prompt": "你是机器人子任务检查器。只回答两组问题，依据所给照片和同步夹爪编码器。\n1. 子任务目的是否达成？放置：指定物品是否已经放在指定目的地，由那里承托；仅悬在上方不算。架子上允许平放或斜放，除非用户明确要求竖立。入篮：指定物品是否已经在篮子内部。开关灶台：当前炉圈/旋钮是否达到要求；红色发热炉圈表示开火，不要求看到之前旋转动作。\n2. 夹爪是否仍夹持或接触目标/局部支撑面？结合图像和编码器。夹爪闭合不证明持物，夹爪未张开不能否定物品已经放到位。照片中物品已搭在架面而手还靠近瓶颈时，放置目的可以已达成，手部尚未离开。\n两组独立判断：第一组不要求松手、退离、归位。看不清返回null；不要把遮挡编成悬空或接触。编码器只说明开合状态，不说明支撑关系。\n为兼容现有接口，只输出一个JSON，键必须恰为：target_visible,destination_visible,at_destination,supported,released,stable,operation_achieved,clear_of_target,boxes,evidence,unknown_reasons。\n第一组：target_visible/destination_visible表示看见指定物体/目的地；at_destination表示已到指定位置；supported表示由指定位置承托；operation_achieved表示当前子任务目的达成。\n第二组：released表示手指已不持握/接触目标；clear_of_target表示手部已与目标及其局部支撑面分离。两者根据照片判断，编码器闭合本身不能断言仍持物。\n所有上述状态用true/false/null。stable固定为null（本检查不额外要求视觉稳定性）。turn任务的destination_visible/at_destination/supported可为null。\nboxes仅用于已有退离路径定位，不作为任务成功条件：以最新照片逐视角输出target/destination/gripper各自归一化[x1,y1,x2,y2]或null；看不清可为空字典。不得跨视角复制坐标。\nevidence和unknown_reasons是简短字符串数组。说明第一组与第二组各自画面依据。\n{\"user_request\": \"请打开灶台。\", \"current_subtask\": {\"operation\": \"turn\", \"target\": \"flat_stove_1\", \"destination\": null}, \"desired_state\": \"on\", \"sensor_frames\": [{\"frame\": 0, \"view\": \"agentview\", \"timestamp\": 4.349999999999743}, {\"frame\": 1, \"view\": \"sideview\", \"timestamp\": 4.349999999999743}, {\"frame\": 2, \"view\": \"agentview\", \"timestamp\": 4.3999999999997375}, {\"frame\": 3, \"view\": \"sideview\", \"timestamp\": 4.3999999999997375}], \"actuator_measurements\": {\"timestamp\": 4.3999999999997375, \"stage\": \"release\", \"finger_qpos\": [0.01935626920078853, -0.010495931928356426], \"max_abs_arm_qvel\": 0.4717293256672402, \"standard_open_finger_qpos\": [0.03873057586502897, -0.03872776397868675]}}",
+  "context": {
+    "user_request": "请打开灶台。",
+    "current_subtask": {
+      "operation": "turn",
+      "target": "flat_stove_1",
+      "destination": null,
+      "phase": "post_execution"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "当前主要目的达成即停止VLA并移交收尾；不要求VLA自行松手或退离。",
+      "desired_state": "on"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 4.349999999999743
+      },
+      {
+        "frame": 1,
+        "view": "sideview",
+        "timestamp": 4.349999999999743
+      },
+      {
+        "frame": 2,
+        "view": "agentview",
+        "timestamp": 4.3999999999997375
+      },
+      {
+        "frame": 3,
+        "view": "sideview",
+        "timestamp": 4.3999999999997375
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 4.3999999999997375,
+      "stage": "release",
+      "finger_qpos": [
+        0.01935626920078853,
+        -0.010495931928356426
+      ],
+      "max_abs_arm_qvel": 0.4717293256672402,
+      "standard_open_finger_qpos": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ]
+    }
+  },
+  "http_status": 200,
+  "request_sha256": "c8bb34da1354491e3481a2cc319d17b04a600980f9cd23f934f41ca57bc4dad6",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000229_agentview.png",
+      "sha256": "c9a17e22c7a80554e86bed5cff71fdf41024adbe51ad412ea56d8584f41b36be"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000231_sideview.png",
+      "sha256": "86093d48a2025b4fd47594b215f8b3edb133875ab978140b0881231363a453ad"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000238_agentview.png",
+      "sha256": "e0f6149f37010db3e7aca0d491f810ec0b9eb493c3438958631c78bbe7ce1efd"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000240_sideview.png",
+      "sha256": "e6e7288f091cb872ce123e139f29acddf816341755e5ba91e6f6390b88ee277e"
+    }
+  ]
+}

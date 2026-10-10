@@ -309,6 +309,8 @@ class FinishMonitor:
         self._phase = 'visual_check'
         self.guarded_step(lambda: None)
         self.calls += 1
+        if getattr(self.call_client, 'simple_handoff', False):
+            self.call_client.audit_dir = self.output_dir / 'model_requests'
         meta = self.call_client.analyze(ctx, paths)
         self.guarded_step(lambda: None)
         self._phase = 'observing'
@@ -316,11 +318,19 @@ class FinishMonitor:
             raise RuntimeError('analyze must return a dict')
         raw = meta['verdict']
         from scene_demo.finish_v1 import vision
-        fused = vision.reconcile_verdict(ctx, raw, robot, self.reference)
+        simple = bool(getattr(self.call_client, 'simple_handoff', False))
+        if simple:
+            from scene_demo.finish_v1 import simple_checker
+            reconcile = simple_checker.reconcile
+            decide = simple_checker.decide
+        else:
+            reconcile = vision.reconcile_verdict
+            decide = vision.decide
+        fused = reconcile(ctx, raw, robot, self.reference)
         initial_check = {'metadata': dict(meta), 'raw_verdict': raw, 'verdict': fused,
-                         'decision': vision.decide(ctx, fused)}
+                         'decision': decide(ctx, fused)}
         relation_review = None
-        trigger = vision.needs_relation_review(ctx, raw, robot, self.reference)
+        trigger = not simple and vision.needs_relation_review(ctx, raw, robot, self.reference)
         if trigger:
             self._write_check({'initial_check': initial_check, 'ctx': ctx, 'robot': robot,
                                'relation_review_pending': self.calls < 10})
@@ -345,7 +355,7 @@ class FinishMonitor:
                 meta = review_meta
             else:
                 relation_review = {'trigger': True, 'review_skipped_budget': self.calls >= 10, 'prepared_inputs': prepared, 'reason': prepared['reason']}
-        self._last_decision = vision.decide(ctx, fused)
+        self._last_decision = decide(ctx, fused)
         row = {
             'initial_check': initial_check,
             'relation_review': relation_review,

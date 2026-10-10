@@ -1,0 +1,2087 @@
+{
+  "case_id": "stove_exit",
+  "context_origin": "fixed_historical_subtask_fixture",
+  "origin_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569",
+  "origin_check": null,
+  "terminal_check": "sha_match",
+  "phase_counts": {
+    "replay": 78,
+    "release": 17,
+    "movement": 120,
+    "confirm": 0,
+    "home": 0
+  },
+  "release_open_actions": 17,
+  "initial_vision_decision": {
+    "target_visible": true,
+    "destination_visible": null,
+    "at_destination": null,
+    "supported": null,
+    "released": false,
+    "stable": null,
+    "operation_achieved": true,
+    "clear_of_target": false,
+    "boxes": {},
+    "evidence": [
+      "frame 0/2: flat_stove_1 shows red spiral heating element \u2192 indicates 'on' state per spec",
+      "frame 1/3 sideviews confirm same stove with red glow, no hand contact",
+      "gripper is retracted and not touching stove in all frames; finger_qpos near open (0.019 vs std 0.0387), consistent with release",
+      "\u5939\u722a\u5c1a\u672a\u8fbe\u5230\u6807\u51c6\u5f00\u53e3\uff0c\u9700\u8981\u53d1\u51fa\u5f00\u722a\u547d\u4ee4\uff1b\u4e0d\u636e\u6b64\u63a8\u65ad\u7269\u54c1\u672a\u5230\u4f4d\u6216\u4ecd\u88ab\u6301\u6709\u3002"
+    ],
+    "unknown_reasons": []
+  },
+  "finish": {
+    "ready": false,
+    "ok": false,
+    "reason": "movement budget",
+    "counts": {
+      "release": 17,
+      "movement": 120,
+      "confirm": 0,
+      "home": 0
+    },
+    "release_settle_actions": 0,
+    "release_open_actions": 17,
+    "plan": {
+      "ok": true,
+      "reason": "ok",
+      "waypoints": [
+        [
+          0.2166012190428483,
+          0.31459870483279856,
+          0.36554324279565165,
+          -2.765654688348768,
+          -0.42735801404647206,
+          2.7764434711619375,
+          0.9460998821775353
+        ],
+        [
+          0.21177375945059865,
+          0.3078265827254259,
+          0.3723169996313829,
+          -2.767991692850144,
+          -0.41981888818931457,
+          2.77239567974155,
+          0.9405083179718822
+        ],
+        [
+          0.20700072764386265,
+          0.30113460914401247,
+          0.37905504419820923,
+          -2.77023937597303,
+          -0.412132380690786,
+          2.768377141697703,
+          0.9348734898984337
+        ],
+        [
+          0.20230707630594094,
+          0.29446790382069643,
+          0.38574816984778787,
+          -2.7724387410344784,
+          -0.4043504717822481,
+          2.764376776922893,
+          0.9291876728926544
+        ],
+        [
+          0.1943710389296398,
+          0.2830388840378741,
+          0.3972049410205025,
+          -2.776094593064964,
+          -0.390650500492809,
+          2.7575059733780414,
+          0.9191886966336285
+        ],
+        [
+          0.18991585615184786,
+          0.2764060582665758,
+          0.4037566343729166,
+          -2.778185894563363,
+          -0.38262943655779413,
+          2.753542998740393,
+          0.9133735348702249
+        ],
+        [
+          0.18554705888848116,
+          0.2697997630361339,
+          0.41025219277631714,
+          -2.780223365840745,
+          -0.37451558697193144,
+          2.749593931907403,
+          0.9075001013200542
+        ],
+        [
+          0.17831052087592678,
+          0.25862220116353596,
+          0.4211642224926411,
+          -2.7835656905124524,
+          -0.36047599434512756,
+          2.742905154329461,
+          0.8973402014606405
+        ],
+        [
+          0.17420563414441267,
+          0.2520318296080006,
+          0.42748656498585097,
+          -2.7854959525155185,
+          -0.352135959776481,
+          2.7389718689071914,
+          0.8913408622586748
+        ],
+        [
+          0.17019815530236906,
+          0.2454582240632273,
+          0.43373860673366443,
+          -2.787376415161675,
+          -0.34370886529226896,
+          2.7350451984511603,
+          0.8852853692666713
+        ],
+        [
+          0.16331258534755663,
+          0.23380167642535152,
+          0.44467048152184,
+          -2.790608871557751,
+          -0.32848983803293796,
+          2.728079164406691,
+          0.8743493733214232
+        ],
+        [
+          0.15960584109464224,
+          0.2272277490718288,
+          0.4507065568883654,
+          -2.7923776516021035,
+          -0.3198423229143899,
+          2.7241453700761515,
+          0.8681666164963561
+        ],
+        [
+          0.1560097583201687,
+          0.22065746779421463,
+          0.45665713786870055,
+          -2.794101937992978,
+          -0.3111155316305739,
+          2.7202080670055713,
+          0.8619330161346067
+        ],
+        [
+          0.14964101130437835,
+          0.20849025994192158,
+          0.4674370436714171,
+          -2.7971973122099203,
+          -0.29472896171615964,
+          2.7129141528927496,
+          0.850225230072223
+        ],
+        [
+          0.14638679069920546,
+          0.20189853827851154,
+          0.4731227552945055,
+          -2.798807492894676,
+          -0.2857937508214295,
+          2.7089415393116574,
+          0.8438675887746557
+        ],
+        [
+          0.14135372455403744,
+          0.19116442458332444,
+          0.48213931341242267,
+          -2.801360419257492,
+          -0.27108888256264707,
+          2.7024755992036096,
+          0.83339356560126
+        ],
+        [
+          0.13843933919953463,
+          0.18453642016895652,
+          0.487551946409125,
+          -2.802862056399164,
+          -0.2619773416375967,
+          2.698444299256534,
+          0.8269319212181189
+        ],
+        [
+          0.13398358630800117,
+          0.17374687782055354,
+          0.4960790408224349,
+          -2.805252284459072,
+          -0.24703143972636507,
+          2.6918910582160307,
+          0.816314225867844
+        ],
+        [
+          0.13142729888004573,
+          0.16707045460878236,
+          0.5011879342040527,
+          -2.806647428373819,
+          -0.2377613174031019,
+          2.687783583842811,
+          0.8097539639873631
+        ],
+        [
+          0.12755312783510211,
+          0.1561212730098553,
+          0.5092363526599194,
+          -2.8088930231241562,
+          -0.2224987494123029,
+          2.681057273298263,
+          0.7989331067683146
+        ],
+        [
+          0.1253768218149854,
+          0.1493794379584737,
+          0.5140101456564267,
+          -2.810182686186719,
+          -0.21309252636594425,
+          2.6768490828977796,
+          0.7922868203304794
+        ]
+      ],
+      "candidate_reports": [
+        {
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "distance": 0.04,
+          "reason": "clear"
+        }
+      ],
+      "sensor_screen": {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        }
+      }
+    },
+    "checks": [
+      {
+        "target_visible": true,
+        "destination_visible": null,
+        "at_destination": null,
+        "supported": null,
+        "released": true,
+        "stable": null,
+        "operation_achieved": true,
+        "clear_of_target": true,
+        "boxes": {},
+        "evidence": [
+          "\u7076\u53f0\u7089\u5708\u5448\u7ea2\u8272\u87ba\u65cb\u72b6\u53d1\u70ed\uff0c\u8868\u660e\u5df2\u901a\u7535\u5f00\u542f\uff08\u64cd\u4f5c\u8fbe\u6210\uff09",
+          "\u5939\u722a\u4f4d\u4e8e\u7076\u53f0\u53f3\u4fa7\u4e0a\u65b9\uff0c\u672a\u63a5\u89e6\u65cb\u94ae\u6216\u7089\u9762\uff1b\u4fa7\u89c6\u4e0e\u4e3b\u89c6\u5747\u663e\u793a\u624b\u90e8\u8fdc\u79bb\u76ee\u6807\u533a\u57df\uff08released & clear_of_target = true\uff09"
+        ],
+        "unknown_reasons": []
+      }
+    ],
+    "restored": true,
+    "limitation": "visible geometry only",
+    "opening_confirmed": true,
+    "object_release_not_yet_confirmed": true,
+    "handoff_mode": "simple_goal_contact_v1",
+    "_release_path": true,
+    "active_retreat_plan": {
+      "ok": true,
+      "reason": "ok",
+      "waypoints": [
+        [
+          0.2166012190428483,
+          0.31459870483279856,
+          0.36554324279565165,
+          -2.765654688348768,
+          -0.42735801404647206,
+          2.7764434711619375,
+          0.9460998821775353
+        ],
+        [
+          0.21177375945059865,
+          0.3078265827254259,
+          0.3723169996313829,
+          -2.767991692850144,
+          -0.41981888818931457,
+          2.77239567974155,
+          0.9405083179718822
+        ],
+        [
+          0.20700072764386265,
+          0.30113460914401247,
+          0.37905504419820923,
+          -2.77023937597303,
+          -0.412132380690786,
+          2.768377141697703,
+          0.9348734898984337
+        ],
+        [
+          0.20230707630594094,
+          0.29446790382069643,
+          0.38574816984778787,
+          -2.7724387410344784,
+          -0.4043504717822481,
+          2.764376776922893,
+          0.9291876728926544
+        ],
+        [
+          0.1943710389296398,
+          0.2830388840378741,
+          0.3972049410205025,
+          -2.776094593064964,
+          -0.390650500492809,
+          2.7575059733780414,
+          0.9191886966336285
+        ],
+        [
+          0.18991585615184786,
+          0.2764060582665758,
+          0.4037566343729166,
+          -2.778185894563363,
+          -0.38262943655779413,
+          2.753542998740393,
+          0.9133735348702249
+        ],
+        [
+          0.18554705888848116,
+          0.2697997630361339,
+          0.41025219277631714,
+          -2.780223365840745,
+          -0.37451558697193144,
+          2.749593931907403,
+          0.9075001013200542
+        ],
+        [
+          0.17831052087592678,
+          0.25862220116353596,
+          0.4211642224926411,
+          -2.7835656905124524,
+          -0.36047599434512756,
+          2.742905154329461,
+          0.8973402014606405
+        ],
+        [
+          0.17420563414441267,
+          0.2520318296080006,
+          0.42748656498585097,
+          -2.7854959525155185,
+          -0.352135959776481,
+          2.7389718689071914,
+          0.8913408622586748
+        ],
+        [
+          0.17019815530236906,
+          0.2454582240632273,
+          0.43373860673366443,
+          -2.787376415161675,
+          -0.34370886529226896,
+          2.7350451984511603,
+          0.8852853692666713
+        ],
+        [
+          0.16331258534755663,
+          0.23380167642535152,
+          0.44467048152184,
+          -2.790608871557751,
+          -0.32848983803293796,
+          2.728079164406691,
+          0.8743493733214232
+        ],
+        [
+          0.15960584109464224,
+          0.2272277490718288,
+          0.4507065568883654,
+          -2.7923776516021035,
+          -0.3198423229143899,
+          2.7241453700761515,
+          0.8681666164963561
+        ],
+        [
+          0.1560097583201687,
+          0.22065746779421463,
+          0.45665713786870055,
+          -2.794101937992978,
+          -0.3111155316305739,
+          2.7202080670055713,
+          0.8619330161346067
+        ],
+        [
+          0.14964101130437835,
+          0.20849025994192158,
+          0.4674370436714171,
+          -2.7971973122099203,
+          -0.29472896171615964,
+          2.7129141528927496,
+          0.850225230072223
+        ],
+        [
+          0.14638679069920546,
+          0.20189853827851154,
+          0.4731227552945055,
+          -2.798807492894676,
+          -0.2857937508214295,
+          2.7089415393116574,
+          0.8438675887746557
+        ],
+        [
+          0.14135372455403744,
+          0.19116442458332444,
+          0.48213931341242267,
+          -2.801360419257492,
+          -0.27108888256264707,
+          2.7024755992036096,
+          0.83339356560126
+        ],
+        [
+          0.13843933919953463,
+          0.18453642016895652,
+          0.487551946409125,
+          -2.802862056399164,
+          -0.2619773416375967,
+          2.698444299256534,
+          0.8269319212181189
+        ],
+        [
+          0.13398358630800117,
+          0.17374687782055354,
+          0.4960790408224349,
+          -2.805252284459072,
+          -0.24703143972636507,
+          2.6918910582160307,
+          0.816314225867844
+        ],
+        [
+          0.13142729888004573,
+          0.16707045460878236,
+          0.5011879342040527,
+          -2.806647428373819,
+          -0.2377613174031019,
+          2.687783583842811,
+          0.8097539639873631
+        ],
+        [
+          0.12755312783510211,
+          0.1561212730098553,
+          0.5092363526599194,
+          -2.8088930231241562,
+          -0.2224987494123029,
+          2.681057273298263,
+          0.7989331067683146
+        ],
+        [
+          0.1253768218149854,
+          0.1493794379584737,
+          0.5140101456564267,
+          -2.810182686186719,
+          -0.21309252636594425,
+          2.6768490828977796,
+          0.7922868203304794
+        ]
+      ],
+      "candidate_reports": [
+        {
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "distance": 0.04,
+          "reason": "clear"
+        }
+      ],
+      "sensor_screen": {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        }
+      }
+    },
+    "movement_screens": [
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000331_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000331_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000332_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000332_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7414261012905119,
+                -0.6445632826375446,
+                -0.1866159451940299,
+                -0.3679808439809316
+              ],
+              [
+                -0.670480311771701,
+                -0.7228902809843158,
+                -0.16699039848127892,
+                0.2520437662636969
+              ],
+              [
+                -0.027266973643421247,
+                0.24893335721418788,
+                -0.9681367133904173,
+                1.0129270619541917
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000364_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000364_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000365_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000365_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7417066586050824,
+                -0.6443181582996724,
+                -0.1863473731132234,
+                -0.36796015628171114
+              ],
+              [
+                -0.67017328802615,
+                -0.7231808666976833,
+                -0.16696466110708552,
+                0.2520821711634097
+              ],
+              [
+                -0.02718449184921122,
+                0.2487238326491914,
+                -0.9681928828881126,
+                1.0151344926892165
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000397_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000397_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000398_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000398_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7417265479360676,
+                -0.644300218121074,
+                -0.18633023645124808,
+                -0.367946798627297
+              ],
+              [
+                -0.6701511962753437,
+                -0.7232038662963266,
+                -0.16695371186280233,
+                0.25209275031357403
+              ],
+              [
+                -0.02718643444012489,
+                0.24870343122518118,
+                -0.9681980691362958,
+                1.0179936497376083
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000430_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000430_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000431_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000431_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7417273148709715,
+                -0.6443002620920731,
+                -0.18632703143232576,
+                -0.3679493722784089
+              ],
+              [
+                -0.6701508283183174,
+                -0.7232009844092477,
+                -0.16696767188221356,
+                0.2520919406262364
+              ],
+              [
+                -0.027174577799297397,
+                0.24871169738791815,
+                -0.9681962786046272,
+                1.0199932800331726
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000463_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000463_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000464_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000464_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7417285002600266,
+                -0.6443018705504943,
+                -0.18631675047386848,
+                -0.3679495520541365
+              ],
+              [
+                -0.6701501401261748,
+                -0.7231990009518542,
+                -0.16697902476390272,
+                0.2520944451932806
+              ],
+              [
+                -0.02715918980521781,
+                0.24871329805092843,
+                -0.9681962991985408,
+                1.0219731504847842
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000496_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000496_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000497_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000497_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7417292654507532,
+                -0.6443002886362715,
+                -0.18631917463616046,
+                -0.36794075617970556
+              ],
+              [
+                -0.6701490463432015,
+                -0.7232013193715952,
+                -0.16697337316014815,
+                0.25209877518968377
+              ],
+              [
+                -0.027165280399442604,
+                0.248710654621787,
+                -0.9681968073787572,
+                1.024679221270438
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000529_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000529_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000530_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000530_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7417307045251386,
+                -0.6443022407831276,
+                -0.1863066946904479,
+                -0.36794144135180124
+              ],
+              [
+                -0.6701482724360637,
+                -0.7231983443221109,
+                -0.16698936409458592,
+                0.25210168275867767
+              ],
+              [
+                -0.02714507166316571,
+                0.24871424826815924,
+                -0.968196451032952,
+                1.0267758063144607
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000562_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000562_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000563_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000563_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.741732902347232,
+                -0.6443028278682581,
+                -0.18629591400917683,
+                -0.3679338603749915
+              ],
+              [
+                -0.6701462102247666,
+                -0.7231997154703474,
+                -0.166991701784815,
+                0.25210806884729997
+              ],
+              [
+                -0.027135926314235906,
+                0.2487087403863635,
+                -0.9681981222655277,
+                1.029148146300768
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000595_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000595_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000596_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000596_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7417342620800855,
+                -0.644301063250422,
+                -0.18629660316518187,
+                -0.3679331820043373
+              ],
+              [
+                -0.6701448809033026,
+                -0.7231991461586369,
+                -0.16699950177924372,
+                0.25210778042857984
+              ],
+              [
+                -0.027131587782656466,
+                0.2487149671607901,
+                -0.9681966443107504,
+                1.031413481575658
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000628_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000628_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000629_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000629_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7417355925928614,
+                -0.6443021687253976,
+                -0.1862874822865574,
+                -0.36793279540629864
+              ],
+              [
+                -0.6701440614063727,
+                -0.72319671432407,
+                -0.16701332088381385,
+                0.2521109181503952
+              ],
+              [
+                -0.027115450257869697,
+                0.24871917450533884,
+                -0.9681960155829469,
+                1.0332087858426835
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000661_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000661_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000662_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000662_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7417403873888269,
+                -0.6442998533528504,
+                -0.18627639862786458,
+                -0.36792380675402747
+              ],
+              [
+                -0.6701391360884515,
+                -0.7232003854175524,
+                -0.1670171871830143,
+                0.2521158685018229
+              ],
+              [
+                -0.02710601407244362,
+                0.2487144979718666,
+                -0.9681974811471601,
+                1.0357622357992524
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      },
+      {
+        "ok": true,
+        "reason": "clear",
+        "min_distance": -0.011791809108238668,
+        "endpoint_hand_clear": true,
+        "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+        "diagnostic": {
+          "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+        },
+        "frames": [
+          {
+            "view": "agentview",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000694_agentview.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000694_agentview.npy",
+            "K": [
+              [
+                309.01933598375615,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                309.01933598375615,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                -7.268184498698815e-08,
+                0.6282664504107425,
+                -0.7779982437565529,
+                0.6586131746834771
+              ],
+              [
+                0.9999999999999858,
+                -7.268184498698815e-08,
+                -1.521152659944569e-07,
+                0.0
+              ],
+              [
+                -1.521152659944569e-07,
+                -0.7779982437565529,
+                -0.6282664504107283,
+                1.6103500240372424
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          },
+          {
+            "view": "wrist",
+            "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000695_wrist.png",
+            "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/sensors/cap000695_wrist.npy",
+            "K": [
+              [
+                166.81284772367434,
+                0.0,
+                128.0
+              ],
+              [
+                0.0,
+                166.81284772367434,
+                128.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "T_world_camera": [
+              [
+                0.7417391512249157,
+                -0.6443006701771359,
+                -0.18627849567095184,
+                -0.367925598712333
+              ],
+              [
+                -0.6701406691402141,
+                -0.7231972207822096,
+                -0.16702473893765415,
+                0.2521157178144588
+              ],
+              [
+                -0.02710193912703153,
+                0.24872158382854317,
+                -0.9681957749512095,
+                1.0376296018373776
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "pixel_center_offset": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "final_snapshot": {
+    "state_sha": "6ac44e0df08e712f18b982f9bca7e6b270f18dccd2fc6b95091678674b2f5761",
+    "gold": {
+      "predicates": {
+        "turnon|flat_stove_1": true
+      },
+      "objects": {
+        "akita_black_bowl_1": {
+          "position": [
+            -0.09762606039235144,
+            -0.008583423299852446,
+            0.8984070750980836
+          ],
+          "quaternion": [
+            0.707106783005648,
+            -1.3874755319823742e-05,
+            1.6673002342614697e-06,
+            0.7071067792293566
+          ],
+          "linear_velocity": [
+            7.619622051409336e-18,
+            -3.0596787892704936e-17,
+            1.524382236606797e-14
+          ],
+          "angular_velocity": [
+            1.5136999640893255e-15,
+            -1.1793470464385921e-14,
+            -4.1959748885777895e-18
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "cream_cheese_1": {
+          "position": [
+            -0.04602629144396026,
+            0.13447270946529477,
+            0.9089214774186077
+          ],
+          "quaternion": [
+            3.089658063579497e-17,
+            -5.4390270699208585e-17,
+            9.385024213578417e-18,
+            1.0
+          ],
+          "linear_velocity": [
+            1.1798586058569968e-18,
+            -7.726904645217514e-18,
+            1.7683745643995768e-14
+          ],
+          "angular_velocity": [
+            -9.410132134694879e-16,
+            -1.3905970590480994e-16,
+            6.324503829162088e-17
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "wine_bottle_1": {
+          "position": [
+            -0.20423290037391095,
+            -0.06165089486055362,
+            0.8988754774203452
+          ],
+          "quaternion": [
+            1.1093590894597121e-08,
+            -6.204091079947124e-06,
+            3.878404398745923e-07,
+            0.9999999999806799
+          ],
+          "linear_velocity": [
+            -1.4036874666572782e-18,
+            -4.398870961253167e-18,
+            1.7706290219224108e-14
+          ],
+          "angular_velocity": [
+            -8.01802209607784e-16,
+            -1.610941857556058e-17,
+            -1.1973005933819962e-18
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "plate_1": {
+          "position": [
+            0.062073867819834094,
+            -0.009382152565275154,
+            0.902506338529415
+          ],
+          "quaternion": [
+            0.7071068099946488,
+            -1.3218930757377813e-05,
+            5.905204028444333e-06,
+            0.7071067522302282
+          ],
+          "linear_velocity": [
+            4.752458999295892e-19,
+            -4.273815083947694e-18,
+            1.6344883902409674e-14
+          ],
+          "angular_velocity": [
+            1.3888543513290035e-15,
+            -2.3140590432800333e-15,
+            -8.929949318281999e-18
+          ],
+          "grasped": false,
+          "error": null
+        }
+      },
+      "held_objects": [],
+      "gripper_qpos": [
+        0.038753920634980295,
+        -0.038694274604747295
+      ],
+      "eef_position": [
+        -0.41820964211442535,
+        0.19975446147126844,
+        0.9561580857194724
+      ],
+      "grasp_observation_complete": true,
+      "strict_candidate": null,
+      "phases": {
+        "turnon|flat_stove_1": "unknown"
+      },
+      "goal_objects": [
+        "flat_stove_1"
+      ]
+    },
+    "home": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.13850129528792873,
+        0.37223589086919917,
+        0.47519526258043926,
+        0.36229247690768585,
+        0.2920051871066816,
+        0.4992980638891109,
+        0.058506102838834395
+      ],
+      "arm_speed_rad_s": [
+        0.00785569466585874,
+        0.01579990744409368,
+        0.01367268396560165,
+        0.0038825304131851,
+        0.021398391335201362,
+        0.009520918748522659,
+        0.015234242883842366
+      ],
+      "max_joint_error_rad": 0.4992980638891109,
+      "max_joint_speed_rad_s": 0.021398391335201362,
+      "finger_error_m": [
+        2.334476995132645e-05,
+        3.348937393945345e-05
+      ],
+      "finger_speed_m_s": [
+        5.15142994191703e-06,
+        3.7507631827897255e-06
+      ],
+      "max_finger_error_m": 3.348937393945345e-05,
+      "max_finger_speed_m_s": 5.15142994191703e-06,
+      "ready": false
+    },
+    "contacts": []
+  },
+  "home": {
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "arm_error_rad": [
+      0.13850129528792873,
+      0.37223589086919917,
+      0.47519526258043926,
+      0.36229247690768585,
+      0.2920051871066816,
+      0.4992980638891109,
+      0.058506102838834395
+    ],
+    "arm_speed_rad_s": [
+      0.00785569466585874,
+      0.01579990744409368,
+      0.01367268396560165,
+      0.0038825304131851,
+      0.021398391335201362,
+      0.009520918748522659,
+      0.015234242883842366
+    ],
+    "max_joint_error_rad": 0.4992980638891109,
+    "max_joint_speed_rad_s": 0.021398391335201362,
+    "finger_error_m": [
+      2.334476995132645e-05,
+      3.348937393945345e-05
+    ],
+    "finger_speed_m_s": [
+      5.15142994191703e-06,
+      3.7507631827897255e-06
+    ],
+    "max_finger_error_m": 3.348937393945345e-05,
+    "max_finger_speed_m_s": 5.15142994191703e-06,
+    "ready": false
+  },
+  "contacts": [],
+  "physical_streak": 0,
+  "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_stove/stove_exit/all_actions.mp4",
+  "errors": [],
+  "status": "blocked",
+  "initialization_steps": 10,
+  "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_state_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569",
+  "core_counts": {
+    "release": 17,
+    "movement": 120,
+    "confirm": 0,
+    "home": 0
+  },
+  "actual_helper_counts": {
+    "release": 17,
+    "movement": 120,
+    "confirm": 0,
+    "home": 0
+  },
+  "target_metrics": {
+    "eligible": true,
+    "expected_release": true,
+    "expected_retreat": true,
+    "release_actions": 17,
+    "actual_release_open_actions": 17,
+    "movement_actions": 120,
+    "confirm_actions": 0,
+    "home_actions": 0,
+    "target_executed": true
+  }
+}

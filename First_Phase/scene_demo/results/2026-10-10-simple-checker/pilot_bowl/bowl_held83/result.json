@@ -1,0 +1,858 @@
+{
+  "case_id": "bowl_held83",
+  "context_origin": "fixed_historical_subtask_fixture",
+  "origin_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_sha": null,
+  "origin_check": null,
+  "terminal_check": "embedded_match",
+  "phase_counts": {
+    "replay": 83,
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  },
+  "release_open_actions": 0,
+  "initial_vision_decision": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": false,
+    "supported": false,
+    "released": false,
+    "stable": null,
+    "operation_achieved": false,
+    "clear_of_target": false,
+    "boxes": {},
+    "evidence": [
+      "agentview (frame 0/2): bowl still held by gripper, not contacting plate; sideview (frame 1/3): bowl suspended above plate, gripper fingers closed around bowl rim, no contact with plate surface",
+      "sideview shows bowl ~1\u20132 cm above plate; plate is visible and stationary; gripper has not released",
+      "\u5939\u722a\u5c1a\u672a\u8fbe\u5230\u6807\u51c6\u5f00\u53e3\uff0c\u9700\u8981\u53d1\u51fa\u5f00\u722a\u547d\u4ee4\uff1b\u4e0d\u636e\u6b64\u63a8\u65ad\u7269\u54c1\u672a\u5230\u4f4d\u6216\u4ecd\u88ab\u6301\u6709\u3002"
+    ],
+    "unknown_reasons": []
+  },
+  "finish": {
+    "ready": false,
+    "ok": false,
+    "reason": "initial stop",
+    "counts": {
+      "release": 0,
+      "movement": 0,
+      "confirm": 0,
+      "home": 0
+    },
+    "release_settle_actions": 0,
+    "release_open_actions": 0,
+    "plan": null,
+    "checks": [],
+    "restored": true,
+    "limitation": "visible geometry only",
+    "opening_confirmed": false,
+    "object_release_not_yet_confirmed": false
+  },
+  "final_snapshot": {
+    "state_sha": "da8146858acf03be45fca8804e9936a0a1a21905a23f58c2644c49cf61032d6b",
+    "gold": {
+      "predicates": {
+        "on|akita_black_bowl_1|plate_1": true
+      },
+      "objects": {
+        "akita_black_bowl_1": {
+          "position": [
+            0.05766805606929405,
+            -0.03776663294586267,
+            0.9081608812982374
+          ],
+          "quaternion": [
+            0.6792907709601259,
+            -0.0024445943480542877,
+            0.030992938517549855,
+            0.7332104133254789
+          ],
+          "linear_velocity": [
+            -0.009646196004477916,
+            -0.030251142989888832,
+            -0.019670003881037804
+          ],
+          "angular_velocity": [
+            0.37878563424166795,
+            1.4076103126551,
+            1.1002943137285426
+          ],
+          "grasped": true,
+          "error": null
+        },
+        "cream_cheese_1": {
+          "position": [
+            -0.04602629144396026,
+            0.13447270946529477,
+            0.9089214774186077
+          ],
+          "quaternion": [
+            3.314089518197786e-18,
+            -2.9778284011023906e-17,
+            5.382924016016608e-18,
+            1.0
+          ],
+          "linear_velocity": [
+            2.664610923351659e-19,
+            -2.7742183233211974e-18,
+            1.768822610164335e-14
+          ],
+          "angular_velocity": [
+            -2.937683156581882e-16,
+            1.6046949523738936e-16,
+            2.2691778979507185e-17
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "wine_bottle_1": {
+          "position": [
+            -0.20423290037391095,
+            -0.061650894860553605,
+            0.8988754774203452
+          ],
+          "quaternion": [
+            1.1093590904232513e-08,
+            -6.204091079947135e-06,
+            3.87840439876048e-07,
+            0.9999999999806799
+          ],
+          "linear_velocity": [
+            7.320189972133119e-19,
+            1.661353424064115e-18,
+            1.7699082956778488e-14
+          ],
+          "angular_velocity": [
+            -1.062129597226123e-15,
+            2.2174028733199996e-17,
+            -6.785241869573908e-19
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "plate_1": {
+          "position": [
+            0.05961404830057633,
+            -0.012018608732947264,
+            0.9031418725868473
+          ],
+          "quaternion": [
+            0.6857280466972401,
+            0.021089899802764947,
+            -0.007623678499556158,
+            0.7275122965457232
+          ],
+          "linear_velocity": [
+            -0.013891396443675088,
+            -0.014057181375486496,
+            0.002296505639503746
+          ],
+          "angular_velocity": [
+            0.4176204640462569,
+            0.08986727588507604,
+            0.4963687854975879
+          ],
+          "grasped": false,
+          "error": null
+        }
+      },
+      "held_objects": [
+        "akita_black_bowl_1"
+      ],
+      "gripper_qpos": [
+        0.0030895895963968098,
+        -0.006446817039395194
+      ],
+      "eef_position": [
+        0.060185402823154405,
+        0.00998769236464318,
+        0.9392613166175647
+      ],
+      "grasp_observation_complete": true,
+      "strict_candidate": false,
+      "phases": {
+        "on|akita_black_bowl_1|plate_1": "goal_held"
+      },
+      "goal_objects": [
+        "akita_black_bowl_1"
+      ]
+    },
+    "home": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.009094541464018382,
+        1.22044369053915,
+        0.005634218807693263,
+        1.2450398272389693,
+        0.025221922674671417,
+        0.1360174251973283,
+        0.1494992948446453
+      ],
+      "arm_speed_rad_s": [
+        0.03221390866135101,
+        0.04329567587255567,
+        0.022756421410288948,
+        0.16535513733736737,
+        0.03773163775392999,
+        0.11137849440106178,
+        0.07279520259663314
+      ],
+      "max_joint_error_rad": 1.2450398272389693,
+      "max_joint_speed_rad_s": 0.16535513733736737,
+      "finger_error_m": [
+        0.03564098626863216,
+        0.03228094693929155
+      ],
+      "finger_speed_m_s": [
+        0.022031017370152724,
+        0.010622005377938969
+      ],
+      "max_finger_error_m": 0.03564098626863216,
+      "max_finger_speed_m_s": 0.022031017370152724,
+      "ready": false
+    },
+    "contacts": [
+      {
+        "geom1": 113,
+        "geom2": 73,
+        "pair": [
+          73,
+          113
+        ],
+        "geom1_name": "akita_black_bowl_1_g30",
+        "geom2_name": "gripper0_finger1_collision",
+        "dist": -0.0009198382221429541,
+        "pos": [
+          0.05301653087734057,
+          0.007061934889452334,
+          0.9314171072616674
+        ],
+        "normal": [
+          0.11778760994766002,
+          -0.9487700738941846,
+          0.2931917901743525
+        ],
+        "outward_normal": [
+          0.11778760994766002,
+          -0.9487700738941846,
+          0.2931917901743525
+        ],
+        "self": false
+      },
+      {
+        "geom1": 114,
+        "geom2": 73,
+        "pair": [
+          73,
+          114
+        ],
+        "geom1_name": "akita_black_bowl_1_g31",
+        "geom2_name": "gripper0_finger1_collision",
+        "dist": -0.0009198382221429541,
+        "pos": [
+          0.05301653087734057,
+          0.007061934889452334,
+          0.9314171072616674
+        ],
+        "normal": [
+          0.11778760994766002,
+          -0.9487700738941846,
+          0.2931917901743525
+        ],
+        "outward_normal": [
+          0.11778760994766002,
+          -0.9487700738941846,
+          0.2931917901743525
+        ],
+        "self": false
+      },
+      {
+        "geom1": 74,
+        "geom2": 113,
+        "pair": [
+          74,
+          113
+        ],
+        "geom1_name": "gripper0_finger1_pad_collision",
+        "geom2_name": "akita_black_bowl_1_g30",
+        "dist": -0.00042847824919247605,
+        "pos": [
+          0.051350451469900145,
+          0.00813288270887678,
+          0.9363899843629193
+        ],
+        "normal": [
+          -0.1177876099476613,
+          0.948770073894201,
+          -0.2931917901742988
+        ],
+        "outward_normal": [
+          0.1177876099476613,
+          -0.948770073894201,
+          0.2931917901742988
+        ],
+        "self": false
+      },
+      {
+        "geom1": 74,
+        "geom2": 114,
+        "pair": [
+          74,
+          114
+        ],
+        "geom1_name": "gripper0_finger1_pad_collision",
+        "geom2_name": "akita_black_bowl_1_g31",
+        "dist": -0.00042847824919247605,
+        "pos": [
+          0.051350451469900145,
+          0.00813288270887678,
+          0.9363899843629193
+        ],
+        "normal": [
+          -0.1177876099476613,
+          0.948770073894201,
+          -0.2931917901742988
+        ],
+        "outward_normal": [
+          0.1177876099476613,
+          -0.948770073894201,
+          0.2931917901742988
+        ],
+        "self": false
+      },
+      {
+        "geom1": 112,
+        "geom2": 76,
+        "pair": [
+          76,
+          112
+        ],
+        "geom1_name": "akita_black_bowl_1_g29",
+        "geom2_name": "gripper0_finger2_collision",
+        "dist": -0.0006548080664957771,
+        "pos": [
+          0.063348128963439,
+          0.018084120790655724,
+          0.9570104810354605
+        ],
+        "normal": [
+          0.14400826627008306,
+          0.9841495486502156,
+          -0.10349533872335386
+        ],
+        "outward_normal": [
+          0.14400826627008306,
+          0.9841495486502156,
+          -0.10349533872335386
+        ],
+        "self": false
+      },
+      {
+        "geom1": 113,
+        "geom2": 76,
+        "pair": [
+          76,
+          113
+        ],
+        "geom1_name": "akita_black_bowl_1_g30",
+        "geom2_name": "gripper0_finger2_collision",
+        "dist": -0.000577095771183106,
+        "pos": [
+          0.06283978950073799,
+          0.01812066257433418,
+          0.9570260724900134
+        ],
+        "normal": [
+          0.14400826627006325,
+          0.9841495486502282,
+          -0.10349533872326383
+        ],
+        "outward_normal": [
+          0.14400826627006325,
+          0.9841495486502282,
+          -0.10349533872326383
+        ],
+        "self": false
+      },
+      {
+        "geom1": 114,
+        "geom2": 76,
+        "pair": [
+          76,
+          114
+        ],
+        "geom1_name": "akita_black_bowl_1_g31",
+        "geom2_name": "gripper0_finger2_collision",
+        "dist": -0.000577095771183106,
+        "pos": [
+          0.06283978950073799,
+          0.01812066257433418,
+          0.9570260724900134
+        ],
+        "normal": [
+          0.14400826627006325,
+          0.9841495486502282,
+          -0.10349533872326383
+        ],
+        "outward_normal": [
+          0.14400826627006325,
+          0.9841495486502282,
+          -0.10349533872326383
+        ],
+        "self": false
+      },
+      {
+        "geom1": 77,
+        "geom2": 112,
+        "pair": [
+          77,
+          112
+        ],
+        "geom1_name": "gripper0_finger2_pad_collision",
+        "geom2_name": "akita_black_bowl_1_g29",
+        "dist": -0.00022925793547284696,
+        "pos": [
+          0.06270528034629776,
+          0.01628643391753116,
+          0.9504103965904827
+        ],
+        "normal": [
+          -0.07105465419411326,
+          -0.9521061451965763,
+          0.29739725014914176
+        ],
+        "outward_normal": [
+          0.07105465419411326,
+          0.9521061451965763,
+          -0.29739725014914176
+        ],
+        "self": false
+      },
+      {
+        "geom1": 77,
+        "geom2": 113,
+        "pair": [
+          77,
+          113
+        ],
+        "geom1_name": "gripper0_finger2_pad_collision",
+        "geom2_name": "akita_black_bowl_1_g30",
+        "dist": -0.00019532668429571708,
+        "pos": [
+          0.06281622858175413,
+          0.016256195478495317,
+          0.9503971446727141
+        ],
+        "normal": [
+          -0.07133395422902204,
+          -0.9525166062897281,
+          0.29601280667624985
+        ],
+        "outward_normal": [
+          0.07133395422902204,
+          0.9525166062897281,
+          -0.29601280667624985
+        ],
+        "self": false
+      },
+      {
+        "geom1": 77,
+        "geom2": 114,
+        "pair": [
+          77,
+          114
+        ],
+        "geom1_name": "gripper0_finger2_pad_collision",
+        "geom2_name": "akita_black_bowl_1_g31",
+        "dist": -0.00019532668429571708,
+        "pos": [
+          0.06281622858175413,
+          0.016256195478495317,
+          0.9503971446727141
+        ],
+        "normal": [
+          -0.07133395422902204,
+          -0.9525166062897281,
+          0.29601280667624985
+        ],
+        "outward_normal": [
+          0.07133395422902204,
+          0.9525166062897281,
+          -0.29601280667624985
+        ],
+        "self": false
+      }
+    ]
+  },
+  "home": {
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "arm_error_rad": [
+      0.009094541464018382,
+      1.22044369053915,
+      0.005634218807693263,
+      1.2450398272389693,
+      0.025221922674671417,
+      0.1360174251973283,
+      0.1494992948446453
+    ],
+    "arm_speed_rad_s": [
+      0.03221390866135101,
+      0.04329567587255567,
+      0.022756421410288948,
+      0.16535513733736737,
+      0.03773163775392999,
+      0.11137849440106178,
+      0.07279520259663314
+    ],
+    "max_joint_error_rad": 1.2450398272389693,
+    "max_joint_speed_rad_s": 0.16535513733736737,
+    "finger_error_m": [
+      0.03564098626863216,
+      0.03228094693929155
+    ],
+    "finger_speed_m_s": [
+      0.022031017370152724,
+      0.010622005377938969
+    ],
+    "max_finger_error_m": 0.03564098626863216,
+    "max_finger_speed_m_s": 0.022031017370152724,
+    "ready": false
+  },
+  "contacts": [
+    {
+      "geom1": 113,
+      "geom2": 73,
+      "pair": [
+        73,
+        113
+      ],
+      "geom1_name": "akita_black_bowl_1_g30",
+      "geom2_name": "gripper0_finger1_collision",
+      "dist": -0.0009198382221429541,
+      "pos": [
+        0.05301653087734057,
+        0.007061934889452334,
+        0.9314171072616674
+      ],
+      "normal": [
+        0.11778760994766002,
+        -0.9487700738941846,
+        0.2931917901743525
+      ],
+      "outward_normal": [
+        0.11778760994766002,
+        -0.9487700738941846,
+        0.2931917901743525
+      ],
+      "self": false
+    },
+    {
+      "geom1": 114,
+      "geom2": 73,
+      "pair": [
+        73,
+        114
+      ],
+      "geom1_name": "akita_black_bowl_1_g31",
+      "geom2_name": "gripper0_finger1_collision",
+      "dist": -0.0009198382221429541,
+      "pos": [
+        0.05301653087734057,
+        0.007061934889452334,
+        0.9314171072616674
+      ],
+      "normal": [
+        0.11778760994766002,
+        -0.9487700738941846,
+        0.2931917901743525
+      ],
+      "outward_normal": [
+        0.11778760994766002,
+        -0.9487700738941846,
+        0.2931917901743525
+      ],
+      "self": false
+    },
+    {
+      "geom1": 74,
+      "geom2": 113,
+      "pair": [
+        74,
+        113
+      ],
+      "geom1_name": "gripper0_finger1_pad_collision",
+      "geom2_name": "akita_black_bowl_1_g30",
+      "dist": -0.00042847824919247605,
+      "pos": [
+        0.051350451469900145,
+        0.00813288270887678,
+        0.9363899843629193
+      ],
+      "normal": [
+        -0.1177876099476613,
+        0.948770073894201,
+        -0.2931917901742988
+      ],
+      "outward_normal": [
+        0.1177876099476613,
+        -0.948770073894201,
+        0.2931917901742988
+      ],
+      "self": false
+    },
+    {
+      "geom1": 74,
+      "geom2": 114,
+      "pair": [
+        74,
+        114
+      ],
+      "geom1_name": "gripper0_finger1_pad_collision",
+      "geom2_name": "akita_black_bowl_1_g31",
+      "dist": -0.00042847824919247605,
+      "pos": [
+        0.051350451469900145,
+        0.00813288270887678,
+        0.9363899843629193
+      ],
+      "normal": [
+        -0.1177876099476613,
+        0.948770073894201,
+        -0.2931917901742988
+      ],
+      "outward_normal": [
+        0.1177876099476613,
+        -0.948770073894201,
+        0.2931917901742988
+      ],
+      "self": false
+    },
+    {
+      "geom1": 112,
+      "geom2": 76,
+      "pair": [
+        76,
+        112
+      ],
+      "geom1_name": "akita_black_bowl_1_g29",
+      "geom2_name": "gripper0_finger2_collision",
+      "dist": -0.0006548080664957771,
+      "pos": [
+        0.063348128963439,
+        0.018084120790655724,
+        0.9570104810354605
+      ],
+      "normal": [
+        0.14400826627008306,
+        0.9841495486502156,
+        -0.10349533872335386
+      ],
+      "outward_normal": [
+        0.14400826627008306,
+        0.9841495486502156,
+        -0.10349533872335386
+      ],
+      "self": false
+    },
+    {
+      "geom1": 113,
+      "geom2": 76,
+      "pair": [
+        76,
+        113
+      ],
+      "geom1_name": "akita_black_bowl_1_g30",
+      "geom2_name": "gripper0_finger2_collision",
+      "dist": -0.000577095771183106,
+      "pos": [
+        0.06283978950073799,
+        0.01812066257433418,
+        0.9570260724900134
+      ],
+      "normal": [
+        0.14400826627006325,
+        0.9841495486502282,
+        -0.10349533872326383
+      ],
+      "outward_normal": [
+        0.14400826627006325,
+        0.9841495486502282,
+        -0.10349533872326383
+      ],
+      "self": false
+    },
+    {
+      "geom1": 114,
+      "geom2": 76,
+      "pair": [
+        76,
+        114
+      ],
+      "geom1_name": "akita_black_bowl_1_g31",
+      "geom2_name": "gripper0_finger2_collision",
+      "dist": -0.000577095771183106,
+      "pos": [
+        0.06283978950073799,
+        0.01812066257433418,
+        0.9570260724900134
+      ],
+      "normal": [
+        0.14400826627006325,
+        0.9841495486502282,
+        -0.10349533872326383
+      ],
+      "outward_normal": [
+        0.14400826627006325,
+        0.9841495486502282,
+        -0.10349533872326383
+      ],
+      "self": false
+    },
+    {
+      "geom1": 77,
+      "geom2": 112,
+      "pair": [
+        77,
+        112
+      ],
+      "geom1_name": "gripper0_finger2_pad_collision",
+      "geom2_name": "akita_black_bowl_1_g29",
+      "dist": -0.00022925793547284696,
+      "pos": [
+        0.06270528034629776,
+        0.01628643391753116,
+        0.9504103965904827
+      ],
+      "normal": [
+        -0.07105465419411326,
+        -0.9521061451965763,
+        0.29739725014914176
+      ],
+      "outward_normal": [
+        0.07105465419411326,
+        0.9521061451965763,
+        -0.29739725014914176
+      ],
+      "self": false
+    },
+    {
+      "geom1": 77,
+      "geom2": 113,
+      "pair": [
+        77,
+        113
+      ],
+      "geom1_name": "gripper0_finger2_pad_collision",
+      "geom2_name": "akita_black_bowl_1_g30",
+      "dist": -0.00019532668429571708,
+      "pos": [
+        0.06281622858175413,
+        0.016256195478495317,
+        0.9503971446727141
+      ],
+      "normal": [
+        -0.07133395422902204,
+        -0.9525166062897281,
+        0.29601280667624985
+      ],
+      "outward_normal": [
+        0.07133395422902204,
+        0.9525166062897281,
+        -0.29601280667624985
+      ],
+      "self": false
+    },
+    {
+      "geom1": 77,
+      "geom2": 114,
+      "pair": [
+        77,
+        114
+      ],
+      "geom1_name": "gripper0_finger2_pad_collision",
+      "geom2_name": "akita_black_bowl_1_g31",
+      "dist": -0.00019532668429571708,
+      "pos": [
+        0.06281622858175413,
+        0.016256195478495317,
+        0.9503971446727141
+      ],
+      "normal": [
+        -0.07133395422902204,
+        -0.9525166062897281,
+        0.29601280667624985
+      ],
+      "outward_normal": [
+        0.07133395422902204,
+        0.9525166062897281,
+        -0.29601280667624985
+      ],
+      "self": false
+    }
+  ],
+  "physical_streak": 0,
+  "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-simple-checker/pilot_bowl/bowl_held83/all_actions.mp4",
+  "errors": [],
+  "status": "blocked",
+  "initialization_steps": 10,
+  "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_state_sha": "da8146858acf03be45fca8804e9936a0a1a21905a23f58c2644c49cf61032d6b",
+  "core_counts": {
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  },
+  "actual_helper_counts": {
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  },
+  "target_metrics": {
+    "eligible": true,
+    "expected_release": true,
+    "expected_retreat": true,
+    "release_actions": 0,
+    "actual_release_open_actions": 0,
+    "movement_actions": 0,
+    "confirm_actions": 0,
+    "home_actions": 0,
+    "target_executed": false
+  }
+}

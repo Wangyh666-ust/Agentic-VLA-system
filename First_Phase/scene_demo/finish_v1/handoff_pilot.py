@@ -78,6 +78,7 @@ def _parse_args(argv=None):
     p.add_argument("--limit", type=int, default=5)
     p.add_argument("--start-index", type=int, default=0)
     p.add_argument("--max-qwen-calls", type=int, default=18)
+    p.add_argument("--simple-checker", action="store_true")
     a = p.parse_args(argv)
     if a.limit < 1 or a.limit > 5:
         p.error("--limit must be between 1 and 5")
@@ -250,6 +251,7 @@ class PilotRunner:
         self.limit = args.limit
         self.start_index = getattr(args, "start_index", 0)
         self.max_qwen_calls = getattr(args, "max_qwen_calls", 18)
+        self.simple_checker = getattr(args, "simple_checker", False)
         self.campaign_summary = {
             "cases": [],
             "statuses": [],
@@ -350,6 +352,9 @@ class PilotRunner:
         self.sc = sc
         self.control = control
         self.vision = vision
+        if self.simple_checker:
+            from scene_demo.finish_v1 import simple_checker
+            self.vision = simple_checker
         self.SensorPort = SensorPort
         self.np = np
         self.imageio = imageio
@@ -622,6 +627,7 @@ class PilotRunner:
                     vision.decide,
                     check_fn,
                     emit,
+                    simple_handoff=self.simple_checker,
                 )
                 result["finish"] = finish_result
                 reason = finish_result.get("reason", "")
@@ -938,7 +944,10 @@ class PilotRunner:
         self.import_runtime()
 
         qwen_budget = {"n": 0, "max": self.max_qwen_calls}
-        qwen_client = self.vision.QwenClient(max_calls=self.max_qwen_calls)
+        if self.simple_checker:
+            qwen_client = self.vision.SimpleQwenClient(max_calls=self.max_qwen_calls)
+        else:
+            qwen_client = self.vision.QwenClient(max_calls=self.max_qwen_calls)
 
         stop_remaining = False
         _selected = cases[self.start_index : self.start_index + self.limit]
