@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "20261010-joint-verifier-category",
+  "intent": "analyze_existing",
+  "question_key": "visual-completion",
+  "purpose": "修正视觉+同步机器人反馈的完成检查，在五个历史失败/边界状态验证预期分支，通过后才开UI；不重跑归位。",
+  "prior_evidence": [
+    "20261010-visual-finish",
+    "20261010-finish-takeover-v2",
+    "20261010-shape-home",
+    "20261010-vision-grounding",
+    "20261010-joint-verifier"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "复用原状态、图像和编码器来源链；前轮缺直接测量timestamp，本轮仅推断same-state并补充同步契约和精确分支验收。"
+    },
+    {
+      "experiment_id": "20261010-finish-takeover-v2",
+      "disposition": "reuse",
+      "reason": "复用原状态、图像和编码器来源链；前轮缺直接测量timestamp，本轮仅推断same-state并补充同步契约和精确分支验收。"
+    },
+    {
+      "experiment_id": "20261010-shape-home",
+      "disposition": "reuse",
+      "reason": "复用原状态、图像和编码器来源链；前轮缺直接测量timestamp，本轮仅推断same-state并补充同步契约和精确分支验收。"
+    },
+    {
+      "experiment_id": "20261010-vision-grounding",
+      "disposition": "reuse",
+      "reason": "复用原状态、图像和编码器来源链；前轮缺直接测量timestamp，本轮仅推断same-state并补充同步契约和精确分支验收。"
+    },
+    {
+      "experiment_id": "20261010-joint-verifier",
+      "disposition": "reuse",
+      "reason": "复用原失败和五状态；仅增加原完整帧与动态候选局部像素细节，不再提示循环。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "只补公开对象类别：tomato_sauce/alphabet_soup为圆柱罐，milk为纸盒；asset纹理仅本地依据，不送模型。",
+    "固定五状态/expected，唯一negative新Qwen1，累计最多10；正例保存结果复用，不冒称新版本新API样本；物理/home0，原失败保留。"
+  ],
+  "scope": {
+    "max_cases": 5,
+    "max_model_calls": 1,
+    "max_vla_actions_per_case": 0,
+    "max_helper_actions_per_case": 0,
+    "stop_rule": "唯一剩余番茄酱负例仍unknown或错误即停止，不改指标或继续提示，UIoff。",
+    "cumulative_max_model_calls": 10
+  },
+  "success_criteria": "五例原expected及exactdecision同时通过；触发与准确通过分别记录；执行指标为checker branch，动作0。",
+  "failure_criteria": "unknown是安全拒绝但不是准确通过；应触发未触发即目标验证未完成。",
+  "fixed_factors": {
+    "finish_v1/control.py": "1154ca0ea7ccb6a69c4afcaa4950a80f4564c336d389ac0a2d1152ad7890490c",
+    "finish_v1/sensors.py": "403576acee777920f98c58d51cccdcde4b1c818ebf24dd3db71efbf511b204bf",
+    "finish_v1/geometry.py": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70",
+    "joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21"
+  },
+  "implementation_model": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "evidence": "parent spawn parameters, not worker name"
+  }
+}

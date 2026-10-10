@@ -1,0 +1,790 @@
+{
+  "case_id": "stove_exit_last",
+  "source_sha": "122d0261bdb8dd959589ca4cefb750a6a52f4de17b6b0f1efee097a0d3ae2935",
+  "labels_sha256": "ddf79b8aa53c5dc5ac895d4d96af89b6fbcdebda2f1b3dd8ba198372a11d3220",
+  "vision_source_sha256": "0421f4c3db44e5d59fa1a0ffe64e051cdb7a3f35319559a422110c848e455fd8",
+  "context": {
+    "user_request": "请打开灶台。",
+    "current_subtask": {
+      "operation": "turn",
+      "target": "flat_stove_1",
+      "destination": null,
+      "phase": "post_execution"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "Rotate the stove knob to turn the burner ON; a red glowing burner ring is visual evidence. This is not opening or removing a lid.",
+      "desired_state": "on"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 4.349999999999743
+      },
+      {
+        "frame": 1,
+        "view": "wrist",
+        "timestamp": 4.349999999999743
+      },
+      {
+        "frame": 2,
+        "view": "agentview",
+        "timestamp": 4.3999999999997375
+      },
+      {
+        "frame": 3,
+        "view": "wrist",
+        "timestamp": 4.3999999999997375
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 4.3999999999997375,
+      "stage": "post_execution",
+      "finger_qpos": [
+        0.01935626920078853,
+        -0.010495931928356426
+      ],
+      "max_abs_arm_qvel": 0.4717293256672402,
+      "standard_open_finger_qpos": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ]
+    }
+  },
+  "build_prompt": "You are an independent vision inspector for this task; the whitelisted user_request, current_subtask, criteria and optional real encoders/frames are the only context.\nHermes subtask guidance tells you what to attend to, but the user's original request and the fixed criteria must not be rewritten by any plan.\nFirst ground the target, destination, and gripper in the images; then judge their relationships; only then fill the exact original keys.\nReturn exactly one JSON object with EXACTLY these keys and no others:\ntarget_visible, destination_visible, at_destination, supported, released,\nstable, operation_achieved, clear_of_target, boxes, evidence, unknown_reasons.\nEach of target_visible, destination_visible, at_destination, supported,\nreleased, stable, operation_achieved, clear_of_target must be true, false,\nor null. Use null whenever the property cannot be judged from the images.\nboxes must be an object keyed by camera/view name. Every camera entry must\ncontain exactly target, destination, gripper. Each of those is either null\nor a normalized [x1, y1, x2, y2] array of four numbers with\n0 <= x1 < x2 <= 1 and 0 <= y1 < y2 <= 1. boxes may be an empty object when\ngeometry is insufficient. Locate boxes independently per view; use each view's\nlast image and never copy agentview coordinates into side or wrist views.\nevidence and unknown_reasons must be lists of strings.\nevidence should state the recognized category, the support relationship and the\nactual frame/view used; do not merely restate the task.\nDo not add fields. Do not add confidence. Do not add commentary outside JSON.\nAn object ID is an alias: a name like black or any color word is NOT a guaranteed rendered color. Locate by category shape.\nGeneric category notes: bowl is a deep open container with an inner wall; plate is a shallow flat dish with a rim, and when a bowl sits on it usually only the outer ring is visible; stove is a cooktop with burner rings and knobs, and a round burner ring is not a plate; rack/shelf is a support frame; basket is a container; bottle is a bottle-shaped object; knob is a knob.\nUse the current ID's category; do NOT supply fixed scene positions, colors, or answers.\nIf a bowl hides the center of a plate but the plate's outer rim is visible, do not say the plate is empty or invisible just because its center is hidden.\nIf the bowl is beside the plate on the table rather than on the plate, at_destination is False.\nPosition is not release. For place operation_achieved describes the placement relation at the destination, separately from released/clear/stable; do not require historical release footage or home posture.\nJudge the current instant, not a required video history of the release or carry event.\nIn the current two views, if the fingers are visibly away from the target, released/clear may be True even without seeing the moment of opening; an open encoder alone does not prove release.\nThis is short-window observed stability, not guaranteed future stability. With two or more distinct timestamps, judge visible support and motion over the supplied window, even if 0.05 or 0.1 seconds; do not invent a minimum duration, require a perturbation, or treat the absence of motion as absence of evidence. Set true only when support is visible and no target motion relative to its support is discernible; set false for visible displacement; null for single timestamp, unresolved support or inadequate image detail. Same-time different-camera frames and duplicate frames are not distinct-time evidence.\nPartial occlusion is not automatic success; if contact or support is unclear, fill Null; with no evidence do not claim grasp or contact.\nplace.supported is support at the declared destination, not any table or the gripper.\nclear_of_target is local separation of the fingers/hand from target and support surface; arm may remain in the workspace. Do not demand leaving the entire workspace. For turn also check the relevant knob; do not expand it to unrelated knobs.\nFor turn, judge by criteria.operation_semantics and the desired_state on/off with the burner ring/knob state: turn/on means rotate the stove knob to ignite; a visible red burner ring can be on evidence and is never a lid opening.\nNull is better than fabricating.\nKeep two stages: an operation that is achieved while still holding or touching hands off to a finishing stage; complete only after release and retreat, based on current evidence rather than a required view of a past event.\nIgnore and do not use any plan claim of success; judge only images and\nthe fixed criteria. Do not accept self-reported model confidence.\nReport unknown whenever an object is occluded, evidence is insufficient,\nor images contradict. Null is better than guessing.\n\nStructured task context (safe fields only):\n{\"actuator_measurements\": {\"finger_qpos\": [0.01935626920078853, -0.010495931928356426], \"max_abs_arm_qvel\": 0.4717293256672402, \"stage\": \"post_execution\", \"standard_open_finger_qpos\": [0.03873057586502897, -0.03872776397868675], \"timestamp\": 4.3999999999997375}, \"criteria\": {\"desired_state\": \"on\", \"must_clear\": true, \"must_preserve_target\": true, \"must_release\": true, \"must_stabilize\": true, \"operation_semantics\": \"Rotate the stove knob to turn the burner ON; a red glowing burner ring is visual evidence. This is not opening or removing a lid.\"}, \"current_subtask\": {\"destination\": null, \"operation\": \"turn\", \"phase\": \"post_execution\", \"target\": \"flat_stove_1\"}, \"sensor_frames\": [{\"frame\": 0, \"timestamp\": 4.349999999999743, \"view\": \"agentview\"}, {\"frame\": 1, \"timestamp\": 4.349999999999743, \"view\": \"wrist\"}, {\"frame\": 2, \"timestamp\": 4.3999999999997375, \"view\": \"agentview\"}, {\"frame\": 3, \"timestamp\": 4.3999999999997375, \"view\": \"wrist\"}], \"user_request\": \"请打开灶台。\"}\n\nOrdered image frames are provided below in this exact order; each image\ncorresponds to the frame/view/timestamp entries listed above:\n- frame=0 view=agentview timestamp=4.349999999999743\n- frame=1 view=wrist timestamp=4.349999999999743\n- frame=2 view=agentview timestamp=4.3999999999997375\n- frame=3 view=wrist timestamp=4.3999999999997375\nMeasurements bind only to the latest frame timestamp, never earlier frames. Closed fingers are not evidence of grasp; arm velocity is not object stability. Deterministic fusion applies encoder thresholds.\nMeasurement context: actuator_measurements are actual joint encoder measurements and the current controller stage, not a claim that the task succeeded. An open gripper does not alone prove release. Inspect actual object support and separation in both camera views. Do not mistake projected overlap or an overhead gripper for grasp contact. Stable means observed support and no visible target motion across the supplied distinct timestamps; no perturbation experiment is required. If the fingers/object gap is occluded, return null, not an invented claim of holding.\nFill released, clear_of_target, support and stable from images. Deterministic code compares the calibrated standard-open pair with measured fingers and applies the 0.002 encoder veto after your visual verdict. Closed fingers do not prove grasp, and open fingers do not prove success. Report visual support independently.\nController stage confirm is the post-retreat stopped-arm confirmation stage; stage home is the return-to-home stage. A stage label does not prove the preceding actions succeeded.",
+  "image_SHA": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000153_agentview.png",
+      "sha256": "c9a17e22c7a80554e86bed5cff71fdf41024adbe51ad412ea56d8584f41b36be",
+      "bytes": 68537
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000154_wrist.png",
+      "sha256": "987555a93e6f8ab9719a824b3d518b6d50d7e6f997e1e48275a3c50cc5d0ebf8",
+      "bytes": 37632
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000159_agentview.png",
+      "sha256": "e0f6149f37010db3e7aca0d491f810ec0b9eb493c3438958631c78bbe7ce1efd",
+      "bytes": 68511
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000160_wrist.png",
+      "sha256": "17640b9c91d12afb392cecad128cb7e240f73ded31ce7686f6c4b5261889747e",
+      "bytes": 37792
+    }
+  ],
+  "raw_verdict": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": null,
+    "supported": null,
+    "released": null,
+    "stable": null,
+    "operation_achieved": true,
+    "clear_of_target": null,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.58203125,
+          0.41796875,
+          0.78125,
+          0.5546875
+        ],
+        "destination": [
+          0.58203125,
+          0.41796875,
+          0.78125,
+          0.5546875
+        ],
+        "gripper": [
+          0.546875,
+          0.1015625,
+          0.6875,
+          0.3515625
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.21875,
+          0.46875,
+          0.78125,
+          0.875
+        ],
+        "destination": [
+          0.21875,
+          0.46875,
+          0.78125,
+          0.875
+        ],
+        "gripper": null
+      }
+    },
+    "evidence": [
+      "In agentview frame 4, a red concentric burner ring is visible on the stove surface, indicating ignition (turn/on achieved).",
+      "The target 'flat_stove_1' is the stove unit; the burner ring is part of it and visible in agentview frame 4.",
+      "The destination for 'turn' is the stove knob; however, no knob is clearly visible in any view — only the burner ring and gripper near it.",
+      "Operation 'turn' with desired_state 'on' is satisfied by visible red burner ring (per instruction: 'a red burner ring is visible on evidence, not opening a lid').",
+      "Wrist views (1,3,5) show only a dark circular object (likely knob or part of stove), but cannot confirm state or contact; insufficient to override agentview evidence for operation_achieved.",
+      "No clear view of the knob being rotated; however, per instructions, historical rotation footage is unnecessary — current visible red ring suffices for operation_achieved=true."
+    ],
+    "unknown_reasons": [
+      "Knob not clearly visible; cannot confirm at_destination, supported, released, or clear_of_target.",
+      "Gripper appears near burner in agentview frame 4 but contact with knob is ambiguous; wrist view does not resolve this.",
+      "Stability and relative motion cannot be assessed due to lack of multi-timestamp burner/knob detail.",
+      "Destination (knob) visibility is uncertain; only burner ring is unambiguously visible."
+    ]
+  },
+  "verdict": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": null,
+    "supported": null,
+    "released": false,
+    "stable": null,
+    "operation_achieved": true,
+    "clear_of_target": false,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.58203125,
+          0.41796875,
+          0.78125,
+          0.5546875
+        ],
+        "destination": [
+          0.58203125,
+          0.41796875,
+          0.78125,
+          0.5546875
+        ],
+        "gripper": [
+          0.546875,
+          0.1015625,
+          0.6875,
+          0.3515625
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.21875,
+          0.46875,
+          0.78125,
+          0.875
+        ],
+        "destination": [
+          0.21875,
+          0.46875,
+          0.78125,
+          0.875
+        ],
+        "gripper": null
+      }
+    },
+    "evidence": [
+      "In agentview frame 4, a red concentric burner ring is visible on the stove surface, indicating ignition (turn/on achieved).",
+      "The target 'flat_stove_1' is the stove unit; the burner ring is part of it and visible in agentview frame 4.",
+      "The destination for 'turn' is the stove knob; however, no knob is clearly visible in any view — only the burner ring and gripper near it.",
+      "Operation 'turn' with desired_state 'on' is satisfied by visible red burner ring (per instruction: 'a red burner ring is visible on evidence, not opening a lid').",
+      "Wrist views (1,3,5) show only a dark circular object (likely knob or part of stove), but cannot confirm state or contact; insufficient to override agentview evidence for operation_achieved.",
+      "No clear view of the knob being rotated; however, per instructions, historical rotation footage is unnecessary — current visible red ring suffices for operation_achieved=true.",
+      "encoder fingers not at standard open position; this does not prove object grasp"
+    ],
+    "unknown_reasons": [
+      "Knob not clearly visible; cannot confirm at_destination, supported, released, or clear_of_target.",
+      "Gripper appears near burner in agentview frame 4 but contact with knob is ambiguous; wrist view does not resolve this.",
+      "Stability and relative motion cannot be assessed due to lack of multi-timestamp burner/knob detail.",
+      "Destination (knob) visibility is uncertain; only burner ring is unambiguously visible."
+    ]
+  },
+  "decision": {
+    "state": "needs_release",
+    "reason": "knob-operation done release fingers",
+    "allow_release": true,
+    "allow_retreat": false
+  },
+  "field_checks": {
+    "operation_achieved": {
+      "actual": true,
+      "expected": true,
+      "ok": true
+    },
+    "clear_of_target": {
+      "actual": false,
+      "expected": [
+        false,
+        null
+      ],
+      "ok": true
+    },
+    "decision.state": {
+      "actual": "needs_release",
+      "expected": [
+        "needs_release",
+        "needs_retreat",
+        "unknown"
+      ],
+      "ok": true
+    }
+  },
+  "grounding_checks": {},
+  "pass": true,
+  "conservative_unknown": false,
+  "usage": {
+    "prompt_tokens": 2016,
+    "completion_tokens": 630,
+    "total_tokens": 2646,
+    "completion_tokens_details": {
+      "text_tokens": 630
+    },
+    "prompt_tokens_details": {
+      "image_tokens": 412,
+      "text_tokens": 1604,
+      "cached_tokens": 0
+    }
+  },
+  "request_sha256": "96b3f96f504e98dc341f48d7ad0e8053f3f7f104accd07c6cf36b7ffe039fe5a",
+  "response_sha256": "2b75b4a828afaf30abe651991fe3c7ceb9fd43263671f1dd9d372247049825c1",
+  "physical_actions": 0,
+  "model_calls": 1,
+  "error": null,
+  "initial_check": {
+    "raw_verdict": {
+      "target_visible": true,
+      "destination_visible": true,
+      "at_destination": null,
+      "supported": null,
+      "released": null,
+      "stable": null,
+      "operation_achieved": false,
+      "clear_of_target": null,
+      "boxes": {
+        "agentview": {
+          "target": [
+            0.54,
+            0.38,
+            0.7,
+            0.48
+          ],
+          "destination": [
+            0.54,
+            0.38,
+            0.7,
+            0.48
+          ],
+          "gripper": [
+            0.52,
+            0.18,
+            0.68,
+            0.38
+          ]
+        },
+        "wrist": {
+          "target": [
+            0.28,
+            0.42,
+            0.72,
+            0.78
+          ],
+          "destination": null,
+          "gripper": [
+            0.2,
+            0.1,
+            0.8,
+            0.5
+          ]
+        }
+      },
+      "evidence": [
+        "flat_stove_1 (stove) visible in agentview with burner ring present but not glowing red",
+        "wrist view shows gripper near a black knob-like object, but contact and rotation state are occluded",
+        "no red glowing burner ring observed in any frame, so operation not achieved"
+      ],
+      "unknown_reasons": [
+        "wrist view occludes whether fingers contacted or rotated the knob",
+        "no visual evidence of burner ignition (red glow)",
+        "support relationship between stove and its base not visible to confirm stability",
+        "gripper position relative to knob ambiguous due to low-resolution wrist frames"
+      ]
+    },
+    "verdict": {
+      "target_visible": true,
+      "destination_visible": true,
+      "at_destination": null,
+      "supported": null,
+      "released": false,
+      "stable": null,
+      "operation_achieved": false,
+      "clear_of_target": false,
+      "boxes": {
+        "agentview": {
+          "target": [
+            0.54,
+            0.38,
+            0.7,
+            0.48
+          ],
+          "destination": [
+            0.54,
+            0.38,
+            0.7,
+            0.48
+          ],
+          "gripper": [
+            0.52,
+            0.18,
+            0.68,
+            0.38
+          ]
+        },
+        "wrist": {
+          "target": [
+            0.28,
+            0.42,
+            0.72,
+            0.78
+          ],
+          "destination": null,
+          "gripper": [
+            0.2,
+            0.1,
+            0.8,
+            0.5
+          ]
+        }
+      },
+      "evidence": [
+        "flat_stove_1 (stove) visible in agentview with burner ring present but not glowing red",
+        "wrist view shows gripper near a black knob-like object, but contact and rotation state are occluded",
+        "no red glowing burner ring observed in any frame, so operation not achieved",
+        "encoder fingers not at standard open position; this does not prove object grasp",
+        "2D projection overlap near target/support; not 3D contact evidence"
+      ],
+      "unknown_reasons": [
+        "wrist view occludes whether fingers contacted or rotated the knob",
+        "no visual evidence of burner ignition (red glow)",
+        "support relationship between stove and its base not visible to confirm stability",
+        "gripper position relative to knob ambiguous due to low-resolution wrist frames"
+      ]
+    },
+    "decision": {
+      "state": "incomplete",
+      "reason": "turn not yet achieved",
+      "allow_release": false,
+      "allow_retreat": false
+    }
+  },
+  "reuse_source_sha256": "6222c49ed5544fc695e82475dfe5930f1c9ccb33d38bb17b00749402c3e9267a",
+  "prepared_inputs": {
+    "ready": true,
+    "reason": "four original frames plus two latest-view crops",
+    "image_paths": [
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000153_agentview.png",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000154_wrist.png",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000159_agentview.png",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000160_wrist.png",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/stove_exit_last_details/detail_0.png",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/stove_exit_last_details/detail_1.png"
+    ],
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 4.349999999999743
+      },
+      {
+        "frame": 1,
+        "view": "wrist",
+        "timestamp": 4.349999999999743
+      },
+      {
+        "frame": 2,
+        "view": "agentview",
+        "timestamp": 4.3999999999997375
+      },
+      {
+        "frame": 3,
+        "view": "wrist",
+        "timestamp": 4.3999999999997375
+      },
+      {
+        "frame": 4,
+        "view": "agentview",
+        "timestamp": 4.3999999999997375
+      },
+      {
+        "frame": 5,
+        "view": "wrist",
+        "timestamp": 4.3999999999997375
+      }
+    ],
+    "derivative_provenance": [
+      {
+        "frame": 4,
+        "source_frame": 2,
+        "view": "agentview",
+        "timestamp": 4.3999999999997375,
+        "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000159_agentview.png",
+        "source_sha256": "e0f6149f37010db3e7aca0d491f810ec0b9eb493c3438958631c78bbe7ce1efd",
+        "source_size_px": [
+          256,
+          256
+        ],
+        "pixel_bounds": [
+          112,
+          71,
+          205,
+          149
+        ],
+        "original_roi": [
+          0.4375,
+          0.27734375,
+          0.80078125,
+          0.58203125
+        ],
+        "crop_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/stove_exit_last_details/detail_0.png",
+        "crop_sha256": "cd21824cc81f5cb99e56b50ae5985cad20212a5a4b866ec47ddcde00baa9c239",
+        "crop_size_px": [
+          93,
+          78
+        ],
+        "candidate_boxes_source_sha256": "49c298c157585fb42e60dc911169476555901b33ca2c4020eef6ad4a4f4812a9"
+      },
+      {
+        "frame": 5,
+        "source_frame": 3,
+        "view": "wrist",
+        "timestamp": 4.3999999999997375,
+        "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000160_wrist.png",
+        "source_sha256": "17640b9c91d12afb392cecad128cb7e240f73ded31ce7686f6c4b5261889747e",
+        "source_size_px": [
+          256,
+          256
+        ],
+        "pixel_bounds": [
+          43,
+          81,
+          213,
+          226
+        ],
+        "original_roi": [
+          0.16796875,
+          0.31640625,
+          0.83203125,
+          0.8828125
+        ],
+        "crop_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/stove_exit_last_details/detail_1.png",
+        "crop_sha256": "53d4ec8af8394afbf4aac46863f7b991b6760beeb500c251ee9f6144863e4562",
+        "crop_size_px": [
+          170,
+          145
+        ],
+        "candidate_boxes_source_sha256": "49c298c157585fb42e60dc911169476555901b33ca2c4020eef6ad4a4f4812a9"
+      }
+    ],
+    "latest_timestamp": 4.3999999999997375,
+    "original_image_count": 4,
+    "crop_image_count": 2,
+    "distinct_timestamps": 2,
+    "views": [
+      "agentview",
+      "wrist"
+    ]
+  },
+  "review_context": {
+    "user_request": "请打开灶台。",
+    "current_subtask": {
+      "operation": "turn",
+      "target": "flat_stove_1",
+      "destination": null,
+      "phase": "post_execution"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "Rotate the stove knob to turn the burner ON; a red glowing burner ring is visual evidence. This is not opening or removing a lid.",
+      "desired_state": "on"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 4.349999999999743
+      },
+      {
+        "frame": 1,
+        "view": "wrist",
+        "timestamp": 4.349999999999743
+      },
+      {
+        "frame": 2,
+        "view": "agentview",
+        "timestamp": 4.3999999999997375
+      },
+      {
+        "frame": 3,
+        "view": "wrist",
+        "timestamp": 4.3999999999997375
+      },
+      {
+        "frame": 4,
+        "view": "agentview",
+        "timestamp": 4.3999999999997375
+      },
+      {
+        "frame": 5,
+        "view": "wrist",
+        "timestamp": 4.3999999999997375
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 4.3999999999997375,
+      "stage": "post_execution",
+      "finger_qpos": [
+        0.01935626920078853,
+        -0.010495931928356426
+      ],
+      "max_abs_arm_qvel": 0.4717293256672402,
+      "standard_open_finger_qpos": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ]
+    },
+    "relation_derivatives": [
+      {
+        "frame": 4,
+        "source_frame": 2,
+        "view": "agentview",
+        "timestamp": 4.3999999999997375,
+        "source_size_px": [
+          256,
+          256
+        ],
+        "pixel_bounds": [
+          112,
+          71,
+          205,
+          149
+        ],
+        "original_roi": [
+          0.4375,
+          0.27734375,
+          0.80078125,
+          0.58203125
+        ]
+      },
+      {
+        "frame": 5,
+        "source_frame": 3,
+        "view": "wrist",
+        "timestamp": 4.3999999999997375,
+        "source_size_px": [
+          256,
+          256
+        ],
+        "pixel_bounds": [
+          43,
+          81,
+          213,
+          226
+        ],
+        "original_roi": [
+          0.16796875,
+          0.31640625,
+          0.83203125,
+          0.8828125
+        ]
+      }
+    ]
+  },
+  "reviewmeta": {
+    "verdict": {
+      "target_visible": true,
+      "destination_visible": true,
+      "at_destination": null,
+      "supported": null,
+      "released": null,
+      "stable": null,
+      "operation_achieved": true,
+      "clear_of_target": null,
+      "boxes": {
+        "agentview": {
+          "target": [
+            0.58203125,
+            0.41796875,
+            0.78125,
+            0.5546875
+          ],
+          "destination": [
+            0.58203125,
+            0.41796875,
+            0.78125,
+            0.5546875
+          ],
+          "gripper": [
+            0.546875,
+            0.1015625,
+            0.6875,
+            0.3515625
+          ]
+        },
+        "wrist": {
+          "target": [
+            0.21875,
+            0.46875,
+            0.78125,
+            0.875
+          ],
+          "destination": [
+            0.21875,
+            0.46875,
+            0.78125,
+            0.875
+          ],
+          "gripper": null
+        }
+      },
+      "evidence": [
+        "In agentview frame 4, a red concentric burner ring is visible on the stove surface, indicating ignition (turn/on achieved).",
+        "The target 'flat_stove_1' is the stove unit; the burner ring is part of it and visible in agentview frame 4.",
+        "The destination for 'turn' is the stove knob; however, no knob is clearly visible in any view — only the burner ring and gripper near it.",
+        "Operation 'turn' with desired_state 'on' is satisfied by visible red burner ring (per instruction: 'a red burner ring is visible on evidence, not opening a lid').",
+        "Wrist views (1,3,5) show only a dark circular object (likely knob or part of stove), but cannot confirm state or contact; insufficient to override agentview evidence for operation_achieved.",
+        "No clear view of the knob being rotated; however, per instructions, historical rotation footage is unnecessary — current visible red ring suffices for operation_achieved=true."
+      ],
+      "unknown_reasons": [
+        "Knob not clearly visible; cannot confirm at_destination, supported, released, or clear_of_target.",
+        "Gripper appears near burner in agentview frame 4 but contact with knob is ambiguous; wrist view does not resolve this.",
+        "Stability and relative motion cannot be assessed due to lack of multi-timestamp burner/knob detail.",
+        "Destination (knob) visibility is uncertain; only burner ring is unambiguously visible."
+      ]
+    },
+    "usage": {
+      "prompt_tokens": 2016,
+      "completion_tokens": 630,
+      "total_tokens": 2646,
+      "completion_tokens_details": {
+        "text_tokens": 630
+      },
+      "prompt_tokens_details": {
+        "image_tokens": 412,
+        "text_tokens": 1604,
+        "cached_tokens": 0
+      }
+    },
+    "model": "qwen3-vl-plus",
+    "http_status": 200,
+    "request_sha256": "96b3f96f504e98dc341f48d7ad0e8053f3f7f104accd07c6cf36b7ffe039fe5a",
+    "response_sha256": "2b75b4a828afaf30abe651991fe3c7ceb9fd43263671f1dd9d372247049825c1",
+    "call_index": 1
+  },
+  "criteria_satisfied": true,
+  "safe_rejection": false,
+  "exact_required_decision": {
+    "state": "needs_release",
+    "allow_release": true,
+    "core": {
+      "operation_achieved": true
+    }
+  },
+  "exact_decision_pass": true,
+  "runtime_source_sha256": "c5b3eab66b1f0c592cdb280d420fb14a5c77283a4edb7f9a69b6bf85ab285631",
+  "same_state_source": {
+    "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/oracle.jsonl",
+    "sha256": "6bb17d73bae5ea4db4bec9355233d83a83fbc720e6b1040748bc0a7f5d20e557",
+    "binding": "inferred_same_state",
+    "latest_timestamp": 4.3999999999997375,
+    "tag": "initial",
+    "row_index": 78,
+    "fields": [
+      "snapshot.gold.gripper_qpos",
+      "snapshot.home.max_joint_speed_rad_s"
+    ],
+    "initial_state_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569",
+    "last_replay_state_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569"
+  },
+  "final_source": "relation_review",
+  "raw_scores": {
+    "decision": {
+      "state": "unknown",
+      "reason": "clearance unknown after turn",
+      "allow_release": false,
+      "allow_retreat": false
+    },
+    "field_checks": {
+      "operation_achieved": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "clear_of_target": {
+        "actual": null,
+        "expected": [
+          false,
+          null
+        ],
+        "ok": true
+      },
+      "decision.state": {
+        "actual": "unknown",
+        "expected": [
+          "needs_release",
+          "needs_retreat",
+          "unknown"
+        ],
+        "ok": true
+      }
+    },
+    "grounding_checks": {},
+    "criteria_satisfied": true,
+    "pass": false,
+    "conservative_unknown": true,
+    "safe_rejection": true
+  },
+  "fused_scores": {
+    "decision": {
+      "state": "needs_release",
+      "reason": "knob-operation done release fingers",
+      "allow_release": true,
+      "allow_retreat": false
+    },
+    "field_checks": {
+      "operation_achieved": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "clear_of_target": {
+        "actual": false,
+        "expected": [
+          false,
+          null
+        ],
+        "ok": true
+      },
+      "decision.state": {
+        "actual": "needs_release",
+        "expected": [
+          "needs_release",
+          "needs_retreat",
+          "unknown"
+        ],
+        "ok": true
+      }
+    },
+    "grounding_checks": {},
+    "criteria_satisfied": true,
+    "pass": true,
+    "conservative_unknown": false,
+    "safe_rejection": false
+  },
+  "model": "qwen3-vl-plus",
+  "http_status": 200,
+  "call_index": 1
+}

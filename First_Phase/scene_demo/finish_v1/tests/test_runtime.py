@@ -38,6 +38,7 @@ class FakePort:
     def capture(self):
         return {
             'timestamp': self.timestamp,
+            'robot': {key: [float(x) for x in value] for key, value in self.robot.items()},
             'frames': [
                 {'view': view, 'rgb_path': f'{self.timestamp}_{self.capture_version}_{view}.png'}
                 for view in ('agentview', 'wrist')

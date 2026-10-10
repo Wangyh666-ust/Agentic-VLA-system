@@ -1,0 +1,130 @@
+[
+  {
+    "case_id": "bowl_initial_held",
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evaluate_saved.py",
+      "--case",
+      "bowl_initial_held",
+      "--output",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/bowl_initial_held.json",
+      "--max-calls",
+      "1"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 13.218765199999325,
+    "stdout": "{\"case_id\": \"bowl_initial_held\", \"output\": \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/bowl_initial_held.json\", \"pass\": true, \"conservative_unknown\": false, \"model_calls\": 1, \"physical_actions\": 0, \"error\": null}\n",
+    "stderr": "",
+    "result": {
+      "decision": {
+        "state": "needs_release",
+        "reason": "target in place and supported; release required",
+        "allow_release": true,
+        "allow_retreat": false
+      },
+      "pass": true,
+      "exact_decision_pass": true,
+      "model_calls": 1,
+      "usage": {
+        "prompt_tokens": 2554,
+        "completion_tokens": 393,
+        "total_tokens": 2947,
+        "completion_tokens_details": {
+          "text_tokens": 393
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 648,
+          "text_tokens": 1906,
+          "cached_tokens": 0
+        }
+      },
+      "error": null
+    },
+    "raw_core": {
+      "at_destination": true,
+      "supported": true,
+      "released": true,
+      "stable": true,
+      "clear_of_target": true,
+      "operation_achieved": true
+    },
+    "fused_core": {
+      "at_destination": true,
+      "supported": true,
+      "released": false,
+      "stable": true,
+      "clear_of_target": false,
+      "operation_achieved": true
+    }
+  },
+  {
+    "case_id": "bowl_final_home",
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evaluate_saved.py",
+      "--case",
+      "bowl_final_home",
+      "--output",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/bowl_final_home.json",
+      "--max-calls",
+      "1"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 10.849221399999806,
+    "stdout": "{\"case_id\": \"bowl_final_home\", \"output\": \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/bowl_final_home.json\", \"pass\": false, \"conservative_unknown\": true, \"model_calls\": 1, \"physical_actions\": 0, \"error\": null}\n",
+    "stderr": "",
+    "result": {
+      "decision": {
+        "state": "unknown",
+        "reason": "release state unknown",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "pass": false,
+      "exact_decision_pass": false,
+      "model_calls": 1,
+      "usage": {
+        "prompt_tokens": 3078,
+        "completion_tokens": 408,
+        "total_tokens": 3486,
+        "completion_tokens_details": {
+          "text_tokens": 408
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 972,
+          "text_tokens": 2106,
+          "cached_tokens": 0
+        }
+      },
+      "error": null
+    },
+    "raw_core": {
+      "at_destination": true,
+      "supported": true,
+      "released": null,
+      "stable": null,
+      "clear_of_target": false,
+      "operation_achieved": false
+    },
+    "fused_core": {
+      "at_destination": true,
+      "supported": true,
+      "released": null,
+      "stable": null,
+      "clear_of_target": false,
+      "operation_achieved": false
+    }
+  }
+]

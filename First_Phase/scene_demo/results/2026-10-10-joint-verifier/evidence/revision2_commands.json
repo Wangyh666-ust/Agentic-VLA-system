@@ -1,0 +1,82 @@
+[
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evaluate_saved.py",
+      "--help"
+    ],
+    "exit_code": 0,
+    "stdout": "usage: evaluate_saved.py [-h] --case CASE --output OUTPUT [--max-calls {1}]\n                         [--reuse-result REUSE_RESULT | --review-saved-result REVIEW_SAVED_RESULT]\n\nCheck one frozen image fixture with production QwenClient; zero physical\nactions. API is called only after validated arguments and image hashes.\n\noptions:\n  -h, --help            show this help message and exit\n  --case CASE           Frozen fixture id\n  --output OUTPUT       New result JSON inside this joint-verifier campaign\n  --max-calls {1}       Exactly one production Qwen call; no retry\n  --reuse-result REUSE_RESULT\n                        Reuse a saved raw verdict with zero new model calls\n  --review-saved-result REVIEW_SAVED_RESULT\n                        Independently review one eligible saved observation\n                        with one call\n",
+    "stderr": "",
+    "model_calls": 0
+  },
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evaluate_saved.py",
+      "--case",
+      "wine_exit_last",
+      "--output",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evidence/revision2/wine_exit_last.json",
+      "--reuse-result",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/wine_exit_last.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"case_id\": \"wine_exit_last\", \"output\": \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evidence/revision2/wine_exit_last.json\", \"pass\": true, \"conservative_unknown\": false, \"model_calls\": 0, \"physical_actions\": 0, \"error\": null}\n",
+    "stderr": "",
+    "model_calls": 0
+  },
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evaluate_saved.py",
+      "--case",
+      "bowl_initial_held",
+      "--output",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evidence/revision2/bowl_initial_held.json",
+      "--reuse-result",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/bowl_initial_held.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"case_id\": \"bowl_initial_held\", \"output\": \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evidence/revision2/bowl_initial_held.json\", \"pass\": true, \"conservative_unknown\": false, \"model_calls\": 0, \"physical_actions\": 0, \"error\": null}\n",
+    "stderr": "",
+    "model_calls": 0
+  },
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/.agents/skills/fyp-experiment-review/scripts/review.py",
+      "check",
+      "--proposal",
+      "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-joint-verifier.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"ok\": true, \"intent\": \"analyze_existing\", \"matched_history_ids\": [\"20261010-visual-finish\", \"20261010-finish-takeover-v2\", \"20261010-shape-home\", \"20261010-vision-grounding\"], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\n",
+    "stderr": "",
+    "model_calls": 0
+  }
+]

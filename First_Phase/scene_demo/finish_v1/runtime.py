@@ -283,8 +283,11 @@ class FinishMonitor:
                     raise RuntimeError('maximum six frames exceeded')
                 paths.append(fr['rgb_path'])
                 sensor_frames.append({'frame': frame, 'view': fr['view'], 'timestamp': float(cap['timestamp'])})
-        robot = self.port.read_robot()
+        robot = selected[-1].get('robot')
+        if not isinstance(robot, dict):
+            raise RuntimeError('latest captured observation missing robot feedback')
         measurements = {
+            'timestamp': float(selected[-1]['timestamp']),
             'stage': self.port.phase or 'post_execution',
             'finger_qpos': [float(x) for x in robot['finger_qpos']],
             'max_abs_arm_qvel': max(abs(float(x)) for x in robot['arm_qvel']),
@@ -313,9 +316,39 @@ class FinishMonitor:
             raise RuntimeError('analyze must return a dict')
         raw = meta['verdict']
         from scene_demo.finish_v1 import vision
-        fused = vision.reconcile_verdict(context, raw, robot, self.reference)
-        self._last_decision = vision.decide(context, fused)
+        fused = vision.reconcile_verdict(ctx, raw, robot, self.reference)
+        initial_check = {'metadata': dict(meta), 'raw_verdict': raw, 'verdict': fused,
+                         'decision': vision.decide(ctx, fused)}
+        relation_review = None
+        trigger = vision.needs_relation_review(ctx, raw, robot, self.reference)
+        if trigger:
+            self._write_check({'initial_check': initial_check, 'ctx': ctx, 'robot': robot,
+                               'relation_review_pending': self.calls < 10})
+            from scene_demo.finish_v1.relation_images import prepare_relation_images
+            prepared = prepare_relation_images(selected, initial_check['raw_verdict'], self.output_dir / 'relation_details' / str(self.calls), operation=ctx['current_subtask']['operation']) if self.calls < 10 else {'ready': False, 'reason': 'review_skipped_budget'}
+            if self.calls < 10 and prepared['ready']:
+                review_ctx = dict(ctx)
+                review_ctx['sensor_frames'] = prepared['sensor_frames']
+                mapping_keys = ('frame', 'source_frame', 'view', 'timestamp', 'source_size_px', 'pixel_bounds', 'original_roi')
+                review_ctx['relation_derivatives'] = [{k: d[k] for k in mapping_keys} for d in prepared['derivative_provenance']]
+                self._phase = 'visual_check'
+                self.guarded_step(lambda: None)
+                self.calls += 1
+                review_meta = self.call_client.inspect_relations(review_ctx, prepared['image_paths'])
+                self.guarded_step(lambda: None)
+                self._phase = 'observing'
+                raw = review_meta['verdict']
+                fused = vision.reconcile_verdict(ctx, raw, robot, self.reference)
+                relation_review = {'trigger': True, 'prepared_inputs': prepared, 'review_context': review_ctx, 'metadata': review_meta,
+                                   'raw_verdict': raw, 'verdict': fused,
+                                   'decision': vision.decide(ctx, fused)}
+                meta = review_meta
+            else:
+                relation_review = {'trigger': True, 'review_skipped_budget': self.calls >= 10, 'prepared_inputs': prepared, 'reason': prepared['reason']}
+        self._last_decision = vision.decide(ctx, fused)
         row = {
+            'initial_check': initial_check,
+            'relation_review': relation_review,
             'raw_verdict': raw,
             'verdict': fused,
             'usage': meta.get('usage'),

@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "status": "PARTIAL_FIX_OVERALL_NOT_PASSED",
+  "purpose": "修正视觉+同步机器人反馈的完成检查，在五个历史失败/边界状态验证预期分支，通过后才开UI；不重跑归位。",
+  "outputs": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/bowl_final_home.json",
+      "sha256": "13e0daff12682987242ea38020d58dcfec041396ec8f42ab4483dee7e870ea42",
+      "model_calls": 1,
+      "usage": {
+        "prompt_tokens": 3078,
+        "completion_tokens": 408,
+        "total_tokens": 3486,
+        "completion_tokens_details": {
+          "text_tokens": 408
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 972,
+          "text_tokens": 2106,
+          "cached_tokens": 0
+        }
+      },
+      "decision": {
+        "state": "unknown",
+        "reason": "release state unknown",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "pass": false,
+      "exact_decision_pass": false,
+      "model": "qwen3-vl-plus"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/bowl_initial_held.json",
+      "sha256": "dc6f70bb984ac5fa6401cdd15b36c6494a8091177e0a6b8a910442eb37106ccd",
+      "model_calls": 1,
+      "usage": {
+        "prompt_tokens": 2554,
+        "completion_tokens": 393,
+        "total_tokens": 2947,
+        "completion_tokens_details": {
+          "text_tokens": 393
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 648,
+          "text_tokens": 1906,
+          "cached_tokens": 0
+        }
+      },
+      "decision": {
+        "state": "needs_release",
+        "reason": "target in place and supported; release required",
+        "allow_release": true,
+        "allow_retreat": false
+      },
+      "pass": true,
+      "exact_decision_pass": true,
+      "model": "qwen3-vl-plus"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision2/bowl_final_home.json",
+      "sha256": "4cdbbb31e4c31f8f885dd41bbe661be08ea98dd2e271f4254074a21fab79a91e",
+      "model_calls": 1,
+      "usage": {
+        "prompt_tokens": 1780,
+        "completion_tokens": 432,
+        "total_tokens": 2212,
+        "completion_tokens_details": {
+          "text_tokens": 432
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 972,
+          "text_tokens": 808,
+          "cached_tokens": 0
+        }
+      },
+      "decision": {
+        "state": "incomplete",
+        "reason": "target not at destination",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "pass": false,
+      "exact_decision_pass": false,
+      "model": "qwen3-vl-plus"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision3/bowl_final_home.json",
+      "sha256": "c8f3e603c9bd949458529cd2cccae1b306b63075486390554aff538be2cd7577",
+      "model_calls": 1,
+      "usage": {
+        "prompt_tokens": 2129,
+        "completion_tokens": 401,
+        "total_tokens": 2530,
+        "completion_tokens_details": {
+          "text_tokens": 401
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 972,
+          "text_tokens": 1157,
+          "cached_tokens": 0
+        }
+      },
+      "decision": {
+        "state": "incomplete",
+        "reason": "target not at destination",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "pass": false,
+      "exact_decision_pass": false,
+      "model": "qwen3-vl-plus"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/wine_exit_last.json",
+      "sha256": "ff414b39e6e257db1dc2cb4b168406661e4b99dfc737cf7b5edcb049fb438dd7",
+      "model_calls": 1,
+      "usage": {
+        "prompt_tokens": 2174,
+        "completion_tokens": 398,
+        "total_tokens": 2572,
+        "completion_tokens_details": {
+          "text_tokens": 398
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 264,
+          "text_tokens": 1910,
+          "cached_tokens": 0
+        }
+      },
+      "decision": {
+        "state": "needs_release",
+        "reason": "target in place and supported; release required",
+        "allow_release": true,
+        "allow_retreat": false
+      },
+      "pass": true,
+      "exact_decision_pass": true,
+      "model": "qwen3-vl-plus"
+    }
+  ],
+  "new_qwen_calls": 5,
+  "tokens": {
+    "prompt_tokens": 11715,
+    "completion_tokens": 2032,
+    "total_tokens": 13747
+  },
+  "registered_states": 5,
+  "states_with_new_outputs": 3,
+  "final_results": {
+    "wine_exit_last": "needs_release/pass",
+    "bowl_initial_held": "needs_release/pass",
+    "bowl_final_home": "incomplete/fail revision3"
+  },
+  "not_run": [
+    "stove_exit_last",
+    "sauce_negative_last"
+  ],
+  "zero_call_recomputations_not_samples": [
+    "evidence/revision2/wine_exit_last.json",
+    "evidence/revision2/bowl_initial_held.json"
+  ],
+  "candidate_relation_review": "not_passed",
+  "finish_mode": "off",
+  "new_actions": {
+    "physical": 0,
+    "vla": 0,
+    "helper": 0,
+    "home": 0,
+    "render": 0
+  },
+  "history_home": "shape-home real recorded home1/1 reused; current home0",
+  "synchronization": "inferred_same_state: old measurements lack explicit timestamp; frozen read-only source/state SHA chain associates latest images, new runtime captures robot with images",
+  "model_input_limits": "only measured encoders and joint velocity extracted from oracle; object truth, contacts and scoring ROI excluded",
+  "implementation_model": "gpt-6.1-sol low; high planning/acceptance; no DeepSeek calls",
+  "next_direction": "动态感知定位+局部视觉细节辅证，先原存图验证；未实施，未扩大预登记"
+}

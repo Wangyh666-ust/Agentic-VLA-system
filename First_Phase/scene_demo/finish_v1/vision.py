@@ -121,6 +121,13 @@ def _validate_actuator_measurements(value):
             "actuator_measurements.standard_open_finger_qpos",
         )
         normalized["standard_open_finger_qpos"] = [float(standard_open[0]), float(standard_open[1])]
+    if "timestamp" in value:
+        stamp = value["timestamp"]
+        if isinstance(stamp, bool) or not isinstance(stamp, (int, float)):
+            raise TypeError("actuator_measurements.timestamp must be numeric")
+        if not math.isfinite(float(stamp)):
+            raise ValueError("actuator_measurements.timestamp must be finite")
+        normalized["timestamp"] = float(stamp)
     return normalized
 
 def build_prompt(context):
@@ -141,6 +148,9 @@ def build_prompt(context):
     if frames:
         safe["sensor_frames"] = frames
     measurements = _validate_actuator_measurements(context.get("actuator_measurements"))
+    if measurements is not None and "timestamp" in measurements and frames:
+        if abs(measurements["timestamp"] - max(f["timestamp"] for f in frames)) > 1e-9:
+            raise ValueError("actuator measurement timestamp must match latest frame")
     if measurements is not None:
         safe["actuator_measurements"] = measurements
 
@@ -165,6 +175,7 @@ def build_prompt(context):
         "actual frame/view used; do not merely restate the task.",
         "Do not add fields. Do not add confidence. Do not add commentary outside JSON.",
         "An object ID is an alias: a name like black or any color word is NOT a guaranteed rendered color. Locate by category shape.",
+        "LIBERO asset aliases alphabet_soup and tomato_sauce refer to cylindrical food cans, not soup bowls or sauce bottles; milk refers to a carton. Use the actual asset category and visible category/label evidence to identify the requested object. A target visible in one usable view is not globally invisible merely because another view is occluded; retain null if identity genuinely remains ambiguous.",
         "Generic category notes: bowl is a deep open container with an inner wall; plate is a shallow flat dish with a rim, and when a bowl sits on it usually only the outer ring is visible; stove is a cooktop with burner rings and knobs, and a round burner ring is not a plate; rack/shelf is a support frame; basket is a container; bottle is a bottle-shaped object; knob is a knob.",
         "Use the current ID's category; do NOT supply fixed scene positions, colors, or answers.",
         "If a bowl hides the center of a plate but the plate's outer rim is visible, do not say the plate is empty or invisible just because its center is hidden.",
@@ -200,8 +211,9 @@ def build_prompt(context):
                 f"- frame={entry['frame']} view={entry['view']} timestamp={entry['timestamp']}"
             )
     if measurements is not None:
+        lines.append("Measurements bind only to the latest frame timestamp, never earlier frames. Closed fingers are not evidence of grasp; arm velocity is not object stability. Deterministic fusion applies encoder thresholds.")
         lines.append("Measurement context: actuator_measurements are actual joint encoder measurements and the current controller stage, not a claim that the task succeeded. An open gripper does not alone prove release. Inspect actual object support and separation in both camera views. Do not mistake projected overlap or an overhead gripper for grasp contact. Stable means observed support and no visible target motion across the supplied distinct timestamps; no perturbation experiment is required. If the fingers/object gap is occluded, return null, not an invented claim of holding.")
-        lines.append("When standard_open_finger_qpos is supplied, compare measured finger_qpos with that calibrated standard-open pair. If maximum absolute deviation exceeds 0.002, released=false and clear_of_target=false, even when projection looks separated; this is an encoder veto, not proof of grasp or support. Open-position measurements alone never prove release. Report the visual support independently.")
+        lines.append("Fill released, clear_of_target, support and stable from images. Deterministic code compares the calibrated standard-open pair with measured fingers and applies the 0.002 encoder veto after your visual verdict. Closed fingers do not prove grasp, and open fingers do not prove success. Report visual support independently.")
         lines.append("Controller stage confirm is the post-retreat stopped-arm confirmation stage; stage home is the return-to-home stage. A stage label does not prove the preceding actions succeeded.")
     return "\n".join(lines)
 
@@ -429,6 +441,25 @@ def reconcile_verdict(context, verdict, robot, reference):
     if not isinstance(reference, dict):
         raise TypeError("reference must be a dict")
 
+    if context.get("sensor_frames"):
+        try:
+            frames = _validate_frames(context["sensor_frames"])
+            measurements = _validate_actuator_measurements(context.get("actuator_measurements"))
+            valid = measurements is not None and "timestamp" in measurements and "standard_open_finger_qpos" in measurements
+            valid = valid and abs(measurements["timestamp"] - max(f["timestamp"] for f in frames)) <= 1e-9
+            robot_pair = _finite_pair(robot.get("finger_qpos"), "robot.finger_qpos")
+            home_pair = _finite_pair(reference.get("finger_home"), "reference.finger_home")
+            valid = valid and all(abs(a-b) <= 1e-9 for a,b in zip(measurements["finger_qpos"], robot_pair))
+            valid = valid and all(abs(a-b) <= 1e-9 for a,b in zip(measurements["standard_open_finger_qpos"], home_pair))
+        except (TypeError, ValueError, KeyError):
+            valid = False
+        if not valid:
+            out["released"] = None
+            out["clear_of_target"] = None
+            out["unknown_reasons"].append("missing_or_stale_encoder")
+            out["evidence"].append("missing_or_stale_encoder: latest visual frame lacks matching measured feedback and reference")
+            return out
+
     finger_qpos = _finite_pair(robot.get("finger_qpos"), "robot.finger_qpos")
     finger_home = _finite_pair(reference.get("finger_home"), "reference.finger_home")
 
@@ -464,6 +495,100 @@ def reconcile_verdict(context, verdict, robot, reference):
         )
 
     return out
+
+
+def needs_relation_review(context, raw, robot, reference):
+    try:
+        _, subtask, _ = _validate_context(context)
+        clean = validate_verdict(raw)
+        frames = _validate_frames(context.get("sensor_frames"))
+        if not frames or len({f["timestamp"] for f in frames}) < 2 or len({f["view"] for f in frames}) < 2:
+            return False
+        probe = {**clean, **{k: True for k in _BOOL_FIELDS}}
+        fused = reconcile_verdict(context, probe, robot, reference)
+        if fused["released"] is None or fused["clear_of_target"] is None or "missing_or_stale_encoder" in fused["unknown_reasons"]:
+            return False
+        latest = max(f["timestamp"] for f in frames)
+        views = {f["view"] for f in frames if f["timestamp"] == latest}
+        if subtask["operation"] == "turn":
+            return clean["target_visible"] is True and clean["operation_achieved"] is not True and sum(clean["boxes"].get(v, {}).get("target") is not None for v in views) >= 2
+        if not all(clean[k] is True for k in ("target_visible", "destination_visible", "at_destination", "supported")):
+            return False
+        if clean["released"] is not None or clean["clear_of_target"] is not False or clean["stable"] is not None:
+            return False
+        if fused["released"] is not True or fused["clear_of_target"] is not True:
+            return False
+        qualified = 0
+        for view in views:
+            boxes = clean["boxes"].get(view)
+            if boxes and all(boxes[k] is not None for k in _BOX_KEYS):
+                if all(_box_separation_norm(boxes["gripper"], boxes[k]) >= .10 for k in ("target", "destination")):
+                    qualified += 1
+        return qualified >= 2
+    except (ValueError, TypeError, KeyError):
+        return False
+
+
+def build_relation_prompt(context):
+    _, subtask, criteria = _validate_context(context)
+    frames = _validate_frames(context.get("sensor_frames"))
+    measurements = _validate_actuator_measurements(context.get("actuator_measurements"))
+    if not frames or measurements is None or "timestamp" not in measurements:
+        raise ValueError("relation review requires synchronized measurements and frames")
+    if abs(measurements["timestamp"] - max(f["timestamp"] for f in frames)) > 1e-9:
+        raise ValueError("actuator measurement timestamp must match latest frame")
+    safe = {"operation": subtask["operation"], "target": subtask["target"], "destination": subtask.get("destination"),
+            "sensor_frames": frames,
+            "actuator_measurements": {k: measurements[k] for k in ("timestamp", "finger_qpos", "standard_open_finger_qpos") if k in measurements}}
+    if subtask["operation"] == "turn":
+        desired = criteria.get("desired_state")
+        if desired not in ("on", "off"):
+            raise ValueError("turn desired_state must be on or off")
+        safe["desired_state"] = desired
+    derivatives = context.get("relation_derivatives") or []
+    if not isinstance(derivatives, list):
+        raise TypeError("relation_derivatives must be a list")
+    mappings = []
+    allowed = {"frame", "source_frame", "view", "timestamp", "source_size_px", "pixel_bounds", "original_roi"}
+    for d in derivatives:
+        if not isinstance(d, dict) or set(d) != allowed:
+            raise ValueError("relation derivative mapping has unexpected or missing fields")
+        frame, source = d["frame"], d["source_frame"]
+        if isinstance(frame,bool) or isinstance(source,bool) or not isinstance(frame,int) or not isinstance(source,int) or not (0 <= source < frame < len(frames)):
+            raise ValueError("relation derivative frame mapping invalid")
+        if frames[frame]["view"] != d["view"] or frames[source]["view"] != d["view"] or frames[frame]["timestamp"] != d["timestamp"] or frames[source]["timestamp"] != d["timestamp"] or d["timestamp"] != measurements["timestamp"]:
+            raise ValueError("relation derivative view/time mismatch")
+        size, bounds, roi = d["source_size_px"], d["pixel_bounds"], d["original_roi"]
+        if not isinstance(size,list) or len(size)!=2 or any(isinstance(x,bool) or not isinstance(x,int) or x<=0 for x in size):
+            raise ValueError("relation derivative source dimensions invalid")
+        if not isinstance(bounds,list) or len(bounds)!=4 or any(isinstance(x,bool) or not isinstance(x,int) for x in bounds):
+            raise ValueError("relation derivative pixel bounds invalid")
+        w,h=size
+        if not (0<=bounds[0]<bounds[2]<=w and 0<=bounds[1]<bounds[3]<=h):
+            raise ValueError("relation derivative pixel bounds outside source")
+        clean_roi = _validate_box(roi,"relation derivative original_roi")
+        if clean_roi is None or any(abs(a-b)>1e-9 for a,b in zip(clean_roi,[bounds[0]/w,bounds[1]/h,bounds[2]/w,bounds[3]/h])):
+            raise ValueError("relation derivative ROI mapping mismatch")
+        mappings.append(dict(d))
+    if mappings:
+        safe["relation_derivatives"] = mappings
+    return "\n".join([
+        "Independently inspect the current image relationships. Locate the target, destination and gripper in each view.",
+        ("For turn, inspect the CURRENT visible burner-ring/knob state. turn/on means rotate the stove knob to ignite; a red burner ring is visible on evidence, not opening a lid. Historical rotation footage is unnecessary. Wrist occlusion means unknown in that view and does not override visible evidence in another view; both views need not show the burner. With insufficient current state evidence use null. Encoders cannot establish ignition. at_destination and supported may be null; operation_achieved independently states whether desired_state is currently achieved." if subtask["operation"] == "turn" else "For place, inspect the current placement relation."),
+        "When derivative mappings are supplied, four complete images are followed by two local details cropped from the latest original views. These crops are not new views or timestamps. Candidate regions may be wrong: reidentify categories and support, using null for ambiguity. Output boxes in original full-image normalized coordinates, mapping detail coordinates through original_roi. Neither crop selection nor boxes establish contact or completion.",
+        "An object ID is an alias: a name like black or any color word is NOT a guaranteed rendered color. Locate by category shape.",
+        "LIBERO asset aliases alphabet_soup and tomato_sauce refer to cylindrical food cans, not soup bowls or sauce bottles; milk refers to a carton. Use the actual asset category and visible category/label evidence to identify the requested object. A target visible in one usable view is not globally invisible merely because another view is occluded; retain null if identity genuinely remains ambiguous.",
+        "Generic category notes: bowl is a deep open container with an inner wall; plate is a shallow flat dish with a rim, and when a bowl sits on it usually only the outer ring is visible; stove is a cooktop with burner rings and knobs, and a round burner ring is not a plate; rack/shelf is a support frame; basket is a container; bottle is a bottle-shaped object; knob is a knob.",
+        "If a bowl hides the center of a plate but the plate's outer rim is visible, do not say the plate is empty or invisible just because its center is hidden.",
+        "target_visible and destination_visible mean the identified target and destination are visible. at_destination describes the current target relation to the identified destination. supported means the destination supports the target, distinct from support by the table.",
+        "released means the current fingers no longer hold or contact the target, independent of placement success. Visibly distant hands can establish released=true without historical opening footage, target movement, or resolving distant finger gaps. clear_of_target means local separation of the entire hand/fingers from the target and destination support, without requiring departure from the whole workspace; projected overhead position or 2D overlap does not establish contact.",
+        "stable means no visible target motion relative to its visible support across distinct timestamps, independent of open fingers or arm velocity. For place, operation_achieved describes only whether the current placement relation holds; do not require historical carrying, release, or return home. Use null for occlusion or unclear evidence; a negative value requires visible contrary evidence. Open fingers alone do not prove placement, support, or separation.",
+        "Observe separately: is the target at the destination; is the destination supporting it; are the current fingers/hand separated from target and support; is there visible target motion relative to support across distinct timestamps?",
+        "Visible support and no discernible relative motion can establish short-window stability. Historical release footage is unnecessary. Placement position and operation relation are independent from release and clearance. Open fingers alone do not establish success. Occlusion, inadequate detail or conflict means null. Encoders bind only to the latest timestamp; deterministic code applies the encoder veto.",
+        "Return exactly one JSON object with these keys: " + ", ".join(_BOOL_FIELDS) + ", boxes, evidence, unknown_reasons.",
+        "Each boolean field is true, false or null. boxes is keyed by view; each view contains exactly target, destination, gripper, each null or normalized [x1,y1,x2,y2] with 0<=x1<x2<=1 and 0<=y1<y2<=1. Use the latest image per view. evidence and unknown_reasons are lists of strings. No other keys or commentary.",
+        json.dumps(safe, ensure_ascii=False, sort_keys=True),
+    ])
 
 
 def decide(context, verdict):
@@ -620,9 +745,14 @@ class QwenClient:
         return items
 
     def analyze(self, context, image_paths):
+        return self._request(context, image_paths, build_prompt(context))
+
+    def inspect_relations(self, context, image_paths):
+        return self._request(context, image_paths, build_relation_prompt(context))
+
+    def _request(self, context, image_paths, prompt):
         if self._calls >= self.max_calls:
             raise RuntimeError("Qwen call budget exhausted")
-        prompt = build_prompt(context)
         key = self._resolve_key()
         if not key:
             raise RuntimeError("Qwen API key unavailable")

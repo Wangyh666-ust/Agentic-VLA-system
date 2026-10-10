@@ -1,0 +1,426 @@
+[
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evaluate_saved.py",
+      "--case",
+      "stove_exit_last",
+      "--output",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/stove_exit_last.json",
+      "--max-calls",
+      "1",
+      "--review-saved-result",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision4/stove_exit_last.json"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 16.47907309999937,
+    "stdout": "{\"case_id\": \"stove_exit_last\", \"output\": \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/stove_exit_last.json\", \"pass\": true, \"conservative_unknown\": false, \"model_calls\": 1, \"physical_actions\": 0, \"error\": null}\n",
+    "stderr": "",
+    "result": {
+      "raw_verdict": {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": null,
+        "supported": null,
+        "released": null,
+        "stable": null,
+        "operation_achieved": true,
+        "clear_of_target": null,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.58203125,
+              0.41796875,
+              0.78125,
+              0.5546875
+            ],
+            "destination": [
+              0.58203125,
+              0.41796875,
+              0.78125,
+              0.5546875
+            ],
+            "gripper": [
+              0.546875,
+              0.1015625,
+              0.6875,
+              0.3515625
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.21875,
+              0.46875,
+              0.78125,
+              0.875
+            ],
+            "destination": [
+              0.21875,
+              0.46875,
+              0.78125,
+              0.875
+            ],
+            "gripper": null
+          }
+        },
+        "evidence": [
+          "In agentview frame 4, a red concentric burner ring is visible on the stove surface, indicating ignition (turn/on achieved).",
+          "The target 'flat_stove_1' is the stove unit; the burner ring is part of it and visible in agentview frame 4.",
+          "The destination for 'turn' is the stove knob; however, no knob is clearly visible in any view — only the burner ring and gripper near it.",
+          "Operation 'turn' with desired_state 'on' is satisfied by visible red burner ring (per instruction: 'a red burner ring is visible on evidence, not opening a lid').",
+          "Wrist views (1,3,5) show only a dark circular object (likely knob or part of stove), but cannot confirm state or contact; insufficient to override agentview evidence for operation_achieved.",
+          "No clear view of the knob being rotated; however, per instructions, historical rotation footage is unnecessary — current visible red ring suffices for operation_achieved=true."
+        ],
+        "unknown_reasons": [
+          "Knob not clearly visible; cannot confirm at_destination, supported, released, or clear_of_target.",
+          "Gripper appears near burner in agentview frame 4 but contact with knob is ambiguous; wrist view does not resolve this.",
+          "Stability and relative motion cannot be assessed due to lack of multi-timestamp burner/knob detail.",
+          "Destination (knob) visibility is uncertain; only burner ring is unambiguously visible."
+        ]
+      },
+      "verdict": {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": null,
+        "supported": null,
+        "released": false,
+        "stable": null,
+        "operation_achieved": true,
+        "clear_of_target": false,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.58203125,
+              0.41796875,
+              0.78125,
+              0.5546875
+            ],
+            "destination": [
+              0.58203125,
+              0.41796875,
+              0.78125,
+              0.5546875
+            ],
+            "gripper": [
+              0.546875,
+              0.1015625,
+              0.6875,
+              0.3515625
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.21875,
+              0.46875,
+              0.78125,
+              0.875
+            ],
+            "destination": [
+              0.21875,
+              0.46875,
+              0.78125,
+              0.875
+            ],
+            "gripper": null
+          }
+        },
+        "evidence": [
+          "In agentview frame 4, a red concentric burner ring is visible on the stove surface, indicating ignition (turn/on achieved).",
+          "The target 'flat_stove_1' is the stove unit; the burner ring is part of it and visible in agentview frame 4.",
+          "The destination for 'turn' is the stove knob; however, no knob is clearly visible in any view — only the burner ring and gripper near it.",
+          "Operation 'turn' with desired_state 'on' is satisfied by visible red burner ring (per instruction: 'a red burner ring is visible on evidence, not opening a lid').",
+          "Wrist views (1,3,5) show only a dark circular object (likely knob or part of stove), but cannot confirm state or contact; insufficient to override agentview evidence for operation_achieved.",
+          "No clear view of the knob being rotated; however, per instructions, historical rotation footage is unnecessary — current visible red ring suffices for operation_achieved=true.",
+          "encoder fingers not at standard open position; this does not prove object grasp"
+        ],
+        "unknown_reasons": [
+          "Knob not clearly visible; cannot confirm at_destination, supported, released, or clear_of_target.",
+          "Gripper appears near burner in agentview frame 4 but contact with knob is ambiguous; wrist view does not resolve this.",
+          "Stability and relative motion cannot be assessed due to lack of multi-timestamp burner/knob detail.",
+          "Destination (knob) visibility is uncertain; only burner ring is unambiguously visible."
+        ]
+      },
+      "decision": {
+        "state": "needs_release",
+        "reason": "knob-operation done release fingers",
+        "allow_release": true,
+        "allow_retreat": false
+      },
+      "pass": true,
+      "exact_decision_pass": true,
+      "grounding_checks": {},
+      "usage": {
+        "prompt_tokens": 2016,
+        "completion_tokens": 630,
+        "total_tokens": 2646,
+        "completion_tokens_details": {
+          "text_tokens": 630
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 412,
+          "text_tokens": 1604,
+          "cached_tokens": 0
+        }
+      },
+      "model": "qwen3-vl-plus",
+      "model_calls": 1,
+      "error": null,
+      "prepared_inputs": {
+        "ready": true,
+        "reason": "four original frames plus two latest-view crops",
+        "image_paths": [
+          "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000153_agentview.png",
+          "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000154_wrist.png",
+          "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000159_agentview.png",
+          "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000160_wrist.png",
+          "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/stove_exit_last_details/detail_0.png",
+          "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/stove_exit_last_details/detail_1.png"
+        ],
+        "sensor_frames": [
+          {
+            "frame": 0,
+            "view": "agentview",
+            "timestamp": 4.349999999999743
+          },
+          {
+            "frame": 1,
+            "view": "wrist",
+            "timestamp": 4.349999999999743
+          },
+          {
+            "frame": 2,
+            "view": "agentview",
+            "timestamp": 4.3999999999997375
+          },
+          {
+            "frame": 3,
+            "view": "wrist",
+            "timestamp": 4.3999999999997375
+          },
+          {
+            "frame": 4,
+            "view": "agentview",
+            "timestamp": 4.3999999999997375
+          },
+          {
+            "frame": 5,
+            "view": "wrist",
+            "timestamp": 4.3999999999997375
+          }
+        ],
+        "derivative_provenance": [
+          {
+            "frame": 4,
+            "source_frame": 2,
+            "view": "agentview",
+            "timestamp": 4.3999999999997375,
+            "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000159_agentview.png",
+            "source_sha256": "e0f6149f37010db3e7aca0d491f810ec0b9eb493c3438958631c78bbe7ce1efd",
+            "source_size_px": [
+              256,
+              256
+            ],
+            "pixel_bounds": [
+              112,
+              71,
+              205,
+              149
+            ],
+            "original_roi": [
+              0.4375,
+              0.27734375,
+              0.80078125,
+              0.58203125
+            ],
+            "crop_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/stove_exit_last_details/detail_0.png",
+            "crop_sha256": "cd21824cc81f5cb99e56b50ae5985cad20212a5a4b866ec47ddcde00baa9c239",
+            "crop_size_px": [
+              93,
+              78
+            ],
+            "candidate_boxes_source_sha256": "49c298c157585fb42e60dc911169476555901b33ca2c4020eef6ad4a4f4812a9"
+          },
+          {
+            "frame": 5,
+            "source_frame": 3,
+            "view": "wrist",
+            "timestamp": 4.3999999999997375,
+            "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000160_wrist.png",
+            "source_sha256": "17640b9c91d12afb392cecad128cb7e240f73ded31ce7686f6c4b5261889747e",
+            "source_size_px": [
+              256,
+              256
+            ],
+            "pixel_bounds": [
+              43,
+              81,
+              213,
+              226
+            ],
+            "original_roi": [
+              0.16796875,
+              0.31640625,
+              0.83203125,
+              0.8828125
+            ],
+            "crop_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/stove_exit_last_details/detail_1.png",
+            "crop_sha256": "53d4ec8af8394afbf4aac46863f7b991b6760beeb500c251ee9f6144863e4562",
+            "crop_size_px": [
+              170,
+              145
+            ],
+            "candidate_boxes_source_sha256": "49c298c157585fb42e60dc911169476555901b33ca2c4020eef6ad4a4f4812a9"
+          }
+        ],
+        "latest_timestamp": 4.3999999999997375,
+        "original_image_count": 4,
+        "crop_image_count": 2,
+        "distinct_timestamps": 2,
+        "views": [
+          "agentview",
+          "wrist"
+        ]
+      }
+    }
+  },
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evaluate_saved.py",
+      "--case",
+      "sauce_negative_last",
+      "--output",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/sauce_negative_last.json",
+      "--max-calls",
+      "1"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 9.1472754000024,
+    "stdout": "{\"case_id\": \"sauce_negative_last\", \"output\": \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision5/sauce_negative_last.json\", \"pass\": false, \"conservative_unknown\": true, \"model_calls\": 1, \"physical_actions\": 0, \"error\": null}\n",
+    "stderr": "",
+    "result": {
+      "raw_verdict": {
+        "target_visible": false,
+        "destination_visible": true,
+        "at_destination": false,
+        "supported": false,
+        "released": null,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": null,
+        "boxes": {
+          "agentview": {
+            "target": null,
+            "destination": [
+              0.75,
+              0.42,
+              0.98,
+              0.65
+            ],
+            "gripper": [
+              0.0,
+              0.0,
+              0.45,
+              0.4
+            ]
+          },
+          "wrist": {
+            "target": null,
+            "destination": null,
+            "gripper": null
+          }
+        },
+        "evidence": [
+          "In agentview frames 0 and 2, a red-labeled bottle (tomato_sauce_1) lies on the table near other cans; it is not inside the basket (basket_1_contain_region).",
+          "The basket (destination) is visible in agentview as a woven container at right side of table.",
+          "Wrist view shows a milk carton, not the target tomato sauce bottle; target is occluded or out of view in wrist frames."
+        ],
+        "unknown_reasons": [
+          "Target object (tomato_sauce_1) is not clearly visible in any frame; its exact location and contact state cannot be confirmed.",
+          "Gripper fingers are partially visible but no clear contact with target is observable in either view.",
+          "No frame shows the target inside or supported by the basket; thus at_destination, supported, released, stable, and clear_of_target cannot be verified."
+        ]
+      },
+      "verdict": {
+        "target_visible": false,
+        "destination_visible": true,
+        "at_destination": false,
+        "supported": false,
+        "released": null,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": null,
+        "boxes": {
+          "agentview": {
+            "target": null,
+            "destination": [
+              0.75,
+              0.42,
+              0.98,
+              0.65
+            ],
+            "gripper": [
+              0.0,
+              0.0,
+              0.45,
+              0.4
+            ]
+          },
+          "wrist": {
+            "target": null,
+            "destination": null,
+            "gripper": null
+          }
+        },
+        "evidence": [
+          "In agentview frames 0 and 2, a red-labeled bottle (tomato_sauce_1) lies on the table near other cans; it is not inside the basket (basket_1_contain_region).",
+          "The basket (destination) is visible in agentview as a woven container at right side of table.",
+          "Wrist view shows a milk carton, not the target tomato sauce bottle; target is occluded or out of view in wrist frames."
+        ],
+        "unknown_reasons": [
+          "Target object (tomato_sauce_1) is not clearly visible in any frame; its exact location and contact state cannot be confirmed.",
+          "Gripper fingers are partially visible but no clear contact with target is observable in either view.",
+          "No frame shows the target inside or supported by the basket; thus at_destination, supported, released, stable, and clear_of_target cannot be verified."
+        ]
+      },
+      "decision": {
+        "state": "unknown",
+        "reason": "target or destination not visible",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "pass": false,
+      "exact_decision_pass": false,
+      "grounding_checks": {},
+      "usage": {
+        "prompt_tokens": 2180,
+        "completion_tokens": 360,
+        "total_tokens": 2540,
+        "completion_tokens_details": {
+          "text_tokens": 360
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 264,
+          "text_tokens": 1916,
+          "cached_tokens": 0
+        }
+      },
+      "model": "qwen3-vl-plus",
+      "model_calls": 1,
+      "error": null,
+      "prepared_inputs": null
+    }
+  }
+]

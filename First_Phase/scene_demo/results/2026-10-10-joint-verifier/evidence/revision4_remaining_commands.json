@@ -1,0 +1,169 @@
+[
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/evaluate_saved.py",
+      "--case",
+      "stove_exit_last",
+      "--output",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision4/stove_exit_last.json",
+      "--max-calls",
+      "1"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 12.081509800002095,
+    "stdout": "{\"case_id\": \"stove_exit_last\", \"output\": \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision4/stove_exit_last.json\", \"pass\": false, \"conservative_unknown\": false, \"model_calls\": 1, \"physical_actions\": 0, \"error\": null}\n",
+    "stderr": "",
+    "result": {
+      "raw_verdict": {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": null,
+        "supported": null,
+        "released": null,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": null,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.54,
+              0.38,
+              0.7,
+              0.48
+            ],
+            "destination": [
+              0.54,
+              0.38,
+              0.7,
+              0.48
+            ],
+            "gripper": [
+              0.52,
+              0.18,
+              0.68,
+              0.38
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.28,
+              0.42,
+              0.72,
+              0.78
+            ],
+            "destination": null,
+            "gripper": [
+              0.2,
+              0.1,
+              0.8,
+              0.5
+            ]
+          }
+        },
+        "evidence": [
+          "flat_stove_1 (stove) visible in agentview with burner ring present but not glowing red",
+          "wrist view shows gripper near a black knob-like object, but contact and rotation state are occluded",
+          "no red glowing burner ring observed in any frame, so operation not achieved"
+        ],
+        "unknown_reasons": [
+          "wrist view occludes whether fingers contacted or rotated the knob",
+          "no visual evidence of burner ignition (red glow)",
+          "support relationship between stove and its base not visible to confirm stability",
+          "gripper position relative to knob ambiguous due to low-resolution wrist frames"
+        ]
+      },
+      "verdict": {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": null,
+        "supported": null,
+        "released": false,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": false,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.54,
+              0.38,
+              0.7,
+              0.48
+            ],
+            "destination": [
+              0.54,
+              0.38,
+              0.7,
+              0.48
+            ],
+            "gripper": [
+              0.52,
+              0.18,
+              0.68,
+              0.38
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.28,
+              0.42,
+              0.72,
+              0.78
+            ],
+            "destination": null,
+            "gripper": [
+              0.2,
+              0.1,
+              0.8,
+              0.5
+            ]
+          }
+        },
+        "evidence": [
+          "flat_stove_1 (stove) visible in agentview with burner ring present but not glowing red",
+          "wrist view shows gripper near a black knob-like object, but contact and rotation state are occluded",
+          "no red glowing burner ring observed in any frame, so operation not achieved",
+          "encoder fingers not at standard open position; this does not prove object grasp",
+          "2D projection overlap near target/support; not 3D contact evidence"
+        ],
+        "unknown_reasons": [
+          "wrist view occludes whether fingers contacted or rotated the knob",
+          "no visual evidence of burner ignition (red glow)",
+          "support relationship between stove and its base not visible to confirm stability",
+          "gripper position relative to knob ambiguous due to low-resolution wrist frames"
+        ]
+      },
+      "decision": {
+        "state": "incomplete",
+        "reason": "turn not yet achieved",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "pass": false,
+      "exact_decision_pass": false,
+      "grounding_checks": {},
+      "usage": {
+        "prompt_tokens": 2187,
+        "completion_tokens": 364,
+        "total_tokens": 2551,
+        "completion_tokens_details": {
+          "text_tokens": 364
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 264,
+          "text_tokens": 1923,
+          "cached_tokens": 0
+        }
+      },
+      "model": "qwen3-vl-plus",
+      "model_calls": 1,
+      "error": null
+    }
+  }
+]

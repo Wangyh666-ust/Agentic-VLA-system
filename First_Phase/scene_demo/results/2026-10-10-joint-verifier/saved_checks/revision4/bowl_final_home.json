@@ -1,0 +1,1085 @@
+{
+  "case_id": "bowl_final_home",
+  "source_sha": "122d0261bdb8dd959589ca4cefb750a6a52f4de17b6b0f1efee097a0d3ae2935",
+  "labels_sha256": "ddf79b8aa53c5dc5ac895d4d96af89b6fbcdebda2f1b3dd8ba198372a11d3220",
+  "vision_source_sha256": "50fe5de890933ee923b3682ac2557b0d36f5e3e5da4abc5bdb6893133247b34c",
+  "context": {
+    "user_request": "请把碗放到盘子上。",
+    "current_subtask": {
+      "operation": "place",
+      "target": "akita_black_bowl_1",
+      "destination": "plate_1",
+      "phase": "post_execution"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "Place target at the declared destination; release it and withdraw from target and support surface."
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 16.950000000001484
+      },
+      {
+        "frame": 1,
+        "view": "sideview",
+        "timestamp": 16.950000000001484
+      },
+      {
+        "frame": 2,
+        "view": "agentview",
+        "timestamp": 17.000000000001457
+      },
+      {
+        "frame": 3,
+        "view": "sideview",
+        "timestamp": 17.000000000001457
+      },
+      {
+        "frame": 4,
+        "view": "agentview",
+        "timestamp": 17.05000000000143
+      },
+      {
+        "frame": 5,
+        "view": "sideview",
+        "timestamp": 17.05000000000143
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 17.05000000000143,
+      "stage": "post_execution",
+      "finger_qpos": [
+        0.0387242526065726,
+        -0.03873400295241959
+      ],
+      "max_abs_arm_qvel": 0.005704797028398903,
+      "standard_open_finger_qpos": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ]
+    }
+  },
+  "build_prompt": "You are an independent vision inspector for this task; the whitelisted user_request, current_subtask, criteria and optional real encoders/frames are the only context.\nHermes subtask guidance tells you what to attend to, but the user's original request and the fixed criteria must not be rewritten by any plan.\nFirst ground the target, destination, and gripper in the images; then judge their relationships; only then fill the exact original keys.\nReturn exactly one JSON object with EXACTLY these keys and no others:\ntarget_visible, destination_visible, at_destination, supported, released,\nstable, operation_achieved, clear_of_target, boxes, evidence, unknown_reasons.\nEach of target_visible, destination_visible, at_destination, supported,\nreleased, stable, operation_achieved, clear_of_target must be true, false,\nor null. Use null whenever the property cannot be judged from the images.\nboxes must be an object keyed by camera/view name. Every camera entry must\ncontain exactly target, destination, gripper. Each of those is either null\nor a normalized [x1, y1, x2, y2] array of four numbers with\n0 <= x1 < x2 <= 1 and 0 <= y1 < y2 <= 1. boxes may be an empty object when\ngeometry is insufficient. Locate boxes independently per view; use each view's\nlast image and never copy agentview coordinates into side or wrist views.\nevidence and unknown_reasons must be lists of strings.\nevidence should state the recognized category, the support relationship and the\nactual frame/view used; do not merely restate the task.\nDo not add fields. Do not add confidence. Do not add commentary outside JSON.\nAn object ID is an alias: a name like black or any color word is NOT a guaranteed rendered color. Locate by category shape.\nGeneric category notes: bowl is a deep open container with an inner wall; plate is a shallow flat dish with a rim, and when a bowl sits on it usually only the outer ring is visible; stove is a cooktop with burner rings and knobs, and a round burner ring is not a plate; rack/shelf is a support frame; basket is a container; bottle is a bottle-shaped object; knob is a knob.\nUse the current ID's category; do NOT supply fixed scene positions, colors, or answers.\nIf a bowl hides the center of a plate but the plate's outer rim is visible, do not say the plate is empty or invisible just because its center is hidden.\nIf the bowl is beside the plate on the table rather than on the plate, at_destination is False.\nPosition is not release. For place operation_achieved describes the placement relation at the destination, separately from released/clear/stable; do not require historical release footage or home posture.\nJudge the current instant, not a required video history of the release or carry event.\nIn the current two views, if the fingers are visibly away from the target, released/clear may be True even without seeing the moment of opening; an open encoder alone does not prove release.\nThis is short-window observed stability, not guaranteed future stability. With two or more distinct timestamps, judge visible support and motion over the supplied window, even if 0.05 or 0.1 seconds; do not invent a minimum duration, require a perturbation, or treat the absence of motion as absence of evidence. Set true only when support is visible and no target motion relative to its support is discernible; set false for visible displacement; null for single timestamp, unresolved support or inadequate image detail. Same-time different-camera frames and duplicate frames are not distinct-time evidence.\nPartial occlusion is not automatic success; if contact or support is unclear, fill Null; with no evidence do not claim grasp or contact.\nplace.supported is support at the declared destination, not any table or the gripper.\nclear_of_target is local separation of the fingers/hand from target and support surface; arm may remain in the workspace. Do not demand leaving the entire workspace. For turn also check the relevant knob; do not expand it to unrelated knobs.\nFor turn, judge by criteria.operation_semantics and the desired_state on/off with the burner ring/knob state: turn/on means rotate the stove knob to ignite; a visible red burner ring can be on evidence and is never a lid opening.\nNull is better than fabricating.\nKeep two stages: an operation that is achieved while still holding or touching hands off to a finishing stage; complete only after release and retreat, based on current evidence rather than a required view of a past event.\nIgnore and do not use any plan claim of success; judge only images and\nthe fixed criteria. Do not accept self-reported model confidence.\nReport unknown whenever an object is occluded, evidence is insufficient,\nor images contradict. Null is better than guessing.\n\nStructured task context (safe fields only):\n{\"actuator_measurements\": {\"finger_qpos\": [0.0387242526065726, -0.03873400295241959], \"max_abs_arm_qvel\": 0.005704797028398903, \"stage\": \"post_execution\", \"standard_open_finger_qpos\": [0.03873057586502897, -0.03872776397868675], \"timestamp\": 17.05000000000143}, \"criteria\": {\"must_clear\": true, \"must_preserve_target\": true, \"must_release\": true, \"must_stabilize\": true, \"operation_semantics\": \"Place target at the declared destination; release it and withdraw from target and support surface.\"}, \"current_subtask\": {\"destination\": \"plate_1\", \"operation\": \"place\", \"phase\": \"post_execution\", \"target\": \"akita_black_bowl_1\"}, \"sensor_frames\": [{\"frame\": 0, \"timestamp\": 16.950000000001484, \"view\": \"agentview\"}, {\"frame\": 1, \"timestamp\": 16.950000000001484, \"view\": \"sideview\"}, {\"frame\": 2, \"timestamp\": 17.000000000001457, \"view\": \"agentview\"}, {\"frame\": 3, \"timestamp\": 17.000000000001457, \"view\": \"sideview\"}, {\"frame\": 4, \"timestamp\": 17.05000000000143, \"view\": \"agentview\"}, {\"frame\": 5, \"timestamp\": 17.05000000000143, \"view\": \"sideview\"}], \"user_request\": \"请把碗放到盘子上。\"}\n\nOrdered image frames are provided below in this exact order; each image\ncorresponds to the frame/view/timestamp entries listed above:\n- frame=0 view=agentview timestamp=16.950000000001484\n- frame=1 view=sideview timestamp=16.950000000001484\n- frame=2 view=agentview timestamp=17.000000000001457\n- frame=3 view=sideview timestamp=17.000000000001457\n- frame=4 view=agentview timestamp=17.05000000000143\n- frame=5 view=sideview timestamp=17.05000000000143\nMeasurements bind only to the latest frame timestamp, never earlier frames. Closed fingers are not evidence of grasp; arm velocity is not object stability. Deterministic fusion applies encoder thresholds.\nMeasurement context: actuator_measurements are actual joint encoder measurements and the current controller stage, not a claim that the task succeeded. An open gripper does not alone prove release. Inspect actual object support and separation in both camera views. Do not mistake projected overlap or an overhead gripper for grasp contact. Stable means observed support and no visible target motion across the supplied distinct timestamps; no perturbation experiment is required. If the fingers/object gap is occluded, return null, not an invented claim of holding.\nFill released, clear_of_target, support and stable from images. Deterministic code compares the calibrated standard-open pair with measured fingers and applies the 0.002 encoder veto after your visual verdict. Closed fingers do not prove grasp, and open fingers do not prove success. Report visual support independently.\nController stage confirm is the post-retreat stopped-arm confirmation stage; stage home is the return-to-home stage. A stage label does not prove the preceding actions succeeded.",
+  "image_SHA": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001033_agentview.png",
+      "sha256": "c2659b778c0bda95dd4cefd39507dda0653b2c36d82c19d1e45b7a8006950055",
+      "bytes": 65956
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001035_sideview.png",
+      "sha256": "2111825576d5817faa865025b60c6384df47075eeedb78f414da0700cb33d52b",
+      "bytes": 218954
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001036_agentview.png",
+      "sha256": "38b1f9c95cfab67144f69c1e61343cc6fee8dd067db23fdfb4fd92a6be5e3e1b",
+      "bytes": 65992
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001038_sideview.png",
+      "sha256": "72d968612427f2f9e3f57871479430aed85f050ef40db9648a2e56c2b395eb94",
+      "bytes": 218959
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001045_agentview.png",
+      "sha256": "d08f16397fe9152739339a899b15f26913bb1d7eb168669358b3102773ffc095",
+      "bytes": 65963
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001047_sideview.png",
+      "sha256": "5c6c45ef48c5f6b0526bf854f50dc126704cf0ef7eccb29a2af80d034c176052",
+      "bytes": 218965
+    }
+  ],
+  "raw_verdict": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": true,
+    "supported": true,
+    "released": true,
+    "stable": true,
+    "operation_achieved": true,
+    "clear_of_target": true,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.375,
+          0.625,
+          0.484375,
+          0.71875
+        ],
+        "destination": [
+          0.359375,
+          0.609375,
+          0.484375,
+          0.6875
+        ],
+        "gripper": [
+          0.390625,
+          0.0,
+          0.578125,
+          0.25
+        ]
+      },
+      "sideview": {
+        "target": [
+          0.34375,
+          0.578125,
+          0.453125,
+          0.671875
+        ],
+        "destination": [
+          0.328125,
+          0.59375,
+          0.453125,
+          0.65625
+        ],
+        "gripper": [
+          0.578125,
+          0.125,
+          0.828125,
+          0.40625
+        ]
+      }
+    },
+    "evidence": [
+      "In agentview frames 0, 2, and 4: black bowl (target) rests on a shallow rimmed dish (destination = plate_1); outer rim of plate visible beneath bowl, confirming plate is not fully occluded.",
+      "In sideview frames 1, 3, and 5: same bowl sits centered on plate; plate rim visible; no motion between frames 0/1 and 2/3/4/5.",
+      "Gripper is elevated and open in frames 2/3/4/5; fingers clearly separated from bowl and plate in both views (e.g., sideview frame 5 shows gripper far above, no overlap with target/destination).",
+      "Finger qpos matches standard_open_finger_qpos (within 6e-6), confirming open state; no contact visible in any view.",
+      "Target remains stationary relative to table across all frames — stable support by plate, which itself rests on table.",
+      "Operation 'place' is achieved: target is at destination and supported by it."
+    ],
+    "unknown_reasons": []
+  },
+  "verdict": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": true,
+    "supported": true,
+    "released": true,
+    "stable": true,
+    "operation_achieved": true,
+    "clear_of_target": true,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.375,
+          0.625,
+          0.484375,
+          0.71875
+        ],
+        "destination": [
+          0.359375,
+          0.609375,
+          0.484375,
+          0.6875
+        ],
+        "gripper": [
+          0.390625,
+          0.0,
+          0.578125,
+          0.25
+        ]
+      },
+      "sideview": {
+        "target": [
+          0.34375,
+          0.578125,
+          0.453125,
+          0.671875
+        ],
+        "destination": [
+          0.328125,
+          0.59375,
+          0.453125,
+          0.65625
+        ],
+        "gripper": [
+          0.578125,
+          0.125,
+          0.828125,
+          0.40625
+        ]
+      }
+    },
+    "evidence": [
+      "In agentview frames 0, 2, and 4: black bowl (target) rests on a shallow rimmed dish (destination = plate_1); outer rim of plate visible beneath bowl, confirming plate is not fully occluded.",
+      "In sideview frames 1, 3, and 5: same bowl sits centered on plate; plate rim visible; no motion between frames 0/1 and 2/3/4/5.",
+      "Gripper is elevated and open in frames 2/3/4/5; fingers clearly separated from bowl and plate in both views (e.g., sideview frame 5 shows gripper far above, no overlap with target/destination).",
+      "Finger qpos matches standard_open_finger_qpos (within 6e-6), confirming open state; no contact visible in any view.",
+      "Target remains stationary relative to table across all frames — stable support by plate, which itself rests on table.",
+      "Operation 'place' is achieved: target is at destination and supported by it."
+    ],
+    "unknown_reasons": []
+  },
+  "decision": {
+    "state": "complete",
+    "reason": "placement stable and clear",
+    "allow_release": false,
+    "allow_retreat": false
+  },
+  "field_checks": {
+    "at_destination": {
+      "actual": true,
+      "expected": true,
+      "ok": true
+    },
+    "supported": {
+      "actual": true,
+      "expected": true,
+      "ok": true
+    },
+    "released": {
+      "actual": true,
+      "expected": true,
+      "ok": true
+    },
+    "stable": {
+      "actual": true,
+      "expected": true,
+      "ok": true
+    },
+    "clear_of_target": {
+      "actual": true,
+      "expected": true,
+      "ok": true
+    },
+    "decision.state": {
+      "actual": "complete",
+      "expected": [
+        "complete"
+      ],
+      "ok": true
+    }
+  },
+  "grounding_checks": {
+    "agentview": {
+      "target": {
+        "box": [
+          0.375,
+          0.625,
+          0.484375,
+          0.71875
+        ],
+        "center": [
+          0.4296875,
+          0.671875
+        ],
+        "independent_roi": [
+          0.3,
+          0.56,
+          0.59,
+          0.86
+        ],
+        "ok": true
+      },
+      "destination": {
+        "box": [
+          0.359375,
+          0.609375,
+          0.484375,
+          0.6875
+        ],
+        "center": [
+          0.421875,
+          0.6484375
+        ],
+        "independent_roi": [
+          0.3,
+          0.56,
+          0.59,
+          0.86
+        ],
+        "ok": true
+      }
+    },
+    "sideview": {
+      "target": {
+        "box": [
+          0.34375,
+          0.578125,
+          0.453125,
+          0.671875
+        ],
+        "center": [
+          0.3984375,
+          0.625
+        ],
+        "independent_roi": [
+          0.28,
+          0.52,
+          0.49,
+          0.72
+        ],
+        "ok": true
+      },
+      "destination": {
+        "box": [
+          0.328125,
+          0.59375,
+          0.453125,
+          0.65625
+        ],
+        "center": [
+          0.390625,
+          0.625
+        ],
+        "independent_roi": [
+          0.28,
+          0.52,
+          0.49,
+          0.72
+        ],
+        "ok": true
+      }
+    }
+  },
+  "pass": true,
+  "conservative_unknown": false,
+  "usage": {
+    "prompt_tokens": 2281,
+    "completion_tokens": 559,
+    "total_tokens": 2840,
+    "completion_tokens_details": {
+      "text_tokens": 559
+    },
+    "prompt_tokens_details": {
+      "image_tokens": 796,
+      "text_tokens": 1485,
+      "cached_tokens": 0
+    }
+  },
+  "request_sha256": "4a17c310c91d643d2e3c9d3a3e63858892f9b8324fc69c1b9aa70bbe0e3ebae6",
+  "response_sha256": "45bfcf102733fcacaaecebcdc3fca9463e6484eeabc2a71169341737d3c2aef3",
+  "physical_actions": 0,
+  "model_calls": 1,
+  "error": null,
+  "initial_check": {
+    "raw_verdict": {
+      "target_visible": true,
+      "destination_visible": true,
+      "at_destination": true,
+      "supported": true,
+      "released": null,
+      "stable": null,
+      "operation_achieved": false,
+      "clear_of_target": false,
+      "boxes": {
+        "agentview": {
+          "target": [
+            0.34,
+            0.58,
+            0.44,
+            0.68
+          ],
+          "destination": [
+            0.32,
+            0.59,
+            0.46,
+            0.67
+          ],
+          "gripper": [
+            0.38,
+            0.12,
+            0.58,
+            0.34
+          ]
+        },
+        "sideview": {
+          "target": [
+            0.33,
+            0.58,
+            0.43,
+            0.66
+          ],
+          "destination": [
+            0.32,
+            0.59,
+            0.45,
+            0.65
+          ],
+          "gripper": [
+            0.54,
+            0.18,
+            0.68,
+            0.42
+          ]
+        }
+      },
+      "evidence": [
+        "akita_black_bowl_1 (bowl) is resting on plate_1 (plate) in both agentview and sideview at all timestamps; outer rim of plate visible beneath bowl",
+        "Gripper remains positioned directly above the bowl in all frames; fingers not visibly open or retracted from target"
+      ],
+      "unknown_reasons": [
+        "Fingers are occluded or too close to bowl to confirm release; no visual separation between gripper and target",
+        "No distinct motion evidence across timestamps to confirm stability: bowl appears static but support contact unclear due to gripper proximity",
+        "Operation requires release and withdrawal; gripper still hovering over target, so operation_achieved cannot be true"
+      ]
+    },
+    "verdict": {
+      "target_visible": true,
+      "destination_visible": true,
+      "at_destination": true,
+      "supported": true,
+      "released": null,
+      "stable": null,
+      "operation_achieved": false,
+      "clear_of_target": false,
+      "boxes": {
+        "agentview": {
+          "target": [
+            0.34,
+            0.58,
+            0.44,
+            0.68
+          ],
+          "destination": [
+            0.32,
+            0.59,
+            0.46,
+            0.67
+          ],
+          "gripper": [
+            0.38,
+            0.12,
+            0.58,
+            0.34
+          ]
+        },
+        "sideview": {
+          "target": [
+            0.33,
+            0.58,
+            0.43,
+            0.66
+          ],
+          "destination": [
+            0.32,
+            0.59,
+            0.45,
+            0.65
+          ],
+          "gripper": [
+            0.54,
+            0.18,
+            0.68,
+            0.42
+          ]
+        }
+      },
+      "evidence": [
+        "akita_black_bowl_1 (bowl) is resting on plate_1 (plate) in both agentview and sideview at all timestamps; outer rim of plate visible beneath bowl",
+        "Gripper remains positioned directly above the bowl in all frames; fingers not visibly open or retracted from target"
+      ],
+      "unknown_reasons": [
+        "Fingers are occluded or too close to bowl to confirm release; no visual separation between gripper and target",
+        "No distinct motion evidence across timestamps to confirm stability: bowl appears static but support contact unclear due to gripper proximity",
+        "Operation requires release and withdrawal; gripper still hovering over target, so operation_achieved cannot be true"
+      ]
+    },
+    "decision": {
+      "state": "unknown",
+      "reason": "release state unknown",
+      "allow_release": false,
+      "allow_retreat": false
+    }
+  },
+  "reuse_source_sha256": "13e0daff12682987242ea38020d58dcfec041396ec8f42ab4483dee7e870ea42",
+  "prepared_inputs": {
+    "ready": true,
+    "reason": "four original frames plus two latest-view crops",
+    "image_paths": [
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001036_agentview.png",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001038_sideview.png",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001045_agentview.png",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001047_sideview.png",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision4/bowl_final_home_details/detail_0.png",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision4/bowl_final_home_details/detail_1.png"
+    ],
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 17.000000000001457
+      },
+      {
+        "frame": 1,
+        "view": "sideview",
+        "timestamp": 17.000000000001457
+      },
+      {
+        "frame": 2,
+        "view": "agentview",
+        "timestamp": 17.05000000000143
+      },
+      {
+        "frame": 3,
+        "view": "sideview",
+        "timestamp": 17.05000000000143
+      },
+      {
+        "frame": 4,
+        "view": "agentview",
+        "timestamp": 17.05000000000143
+      },
+      {
+        "frame": 5,
+        "view": "sideview",
+        "timestamp": 17.05000000000143
+      }
+    ],
+    "derivative_provenance": [
+      {
+        "frame": 4,
+        "source_frame": 2,
+        "view": "agentview",
+        "timestamp": 17.05000000000143,
+        "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001045_agentview.png",
+        "source_sha256": "d08f16397fe9152739339a899b15f26913bb1d7eb168669358b3102773ffc095",
+        "source_size_px": [
+          256,
+          256
+        ],
+        "pixel_bounds": [
+          56,
+          122,
+          144,
+          200
+        ],
+        "original_roi": [
+          0.21875,
+          0.4765625,
+          0.5625,
+          0.78125
+        ],
+        "crop_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision4/bowl_final_home_details/detail_0.png",
+        "crop_sha256": "a879dd5b67d4380b780c3975770100413c996f035adc9cea4d960539e8d13c9a",
+        "crop_size_px": [
+          88,
+          78
+        ],
+        "candidate_boxes_source_sha256": "c4d63f433e16653d1aa60649c0f0f247986a66aee529e5bf431ed4ce4fc1acb4"
+      },
+      {
+        "frame": 5,
+        "source_frame": 3,
+        "view": "sideview",
+        "timestamp": 17.05000000000143,
+        "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/sensors/cap001047_sideview.png",
+        "source_sha256": "5c6c45ef48c5f6b0526bf854f50dc126704cf0ef7eccb29a2af80d034c176052",
+        "source_size_px": [
+          512,
+          512
+        ],
+        "pixel_bounds": [
+          112,
+          245,
+          282,
+          390
+        ],
+        "original_roi": [
+          0.21875,
+          0.478515625,
+          0.55078125,
+          0.76171875
+        ],
+        "crop_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-joint-verifier/saved_checks/revision4/bowl_final_home_details/detail_1.png",
+        "crop_sha256": "39998ae003d9525a13891688ef0acb674a0149f23a288bdcf79a0db5dc04213f",
+        "crop_size_px": [
+          170,
+          145
+        ],
+        "candidate_boxes_source_sha256": "c4d63f433e16653d1aa60649c0f0f247986a66aee529e5bf431ed4ce4fc1acb4"
+      }
+    ],
+    "latest_timestamp": 17.05000000000143,
+    "original_image_count": 4,
+    "crop_image_count": 2,
+    "distinct_timestamps": 2,
+    "views": [
+      "agentview",
+      "sideview"
+    ]
+  },
+  "review_context": {
+    "user_request": "请把碗放到盘子上。",
+    "current_subtask": {
+      "operation": "place",
+      "target": "akita_black_bowl_1",
+      "destination": "plate_1",
+      "phase": "post_execution"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "Place target at the declared destination; release it and withdraw from target and support surface."
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 17.000000000001457
+      },
+      {
+        "frame": 1,
+        "view": "sideview",
+        "timestamp": 17.000000000001457
+      },
+      {
+        "frame": 2,
+        "view": "agentview",
+        "timestamp": 17.05000000000143
+      },
+      {
+        "frame": 3,
+        "view": "sideview",
+        "timestamp": 17.05000000000143
+      },
+      {
+        "frame": 4,
+        "view": "agentview",
+        "timestamp": 17.05000000000143
+      },
+      {
+        "frame": 5,
+        "view": "sideview",
+        "timestamp": 17.05000000000143
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 17.05000000000143,
+      "stage": "post_execution",
+      "finger_qpos": [
+        0.0387242526065726,
+        -0.03873400295241959
+      ],
+      "max_abs_arm_qvel": 0.005704797028398903,
+      "standard_open_finger_qpos": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ]
+    },
+    "relation_derivatives": [
+      {
+        "frame": 4,
+        "source_frame": 2,
+        "view": "agentview",
+        "timestamp": 17.05000000000143,
+        "source_size_px": [
+          256,
+          256
+        ],
+        "pixel_bounds": [
+          56,
+          122,
+          144,
+          200
+        ],
+        "original_roi": [
+          0.21875,
+          0.4765625,
+          0.5625,
+          0.78125
+        ]
+      },
+      {
+        "frame": 5,
+        "source_frame": 3,
+        "view": "sideview",
+        "timestamp": 17.05000000000143,
+        "source_size_px": [
+          512,
+          512
+        ],
+        "pixel_bounds": [
+          112,
+          245,
+          282,
+          390
+        ],
+        "original_roi": [
+          0.21875,
+          0.478515625,
+          0.55078125,
+          0.76171875
+        ]
+      }
+    ]
+  },
+  "reviewmeta": {
+    "verdict": {
+      "target_visible": true,
+      "destination_visible": true,
+      "at_destination": true,
+      "supported": true,
+      "released": true,
+      "stable": true,
+      "operation_achieved": true,
+      "clear_of_target": true,
+      "boxes": {
+        "agentview": {
+          "target": [
+            0.375,
+            0.625,
+            0.484375,
+            0.71875
+          ],
+          "destination": [
+            0.359375,
+            0.609375,
+            0.484375,
+            0.6875
+          ],
+          "gripper": [
+            0.390625,
+            0.0,
+            0.578125,
+            0.25
+          ]
+        },
+        "sideview": {
+          "target": [
+            0.34375,
+            0.578125,
+            0.453125,
+            0.671875
+          ],
+          "destination": [
+            0.328125,
+            0.59375,
+            0.453125,
+            0.65625
+          ],
+          "gripper": [
+            0.578125,
+            0.125,
+            0.828125,
+            0.40625
+          ]
+        }
+      },
+      "evidence": [
+        "In agentview frames 0, 2, and 4: black bowl (target) rests on a shallow rimmed dish (destination = plate_1); outer rim of plate visible beneath bowl, confirming plate is not fully occluded.",
+        "In sideview frames 1, 3, and 5: same bowl sits centered on plate; plate rim visible; no motion between frames 0/1 and 2/3/4/5.",
+        "Gripper is elevated and open in frames 2/3/4/5; fingers clearly separated from bowl and plate in both views (e.g., sideview frame 5 shows gripper far above, no overlap with target/destination).",
+        "Finger qpos matches standard_open_finger_qpos (within 6e-6), confirming open state; no contact visible in any view.",
+        "Target remains stationary relative to table across all frames — stable support by plate, which itself rests on table.",
+        "Operation 'place' is achieved: target is at destination and supported by it."
+      ],
+      "unknown_reasons": []
+    },
+    "usage": {
+      "prompt_tokens": 2281,
+      "completion_tokens": 559,
+      "total_tokens": 2840,
+      "completion_tokens_details": {
+        "text_tokens": 559
+      },
+      "prompt_tokens_details": {
+        "image_tokens": 796,
+        "text_tokens": 1485,
+        "cached_tokens": 0
+      }
+    },
+    "model": "qwen3-vl-plus",
+    "http_status": 200,
+    "request_sha256": "4a17c310c91d643d2e3c9d3a3e63858892f9b8324fc69c1b9aa70bbe0e3ebae6",
+    "response_sha256": "45bfcf102733fcacaaecebcdc3fca9463e6484eeabc2a71169341737d3c2aef3",
+    "call_index": 1
+  },
+  "criteria_satisfied": true,
+  "safe_rejection": false,
+  "exact_required_decision": {
+    "state": "complete",
+    "core": {
+      "at_destination": true,
+      "supported": true,
+      "released": true,
+      "stable": true,
+      "clear_of_target": true
+    }
+  },
+  "exact_decision_pass": true,
+  "runtime_source_sha256": "d96feac192ae4b89b48767c9b13c494dd5c2cd325842583fd4862d3fe26795f5",
+  "same_state_source": {
+    "path": "First_Phase/scene_demo/results/2026-10-10-shape-home/pilot_home_gate/bowl_held83/checks.jsonl",
+    "sha256": "b91f6a16b3d62b54e8c1f7ef90d99e743b72c2dc2c34d35c2eab7ca5ff3d281c",
+    "binding": "inferred_same_state",
+    "latest_timestamp": 17.05000000000143,
+    "row_index": 3,
+    "fields": [
+      "actuator_measurements.finger_qpos",
+      "actuator_measurements.max_abs_arm_qvel"
+    ],
+    "latest_source_timestamp": 17.05000000000143
+  },
+  "final_source": "relation_review",
+  "raw_scores": {
+    "decision": {
+      "state": "complete",
+      "reason": "placement stable and clear",
+      "allow_release": false,
+      "allow_retreat": false
+    },
+    "field_checks": {
+      "at_destination": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "supported": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "released": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "stable": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "clear_of_target": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "decision.state": {
+        "actual": "complete",
+        "expected": [
+          "complete"
+        ],
+        "ok": true
+      }
+    },
+    "grounding_checks": {
+      "agentview": {
+        "target": {
+          "box": [
+            0.375,
+            0.625,
+            0.484375,
+            0.71875
+          ],
+          "center": [
+            0.4296875,
+            0.671875
+          ],
+          "independent_roi": [
+            0.3,
+            0.56,
+            0.59,
+            0.86
+          ],
+          "ok": true
+        },
+        "destination": {
+          "box": [
+            0.359375,
+            0.609375,
+            0.484375,
+            0.6875
+          ],
+          "center": [
+            0.421875,
+            0.6484375
+          ],
+          "independent_roi": [
+            0.3,
+            0.56,
+            0.59,
+            0.86
+          ],
+          "ok": true
+        }
+      },
+      "sideview": {
+        "target": {
+          "box": [
+            0.34375,
+            0.578125,
+            0.453125,
+            0.671875
+          ],
+          "center": [
+            0.3984375,
+            0.625
+          ],
+          "independent_roi": [
+            0.28,
+            0.52,
+            0.49,
+            0.72
+          ],
+          "ok": true
+        },
+        "destination": {
+          "box": [
+            0.328125,
+            0.59375,
+            0.453125,
+            0.65625
+          ],
+          "center": [
+            0.390625,
+            0.625
+          ],
+          "independent_roi": [
+            0.28,
+            0.52,
+            0.49,
+            0.72
+          ],
+          "ok": true
+        }
+      }
+    },
+    "criteria_satisfied": true,
+    "pass": true,
+    "conservative_unknown": false,
+    "safe_rejection": false
+  },
+  "fused_scores": {
+    "decision": {
+      "state": "complete",
+      "reason": "placement stable and clear",
+      "allow_release": false,
+      "allow_retreat": false
+    },
+    "field_checks": {
+      "at_destination": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "supported": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "released": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "stable": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "clear_of_target": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "decision.state": {
+        "actual": "complete",
+        "expected": [
+          "complete"
+        ],
+        "ok": true
+      }
+    },
+    "grounding_checks": {
+      "agentview": {
+        "target": {
+          "box": [
+            0.375,
+            0.625,
+            0.484375,
+            0.71875
+          ],
+          "center": [
+            0.4296875,
+            0.671875
+          ],
+          "independent_roi": [
+            0.3,
+            0.56,
+            0.59,
+            0.86
+          ],
+          "ok": true
+        },
+        "destination": {
+          "box": [
+            0.359375,
+            0.609375,
+            0.484375,
+            0.6875
+          ],
+          "center": [
+            0.421875,
+            0.6484375
+          ],
+          "independent_roi": [
+            0.3,
+            0.56,
+            0.59,
+            0.86
+          ],
+          "ok": true
+        }
+      },
+      "sideview": {
+        "target": {
+          "box": [
+            0.34375,
+            0.578125,
+            0.453125,
+            0.671875
+          ],
+          "center": [
+            0.3984375,
+            0.625
+          ],
+          "independent_roi": [
+            0.28,
+            0.52,
+            0.49,
+            0.72
+          ],
+          "ok": true
+        },
+        "destination": {
+          "box": [
+            0.328125,
+            0.59375,
+            0.453125,
+            0.65625
+          ],
+          "center": [
+            0.390625,
+            0.625
+          ],
+          "independent_roi": [
+            0.28,
+            0.52,
+            0.49,
+            0.72
+          ],
+          "ok": true
+        }
+      }
+    },
+    "criteria_satisfied": true,
+    "pass": true,
+    "conservative_unknown": false,
+    "safe_rejection": false
+  },
+  "model": "qwen3-vl-plus",
+  "http_status": 200,
+  "call_index": 1
+}

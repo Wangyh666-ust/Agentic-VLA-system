@@ -1,0 +1,45 @@
+[
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "FYP_PATH=/mnt/d/FYP/First_Phase",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/miniconda3/envs/lerobot/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "scene_demo.finish_v1.tests.test_joint_verifier",
+      "scene_demo.finish_v1.tests.test_vision",
+      "scene_demo.finish_v1.tests.test_grounding"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ".......................................................................\n----------------------------------------------------------------------\nRan 71 tests in 0.032s\n\nOK\n",
+    "model_calls": 0,
+    "physical_actions": 0
+  },
+  {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "FYP_PATH=/mnt/d/FYP/First_Phase",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/miniconda3/envs/lerobot/bin/python",
+      "-B",
+      "/mnt/d/FYP/.agents/skills/fyp-experiment-review/scripts/review.py",
+      "check",
+      "--proposal",
+      "/mnt/d/FYP/First_Phase/scene_demo/plans/2026-10-10-joint-verifier.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"ok\": true, \"intent\": \"analyze_existing\", \"matched_history_ids\": [\"20261010-visual-finish\", \"20261010-finish-takeover-v2\", \"20261010-shape-home\", \"20261010-vision-grounding\"], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\n",
+    "stderr": "",
+    "model_calls": 0,
+    "physical_actions": 0
+  }
+]

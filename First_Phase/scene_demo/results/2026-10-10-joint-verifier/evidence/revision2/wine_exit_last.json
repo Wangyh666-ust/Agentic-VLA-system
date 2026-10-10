@@ -1,0 +1,355 @@
+{
+  "case_id": "wine_exit_last",
+  "source_sha": "122d0261bdb8dd959589ca4cefb750a6a52f4de17b6b0f1efee097a0d3ae2935",
+  "labels_sha256": "ddf79b8aa53c5dc5ac895d4d96af89b6fbcdebda2f1b3dd8ba198372a11d3220",
+  "vision_source_sha256": "1f89f6ab49e779a9df53ba5b70445a42989a450144a32ac3da92661d060f33eb",
+  "context": {
+    "user_request": "请把酒瓶放到架子上。",
+    "current_subtask": {
+      "operation": "place",
+      "target": "wine_bottle_1",
+      "destination": "wine_rack_1_top_region",
+      "phase": "post_execution"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "Place target at the declared destination; release it and withdraw from target and support surface."
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "agentview",
+        "timestamp": 9.449999999999825
+      },
+      {
+        "frame": 1,
+        "view": "wrist",
+        "timestamp": 9.449999999999825
+      },
+      {
+        "frame": 2,
+        "view": "agentview",
+        "timestamp": 9.499999999999842
+      },
+      {
+        "frame": 3,
+        "view": "wrist",
+        "timestamp": 9.499999999999842
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 9.499999999999842,
+      "stage": "post_execution",
+      "finger_qpos": [
+        0.01737092685843748,
+        -0.025009753346563177
+      ],
+      "max_abs_arm_qvel": 0.29744287368777145,
+      "standard_open_finger_qpos": [
+        0.03872783560654059,
+        -0.038730509939092383
+      ]
+    }
+  },
+  "build_prompt": "You are an independent vision inspector for this task; the whitelisted user_request, current_subtask, criteria and optional real encoders/frames are the only context.\nHermes subtask guidance tells you what to attend to, but the user's original request and the fixed criteria must not be rewritten by any plan.\nFirst ground the target, destination, and gripper in the images; then judge their relationships; only then fill the exact original keys.\nReturn exactly one JSON object with EXACTLY these keys and no others:\ntarget_visible, destination_visible, at_destination, supported, released,\nstable, operation_achieved, clear_of_target, boxes, evidence, unknown_reasons.\nEach of target_visible, destination_visible, at_destination, supported,\nreleased, stable, operation_achieved, clear_of_target must be true, false,\nor null. Use null whenever the property cannot be judged from the images.\nboxes must be an object keyed by camera/view name. Every camera entry must\ncontain exactly target, destination, gripper. Each of those is either null\nor a normalized [x1, y1, x2, y2] array of four numbers with\n0 <= x1 < x2 <= 1 and 0 <= y1 < y2 <= 1. boxes may be an empty object when\ngeometry is insufficient. Locate boxes independently per view; use each view's\nlast image and never copy agentview coordinates into side or wrist views.\nevidence and unknown_reasons must be lists of strings.\nevidence should state the recognized category, the support relationship and the\nactual frame/view used; do not merely restate the task.\nDo not add fields. Do not add confidence. Do not add commentary outside JSON.\nAn object ID is an alias: a name like black or any color word is NOT a guaranteed rendered color. Locate by category shape.\nGeneric category notes: bowl is a deep open container with an inner wall; plate is a shallow flat dish with a rim, and when a bowl sits on it usually only the outer ring is visible; stove is a cooktop with burner rings and knobs, and a round burner ring is not a plate; rack/shelf is a support frame; basket is a container; bottle is a bottle-shaped object; knob is a knob.\nUse the current ID's category; do NOT supply fixed scene positions, colors, or answers.\nIf a bowl hides the center of a plate but the plate's outer rim is visible, do not say the plate is empty or invisible just because its center is hidden.\nIf the bowl is beside the plate on the table rather than on the plate, at_destination is False.\nPosition is not release. For place operation_achieved describes the placement relation at the destination, separately from released/clear/stable; do not require historical release footage or home posture.\nJudge the current instant, not a required video history of the release or carry event.\nIn the current two views, if the fingers are visibly away from the target, released/clear may be True even without seeing the moment of opening; an open encoder alone does not prove release.\nThis is short-window observed stability, not guaranteed future stability. With two or more distinct timestamps, judge visible support and motion over the supplied window, even if 0.05 or 0.1 seconds; do not invent a minimum duration, require a perturbation, or treat the absence of motion as absence of evidence. Set true only when support is visible and no target motion relative to its support is discernible; set false for visible displacement; null for single timestamp, unresolved support or inadequate image detail. Same-time different-camera frames and duplicate frames are not distinct-time evidence.\nPartial occlusion is not automatic success; if contact or support is unclear, fill Null; with no evidence do not claim grasp or contact.\nplace.supported is support at the declared destination, not any table or the gripper.\nclear_of_target is local separation of the fingers/hand from target and support surface; arm may remain in the workspace. Do not demand leaving the entire workspace. For turn also check the relevant knob; do not expand it to unrelated knobs.\nFor turn, judge by criteria.operation_semantics and the desired_state on/off with the burner ring/knob state: turn/on means rotate the stove knob to ignite; a visible red burner ring can be on evidence and is never a lid opening.\nNull is better than fabricating.\nKeep two stages: an operation that is achieved while still holding or touching hands off to a finishing stage; complete only after release and retreat, based on current evidence rather than a required view of a past event.\nIgnore and do not use any plan claim of success; judge only images and\nthe fixed criteria. Do not accept self-reported model confidence.\nReport unknown whenever an object is occluded, evidence is insufficient,\nor images contradict. Null is better than guessing.\n\nStructured task context (safe fields only):\n{\"actuator_measurements\": {\"finger_qpos\": [0.01737092685843748, -0.025009753346563177], \"max_abs_arm_qvel\": 0.29744287368777145, \"stage\": \"post_execution\", \"standard_open_finger_qpos\": [0.03872783560654059, -0.038730509939092383], \"timestamp\": 9.499999999999842}, \"criteria\": {\"must_clear\": true, \"must_preserve_target\": true, \"must_release\": true, \"must_stabilize\": true, \"operation_semantics\": \"Place target at the declared destination; release it and withdraw from target and support surface.\"}, \"current_subtask\": {\"destination\": \"wine_rack_1_top_region\", \"operation\": \"place\", \"phase\": \"post_execution\", \"target\": \"wine_bottle_1\"}, \"sensor_frames\": [{\"frame\": 0, \"timestamp\": 9.449999999999825, \"view\": \"agentview\"}, {\"frame\": 1, \"timestamp\": 9.449999999999825, \"view\": \"wrist\"}, {\"frame\": 2, \"timestamp\": 9.499999999999842, \"view\": \"agentview\"}, {\"frame\": 3, \"timestamp\": 9.499999999999842, \"view\": \"wrist\"}], \"user_request\": \"请把酒瓶放到架子上。\"}\n\nOrdered image frames are provided below in this exact order; each image\ncorresponds to the frame/view/timestamp entries listed above:\n- frame=0 view=agentview timestamp=9.449999999999825\n- frame=1 view=wrist timestamp=9.449999999999825\n- frame=2 view=agentview timestamp=9.499999999999842\n- frame=3 view=wrist timestamp=9.499999999999842\nMeasurements bind only to the latest frame timestamp, never earlier frames. Closed fingers are not evidence of grasp; arm velocity is not object stability. Deterministic fusion applies encoder thresholds.\nMeasurement context: actuator_measurements are actual joint encoder measurements and the current controller stage, not a claim that the task succeeded. An open gripper does not alone prove release. Inspect actual object support and separation in both camera views. Do not mistake projected overlap or an overhead gripper for grasp contact. Stable means observed support and no visible target motion across the supplied distinct timestamps; no perturbation experiment is required. If the fingers/object gap is occluded, return null, not an invented claim of holding.\nFill released, clear_of_target, support and stable from images. Deterministic code compares the calibrated standard-open pair with measured fingers and applies the 0.002 encoder veto after your visual verdict. Closed fingers do not prove grasp, and open fingers do not prove success. Report visual support independently.\nController stage confirm is the post-retreat stopped-arm confirmation stage; stage home is the return-to-home stage. A stage label does not prove the preceding actions succeeded.",
+  "image_SHA": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/sensors/cap000357_agentview.png",
+      "sha256": "b166e4e8392a8fde8a2157abcfd330b637dbfea2ed534da65637d0d4c681b096",
+      "bytes": 65058
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/sensors/cap000358_wrist.png",
+      "sha256": "48790f4731d89650094e2575d2b28380dbf57f67490beca99ae82234d9553c8f",
+      "bytes": 54572
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/sensors/cap000363_agentview.png",
+      "sha256": "f2d505f568bced5d261561050502da2f4eadfd36db9374ee3e47cd4d03deb370",
+      "bytes": 65069
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/sensors/cap000364_wrist.png",
+      "sha256": "943fed259ab9ed0d5003032ffc7247c96fe44546085d5e81d313fe5898afbfb9",
+      "bytes": 54936
+    }
+  ],
+  "raw_verdict": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": true,
+    "supported": true,
+    "released": true,
+    "stable": true,
+    "operation_achieved": true,
+    "clear_of_target": true,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.12,
+          0.2,
+          0.28,
+          0.35
+        ],
+        "destination": [
+          0.0,
+          0.35,
+          0.3,
+          0.65
+        ],
+        "gripper": [
+          0.05,
+          0.05,
+          0.25,
+          0.25
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.4,
+          0.25,
+          0.6,
+          0.75
+        ],
+        "destination": [
+          0.2,
+          0.2,
+          0.8,
+          0.8
+        ],
+        "gripper": [
+          0.25,
+          0.7,
+          0.75,
+          0.9
+        ]
+      }
+    },
+    "evidence": [
+      "wine_bottle_1 (bottle) is fully seated in wine_rack_1_top_region (rack/shelf) in both agentview and wrist views at timestamps 9.45 and 9.49",
+      "In wrist view frames 1 and 3, the bottle rests on horizontal slats of the rack with no contact from gripper fingers",
+      "In agentview frames 0 and 2, gripper is retracted above and away from the bottle and rack; fingers are open and not touching target or support surface",
+      "No visible motion of bottle relative to rack across the two distinct timestamps (9.45 → 9.49)"
+    ],
+    "unknown_reasons": []
+  },
+  "verdict": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": true,
+    "supported": true,
+    "released": false,
+    "stable": true,
+    "operation_achieved": true,
+    "clear_of_target": false,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.12,
+          0.2,
+          0.28,
+          0.35
+        ],
+        "destination": [
+          0.0,
+          0.35,
+          0.3,
+          0.65
+        ],
+        "gripper": [
+          0.05,
+          0.05,
+          0.25,
+          0.25
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.4,
+          0.25,
+          0.6,
+          0.75
+        ],
+        "destination": [
+          0.2,
+          0.2,
+          0.8,
+          0.8
+        ],
+        "gripper": [
+          0.25,
+          0.7,
+          0.75,
+          0.9
+        ]
+      }
+    },
+    "evidence": [
+      "wine_bottle_1 (bottle) is fully seated in wine_rack_1_top_region (rack/shelf) in both agentview and wrist views at timestamps 9.45 and 9.49",
+      "In wrist view frames 1 and 3, the bottle rests on horizontal slats of the rack with no contact from gripper fingers",
+      "In agentview frames 0 and 2, gripper is retracted above and away from the bottle and rack; fingers are open and not touching target or support surface",
+      "No visible motion of bottle relative to rack across the two distinct timestamps (9.45 → 9.49)",
+      "encoder fingers not at standard open position; this does not prove object grasp",
+      "2D projection overlap near target/support; not 3D contact evidence"
+    ],
+    "unknown_reasons": []
+  },
+  "decision": {
+    "state": "needs_release",
+    "reason": "target in place and supported; release required",
+    "allow_release": true,
+    "allow_retreat": false
+  },
+  "field_checks": {
+    "at_destination": {
+      "actual": true,
+      "expected": true,
+      "ok": true
+    },
+    "supported": {
+      "actual": true,
+      "expected": true,
+      "ok": true
+    },
+    "clear_of_target": {
+      "actual": false,
+      "expected": [
+        false,
+        null
+      ],
+      "ok": true
+    },
+    "decision.state": {
+      "actual": "needs_release",
+      "expected": [
+        "needs_retreat",
+        "needs_release",
+        "unknown"
+      ],
+      "ok": true
+    }
+  },
+  "grounding_checks": {},
+  "pass": true,
+  "conservative_unknown": false,
+  "usage": {},
+  "request_sha256": null,
+  "response_sha256": null,
+  "physical_actions": 0,
+  "model_calls": 0,
+  "error": null,
+  "reuse_source_sha256": "ff414b39e6e257db1dc2cb4b168406661e4b99dfc737cf7b5edcb049fb438dd7",
+  "criteria_satisfied": true,
+  "safe_rejection": false,
+  "exact_required_decision": {
+    "state": "needs_release",
+    "allow_release": true
+  },
+  "exact_decision_pass": true,
+  "runtime_source_sha256": "1218437fa89a5a251c1103615bd05a760bc885a883b64fccc7a9534c5e1411ec",
+  "same_state_source": {
+    "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/oracle.jsonl",
+    "sha256": "22121382a919503be8940d4c40135ca0e4c85cd1e5e3a9c3cfd9f5ac999b0fef",
+    "binding": "inferred_same_state",
+    "latest_timestamp": 9.499999999999842,
+    "tag": "initial",
+    "row_index": 180,
+    "fields": [
+      "snapshot.gold.gripper_qpos",
+      "snapshot.home.max_joint_speed_rad_s"
+    ],
+    "initial_state_sha": "bd21e55c973071f49692c80e0349ad094ab982917031c2f5e7c6492e48f2d222",
+    "last_replay_state_sha": "bd21e55c973071f49692c80e0349ad094ab982917031c2f5e7c6492e48f2d222"
+  },
+  "final_source": "saved_raw_reuse",
+  "raw_scores": {
+    "decision": {
+      "state": "complete",
+      "reason": "placement stable and clear",
+      "allow_release": false,
+      "allow_retreat": false
+    },
+    "field_checks": {
+      "at_destination": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "supported": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "clear_of_target": {
+        "actual": true,
+        "expected": [
+          false,
+          null
+        ],
+        "ok": false
+      },
+      "decision.state": {
+        "actual": "complete",
+        "expected": [
+          "needs_retreat",
+          "needs_release",
+          "unknown"
+        ],
+        "ok": false
+      }
+    },
+    "grounding_checks": {},
+    "criteria_satisfied": false,
+    "pass": false,
+    "conservative_unknown": false,
+    "safe_rejection": false
+  },
+  "fused_scores": {
+    "decision": {
+      "state": "needs_release",
+      "reason": "target in place and supported; release required",
+      "allow_release": true,
+      "allow_retreat": false
+    },
+    "field_checks": {
+      "at_destination": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "supported": {
+        "actual": true,
+        "expected": true,
+        "ok": true
+      },
+      "clear_of_target": {
+        "actual": false,
+        "expected": [
+          false,
+          null
+        ],
+        "ok": true
+      },
+      "decision.state": {
+        "actual": "needs_release",
+        "expected": [
+          "needs_retreat",
+          "needs_release",
+          "unknown"
+        ],
+        "ok": true
+      }
+    },
+    "grounding_checks": {},
+    "criteria_satisfied": true,
+    "pass": true,
+    "conservative_unknown": false,
+    "safe_rejection": false
+  },
+  "model": "saved_raw_reuse",
+  "http_status": null,
+  "call_index": null
+}
