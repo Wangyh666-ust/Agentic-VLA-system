@@ -1,0 +1,70 @@
+{
+  "task": "vision-grounding",
+  "implementation_author": "actual DeepSeek API",
+  "calls": [
+    {
+      "http_status": 200,
+      "requested_model": "deepseek-flash",
+      "actual_model": "deepseek-flash",
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 4500,
+      "usage": {
+        "input_tokens": 5120,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 4500,
+        "service_tier": "standard"
+      },
+      "stop_reason": "max_tokens",
+      "request_sha256": "7719be34170a8c14c4873074cbfde5a8b6287164bbdc1f840f06cc499c0252e3",
+      "response_sha256": "5afc5e512ea316f858d9609da730508ab8a89437a3ba421905702450d7e156c0"
+    }
+  ],
+  "source_before_sha256": "f3096d346438edfd343e8d2818a09b743a780e855f34b1f59dbfdd8e732e535e",
+  "status": "recovered_production_software_pass",
+  "physical_actions": 0,
+  "qwen_calls": 0,
+  "error": "RuntimeError: DeepSeek stop_reason max_tokens",
+  "recovery": {
+    "decision_author": "GPT full review of two independent production edits",
+    "note": "GPT完整审阅2个独立生产补丁，舍弃截断测试；不是完整响应成功",
+    "edits_recovered": 2,
+    "truncated_new_files_applied": false,
+    "mechanical_changes": [
+      "remove exact redundant eleven prompt strings",
+      "reject explicit empty sensor_frames before HTTP"
+    ],
+    "tests_author": "worker mechanically implemented GPT-frozen five acceptance tests",
+    "original_source_sha256": "f3096d346438edfd343e8d2818a09b743a780e855f34b1f59dbfdd8e732e535e",
+    "source_sha256": "1be82e4d25bd4dcf3f16f6af987b23880cae4c0bb68bbc9dd0bd1aaf6530ed86",
+    "test_sha256": "e8c3a5e72fd541d5a7aa65b680925f86bf3aaa3a212bd7027b7717bd3d8dae98",
+    "diff_sha256": "49bceec93eee4050da1e3b0bd4e2a790146902ae63f71b06574fe8847d90ff98",
+    "unchanged_outside_authorized_functions_ast": true,
+    "additional_deepseek_calls": 0
+  },
+  "software_validation": {
+    "command": [
+      "wsl.exe",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase:/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "test_vision",
+      "test_grounding",
+      "test_takeover_vision",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_place_complete_ignores_operation_achieved (test_vision.DecideTests.test_place_complete_ignores_operation_achieved) ... ok\ntest_supported_held_needs_release (test_vision.DecideTests.test_supported_held_needs_release) ... ok\ntest_turn_needs_retreat (test_vision.DecideTests.test_turn_needs_retreat) ... ok\ntest_unknown_denies (test_vision.DecideTests.test_unknown_denies) ... ok\ntest_unsupported_blocks_release (test_vision.DecideTests.test_unsupported_blocks_release) ... ok\ntest_constructor_no_io (test_vision.ImportSafetyTests.test_constructor_no_io) ... ok\ntest_naked_and_fence (test_vision.ParseTests.test_naked_and_fence) ... ok\ntest_reject_prose (test_vision.ParseTests.test_reject_prose) ... ok\ntest_leading_trailing_prose_rejected (test_vision.ParserFinalTests.test_leading_trailing_prose_rejected) ... ok\ntest_multiple_fences_rejected (test_vision.ParserFinalTests.test_multiple_fences_rejected) ... ok\ntest_naked_and_fenced_success (test_vision.ParserFinalTests.test_naked_and_fenced_success) ... ok\ntest_non_dict_rejected (test_vision.ParserFinalTests.test_non_dict_rejected) ... ok\ntest_excludes_hidden_fields (test_vision.PromptTests.test_excludes_hidden_fields) ... ok\ntest_frames_strip_extra (test_vision.PromptTests.test_frames_strip_extra) ... ok\ntest_validates_context (test_vision.PromptTests.test_validates_context) ... ok\ntest_bad_schema (test_vision.QwenTests.test_bad_schema) ... ok\ntest_budget_charge_on_http_error (test_vision.QwenTests.test_budget_charge_on_http_error) ... ok\ntest_success (test_vision.QwenTests.test_success) ... ok\ntest_boxes (test_vision.VerdictTests.test_boxes) ... ok\ntest_null_and_bool_rejections (test_vision.VerdictTests.test_null_and_bool_rejections) ... ok\ntest_mismatched_frames_rejected_before_http (test_grounding.GroundingTests.test_mismatched_frames_rejected_before_http) ... ok\ntest_no_frame_metadata_compatible_and_schema_unchanged (test_grounding.GroundingTests.test_no_frame_metadata_compatible_and_schema_unchanged) ... ok\ntest_prompt_grounding_and_no_private_truth (test_grounding.GroundingTests.test_prompt_grounding_and_no_private_truth) ... ok\ntest_real_client_labels_interleave_matching_urls (test_grounding.GroundingTests.test_real_client_labels_interleave_matching_urls) ... ok\ntest_unknown_release_not_complete (test_grounding.GroundingTests.test_unknown_release_not_complete) ... ok\ntest_measurement_absent_compatible (test_takeover_vision.BuildPromptTest.test_measurement_absent_compatible) ... ok\ntest_measurement_invalid_values_raise (test_takeover_vision.BuildPromptTest.test_measurement_invalid_values_raise) ... ok\ntest_measurement_whitelist_prompt_and_extra_dropped (test_takeover_vision.BuildPromptTest.test_measurement_whitelist_prompt_and_extra_dropped) ... ok\ntest_open_measurements_released_none_not_complete (test_takeover_vision.BuildPromptTest.test_open_measurements_released_none_not_complete) ... ok\ntest_prompt_contains_turn_support_and_no_gold (test_takeover_vision.BuildPromptTest.test_prompt_contains_turn_support_and_no_gold) ... ok\ntest_prompt_mentions_stove_semantics (test_takeover_vision.BuildPromptTest.test_prompt_mentions_stove_semantics) ... ok\ntest_closed_fingers_downgrade_release_and_clear (test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_downgrade_release_and_clear) ... ok\ntest_closed_fingers_override_null_release_and_clear (test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_override_null_release_and_clear) ... ok\ntest_invalid_finger_data_is_rejected_without_mutation (test_takeover_vision.ReconcileVerdictTest.test_invalid_finger_data_is_rejected_without_mutation) ... ok\ntest_near_support_projection_retains_raw_clear (test_takeover_vision.ReconcileVerdictTest.test_near_support_projection_retains_raw_clear) ... ok\ntest_open_fingers_do_not_change_null_release (test_takeover_vision.ReconcileVerdictTest.test_open_fingers_do_not_change_null_release) ... ok\ntest_turn_achieved_and_clear_and_released_is_complete (test_takeover_vision.TurnDecisionTest.test_turn_achieved_and_clear_and_released_is_complete) ... ok\ntest_turn_clear_unknown_release_unknown_is_unknown (test_takeover_vision.TurnDecisionTest.test_turn_clear_unknown_release_unknown_is_unknown) ... ok\ntest_turn_not_achieved_is_incomplete (test_takeover_vision.TurnDecisionTest.test_turn_not_achieved_is_incomplete) ... ok\ntest_turn_on_with_closed_fingers_needs_release (test_takeover_vision.TurnDecisionTest.test_turn_on_with_closed_fingers_needs_release) ... ok\n\n----------------------------------------------------------------------\nRan 40 tests in 0.009s\n\nOK\n",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "ab4b211e3e7f037f1d85bb4bcd107fcdb0aa2c7edf44a464c9f93c072567a054",
+    "ast_parse": true
+  }
+}

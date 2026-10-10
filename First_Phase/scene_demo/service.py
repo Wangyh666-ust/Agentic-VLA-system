@@ -922,6 +922,8 @@ class SessionRecord:
         self.total_steps = 0
         self.active_request_id: str | None = None
         self.error: str | None = None
+        self.finish_mode: str = "off"
+        self.home_reference: Any = None
         self.images: list[dict[str, Any]] = []
         self.latest_png: str | None = None
         # --- private (never returned by any public API) ---
@@ -962,6 +964,7 @@ class SessionRecord:
             "run_dir": str(self.run_dir),
             "active_request_id": self.active_request_id,
             "error": self.error,
+            "finish_mode": self.finish_mode,
         }
 
 
@@ -1068,6 +1071,7 @@ class JobRecord:
         self.semantic_success: bool | None = None
         self.native_wine_predicate: bool | None = None
         self.semantic_observation_samples: int = 0
+        self.finish_status: dict | None = None
         self._t0: float | None = None
 
     def public(self) -> dict[str, Any]:
@@ -1108,6 +1112,10 @@ class JobRecord:
             "semantic_success": self.semantic_success,
             "native_wine_predicate": self.native_wine_predicate,
             "semantic_observation_samples": self.semantic_observation_samples,
+            "finish_status": (
+                json.loads(json.dumps(self.finish_status))
+                if isinstance(self.finish_status, dict) else None
+            ),
             "run_dir": str(self.run_dir),
             "latest_png": self.latest_png,
             "rollout_path": self.rollout_path,
@@ -1137,7 +1145,12 @@ class SceneService:
         batch_builder: Any = None,
         completion_mode: str = DEFAULT_COMPLETION_MODE,
         grasp_guard_mode: str = DEFAULT_GRASP_GUARD_MODE,
+        finish_mode: str = "off",
     ) -> None:
+        if finish_mode not in ("off", "visual"):
+            raise ValueError(
+                "finish_mode must be 'off' or 'visual', got %r" % (finish_mode,)
+            )
         if completion_mode not in COMPLETION_MODES:
             raise ValueError(
                 "completion_mode must be one of %s, got %r"
@@ -1155,6 +1168,10 @@ class SceneService:
         # The wine-only grasp guard mode; ``shadow`` is the default and never
         # changes a run, ``enforce`` may stop a ghost-grasp wine job.
         self.grasp_guard_mode = grasp_guard_mode
+        # Visual finish mode: ``off`` keeps every historical behavior; ``visual``
+        # enables the bridge into the finish capability (context binding, home
+        # reference capture, finish monitor).
+        self.finish_mode = finish_mode
 
         self._lock = threading.RLock()
         # The worker holds this single lock across the post-inference
@@ -1175,6 +1192,10 @@ class SceneService:
         # tombstone is created even before any plan exists, so a late plan
         # submission can never resurrect a cancelled request.
         self._cancel_requests: dict[str, dict[str, Any]] = {}
+        # Bound request contexts for the visual bridge (request_id -> {session_id,
+        # user_request}).  Only populated in ``visual`` mode via
+        # ``bind_request_context``.
+        self._request_contexts: dict[str, dict[str, Any]] = {}
 
         self._ready = False
         self._worker_error: str | None = None
@@ -1239,6 +1260,7 @@ class SceneService:
                 "session_step_limit": SESSION_STEP_LIMIT,
                 "completion_mode": self.completion_mode,
                 "grasp_guard_mode": self.grasp_guard_mode,
+                "finish_mode": self.finish_mode,
                 "active_request_id": active.request_id if active is not None else None,
             }
 
@@ -1437,6 +1459,37 @@ class SceneService:
         if any(object_id not in placement_ids for object_id in held):
             return "holding_other_object"
         return None
+
+    def bind_request_context(self, request_id: Any, session_id: Any, user_request: Any) -> dict[str, Any]:
+        if not isinstance(request_id, str) or not request_id.strip() or len(request_id) > MAX_REQUEST_ID_LEN:
+            return _err("invalid_body", "request_id must be a non-empty string within length")
+        if not isinstance(session_id, str) or not session_id:
+            return _err("invalid_body", "session_id must be a non-empty string")
+        if not isinstance(user_request, str) or not user_request.strip() or len(user_request) > 4000:
+            return _err("invalid_body", "user_request must be a non-empty string within 4000 chars")
+        with self._lock:
+            record = self._sessions.get(session_id)
+            if record is None:
+                return _err("unknown_session", "no such session")
+            if record.state != "ready":
+                return _err("not_ready", "session is not ready")
+            if request_id in self._cancel_requests:
+                return _err("cancelled", "request_id %r was cancelled" % request_id)
+            if request_id in self._plans:
+                return _err("request_conflict", "request_id %r already exists" % request_id)
+            existing = self._request_contexts.get(request_id)
+            if existing is not None:
+                if (existing.get("session_id") == session_id
+                        and existing.get("user_request") == user_request):
+                    return {"ok": True, "request_id": request_id, "session_id": session_id,
+                            "user_request": user_request, "idempotent": True}
+                return _err("request_conflict", "request_id %r already bound differently" % request_id)
+            self._request_contexts[request_id] = {
+                "session_id": session_id,
+                "user_request": user_request,
+            }
+            return {"ok": True, "request_id": request_id, "session_id": session_id,
+                    "user_request": user_request, "idempotent": False}
 
     def _apply_completion_probe(self, job: JobRecord, status: Any) -> None:
         """Publish the screened probe fields on the job under the lock.
@@ -1866,6 +1919,7 @@ class SceneService:
             record = SessionRecord(
                 session_id, scene_id, catalog.SCENES[scene_id], seed, init_state_index, run_dir
             )
+            record.finish_mode = self.finish_mode
             self._sessions[session_id] = record
             self._session_order.append(session_id)
 
@@ -1949,6 +2003,17 @@ class SceneService:
             raise
 
         self._snapshot_session_state(record, env)
+        if record.finish_mode == "visual":
+            if str(_HERE.parent) not in sys.path:
+                sys.path.insert(0, str(_HERE.parent))
+            try:
+                from scene_demo import joint_home  # noqa: WPS433
+                record.home_reference = joint_home.capture_home_reference(
+                    env, origin_sha256=state_sha(env)
+                )
+            except Exception as exc:  # noqa: BLE001
+                self._close_env()
+                raise SceneError("finish_reference_failed", str(exc)) from exc
         self._reset_policy_queues()
 
         with self._lock:
@@ -2067,7 +2132,16 @@ class SceneService:
                 return _err("not_ready", "worker thread is not running")
             # Never hardcode routing from the whole user request: the caller's
             # decision/capability list is executed verbatim, only validated.
+            if self.finish_mode == "visual":
+                ctx = self._request_contexts.get(request_id)
+                if ctx is None or ctx.get("session_id") != session_id:
+                    return _err(
+                        "invalid_request",
+                        "request_id %r has no bound context for this session" % request_id,
+                    )
             plan = PlanRecord(payload["request_id"], session_id, payload)
+            if self.finish_mode == "visual":
+                plan.user_request = ctx["user_request"]
             self._plans[plan.request_id] = plan
             self._plan_order.append(plan.request_id)
             self._active_request_id = plan.request_id
@@ -2451,6 +2525,75 @@ class SceneService:
         except Exception as exc:  # noqa: BLE001
             log("frame save failed (%s): %s" % (path, exc))
 
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        reference = session.home_reference
+        if reference is None:
+            raise SceneError('finish_reference_failed', 'home reference unavailable')
+        if str(_HERE.parent) not in sys.path:
+            sys.path.insert(0, str(_HERE.parent))
+        from scene_demo.finish_v1.runtime import build_context, FinishMonitor
+        from scene_demo import joint_home, safe_exit_contacts
+        context = build_context(capability, plan.user_request)
+        outputdir = job.run_dir / 'finish'
+        helper_index = 0
+        self_ref = self
+
+        def guarded_step(call):
+            with self_ref._lock:
+                if self_ref._stop.is_set():
+                    raise SceneError('shutdown', 'service is stopping')
+                if plan.cancel_event.is_set():
+                    raise SceneError('cancelled', 'plan was cancelled')
+                if self_ref._total_steps >= SESSION_STEP_LIMIT:
+                    raise SceneError('session_limit', 'session step limit reached')
+                return call()
+
+        def on_action(row):
+            nonlocal helper_index
+            self_ref._total_steps += 1
+            job.total_steps = self_ref._total_steps
+            session.total_steps = self_ref._total_steps
+            self_ref._last_obs = self_ref._refresh_observation(env)
+            helper_index += 1
+            serialized = json.dumps(
+                row,
+                default=lambda x: x.tolist() if hasattr(x, 'tolist') else float(x),
+            )
+            with open(job.run_dir / 'finish_actions.jsonl', 'a', encoding='utf-8') as handle:
+                handle.write(serialized + '\n')
+            if helper_index % 5 == 0:
+                frame = self_ref._safe_render(env)
+                if frame is not None:
+                    frames.append(frame)
+                    self_ref._save_frame(latest_png, frame)
+                    self_ref._update_images(session, env)
+            job.finish_status = monitor.status()
+
+        def independent_ready():
+            fixedgoals = [list(goal) for goal in capability['goals']]
+            predicates = {
+                catalog.goal_key(goal): bool(eval_goal_predicate(env, goal))
+                for goal in fixedgoals
+            }
+            state = joint_home.read_robot_state(env)
+            return (
+                self_ref._completion_ready(env, fixedgoals, predicates)
+                and joint_home.home_metrics(reference, state)['ready']
+                and safe_exit_contacts.contacts(env) == []
+            )
+
+        monitor = FinishMonitor(
+            env,
+            reference,
+            outputdir,
+            context,
+            guarded_step,
+            on_action,
+            independent_ready,
+            budget,
+        )
+        return monitor
+
     def _run_capability(self, session: SessionRecord, plan: PlanRecord, job: JobRecord,
                         capability_id: str) -> dict[str, Any]:
         capability = catalog.CAPABILITIES[capability_id]
@@ -2479,6 +2622,7 @@ class SceneService:
         # created lazily on the worker and the handle is closed in ``finally``.
         wine_semantic_tracker: Any = None
         wine_semantic_handle: Any = None
+        finish_monitor: Any = None
 
         with self._lock:
             job.state = "running"
@@ -2509,11 +2653,17 @@ class SceneService:
             # them through the same completion gate used by the step loop: in
             # release mode a raw-true-but-still-held sample can never be an
             # instant "already satisfied".
+            if self.finish_mode == "visual":
+                finish_monitor = self._make_finish_monitor(
+                    session, plan, job, env, capability, budget, frames, latest_png
+                )
             initial_predicates = {
                 catalog.goal_key(goal): bool(eval_goal_predicate(env, goal))
                 for goal in goals
             }
-            already_satisfied = self._completion_ready(env, goals, initial_predicates)
+            native_satisfied = bool(initial_predicates) and all(initial_predicates.values())
+            actual_initial_ready = self._completion_ready(env, goals, initial_predicates)
+            already_satisfied = actual_initial_ready and self.finish_mode == "off"
             initial_status = self._last_completion_status
             if isinstance(initial_status, dict):
                 last_completion_phase = initial_status.get("phase")
@@ -2548,7 +2698,7 @@ class SceneService:
             occupant = None
             if (
                 holding_block is None
-                and not already_satisfied
+                and (not native_satisfied if self.finish_mode == "visual" else not already_satisfied)
                 and capability.get("exclusive_target")
                 and capability.get("target_id")
             ):
@@ -2685,7 +2835,24 @@ class SceneService:
                                 if step % PNG_EVERY == 0:
                                     self._save_frame(latest_png, frame)
                                     self._update_images(session, env)
-                            if consecutive >= GOAL_CONSECUTIVE_STEPS:
+                            if finish_monitor is not None:
+                                finish_monitor.record(step)
+                                cand = bool(predicates) and all(predicates.values())
+                                outcome = finish_monitor.poll(
+                                    step, candidate=cand, force=(step == limit)
+                                )
+                                with self._lock:
+                                    job.finish_status = finish_monitor.status()
+                                if outcome is not None:
+                                    success = bool(outcome.get("ok"))
+                                    ended_reason = outcome.get("reason")
+                                    if success:
+                                        self._reset_policy_queues()
+                                        with self._lock:
+                                            session.policy_resets += 1
+                                            self._last_obs = self._refresh_observation(env)
+                                    break
+                            if consecutive >= GOAL_CONSECUTIVE_STEPS and self.finish_mode == "off":
                                 success = True
                                 ended_reason = "success"
                                 break
@@ -2735,6 +2902,12 @@ class SceneService:
                     except Exception as exc:  # noqa: BLE001
                         log("video write failed: %s" % exc)
             with self._lock:
+                if finish_monitor is not None:
+                    try:
+                        finish_monitor.close()
+                        job.finish_status = finish_monitor.status()
+                    except Exception as exc:  # noqa: BLE001
+                        log("finish monitor close failed: %s" % exc)
                 session.scene_version += 1  # a capability ended -> new scene version
                 job.scene_version_after = session.scene_version
                 job.steps = steps
@@ -3036,6 +3209,16 @@ class _Handler(BaseHTTPRequestHandler):
                 return self._send_error_payload(result)
             return self._send_json(200, result)
 
+        if len(segments) == 3 and segments[0] == "requests" and segments[2] == "context":
+            result = service.bind_request_context(
+                segments[1],
+                payload.get("session_id"),
+                payload.get("user_request"),
+            )
+            if not result.get("ok"):
+                return self._send_error_payload(result)
+            return self._send_json(200, result)
+
         if len(segments) == 3 and segments[0] == "requests" and segments[2] == "cancel":
             result = service.cancel_request(segments[1], payload.get("session_id"))
             if not result.get("ok"):
@@ -3081,6 +3264,13 @@ def main(argv: list[str] | None = None) -> int:
         default=DEFAULT_GRASP_GUARD_MODE,
         help="wine-only grasp guard: off, shadow (default, records only) or enforce",
     )
+    parser.add_argument(
+        "--finish-mode",
+        type=str,
+        choices=["off", "visual"],
+        default="off",
+        help="finish handling: off (default) or visual (bounded visual check + release/retreat/home)",
+    )
     args = parser.parse_args(argv)
 
     service = SceneService(
@@ -3088,6 +3278,7 @@ def main(argv: list[str] | None = None) -> int:
         args.run_root,
         completion_mode=args.completion_mode,
         grasp_guard_mode=args.grasp_guard_mode,
+        finish_mode=args.finish_mode,
     )
     service.start()
 

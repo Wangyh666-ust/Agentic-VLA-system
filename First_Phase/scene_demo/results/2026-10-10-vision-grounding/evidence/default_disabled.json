@@ -1,0 +1,53 @@
+{
+  "change_author": "GPT-fixed default disable decision; worker mechanical literal replacement",
+  "default_finish_mode": "off",
+  "health_expected_finish_mode": "off",
+  "candidate_interface_retained": true,
+  "explicit_visual_cli_override_retained": true,
+  "reason": "Image-effect acceptance has not passed: the ninth Qwen call for bowlv5 stopped as unknown, and the prior wine inspection incorrectly reported complete. Software interface validation does not establish visual or physical effect success. UI binding is present, but automatic visual finish control remains disabled and not accepted.",
+  "changes": [
+    {
+      "path": "First_Phase/scene_demo/run_service.sh",
+      "old": "--finish-mode visual",
+      "new": "--finish-mode off",
+      "before_sha256": "fc7062c1276640f1577bf7ec79e4b5d7e4b2f39f98e37036439df6c92ce1f36f",
+      "after_sha256": "7614f51cb6084a3520d8c9dd880a9bdd70a600204c31a71129f753c3e7de380f"
+    },
+    {
+      "path": "First_Phase/scene_demo/start_demo.ps1",
+      "old": "EXPECTED_FINISH_MODE = \"visual\"",
+      "new": "EXPECTED_FINISH_MODE = \"off\"",
+      "before_sha256": "dce608bd4b3bb8f93b96332f0b154e47398c0c377578d3265db2597200adf5bb",
+      "after_sha256": "7e5fc8f71767f24566c62a0043fa7ba765749f7756c6b293585c7a3440cd696a"
+    },
+    {
+      "path": "First_Phase/scene_demo/tests/test_launcher_guard_mode.py",
+      "old": "\"finish_mode\": \"visual\"",
+      "new": "\"finish_mode\": \"off\"",
+      "before_sha256": "917d41b124be19954fae84fe73b915c68e9b25301e6bfb5631ee5e345dcbb0d1",
+      "after_sha256": "a34cd660697ee6c0d3d230485921f0d7b94744ae89a5b163b46ed405b9259b79"
+    }
+  ],
+  "test_command": [
+    "C:/Users/Admin1/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "D:\\FYP\\First_Phase\\scene_demo\\tests",
+    "-p",
+    "test_launcher_guard_mode.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.5780000000013388,
+  "stdout_raw_base64": "",
+  "stderr_raw_base64": "dGVzdF9taXNzaW5nX2ZpbmlzaF9tb2RlX3JldHVybnNfdHdvICh0ZXN0X2xhdW5jaGVyX2d1YXJkX21vZGUuR3VhcmRNb2RlTWlzbWF0Y2hUZXN0cy50ZXN0X21pc3NpbmdfZmluaXNoX21vZGVfcmV0dXJuc190d28pIC4uLiBvaw0KdGVzdF9taXNzaW5nX2dyYXNwX2d1YXJkX21vZGVfcmV0dXJuc190d28gKHRlc3RfbGF1bmNoZXJfZ3VhcmRfbW9kZS5HdWFyZE1vZGVNaXNtYXRjaFRlc3RzLnRlc3RfbWlzc2luZ19ncmFzcF9ndWFyZF9tb2RlX3JldHVybnNfdHdvKSAuLi4gb2sNCnRlc3RfbnVsbF9ncmFzcF9ndWFyZF9tb2RlX3JldHVybnNfdHdvICh0ZXN0X2xhdW5jaGVyX2d1YXJkX21vZGUuR3VhcmRNb2RlTWlzbWF0Y2hUZXN0cy50ZXN0X251bGxfZ3Jhc3BfZ3VhcmRfbW9kZV9yZXR1cm5zX3R3bykgLi4uIG9rDQp0ZXN0X29mZl9ncmFzcF9ndWFyZF9tb2RlX3JldHVybnNfdHdvICh0ZXN0X2xhdW5jaGVyX2d1YXJkX21vZGUuR3VhcmRNb2RlTWlzbWF0Y2hUZXN0cy50ZXN0X29mZl9ncmFzcF9ndWFyZF9tb2RlX3JldHVybnNfdHdvKSAuLi4gb2sNCnRlc3Rfc2hhZG93X2dyYXNwX2d1YXJkX21vZGVfcmV0dXJuc190d28gKHRlc3RfbGF1bmNoZXJfZ3VhcmRfbW9kZS5HdWFyZE1vZGVNaXNtYXRjaFRlc3RzLnRlc3Rfc2hhZG93X2dyYXNwX2d1YXJkX21vZGVfcmV0dXJuc190d28pIC4uLiBvaw0KdGVzdF9lbWJlZGRlZF9oZWFsdGhfY29tcGFyaXNvbl9jb3ZlcnNfZ3Jhc3BfZ3VhcmRfbW9kZSAodGVzdF9sYXVuY2hlcl9ndWFyZF9tb2RlLkxhdW5jaGVyU291cmNlQ29udHJhY3RUZXN0cy50ZXN0X2VtYmVkZGVkX2hlYWx0aF9jb21wYXJpc29uX2NvdmVyc19ncmFzcF9ndWFyZF9tb2RlKSAuLi4gb2sNCnRlc3RfZW1iZWRkZWRfbmFtZXNwYWNlX3BpbnNfYm90aF9leHBlY3RlZF9tb2RlcyAodGVzdF9sYXVuY2hlcl9ndWFyZF9tb2RlLkxhdW5jaGVyU291cmNlQ29udHJhY3RUZXN0cy50ZXN0X2VtYmVkZGVkX25hbWVzcGFjZV9waW5zX2JvdGhfZXhwZWN0ZWRfbW9kZXMpIC4uLiBvaw0KdGVzdF9wczFfZG9jdW1lbnRzX3RoYXRfZW5mb3JjZV9pc19yZXF1aXJlZCAodGVzdF9sYXVuY2hlcl9ndWFyZF9tb2RlLkxhdW5jaGVyU291cmNlQ29udHJhY3RUZXN0cy50ZXN0X3BzMV9kb2N1bWVudHNfdGhhdF9lbmZvcmNlX2lzX3JlcXVpcmVkKSAuLi4gb2sNCnRlc3RfcHMxX2tlZXBzX3V0ZjhfYm9tICh0ZXN0X2xhdW5jaGVyX2d1YXJkX21vZGUuTGF1bmNoZXJTb3VyY2VDb250cmFjdFRlc3RzLnRlc3RfcHMxX2tlZXBzX3V0ZjhfYm9tKSAuLi4gb2sNCnRlc3RfcnVuX3NlcnZpY2VfaXNfbGZfYW5kX2tlZXBzX3RyYWlsaW5nX292ZXJyaWRlX2xhc3QgKHRlc3RfbGF1bmNoZXJfZ3VhcmRfbW9kZS5MYXVuY2hlclNvdXJjZUNvbnRyYWN0VGVzdHMudGVzdF9ydW5fc2VydmljZV9pc19sZl9hbmRfa2VlcHNfdHJhaWxpbmdfb3ZlcnJpZGVfbGFzdCkgLi4uIG9rDQp0ZXN0X3J1bl9zZXJ2aWNlX2tlZXBzX29mZmxpbmVfYW5kX2Vudmlyb25tZW50X2ZsYWdzICh0ZXN0X2xhdW5jaGVyX2d1YXJkX21vZGUuTGF1bmNoZXJTb3VyY2VDb250cmFjdFRlc3RzLnRlc3RfcnVuX3NlcnZpY2Vfa2VlcHNfb2ZmbGluZV9hbmRfZW52aXJvbm1lbnRfZmxhZ3MpIC4uLiBvaw0KdGVzdF9ydW5fc2VydmljZV9waW5zX2VuZm9yY2VfYmVmb3JlX3RyYWlsaW5nX292ZXJyaWRlcyAodGVzdF9sYXVuY2hlcl9ndWFyZF9tb2RlLkxhdW5jaGVyU291cmNlQ29udHJhY3RUZXN0cy50ZXN0X3J1bl9zZXJ2aWNlX3BpbnNfZW5mb3JjZV9iZWZvcmVfdHJhaWxpbmdfb3ZlcnJpZGVzKSAuLi4gb2sNCnRlc3RfY29tcGxldGlvbl9tb2RlX21pc21hdGNoX3JldHVybnNfdHdvICh0ZXN0X2xhdW5jaGVyX2d1YXJkX21vZGUuUHJpb3JQcm90ZWN0aW9uVGVzdHMudGVzdF9jb21wbGV0aW9uX21vZGVfbWlzbWF0Y2hfcmV0dXJuc190d28pIC4uLiBvaw0KdGVzdF9yZXZpc2lvbl9taXNtYXRjaF9yZXR1cm5zX3R3byAodGVzdF9sYXVuY2hlcl9ndWFyZF9tb2RlLlByaW9yUHJvdGVjdGlvblRlc3RzLnRlc3RfcmV2aXNpb25fbWlzbWF0Y2hfcmV0dXJuc190d28pIC4uLiBvaw0KdGVzdF93b3JrZmxvd19taXNtYXRjaF9yZXR1cm5zX3R3byAodGVzdF9sYXVuY2hlcl9ndWFyZF9tb2RlLlByaW9yUHJvdGVjdGlvblRlc3RzLnRlc3Rfd29ya2Zsb3dfbWlzbWF0Y2hfcmV0dXJuc190d28pIC4uLiBvaw0KdGVzdF9lbmZvcmNlX2hlYWx0aF9yZXVzZXNfc2VydmljZV9hbmRfcmV0dXJuc196ZXJvICh0ZXN0X2xhdW5jaGVyX2d1YXJkX21vZGUuUmV1c2VTdWNjZXNzVGVzdHMudGVzdF9lbmZvcmNlX2hlYWx0aF9yZXVzZXNfc2VydmljZV9hbmRfcmV0dXJuc196ZXJvKSAuLi4gb2sNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KUmFuIDE2IHRlc3RzIGluIDAuMDcwcw0KDQpPSw0K",
+  "stdout": "",
+  "stderr": "test_missing_finish_mode_returns_two (test_launcher_guard_mode.GuardModeMismatchTests.test_missing_finish_mode_returns_two) ... ok\r\ntest_missing_grasp_guard_mode_returns_two (test_launcher_guard_mode.GuardModeMismatchTests.test_missing_grasp_guard_mode_returns_two) ... ok\r\ntest_null_grasp_guard_mode_returns_two (test_launcher_guard_mode.GuardModeMismatchTests.test_null_grasp_guard_mode_returns_two) ... ok\r\ntest_off_grasp_guard_mode_returns_two (test_launcher_guard_mode.GuardModeMismatchTests.test_off_grasp_guard_mode_returns_two) ... ok\r\ntest_shadow_grasp_guard_mode_returns_two (test_launcher_guard_mode.GuardModeMismatchTests.test_shadow_grasp_guard_mode_returns_two) ... ok\r\ntest_embedded_health_comparison_covers_grasp_guard_mode (test_launcher_guard_mode.LauncherSourceContractTests.test_embedded_health_comparison_covers_grasp_guard_mode) ... ok\r\ntest_embedded_namespace_pins_both_expected_modes (test_launcher_guard_mode.LauncherSourceContractTests.test_embedded_namespace_pins_both_expected_modes) ... ok\r\ntest_ps1_documents_that_enforce_is_required (test_launcher_guard_mode.LauncherSourceContractTests.test_ps1_documents_that_enforce_is_required) ... ok\r\ntest_ps1_keeps_utf8_bom (test_launcher_guard_mode.LauncherSourceContractTests.test_ps1_keeps_utf8_bom) ... ok\r\ntest_run_service_is_lf_and_keeps_trailing_override_last (test_launcher_guard_mode.LauncherSourceContractTests.test_run_service_is_lf_and_keeps_trailing_override_last) ... ok\r\ntest_run_service_keeps_offline_and_environment_flags (test_launcher_guard_mode.LauncherSourceContractTests.test_run_service_keeps_offline_and_environment_flags) ... ok\r\ntest_run_service_pins_enforce_before_trailing_overrides (test_launcher_guard_mode.LauncherSourceContractTests.test_run_service_pins_enforce_before_trailing_overrides) ... ok\r\ntest_completion_mode_mismatch_returns_two (test_launcher_guard_mode.PriorProtectionTests.test_completion_mode_mismatch_returns_two) ... ok\r\ntest_revision_mismatch_returns_two (test_launcher_guard_mode.PriorProtectionTests.test_revision_mismatch_returns_two) ... ok\r\ntest_workflow_mismatch_returns_two (test_launcher_guard_mode.PriorProtectionTests.test_workflow_mismatch_returns_two) ... ok\r\ntest_enforce_health_reuses_service_and_returns_zero (test_launcher_guard_mode.ReuseSuccessTests.test_enforce_health_reuses_service_and_returns_zero) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 16 tests in 0.070s\r\n\r\nOK\r\n",
+  "actual_robot_actions": 0,
+  "actual_qwen_calls": 0,
+  "actual_deepseek_calls": 0,
+  "service_started": false
+}

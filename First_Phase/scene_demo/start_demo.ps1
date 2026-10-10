@@ -76,6 +76,7 @@ EXPECTED_SERVICE_PORT = 8767
 EXPECTED_APP_PORT = 8081
 EXPECTED_COMPLETION_MODE = "release_verified"
 EXPECTED_GRASP_GUARD_MODE = "enforce"
+EXPECTED_FINISH_MODE = "off"
 MARKERS = (PROJECT_WSL, PROJECT_SRC)
 PROXY_VARS = ("http_proxy", "https_proxy", "all_proxy",
               "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY")
@@ -220,6 +221,8 @@ def start(service_port, app_port, min_free_gpu):
             mismatches.append("completion_mode=%r" % health.get("completion_mode"))
         if health.get("grasp_guard_mode") != EXPECTED_GRASP_GUARD_MODE:
             mismatches.append("grasp_guard_mode=%r" % health.get("grasp_guard_mode"))
+        if health.get("finish_mode") != EXPECTED_FINISH_MODE:
+            mismatches.append("finish_mode=%r" % health.get("finish_mode"))
         if mismatches:
             log("端口 %d 被非本项目服务占用 (%s)：端口冲突，退出，不杀进程。"
                 % (service_port, ", ".join(mismatches)))

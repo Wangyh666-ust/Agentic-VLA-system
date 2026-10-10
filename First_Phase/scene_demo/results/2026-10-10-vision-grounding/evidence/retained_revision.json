@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "operation": "deterministic source rollback; not a new experiment",
+  "failed_candidate_source": {
+    "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/failed_finger_vision.py",
+    "sha256": "7f5ff92f1814687a9b84d5e28dd1cc05d7740e15c67bb9d70b83a5cce089c334"
+  },
+  "retained_vision_sha256": "05a2967845abc2b8e12e15f039ccf08ae9fd578fbc00fe4129c4caa800c8cb6e",
+  "test_grounding_sha256": "348839b5678755879b8779c1456f9d6bba25bcccd8576c528c6e12c06c4b53f3",
+  "removed_prompt_line_numbers": [
+    184,
+    185
+  ],
+  "removed_test_case": "test_complete_fingers_and_occluded_gap_observation; includes its scale assertions only",
+  "reused_same_revision_evidence": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v3.json",
+      "sha256": "2ed22f44a2f972aee73eee8c485fbf64ae6cc008e5fe28cac7818925170bc7b1",
+      "vision_source_sha256": "05a2967845abc2b8e12e15f039ccf08ae9fd578fbc00fe4129c4caa800c8cb6e",
+      "raw_decision": {
+        "state": "complete",
+        "reason": "placement stable and clear",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "fused_decision": {
+        "state": "complete",
+        "reason": "placement stable and clear",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "raw_pass": true,
+      "fused_pass": true,
+      "conservative_unknown_raw": false
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_initial_held_v2.json",
+      "sha256": "7fcb6045ed530d6aa70ab8e06823118045a4b1505bafda5bf90d7a5cf2c9936e",
+      "vision_source_sha256": "05a2967845abc2b8e12e15f039ccf08ae9fd578fbc00fe4129c4caa800c8cb6e",
+      "raw_decision": {
+        "state": "unknown",
+        "reason": "release state unknown",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "fused_decision": {
+        "state": "needs_release",
+        "reason": "target in place and supported; release required",
+        "allow_release": true,
+        "allow_retreat": false
+      },
+      "raw_pass": false,
+      "fused_pass": true,
+      "conservative_unknown_raw": true
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/wine_exit_last.json",
+      "sha256": "532c9808cb32df18fdb2ea756701a3c086dd14be8b5dca18078da6394041a9a0",
+      "vision_source_sha256": "05a2967845abc2b8e12e15f039ccf08ae9fd578fbc00fe4129c4caa800c8cb6e",
+      "raw_decision": {
+        "state": "complete",
+        "reason": "placement stable and clear",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "fused_decision": {
+        "state": "complete",
+        "reason": "placement stable and clear",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "raw_pass": false,
+      "fused_pass": false,
+      "conservative_unknown_raw": false
+    }
+  ],
+  "retained_scope": "Two bowl state classes fused 2/2 in these fixed saved-image diagnostics only; pure-vision held remains unknown. Wine same revision wrong complete prevents all-task activation. No cross-version accuracy pooled.",
+  "remaining_cases_not_run": [
+    "stove_exit_last",
+    "soup_negative_last",
+    "sauce_negative_last"
+  ],
+  "existing_qwen_calls": 9,
+  "qwen_calls_this_task": 0,
+  "deepseek_calls_this_task": 0,
+  "physical_actions_this_task": 0,
+  "all_prior_responses_preserved": true,
+  "ui_activation_allowed_by_this_task": false,
+  "software_check": {
+    "command": [
+      "wsl",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "scene_demo.finish_v1.tests.test_vision",
+      "scene_demo.finish_v1.tests.test_takeover_vision",
+      "scene_demo.finish_v1.tests.test_grounding",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_place_complete_ignores_operation_achieved (scene_demo.finish_v1.tests.test_vision.DecideTests.test_place_complete_ignores_operation_achieved) ... ok\ntest_supported_held_needs_release (scene_demo.finish_v1.tests.test_vision.DecideTests.test_supported_held_needs_release) ... ok\ntest_turn_needs_retreat (scene_demo.finish_v1.tests.test_vision.DecideTests.test_turn_needs_retreat) ... ok\ntest_unknown_denies (scene_demo.finish_v1.tests.test_vision.DecideTests.test_unknown_denies) ... ok\ntest_unsupported_blocks_release (scene_demo.finish_v1.tests.test_vision.DecideTests.test_unsupported_blocks_release) ... ok\ntest_constructor_no_io (scene_demo.finish_v1.tests.test_vision.ImportSafetyTests.test_constructor_no_io) ... ok\ntest_naked_and_fence (scene_demo.finish_v1.tests.test_vision.ParseTests.test_naked_and_fence) ... ok\ntest_reject_prose (scene_demo.finish_v1.tests.test_vision.ParseTests.test_reject_prose) ... ok\ntest_leading_trailing_prose_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_leading_trailing_prose_rejected) ... ok\ntest_multiple_fences_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_multiple_fences_rejected) ... ok\ntest_naked_and_fenced_success (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_naked_and_fenced_success) ... ok\ntest_non_dict_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_non_dict_rejected) ... ok\ntest_excludes_hidden_fields (scene_demo.finish_v1.tests.test_vision.PromptTests.test_excludes_hidden_fields) ... ok\ntest_frames_strip_extra (scene_demo.finish_v1.tests.test_vision.PromptTests.test_frames_strip_extra) ... ok\ntest_validates_context (scene_demo.finish_v1.tests.test_vision.PromptTests.test_validates_context) ... ok\ntest_bad_schema (scene_demo.finish_v1.tests.test_vision.QwenTests.test_bad_schema) ... ok\ntest_budget_charge_on_http_error (scene_demo.finish_v1.tests.test_vision.QwenTests.test_budget_charge_on_http_error) ... ok\ntest_success (scene_demo.finish_v1.tests.test_vision.QwenTests.test_success) ... ok\ntest_boxes (scene_demo.finish_v1.tests.test_vision.VerdictTests.test_boxes) ... ok\ntest_null_and_bool_rejections (scene_demo.finish_v1.tests.test_vision.VerdictTests.test_null_and_bool_rejections) ... ok\ntest_measurement_absent_compatible (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_absent_compatible) ... ok\ntest_measurement_invalid_values_raise (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_invalid_values_raise) ... ok\ntest_measurement_whitelist_prompt_and_extra_dropped (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_whitelist_prompt_and_extra_dropped) ... ok\ntest_open_measurements_released_none_not_complete (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_open_measurements_released_none_not_complete) ... ok\ntest_prompt_contains_turn_support_and_no_gold (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_prompt_contains_turn_support_and_no_gold) ... ok\ntest_prompt_mentions_stove_semantics (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_prompt_mentions_stove_semantics) ... ok\ntest_closed_fingers_downgrade_release_and_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_downgrade_release_and_clear) ... ok\ntest_closed_fingers_override_null_release_and_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_override_null_release_and_clear) ... ok\ntest_invalid_finger_data_is_rejected_without_mutation (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_invalid_finger_data_is_rejected_without_mutation) ... ok\ntest_near_support_projection_retains_raw_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_near_support_projection_retains_raw_clear) ... ok\ntest_open_fingers_do_not_change_null_release (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_open_fingers_do_not_change_null_release) ... ok\ntest_turn_achieved_and_clear_and_released_is_complete (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_achieved_and_clear_and_released_is_complete) ... ok\ntest_turn_clear_unknown_release_unknown_is_unknown (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_clear_unknown_release_unknown_is_unknown) ... ok\ntest_turn_not_achieved_is_incomplete (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_not_achieved_is_incomplete) ... ok\ntest_turn_on_with_closed_fingers_needs_release (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_on_with_closed_fingers_needs_release) ... ok\ntest_mismatched_frames_rejected_before_http (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_mismatched_frames_rejected_before_http) ... ok\ntest_no_frame_metadata_compatible_and_schema_unchanged (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_no_frame_metadata_compatible_and_schema_unchanged) ... ok\ntest_prompt_grounding_and_no_private_truth (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_prompt_grounding_and_no_private_truth) ... ok\ntest_real_client_labels_interleave_matching_urls (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_real_client_labels_interleave_matching_urls) ... ok\ntest_short_window_stability_and_local_clearance_prompt (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_short_window_stability_and_local_clearance_prompt) ... ok\ntest_standard_open_encoder_context_optional_and_validated (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_standard_open_encoder_context_optional_and_validated) ... ok\ntest_unknown_release_not_complete (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_unknown_release_not_complete) ... ok\n\n----------------------------------------------------------------------\nRan 42 tests in 0.009s\n\nOK\n",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "934d8ad5d8ca72f44dcbd553c2ad92b06b83089d156cee2dfae1bb1bf4255bf6"
+  }
+}

@@ -613,6 +613,21 @@ class Handler(BaseHTTPRequestHandler):
                                  "request_id": RUNNING["request_id"]}, 409)
                 return
             request_id = uuid.uuid4().hex
+            if session.get("finish_mode") == "visual":
+                try:
+                    binding_result = proxy_json("POST",
+                               "/requests/" + urllib.parse.quote(request_id, safe="") + "/context",
+                               {"session_id": session_id, "user_request": request_text},
+                               15.0)
+                except urllib.error.HTTPError as exc:
+                    self._send_json({"error": "visual finish context binding failed (http %s)" % exc.code}, 502)
+                    return
+                except Exception as exc:  # noqa: BLE001
+                    self._send_json({"error": "visual finish context binding failed: %s" % exc}, 502)
+                    return
+                if (not isinstance(binding_result, dict)) or (not binding_result.get("ok")):
+                    self._send_json({"error": "视觉收尾请求上下文绑定失败"}, 502)
+                    return
             run_dir = os.path.join(
                 RUNS_DIR, "web_%s_%s" % (datetime.now().strftime("%Y%m%d_%H%M%S"), request_id))
             os.makedirs(run_dir, exist_ok=True)
@@ -1296,6 +1311,42 @@ function intOrDash(v) {
 // 语义放置评价。仅 capability_id === "wine_to_rack" 展示 wine 诊断；非 wine 一律
 // '-'/'未启用'，绝不因初始字段为空而显示 false 失败。语义真值只由 semantic_spec_id
 // === "semantic_wine_rack_v1" 门控，且始终独立于 job.success/plan success，绝不提升为成功。
+function finishJobStatus(j) {
+  // 视觉检查与收尾的只读展示：仅按 runtime 上报的 finish_status 如实渲染，
+  // 未启用 / 未知相位都如实标注，不捏造结果，不展示传感器坐标。
+  const fs = j && j.finish_status;
+  if (typeof fs !== "object" || fs === null) {
+    return "<td>未启用</td>";
+  }
+  const PHASE_ZH = {
+    observing: "观察",
+    visual_check: "检查",
+    needs_release: "需松手",
+    needs_retreat: "需退离",
+    release: "松手",
+    movement: "退离",
+    confirm: "停稳",
+    home: "归位",
+    done: "完成",
+    blocked: "阻断",
+    unknown: "待确认"
+  };
+  const phase = fs.phase;
+  const phaseText = Object.prototype.hasOwnProperty.call(PHASE_ZH, phase) ? PHASE_ZH[phase] : String(phase || "-");
+  const hc = (fs.helper_counts && typeof fs.helper_counts === "object") ? fs.helper_counts : {};
+  const counts = "松手 " + intOrDash(hc.release) + "；退离 " + intOrDash(hc.movement) +
+                 "；停稳 " + intOrDash(hc.confirm) + "；归位 " + intOrDash(hc.home);
+  const ld = fs.last_decision;
+  const dec = (ld && typeof ld === "object")
+    ? "决策 " + String(ld.state || "-") + "/" + String(ld.reason || "-")
+    : "";
+  const term = (fs.terminal && typeof fs.terminal === "object")
+    ? "终态 " + (fs.terminal.ok === true ? "ok" : "未完成") + "/" + String(fs.terminal.reason || "-")
+    : "";
+  return "<td>" + esc(phaseText) + "（调用 " + intOrDash(fs.calls) + "）<br>" +
+         esc(counts) + "<br>" + esc(dec) + "<br>" + esc(term) + "</td>";
+}
+
 function wineJobStatus(j) {
   const job = (j && typeof j === "object") ? j : {};
 
@@ -1446,15 +1497,17 @@ function renderSubgoals(plan, jobs) {
   if (jobs && jobs.length) {
     html += "<h2>执行明细（本次请求）</h2><div class='scroll'><table><thead><tr>" +
       "<th>job_id</th><th>能力</th><th>状态</th><th>本段步数 / 场景累计步数</th><th>success</th>" +
-      "<th>抓取阶段 / 停止原因</th><th>标准目标命中</th><th>语义放置评价</th></tr></thead><tbody>";
+      "<th>抓取阶段 / 停止原因</th><th>标准目标命中</th><th>语义放置评价</th>" +
+      "<th>视觉检查与收尾</th></tr></thead><tbody>";
     jobs.forEach(j => {
       html += "<tr><td>" + esc(j.job_id) + "</td><td>" + esc(j.capability_id) + "</td><td>" +
               esc(j.state) + "</td><td>" +
               esc("本段 " + (j.steps != null ? j.steps : "-") + "；累计 " +
                   (j.total_steps != null ? j.total_steps : "-")) + "</td><td>" +
-              fmtBool(j.success) + "</td>" + wineJobStatus(j) + "</tr>";
+              fmtBool(j.success) + "</td>" + wineJobStatus(j) + finishJobStatus(j) + "</tr>";
     });
     html += "</tbody></table></div>";
+    html += "<div class='hint'>每个子任务最多10次有限视觉检查；显示松手、退离、归位的实际控制步数，不是逐动作调用。观察不确定时停止待确认。</div>";
   }
   show("subgoals", html);
 }

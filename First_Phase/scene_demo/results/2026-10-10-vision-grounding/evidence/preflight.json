@@ -1,0 +1,78 @@
+{
+  "command": [
+    "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "D:\\FYP\\.agents\\skills\\fyp-experiment-review\\scripts\\review.py",
+    "check",
+    "--proposal",
+    "D:\\FYP\\First_Phase\\scene_demo\\plans\\2026-10-10-vision-grounding.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"ok\": true, \"intent\": \"analyze_existing\", \"matched_history_ids\": [], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\r\n",
+  "stderr": "",
+  "stdout_sha256": "605cac927c412326f0b260b98fc6d3124260b89e210fa6d2dad496d203391c7d",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review": {
+    "ok": true,
+    "intent": "analyze_existing",
+    "matched_history_ids": [],
+    "exact_duplicate_ids": [],
+    "warnings": [],
+    "scientific_review_required": true,
+    "launch_authorized": false
+  },
+  "proposal": {
+    "path": "First_Phase/scene_demo/plans/2026-10-10-vision-grounding.json",
+    "sha256": "7996082c38d85ecd0362e6a6d94de00ee180904070f5a6e2bb8e3465c91f8e1d",
+    "bytes": 12621
+  },
+  "fixtures": {
+    "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/fixtures.json",
+    "sha256": "db9c6a72133afbf42b83f691b8863922d7b570b0dafd0c43374ee3b482a2dd60",
+    "bytes": 113077
+  },
+  "prompt_audit": {
+    "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/prompt_audit.json",
+    "sha256": "4fdb3176cab2554a63fa088f08db38023d95f41eb2cd2d44fe413714e8cf6378",
+    "bytes": 5584
+  },
+  "new_api_calls": 0,
+  "new_physical_actions": 0,
+  "labels_review_validation": {
+    "checks": [
+      {
+        "command": [
+          "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+          "-B",
+          "D:\\FYP\\First_Phase\\tmp\\vision_grounding_eval.py",
+          "--help"
+        ],
+        "exit_code": 0,
+        "stdout": "usage: vision_grounding_eval.py [-h] --case CASE --output OUTPUT\r\n                                [--max-calls {1}]\r\n\r\nCheck one frozen image fixture with production QwenClient; zero physical\r\nactions. API is called only after validated arguments and image hashes.\r\n\r\noptions:\r\n  -h, --help       show this help message and exit\r\n  --case CASE      Frozen fixture id\r\n  --output OUTPUT  New result JSON inside this vision-grounding campaign\r\n  --max-calls {1}  Exactly one production Qwen call; no retry\r\n",
+        "stderr": "",
+        "stdout_sha256": "24a7bba68522e671ebb65612cfd8358ad348395b59a4ecf3a3fd817e81f67537",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+          "-B",
+          "D:\\FYP\\.agents\\skills\\fyp-experiment-review\\scripts\\review.py",
+          "check",
+          "--proposal",
+          "D:\\FYP\\First_Phase\\scene_demo\\plans\\2026-10-10-vision-grounding.json"
+        ],
+        "exit_code": 0,
+        "stdout": "{\"ok\": true, \"intent\": \"analyze_existing\", \"matched_history_ids\": [], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\r\n",
+        "stderr": "",
+        "stdout_sha256": "605cac927c412326f0b260b98fc6d3124260b89e210fa6d2dad496d203391c7d",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "fixtures_sha256": "7e586c282bcd6da64d18c6b1ae4d365baf490d35fe79bbacd9e7b5ac454a2b8e",
+    "labels_review_sha256": "77411759c19884c9f9b9b2456af99eb491db3d7649b11118d2f62e0dfbdc4c80",
+    "eval_source_sha256": "e2a123fa25396899f5acbfa9063e4033a8119df971aa3101f24d65b555858ac1",
+    "proposal_sha256": "3e2fe8466005eb31704908225f026885724a3a3ca25d51659eda81f8184c2872",
+    "api_calls": 0,
+    "physical_actions": 0
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "actual_deepseek_calls": 1,
+  "requested_model": "deepseek-flash",
+  "returned_model": "deepseek-flash",
+  "http_status": 200,
+  "stop_reason": "end_turn",
+  "usage": {
+    "input_tokens": 3450,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 932,
+    "service_tier": "standard"
+  },
+  "request_sha256": "68ef208d11a2340f7dd41e0b51b5e176aaa5c9837fd9ea5c973bbabf0ed71f95",
+  "response_sha256": "66a6534f224aacc5ba65cae564c8fc82d9b5c051f97ab256d131ec80be284b68",
+  "thinking": "disabled",
+  "max_tokens": 2400,
+  "design": "GPT fixed specification",
+  "implementation": "actual DeepSeek",
+  "application": "native worker unique anchors and CRLF binding only",
+  "qwen_calls": 0,
+  "physical_actions": 0,
+  "applied": true,
+  "edit_count": 3,
+  "source_before_sha256": {
+    "First_Phase/scene_demo/finish_v1/vision.py": "dcac24acd07040fc97258fca5661c8af09c5a04fcf8e1bbed506c776d284ba00",
+    "First_Phase/tmp/vision_grounding_eval.py": "e2a123fa25396899f5acbfa9063e4033a8119df971aa3101f24d65b555858ac1"
+  },
+  "source_after_sha256": {
+    "First_Phase/scene_demo/finish_v1/vision.py": "05a2967845abc2b8e12e15f039ccf08ae9fd578fbc00fe4129c4caa800c8cb6e",
+    "First_Phase/tmp/vision_grounding_eval.py": "6a2fd3f30572c8cc88452d64cdef1a05403633d53aaa9d18298d9f6990947866"
+  },
+  "edits": [
+    {
+      "path": "First_Phase/scene_demo/finish_v1/vision.py",
+      "old": "    if isinstance(max_abs_arm_qvel, bool) or not isinstance(max_abs_arm_qvel, (int, float)):\n        raise TypeError(\"actuator_measurements.max_abs_arm_qvel must be a number\")\n    max_speed = float(max_abs_arm_qvel)\n    if not math.isfinite(max_speed) or max_speed < 0.0:\n        raise ValueError(\"actuator_measurements.max_abs_arm_qvel must be finite and non-negative\")\n    return {\n        \"stage\": stage,\n        \"finger_qpos\": norm_fingers,\n        \"max_abs_arm_qvel\": max_speed,\n    }",
+      "new": "    if isinstance(max_abs_arm_qvel, bool) or not isinstance(max_abs_arm_qvel, (int, float)):\n        raise TypeError(\"actuator_measurements.max_abs_arm_qvel must be a number\")\n    max_speed = float(max_abs_arm_qvel)\n    if not math.isfinite(max_speed) or max_speed < 0.0:\n        raise ValueError(\"actuator_measurements.max_abs_arm_qvel must be finite and non-negative\")\n    normalized = {\n        \"stage\": stage,\n        \"finger_qpos\": norm_fingers,\n        \"max_abs_arm_qvel\": max_speed,\n    }\n    if \"standard_open_finger_qpos\" in value:\n        standard_open = _finite_pair(\n            value[\"standard_open_finger_qpos\"],\n            \"actuator_measurements.standard_open_finger_qpos\",\n        )\n        normalized[\"standard_open_finger_qpos\"] = [float(standard_open[0]), float(standard_open[1])]\n    return normalized"
+    },
+    {
+      "path": "First_Phase/scene_demo/finish_v1/vision.py",
+      "old": "    if measurements is not None:\n        lines.append(\"Measurement context: actuator_measurements are actual joint encoder measurements and the current controller stage, not a claim that the task succeeded. An open gripper does not alone prove release. Inspect actual object support and separation in both camera views. Do not mistake projected overlap or an overhead gripper for grasp contact. Stable means observed support and no visible target motion across the supplied distinct timestamps; no perturbation experiment is required. If the fingers/object gap is occluded, return null, not an invented claim of holding.\")",
+      "new": "    if measurements is not None:\n        lines.append(\"Measurement context: actuator_measurements are actual joint encoder measurements and the current controller stage, not a claim that the task succeeded. An open gripper does not alone prove release. Inspect actual object support and separation in both camera views. Do not mistake projected overlap or an overhead gripper for grasp contact. Stable means observed support and no visible target motion across the supplied distinct timestamps; no perturbation experiment is required. If the fingers/object gap is occluded, return null, not an invented claim of holding.\")\n        lines.append(\"When standard_open_finger_qpos is supplied, compare measured finger_qpos with that calibrated standard-open pair. If maximum absolute deviation exceeds 0.002, released=false and clear_of_target=false, even when projection looks separated; this is an encoder veto, not proof of grasp or support. Open-position measurements alone never prove release. Report the visual support independently.\")"
+    },
+    {
+      "path": "First_Phase/tmp/vision_grounding_eval.py",
+      "old": "    prompt = vision.build_prompt(context)",
+      "new": "    if case.get('actuator_measurements') is not None and case.get('reference_finger_home') is not None:\n        ref_source = case['reference_source']\n        if sha(ROOT / ref_source['path']) != ref_source['sha256']:\n            raise ValueError('Original encoder-reference source SHA mismatch')\n        context['actuator_measurements']['standard_open_finger_qpos'] = copy.deepcopy(case['reference_finger_home'])\n    prompt = vision.build_prompt(context)"
+    }
+  ],
+  "diff": "--- First_Phase/scene_demo/finish_v1/vision.py\n+++ First_Phase/scene_demo/finish_v1/vision.py\n@@ -110,11 +110,18 @@\n     max_speed = float(max_abs_arm_qvel)\n     if not math.isfinite(max_speed) or max_speed < 0.0:\n         raise ValueError(\"actuator_measurements.max_abs_arm_qvel must be finite and non-negative\")\n-    return {\n+    normalized = {\n         \"stage\": stage,\n         \"finger_qpos\": norm_fingers,\n         \"max_abs_arm_qvel\": max_speed,\n     }\n+    if \"standard_open_finger_qpos\" in value:\n+        standard_open = _finite_pair(\n+            value[\"standard_open_finger_qpos\"],\n+            \"actuator_measurements.standard_open_finger_qpos\",\n+        )\n+        normalized[\"standard_open_finger_qpos\"] = [float(standard_open[0]), float(standard_open[1])]\n+    return normalized\n \n def build_prompt(context):\n     user_request, subtask, criteria = _validate_context(context)\n@@ -194,6 +201,7 @@\n             )\n     if measurements is not None:\n         lines.append(\"Measurement context: actuator_measurements are actual joint encoder measurements and the current controller stage, not a claim that the task succeeded. An open gripper does not alone prove release. Inspect actual object support and separation in both camera views. Do not mistake projected overlap or an overhead gripper for grasp contact. Stable means observed support and no visible target motion across the supplied distinct timestamps; no perturbation experiment is required. If the fingers/object gap is occluded, return null, not an invented claim of holding.\")\n+        lines.append(\"When standard_open_finger_qpos is supplied, compare measured finger_qpos with that calibrated standard-open pair. If maximum absolute deviation exceeds 0.002, released=false and clear_of_target=false, even when projection looks separated; this is an encoder veto, not proof of grasp or support. Open-position measurements alone never prove release. Report the visual support independently.\")\n         lines.append(\"Controller stage confirm is the post-retreat stopped-arm confirmation stage; stage home is the return-to-home stage. A stage label does not prove the preceding actions succeeded.\")\n     return \"\\n\".join(lines)\n \n--- First_Phase/tmp/vision_grounding_eval.py\n+++ First_Phase/tmp/vision_grounding_eval.py\n@@ -90,6 +90,11 @@\n         proof.append({'path': relative, 'sha256': actual, 'bytes': path.stat().st_size})\n     if len(images) != len(case['image_paths']) or len(images) != len(case['sensor_frames']):\n         raise ValueError('Original image and frame list lengths differ')\n+    if case.get('actuator_measurements') is not None and case.get('reference_finger_home') is not None:\n+        ref_source = case['reference_source']\n+        if sha(ROOT / ref_source['path']) != ref_source['sha256']:\n+            raise ValueError('Original encoder-reference source SHA mismatch')\n+        context['actuator_measurements']['standard_open_finger_qpos'] = copy.deepcopy(case['reference_finger_home'])\n     prompt = vision.build_prompt(context)\n     result = {'case_id': args.case, 'source_sha': sha(FIXTURES),\n               'labels_sha256': data['labels_sha256'], 'vision_source_sha256': sha(Path(vision.__file__)),\n",
+  "software_checks": [
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "scene_demo.finish_v1.tests.test_vision",
+        "scene_demo.finish_v1.tests.test_takeover_vision",
+        "scene_demo.finish_v1.tests.test_grounding",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_place_complete_ignores_operation_achieved (scene_demo.finish_v1.tests.test_vision.DecideTests.test_place_complete_ignores_operation_achieved) ... ok\ntest_supported_held_needs_release (scene_demo.finish_v1.tests.test_vision.DecideTests.test_supported_held_needs_release) ... ok\ntest_turn_needs_retreat (scene_demo.finish_v1.tests.test_vision.DecideTests.test_turn_needs_retreat) ... ok\ntest_unknown_denies (scene_demo.finish_v1.tests.test_vision.DecideTests.test_unknown_denies) ... ok\ntest_unsupported_blocks_release (scene_demo.finish_v1.tests.test_vision.DecideTests.test_unsupported_blocks_release) ... ok\ntest_constructor_no_io (scene_demo.finish_v1.tests.test_vision.ImportSafetyTests.test_constructor_no_io) ... ok\ntest_naked_and_fence (scene_demo.finish_v1.tests.test_vision.ParseTests.test_naked_and_fence) ... ok\ntest_reject_prose (scene_demo.finish_v1.tests.test_vision.ParseTests.test_reject_prose) ... ok\ntest_leading_trailing_prose_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_leading_trailing_prose_rejected) ... ok\ntest_multiple_fences_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_multiple_fences_rejected) ... ok\ntest_naked_and_fenced_success (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_naked_and_fenced_success) ... ok\ntest_non_dict_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_non_dict_rejected) ... ok\ntest_excludes_hidden_fields (scene_demo.finish_v1.tests.test_vision.PromptTests.test_excludes_hidden_fields) ... ok\ntest_frames_strip_extra (scene_demo.finish_v1.tests.test_vision.PromptTests.test_frames_strip_extra) ... ok\ntest_validates_context (scene_demo.finish_v1.tests.test_vision.PromptTests.test_validates_context) ... ok\ntest_bad_schema (scene_demo.finish_v1.tests.test_vision.QwenTests.test_bad_schema) ... ok\ntest_budget_charge_on_http_error (scene_demo.finish_v1.tests.test_vision.QwenTests.test_budget_charge_on_http_error) ... ok\ntest_success (scene_demo.finish_v1.tests.test_vision.QwenTests.test_success) ... ok\ntest_boxes (scene_demo.finish_v1.tests.test_vision.VerdictTests.test_boxes) ... ok\ntest_null_and_bool_rejections (scene_demo.finish_v1.tests.test_vision.VerdictTests.test_null_and_bool_rejections) ... ok\ntest_measurement_absent_compatible (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_absent_compatible) ... ok\ntest_measurement_invalid_values_raise (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_invalid_values_raise) ... ok\ntest_measurement_whitelist_prompt_and_extra_dropped (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_whitelist_prompt_and_extra_dropped) ... ok\ntest_open_measurements_released_none_not_complete (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_open_measurements_released_none_not_complete) ... ok\ntest_prompt_contains_turn_support_and_no_gold (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_prompt_contains_turn_support_and_no_gold) ... ok\ntest_prompt_mentions_stove_semantics (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_prompt_mentions_stove_semantics) ... ok\ntest_closed_fingers_downgrade_release_and_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_downgrade_release_and_clear) ... ok\ntest_closed_fingers_override_null_release_and_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_override_null_release_and_clear) ... ok\ntest_invalid_finger_data_is_rejected_without_mutation (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_invalid_finger_data_is_rejected_without_mutation) ... ok\ntest_near_support_projection_retains_raw_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_near_support_projection_retains_raw_clear) ... ok\ntest_open_fingers_do_not_change_null_release (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_open_fingers_do_not_change_null_release) ... ok\ntest_turn_achieved_and_clear_and_released_is_complete (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_achieved_and_clear_and_released_is_complete) ... ok\ntest_turn_clear_unknown_release_unknown_is_unknown (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_clear_unknown_release_unknown_is_unknown) ... ok\ntest_turn_not_achieved_is_incomplete (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_not_achieved_is_incomplete) ... ok\ntest_turn_on_with_closed_fingers_needs_release (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_on_with_closed_fingers_needs_release) ... ok\ntest_mismatched_frames_rejected_before_http (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_mismatched_frames_rejected_before_http) ... ok\ntest_no_frame_metadata_compatible_and_schema_unchanged (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_no_frame_metadata_compatible_and_schema_unchanged) ... ok\ntest_prompt_grounding_and_no_private_truth (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_prompt_grounding_and_no_private_truth) ... ok\ntest_real_client_labels_interleave_matching_urls (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_real_client_labels_interleave_matching_urls) ... ok\ntest_short_window_stability_and_local_clearance_prompt (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_short_window_stability_and_local_clearance_prompt) ... ok\ntest_standard_open_encoder_context_optional_and_validated (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_standard_open_encoder_context_optional_and_validated) ... ok\ntest_unknown_release_not_complete (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_unknown_release_not_complete) ... ok\n\n----------------------------------------------------------------------\nRan 42 tests in 0.009s\n\nOK\n",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "934d8ad5d8ca72f44dcbd553c2ad92b06b83089d156cee2dfae1bb1bf4255bf6"
+    },
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "/mnt/d/FYP/First_Phase/tmp/vision_grounding_eval.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "stdout": "usage: vision_grounding_eval.py [-h] --case CASE --output OUTPUT\n                                [--max-calls {1}]\n\nCheck one frozen image fixture with production QwenClient; zero physical\nactions. API is called only after validated arguments and image hashes.\n\noptions:\n  -h, --help       show this help message and exit\n  --case CASE      Frozen fixture id\n  --output OUTPUT  New result JSON inside this vision-grounding campaign\n  --max-calls {1}  Exactly one production Qwen call; no retry\n",
+      "stderr": "",
+      "stdout_sha256": "262147a13b613707b6c1b0ba821033b791a8c913070acd79ea44fa46f9dfd08f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\FYP\\.agents\\skills\\fyp-experiment-review\\scripts\\review.py",
+        "check",
+        "--proposal",
+        "D:\\FYP\\First_Phase\\scene_demo\\plans\\2026-10-10-vision-grounding.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"ok\": true, \"intent\": \"analyze_existing\", \"matched_history_ids\": [], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\r\n",
+      "stderr": "",
+      "stdout_sha256": "605cac927c412326f0b260b98fc6d3124260b89e210fa6d2dad496d203391c7d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "tests_authorship": "GPT fixed test design; native worker mechanical implementation, not a DeepSeek-generated test",
+  "final_source_sha256": {
+    "First_Phase/scene_demo/finish_v1/vision.py": "05a2967845abc2b8e12e15f039ccf08ae9fd578fbc00fe4129c4caa800c8cb6e",
+    "First_Phase/tmp/vision_grounding_eval.py": "6a2fd3f30572c8cc88452d64cdef1a05403633d53aaa9d18298d9f6990947866",
+    "First_Phase/scene_demo/finish_v1/tests/test_grounding.py": "348839b5678755879b8779c1456f9d6bba25bcccd8576c528c6e12c06c4b53f3"
+  },
+  "qwen_calls_this_task": 0
+}

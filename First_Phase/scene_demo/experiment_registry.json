@@ -1701,6 +1701,419 @@
           "sha256": "5c6c45ef48c5f6b0526bf854f50dc126704cf0ef7eccb29a2af80d034c176052"
         }
       ]
+    },
+    {
+      "id": "20261010-vision-grounding",
+      "title": "保存画面校准：碗盘识别修正，松手退离未验收，自动收尾关闭",
+      "date": "2026-10-10",
+      "question_keys": [
+        "visual-completion",
+        "visual_finish"
+      ],
+      "tags": [
+        "saved-images",
+        "vision-grounding",
+        "encoder-veto",
+        "default-off",
+        "no-physical-actions"
+      ],
+      "conditions": [
+        "六份冻结画面fixture中实际调用三类状态：碗完成态、碗仍持物态、酒瓶近架终态。不同提示版本共9次Qwen保存图调用，无初始化/回放/新VLA/辅助/归位/训练，不生成视频。",
+        "Qwen模型qwen3-vl-plus，temperature0/max_tokens1600；物体描述、每图frame/view/time、当前状态语义与真实开口标定为修正。独立gold/仿真真值和ROI仅用于评分，不输入模型。",
+        "生产融合checker验收与raw视觉分别记录；原2mm编码器否决保留，开放编码器不能单独证明释放。四旧例缺同timestamp encoder，不从不同时间末态补值。",
+        "最终机械撤回两条指尖候选，保留05a2967845abc2b8e12e15f039ccf08ae9fd578fbc00fe4129c4caa800c8cb6e来源；三项同源结果单列，不跨版本合并准确率。",
+        "真实物理闭环未验证，自动视觉收尾默认off，service/runtime/app候选接口与状态展示已接，服务未启动。"
+      ],
+      "findings": [
+        "最终保留版本碗完成态raw/fused complete正确；碗仍持物态raw unknown、fused needs_release正确。两类碗状态仅固定输入诊断，不是可靠性成功率或纯视觉全通过。",
+        "同保留源码酒瓶raw/fused complete错误；手指近瓶颈/支撑架，未确认退离，不应完成，故整体验收未通过。",
+        "加强指尖要求使酒瓶降为保守unknown，却让碗已完成正例退化unknown；最后尺度修正仍失败，原候选与全部9次响应保留并停止/撤回，不宣布修复有效。",
+        "视觉最终42项、runtime10、service集成5、launcher16软件测试通过；原169suite中1launcher fixture失败后修复，Node缓存视频/停止测试通过。仅证明软件接口，不证明物理收尾效果。",
+        "9次Qwen共27806 tokens；实际DeepSeek12调用/51865input/21919output，含截断或接口失败原记录；GPT规划/验收，DeepSeek确定实现，worker机械应用，调用数不证明成果。"
+      ],
+      "limits": [
+        "灶台、汤罐、番茄酱三fixture未运行；不称六例全测/全通过，不继续下游物理或UI自动收尾。",
+        "纯视觉释放/退离仍不可靠；持物raw unknown不能当准确成功，酒瓶误报complete尚未解决，不能把全部失败归因prompt或训练。",
+        "保存画面多版本诊断不是同配置物理对照，不跨版本合并成功率，不代表真机/更多物体或组合任务泛化。",
+        "control/sensors/joint_home/geometry原实现保持；软件通过与默认off接口接入不等于自动控制已经验收。"
+      ],
+      "configuration": {
+        "retained_vision_sha256": "05a2967845abc2b8e12e15f039ccf08ae9fd578fbc00fe4129c4caa800c8cb6e",
+        "source_snapshot_sha256": "7c6dd735f1ce3c3eefe9f18aa10a1e7eac0a2631a52d42c17dd069a42252ba08",
+        "vision_model": "qwen3-vl-plus",
+        "temperature": 0,
+        "max_tokens": 1600,
+        "planned_max_cases": 6,
+        "actual_distinct_states": 3,
+        "qwen_calls": 9,
+        "qwen_total_tokens": 27806,
+        "qwen_budget": 13,
+        "physical_actions": 0,
+        "initialization": 0,
+        "historical_replay": 0,
+        "new_vla": 0,
+        "helper": 0,
+        "home": 0,
+        "training": false,
+        "default_finish_mode": "off",
+        "service_started": false,
+        "comparison": "retained-version evidence only; no cross-revision accuracy pooling"
+      },
+      "configuration_complete": false,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-vision-grounding.json",
+          "sha256": "c4382fd13715485980250ff7faf944e3483a58cc6be9386bf2aed636df87e9f2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/README.md",
+          "sha256": "1343bc1ea0072ab32e5878dfe81b7c0ac946224f35ab204f151dcc8e96b5c104"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/candidate_failed_snapshot.zip",
+          "sha256": "ab9133d953846b0e5af054433a364b9f6bfaf626997e0618f0833375d60fd094"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evaluate_saved.py",
+          "sha256": "97820a34ac0701397b7f151360116199b03dc0abfc00ce775f5e5e240dcfd653"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/encoder_context.request.json",
+          "sha256": "68ef208d11a2340f7dd41e0b51b5e176aaa5c9837fd9ea5c973bbabf0ed71f95"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/encoder_context.response.json",
+          "sha256": "66a6534f224aacc5ba65cae564c8fc82d9b5c051f97ab256d131ec80be284b68"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/finger_grounding.request.json",
+          "sha256": "992c57b0f74daeb142209b5e84ee56fb7f10afef9c73be024f733593f0126df1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/finger_grounding.response.json",
+          "sha256": "cb571011c751cd7d53196a26914ac2268ad85741d81205274e3b2acd0b47b5d7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/finger_scale.request.json",
+          "sha256": "e2e0b6f139beaab0009853c7695510db309f17ee066947b0649ccfb98c85349e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/finger_scale.response.json",
+          "sha256": "61585151c91987ee6988f1cd6a9559be3741e3378e5a5bc1b2c5e6e98feb1aa5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/runtime_bridge.request.json",
+          "sha256": "ac1e8f2aa128c4c443e31ba550d49d322f202896c83f7ef7b2bbb228d830c52b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/runtime_bridge.response.json",
+          "sha256": "52543e26bf520b500b23eb947bf3ba12de99ebf2353b6d07afa3002fd088369a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/runtime_checks.request.json",
+          "sha256": "2892a211fca68f58ecb66f31971c3423550bc1a3cf784b88cb9ef1d2fec48cee"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/runtime_checks.response.json",
+          "sha256": "42ee0d74c0c574fe05abe8bf25a611473c209ea463e25d1297847c645b417184"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/runtime_fix.request.json",
+          "sha256": "f0e1ade7997031366f9cc8ffd1baf6354c58abffb4eaf34dbef9d6971a28535c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/runtime_fix.response.json",
+          "sha256": "702a1934ad0b1162af9f06b891a8ca4ced64020151f281bb4cdd97bedd4c07c2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/service_core_fix.request.json",
+          "sha256": "24bc545b1b455fc235f0258e3f344c3a38f32028f68a5596e52c032d453466d5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/service_core_fix.response.json",
+          "sha256": "4f67e30e20dcd05654338d9d79c3b89b028bbaeb9c4b61229ef5c66c6c430a60"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/service_finish.request.json",
+          "sha256": "b4526f49e13076ec46b59876b43921dc87da1f0a95403c2a5a83c6414c2f6fb9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/service_finish.response.json",
+          "sha256": "cf7f347206568afa6f7ceb8a0bccc75b4d7f568c6d5acc68c7f57932f5673aac"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/service_method.request.json",
+          "sha256": "6862dde02c13b0c0985891e20b65cbdbf90e484087a2c66b44ef648b1e53f9bd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/service_method.response.json",
+          "sha256": "5ab90ae07b90d45171726baca9168b0956168a05c9a65e9b5593859ef93f84d6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/ui_finish.request.json",
+          "sha256": "0389c9eaaeb6952afffc74ab93f6b068c9226746e8aa74612579debfab91178b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/ui_finish.response.json",
+          "sha256": "d3c2cac23351703cca377b4b81728d88ed8a591a315c4081c6977ddd39abde5f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/vision_grounding.request.json",
+          "sha256": "7719be34170a8c14c4873074cbfde5a8b6287164bbdc1f840f06cc499c0252e3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/vision_grounding.response.json",
+          "sha256": "5afc5e512ea316f858d9609da730508ab8a89437a3ba421905702450d7e156c0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/vision_stability.request.json",
+          "sha256": "6c4f79b4f3c5b611a98910bf2b88d6f75738e3d5c9a5ae2d5381a7d26d7259a9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/api_provenance/vision_stability.response.json",
+          "sha256": "83996251e29a82d8bec4d47a47c99c1b0fb0628927fb592c5d36dccec522a058"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/default_disabled.json",
+          "sha256": "4214648c526bea4946eabfc07748504e8cec7aa6ebc34c9a93f4fbce071ae98b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/encoder_author.json",
+          "sha256": "0e5364ad9fe969e3daff98e5b55313acdf7c88b1e1f09ef7273a38b22271d8a8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/failed_finger_vision.py",
+          "sha256": "7f5ff92f1814687a9b84d5e28dd1cc05d7740e15c67bb9d70b83a5cce089c334"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/finger_author.json",
+          "sha256": "123341ba91893c7b29bd8a10c9936b1981b06e98ccc357d5fa9dfe9b08c63c8c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/fixtures.json",
+          "sha256": "7e586c282bcd6da64d18c6b1ae4d365baf490d35fe79bbacd9e7b5ac454a2b8e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/labels_review.json",
+          "sha256": "77411759c19884c9f9b9b2456af99eb491db3d7649b11118d2f62e0dfbdc4c80"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/live_before.json",
+          "sha256": "b3a10305fdd369cfd0bc8824d1492d17885f625b0be358db66909333ab15756a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/model_calls.json",
+          "sha256": "eda67a1a4ad1373878bc65fe84e1a660177a29a19f04a82f9f360606578a195f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/preflight.json",
+          "sha256": "8ce75572045c4d1bd7d52392bd7814d90eaee90d7e40287517ac5ba68d8f4793"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/preflight_v2.json",
+          "sha256": "79dcceaeedbf7136fd837126da4d65cc95ed7463bf38a004e94d638c27043210"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/preflight_v3.json",
+          "sha256": "7b807b530a77b3b744e672edcbc2d3a4c22cad06fd0339099331e24a12aa030f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/preflight_v4.json",
+          "sha256": "244ae530b76745be88b8105a76168bad1dd5831711483328199ee23049c47866"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/preflight_v5.json",
+          "sha256": "3782551e3f66e370b54b9b7a57673b0637cce026c2a2d9ad0b35f3e799049060"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/preflight_v6.json",
+          "sha256": "fe93c48c8785dac83d32d387daec3fbd0dd388e1007b0d37efca5d7909e1be80"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/prompt_audit.json",
+          "sha256": "4fdb3176cab2554a63fa088f08db38023d95f41eb2cd2d44fe413714e8cf6378"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/retained_revision.json",
+          "sha256": "09033eefad2e389b97655160a21f19c25b22c3629e2fcb8a83d3049700242445"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/runtime_author.json",
+          "sha256": "dd7f669ccd620f9376d1be30ebaf2a2647587fb0e41ce911f3699c7295d774a2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/service_author.json",
+          "sha256": "74c89f35b9b820e582ae734a07b7ffdb8f0bcb6cda887dc05200cfe085a20b16"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/service_integration_tests.json",
+          "sha256": "7128fe942de2b693b3f43f2952a28527f8f5087b7810f352d289cabf21254f31"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/software_ui_validation.json",
+          "sha256": "3bf49c26016729fa4be291d27f7f0efa84b73eea7ef423a3d546a0ef81cbb3e1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/source_snapshot_manifest.json",
+          "sha256": "15107f8999d6ef4107b6a2f430adb9c17adbb9a7b605378c79b7ebeb993b4d6d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/vision_author.json",
+          "sha256": "40bb5dae675390d1f3bc1df86620e16fbfc6c43ec42134ae52e826505fb7473a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/evidence/vision_stability_author.json",
+          "sha256": "5b4a4f837a25ccfda98dbb399cad5f873f74960cff90a5a30587a45f7c6c2ed3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home.command.json",
+          "sha256": "8aa12a5ea494d858fdbf333c432b0149cb401a38bf356d653fd8e0edca8e1164"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home.json",
+          "sha256": "3bc287ff747c3fefe118cebbb0d734b6f114bd19aac7ffd4379684a22227fbae"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home.stdout.log",
+          "sha256": "4be23fef225df77098ef7637a269573e6e8970d44d87777a7365907d2951ae85"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v2.command.json",
+          "sha256": "8b9bbd3e254dbfd7d06d594aa08605580165544e41f74b71fd0c1d0ad1caa287"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v2.json",
+          "sha256": "ef5a7e560c2b2a95e81f2c4c9ecf4bf553df9b6e7c3f4ff8e13d60b7e4b13aa3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v2.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v2.stdout.log",
+          "sha256": "39891db423164b47db7883577c7e973702cfb94cc57c8c0381542700b0af82c0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v3.command.json",
+          "sha256": "c07d369d027f81361505985475f0caee749b0d904c834c714b21bbcfca1e896b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v3.json",
+          "sha256": "2ed22f44a2f972aee73eee8c485fbf64ae6cc008e5fe28cac7818925170bc7b1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v3.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v3.stdout.log",
+          "sha256": "fd8a4fbf237e87f0950cbc0151133198c3b538bcc5a786f08f9a33582c42b6ab"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v4.command.json",
+          "sha256": "da63278b348ecd83d565f2c0320a9ecd88bdff69e60e5ef5a46fe66e5c78951a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v4.json",
+          "sha256": "27d1f3407d08e507ec557172ec5999e9ed60d71b50fa750bf078361346a84336"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v4.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v4.stdout.log",
+          "sha256": "7db2d5793d34da23a0345ac816f53ec950dd9ee63eef164842e7943e9f77a9bf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v5.command.json",
+          "sha256": "137cdf5b42928f707e7e2f4f9379e7b8d641e7c62bdde52d44527b80ebf92790"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v5.json",
+          "sha256": "a510c3ec7bd55f546a4f8df02cd1d36775c113ea4a687373ac04de06b81efab4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v5.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home_v5.stdout.log",
+          "sha256": "c931fb22e4b82f67dd24c5cd2b921fec2b914f23867b0f91f9070a1138837b07"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_initial_held.command.json",
+          "sha256": "fe697ab98be84af6cd14027c8f6dfb4c9fd50c691e18401ae6649ad237c6375c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_initial_held.json",
+          "sha256": "baad6619d005dd5719eb03c2574d539befb6da83cf257fd277d3004722415cf7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_initial_held.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_initial_held.stdout.log",
+          "sha256": "8046dbc94d4cd7aa7c2d53c8377e48c59ce55ad2eee2b621ed4f3b5d5badc501"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_initial_held_v2.command.json",
+          "sha256": "f4eee88dbf44bcfae6167e0333f0ad5757c80ae614258abd69f7885a9a75329d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_initial_held_v2.json",
+          "sha256": "7fcb6045ed530d6aa70ab8e06823118045a4b1505bafda5bf90d7a5cf2c9936e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_initial_held_v2.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_initial_held_v2.stdout.log",
+          "sha256": "d28a9190006c6f4795e2502635748809b760342674414aafbb896c10acb6019a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/wine_exit_last.command.json",
+          "sha256": "1338b0aa0e57c294b93d9c274fdea6da7b2c6d12deae06efeb68a16bc8039500"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/wine_exit_last.json",
+          "sha256": "532c9808cb32df18fdb2ea756701a3c086dd14be8b5dca18078da6394041a9a0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/wine_exit_last.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/wine_exit_last.stdout.log",
+          "sha256": "9a048f88a447cc7a2d0608a85b028d26dbaedea1e09dba66f0e15a7f532a42df"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/wine_exit_last_v2.command.json",
+          "sha256": "34030e8c0242e992c08551a142ff4a9bbe85db5ab228fcb495474a3ac874c73f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/wine_exit_last_v2.json",
+          "sha256": "5f681abf7c3c449df8bc4d29aa2e26818bbecb40d7c9c7e9aede5ab9be9d1800"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/wine_exit_last_v2.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/wine_exit_last_v2.stdout.log",
+          "sha256": "56eb2aed51bb513a15cc27859fee49b01737e221ac4787d15273942edb98ed09"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/source_snapshot.zip",
+          "sha256": "7c6dd735f1ce3c3eefe9f18aa10a1e7eac0a2631a52d42c17dd069a42252ba08"
+        }
+      ]
     }
   ]
 }

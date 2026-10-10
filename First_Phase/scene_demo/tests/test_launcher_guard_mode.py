@@ -77,6 +77,7 @@ def _service_health(**overrides) -> dict:
         "model_revision": EXPECTED_REVISION,
         "completion_mode": EXPECTED_COMPLETION_MODE,
         "grasp_guard_mode": EXPECTED_GRASP_GUARD_MODE,
+        "finish_mode": "off",
     }
     health.update(overrides)
     return health
@@ -148,6 +149,11 @@ class GuardModeMismatchTests(unittest.TestCase):
         self.assertEqual(harness.service_queries, ["http://127.0.0.1:8767/health"])
         self.assertEqual(harness.app_queries, [])
         harness.assert_no_process_side_effects(self)
+
+    def test_missing_finish_mode_returns_two(self):
+        health = _service_health()
+        del health["finish_mode"]
+        self._assert_rejected(health)
 
     def test_missing_grasp_guard_mode_returns_two(self):
         health = _service_health()

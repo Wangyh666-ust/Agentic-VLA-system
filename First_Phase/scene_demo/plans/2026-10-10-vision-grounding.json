@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "id": "20261010-vision-grounding",
+  "intent": "analyze_existing",
+  "question_key": "visual_finish",
+  "purpose": "修正检查器物体定位和当前完成状态语义，优先用冻结旧画面验证，不重复归位。",
+  "prior_evidence": [
+    "20261010-visual-finish",
+    "20261010-finish-takeover-v2",
+    "20261010-shape-home"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "复用五个旧状态的真实图像、原检查输出和独立终态评分；视觉误判、零动作阻断与软件通过不能替代任务完成，不重复原动作或归位。"
+    },
+    {
+      "experiment_id": "20261010-finish-takeover-v2",
+      "disposition": "reuse",
+      "reason": "复用开口和退离触发及终点保护阻断的历史条件；本轮只检查保存画面的物体定位和完成语义，不重做已执行控制。"
+    },
+    {
+      "experiment_id": "20261010-shape-home",
+      "disposition": "reuse",
+      "reason": "复用同一碗停点四版结果；最终真实归位137步、五post独立验收通过而最终视觉失败，优先冻结最终原图和持物负例校准检查器，不能把四版合并可靠性。"
+    }
+  ],
+  "related_search": "最新20条registry精确检索question_keys=visual_finish无匹配；扩展visual-completion命中20261010-visual-finish、20261010-finish-takeover-v2、20261010-shape-home，已全纳入。rg --files results/2026-10-10-visual-finish及results/2026-10-10-shape-home检索checks.jsonl/result.json/inputs.json并读取原记录。",
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "冻结准备阶段0 Qwen/0物理，六组原图和独立人工标签不改；执行阶段按用户授权仅调用production Qwen检查保存画面。",
+    "已保存三次Qwen：初始终态stableNone失败、修正终态complete通过、持物态原视觉错误complete而原编码器后处理拦住；纯视觉负例不算成功，已停止余四例。所有原响应保留。",
+    "本次局部修正仅提供实际finger_qpos与标准开口标定pair，并解释原2mm encoder veto；标定来源SHA验证后进入白名单上下文，不输入gold/native/ROI，不把开放位置当释放证明，独立支撑和图像判据保持。",
+    "修正后的持物态仅再测1次，同版终态仅1次；二者通过才继续余四例各1次，累计计划9次。上限10的第10次仅为明确程序失败修正预留，不自动使用、不做网络重试。",
+    "原独立标签和餐具ROI只评分；原与融合评分分开。unknown标conservative_unknown不算准确通过。任何负例complete或错误allow_release/allow_retreat停止依赖验证。四历史样例没有同timestamp编码器，保持缺失不补造。",
+    "本实现验收阶段仅一次实际DeepSeek局部补丁、软件测试、eval --help和门禁，不发Qwen；所有阶段均无机械臂动作/重建渲染/VLA/Hermes。",
+    "GPT复核原expected后明确：验收主体为既有生产融合checker（视觉+原2mm编码器否决）；持物v2 fused needs_release满足原expected，raw unknown保留为纯视觉局限而不单独阻断。此前raw错误complete及停止记录全部保留，不改labels或门槛。终态同版本raw/fused均须complete，通过后余四场景各一次；融合结果不满足独立expected/错误complete立即停；独立allowed范围内unknown可安全拒绝并继续无下游依赖的场景诊断，但不计准确分类通过。",
+    "第6次酒瓶原/融合均错误complete且clearTrue，违反固定expected，已停止其余3；GPT直接复核原agentview+wrist：腕壳下方指尖仍近瓶颈/架，wrist两侧下缘有夹指，原模型漏定位完整手。仅增加通用完整夹爪/指尖与支撑间隙观察文本，不改标定/decide/reconcile或独立标签；酒瓶保守unknown仅记录局限，不算准确成功。软件验收后仅酒瓶v2与同版碗终态v4各一次，任何融合expected不符停止，不自行扩大或启用UI。",
+    "第7/8次指尖版酒瓶变unknown，符合安全拒绝但不是准确通过；同版碗终态也unknown，正例退化，原记录保留。GPT复核其原图及框显示宏观分离；最后一次只澄清明显完整手远离与近距离指尖遮挡的尺度区别，保持第一指尖定位/2mm否决/完成字段不变，不追逐单图答案。软件43tests和v6门禁后，只碗终态v5，通过才酒瓶v3；失败候选off，停止依赖UI，不自行继续迭代。"
+  ],
+  "success_criteria": "首例冻结图真实碗/盘定位正确，at_destination/supported/released/stable/clear_of_target为True且decision complete；持物与未完成负例不能被判完成。标签最终由GPT审核，本步骤不运行检查器。",
+  "failure_criteria": "首例定位错误或当前完成态不通过时停止下游整链/UI；任何负例错误成功不计通过；缺原图、SHA错误或上下文泄漏独立gold停止交付。",
+  "scope": {
+    "max_cases": 6,
+    "new_model_calls": 13,
+    "max_vla_actions_per_case": 0,
+    "max_helper_actions_per_case": 0,
+    "stop_rule": "最后一次有限提示尺度修正，累计Qwen上限13=已有8+本版碗终态1+酒瓶1+余灶台/汤罐/番茄酱各1。先碗终态v5，必须原expected complete，否则停止酒瓶和后续，候选保持off并如实报告未完成；通过后酒瓶v3仅1次，错误complete或违反expected立即停，unknown只保守拒绝不计准确成功。其余3待GPT新派发，无自动继续、无重试或无限提示修改、不以home补救、不启用UI。所有label/像素/gold不变，无机器人/归位/渲染重建/训练。",
+    "new_physical_actions": 0
+  },
+  "history_conditions": [
+    {
+      "id": "20261010-visual-finish",
+      "question_keys": [
+        "release-stop",
+        "joint-home-handoff",
+        "visual-completion"
+      ],
+      "conditions": [
+        "五个冻结历史样例：bowl_held83、wine_exit、stove_exit允许收尾；soup_negative、sauce_negative为负例。原初态真实恢复后回放83/180/78/336/336动作，碗终态只有嵌入快照部分身份核对，其他四例有完整终态SHA。",
+        "独立literal评分目标是每个受测子任务的on/in/turnon，不是场景全部BDDL目标或完整多任务指令。交接要求目标保持、所有抓持解除、无机器人接触及标准关节归位连续五个真实post-action样本满足。",
+        "运行期Qwen3-VL检查实际RGBD相机图像，传感路线使用RGBD/编码器；独立oracle评分及紧急监督不传入检查器或路线规划。当前仍有仿真特权紧急监督，独立CLI模块未启用为演示UI默认收尾。",
+        "无新VLA推理、无新Hermes规划、无训练。固定历史子任务上下文；实际Qwen5次，每次初查4图2时间点。实际动作1423=初始化50+历史回放1013+辅助归位360，运行406.86秒。"
+      ],
+      "findings": [
+        "三个eligible完整子任务交接0/3，v1尚不通过物理验收；两个负例2/2零辅助，汤罐incomplete、番茄酱unknown保守拒绝，不称两例都准确辨识。",
+        "碗回放83后执行home360因home budget阻断。初查视觉全部true与原图/冻结graspedTrue矛盾，错误跳过松手及退离。归位动作打开夹爪，末nativeTrue/released_stable/contacts=[]，但关节最大误差0.8124311325333802rad约46.55度，未归位，不是仅少确认。",
+        "酒瓶回放180，辅助0，home screen blocked；clear_of_target不覆盖支撑架及其他障碍，Qwen声称open/retracted与图中仍近架不一致。未启动退离，不能宣称退离规划已验证。",
+        "灶台回放78，辅助0，initial stop；native turnonTrue和红炉圈可见，Qwen把开火当作开盖，是检查器语义错误。release/movement/confirm五例实际均0，这些分支尚无物理验证。",
+        "51软件测试通过仅是软件证据；训练来源本地README datasets unknown、train_config及准确dataset/episode/preprocessing截断manifest缺失，末段抽查0episode，不能判断训练缺松手。"
+      ],
+      "limits": [
+        "没有新VLA或完整Hermes规划链，0/3不是VLA能力成功率或完整多任务系统成功率；两个负例不能证明普适视觉准确。",
+        "本轮改变视觉检查与传感收尾多个因素，不能单独归因。oracle紧急监督仍限仿真，尚非已验收真机方案；碗完整历史终态SHA未知。",
+        "松手、退离、确认分支未发生物理动作；末段真实训练episode身份未核实，不能用一般LIBERO数据替代实际训练数据，也不据此开始微调。",
+        "下一步仅计划复用存帧离线校准语义/遮挡/目标与支撑物区别，加夹爪传感及时序矛盾否决，复用既有成功归位流程并核对新分段速度；之后同规模旧失败样例复验，不扩大不训练。",
+        "原campaign不可覆盖或直接重跑；后续测量需新proposal、inputs、输出目录。软件传感及控制组单独原始输出有缺口，既有结构化记录保留并标明，不补造输出。"
+      ]
+    },
+    {
+      "id": "20261010-finish-takeover-v2",
+      "question_keys": [
+        "release-stop",
+        "joint-home-handoff",
+        "visual-completion"
+      ],
+      "conditions": [
+        "三个不同源码版本各恢复同一个原碗失败状态，不能合并为可靠性；最终版本独立分母1，酒瓶/灶台/汤罐/番茄酱四例暂停not_run。首次导入EOF零物理零Qwen不计效果分母。",
+        "固定目标是碗on plate子任务，非完整场景或新Hermes多任务链；原权重不变，新VLA/新Hermes0，无训练。LIBERO/robosuite/MuJoCo/Panda，独立oracle评分与紧急监督不输入视觉和传感路线。",
+        "到位且支撑→停稳→真实开启夹爪并编码器确认→受保护RGBD退离→独立检查→旧home。仅endpoint_hand_clear_fail允许实际姿态新RGBD重规划1次，movement80不重置，geometry阈值不变。",
+        "累计409实际动作=初始化30+历史回放249+辅助130；Qwen6次/11152tokens；实际DeepSeek8次input33503/output22014。三个旧版本的物理动作不合并计算最终版成功率。"
+      ],
+      "findings": [
+        "本轮修正了接管触发与松手/退离顺序，已真实发出开口和退离动作，但完整子任务交接仍未通过。最终原碗样例11个控制周期持续标准开口命令/60退离/确认0/归位0，完整交接0/1，余四暂停。",
+        "入口版release6只是闭合等待，实际开口0，release denied；释放版等待6/开口11/退离30；最后版等待6/开口11/退离60，均在确认和归位前停止。target_metrics true仅证明open+move，不能当完整通过。",
+        "末版碗onTrue/strictTrue/released_stable/held[]/contacts0保持；physical_streak0/homeFalse。是退离阶段阻断，不是已执行归位的失败。",
+        "首次末端间隙7.959mm不足10mm是保存RGBD/CAD离线FK复算；原runtime只保存布尔阻断，不冒称当时记录精确底层原因。新版在线两次endpoint_hand_clear_fail，一次重规划后停止，不能强制home。",
+        "释放DS请求9951input/6000output截断，整体未应用；12完整生产对象由GPT审阅，恢复11+1noop，测试worker按固定规格。退离短请求982input/1129output end_turn，未重生成全模块。离线三次均zero动力，前两guard失败保留，第三构建mj_step1一次被替换noop。"
+      ],
+      "limits": [
+        "最终仅一个原碗状态，不能宣称完整修复成功、可靠性改善或泛化；确认和归位0，四其他case未测。尚未改UI默认链路，不是新VLA/Hermes能力实验，没有训练因果结论。",
+        "独立oracle仍有仿真特权监督，未真机验收；当前只有间隙否决证据，不证明实际新碰撞或已定位训练缺陷。",
+        "下一步限离线核对约119mm手部保守球包络与RGBD自身点剔除是否造成新观测反复否决终点；不扩样、不新增物理、不降低阈值、不微调。",
+        "原请求响应私有保留、公开SHA/usage；不能由DeepSeek调用量估计GPT账户消耗。"
+      ]
+    },
+    {
+      "id": "20261010-shape-home",
+      "question_keys": [
+        "release-stop",
+        "joint-home-handoff",
+        "visual-completion"
+      ],
+      "conditions": [
+        "仅同一历史bowl_held83停点四个修订；每次10初始化+83历史动作回放，非四个独立可靠性样本。仅case0，余四fixture未运行；无新VLA/Hermes/训练，LIBERO/robosuite/MuJoCo + Franka Panda。",
+        "机器人几何代理、3mm CAD表面自身点过滤、深度像素中心、视觉测量上下文、实时侧视、4/6cm退离及安全归位资格存在多因素变化；原成功归位实际循环保持。",
+        "独立native on/释放稳定/所有物体不持有/robot contact0与五真实posthome-ready评分不进入Qwen；最终视觉完整仍必需。",
+        "最后版本仅归位验证1/1，完整验收0/1；当前final configuration按最终proposal原样记录，三个更早修订不以它声称配置相同。"
+      ],
+      "findings": [
+        "四版真实标准开口均11控制周期，另6停稳；movement44/44/89/89、confirm均5、home0/0/0/137；前三版未执行归位，不是归位动作失败。",
+        "最终home_entry到位支撑/实际开口/停稳/current clear通过；原home_screen123采样无碰撞，原streaming执行137动作后home_streak5和independent physical_streak5。",
+        "最后5条actual采样均目标on=true、释放稳定、held[]、contacts[]、home ready；终点最大关节误差0.0026315311rad。全链原status blocked / final visual failed。",
+        "GPT直接复核最终真实agentview/sideview，碗在盘上、夹爪远离未持碗；Qwen却误判盘为空、碗在桌上。保留错误原输出，不把归位通过替代全任务验收。",
+        "实际DeepSeek确定实现7调用有作者记录；最终软件69项68通过，旧mock缺第三次screen精确补齐后仅失败1项重跑通过；单次离线Qwen诊断只改变输出，不计新物理效果。"
+      ],
+      "limits": [
+        "同一个历史状态四个修订不合并为可靠性四样本；多个因素一起变化，不能单独归因或声称泛化。",
+        "其余四fixture、多任务与真机未测试；finish_v1.pilot未接入默认演示UI；OBB仍为近似。",
+        "最终视觉验收未修复；下一步仅复用保存终态图像校准目标/盘子识别与最终判据，再考虑其余失败样例，不立即再跑归位、不微调。"
+      ]
+    }
+  ],
+  "api_budget": {
+    "maximum_cumulative_calls": 13,
+    "already_executed": 8,
+    "remaining_fixtures_max_calls": 3,
+    "condition": "bowl final v5 complete first, then wine v3; remaining three require new GPT dispatch",
+    "first_failure_path": "First_Phase/scene_demo/results/2026-10-10-vision-grounding/saved_checks/bowl_final_home.json",
+    "first_failure_sha256": "3bc287ff747c3fefe118cebbb0d734b6f114bd19aac7ffd4379684a22227fbae",
+    "physical_actions": 0,
+    "corrected_held_case_max_calls": 1,
+    "same_revision_final_case_max_calls": 1,
+    "reserve_calls": 0,
+    "reserve_condition": "No extra calls or automatic retries; final bounded prompt correction",
+    "planned_total_calls": 13,
+    "call_type": "Qwen saved-image evaluation",
+    "remaining_same_revision_final_calls": 1,
+    "corrected_wine_case_max_calls": 1
+  },
+  "acceptance_subject": "production fused checker; raw separately reported; conservative_unknown is not accurate classification success"
+}

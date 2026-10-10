@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "health": [
+    {
+      "url": "http://127.0.0.1:8767/health",
+      "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"
+    },
+    {
+      "url": "http://127.0.0.1:8081/api/health",
+      "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"
+    }
+  ],
+  "processes": [
+    {
+      "name": "service",
+      "pid_file": "/home/yhwang/fyp/scene_demo/service.pid",
+      "pid": 429,
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/proc/429/cmdline'"
+    },
+    {
+      "name": "app",
+      "pid_file": "/home/yhwang/fyp/scene_demo/app.pid",
+      "pid": 453,
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/proc/453/cmdline'"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "First_Phase/scene_demo/service.py",
+      "sha256": "42a449191890aeafd64c48647c79223cc36d11a2fba386a40c2cae28ebfcd6b4"
+    },
+    {
+      "path": "First_Phase/scene_demo/app.py",
+      "sha256": "075943ba23c30149db736c9693d4d6cfdfcc699cb124dcef2c2f4888881d2cfb"
+    }
+  ],
+  "snippets": {
+    "path": "First_Phase/tmp/service_finish_snippets.txt",
+    "bytes": 46019,
+    "sha256": "cc0c536381e506595e78ea43302c6a39f6f5f73f4f299d7025d09c1ab5110a75",
+    "blocks": [
+      {
+        "path": "First_Phase/scene_demo/service.py",
+        "name": "SceneService.__init__",
+        "first_line": 1129,
+        "last_line": 1206,
+        "sha256": "532befa922520df0173ba76a662815b34bb76c547f2e9bb6975156eabc8afc06"
+      },
+      {
+        "path": "First_Phase/scene_demo/service.py",
+        "name": "SceneService.health",
+        "first_line": 1223,
+        "last_line": 1243,
+        "sha256": "27f66036c6cd6f8104209e9322e36566a7dde01c174331712c3cfaff1a09f93b"
+      },
+      {
+        "path": "First_Phase/scene_demo/service.py",
+        "name": "SceneService._do_create_session",
+        "first_line": 1888,
+        "last_line": 1964,
+        "sha256": "385956903e3680e88ba2b3508e1d986e05d557f5bda478741b1ecd19701db564"
+      },
+      {
+        "path": "First_Phase/scene_demo/service.py",
+        "name": "SceneService.submit_plan",
+        "first_line": 2034,
+        "last_line": 2076,
+        "sha256": "432959decadc2129b98971572f114020ec9455112047080a2435152edecede65"
+      },
+      {
+        "path": "First_Phase/scene_demo/service.py",
+        "name": "SceneService._run_capability",
+        "first_line": 2454,
+        "last_line": 2776,
+        "sha256": "a9e7e9bbdb62093f8f334fe244e587ac917753c6279312b96b20589b8511daf2"
+      },
+      {
+        "path": "First_Phase/scene_demo/service.py",
+        "name": "JobRecord.public",
+        "first_line": 1073,
+        "last_line": 1115,
+        "sha256": "88da759f66e306b378f74858ace0574114ba6407aaba7b66c78cee9648d88155"
+      },
+      {
+        "path": "First_Phase/scene_demo/service.py",
+        "name": "_Handler.do_POST",
+        "first_line": 3001,
+        "last_line": 3058,
+        "sha256": "8f945d4904294d96e2c239cda31eaa19b4c8d094e2440fb25fd16e5cbf5657b6"
+      },
+      {
+        "path": "First_Phase/scene_demo/service.py",
+        "name": "main",
+        "first_line": 3064,
+        "last_line": 3111,
+        "sha256": "627e4a8e8446e1b03364ae15ed5a45f3f0e56ee1e9397cc93e68c3348c50b137"
+      },
+      {
+        "path": "First_Phase/scene_demo/app.py",
+        "name": "_api_start_agent",
+        "first_line": 569,
+        "last_line": 642,
+        "sha256": "a62ef4189571bba2653915ad0b62e6b8b4f90e8f87a6036717d42bda191b64ef"
+      },
+      {
+        "path": "First_Phase/scene_demo/app.py",
+        "name": "renderSubgoals",
+        "sha256": "eef6a43449d414f6d0317ac44c478cc86afb05f9a0eb17dfc44674e568dd5eb6",
+        "extraction": "original function text to following top-level function declaration"
+      },
+      {
+        "path": "First_Phase/scene_demo/app.py",
+        "name": "wineJobStatus",
+        "sha256": "0c86d6a80b71a1dc90cc2fc77ec335b1abc235c7002a7531dc8e9e0b19873aa0",
+        "extraction": "original function text to following top-level function declaration"
+      }
+    ]
+  },
+  "http_methods": [
+    "GET"
+  ],
+  "model_calls": 0,
+  "physical_actions": 0,
+  "process_changes": 0
+}

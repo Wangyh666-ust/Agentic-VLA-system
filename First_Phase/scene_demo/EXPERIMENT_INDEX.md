@@ -1,6 +1,6 @@
 # 实验历史索引（截至2026-10-10）
 
-本索引截至2026-10-10，共20个历史campaign。每行是问题/证据导航，不是一个独立统计样本；记录中的回放、复用、未启动和原始判据差异保留。当前最近完整样本是前12例；20例目录名只保留原注册历史。环境是LIBERO/robosuite/MuJoCo + Franka Panda，非ManiSkill。开发GPT规划/验收、DeepSeek实现；运行期Hermes/Qwen3-VL与SmolVLA不等于开发分工。
+本索引截至2026-10-10，共21个历史campaign。每行是问题/证据导航，不是一个独立统计样本；记录中的回放、复用、未启动和原始判据差异保留。当前最近完整样本是前12例；20例目录名只保留原注册历史。环境是LIBERO/robosuite/MuJoCo + Franka Panda，非ManiSkill。开发GPT规划/验收、DeepSeek实现；运行期Hermes/Qwen3-VL与SmolVLA不等于开发分工。
 
 [结构化台账](experiment_registry.json)记录各条适用条件、结论、限制和原始证据哈希。
 
@@ -31,6 +31,7 @@
 | 20261010-finish-takeover-v2 | 接管、实际松手与受保护退离定点修正 | 最终原碗状态完整交接0/1，11开口/60退离/确认0/归位0，退离终点清场阻断；余四暂停，三个源码版本不合并可靠性 | [报告](results/2026-10-10-finish-takeover-v2/README.md) · [台账](experiment_registry.json) |
 
 | 20261010-shape-home | 收尾与安全归位定点验证：归位1/1，最终视觉误判，全链0/1 | 11开口周期/89退离/5确认/137归位，五真实post达标且目标保持；最终Qwen误判，原始blocked；前三版home0，非归位执行失败 | [报告](results/2026-10-10-shape-home/README.md) · [台账](experiment_registry.json) |
+| 20261010-vision-grounding | 保存画面校准：碗盘识别修正，松手退离未验收 | 最终保留版两种碗状态融合判定正确（持物raw unknown）；酒瓶raw/fused错误complete，指尖候选使正例退化后撤回；9Qwen/零物理，余3未运行，自动视觉收尾默认off | [报告](results/2026-10-10-vision-grounding/README.md) |
 
 ## 当前结论
 

@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "reviewer": "GPT main agent; native worker mechanical label binding",
+  "labels_sha256": "ddf79b8aa53c5dc5ac895d4d96af89b6fbcdebda2f1b3dd8ba198372a11d3220",
+  "fixtures_before_sha256": "db9c6a72133afbf42b83f691b8863922d7b570b0dafd0c43374ee3b482a2dd60",
+  "fixtures_after_sha256": "7e586c282bcd6da64d18c6b1ae4d365baf490d35fe79bbacd9e7b5ac454a2b8e",
+  "labels": [
+    {
+      "id": "bowl_final_home",
+      "expected": {
+        "review_status": "GPT_HUMAN_REVIEWED",
+        "core": {
+          "at_destination": true,
+          "supported": true,
+          "released": true,
+          "stable": true,
+          "clear_of_target": true
+        },
+        "allowed_decisions": [
+          "complete"
+        ],
+        "grounding_roi": {
+          "agentview": [
+            0.3,
+            0.56,
+            0.59,
+            0.86
+          ],
+          "sideview": [
+            0.28,
+            0.52,
+            0.49,
+            0.72
+          ]
+        },
+        "grounding_required_boxes": [
+          "target",
+          "destination"
+        ],
+        "basis": "GPT direct original-image review: real bowl/plate region; ROI is independent score only, never model context.",
+        "unknown_scoring": "conservative_unknown is a safe refusal, not an accurate distinction success"
+      }
+    },
+    {
+      "id": "bowl_initial_held",
+      "expected": {
+        "review_status": "GPT_HUMAN_REVIEWED",
+        "core": {
+          "released": false
+        },
+        "allowed_decisions": [
+          "needs_release"
+        ],
+        "forbidden_decisions": [
+          "complete"
+        ],
+        "basis": "GPT direct original-image review: held state, not complete.",
+        "unknown_scoring": "conservative_unknown is a safe refusal, not an accurate distinction success"
+      }
+    },
+    {
+      "id": "wine_exit_last",
+      "expected": {
+        "review_status": "GPT_HUMAN_REVIEWED",
+        "core": {
+          "at_destination": true,
+          "supported": true,
+          "clear_of_target": [
+            false,
+            null
+          ]
+        },
+        "allowed_decisions": [
+          "needs_retreat",
+          "needs_release",
+          "unknown"
+        ],
+        "forbidden_decisions": [
+          "complete"
+        ],
+        "basis": "GPT direct original-image review: hand near rack top; finger/object gap difficult to confirm; no release label inferred from oracle.",
+        "unknown_scoring": "conservative_unknown is a safe refusal, not an accurate distinction success"
+      }
+    },
+    {
+      "id": "stove_exit_last",
+      "expected": {
+        "review_status": "GPT_HUMAN_REVIEWED",
+        "core": {
+          "operation_achieved": true,
+          "clear_of_target": [
+            false,
+            null
+          ]
+        },
+        "allowed_decisions": [
+          "needs_release",
+          "needs_retreat",
+          "unknown"
+        ],
+        "forbidden_decisions": [
+          "complete"
+        ],
+        "basis": "GPT direct original-image review: burner on, hand not demonstrably clear; on/knob semantics follow request/catalog, not gold.",
+        "unknown_scoring": "conservative_unknown is a safe refusal, not an accurate distinction success"
+      }
+    },
+    {
+      "id": "soup_negative_last",
+      "expected": {
+        "review_status": "GPT_HUMAN_REVIEWED",
+        "core": {
+          "at_destination": [
+            false,
+            null
+          ]
+        },
+        "allowed_decisions": [
+          "incomplete",
+          "unknown"
+        ],
+        "forbidden_decisions": [
+          "complete"
+        ],
+        "decision_fields": {
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "basis": "GPT direct original-image review: target not placed in basket; no assistance authorized by this state.",
+        "unknown_scoring": "conservative_unknown is a safe refusal, not an accurate distinction success"
+      }
+    },
+    {
+      "id": "sauce_negative_last",
+      "expected": {
+        "review_status": "GPT_HUMAN_REVIEWED",
+        "core": {
+          "at_destination": [
+            false,
+            null
+          ]
+        },
+        "allowed_decisions": [
+          "incomplete",
+          "unknown"
+        ],
+        "forbidden_decisions": [
+          "complete"
+        ],
+        "decision_fields": {
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "basis": "GPT direct original-image review: target not placed in basket; no assistance authorized by this state.",
+        "unknown_scoring": "conservative_unknown is a safe refusal, not an accurate distinction success"
+      }
+    }
+  ],
+  "criteria_corrections": [
+    {
+      "id": "wine_exit_last",
+      "source_path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/inputs.json",
+      "source_sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9",
+      "source_field": "cases[wine_exit].context.criteria",
+      "before": {
+        "must_release": true,
+        "must_stabilize": true,
+        "must_clear": true,
+        "must_preserve_target": true
+      },
+      "after": {
+        "must_release": true,
+        "must_stabilize": true,
+        "must_clear": true,
+        "must_preserve_target": true,
+        "operation_semantics": "Place target at the declared destination; release it and withdraw from target and support surface."
+      },
+      "basis": "Existing user request and catalog instruction; task unchanged; no independent gold used."
+    },
+    {
+      "id": "stove_exit_last",
+      "source_path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/inputs.json",
+      "source_sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9",
+      "source_field": "cases[stove_exit].context.criteria",
+      "before": {
+        "must_release": false,
+        "must_stabilize": true,
+        "must_clear": true,
+        "must_preserve_target": true
+      },
+      "after": {
+        "must_release": true,
+        "must_stabilize": true,
+        "must_clear": true,
+        "must_preserve_target": true,
+        "operation_semantics": "Rotate the stove knob to turn the burner ON; a red glowing burner ring is visual evidence. This is not opening or removing a lid.",
+        "desired_state": "on"
+      },
+      "basis": "Existing user request and catalog instruction; task unchanged; no independent gold used."
+    },
+    {
+      "id": "soup_negative_last",
+      "source_path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/inputs.json",
+      "source_sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9",
+      "source_field": "cases[soup_negative].context.criteria",
+      "before": {
+        "must_release": true,
+        "must_stabilize": true,
+        "must_clear": true,
+        "must_preserve_target": true
+      },
+      "after": {
+        "must_release": true,
+        "must_stabilize": true,
+        "must_clear": true,
+        "must_preserve_target": true,
+        "operation_semantics": "Place target at the declared destination; release it and withdraw from target and support surface."
+      },
+      "basis": "Existing user request and catalog instruction; task unchanged; no independent gold used."
+    },
+    {
+      "id": "sauce_negative_last",
+      "source_path": "First_Phase/scene_demo/results/2026-10-10-shape-home/evidence/inputs.json",
+      "source_sha256": "977d957e651738933c3eea0aa44bd0d3955e9f17e0956868fec95139eb3916b9",
+      "source_field": "cases[sauce_negative].context.criteria",
+      "before": {
+        "must_release": true,
+        "must_stabilize": true,
+        "must_clear": true,
+        "must_preserve_target": true
+      },
+      "after": {
+        "must_release": true,
+        "must_stabilize": true,
+        "must_clear": true,
+        "must_preserve_target": true,
+        "operation_semantics": "Place target at the declared destination; release it and withdraw from target and support surface."
+      },
+      "basis": "Existing user request and catalog instruction; task unchanged; no independent gold used."
+    }
+  ],
+  "catalog_source": {
+    "path": "First_Phase/scene_demo/catalog.py",
+    "sha256": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02",
+    "stove_instruction": "turn on the stove"
+  },
+  "stove_semantic_note": "Old criteria lacked desired_state/operation_semantics and must_release was False. Copied existing shape-home criteria: desired_state on, knob ignition rather than lid removal; original user_request/current_subtask unchanged. No gold/native predicates entered model context.",
+  "encoder_gaps": [
+    {
+      "id": "wine_exit_last",
+      "source_path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/oracle.jsonl",
+      "source_sha256": "22121382a919503be8940d4c40135ca0e4c85cd1e5e3a9c3cfd9f5ac999b0fef",
+      "check_timestamps": [
+        9.449999999999825,
+        9.499999999999842
+      ],
+      "oracle_snapshot_timestamps_present": false,
+      "exact_timestamp_matches": 0,
+      "actuator_measurements_added": false,
+      "gap": "Original oracle snapshots have no explicit matching timestamps; final snapshot encoder numbers are not substituted for earlier image time."
+    },
+    {
+      "id": "stove_exit_last",
+      "source_path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/oracle.jsonl",
+      "source_sha256": "6bb17d73bae5ea4db4bec9355233d83a83fbc720e6b1040748bc0a7f5d20e557",
+      "check_timestamps": [
+        4.349999999999743,
+        4.3999999999997375
+      ],
+      "oracle_snapshot_timestamps_present": false,
+      "exact_timestamp_matches": 0,
+      "actuator_measurements_added": false,
+      "gap": "Original oracle snapshots have no explicit matching timestamps; final snapshot encoder numbers are not substituted for earlier image time."
+    },
+    {
+      "id": "soup_negative_last",
+      "source_path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/soup_negative/oracle.jsonl",
+      "source_sha256": "a80ff2514fc17c4f2f1e9ddee655f5fe989f41e4cba44135cc2cb287aaaf24ab",
+      "check_timestamps": [
+        17.250000000001318,
+        17.30000000000129
+      ],
+      "oracle_snapshot_timestamps_present": false,
+      "exact_timestamp_matches": 0,
+      "actuator_measurements_added": false,
+      "gap": "Original oracle snapshots have no explicit matching timestamps; final snapshot encoder numbers are not substituted for earlier image time."
+    },
+    {
+      "id": "sauce_negative_last",
+      "source_path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/sauce_negative/oracle.jsonl",
+      "source_sha256": "688090d406135a303170ab0680c94cc778e706b30285ed4fca8625d642f87ae3",
+      "check_timestamps": [
+        17.250000000001318,
+        17.30000000000129
+      ],
+      "oracle_snapshot_timestamps_present": false,
+      "exact_timestamp_matches": 0,
+      "actuator_measurements_added": false,
+      "gap": "Original oracle snapshots have no explicit matching timestamps; final snapshot encoder numbers are not substituted for earlier image time."
+    }
+  ],
+  "new_api_calls": 0,
+  "physical_actions": 0
+}

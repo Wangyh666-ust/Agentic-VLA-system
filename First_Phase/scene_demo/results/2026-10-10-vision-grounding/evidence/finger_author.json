@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "actual_deepseek_calls": 1,
+  "model": "deepseek-flash",
+  "http_status": 200,
+  "stop_reason": "end_turn",
+  "usage": {
+    "input_tokens": 1598,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 253,
+    "service_tier": "standard"
+  },
+  "thinking": "disabled",
+  "max_tokens": 1000,
+  "request_sha256": "992c57b0f74daeb142209b5e84ee56fb7f10afef9c73be024f733593f0126df1",
+  "response_sha256": "cb571011c751cd7d53196a26914ac2268ad85741d81205274e3b2acd0b47b5d7",
+  "source_before_sha256": "05a2967845abc2b8e12e15f039ccf08ae9fd578fbc00fe4129c4caa800c8cb6e",
+  "applied": true,
+  "qwen_calls_during_implementation": 0,
+  "physical_actions": 0,
+  "design": "GPT fixed two strings",
+  "implementation": "Actual DeepSeek local edit; native worker unique anchor/line ending application",
+  "pre_call_preparation_correction": {
+    "error": "ValueError: old source-excerpt end anchor absent",
+    "api_calls_before_correction": 0,
+    "correction": "Use existing next if frames anchor to extract the actual lines block; no production change"
+  },
+  "edits": [
+    {
+      "path": "First_Phase/scene_demo/finish_v1/vision.py",
+      "old": "        \"Ignore and do not use any plan claim of success; judge only images and\",\n        \"the fixed criteria. Do not accept self-reported model confidence.\",",
+      "new": "        \"Ignore and do not use any plan claim of success; judge only images and\",\n        \"the fixed criteria. Do not accept self-reported model confidence.\",\n        \"Gripper includes both fingers, dark finger pads and fingertips, not merely the white wrist housing or forearm. Localize the complete hand including its lowest protruding tips. Wrist-view fingers may be visible only partly at image edges; dark pads must not be mistaken for the table or background.\",\n        \"Before released/clear_of_target=true, inspect fingertip-to-target AND fingertip-to-support gaps in each useful view. Visible touch or wrap around a bottle neck/rim means false; if the fingertip gap is occluded or tips cannot be identified and no other view resolves it, use null, not an assertion that fingers are retracted. Do not infer lack of contact solely from the main object's body being clear.\","
+    }
+  ],
+  "source_after_sha256": "2e070b36e23fa433f1fa5b6d479f1ff6e4faed04913b9a404e8f320d6b0c1318",
+  "diff": "--- First_Phase/scene_demo/finish_v1/vision.py\n+++ First_Phase/scene_demo/finish_v1/vision.py\n@@ -181,6 +181,8 @@\n         \"Keep two stages: an operation that is achieved while still holding or touching hands off to a finishing stage; complete only after release and retreat, based on current evidence rather than a required view of a past event.\",\n         \"Ignore and do not use any plan claim of success; judge only images and\",\n         \"the fixed criteria. Do not accept self-reported model confidence.\",\n+        \"Gripper includes both fingers, dark finger pads and fingertips, not merely the white wrist housing or forearm. Localize the complete hand including its lowest protruding tips. Wrist-view fingers may be visible only partly at image edges; dark pads must not be mistaken for the table or background.\",\n+        \"Before released/clear_of_target=true, inspect fingertip-to-target AND fingertip-to-support gaps in each useful view. Visible touch or wrap around a bottle neck/rim means false; if the fingertip gap is occluded or tips cannot be identified and no other view resolves it, use null, not an assertion that fingers are retracted. Do not infer lack of contact solely from the main object's body being clear.\",\n         \"Report unknown whenever an object is occluded, evidence is insufficient,\",\n         \"or images contradict. Null is better than guessing.\",\n         \"\",\n",
+  "software_checks": [
+    {
+      "command": [
+        "wsl",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "scene_demo.finish_v1.tests.test_vision",
+        "scene_demo.finish_v1.tests.test_takeover_vision",
+        "scene_demo.finish_v1.tests.test_grounding",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_place_complete_ignores_operation_achieved (scene_demo.finish_v1.tests.test_vision.DecideTests.test_place_complete_ignores_operation_achieved) ... ok\ntest_supported_held_needs_release (scene_demo.finish_v1.tests.test_vision.DecideTests.test_supported_held_needs_release) ... ok\ntest_turn_needs_retreat (scene_demo.finish_v1.tests.test_vision.DecideTests.test_turn_needs_retreat) ... ok\ntest_unknown_denies (scene_demo.finish_v1.tests.test_vision.DecideTests.test_unknown_denies) ... ok\ntest_unsupported_blocks_release (scene_demo.finish_v1.tests.test_vision.DecideTests.test_unsupported_blocks_release) ... ok\ntest_constructor_no_io (scene_demo.finish_v1.tests.test_vision.ImportSafetyTests.test_constructor_no_io) ... ok\ntest_naked_and_fence (scene_demo.finish_v1.tests.test_vision.ParseTests.test_naked_and_fence) ... ok\ntest_reject_prose (scene_demo.finish_v1.tests.test_vision.ParseTests.test_reject_prose) ... ok\ntest_leading_trailing_prose_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_leading_trailing_prose_rejected) ... ok\ntest_multiple_fences_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_multiple_fences_rejected) ... ok\ntest_naked_and_fenced_success (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_naked_and_fenced_success) ... ok\ntest_non_dict_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_non_dict_rejected) ... ok\ntest_excludes_hidden_fields (scene_demo.finish_v1.tests.test_vision.PromptTests.test_excludes_hidden_fields) ... ok\ntest_frames_strip_extra (scene_demo.finish_v1.tests.test_vision.PromptTests.test_frames_strip_extra) ... ok\ntest_validates_context (scene_demo.finish_v1.tests.test_vision.PromptTests.test_validates_context) ... ok\ntest_bad_schema (scene_demo.finish_v1.tests.test_vision.QwenTests.test_bad_schema) ... ok\ntest_budget_charge_on_http_error (scene_demo.finish_v1.tests.test_vision.QwenTests.test_budget_charge_on_http_error) ... ok\ntest_success (scene_demo.finish_v1.tests.test_vision.QwenTests.test_success) ... ok\ntest_boxes (scene_demo.finish_v1.tests.test_vision.VerdictTests.test_boxes) ... ok\ntest_null_and_bool_rejections (scene_demo.finish_v1.tests.test_vision.VerdictTests.test_null_and_bool_rejections) ... ok\ntest_measurement_absent_compatible (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_absent_compatible) ... ok\ntest_measurement_invalid_values_raise (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_invalid_values_raise) ... ok\ntest_measurement_whitelist_prompt_and_extra_dropped (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_whitelist_prompt_and_extra_dropped) ... ok\ntest_open_measurements_released_none_not_complete (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_open_measurements_released_none_not_complete) ... ok\ntest_prompt_contains_turn_support_and_no_gold (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_prompt_contains_turn_support_and_no_gold) ... ok\ntest_prompt_mentions_stove_semantics (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_prompt_mentions_stove_semantics) ... ok\ntest_closed_fingers_downgrade_release_and_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_downgrade_release_and_clear) ... ok\ntest_closed_fingers_override_null_release_and_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_override_null_release_and_clear) ... ok\ntest_invalid_finger_data_is_rejected_without_mutation (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_invalid_finger_data_is_rejected_without_mutation) ... ok\ntest_near_support_projection_retains_raw_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_near_support_projection_retains_raw_clear) ... ok\ntest_open_fingers_do_not_change_null_release (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_open_fingers_do_not_change_null_release) ... ok\ntest_turn_achieved_and_clear_and_released_is_complete (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_achieved_and_clear_and_released_is_complete) ... ok\ntest_turn_clear_unknown_release_unknown_is_unknown (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_clear_unknown_release_unknown_is_unknown) ... ok\ntest_turn_not_achieved_is_incomplete (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_not_achieved_is_incomplete) ... ok\ntest_turn_on_with_closed_fingers_needs_release (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_on_with_closed_fingers_needs_release) ... ok\ntest_complete_fingers_and_occluded_gap_observation (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_complete_fingers_and_occluded_gap_observation) ... ok\ntest_mismatched_frames_rejected_before_http (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_mismatched_frames_rejected_before_http) ... ok\ntest_no_frame_metadata_compatible_and_schema_unchanged (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_no_frame_metadata_compatible_and_schema_unchanged) ... ok\ntest_prompt_grounding_and_no_private_truth (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_prompt_grounding_and_no_private_truth) ... ok\ntest_real_client_labels_interleave_matching_urls (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_real_client_labels_interleave_matching_urls) ... ok\ntest_short_window_stability_and_local_clearance_prompt (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_short_window_stability_and_local_clearance_prompt) ... ok\ntest_standard_open_encoder_context_optional_and_validated (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_standard_open_encoder_context_optional_and_validated) ... ok\ntest_unknown_release_not_complete (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_unknown_release_not_complete) ... ok\n\n----------------------------------------------------------------------\nRan 43 tests in 0.009s\n\nOK\n",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "fd91c7ef7679a4329653fb15f188fd51d8675cbdaec02dab2fdb759858ead3bc"
+    },
+    {
+      "command": [
+        "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\FYP\\.agents\\skills\\fyp-experiment-review\\scripts\\review.py",
+        "check",
+        "--proposal",
+        "D:\\FYP\\First_Phase\\scene_demo\\plans\\2026-10-10-vision-grounding.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"ok\": true, \"intent\": \"analyze_existing\", \"matched_history_ids\": [], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\r\n",
+      "stderr": "",
+      "stdout_sha256": "605cac927c412326f0b260b98fc6d3124260b89e210fa6d2dad496d203391c7d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "tests_authorship": "GPT fixed observation requirement; native worker mechanical test, no model-generated test",
+  "final_source_sha256": {
+    "First_Phase/scene_demo/finish_v1/vision.py": "2e070b36e23fa433f1fa5b6d479f1ff6e4faed04913b9a404e8f320d6b0c1318",
+    "First_Phase/scene_demo/finish_v1/tests/test_grounding.py": "3a491458ea35d0202b105ea5e34d06f8802829468fda245486b8b1b25b5a8566"
+  },
+  "scale_revision": {
+    "actual_deepseek_calls": 1,
+    "model": "deepseek-flash",
+    "http_status": 200,
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 693,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 356,
+      "service_tier": "standard"
+    },
+    "thinking": "disabled",
+    "max_tokens": 900,
+    "request_sha256": "e2e0b6f139beaab0009853c7695510db309f17ee066947b0649ccfb98c85349e",
+    "response_sha256": "61585151c91987ee6988f1cd6a9559be3741e3378e5a5bc1b2c5e6e98feb1aa5",
+    "source_before_sha256": "2e070b36e23fa433f1fa5b6d479f1ff6e4faed04913b9a404e8f320d6b0c1318",
+    "applied": true,
+    "qwen_calls_during_implementation": 0,
+    "physical_actions": 0,
+    "design": "GPT final bounded macro/micro distinction",
+    "implementation": "Actual DeepSeek replacement string; worker unique binding only",
+    "edits": [
+      {
+        "path": "First_Phase/scene_demo/finish_v1/vision.py",
+        "old": "        \"Before released/clear_of_target=true, inspect fingertip-to-target AND fingertip-to-support gaps in each useful view. Visible touch or wrap around a bottle neck/rim means false; if the fingertip gap is occluded or tips cannot be identified and no other view resolves it, use null, not an assertion that fingers are retracted. Do not infer lack of contact solely from the main object's body being clear.\",",
+        "new": "        \"Before released/clear_of_target=true, inspect fingertip-to-target AND fingertip-to-support gaps in each useful view. When the complete hand silhouette, including fingers, is clearly and consistently distant from both target and support across mutually corroborating views, and the target is independently supported by the destination, macroscopic separation permits released/clear_of_target true even if fine pad edges are not individually resolvable; do not require a tiny contact gap or a historical release motion. Only when views are close, projectively overlapping, or wrapping a bottle neck/rim must the actual fingertip-to-target and fingertip-to-support gaps be observed: visible touch means false, and an occluded gap with no other view disambiguating it means null. Keep full fingertip identification, and do not use an erroneous bbox that circles only the wrist housing to prove retraction; open encoder alone still cannot prove release. For place, operation_achieved means placement plus support only, independently of released and clear_of_target. Use direct image evidence, not fixed pixel coordinates, scene positions, or any sample answer key; do not force bbox rules to true and do not alter any boolean criterion.\","
+      }
+    ],
+    "source_after_sha256": "7f5ff92f1814687a9b84d5e28dd1cc05d7740e15c67bb9d70b83a5cce089c334",
+    "diff": "--- First_Phase/scene_demo/finish_v1/vision.py\n+++ First_Phase/scene_demo/finish_v1/vision.py\n@@ -182,7 +182,7 @@\n         \"Ignore and do not use any plan claim of success; judge only images and\",\n         \"the fixed criteria. Do not accept self-reported model confidence.\",\n         \"Gripper includes both fingers, dark finger pads and fingertips, not merely the white wrist housing or forearm. Localize the complete hand including its lowest protruding tips. Wrist-view fingers may be visible only partly at image edges; dark pads must not be mistaken for the table or background.\",\n-        \"Before released/clear_of_target=true, inspect fingertip-to-target AND fingertip-to-support gaps in each useful view. Visible touch or wrap around a bottle neck/rim means false; if the fingertip gap is occluded or tips cannot be identified and no other view resolves it, use null, not an assertion that fingers are retracted. Do not infer lack of contact solely from the main object's body being clear.\",\n+        \"Before released/clear_of_target=true, inspect fingertip-to-target AND fingertip-to-support gaps in each useful view. When the complete hand silhouette, including fingers, is clearly and consistently distant from both target and support across mutually corroborating views, and the target is independently supported by the destination, macroscopic separation permits released/clear_of_target true even if fine pad edges are not individually resolvable; do not require a tiny contact gap or a historical release motion. Only when views are close, projectively overlapping, or wrapping a bottle neck/rim must the actual fingertip-to-target and fingertip-to-support gaps be observed: visible touch means false, and an occluded gap with no other view disambiguating it means null. Keep full fingertip identification, and do not use an erroneous bbox that circles only the wrist housing to prove retraction; open encoder alone still cannot prove release. For place, operation_achieved means placement plus support only, independently of released and clear_of_target. Use direct image evidence, not fixed pixel coordinates, scene positions, or any sample answer key; do not force bbox rules to true and do not alter any boolean criterion.\",\n         \"Report unknown whenever an object is occluded, evidence is insufficient,\",\n         \"or images contradict. Null is better than guessing.\",\n         \"\",\n",
+    "software_checks": [
+      {
+        "command": [
+          "wsl",
+          "--exec",
+          "env",
+          "PYTHONDONTWRITEBYTECODE=1",
+          "PYTHONPATH=/mnt/d/FYP/First_Phase",
+          "/home/yhwang/fyp/libero_demo/venv/bin/python",
+          "-B",
+          "-m",
+          "unittest",
+          "scene_demo.finish_v1.tests.test_vision",
+          "scene_demo.finish_v1.tests.test_takeover_vision",
+          "scene_demo.finish_v1.tests.test_grounding",
+          "-v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "test_place_complete_ignores_operation_achieved (scene_demo.finish_v1.tests.test_vision.DecideTests.test_place_complete_ignores_operation_achieved) ... ok\ntest_supported_held_needs_release (scene_demo.finish_v1.tests.test_vision.DecideTests.test_supported_held_needs_release) ... ok\ntest_turn_needs_retreat (scene_demo.finish_v1.tests.test_vision.DecideTests.test_turn_needs_retreat) ... ok\ntest_unknown_denies (scene_demo.finish_v1.tests.test_vision.DecideTests.test_unknown_denies) ... ok\ntest_unsupported_blocks_release (scene_demo.finish_v1.tests.test_vision.DecideTests.test_unsupported_blocks_release) ... ok\ntest_constructor_no_io (scene_demo.finish_v1.tests.test_vision.ImportSafetyTests.test_constructor_no_io) ... ok\ntest_naked_and_fence (scene_demo.finish_v1.tests.test_vision.ParseTests.test_naked_and_fence) ... ok\ntest_reject_prose (scene_demo.finish_v1.tests.test_vision.ParseTests.test_reject_prose) ... ok\ntest_leading_trailing_prose_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_leading_trailing_prose_rejected) ... ok\ntest_multiple_fences_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_multiple_fences_rejected) ... ok\ntest_naked_and_fenced_success (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_naked_and_fenced_success) ... ok\ntest_non_dict_rejected (scene_demo.finish_v1.tests.test_vision.ParserFinalTests.test_non_dict_rejected) ... ok\ntest_excludes_hidden_fields (scene_demo.finish_v1.tests.test_vision.PromptTests.test_excludes_hidden_fields) ... ok\ntest_frames_strip_extra (scene_demo.finish_v1.tests.test_vision.PromptTests.test_frames_strip_extra) ... ok\ntest_validates_context (scene_demo.finish_v1.tests.test_vision.PromptTests.test_validates_context) ... ok\ntest_bad_schema (scene_demo.finish_v1.tests.test_vision.QwenTests.test_bad_schema) ... ok\ntest_budget_charge_on_http_error (scene_demo.finish_v1.tests.test_vision.QwenTests.test_budget_charge_on_http_error) ... ok\ntest_success (scene_demo.finish_v1.tests.test_vision.QwenTests.test_success) ... ok\ntest_boxes (scene_demo.finish_v1.tests.test_vision.VerdictTests.test_boxes) ... ok\ntest_null_and_bool_rejections (scene_demo.finish_v1.tests.test_vision.VerdictTests.test_null_and_bool_rejections) ... ok\ntest_measurement_absent_compatible (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_absent_compatible) ... ok\ntest_measurement_invalid_values_raise (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_invalid_values_raise) ... ok\ntest_measurement_whitelist_prompt_and_extra_dropped (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_measurement_whitelist_prompt_and_extra_dropped) ... ok\ntest_open_measurements_released_none_not_complete (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_open_measurements_released_none_not_complete) ... ok\ntest_prompt_contains_turn_support_and_no_gold (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_prompt_contains_turn_support_and_no_gold) ... ok\ntest_prompt_mentions_stove_semantics (scene_demo.finish_v1.tests.test_takeover_vision.BuildPromptTest.test_prompt_mentions_stove_semantics) ... ok\ntest_closed_fingers_downgrade_release_and_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_downgrade_release_and_clear) ... ok\ntest_closed_fingers_override_null_release_and_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_closed_fingers_override_null_release_and_clear) ... ok\ntest_invalid_finger_data_is_rejected_without_mutation (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_invalid_finger_data_is_rejected_without_mutation) ... ok\ntest_near_support_projection_retains_raw_clear (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_near_support_projection_retains_raw_clear) ... ok\ntest_open_fingers_do_not_change_null_release (scene_demo.finish_v1.tests.test_takeover_vision.ReconcileVerdictTest.test_open_fingers_do_not_change_null_release) ... ok\ntest_turn_achieved_and_clear_and_released_is_complete (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_achieved_and_clear_and_released_is_complete) ... ok\ntest_turn_clear_unknown_release_unknown_is_unknown (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_clear_unknown_release_unknown_is_unknown) ... ok\ntest_turn_not_achieved_is_incomplete (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_not_achieved_is_incomplete) ... ok\ntest_turn_on_with_closed_fingers_needs_release (scene_demo.finish_v1.tests.test_takeover_vision.TurnDecisionTest.test_turn_on_with_closed_fingers_needs_release) ... ok\ntest_complete_fingers_and_occluded_gap_observation (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_complete_fingers_and_occluded_gap_observation) ... ok\ntest_mismatched_frames_rejected_before_http (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_mismatched_frames_rejected_before_http) ... ok\ntest_no_frame_metadata_compatible_and_schema_unchanged (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_no_frame_metadata_compatible_and_schema_unchanged) ... ok\ntest_prompt_grounding_and_no_private_truth (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_prompt_grounding_and_no_private_truth) ... ok\ntest_real_client_labels_interleave_matching_urls (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_real_client_labels_interleave_matching_urls) ... ok\ntest_short_window_stability_and_local_clearance_prompt (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_short_window_stability_and_local_clearance_prompt) ... ok\ntest_standard_open_encoder_context_optional_and_validated (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_standard_open_encoder_context_optional_and_validated) ... ok\ntest_unknown_release_not_complete (scene_demo.finish_v1.tests.test_grounding.GroundingTests.test_unknown_release_not_complete) ... ok\n\n----------------------------------------------------------------------\nRan 43 tests in 0.010s\n\nOK\n",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "0f431aa00469dc969fb1c63da3756f83c67d50eee7a13b5fd9e5d4f303d9162b"
+      },
+      {
+        "command": [
+          "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+          "-B",
+          "D:\\FYP\\.agents\\skills\\fyp-experiment-review\\scripts\\review.py",
+          "check",
+          "--proposal",
+          "D:\\FYP\\First_Phase\\scene_demo\\plans\\2026-10-10-vision-grounding.json"
+        ],
+        "exit_code": 0,
+        "stdout": "{\"ok\": true, \"intent\": \"analyze_existing\", \"matched_history_ids\": [], \"exact_duplicate_ids\": [], \"warnings\": [], \"scientific_review_required\": true, \"launch_authorized\": false}\r\n",
+        "stderr": "",
+        "stdout_sha256": "605cac927c412326f0b260b98fc6d3124260b89e210fa6d2dad496d203391c7d",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "tests_authorship": "GPT fixed added scale assertions; native worker mechanical binding within existing case",
+    "final_source_sha256": {
+      "First_Phase/scene_demo/finish_v1/vision.py": "7f5ff92f1814687a9b84d5e28dd1cc05d7740e15c67bb9d70b83a5cce089c334",
+      "First_Phase/scene_demo/finish_v1/tests/test_grounding.py": "233fa5d36b4b36e476539230f6fb5895afead699be20d0f4f27e8911ed94f5a2"
+    }
+  }
+}

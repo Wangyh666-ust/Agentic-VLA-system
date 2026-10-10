@@ -1,0 +1,253 @@
+{
+  "implementation_author": "actual DeepSeek API",
+  "http_status": 200,
+  "model": "deepseek-flash",
+  "thinking": {
+    "type": "disabled"
+  },
+  "max_tokens": 5500,
+  "usage": {
+    "input_tokens": 15360,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 2973,
+    "service_tier": "standard"
+  },
+  "stop_reason": "end_turn",
+  "request_sha256": "b4526f49e13076ec46b59876b43921dc87da1f0a95403c2a5a83c6414c2f6fb9",
+  "response_sha256": "cf7f347206568afa6f7ceb8a0bccc75b4d7f568c6d5acc68c7f57932f5673aac",
+  "source_before_sha256": {
+    "First_Phase/scene_demo/service.py": "42a449191890aeafd64c48647c79223cc36d11a2fba386a40c2cae28ebfcd6b4",
+    "First_Phase/scene_demo/app.py": "075943ba23c30149db736c9693d4d6cfdfcc699cb124dcef2c2f4888881d2cfb",
+    "First_Phase/scene_demo/run_service.sh": "c58b7facf4204113d91166859ed101f3bd380ff274bb97e74fc5485324f75201",
+    "First_Phase/scene_demo/start_demo.ps1": "055b831c2e87ac44f77a213c508f319193e2504e5c593d538098e4c668dae170"
+  },
+  "status": "candidate_applied_pending_GPT_review",
+  "qwen_calls": 0,
+  "physical_actions": 0,
+  "process_starts": 0,
+  "edits_count": 17,
+  "ast_parse": true,
+  "source_after_sha256": {
+    "First_Phase/scene_demo/service.py": "8a3b999dccc1a5574e8d4e5ede1c060e4d6a58f3abccee7f190671bec643fb0d",
+    "First_Phase/scene_demo/app.py": "54af16ca2185d140cd937b5d22cb6c91963db0f6d328a7e21c6d621ed40abd59",
+    "First_Phase/scene_demo/run_service.sh": "c58b7facf4204113d91166859ed101f3bd380ff274bb97e74fc5485324f75201",
+    "First_Phase/scene_demo/start_demo.ps1": "055b831c2e87ac44f77a213c508f319193e2504e5c593d538098e4c668dae170"
+  },
+  "software_tests_run": false,
+  "followup_calls": [
+    {
+      "task": "service_core_fix",
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 4500,
+      "usage": {
+        "input_tokens": 3206,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 1120,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "24bc545b1b455fc235f0258e3f344c3a38f32028f68a5596e52c032d453466d5",
+      "response_sha256": "4f67e30e20dcd05654338d9d79c3b89b028bbaeb9c4b61229ef5c66c6c430a60",
+      "source_before_sha256": "8a3b999dccc1a5574e8d4e5ede1c060e4d6a58f3abccee7f190671bec643fb0d",
+      "status": "failed_no_retry",
+      "qwen_calls": 0,
+      "physical_actions": 0,
+      "process_starts": 0,
+      "error": "RuntimeError: patch scope invalid"
+    },
+    {
+      "task": "service_method",
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 2200,
+      "usage": {
+        "input_tokens": 1432,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 714,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "6862dde02c13b0c0985891e20b65cbdbf90e484087a2c66b44ef648b1e53f9bd",
+      "response_sha256": "5ab90ae07b90d45171726baca9168b0956168a05c9a65e9b5593859ef93f84d6",
+      "status": "candidate_applied_pending_GPT_review",
+      "qwen_calls": 0,
+      "physical_actions": 0,
+      "process_starts": 0,
+      "source_after_sha256": "56edd7cd7bac4497ae729406dde90f61165ef502231c16b6df7cf5df731b4f49",
+      "ast_parse": true,
+      "method_lines": 68,
+      "method_sha256": "4fecf88d4da58089fd02be5b84806cb4bb4893b3fbc6ccafb67ff5aa542aa9f4"
+    },
+    {
+      "task": "ui_finish",
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 2300,
+      "usage": {
+        "input_tokens": 3114,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 2300,
+        "service_tier": "standard"
+      },
+      "stop_reason": "max_tokens",
+      "request_sha256": "0389c9eaaeb6952afffc74ab93f6b068c9226746e8aa74612579debfab91178b",
+      "response_sha256": "d3c2cac23351703cca377b4b81728d88ed8a591a315c4081c6977ddd39abde5f",
+      "status": "failed_no_retry",
+      "qwen_calls": 0,
+      "physical_actions": 0,
+      "service_process_starts": 0,
+      "error": "RuntimeError: stop_reason max_tokens"
+    }
+  ],
+  "core_recovery": {
+    "decision_author": "GPT reviewed four full production patches plus fixed interface bindings",
+    "source_before_sha256": "8a3b999dccc1a5574e8d4e5ede1c060e4d6a58f3abccee7f190671bec643fb0d",
+    "source_after_sha256": "79391468119187c8d281f41385a882bfd6158148cd4b5dae84540965ec5bdfb7",
+    "extra_edit_metadata_applied": false,
+    "removed_duplicate_completion_call": true,
+    "mechanical_changes": [
+      "str(_HERE.parent) import path",
+      "close/raise on reference failure",
+      "immutable original user_request binding",
+      "strip rid validity",
+      "remove finally no-op pass"
+    ],
+    "ast_parse": true,
+    "additional_model_calls_for_recovery": 0
+  },
+  "off_mode_occupancy_binding": {
+    "decision_author": "GPT",
+    "transform": "and (not native_satisfied if self.finish_mode == \"visual\" else not already_satisfied)",
+    "source_before_sha256": "56edd7cd7bac4497ae729406dde90f61165ef502231c16b6df7cf5df731b4f49",
+    "source_after_sha256": "7dff6f2b1397685f8cb82bb437b5f06736ce31f87ec862f39a16631b2101c8b6",
+    "additional_model_calls": 0
+  },
+  "ui_recovery": {
+    "decision_author": "GPT fully reviewed first six independent edits",
+    "original_response_stop_reason": "max_tokens",
+    "recovered_complete_edits": 6,
+    "truncated_seventh_applied": false,
+    "mechanical_changes": [
+      "health finish_mode metadata binding",
+      "phase own property lookup",
+      "single final HTML escape for phase/decision/terminal"
+    ],
+    "source_before_sha256": {
+      "First_Phase/scene_demo/service.py": "7dff6f2b1397685f8cb82bb437b5f06736ce31f87ec862f39a16631b2101c8b6",
+      "First_Phase/scene_demo/app.py": "54af16ca2185d140cd937b5d22cb6c91963db0f6d328a7e21c6d621ed40abd59",
+      "First_Phase/scene_demo/run_service.sh": "c58b7facf4204113d91166859ed101f3bd380ff274bb97e74fc5485324f75201",
+      "First_Phase/scene_demo/start_demo.ps1": "055b831c2e87ac44f77a213c508f319193e2504e5c593d538098e4c668dae170"
+    },
+    "source_after_sha256": {
+      "First_Phase/scene_demo/service.py": "c9fdbf2495a11d6821ec2b254c0e2f5677ee46adb44fb3d924263071008b2a52",
+      "First_Phase/scene_demo/app.py": "22c2235d9a0b1c58cf837ea5d439d91cb9ed93666b324617ab2e5b1aa60da8a9",
+      "First_Phase/scene_demo/run_service.sh": "fc7062c1276640f1577bf7ec79e4b5d7e4b2f39f98e37036439df6c92ce1f36f",
+      "First_Phase/scene_demo/start_demo.ps1": "dce608bd4b3bb8f93b96332f0b154e47398c0c377578d3265db2597200adf5bb"
+    },
+    "additional_deepseek_calls": 0,
+    "qwen_calls": 0,
+    "physical_actions": 0,
+    "service_process_starts": 0,
+    "ast_parse": true,
+    "launcher_python_ast": true,
+    "software_checks": [
+      {
+        "name": "bash",
+        "command": [
+          "wsl.exe",
+          "--exec",
+          "bash",
+          "-n",
+          "/mnt/d/FYP/First_Phase/scene_demo/run_service.sh"
+        ],
+        "exit_code": 0,
+        "stdout_path": "D:\\FYP\\First_Phase\\tmp\\ui_finish_bash.stdout.log",
+        "stderr_path": "D:\\FYP\\First_Phase\\tmp\\ui_finish_bash.stderr.log",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "node",
+        "command": [
+          "C:/Users/Admin1/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe",
+          "D:\\FYP\\First_Phase\\scene_demo\\tests\\test_frontend_ui.js",
+          "D:\\FYP\\First_Phase\\tmp\\vision_ui.html"
+        ],
+        "exit_code": 0,
+        "stdout_path": "D:\\FYP\\First_Phase\\tmp\\ui_finish_node.stdout.log",
+        "stderr_path": "D:\\FYP\\First_Phase\\tmp\\ui_finish_node.stderr.log",
+        "stdout_sha256": "edc66ecc6d7f3980cf1fed49a51fe95dafc7e8205eb3b098b23248e24fd8bb67",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "contracts",
+        "command": [
+          "wsl.exe",
+          "--exec",
+          "env",
+          "PYTHONDONTWRITEBYTECODE=1",
+          "PYTHONPATH=/mnt/d/FYP/First_Phase:/mnt/d/FYP/First_Phase/scene_demo/tests",
+          "/home/yhwang/fyp/libero_demo/venv/bin/python",
+          "-B",
+          "-m",
+          "unittest",
+          "test_service_contract",
+          "test_app_contract",
+          "test_launcher_guard_mode",
+          "-v"
+        ],
+        "exit_code": 1,
+        "stdout_path": "D:\\FYP\\First_Phase\\tmp\\ui_finish_contracts.stdout.log",
+        "stderr_path": "D:\\FYP\\First_Phase\\tmp\\ui_finish_contracts.stderr.log",
+        "stdout_sha256": "a9521db2d86f6ef0f3c3e126500c047b17eb2b755e3e3dc9ed276db16270bd66",
+        "stderr_sha256": "17a40232ce182f9a6e161b187c9138efaad7421d7d4f67c402537d86583a6cb4"
+      }
+    ],
+    "rendered_html_sha256": "3eef922b688d3bb6bbbf1002d594c5bcc01359415e996841d430615d8264e462",
+    "status": "software_failed"
+  },
+  "launcher_fixture_update": {
+    "decision_author": "GPT fixed real interface metadata binding",
+    "changes": [
+      "successful health fixture includes finish_mode visual",
+      "missing finish_mode test requires return2 and zero spawn"
+    ],
+    "test_before_sha256": "6fba74d89519de0089c6c7bcdab5dcdbe578b8f9735e30e61727315724b3f999",
+    "test_sha256": "917d41b124be19954fae84fe73b915c68e9b25301e6bfb5631ee5e345dcbb0d1",
+    "command": [
+      "wsl.exe",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP/First_Phase/scene_demo/tests",
+      "/home/yhwang/fyp/libero_demo/venv/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "test_launcher_guard_mode",
+      "-v"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_missing_finish_mode_returns_two (test_launcher_guard_mode.GuardModeMismatchTests.test_missing_finish_mode_returns_two) ... ok\ntest_missing_grasp_guard_mode_returns_two (test_launcher_guard_mode.GuardModeMismatchTests.test_missing_grasp_guard_mode_returns_two) ... ok\ntest_null_grasp_guard_mode_returns_two (test_launcher_guard_mode.GuardModeMismatchTests.test_null_grasp_guard_mode_returns_two) ... ok\ntest_off_grasp_guard_mode_returns_two (test_launcher_guard_mode.GuardModeMismatchTests.test_off_grasp_guard_mode_returns_two) ... ok\ntest_shadow_grasp_guard_mode_returns_two (test_launcher_guard_mode.GuardModeMismatchTests.test_shadow_grasp_guard_mode_returns_two) ... ok\ntest_embedded_health_comparison_covers_grasp_guard_mode (test_launcher_guard_mode.LauncherSourceContractTests.test_embedded_health_comparison_covers_grasp_guard_mode) ... ok\ntest_embedded_namespace_pins_both_expected_modes (test_launcher_guard_mode.LauncherSourceContractTests.test_embedded_namespace_pins_both_expected_modes) ... ok\ntest_ps1_documents_that_enforce_is_required (test_launcher_guard_mode.LauncherSourceContractTests.test_ps1_documents_that_enforce_is_required) ... ok\ntest_ps1_keeps_utf8_bom (test_launcher_guard_mode.LauncherSourceContractTests.test_ps1_keeps_utf8_bom) ... ok\ntest_run_service_is_lf_and_keeps_trailing_override_last (test_launcher_guard_mode.LauncherSourceContractTests.test_run_service_is_lf_and_keeps_trailing_override_last) ... ok\ntest_run_service_keeps_offline_and_environment_flags (test_launcher_guard_mode.LauncherSourceContractTests.test_run_service_keeps_offline_and_environment_flags) ... ok\ntest_run_service_pins_enforce_before_trailing_overrides (test_launcher_guard_mode.LauncherSourceContractTests.test_run_service_pins_enforce_before_trailing_overrides) ... ok\ntest_completion_mode_mismatch_returns_two (test_launcher_guard_mode.PriorProtectionTests.test_completion_mode_mismatch_returns_two) ... ok\ntest_revision_mismatch_returns_two (test_launcher_guard_mode.PriorProtectionTests.test_revision_mismatch_returns_two) ... ok\ntest_workflow_mismatch_returns_two (test_launcher_guard_mode.PriorProtectionTests.test_workflow_mismatch_returns_two) ... ok\ntest_enforce_health_reuses_service_and_returns_zero (test_launcher_guard_mode.ReuseSuccessTests.test_enforce_health_reuses_service_and_returns_zero) ... ok\n\n----------------------------------------------------------------------\nRan 16 tests in 0.067s\n\nOK\n",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "cc8c26c28ad61791ae98d4385ff699b8b076d1592f055fcb9408966ec1da8ea2",
+    "additional_deepseek_calls": 0,
+    "qwen_calls": 0,
+    "physical_actions": 0
+  }
+}
