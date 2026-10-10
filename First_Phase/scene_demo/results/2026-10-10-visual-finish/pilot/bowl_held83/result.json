@@ -1,0 +1,336 @@
+{
+  "case_id": "bowl_held83",
+  "context_origin": "fixed_historical_subtask_fixture",
+  "origin_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_sha": null,
+  "origin_check": null,
+  "terminal_check": "embedded_match",
+  "phase_counts": {
+    "replay": 83,
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 360
+  },
+  "initial_vision_decision": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": true,
+    "supported": true,
+    "released": true,
+    "stable": true,
+    "operation_achieved": true,
+    "clear_of_target": true,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.42,
+          0.58,
+          0.78,
+          0.85
+        ],
+        "destination": [
+          0.2,
+          0.45,
+          0.85,
+          0.85
+        ],
+        "gripper": [
+          0.38,
+          0.0,
+          0.62,
+          0.5
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.35,
+          0.55,
+          0.95,
+          0.85
+        ],
+        "destination": [
+          0.15,
+          0.4,
+          0.85,
+          0.75
+        ],
+        "gripper": null
+      }
+    },
+    "evidence": [
+      "In agentview frames 0 and 2, the black bowl (target) is positioned on top of the red-rimmed plate (destination).",
+      "In wrist frames 1 and 3, the bowl is fully resting on the plate with no gripper contact.",
+      "Gripper is open and retracted in both agentview frames, indicating release.",
+      "The bowl remains stationary across frames 0\u21922 and 1\u21923, indicating stability.",
+      "No part of the target overlaps with the gripper in any frame, satisfying clear_of_target."
+    ],
+    "unknown_reasons": []
+  },
+  "finish": {
+    "ready": false,
+    "ok": false,
+    "reason": "home budget",
+    "counts": {
+      "release": 0,
+      "movement": 0,
+      "confirm": 0,
+      "home": 360
+    },
+    "plan": null,
+    "checks": [],
+    "restored": true,
+    "limitation": "visible geometry only"
+  },
+  "final_snapshot": {
+    "state_sha": "62e3942397d080aa253695b201adfa385372e38f8c76821da3805d2794e11bca",
+    "gold": {
+      "predicates": {
+        "on|akita_black_bowl_1|plate_1": true
+      },
+      "objects": {
+        "akita_black_bowl_1": {
+          "position": [
+            0.05722308061436319,
+            -0.03776583903737729,
+            0.9086238886932294
+          ],
+          "quaternion": [
+            0.674195234143683,
+            -0.0387361465963262,
+            0.034969183785184696,
+            0.7367071693625694
+          ],
+          "linear_velocity": [
+            -1.4980807728754466e-08,
+            1.065998131833632e-07,
+            -2.2291360823599794e-08
+          ],
+          "angular_velocity": [
+            2.460885157005519e-07,
+            -1.080468558799696e-06,
+            -1.8816818646374103e-06
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "cream_cheese_1": {
+          "position": [
+            -0.04602629144396026,
+            0.13447270946529477,
+            0.9089214774186077
+          ],
+          "quaternion": [
+            1.4140385208466452e-17,
+            7.462385636221865e-19,
+            8.79966745902965e-18,
+            1.0
+          ],
+          "linear_velocity": [
+            1.4830721736396576e-19,
+            -6.7254738884913284e-18,
+            1.768598587281954e-14
+          ],
+          "angular_velocity": [
+            -8.89513581431938e-16,
+            -1.6046488342399813e-16,
+            -9.34945304838262e-17
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "wine_bottle_1": {
+          "position": [
+            -0.20423290037391095,
+            -0.06165089486055367,
+            0.8988754774203452
+          ],
+          "quaternion": [
+            1.1093590920697689e-08,
+            -6.2040910799469625e-06,
+            3.878404398753628e-07,
+            0.9999999999806799
+          ],
+          "linear_velocity": [
+            -2.0641674054939083e-18,
+            6.539434641476945e-18,
+            1.7706285109413898e-14
+          ],
+          "angular_velocity": [
+            -1.0848384483448605e-15,
+            -2.487767480538819e-17,
+            4.176541502207837e-18
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "plate_1": {
+          "position": [
+            0.05949549019730205,
+            -0.01194655745717455,
+            0.9025033980214158
+          ],
+          "quaternion": [
+            0.6852119252705254,
+            1.1727990932701319e-05,
+            -1.5004048838263224e-05,
+            0.7283437492725496
+          ],
+          "linear_velocity": [
+            -3.4866195929773436e-13,
+            1.0345829269978818e-12,
+            -9.171537905728321e-13
+          ],
+          "angular_velocity": [
+            -2.1513353395315013e-11,
+            3.073541211401527e-10,
+            7.122767177538917e-11
+          ],
+          "grasped": false,
+          "error": null
+        }
+      },
+      "held_objects": [],
+      "gripper_qpos": [
+        0.03869847691648925,
+        -0.038759862580799685
+      ],
+      "eef_position": [
+        0.003991110281824318,
+        0.0071787488584337715,
+        1.0610586574711638
+      ],
+      "grasp_observation_complete": true,
+      "strict_candidate": true,
+      "phases": {
+        "on|akita_black_bowl_1|plate_1": "released_stable"
+      },
+      "goal_objects": [
+        "akita_black_bowl_1"
+      ]
+    },
+    "home": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.006008279919695618,
+        0.7955663860045579,
+        0.004274229876939629,
+        0.8124311325333802,
+        0.017923134776431933,
+        0.09058785243877976,
+        0.09986708994369242
+      ],
+      "arm_speed_rad_s": [
+        0.00014844158812755384,
+        0.020148820965778108,
+        9.909274022241279e-05,
+        0.020558370416057334,
+        0.0004214350713585617,
+        0.0022457888510642823,
+        0.0024670776786001403
+      ],
+      "max_joint_error_rad": 0.8124311325333802,
+      "max_joint_speed_rad_s": 0.020558370416057334,
+      "finger_error_m": [
+        3.209894853972023e-05,
+        3.2098602112937136e-05
+      ],
+      "finger_speed_m_s": [
+        1.302297543319761e-06,
+        1.3018820942406726e-06
+      ],
+      "max_finger_error_m": 3.209894853972023e-05,
+      "max_finger_speed_m_s": 1.302297543319761e-06,
+      "ready": false
+    },
+    "contacts": []
+  },
+  "home": {
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "arm_error_rad": [
+      0.006008279919695618,
+      0.7955663860045579,
+      0.004274229876939629,
+      0.8124311325333802,
+      0.017923134776431933,
+      0.09058785243877976,
+      0.09986708994369242
+    ],
+    "arm_speed_rad_s": [
+      0.00014844158812755384,
+      0.020148820965778108,
+      9.909274022241279e-05,
+      0.020558370416057334,
+      0.0004214350713585617,
+      0.0022457888510642823,
+      0.0024670776786001403
+    ],
+    "max_joint_error_rad": 0.8124311325333802,
+    "max_joint_speed_rad_s": 0.020558370416057334,
+    "finger_error_m": [
+      3.209894853972023e-05,
+      3.2098602112937136e-05
+    ],
+    "finger_speed_m_s": [
+      1.302297543319761e-06,
+      1.3018820942406726e-06
+    ],
+    "max_finger_error_m": 3.209894853972023e-05,
+    "max_finger_speed_m_s": 1.302297543319761e-06,
+    "ready": false
+  },
+  "contacts": [],
+  "physical_streak": 0,
+  "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/bowl_held83/all_actions.mp4",
+  "errors": [],
+  "status": "blocked",
+  "initialization_steps": 10,
+  "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_state_sha": "da8146858acf03be45fca8804e9936a0a1a21905a23f58c2644c49cf61032d6b",
+  "core_counts": {
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 360
+  },
+  "actual_helper_counts": {
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 360
+  }
+}

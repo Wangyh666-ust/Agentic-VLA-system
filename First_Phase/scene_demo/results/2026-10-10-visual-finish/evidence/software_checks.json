@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "status": "SOFTWARE_RESULTS_ARCHIVED_WITH_RAW_LOG_GAPS",
+  "groups": [
+    {
+      "group": "vision",
+      "verified_test_count": 20,
+      "test_source": {
+        "path": "First_Phase/scene_demo/finish_v1/tests/test_vision.py",
+        "bytes": 9595,
+        "sha256": "a53dda585c46c35ff2c6347ae8ca5930df040ad0dc01573b3e7d1ea9b48c53c5"
+      },
+      "author_record": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/vision_author.json",
+        "bytes": 3426,
+        "sha256": "15fbfe11d34b4c605ab347b74cd250cc1775cc54901a1d215938d41beb8ad231"
+      },
+      "physical_proof": false,
+      "raw_logs": [
+        {
+          "stream": "stdout",
+          "source": {
+            "path": "First_Phase/tmp/finish_vision_test.stdout.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "archived": {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/software/vision.stdout.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "stream": "stderr",
+          "source": {
+            "path": "First_Phase/tmp/finish_vision_test.stderr.log",
+            "bytes": 1838,
+            "sha256": "a6f60d25b3f7a5c89f5e65f51dd3c187e74ec9baa8f3bb251736061e2fb370a2"
+          },
+          "archived": {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/software/vision.stderr.log",
+            "bytes": 1838,
+            "sha256": "a6f60d25b3f7a5c89f5e65f51dd3c187e74ec9baa8f3bb251736061e2fb370a2"
+          }
+        }
+      ],
+      "missing": [],
+      "command": [
+        "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "First_Phase/scene_demo/finish_v1/tests",
+        "-p",
+        "test_vision.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "source_origin": "Actual DeepSeek implementation/tests plus GPT directed mechanical bindings; see vision_author.json"
+    },
+    {
+      "group": "sensors",
+      "verified_test_count": 6,
+      "test_source": {
+        "path": "First_Phase/scene_demo/finish_v1/tests/test_sensors.py",
+        "bytes": 7194,
+        "sha256": "1568191f0ea705a9629e531e88f31d401610e102f86330264530dc90cc7f71af"
+      },
+      "author_record": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/control_author.json",
+        "bytes": 6341,
+        "sha256": "2f92933951eae3e51da4c62b8e749d8e3ee3ab18c9024d24a9a9ae428eecb2c6"
+      },
+      "physical_proof": false,
+      "raw_logs": [],
+      "missing": [
+        "original stdout/stderr raw files were not saved under current finish-prefixed tmp files; existing structured author output is retained, no fabricated raw log"
+      ],
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/mnt/d/FYP/First_Phase:/mnt/d/FYP/First_Phase/scene_demo/finish_v1 /home/yhwang/fyp/libero_demo/venv/bin/python -B -m pytest /mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests/test_sensors.py -q -p no:cacheprovider",
+      "exit_code": 0,
+      "recorded_stdout": "......                                                                   [100%]\n6 passed in 1.04s\n",
+      "source_origin": "Actual DeepSeek implementation/tests and mechanical AST application; see control_author.json",
+      "command_source_note": "same WSL pytest invocation recorded in earlier sensor validation; final source-specific proof contains output/exit but not a repeated command field"
+    },
+    {
+      "group": "core",
+      "verified_test_count": 8,
+      "test_source": {
+        "path": "First_Phase/scene_demo/finish_v1/tests/test_core.py",
+        "bytes": 6126,
+        "sha256": "0afcce0cb8a2ce1de01454093a12a52117ec49b585dedfa6c979a3b59e91fb40"
+      },
+      "author_record": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/finish_control_author.json",
+        "bytes": 12525,
+        "sha256": "a4e2e1120292afc5e291f196215b945e3649f3d2a1229da1302eef71414c2377"
+      },
+      "physical_proof": false,
+      "raw_logs": [],
+      "missing": [
+        "original stdout/stderr raw files were not saved under current finish-prefixed tmp files; existing structured author output is retained, no fabricated raw log"
+      ],
+      "command": "wsl --exec env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/mnt/d/FYP/First_Phase /home/yhwang/fyp/libero_demo/venv/bin/python -m unittest discover -s /mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests -p test_core.py -v",
+      "exit_code": 0,
+      "recorded_summary": "Ran 8 tests in 0.012s; OK",
+      "source_origin": "GPT fixed acceptance design; native worker mechanical test implementation. Not DeepSeek authored tests. Actual DeepSeek implementation provenance is retained for geometry/control."
+    },
+    {
+      "group": "pilot",
+      "verified_test_count": 17,
+      "test_source": {
+        "path": "First_Phase/scene_demo/finish_v1/tests/test_pilot.py",
+        "bytes": 8720,
+        "sha256": "1e35ce0cfe03c02b896c20295838614c31e9d21c48039156d2ba3897a49050c9"
+      },
+      "author_record": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/runner_author.json",
+        "bytes": 9447,
+        "sha256": "ec3e82004bd0950d3d5c39e41d6d2a01f3d5348653d8f59ab8088dcd785b096b"
+      },
+      "physical_proof": false,
+      "raw_logs": [
+        {
+          "stream": "stdout",
+          "source": {
+            "path": "First_Phase/tmp/finish_pilot_mechanical_tests.stdout.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "archived": {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/software/pilot.stdout.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "stream": "stderr",
+          "source": {
+            "path": "First_Phase/tmp/finish_pilot_mechanical_tests.stderr.log",
+            "bytes": 2017,
+            "sha256": "0ddf44930885899c5fb7ba97d9d62b213bb438a1ae991f403e278b1576561550"
+          },
+          "archived": {
+            "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/evidence/software/pilot.stderr.log",
+            "bytes": 2017,
+            "sha256": "0ddf44930885899c5fb7ba97d9d62b213bb438a1ae991f403e278b1576561550"
+          }
+        }
+      ],
+      "missing": [],
+      "command": [
+        "wsl.exe",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests",
+        "-p",
+        "test_pilot.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "source_origin": "Actual DeepSeek baseline tests plus GPT fixed expectations and worker mechanical corrections; see runner_author.json"
+    }
+  ],
+  "verified_total_tests": 51,
+  "verified_all_exit_zero": true,
+  "physical_proof": false,
+  "new_test_runs": 0,
+  "new_model_calls": 0,
+  "new_physical_actions": 0,
+  "raw_log_files_archived": 4,
+  "note": "Existing results only. Counts/source checks are software evidence, not physical success. Missing raw logs are explicit; no outputs reconstructed."
+}

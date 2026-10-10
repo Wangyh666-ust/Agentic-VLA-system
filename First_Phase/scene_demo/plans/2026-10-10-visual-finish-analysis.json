@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "20261010-visual-finish-analysis",
+  "intent": "analyze_existing",
+  "question_key": "release-stop",
+  "purpose": "冻结五个旧失败状态并分离Hermes接口上下文与独立gold；核查固定checkpoint训练来源，不产生新机器人动作。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261009-joint-home",
+    "20261009-joint-home-12",
+    "20261009-safe-exit-3",
+    "20261010-safe-exit-sdk-3"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "原95/83停点与102/104释放确认已配对；重用未释放/未稳的原始证据，不重做VLA。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "已验证真实归位控制器在部分旧状态有效，复用控制器结果。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用原case02/07及失败09/11动作与旧评分，不重跑原生基线。"
+    },
+    {
+      "experiment_id": "20261009-safe-exit-3",
+      "disposition": "reuse",
+      "reason": "保留SDK错误后零辅助动作的unknown；不能作为退出有效性证据。"
+    },
+    {
+      "experiment_id": "20261010-safe-exit-sdk-3",
+      "disposition": "reuse",
+      "reason": "复用退离预算用尽与新浅接触的结果，作为本轮收尾问题来源。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "冻结碗83步、酒瓶180步、灶台78步及两篮子反例336步原动作和旧评分，保留未知字段。",
+    "仅核对固定checkpoint本地模型metadata与数据目录清单，不读取权重、不下载数据。",
+    "记录训练集身份及示范末段来源缺口；context提供用户要求与子任务，gold独立存放且不供视觉判定。"
+  ]
+}

@@ -1,0 +1,232 @@
+{
+  "actual_deepseek": true,
+  "http_status": 200,
+  "model": "deepseek-v4-pro",
+  "thinking_requested": {
+    "type": "disabled"
+  },
+  "usage": {
+    "input_tokens": 3987,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 5000,
+    "service_tier": "standard"
+  },
+  "stop_reason": "max_tokens",
+  "request_sha256": "35b34194ec3de6cabd170a865b49c2d1c2937d2d267f03714ffd75a029b61cc4",
+  "response_sha256": "2aea2724a331db3f10aabe21dd320ed993875e5aa4895d972586aa13be48e2a3",
+  "previous_attempts": {
+    "actual_deepseek": true,
+    "http_status": 200,
+    "model": "deepseek-v4-pro",
+    "thinking_requested": {
+      "type": "disabled"
+    },
+    "usage": {
+      "input_tokens": 11376,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 12687,
+      "service_tier": "standard"
+    },
+    "stop_reason": "end_turn",
+    "request_sha256": "7e3d1102a0b1711fa2858e14bc25d7450908776cf43a4be0b9aad70822015458",
+    "response_sha256": "d57496561e01559039cfbb651dfe62f836577695a2424b0f00b9875bcb5f58b9",
+    "previous_attempts": {
+      "actual_deepseek": true,
+      "http_status": 200,
+      "model": "deepseek-flash",
+      "thinking_requested": {
+        "type": "enabled"
+      },
+      "output_config_requested": {
+        "effort": "low"
+      },
+      "usage": {
+        "input_tokens": 2156,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "output_tokens": 9424,
+        "service_tier": "standard"
+      },
+      "stop_reason": "end_turn",
+      "request_sha256": "c1879b4cfbc8afd102a86ee0da686e8565af666128bf874741912b892359c155",
+      "response_sha256": "083215aa714527a1c680f5afe49eef0270d78f787ec527f22270379d48b3eb47",
+      "previous_rejected_attempts": {
+        "actual_deepseek": true,
+        "http_status": 200,
+        "model": "deepseek-flash",
+        "thinking_requested": {
+          "type": "enabled",
+          "budget_tokens": 2048
+        },
+        "usage": {
+          "input_tokens": 2171,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "output_tokens": 12000,
+          "service_tier": "standard"
+        },
+        "stop_reason": "max_tokens",
+        "request_sha256": "67fd498ebfca7e739e160d754aa16d475153e5c4550c7642f722848476f29ba0",
+        "response_sha256": "66d80d814ce09c32a152c4301a8e7e7c226553a15d5e360df41be585dd7c5a04",
+        "files": {
+          "First_Phase/scene_demo/finish_v1/pilot.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+        },
+        "lines": 0,
+        "status": "implementation_not_accepted",
+        "previous_rejected_attempt": {
+          "actual_deepseek": true,
+          "http_status": 200,
+          "model": "deepseek-flash",
+          "usage": {
+            "input_tokens": 1946,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "output_tokens": 3047,
+            "service_tier": "standard"
+          },
+          "stop_reason": "end_turn",
+          "response_sha256": "f991e33c8e765488f7f76dd06cb6204b31b5fe646ee8d5781ec2fe559e57a232",
+          "request_sha256": "145355e254d561e021853be6c0b82075037c9b1292d7d5e516e48c0076ad6973",
+          "status": "implementation_not_accepted",
+          "files": {},
+          "failure": "Complete DS source exceeded270line limit and contains Qwen stub, incorrect reference/vision APIs, missing safety/video/counters. Not applied, no real environment/Qwen called."
+        },
+        "new_robot_actions": 0,
+        "new_qwen_calls": 0,
+        "failure": "Enabled response exhausted12000 output tokens in thinking only; no text code. Empty newline source must never be considered implementation; no runtime launched."
+      },
+      "new_robot_actions": 0,
+      "new_qwen_calls": 0,
+      "files": {
+        "First_Phase/scene_demo/finish_v1/pilot.py": "e65eb88984079ee8756ca2256251e890916a66b677cab1da52d4e598e486d3b1"
+      },
+      "lines": 1049,
+      "status": "applied_pending_GPT_review"
+    },
+    "new_robot_actions": 0,
+    "new_qwen_calls": 0,
+    "status": "static_verification_failed",
+    "files": {
+      "First_Phase/scene_demo/finish_v1/pilot.py": "2f8b4ca3f0128c65ac11651ad9a2413ec7a20778c8345ce222087b37078aee83",
+      "First_Phase/tmp/finish_pilot_pure_tests.py": "7f4b142c350504b20672a5e3c37efa99b1b4124b381bd01e2ddd24fd42547996"
+    },
+    "source_lines": 978,
+    "verification": [
+      {
+        "label": "tests",
+        "command": [
+          "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "First_Phase/tmp",
+          "-p",
+          "finish_pilot_pure_tests.py",
+          "-v"
+        ],
+        "exit_code": 1,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "425c05bcd268f569cc8cc33f35b483cb735983026c306f22232c388fbf069a3e"
+      }
+    ]
+  },
+  "new_robot_actions": 0,
+  "new_qwen_calls": 0,
+  "status": "mechanical_tests_passed_pending_GPT_review",
+  "patch_count": 13,
+  "files": {
+    "First_Phase/scene_demo/finish_v1/pilot.py": "84b4238f8e5e37f3c22ebfcb12ea4818b1f720ff9e81ba6d1e3a1448b7b47633",
+    "First_Phase/scene_demo/finish_v1/tests/test_pilot.py": "1e35ce0cfe03c02b896c20295838614c31e9d21c48039156d2ba3897a49050c9"
+  },
+  "normalization": "Only complete JSON patch objects extracted by JSONDecoder; incomplete trailing patch/test discarded; every applied old matched uniquely; ast.parse passed",
+  "verification": [
+    {
+      "label": "tests",
+      "command": [
+        "C:\\Users\\Admin1\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "First_Phase/tmp",
+        "-p",
+        "finish_pilot_pure_tests.py",
+        "-v"
+      ],
+      "exit_code": 1,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "67da419dbdc8c2b5cd3b09173f17ddc6b24e946df8190c0367088a85e25b7b2c"
+    }
+  ],
+  "gpt_mechanical_corrections": [
+    "Use service.state_sha after actual replay instead of phantom port.state and bare sha256",
+    "Capture helper video after actual successful step/count",
+    "Negative branch controlled only by not allow_helper",
+    "Fixed turnon literal predicate, False oracle predicate normalFalse",
+    "Embedded target uses objects nesting and fixedgoal predicate type/equality",
+    "Core exception reason/actions mismatch unknown, safetyabort counter differences recorded",
+    "Oracle flush before actualpost streak read",
+    "Stove readiness uses nativepredicate helper not strictcandidate",
+    "Qwen constructor exact max_calls18 without fallback",
+    "SensorPort callback writes actual helper state only",
+    "Existing actualPRO private tests saved publicly, path adaptation and frozen expected-value corrections; focused GPT mechanical checks added"
+  ],
+  "mechanical_verification": [
+    {
+      "label": "tests",
+      "command": [
+        "wsl.exe",
+        "--exec",
+        "env",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/mnt/d/FYP/First_Phase",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests",
+        "-p",
+        "test_pilot.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0ddf44930885899c5fb7ba97d9d62b213bb438a1ae991f403e278b1576561550"
+    },
+    {
+      "label": "compile",
+      "command": [
+        "wsl.exe",
+        "--exec",
+        "/home/yhwang/fyp/libero_demo/venv/bin/python",
+        "-B",
+        "-c",
+        "from pathlib import Path; paths=[Path('/mnt/d/FYP/First_Phase/scene_demo/finish_v1/pilot.py'),Path('/mnt/d/FYP/First_Phase/scene_demo/finish_v1/tests/test_pilot.py')]; [compile(p.read_text(),str(p),'exec') for p in paths]; print('IN_MEMORY_COMPILE_OK files=2')"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "9535ac0fceda484ed17d2a7de1f708d2983998d50cdca356b7b535443fecd85e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "test_origin": {
+    "baseline": "actual DeepSeek PRO private finish_pilot_pure_tests.py",
+    "mechanical_expectations": "GPT current specification; no new model call",
+    "source_sha256": "6c7a1c778c8b8e939f73db848262a136def0043bc5689a5c3cecad71ce26a995"
+  },
+  "new_deepseek_calls_in_mechanical_correction": 0,
+  "mechanical_diff_review": {
+    "before_source_sha256": "ab8af00a212223fa330efee76279f4b653bd2e0b9d1e88466f3f46d7bd410092",
+    "git_diff_no_index_exit": 1,
+    "diff_sha256": "cfe4f5525e86cdc3a003f644bd13e727da5fd3e7a29f47343543265a60622afc",
+    "raw_diff_private": "First_Phase/tmp/finish_pilot_mechanical.diff.log",
+    "scope": "GPT specified corrections only, no new DS/env/Qwen"
+  },
+  "mechanical_verification_test_count": 17
+}

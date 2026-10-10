@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "registry_fact": {
+    "path": "First_Phase/scene_demo/experiment_registry.json",
+    "bytes": 29477,
+    "sha256": "37e980a42144c31214f2cc7f91743b901781858056be3bce4de457ac336c8745"
+  },
+  "entries": [
+    {
+      "id": "20261007-placement",
+      "title": "停止判据与篮子完整/拆分指令对照",
+      "date": "2026-10-07",
+      "question_keys": [
+        "release-stop",
+        "basket-full-vs-atomic",
+        "bowl-native-baseline"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "release-stop",
+        "basket-full-vs-atomic",
+        "bowl-native-baseline",
+        "停止判据与篮子完整/拆分指令对照",
+        "篮子"
+      ],
+      "conditions": [
+        "同checkpoint与状态0/模型seed0，17 trials/19 jobs，另有独立live检查",
+        "完整篮子指令与原子指令、预算300/600/300+300，停止判据对照"
+      ],
+      "findings": [
+        "碗在旧95/83步停点未达到释放稳定，新102/104步达标，动作前缀完全相同",
+        "完整篮子指令中汤罐第212步稳定放置，但全任务失败",
+        "原子汤罐300、600、300+300均失败，番茄酱原子失败"
+      ],
+      "limits": [
+        "每条件n=1",
+        "完整/拆分行为差异不能直接证明语言因果",
+        "本轮非训练"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-07/README.md",
+          "sha256": "aec6a3122e509eda1c4f9c0f043f69443805dc783f20631fabfad1110bacfb14"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-07/baseline_comparison_statistics.json",
+          "sha256": "f3e45aeeeb6c06cf8ccdfaf8e6326b0157bad0224fdf9d7fb318a4de9a637529"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-joint-home",
+      "title": "两旧酒瓶后状态完整关节归位再抓碗",
+      "date": "2026-10-09",
+      "question_keys": [
+        "joint-home-handoff",
+        "bowl-start-context"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "joint-home-handoff",
+        "bowl-start-context",
+        "两旧酒瓶后状态完整关节归位再抓碗",
+        "酒瓶",
+        "碗",
+        "归位"
+      ],
+      "conditions": [
+        "同两个旧交接状态，seed2/3",
+        "全部7关节+夹爪真实归位",
+        "旧酒瓶历史动作回放"
+      ],
+      "findings": [
+        "243/241归位后，93/105新VLA放碗完成，两例成功",
+        "旧直接/碗上方准备失败背景保留"
+      ],
+      "limits": [
+        "首酒瓶不是本轮新VLA",
+        "只有两个状态，非普遍保证",
+        "旧500VLA背景不是相同总预算"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-joint-home/README.md",
+          "sha256": "162edd099f1300b79d79a395732b80234dcb1005ce3bdacd9aa872b136406c29"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-joint-home-12",
+      "title": "关节归位六种组合×两条件，前12例",
+      "date": "2026-10-09",
+      "question_keys": [
+        "joint-home-handoff",
+        "joint-home-multitask",
+        "wine-start-context",
+        "basket-atomic-execution",
+        "wine-grasp-placement"
+      ],
+      "tags": [
+        "LIBERO",
+        "SmolVLA",
+        "joint-home-handoff",
+        "joint-home-multitask",
+        "wine-start-context",
+        "basket-atomic-execution",
+        "wine-grasp-placement",
+        "关节归位六种组合×两条件，前12例",
+        "归位"
+      ],
+      "conditions": [
+        "全为新VLA，无辅助/回放/Hermes",
+        "goal_table与basket_two，A init0/model2、B init1/model3",
+        "VLA336/归位360",
+        "12完整，第13中止164动作且排除，第14–20未启动"
+      ],
+      "findings": [
+        "全链3/12",
+        "首技能失败4、归位入口受阻3、归位后酒瓶失败2",
+        "实际17VLA：碗5/5、酒瓶2/4、灶台4/4、汤0/2、番茄酱0/2",
+        "5次归位达标后接续3成功",
+        "六个VLA失败目标谓词从未真"
+      ],
+      "limits": [
+        "没有无归位配对组，init与seed同时改变，后续策略随机流未单独控制",
+        "相关前缀不能当独立随机样本",
+        "杯子/三步未取得本轮结果",
+        "不能证实训练缺陷"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/README.md",
+          "sha256": "93debc649e87a463fb752b07c12e2f90356fca198f77009e4f7bf28cded4e370"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/case_summary12.csv",
+          "sha256": "dd588b7bccc2099f0a520078d800d86d791b4299eefd08d2601b24b36af6f432"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/scope12.json",
+          "sha256": "1c719ccf0dff3f80675f928269a2eb90edac7e11b91ba36d417544195d156c7b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-joint-home-20/evidence/metrics12.json",
+          "sha256": "8a331d7433dfcbd36de0be6027905b0711e43a9f50076c60bbf7b4079cc038bb"
+        }
+      ],
+      "configuration_complete": false
+    },
+    {
+      "id": "20261009-safe-exit-3",
+      "title": "保持夹爪开口安全退离三旧终态试点",
+      "date": "2026-10-10",
+      "question_keys": [
+        "joint-home-handoff",
+        "wine-start-context"
+      ],
+      "tags": [
+        "LIBERO",
+        "关节归位",
+        "安全退离",
+        "SDK",
+        "离线酒瓶"
+      ],
+      "conditions": [
+        "LIBERO goal8；env seed0；固定case02/07/08，init1/0/1；历史model seed3/2/3。",
+        "历史动作回放预算180/78/76；每例退离80、归位360；零新VLA/Hermes。",
+        "成功要求真实退离与原严格归位、5次真实post-action确认、全部保护及旧成果保持；未知即停止campaign。"
+      ],
+      "findings": [
+        "case02真实回放180、退离0、归位0，SDK字段缺失使结果unknown；case07/08 not_run。",
+        "case02原态和终态SHA吻合；2cm退离候选在scratch规划中接受，未执行。",
+        "运行后修正SDK字段并通过35项SDK软件测试；未复测物理。",
+        "旧酒瓶case01/02成功，case03/04归位后失败；离线分析仍有两路策略输入及子任务RNG记录缺口。"
+      ],
+      "limits": [
+        "没有有效退离或归位结果；完整最终guard未保存。",
+        "接口错误不算VLA失败，不能归因于训练；离线四例不严格配对，不能pool或合并成功率。",
+        "configuration是原冻结实验方法；实际运行前后源码版本见proof，修正源码未物理运行。"
+      ],
+      "configuration": {
+        "actual_vla_cap": 0,
+        "retries": 0,
+        "cases": [
+          "case_02",
+          "case_07",
+          "case_08"
+        ],
+        "frozen_inputs_sha256": "5fae1983b80eedbc38f4db30ce6ac5607ebb7ed24b612fbe5814085e1fbc0f71",
+        "mechanism": "actual_gap_safe_exit_then_strict_home",
+        "retreat_cap_per_case": 80,
+        "home_cap_per_case": 360,
+        "replay_actions": [
+          180,
+          78,
+          76
+        ],
+        "candidate_distances_m": [
+          0.02,
+          0.04,
+          0.06
+        ],
+        "cart_step_m": 0.001,
+        "joint_screen_step_rad": 0.003,
+        "ik_iterations": 50,
+        "ik_damping": 0.03,
+        "ik_joint_clip_rad": 0.015,
+        "ik_pos_tol_m": 0.0001,
+        "ik_ori_tol_rad": 0.005,
+        "penetration_slack_m": 5e-05,
+        "real_waypoint_joint_error_rad": 0.004,
+        "confirm_postaction_samples": 5,
+        "gripper_hold": "actual qpos normalized by corresponding position-actuator ctrlrange; zero gripper action holds command",
+        "weight": "not_loaded",
+        "language": "none",
+        "new_policy_rng": "none",
+        "source_freeze": "all current top-level Python SHA map locked in accepted software proof before launch"
+      },
+      "configuration_complete": true,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/README.md",
+          "sha256": "7c01c64119743592571b4154de8b6330b6c5d6b5c0066ef3e22c8a032f016556"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/pilot/summary.json",
+          "sha256": "1de2984187938a8322acc865a6b2278cd97acb0f7bf11c204a0da137e4523532"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/evidence/pilot_real_postflight.json",
+          "sha256": "b1764eb6e4260793eed5de52c58d76d683a8ee03c5bb88f222314d8144128692"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/evidence/software_proof_entry.json",
+          "sha256": "3240c9d6f42f93b416b41a70805976493d48bed478d2a3dc12012c63ad1ddc05"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/evidence/gripper_sdk_fix_final_proof.json",
+          "sha256": "9757cb4fa3c614a219cb2e201e868e035be430f1e7b8df70d71b65b72956a5aa"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-09-safe-exit/analysis/wine_existing.json",
+          "sha256": "26759f4f527726e3f36389b03648efaf7f280b20ed60e59c343f3b39130804da"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-09-safe-exit.json",
+          "sha256": "945856a400eeef019cf122ad962f91b4548422c52fb7750cd5b00d1a4b6a1bc9"
+        }
+      ]
+    },
+    {
+      "id": "20261010-safe-exit-sdk-3",
+      "date": "2026-10-10",
+      "title": "SDK修正后三旧终态退离实测：零归位通过",
+      "question_keys": [
+        "joint-home-handoff"
+      ],
+      "tags": [
+        "LIBERO",
+        "安全退离",
+        "归位",
+        "SDK",
+        "试点"
+      ],
+      "conditions": [
+        "与旧试点相同的三个原生结束状态：case02/07/08，初态1/0/1；历史动作回放180/78/76，合计334。",
+        "实际SDK字段修正为_ref_joint_gripper_actuator_indexes；每例退离上限80、归位上限360，保护与确认判据保持。",
+        "没有新VLA或Hermes调用、模型加载、重试、调参或训练；复用97项软件测试与3项子测试证据。"
+      ],
+      "findings": [
+        "完整退离并归位0/3；case02退离80后exit_budget，case07退离14、case08退离9后contact_blocked，归位均0。",
+        "case02末尾无机器人接触但仅3次连续稳定确认，要求5次，预算耗尽；两个灶台新接触均为finger1_pad_collision与stove_g19，末深度约0.52/2.84微米。",
+        "三个原任务目标最终均真，物体与原成果保护通过，控制器均恢复；灶台完整无机器人接触保护未通过。",
+        "实际85.53980326652527秒，334回放+103退离+0归位=437步；exit0/summary.ok=true仅表示既定流程完成，接口异常消除但修复效果未证明。"
+      ],
+      "limits": [
+        "没有后续VLA任务；0/3归位不是VLA失败，不能推出微调必要或组合成功。",
+        "退离有进展不证明增加两步即可归位；极浅新接触不能直接宣称严重碰撞或放宽保护。",
+        "仅三个已有失败结束状态，无随机扩展或单因素贡献对照；旧unknown记录独立保留。"
+      ],
+      "configuration": {
+        "actual_vla_cap": 0,
+        "retries": 0,
+        "cases": [
+          "case_02",
+          "case_07",
+          "case_08"
+        ],
+        "frozen_inputs_sha256": "6ed04b29b202098e286d57270b492345b561348240e366d9f3a5f5e9886f1b6c",
+        "mechanism": "actual_gap_safe_exit_then_strict_home",
+        "retreat_cap_per_case": 80,
+        "home_cap_per_case": 360,
+        "replay_actions": [
+          180,
+          78,
+          76
+        ],
+        "candidate_distances_m": [
+          0.02,
+          0.04,
+          0.06
+        ],
+        "cart_step_m": 0.001,
+        "joint_screen_step_rad": 0.003,
+        "ik_iterations": 50,
+        "ik_damping": 0.03,
+        "ik_joint_clip_rad": 0.015,
+        "ik_pos_tol_m": 0.0001,
+        "ik_ori_tol_rad": 0.005,
+        "penetration_slack_m": 5e-05,
+        "real_waypoint_joint_error_rad": 0.004,
+        "confirm_postaction_samples": 5,
+        "gripper_hold": "actual qpos normalized by corresponding position-actuator ctrlrange; zero gripper action holds command",
+        "weight": "not_loaded",
+        "language": "none",
+        "new_policy_rng": "none",
+        "source_freeze": "all current top-level Python SHA map locked in accepted software proof before launch",
+        "sdk_index_attribute": "_ref_joint_gripper_actuator_indexes",
+        "runtime_sources": {
+          "safe_exit.py": "54824e433307a5eb9634783f66b9cb654967f35cec7ec661ff0e70b6c3f635b5",
+          "safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+          "safe_exit_planner.py": "e1ded8ff1c310ff0e128945b8fec0ec36c13ff9ab41fee8c610b6d9ac7fd4de7",
+          "safe_exit_pilot.py": "791a73d33999b63b7eeb226010b2c77a70c727081b2b06fd86ea9b9618cc9ea8",
+          "safe_exit_pilot_io.py": "d77244763b9a4eb772fc61c0ea938197678d3a68545e67c773d3eefed0bc7ad9",
+          "joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21"
+        },
+        "launcher_sha256": "0fce0d44ac164ae2dc487fae81ee17f40694ddebaad270c559bf074fee4691ee"
+      },
+      "configuration_complete": true,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/README.md",
+          "sha256": "2294047afea1c9f62782af2ee660839a60fbae7ca1c44c13a9e025278c129fdc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/pilot/summary.json",
+          "sha256": "5ed86fe953764143a586054c423c8b3ecadbdc28058a560e7f8a8fbef04aa955"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-10-safe-exit-sdk/evidence/run_command.json",
+          "sha256": "8b109e5d24d38ded68a7739dbcc2d6085d87696d65a864b369a38fd8e10fcfd4"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-10-safe-exit-sdk.json",
+          "sha256": "055d86177d6e75efb0978c9416ffdedf3d50da86827946bb5f85c517f3b06e66"
+        }
+      ]
+    }
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "原95/83停点与102/104释放确认已配对；重用未释放/未稳的原始证据，不重做VLA。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "已验证真实归位控制器在部分旧状态有效，复用控制器结果。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用原case02/07及失败09/11动作与旧评分，不重跑原生基线。"
+    },
+    {
+      "experiment_id": "20261009-safe-exit-3",
+      "disposition": "reuse",
+      "reason": "保留SDK错误后零辅助动作的unknown；不能作为退出有效性证据。"
+    },
+    {
+      "experiment_id": "20261010-safe-exit-sdk-3",
+      "disposition": "reuse",
+      "reason": "复用退离预算用尽与新浅接触的结果，作为本轮收尾问题来源。"
+    }
+  ],
+  "new_physical_actions": 0
+}

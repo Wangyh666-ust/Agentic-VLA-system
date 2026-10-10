@@ -1,0 +1,1452 @@
+{
+  "schema_version": 1,
+  "summary_source": {
+    "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/summary.json",
+    "bytes": 1483,
+    "sha256": "eb33bffbb8590f972bdd2df84072c1cc73adb4215f4d62683edad3fba86637cd"
+  },
+  "cases": [
+    {
+      "case_id": "bowl_held83",
+      "status": "blocked",
+      "phase_counts": {
+        "replay": 83,
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 360
+      },
+      "initialization_steps": 10,
+      "finish": {
+        "ready": false,
+        "ok": false,
+        "reason": "home budget",
+        "counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 360
+        },
+        "plan": null,
+        "checks": [],
+        "restored": true,
+        "limitation": "visible geometry only"
+      },
+      "initial_vision_fields": {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": true,
+        "supported": true,
+        "released": true,
+        "stable": true,
+        "operation_achieved": true,
+        "clear_of_target": true,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.42,
+              0.58,
+              0.78,
+              0.85
+            ],
+            "destination": [
+              0.2,
+              0.45,
+              0.85,
+              0.85
+            ],
+            "gripper": [
+              0.38,
+              0.0,
+              0.62,
+              0.5
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.35,
+              0.55,
+              0.95,
+              0.85
+            ],
+            "destination": [
+              0.15,
+              0.4,
+              0.85,
+              0.75
+            ],
+            "gripper": null
+          }
+        },
+        "evidence": [
+          "In agentview frames 0 and 2, the black bowl (target) is positioned on top of the red-rimmed plate (destination).",
+          "In wrist frames 1 and 3, the bowl is fully resting on the plate with no gripper contact.",
+          "Gripper is open and retracted in both agentview frames, indicating release.",
+          "The bowl remains stationary across frames 0→2 and 1→3, indicating stability.",
+          "No part of the target overlaps with the gripper in any frame, satisfying clear_of_target."
+        ],
+        "unknown_reasons": []
+      },
+      "initial_oracle": {
+        "state_sha": "da8146858acf03be45fca8804e9936a0a1a21905a23f58c2644c49cf61032d6b",
+        "predicates": {
+          "on|akita_black_bowl_1|plate_1": true
+        },
+        "held_objects": [
+          "akita_black_bowl_1"
+        ],
+        "strict_candidate": false,
+        "grasp_observation_complete": true,
+        "home": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.009094541464018382,
+            1.22044369053915,
+            0.005634218807693263,
+            1.2450398272389693,
+            0.025221922674671417,
+            0.1360174251973283,
+            0.1494992948446453
+          ],
+          "arm_speed_rad_s": [
+            0.03221390866135101,
+            0.04329567587255567,
+            0.022756421410288948,
+            0.16535513733736737,
+            0.03773163775392999,
+            0.11137849440106178,
+            0.07279520259663314
+          ],
+          "max_joint_error_rad": 1.2450398272389693,
+          "max_joint_speed_rad_s": 0.16535513733736737,
+          "finger_error_m": [
+            0.03564098626863216,
+            0.03228094693929155
+          ],
+          "finger_speed_m_s": [
+            0.022031017370152724,
+            0.010622005377938969
+          ],
+          "max_finger_error_m": 0.03564098626863216,
+          "max_finger_speed_m_s": 0.022031017370152724,
+          "ready": false
+        },
+        "contacts_count": 10
+      },
+      "final_oracle": {
+        "state_sha": "62e3942397d080aa253695b201adfa385372e38f8c76821da3805d2794e11bca",
+        "predicates": {
+          "on|akita_black_bowl_1|plate_1": true
+        },
+        "held_objects": [],
+        "strict_candidate": true,
+        "grasp_observation_complete": true,
+        "home": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.006008279919695618,
+            0.7955663860045579,
+            0.004274229876939629,
+            0.8124311325333802,
+            0.017923134776431933,
+            0.09058785243877976,
+            0.09986708994369242
+          ],
+          "arm_speed_rad_s": [
+            0.00014844158812755384,
+            0.020148820965778108,
+            9.909274022241279e-05,
+            0.020558370416057334,
+            0.0004214350713585617,
+            0.0022457888510642823,
+            0.0024670776786001403
+          ],
+          "max_joint_error_rad": 0.8124311325333802,
+          "max_joint_speed_rad_s": 0.020558370416057334,
+          "finger_error_m": [
+            3.209894853972023e-05,
+            3.2098602112937136e-05
+          ],
+          "finger_speed_m_s": [
+            1.302297543319761e-06,
+            1.3018820942406726e-06
+          ],
+          "max_finger_error_m": 3.209894853972023e-05,
+          "max_finger_speed_m_s": 1.302297543319761e-06,
+          "ready": false
+        },
+        "contacts_count": 0
+      },
+      "core_counts": {
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 360
+      },
+      "actual_helper_counts": {
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 360
+      },
+      "core_actual_equal": true,
+      "actual_post_action_oracle_count": 360,
+      "oracle_tags": {
+        "replay": 83,
+        "initial": 1,
+        "actual": 360,
+        "final": 1
+      },
+      "physical_streak": 0,
+      "checks": [
+        {
+          "index": 0,
+          "model": "qwen3-vl-plus",
+          "http_status": 200,
+          "usage": {
+            "prompt_tokens": 981,
+            "completion_tokens": 359,
+            "total_tokens": 1340,
+            "completion_tokens_details": {
+              "text_tokens": 359
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 264,
+              "text_tokens": 717,
+              "cached_tokens": 0
+            }
+          },
+          "image_count": 4,
+          "unique_timestamp_count": 2,
+          "sensor_frames": [
+            {
+              "frame": 0,
+              "view": "agentview",
+              "timestamp": 4.599999999999715
+            },
+            {
+              "frame": 1,
+              "view": "wrist",
+              "timestamp": 4.599999999999715
+            },
+            {
+              "frame": 2,
+              "view": "agentview",
+              "timestamp": 4.64999999999971
+            },
+            {
+              "frame": 3,
+              "view": "wrist",
+              "timestamp": 4.64999999999971
+            }
+          ],
+          "sensor_paths": [
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/bowl_held83/sensors/cap000163_agentview.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/bowl_held83/sensors/cap000164_wrist.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/bowl_held83/sensors/cap000169_agentview.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/bowl_held83/sensors/cap000170_wrist.png"
+          ]
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_total_tokens": 1340,
+      "errors": [],
+      "origin_check": null,
+      "terminal_check": "embedded_match",
+      "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+      "terminal_state_sha": "da8146858acf03be45fca8804e9936a0a1a21905a23f58c2644c49cf61032d6b",
+      "result_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/bowl_held83/result.json",
+        "bytes": 8548,
+        "sha256": "391fb38343105c1749d7f1d8dcf5bcac4645ac6c0b9c7aefa440a81398689432"
+      },
+      "oracle_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/bowl_held83/oracle.jsonl",
+        "bytes": 1149543,
+        "sha256": "e049de97dde137b6b50d9647fcd24777f148f2682cce42fbf5f0bafa0e212d93"
+      },
+      "checks_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/bowl_held83/checks.jsonl",
+        "bytes": 2184,
+        "sha256": "67e38d64571ff68da47eebd07399b635935817dcb462a5a9e2d8bc73e6c0fb77"
+      }
+    },
+    {
+      "case_id": "wine_exit",
+      "status": "blocked",
+      "phase_counts": {
+        "replay": 180,
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 0
+      },
+      "initialization_steps": 10,
+      "finish": {
+        "ready": false,
+        "ok": false,
+        "reason": "home screen blocked",
+        "counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "plan": null,
+        "checks": [],
+        "restored": true,
+        "limitation": "visible geometry only"
+      },
+      "initial_vision_fields": {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": true,
+        "supported": true,
+        "released": true,
+        "stable": true,
+        "operation_achieved": true,
+        "clear_of_target": true,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.15,
+              0.2,
+              0.3,
+              0.4
+            ],
+            "destination": [
+              0.55,
+              0.4,
+              0.8,
+              0.6
+            ],
+            "gripper": [
+              0.05,
+              0.05,
+              0.25,
+              0.3
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.4,
+              0.25,
+              0.6,
+              0.75
+            ],
+            "destination": [
+              0.35,
+              0.6,
+              0.65,
+              0.85
+            ],
+            "gripper": null
+          }
+        },
+        "evidence": [
+          "In agentview frames 0 and 2, the wine bottle is no longer held by the gripper and rests upright in the wine rack.",
+          "In wrist frames 1 and 3, the bottle is fully seated in the rack slots with no contact from gripper.",
+          "The bottle remains stationary between frames 0→2 and 1→3, indicating stability.",
+          "Gripper is open and retracted in all frames, confirming release.",
+          "No part of the bottle overlaps with gripper in any frame; clear of target."
+        ],
+        "unknown_reasons": []
+      },
+      "initial_oracle": {
+        "state_sha": "bd21e55c973071f49692c80e0349ad094ab982917031c2f5e7c6492e48f2d222",
+        "predicates": {
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "strict_candidate": true,
+        "grasp_observation_complete": true,
+        "home": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.1357465235962493,
+            0.24437485103866116,
+            0.3440683276950444,
+            0.35355497318510176,
+            0.12814199922765182,
+            0.21514828037898148,
+            1.9780736432958232
+          ],
+          "arm_speed_rad_s": [
+            0.012757148041690196,
+            0.016813411364261413,
+            0.012439796502507,
+            0.059168476736295904,
+            0.00021627008657296908,
+            0.29744287368777145,
+            0.04961799937792391
+          ],
+          "max_joint_error_rad": 1.9780736432958232,
+          "max_joint_speed_rad_s": 0.29744287368777145,
+          "finger_error_m": [
+            0.02135690874810311,
+            0.013720756592529207
+          ],
+          "finger_speed_m_s": [
+            0.052844799152963313,
+            0.08695057647928894
+          ],
+          "max_finger_error_m": 0.02135690874810311,
+          "max_finger_speed_m_s": 0.08695057647928894,
+          "ready": false
+        },
+        "contacts_count": 1
+      },
+      "final_oracle": {
+        "state_sha": "bd21e55c973071f49692c80e0349ad094ab982917031c2f5e7c6492e48f2d222",
+        "predicates": {
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "held_objects": [],
+        "strict_candidate": true,
+        "grasp_observation_complete": true,
+        "home": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.1357465235962493,
+            0.24437485103866116,
+            0.3440683276950444,
+            0.35355497318510176,
+            0.12814199922765182,
+            0.21514828037898148,
+            1.9780736432958232
+          ],
+          "arm_speed_rad_s": [
+            0.012757148041690196,
+            0.016813411364261413,
+            0.012439796502507,
+            0.059168476736295904,
+            0.00021627008657296908,
+            0.29744287368777145,
+            0.04961799937792391
+          ],
+          "max_joint_error_rad": 1.9780736432958232,
+          "max_joint_speed_rad_s": 0.29744287368777145,
+          "finger_error_m": [
+            0.02135690874810311,
+            0.013720756592529207
+          ],
+          "finger_speed_m_s": [
+            0.052844799152963313,
+            0.08695057647928894
+          ],
+          "max_finger_error_m": 0.02135690874810311,
+          "max_finger_speed_m_s": 0.08695057647928894,
+          "ready": false
+        },
+        "contacts_count": 1
+      },
+      "core_counts": {
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 0
+      },
+      "actual_helper_counts": {
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 0
+      },
+      "core_actual_equal": true,
+      "actual_post_action_oracle_count": 0,
+      "oracle_tags": {
+        "replay": 180,
+        "initial": 1,
+        "final": 1
+      },
+      "physical_streak": 0,
+      "checks": [
+        {
+          "index": 0,
+          "model": "qwen3-vl-plus",
+          "http_status": 200,
+          "usage": {
+            "prompt_tokens": 987,
+            "completion_tokens": 349,
+            "total_tokens": 1336,
+            "completion_tokens_details": {
+              "text_tokens": 349
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 264,
+              "text_tokens": 723,
+              "cached_tokens": 0
+            }
+          },
+          "image_count": 4,
+          "unique_timestamp_count": 2,
+          "sensor_frames": [
+            {
+              "frame": 0,
+              "view": "agentview",
+              "timestamp": 9.449999999999825
+            },
+            {
+              "frame": 1,
+              "view": "wrist",
+              "timestamp": 9.449999999999825
+            },
+            {
+              "frame": 2,
+              "view": "agentview",
+              "timestamp": 9.499999999999842
+            },
+            {
+              "frame": 3,
+              "view": "wrist",
+              "timestamp": 9.499999999999842
+            }
+          ],
+          "sensor_paths": [
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/sensors/cap000357_agentview.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/sensors/cap000358_wrist.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/sensors/cap000363_agentview.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/sensors/cap000364_wrist.png"
+          ]
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_total_tokens": 1336,
+      "errors": [],
+      "origin_check": null,
+      "terminal_check": "sha_match",
+      "initial_state_sha": "bd974baeab772df43c3db589b35e6885d3428363a8dbbbbcbe4c07171fcad859",
+      "terminal_state_sha": "bd21e55c973071f49692c80e0349ad094ab982917031c2f5e7c6492e48f2d222",
+      "result_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/result.json",
+        "bytes": 9799,
+        "sha256": "3fe7c66376558bc276827407761ef9ec16e77673974f065afe4e4470238f458a"
+      },
+      "oracle_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/oracle.jsonl",
+        "bytes": 52630,
+        "sha256": "22121382a919503be8940d4c40135ca0e4c85cd1e5e3a9c3cfd9f5ac999b0fef"
+      },
+      "checks_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/wine_exit/checks.jsonl",
+        "bytes": 2161,
+        "sha256": "6a7feac31cd148b87bfbdb678110f122c8421b776e9863137818e4a347fb1d24"
+      }
+    },
+    {
+      "case_id": "stove_exit",
+      "status": "blocked",
+      "phase_counts": {
+        "replay": 78,
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 0
+      },
+      "initialization_steps": 10,
+      "finish": {
+        "ready": false,
+        "ok": false,
+        "reason": "initial stop",
+        "counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "plan": null,
+        "checks": [],
+        "restored": true,
+        "limitation": "visible geometry only"
+      },
+      "initial_vision_fields": {
+        "target_visible": true,
+        "destination_visible": false,
+        "at_destination": null,
+        "supported": null,
+        "released": null,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": null,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.54,
+              0.42,
+              0.73,
+              0.53
+            ],
+            "destination": null,
+            "gripper": [
+              0.58,
+              0.16,
+              0.79,
+              0.4
+            ]
+          },
+          "wrist": {
+            "target": null,
+            "destination": null,
+            "gripper": null
+          }
+        },
+        "evidence": [
+          "In agentview frames 0 and 2, the flat_stove_1 (circular red burner on white base) is visible and appears closed (lid in place).",
+          "The gripper is positioned above the stove but not in contact with it in frame 0; in frame 2, gripper is slightly retracted but still near stove.",
+          "Wrist views (frames 1 and 3) show only a dark circular object (likely the stove lid or part of the stove) under the gripper, but no clear motion or opening is observed.",
+          "No frame shows the stove lid removed or the interior exposed; thus 'open' state is not achieved."
+        ],
+        "unknown_reasons": [
+          "Stove lid status (open/closed) cannot be definitively confirmed from wrist view due to occlusion and low resolution.",
+          "Whether the gripper contacted or manipulated the stove is ambiguous — no visible deformation, displacement, or release.",
+          "No evidence of stabilization or release since no object was grasped or moved.",
+          "Destination is undefined per criteria (destination: null), so destination visibility and at_destination are unjudgable."
+        ]
+      },
+      "initial_oracle": {
+        "state_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569",
+        "predicates": {
+          "turnon|flat_stove_1": true
+        },
+        "held_objects": [],
+        "strict_candidate": null,
+        "grasp_observation_complete": true,
+        "home": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.2055833129885631,
+            0.48433307355928246,
+            0.36937136225975903,
+            0.3298703943318855,
+            0.42156262094510305,
+            0.5658683258783586,
+            0.162862068309103
+          ],
+          "arm_speed_rad_s": [
+            0.02075663774008609,
+            0.00010917479613376359,
+            0.10146111127434726,
+            0.032072015048046465,
+            0.4717293256672402,
+            0.062345307562861524,
+            0.23161494856959
+          ],
+          "max_joint_error_rad": 0.5658683258783586,
+          "max_joint_speed_rad_s": 0.4717293256672402,
+          "finger_error_m": [
+            0.019374306664240438,
+            0.02823183205033032
+          ],
+          "finger_speed_m_s": [
+            0.027615810196911797,
+            0.031323025881558456
+          ],
+          "max_finger_error_m": 0.02823183205033032,
+          "max_finger_speed_m_s": 0.031323025881558456,
+          "ready": false
+        },
+        "contacts_count": 2
+      },
+      "final_oracle": {
+        "state_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569",
+        "predicates": {
+          "turnon|flat_stove_1": true
+        },
+        "held_objects": [],
+        "strict_candidate": null,
+        "grasp_observation_complete": true,
+        "home": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.2055833129885631,
+            0.48433307355928246,
+            0.36937136225975903,
+            0.3298703943318855,
+            0.42156262094510305,
+            0.5658683258783586,
+            0.162862068309103
+          ],
+          "arm_speed_rad_s": [
+            0.02075663774008609,
+            0.00010917479613376359,
+            0.10146111127434726,
+            0.032072015048046465,
+            0.4717293256672402,
+            0.062345307562861524,
+            0.23161494856959
+          ],
+          "max_joint_error_rad": 0.5658683258783586,
+          "max_joint_speed_rad_s": 0.4717293256672402,
+          "finger_error_m": [
+            0.019374306664240438,
+            0.02823183205033032
+          ],
+          "finger_speed_m_s": [
+            0.027615810196911797,
+            0.031323025881558456
+          ],
+          "max_finger_error_m": 0.02823183205033032,
+          "max_finger_speed_m_s": 0.031323025881558456,
+          "ready": false
+        },
+        "contacts_count": 2
+      },
+      "core_counts": {
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 0
+      },
+      "actual_helper_counts": {
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 0
+      },
+      "core_actual_equal": true,
+      "actual_post_action_oracle_count": 0,
+      "oracle_tags": {
+        "replay": 78,
+        "initial": 1,
+        "final": 1
+      },
+      "physical_streak": 0,
+      "checks": [
+        {
+          "index": 0,
+          "model": "qwen3-vl-plus",
+          "http_status": 200,
+          "usage": {
+            "prompt_tokens": 981,
+            "completion_tokens": 412,
+            "total_tokens": 1393,
+            "completion_tokens_details": {
+              "text_tokens": 412
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 264,
+              "text_tokens": 717,
+              "cached_tokens": 0
+            }
+          },
+          "image_count": 4,
+          "unique_timestamp_count": 2,
+          "sensor_frames": [
+            {
+              "frame": 0,
+              "view": "agentview",
+              "timestamp": 4.349999999999743
+            },
+            {
+              "frame": 1,
+              "view": "wrist",
+              "timestamp": 4.349999999999743
+            },
+            {
+              "frame": 2,
+              "view": "agentview",
+              "timestamp": 4.3999999999997375
+            },
+            {
+              "frame": 3,
+              "view": "wrist",
+              "timestamp": 4.3999999999997375
+            }
+          ],
+          "sensor_paths": [
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000153_agentview.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000154_wrist.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000159_agentview.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/sensors/cap000160_wrist.png"
+          ]
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_total_tokens": 1393,
+      "errors": [],
+      "origin_check": null,
+      "terminal_check": "sha_match",
+      "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+      "terminal_state_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569",
+      "result_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/result.json",
+        "bytes": 11229,
+        "sha256": "2ff1c6759d1dcbd84192043cf63030585117b6f7e4a7fa658b1a835cd8141e97"
+      },
+      "oracle_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/oracle.jsonl",
+        "bytes": 27503,
+        "sha256": "6bb17d73bae5ea4db4bec9355233d83a83fbc720e6b1040748bc0a7f5d20e557"
+      },
+      "checks_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/checks.jsonl",
+        "bytes": 2660,
+        "sha256": "e7337ced4e0f08fef2778f2a220bd0c4e29d6f0df928c91f0148e739dc19ae4d"
+      }
+    },
+    {
+      "case_id": "soup_negative",
+      "status": "correct_negative",
+      "phase_counts": {
+        "replay": 336,
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 0
+      },
+      "initialization_steps": 10,
+      "finish": {
+        "status": "skipped_negative"
+      },
+      "initial_vision_fields": {
+        "target_visible": true,
+        "destination_visible": true,
+        "at_destination": false,
+        "supported": true,
+        "released": false,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": true,
+        "boxes": {
+          "agentview": {
+            "target": [
+              0.58,
+              0.34,
+              0.76,
+              0.46
+            ],
+            "destination": [
+              0.78,
+              0.44,
+              1.0,
+              0.72
+            ],
+            "gripper": [
+              0.38,
+              0.0,
+              0.76,
+              0.4
+            ]
+          },
+          "wrist": {
+            "target": [
+              0.44,
+              0.22,
+              0.6,
+              0.32
+            ],
+            "destination": null,
+            "gripper": [
+              0.2,
+              0.4,
+              0.6,
+              0.8
+            ]
+          }
+        },
+        "evidence": [
+          "In agentview frames 0 and 2, the alphabet_soup_1 (target) is held by the gripper and not in the basket (destination).",
+          "In wrist frames 1 and 3, the target is visible on the table, separate from the gripper, indicating it was dropped or released onto the table, not into the basket.",
+          "The basket (destination) is empty in all frames.",
+          "Gripper is open in wrist frames but target is not inside basket; target lies on table surface."
+        ],
+        "unknown_reasons": [
+          "Stability of the target on the table cannot be judged due to lack of motion or contact detail in static frames.",
+          "Exact release timing and contact state during release are not observable."
+        ]
+      },
+      "initial_oracle": {
+        "state_sha": "a18207f6c4662f2b056c117814601ae6a11fac83e8fc3c93ff2bd16b198183d8",
+        "predicates": {
+          "in|alphabet_soup_1|basket_1_contain_region": false
+        },
+        "held_objects": [
+          "alphabet_soup_1"
+        ],
+        "strict_candidate": false,
+        "grasp_observation_complete": true,
+        "home": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.0441922648901817,
+            0.18725612533187522,
+            0.10597480110963449,
+            0.13241338332274566,
+            0.47157512256176365,
+            0.04846946313873701,
+            0.8435814598586985
+          ],
+          "arm_speed_rad_s": [
+            0.005964651987393827,
+            0.0729992226705383,
+            0.01661131542663063,
+            0.05602660179317853,
+            0.12342138445071768,
+            0.1339610951807677,
+            0.014330586775649301
+          ],
+          "max_joint_error_rad": 0.8435814598586985,
+          "max_joint_speed_rad_s": 0.1339610951807677,
+          "finger_error_m": [
+            0.006301023971259319,
+            0.008613947660247381
+          ],
+          "finger_speed_m_s": [
+            0.0006988498448586981,
+            0.0002474893897242304
+          ],
+          "max_finger_error_m": 0.008613947660247381,
+          "max_finger_speed_m_s": 0.0006988498448586981,
+          "ready": false
+        },
+        "contacts_count": 9
+      },
+      "final_oracle": {
+        "state_sha": "a18207f6c4662f2b056c117814601ae6a11fac83e8fc3c93ff2bd16b198183d8",
+        "predicates": {
+          "in|alphabet_soup_1|basket_1_contain_region": false
+        },
+        "held_objects": [
+          "alphabet_soup_1"
+        ],
+        "strict_candidate": false,
+        "grasp_observation_complete": true,
+        "home": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.0441922648901817,
+            0.18725612533187522,
+            0.10597480110963449,
+            0.13241338332274566,
+            0.47157512256176365,
+            0.04846946313873701,
+            0.8435814598586985
+          ],
+          "arm_speed_rad_s": [
+            0.005964651987393827,
+            0.0729992226705383,
+            0.01661131542663063,
+            0.05602660179317853,
+            0.12342138445071768,
+            0.1339610951807677,
+            0.014330586775649301
+          ],
+          "max_joint_error_rad": 0.8435814598586985,
+          "max_joint_speed_rad_s": 0.1339610951807677,
+          "finger_error_m": [
+            0.006301023971259319,
+            0.008613947660247381
+          ],
+          "finger_speed_m_s": [
+            0.0006988498448586981,
+            0.0002474893897242304
+          ],
+          "max_finger_error_m": 0.008613947660247381,
+          "max_finger_speed_m_s": 0.0006988498448586981,
+          "ready": false
+        },
+        "contacts_count": 9
+      },
+      "core_counts": null,
+      "actual_helper_counts": null,
+      "core_actual_equal": null,
+      "actual_post_action_oracle_count": 0,
+      "oracle_tags": {
+        "replay": 336,
+        "initial": 1,
+        "final": 1
+      },
+      "physical_streak": 0,
+      "checks": [
+        {
+          "index": 0,
+          "model": "qwen3-vl-plus",
+          "http_status": 200,
+          "usage": {
+            "prompt_tokens": 989,
+            "completion_tokens": 388,
+            "total_tokens": 1377,
+            "completion_tokens_details": {
+              "text_tokens": 388
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 264,
+              "text_tokens": 725,
+              "cached_tokens": 0
+            }
+          },
+          "image_count": 4,
+          "unique_timestamp_count": 2,
+          "sensor_frames": [
+            {
+              "frame": 0,
+              "view": "agentview",
+              "timestamp": 17.250000000001318
+            },
+            {
+              "frame": 1,
+              "view": "wrist",
+              "timestamp": 17.250000000001318
+            },
+            {
+              "frame": 2,
+              "view": "agentview",
+              "timestamp": 17.30000000000129
+            },
+            {
+              "frame": 3,
+              "view": "wrist",
+              "timestamp": 17.30000000000129
+            }
+          ],
+          "sensor_paths": [
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/soup_negative/sensors/cap000669_agentview.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/soup_negative/sensors/cap000670_wrist.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/soup_negative/sensors/cap000675_agentview.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/soup_negative/sensors/cap000676_wrist.png"
+          ]
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_total_tokens": 1377,
+      "errors": [],
+      "origin_check": null,
+      "terminal_check": "sha_match",
+      "initial_state_sha": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+      "terminal_state_sha": "a18207f6c4662f2b056c117814601ae6a11fac83e8fc3c93ff2bd16b198183d8",
+      "result_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/soup_negative/result.json",
+        "bytes": 15835,
+        "sha256": "3461d7b205e2842a1e9313b1fbf91101b955e938777eef80847f2474333433fd"
+      },
+      "oracle_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/soup_negative/oracle.jsonl",
+        "bytes": 102497,
+        "sha256": "a80ff2514fc17c4f2f1e9ddee655f5fe989f41e4cba44135cc2cb287aaaf24ab"
+      },
+      "checks_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/soup_negative/checks.jsonl",
+        "bytes": 2352,
+        "sha256": "b3d5a3883271bcfb03d8d7f2d2ca4adfb5e9091e72fafbfa21809d6c0e11fb4f"
+      }
+    },
+    {
+      "case_id": "sauce_negative",
+      "status": "correct_negative",
+      "phase_counts": {
+        "replay": 336,
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 0
+      },
+      "initialization_steps": 10,
+      "finish": {
+        "status": "skipped_negative"
+      },
+      "initial_vision_fields": {
+        "target_visible": false,
+        "destination_visible": true,
+        "at_destination": false,
+        "supported": false,
+        "released": false,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": null,
+        "boxes": {
+          "agentview": {
+            "target": null,
+            "destination": [
+              0.75,
+              0.45,
+              1.0,
+              0.7
+            ],
+            "gripper": [
+              0.0,
+              0.0,
+              0.3,
+              0.4
+            ]
+          },
+          "wrist": {
+            "target": null,
+            "destination": null,
+            "gripper": null
+          }
+        },
+        "evidence": [
+          "In agentview frames 0 and 2, a tomato sauce bottle is on the table near other objects, not in the basket.",
+          "The basket (destination) is visible on the right side of agentview frames.",
+          "The gripper is holding a different object (a colorful box), not the tomato sauce bottle.",
+          "Wrist views show only a milk carton and part of the robot arm; target and destination are not visible.",
+          "No frame shows the tomato sauce bottle inside or supported by the basket."
+        ],
+        "unknown_reasons": [
+          "Tomato sauce bottle is not clearly identifiable in wrist views due to occlusion and angle.",
+          "It is unknown whether the tomato sauce bottle was moved or released elsewhere outside the field of view.",
+          "Stability of any placed object cannot be assessed since no object is observed at destination."
+        ]
+      },
+      "initial_oracle": {
+        "state_sha": "933333e02637d42abcd9eb7307183ce2b39a0031b6d76951344140f3a8589bcb",
+        "predicates": {
+          "in|tomato_sauce_1|basket_1_contain_region": false
+        },
+        "held_objects": [],
+        "strict_candidate": false,
+        "grasp_observation_complete": true,
+        "home": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.13517316328278486,
+            0.7168661897069284,
+            0.2060083042016231,
+            0.5098303078237993,
+            0.42760025138061053,
+            0.11204461320312342,
+            0.8181952881607125
+          ],
+          "arm_speed_rad_s": [
+            0.005967132278643322,
+            0.003482478981190736,
+            0.002148529293579578,
+            0.00996038218759122,
+            0.00022730520881648187,
+            0.08563079622918754,
+            0.07416801653716476
+          ],
+          "max_joint_error_rad": 0.8181952881607125,
+          "max_joint_speed_rad_s": 0.08563079622918754,
+          "finger_error_m": [
+            0.0008489575714151418,
+            0.0011636576565067641
+          ],
+          "finger_speed_m_s": [
+            0.0002451864489023018,
+            0.00021908639039158024
+          ],
+          "max_finger_error_m": 0.0011636576565067641,
+          "max_finger_speed_m_s": 0.0002451864489023018,
+          "ready": false
+        },
+        "contacts_count": 0
+      },
+      "final_oracle": {
+        "state_sha": "933333e02637d42abcd9eb7307183ce2b39a0031b6d76951344140f3a8589bcb",
+        "predicates": {
+          "in|tomato_sauce_1|basket_1_contain_region": false
+        },
+        "held_objects": [],
+        "strict_candidate": false,
+        "grasp_observation_complete": true,
+        "home": {
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "arm_error_rad": [
+            0.13517316328278486,
+            0.7168661897069284,
+            0.2060083042016231,
+            0.5098303078237993,
+            0.42760025138061053,
+            0.11204461320312342,
+            0.8181952881607125
+          ],
+          "arm_speed_rad_s": [
+            0.005967132278643322,
+            0.003482478981190736,
+            0.002148529293579578,
+            0.00996038218759122,
+            0.00022730520881648187,
+            0.08563079622918754,
+            0.07416801653716476
+          ],
+          "max_joint_error_rad": 0.8181952881607125,
+          "max_joint_speed_rad_s": 0.08563079622918754,
+          "finger_error_m": [
+            0.0008489575714151418,
+            0.0011636576565067641
+          ],
+          "finger_speed_m_s": [
+            0.0002451864489023018,
+            0.00021908639039158024
+          ],
+          "max_finger_error_m": 0.0011636576565067641,
+          "max_finger_speed_m_s": 0.0002451864489023018,
+          "ready": false
+        },
+        "contacts_count": 0
+      },
+      "core_counts": null,
+      "actual_helper_counts": null,
+      "core_actual_equal": null,
+      "actual_post_action_oracle_count": 0,
+      "oracle_tags": {
+        "replay": 336,
+        "initial": 1,
+        "final": 1
+      },
+      "physical_streak": 0,
+      "checks": [
+        {
+          "index": 0,
+          "model": "qwen3-vl-plus",
+          "http_status": 200,
+          "usage": {
+            "prompt_tokens": 992,
+            "completion_tokens": 344,
+            "total_tokens": 1336,
+            "completion_tokens_details": {
+              "text_tokens": 344
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 264,
+              "text_tokens": 728,
+              "cached_tokens": 0
+            }
+          },
+          "image_count": 4,
+          "unique_timestamp_count": 2,
+          "sensor_frames": [
+            {
+              "frame": 0,
+              "view": "agentview",
+              "timestamp": 17.250000000001318
+            },
+            {
+              "frame": 1,
+              "view": "wrist",
+              "timestamp": 17.250000000001318
+            },
+            {
+              "frame": 2,
+              "view": "agentview",
+              "timestamp": 17.30000000000129
+            },
+            {
+              "frame": 3,
+              "view": "wrist",
+              "timestamp": 17.30000000000129
+            }
+          ],
+          "sensor_paths": [
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/sauce_negative/sensors/cap000669_agentview.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/sauce_negative/sensors/cap000670_wrist.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/sauce_negative/sensors/cap000675_agentview.png",
+            "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/sauce_negative/sensors/cap000676_wrist.png"
+          ]
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_total_tokens": 1336,
+      "errors": [],
+      "origin_check": null,
+      "terminal_check": "sha_match",
+      "initial_state_sha": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+      "terminal_state_sha": "933333e02637d42abcd9eb7307183ce2b39a0031b6d76951344140f3a8589bcb",
+      "result_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/sauce_negative/result.json",
+        "bytes": 9922,
+        "sha256": "58aaefe1fe28d728cc5c7bfe90cadd76da0033e141ac29241dfb3305af3c6c42"
+      },
+      "oracle_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/sauce_negative/oracle.jsonl",
+        "bytes": 96104,
+        "sha256": "688090d406135a303170ab0680c94cc778e706b30285ed4fca8625d642f87ae3"
+      },
+      "checks_source": {
+        "path": "First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/sauce_negative/checks.jsonl",
+        "bytes": 2432,
+        "sha256": "b6907c4cc584d35bb51eb500a17dc29a70acd24f6df6c5ae7d973b96ea4a1b78"
+      }
+    }
+  ],
+  "totals": {
+    "initialization_actions": 50,
+    "historical_replay_actions": 1013,
+    "actual_helper_actions": 360,
+    "actual_helper_by_phase": {
+      "release": 0,
+      "movement": 0,
+      "confirm": 0,
+      "home": 360
+    },
+    "all_actual_physical_actions": 1423,
+    "actual_qwen_calls": 5,
+    "actual_qwen_total_tokens": 6782,
+    "new_vla_calls": 0,
+    "new_hermes_calls": 0
+  },
+  "new_analysis_physical_actions": 0,
+  "new_analysis_api_calls": 0,
+  "note": "Mechanical extraction only. Vision fields are observations from Qwen, not independent oracle; native oracle and actual-only post-action records are kept separate."
+}

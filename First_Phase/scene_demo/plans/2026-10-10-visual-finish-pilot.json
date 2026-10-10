@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "id": "20261010-visual-finish-pilot",
+  "intent": "new_experiment",
+  "question_key": "release-stop",
+  "purpose": "在五个冻结旧失败状态上验证视觉完成检查与传感通用收尾；接收用户要求和固定历史Hermes子任务上下文，但独立gold不供视觉判断。暂不微调或新VLA推理。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261009-joint-home",
+    "20261009-joint-home-12",
+    "20261009-safe-exit-3",
+    "20261010-safe-exit-sdk-3"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "原95/83停点与102/104释放确认已配对；重用未释放/未稳的原始证据，不重做VLA。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "已验证真实归位控制器在部分旧状态有效，复用控制器结果。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用原case02/07及失败09/11动作与旧评分，不重跑原生基线。"
+    },
+    {
+      "experiment_id": "20261009-safe-exit-3",
+      "disposition": "reuse",
+      "reason": "保留SDK错误后零辅助动作的unknown；不能作为退出有效性证据。"
+    },
+    {
+      "experiment_id": "20261010-safe-exit-sdk-3",
+      "disposition": "reuse",
+      "reason": "复用退离预算用尽与新浅接触的结果，作为本轮收尾问题来源。"
+    }
+  ],
+  "new_physical_actions": 2503,
+  "hypothesis": "多帧图像检查能区分未完成操作与缺少释放或退离；传感收尾在明确支持、完成和空隙证据下可以完成旧状态的安全交接。",
+  "information_gain": "首次独立验证以Hermes当前子任务作为注意上下文的视觉完成判断，以及RGBD几何筛查和独立确认预算组成的收尾机制。多个改变组成干预包，不能单独归因，也不证明新VLA、多任务链或真机泛化。",
+  "success_criteria": "两个negative必须零helper且视觉incomplete或unknown；三个eligible逐例只有原生literal目标成立、所有具名关节物体明确未被持有、目标已释放稳定（turn不要求static目标速度）、机器人归位与停稳、零robotcontacts在实际post-action连续5个样本均满足，且最终视觉complete，才physical_success。错误计划不改独立gold。",
+  "failure_criteria": "视觉把负例判成需要释放/退离/完成为false_positive；eligible视觉非完成或收尾阻断/预算耗尽/保护触发为blocked；任何浅接触仍记录且不满足最终零接触。物体成果破坏立即停止本例。",
+  "unknown_criteria": "来源SHA或回放终态不匹配、缺必需相机、SDK接口/协议/网络错误或cleanup异常记unknown，停止campaign剩余not_run；视觉看不清的unknown是正常阻断，可以继续下一个冻结case。",
+  "changed_factors": [
+    {
+      "name": "completion_judgement",
+      "before": "仿真目标与持物代理决定收尾资格",
+      "after": "固定用户要求、历史子任务上下文、固定完成条件和最多6张RGB实际观测决定视觉状态",
+      "reason": "避免计划自报成功覆盖观测；检查真机可获取输入能否识别不完整终点"
+    },
+    {
+      "name": "retreat_geometry",
+      "before": "精确仿真接触法线和接触几何选择退出路线",
+      "after": "RGBD点云与本体几何筛查可见空间路径；仍保留仿真独立紧急监督",
+      "reason": "检验接近真实传感条件的通用收尾"
+    },
+    {
+      "name": "confirmation_budget",
+      "before": "移动与连续确认共享80步额度",
+      "after": "release20、movement80、confirm20、home360独立额度",
+      "reason": "防止已到位但确认被移动额度截断"
+    }
+  ],
+  "fixed_factors": {
+    "cases": [
+      "bowl_held83",
+      "wine_exit",
+      "stove_exit",
+      "soup_negative",
+      "sauce_negative"
+    ],
+    "historical_initial_states": "inputs逐例origin_sha与reference.origin_sha256；四个terminal_sha精确匹配；碗只匹配原embedded目标谓词/持物/target,eef,finger位置1e-7，不宣称全态同一",
+    "actions": "原gzip日志浮点7维按原顺序真实回放，1013历史动作；无新VLA/模型加载",
+    "policy_weights": "不改变、不读取、不微调；本轮无新policy推理",
+    "initialization": "原env.reset内10settle no-op每例，50初始化动作独立记录",
+    "vision": "qwen3-vl-plus、temperature0、max_tokens1600、最多18API调用、无retry",
+    "scene": "LIBERO robosuite/MuJoCo Franka Panda，env_seed与init保持inputs",
+    "contexts": "GPT固定历史Hermes子任务fixture，不新增Hermes调用",
+    "inputs_sha256": "85229f96c05aa97073cecacb4de524e3f539594879ec39a80720da4fb67d086b",
+    "safety": "已真谓词保留；非目标jointed物体位置变化5mm上限；new contact/deepening50um上限；最后成功仍必须无任何robotcontact"
+  },
+  "scope": {
+    "max_cases": 5,
+    "max_vla_actions_per_case": 0,
+    "max_helper_actions_per_case": 817,
+    "stop_rule": "每个冻结样例一次；不重试不调参。已知物理或视觉阻断仅停止本例，软件/来源/接口unknown停止全部剩余样例。两个negative禁止helper。"
+  },
+  "configuration": {
+    "campaign": "20261010-visual-finish-pilot",
+    "inputs_sha256": "85229f96c05aa97073cecacb4de524e3f539594879ec39a80720da4fb67d086b",
+    "case_order": [
+      "bowl_held83",
+      "wine_exit",
+      "stove_exit",
+      "soup_negative",
+      "sauce_negative"
+    ],
+    "initialization_actions": 50,
+    "historical_replay_actions": 1013,
+    "max_finish_actions": 1440,
+    "finish_caps_per_eligible": {
+      "release": 20,
+      "movement": 80,
+      "confirm": 20,
+      "home": 360
+    },
+    "eligible_cases": [
+      "bowl_held83",
+      "wine_exit",
+      "stove_exit"
+    ],
+    "negative_cases": [
+      "soup_negative",
+      "sauce_negative"
+    ],
+    "runtime_sensors": "two-camera actual RGBD render, calibration, arm joint encoders, finger position; no object poses/predicates/contact lists in visual or path planning",
+    "oracle_emergency_supervision": "privileged simulation predicate/object displacement/contact probes after actual helper steps; logged separately, remains simulation-only emergency supervision",
+    "independent_gold": [
+      [
+        "on",
+        "akita_black_bowl_1",
+        "plate_1"
+      ],
+      [
+        "on",
+        "wine_bottle_1",
+        "wine_rack_1_top_region"
+      ],
+      [
+        "turnon",
+        "flat_stove_1"
+      ],
+      [
+        "in",
+        "alphabet_soup_1",
+        "basket_1_contain_region"
+      ],
+      [
+        "in",
+        "tomato_sauce_1",
+        "basket_1_contain_region"
+      ]
+    ],
+    "context_contract": "context is a GPT-fixed historical Hermes subtask fixture, not a newly generated Hermes plan. Gold is independent offline oracle and forbidden to vision decision.",
+    "vision_model": "qwen3-vl-plus",
+    "vision_max_calls": 18,
+    "vision_max_tokens": 1600,
+    "vision_temperature": 0,
+    "new_vla_inferences": 0,
+    "new_hermes_calls": 0,
+    "weights_loaded": 0,
+    "training": false,
+    "physical_streak": 5,
+    "repeat_measurements": 0,
+    "source_freeze": "preflight.json source_sha256 must match before launch and before eachcase; no silent refreeze"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "原状态动作重放用于新视觉和RGBD收尾干预包验证，不重复原策略测量或归位基线。"
+  }
+}

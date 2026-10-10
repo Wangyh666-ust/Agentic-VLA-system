@@ -1,0 +1,435 @@
+{
+  "case_id": "stove_exit",
+  "context_origin": "fixed_historical_subtask_fixture",
+  "origin_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569",
+  "origin_check": null,
+  "terminal_check": "sha_match",
+  "phase_counts": {
+    "replay": 78,
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  },
+  "initial_vision_decision": {
+    "target_visible": true,
+    "destination_visible": false,
+    "at_destination": null,
+    "supported": null,
+    "released": null,
+    "stable": null,
+    "operation_achieved": false,
+    "clear_of_target": null,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.54,
+          0.42,
+          0.73,
+          0.53
+        ],
+        "destination": null,
+        "gripper": [
+          0.58,
+          0.16,
+          0.79,
+          0.4
+        ]
+      },
+      "wrist": {
+        "target": null,
+        "destination": null,
+        "gripper": null
+      }
+    },
+    "evidence": [
+      "In agentview frames 0 and 2, the flat_stove_1 (circular red burner on white base) is visible and appears closed (lid in place).",
+      "The gripper is positioned above the stove but not in contact with it in frame 0; in frame 2, gripper is slightly retracted but still near stove.",
+      "Wrist views (frames 1 and 3) show only a dark circular object (likely the stove lid or part of the stove) under the gripper, but no clear motion or opening is observed.",
+      "No frame shows the stove lid removed or the interior exposed; thus 'open' state is not achieved."
+    ],
+    "unknown_reasons": [
+      "Stove lid status (open/closed) cannot be definitively confirmed from wrist view due to occlusion and low resolution.",
+      "Whether the gripper contacted or manipulated the stove is ambiguous \u2014 no visible deformation, displacement, or release.",
+      "No evidence of stabilization or release since no object was grasped or moved.",
+      "Destination is undefined per criteria (destination: null), so destination visibility and at_destination are unjudgable."
+    ]
+  },
+  "finish": {
+    "ready": false,
+    "ok": false,
+    "reason": "initial stop",
+    "counts": {
+      "release": 0,
+      "movement": 0,
+      "confirm": 0,
+      "home": 0
+    },
+    "plan": null,
+    "checks": [],
+    "restored": true,
+    "limitation": "visible geometry only"
+  },
+  "final_snapshot": {
+    "state_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569",
+    "gold": {
+      "predicates": {
+        "turnon|flat_stove_1": true
+      },
+      "objects": {
+        "akita_black_bowl_1": {
+          "position": [
+            -0.09762606039235144,
+            -0.008583423299852446,
+            0.8984070750980836
+          ],
+          "quaternion": [
+            0.707106783005648,
+            -1.3874755319831753e-05,
+            1.6673002342709846e-06,
+            0.7071067792293566
+          ],
+          "linear_velocity": [
+            4.397672651744198e-18,
+            -1.6170119774063688e-17,
+            1.5094326373719e-14
+          ],
+          "angular_velocity": [
+            2.664036680324522e-16,
+            -3.619870492487805e-15,
+            1.4945752074281535e-18
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "cream_cheese_1": {
+          "position": [
+            -0.04602629144396026,
+            0.13447270946529477,
+            0.9089214774186077
+          ],
+          "quaternion": [
+            6.107164579103297e-18,
+            -2.752724164410738e-17,
+            7.977273886168948e-18,
+            1.0
+          ],
+          "linear_velocity": [
+            -5.141723835415789e-19,
+            -7.205614423994957e-18,
+            1.768374564399578e-14
+          ],
+          "angular_velocity": [
+            -9.80614250371461e-16,
+            -8.314283940739312e-18,
+            -1.1495469853597813e-16
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "wine_bottle_1": {
+          "position": [
+            -0.20423290037391095,
+            -0.06165089486055362,
+            0.8988754774203452
+          ],
+          "quaternion": [
+            1.1093590895510117e-08,
+            -6.2040910799496645e-06,
+            3.8784043985960537e-07,
+            0.9999999999806799
+          ],
+          "linear_velocity": [
+            -1.8669205621532523e-17,
+            9.752322376241003e-18,
+            1.7724245238324796e-14
+          ],
+          "angular_velocity": [
+            6.047512799359092e-16,
+            -4.860258809608775e-16,
+            -1.7069346677000166e-16
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "plate_1": {
+          "position": [
+            0.062073867819834094,
+            -0.009382152565275154,
+            0.902506338529415
+          ],
+          "quaternion": [
+            0.7071068099946488,
+            -1.3218930757283315e-05,
+            5.9052040285612224e-06,
+            0.7071067522302282
+          ],
+          "linear_velocity": [
+            3.5185098581569235e-18,
+            1.7320025035722178e-17,
+            1.63574563788557e-14
+          ],
+          "angular_velocity": [
+            8.123232979975898e-16,
+            4.9735163082077446e-15,
+            7.160257005866612e-18
+          ],
+          "grasped": false,
+          "error": null
+        }
+      },
+      "held_objects": [],
+      "gripper_qpos": [
+        0.01935626920078853,
+        -0.010495931928356426
+      ],
+      "eef_position": [
+        -0.41838003348193986,
+        0.1990403302297046,
+        0.9287069307275868
+      ],
+      "grasp_observation_complete": true,
+      "strict_candidate": null,
+      "phases": {
+        "turnon|flat_stove_1": "unknown"
+      },
+      "goal_objects": [
+        "flat_stove_1"
+      ]
+    },
+    "home": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.2055833129885631,
+        0.48433307355928246,
+        0.36937136225975903,
+        0.3298703943318855,
+        0.42156262094510305,
+        0.5658683258783586,
+        0.162862068309103
+      ],
+      "arm_speed_rad_s": [
+        0.02075663774008609,
+        0.00010917479613376359,
+        0.10146111127434726,
+        0.032072015048046465,
+        0.4717293256672402,
+        0.062345307562861524,
+        0.23161494856959
+      ],
+      "max_joint_error_rad": 0.5658683258783586,
+      "max_joint_speed_rad_s": 0.4717293256672402,
+      "finger_error_m": [
+        0.019374306664240438,
+        0.02823183205033032
+      ],
+      "finger_speed_m_s": [
+        0.027615810196911797,
+        0.031323025881558456
+      ],
+      "max_finger_error_m": 0.02823183205033032,
+      "max_finger_speed_m_s": 0.031323025881558456,
+      "ready": false
+    },
+    "contacts": [
+      {
+        "geom1": 209,
+        "geom2": 73,
+        "pair": [
+          73,
+          209
+        ],
+        "geom1_name": "flat_stove_1_g5",
+        "geom2_name": "gripper0_finger1_collision",
+        "dist": -0.00039304353147862075,
+        "pos": [
+          -0.391704286916207,
+          0.17869819253066097,
+          0.9175834782342608
+        ],
+        "normal": [
+          2.824682091698181e-13,
+          -1.4123410458490905e-13,
+          1.0
+        ],
+        "outward_normal": [
+          2.824682091698181e-13,
+          -1.4123410458490905e-13,
+          1.0
+        ],
+        "self": false
+      },
+      {
+        "geom1": 77,
+        "geom2": 223,
+        "pair": [
+          77,
+          223
+        ],
+        "geom1_name": "gripper0_finger2_pad_collision",
+        "geom2_name": "flat_stove_1_g19",
+        "dist": -3.25771961113049e-05,
+        "pos": [
+          -0.43173180141345324,
+          0.1994091003395624,
+          0.926735705300954
+        ],
+        "normal": [
+          0.5787335595328116,
+          -0.8155166871808827,
+          -0.0
+        ],
+        "outward_normal": [
+          -0.5787335595328116,
+          0.8155166871808827,
+          0.0
+        ],
+        "self": false
+      }
+    ]
+  },
+  "home": {
+    "joint_names": [
+      "robot0_joint1",
+      "robot0_joint2",
+      "robot0_joint3",
+      "robot0_joint4",
+      "robot0_joint5",
+      "robot0_joint6",
+      "robot0_joint7"
+    ],
+    "joint_indexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "arm_error_rad": [
+      0.2055833129885631,
+      0.48433307355928246,
+      0.36937136225975903,
+      0.3298703943318855,
+      0.42156262094510305,
+      0.5658683258783586,
+      0.162862068309103
+    ],
+    "arm_speed_rad_s": [
+      0.02075663774008609,
+      0.00010917479613376359,
+      0.10146111127434726,
+      0.032072015048046465,
+      0.4717293256672402,
+      0.062345307562861524,
+      0.23161494856959
+    ],
+    "max_joint_error_rad": 0.5658683258783586,
+    "max_joint_speed_rad_s": 0.4717293256672402,
+    "finger_error_m": [
+      0.019374306664240438,
+      0.02823183205033032
+    ],
+    "finger_speed_m_s": [
+      0.027615810196911797,
+      0.031323025881558456
+    ],
+    "max_finger_error_m": 0.02823183205033032,
+    "max_finger_speed_m_s": 0.031323025881558456,
+    "ready": false
+  },
+  "contacts": [
+    {
+      "geom1": 209,
+      "geom2": 73,
+      "pair": [
+        73,
+        209
+      ],
+      "geom1_name": "flat_stove_1_g5",
+      "geom2_name": "gripper0_finger1_collision",
+      "dist": -0.00039304353147862075,
+      "pos": [
+        -0.391704286916207,
+        0.17869819253066097,
+        0.9175834782342608
+      ],
+      "normal": [
+        2.824682091698181e-13,
+        -1.4123410458490905e-13,
+        1.0
+      ],
+      "outward_normal": [
+        2.824682091698181e-13,
+        -1.4123410458490905e-13,
+        1.0
+      ],
+      "self": false
+    },
+    {
+      "geom1": 77,
+      "geom2": 223,
+      "pair": [
+        77,
+        223
+      ],
+      "geom1_name": "gripper0_finger2_pad_collision",
+      "geom2_name": "flat_stove_1_g19",
+      "dist": -3.25771961113049e-05,
+      "pos": [
+        -0.43173180141345324,
+        0.1994091003395624,
+        0.926735705300954
+      ],
+      "normal": [
+        0.5787335595328116,
+        -0.8155166871808827,
+        -0.0
+      ],
+      "outward_normal": [
+        -0.5787335595328116,
+        0.8155166871808827,
+        0.0
+      ],
+      "self": false
+    }
+  ],
+  "physical_streak": 0,
+  "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/stove_exit/all_actions.mp4",
+  "errors": [],
+  "status": "blocked",
+  "initialization_steps": 10,
+  "initial_state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+  "terminal_state_sha": "199cc804acf22ad0c812f2d260d622658edcffca609e66d13f652a52ac737569",
+  "core_counts": {
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  },
+  "actual_helper_counts": {
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  }
+}

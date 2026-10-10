@@ -1,0 +1,610 @@
+{
+  "case_id": "soup_negative",
+  "context_origin": "fixed_historical_subtask_fixture",
+  "origin_sha": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+  "terminal_sha": "a18207f6c4662f2b056c117814601ae6a11fac83e8fc3c93ff2bd16b198183d8",
+  "origin_check": null,
+  "terminal_check": "sha_match",
+  "phase_counts": {
+    "replay": 336,
+    "release": 0,
+    "movement": 0,
+    "confirm": 0,
+    "home": 0
+  },
+  "initial_vision_decision": {
+    "target_visible": true,
+    "destination_visible": true,
+    "at_destination": false,
+    "supported": true,
+    "released": false,
+    "stable": null,
+    "operation_achieved": false,
+    "clear_of_target": true,
+    "boxes": {
+      "agentview": {
+        "target": [
+          0.58,
+          0.34,
+          0.76,
+          0.46
+        ],
+        "destination": [
+          0.78,
+          0.44,
+          1.0,
+          0.72
+        ],
+        "gripper": [
+          0.38,
+          0.0,
+          0.76,
+          0.4
+        ]
+      },
+      "wrist": {
+        "target": [
+          0.44,
+          0.22,
+          0.6,
+          0.32
+        ],
+        "destination": null,
+        "gripper": [
+          0.2,
+          0.4,
+          0.6,
+          0.8
+        ]
+      }
+    },
+    "evidence": [
+      "In agentview frames 0 and 2, the alphabet_soup_1 (target) is held by the gripper and not in the basket (destination).",
+      "In wrist frames 1 and 3, the target is visible on the table, separate from the gripper, indicating it was dropped or released onto the table, not into the basket.",
+      "The basket (destination) is empty in all frames.",
+      "Gripper is open in wrist frames but target is not inside basket; target lies on table surface."
+    ],
+    "unknown_reasons": [
+      "Stability of the target on the table cannot be judged due to lack of motion or contact detail in static frames.",
+      "Exact release timing and contact state during release are not observable."
+    ]
+  },
+  "finish": {
+    "status": "skipped_negative"
+  },
+  "final_snapshot": {
+    "state_sha": "a18207f6c4662f2b056c117814601ae6a11fac83e8fc3c93ff2bd16b198183d8",
+    "gold": {
+      "predicates": {
+        "in|alphabet_soup_1|basket_1_contain_region": false
+      },
+      "objects": {
+        "alphabet_soup_1": {
+          "position": [
+            0.0021575036366279334,
+            0.12505391962474585,
+            0.6673422413517015
+          ],
+          "quaternion": [
+            0.22269900977538032,
+            0.4306125224694008,
+            0.4880480437840488,
+            0.7258010150834511
+          ],
+          "linear_velocity": [
+            -0.01262974723660959,
+            0.010300748807245689,
+            -0.01786531546967174
+          ],
+          "angular_velocity": [
+            0.029394075858167012,
+            -0.09158447702271726,
+            0.17172509546920858
+          ],
+          "grasped": true,
+          "error": null
+        },
+        "cream_cheese_1": {
+          "position": [
+            0.07851475615653067,
+            -0.19384593250156518,
+            0.4456959215200001
+          ],
+          "quaternion": [
+            -4.8754735302531797e-20,
+            3.909617252075502e-17,
+            1.3401520851969125e-17,
+            1.0
+          ],
+          "linear_velocity": [
+            -1.8126219657506943e-18,
+            -5.17293072052969e-19,
+            3.953037896751578e-15
+          ],
+          "angular_velocity": [
+            -8.883381790755753e-17,
+            4.7009124583594553e-17,
+            -1.473205160296033e-17
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "tomato_sauce_1": {
+          "position": [
+            -0.11728844084700195,
+            0.05575548547705526,
+            0.47516927848924284
+          ],
+          "quaternion": [
+            -0.00246772169733591,
+            0.0022070378667393,
+            0.7074518281383777,
+            0.7067538115901091
+          ],
+          "linear_velocity": [
+            -2.3167981695661616e-15,
+            -1.4974965695069613e-15,
+            8.800236282524758e-15
+          ],
+          "angular_velocity": [
+            -3.81215495980234e-14,
+            1.9651731086332822e-16,
+            -5.498879144127651e-14
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "ketchup_1": {
+          "position": [
+            -0.26843450234583466,
+            -0.14854799120794374,
+            0.509179921516479
+          ],
+          "quaternion": [
+            0.4999999583020072,
+            0.4999999585002978,
+            0.5000000401518702,
+            0.5000000430458182
+          ],
+          "linear_velocity": [
+            3.709145103407977e-15,
+            3.991427850086264e-15,
+            1.3332124906092243e-14
+          ],
+          "angular_velocity": [
+            5.119590479522449e-14,
+            3.2691139645279985e-19,
+            -5.516009358409653e-14
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "orange_juice_1": {
+          "position": [
+            0.009971966676264137,
+            -0.25926272106022036,
+            0.5065099215193675
+          ],
+          "quaternion": [
+            0.49999999833504905,
+            0.4999999973697392,
+            0.5000000025195244,
+            0.5000000017756863
+          ],
+          "linear_velocity": [
+            2.0029706197186695e-15,
+            3.6302137782604706e-15,
+            2.3018716073671168e-14
+          ],
+          "angular_velocity": [
+            2.885170492562905e-14,
+            4.227181809027104e-19,
+            -5.201104499950985e-14
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "milk_1": {
+          "position": [
+            0.04926647003025917,
+            -0.12138603670747229,
+            0.5065099215193676
+          ],
+          "quaternion": [
+            0.499999997369739,
+            0.4999999983350491,
+            0.5000000017756867,
+            0.500000002519525
+          ],
+          "linear_velocity": [
+            -2.6897005384021774e-15,
+            -2.0695012249527876e-16,
+            2.148574590486646e-14
+          ],
+          "angular_velocity": [
+            -3.852331634786391e-14,
+            -1.4373010916014428e-19,
+            3.0456956044322392e-15
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "butter_1": {
+          "position": [
+            0.07044719834440566,
+            0.052656177719437446,
+            0.4454699215200001
+          ],
+          "quaternion": [
+            -1.2547300625069507e-17,
+            -2.4606712769477546e-17,
+            1.2659226042629929e-17,
+            1.0
+          ],
+          "linear_velocity": [
+            -1.451062619199053e-20,
+            9.82977947741146e-19,
+            4.600063080003863e-15
+          ],
+          "angular_velocity": [
+            -1.5893254864336464e-15,
+            2.5311312546087307e-16,
+            1.711152967517645e-18
+          ],
+          "grasped": false,
+          "error": null
+        },
+        "basket_1": {
+          "position": [
+            -0.0019505361011864385,
+            0.26881026581223894,
+            0.43219210516477036
+          ],
+          "quaternion": [
+            0.7079625833212245,
+            -0.0016929363398344973,
+            0.001697050415335097,
+            0.706245874043576
+          ],
+          "linear_velocity": [
+            -2.3137157178916807e-17,
+            6.6269255411774904e-18,
+            8.93280317193754e-15
+          ],
+          "angular_velocity": [
+            5.543141903041551e-15,
+            -1.4650486315680629e-15,
+            2.6773155324825718e-17
+          ],
+          "grasped": false,
+          "error": null
+        }
+      },
+      "held_objects": [
+        "alphabet_soup_1"
+      ],
+      "gripper_qpos": [
+        0.0324285348409063,
+        -0.030114827388808163
+      ],
+      "eef_position": [
+        -0.0017816944256882229,
+        0.12323064266662613,
+        0.6800949977219105
+      ],
+      "grasp_observation_complete": true,
+      "strict_candidate": false,
+      "phases": {
+        "in|alphabet_soup_1|basket_1_contain_region": "transporting"
+      },
+      "goal_objects": [
+        "alphabet_soup_1"
+      ]
+    },
+    "home": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.0441922648901817,
+        0.18725612533187522,
+        0.10597480110963449,
+        0.13241338332274566,
+        0.47157512256176365,
+        0.04846946313873701,
+        0.8435814598586985
+      ],
+      "arm_speed_rad_s": [
+        0.005964651987393827,
+        0.0729992226705383,
+        0.01661131542663063,
+        0.05602660179317853,
+        0.12342138445071768,
+        0.1339610951807677,
+        0.014330586775649301
+      ],
+      "max_joint_error_rad": 0.8435814598586985,
+      "max_joint_speed_rad_s": 0.1339610951807677,
+      "finger_error_m": [
+        0.006301023971259319,
+        0.008613947660247381
+      ],
+      "finger_speed_m_s": [
+        0.0006988498448586981,
+        0.0002474893897242304
+      ],
+      "max_finger_error_m": 0.008613947660247381,
+      "max_finger_speed_m_s": 0.0006988498448586981,
+      "ready": false
+    },
+    "contacts": [
+      {
+        "geom1": 77,
+        "geom2": 87,
+        "pair": [
+          77,
+          87
+        ],
+        "geom1_name": "gripper0_finger1_pad_collision",
+        "geom2_name": "alphabet_soup_1_g6",
+        "dist": -0.00010706894071470414,
+        "pos": [
+          -0.029622191795808533,
+          0.1092274657573314,
+          0.6715822593650617
+        ],
+        "normal": [
+          0.8423624929206868,
+          0.5167684935341135,
+          0.15289131633591463
+        ],
+        "outward_normal": [
+          -0.8423624929206868,
+          -0.5167684935341135,
+          -0.15289131633591463
+        ],
+        "self": false
+      },
+      {
+        "geom1": 77,
+        "geom2": 87,
+        "pair": [
+          77,
+          87
+        ],
+        "geom1_name": "gripper0_finger1_pad_collision",
+        "geom2_name": "alphabet_soup_1_g6",
+        "dist": -0.00014020359265995262,
+        "pos": [
+          -0.028054017414827354,
+          0.10242624177261654,
+          0.6860386351149311
+        ],
+        "normal": [
+          0.8423624929206868,
+          0.5167684935341135,
+          0.15289131633591463
+        ],
+        "outward_normal": [
+          -0.8423624929206868,
+          -0.5167684935341135,
+          -0.15289131633591463
+        ],
+        "self": false
+      },
+      {
+        "geom1": 77,
+        "geom2": 87,
+        "pair": [
+          77,
+          87
+        ],
+        "geom1_name": "gripper0_finger1_pad_collision",
+        "geom2_name": "alphabet_soup_1_g6",
+        "dist": -0.00010706478960454241,
+        "pos": [
+          -0.024669957585797847,
+          0.10206435584851538,
+          0.6685088031755284
+        ],
+        "normal": [
+          0.8423624929206868,
+          0.5167684935341135,
+          0.15289131633591463
+        ],
+        "outward_normal": [
+          -0.8423624929206868,
+          -0.5167684935341135,
+          -0.15289131633591463
+        ],
+        "self": false
+      },
+      {
+        "geom1": 77,
+        "geom2": 96,
+        "pair": [
+          77,
+          96
+        ],
+        "geom1_name": "gripper0_finger1_pad_collision",
+        "geom2_name": "alphabet_soup_1_g15",
+        "dist": -8.274340574634039e-05,
+        "pos": [
+          -0.029723282788655922,
+          0.1093947926767437,
+          0.6716532166203102
+        ],
+        "normal": [
+          0.8423624929206869,
+          0.5167684935341135,
+          0.1528913163359147
+        ],
+        "outward_normal": [
+          -0.8423624929206869,
+          -0.5167684935341135,
+          -0.1528913163359147
+        ],
+        "self": false
+      },
+      {
+        "geom1": 77,
+        "geom2": 96,
+        "pair": [
+          77,
+          96
+        ],
+        "geom1_name": "gripper0_finger1_pad_collision",
+        "geom2_name": "alphabet_soup_1_g15",
+        "dist": -0.0001158780576915902,
+        "pos": [
+          -0.028155108407674746,
+          0.10259356869202883,
+          0.6861095923701797
+        ],
+        "normal": [
+          0.8423624929206869,
+          0.5167684935341135,
+          0.1528913163359147
+        ],
+        "outward_normal": [
+          -0.8423624929206869,
+          -0.5167684935341135,
+          -0.1528913163359147
+        ],
+        "self": false
+      },
+      {
+        "geom1": 80,
+        "geom2": 88,
+        "pair": [
+          80,
+          88
+        ],
+        "geom1_name": "gripper0_finger2_pad_collision",
+        "geom2_name": "alphabet_soup_1_g7",
+        "dist": -0.00024060351894417476,
+        "pos": [
+          0.022352794505900178,
+          0.14117470040793872,
+          0.6809030007303347
+        ],
+        "normal": [
+          -0.8423622538249255,
+          -0.5167688289176002,
+          -0.1528915000584538
+        ],
+        "outward_normal": [
+          0.8423622538249255,
+          0.5167688289176002,
+          0.1528915000584538
+        ],
+        "self": false
+      },
+      {
+        "geom1": 80,
+        "geom2": 88,
+        "pair": [
+          80,
+          88
+        ],
+        "geom1_name": "gripper0_finger2_pad_collision",
+        "geom2_name": "alphabet_soup_1_g7",
+        "dist": -0.00020746886699892379,
+        "pos": [
+          0.02392096888280216,
+          0.13437347642929737,
+          0.6953593764821504
+        ],
+        "normal": [
+          -0.8423622538249255,
+          -0.5167688289176002,
+          -0.1528915000584538
+        ],
+        "outward_normal": [
+          0.8423622538249255,
+          0.5167688289176002,
+          0.1528915000584538
+        ],
+        "self": false
+      },
+      {
+        "geom1": 80,
+        "geom2": 88,
+        "pair": [
+          80,
+          88
+        ],
+        "geom1_name": "gripper0_finger2_pad_collision",
+        "geom2_name": "alphabet_soup_1_g7",
+        "dist": -0.00024060767474013906,
+        "pos": [
+          0.027310618833471485,
+          0.13400350472918696,
+          0.6778260752013705
+        ],
+        "normal": [
+          -0.8423622538249255,
+          -0.5167688289176002,
+          -0.1528915000584538
+        ],
+        "outward_normal": [
+          0.8423622538249255,
+          0.5167688289176002,
+          0.1528915000584538
+        ],
+        "self": false
+      },
+      {
+        "geom1": 80,
+        "geom2": 88,
+        "pair": [
+          80,
+          88
+        ],
+        "geom1_name": "gripper0_finger2_pad_collision",
+        "geom2_name": "alphabet_soup_1_g7",
+        "dist": -0.00020747243611389347,
+        "pos": [
+          0.028178888467055404,
+          0.1282146510039465,
+          0.6927168259189515
+        ],
+        "normal": [
+          -0.8423622538249255,
+          -0.5167688289176002,
+          -0.1528915000584538
+        ],
+        "outward_normal": [
+          0.8423622538249255,
+          0.5167688289176002,
+          0.1528915000584538
+        ],
+        "self": false
+      }
+    ]
+  },
+  "home": null,
+  "contacts": null,
+  "physical_streak": 0,
+  "video": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-10-visual-finish/pilot/soup_negative/all_actions.mp4",
+  "errors": [],
+  "status": "correct_negative",
+  "initialization_steps": 10,
+  "initial_state_sha": "9fb2f99b20c6a89fe43f018433dc54263f24ae09f2006544536b90ff89e11e1f",
+  "terminal_state_sha": "a18207f6c4662f2b056c117814601ae6a11fac83e8fc3c93ff2bd16b198183d8"
+}
