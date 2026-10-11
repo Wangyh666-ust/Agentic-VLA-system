@@ -5993,6 +5993,268 @@
           "sha256": "a803ffc033346577efea890beb82aac8162de0d54f728c77e55f28bf0a721b4e"
         }
       ]
+    },
+    {
+      "id": "20261011-two-view-negatives",
+      "title": "同步双视角无阶段标签：盘旁碗仍误报，两个组合未启动",
+      "date": "2026-10-11",
+      "question_keys": [
+        "visual-completion",
+        "release-stop",
+        "joint-home-handoff"
+      ],
+      "tags": [
+        "LIBERO",
+        "Qwen",
+        "false-positive",
+        "双视角",
+        "零动作",
+        "负例门禁"
+      ],
+      "conditions": [
+        "Reuse 20261011-generic-combos VLA60 pre-release and final after-home captures; exactly latest wrist+sideview with synced encoder; no stage/phase labels in actual prompt.",
+        "Current source based on2b77ffb plus frozen two_view_pilot wrapper; Qwen3-VL-plus thinking1024 temperature0 max_tokens1600; two requests, no retries or prompt changes.",
+        "150/300 schedule configured for future online work; not physically exercised this round. Independent negative labels from saved original pictures/records, not sent to Qwen."
+      ],
+      "findings": [
+        "Pre-release negative returned goal=false/holding=true, consistent with negative label but rationale still invokes contact.",
+        "After-home bowl beside plate returned goal=true/holding=false; false spatial judgment. Model also called near-standard-open feedback closed, while maximum difference from standard was about0.0000171.",
+        "Negative gate did not pass; bowl→wine and bowl→stove not started. NewVLA/helper/replay/home0, subagents0; 2 raw-response Qwen calls/4031tokens.",
+        "Both full HTTP bodies reconstructed from original PNGs; hashes match actual recorded request SHA. Exactly2 images each, no stage label sent."
+      ],
+      "limits": [
+        "Two different saved states, one request each; not a reliability measurement or isolated causal comparison.",
+        "No new physical motion, no online check-point/finishing/home/subtask handoff validation, no evidence of VLA performance change.",
+        "No retry, new prompt tweak, fine-tuning or UI automatic finishing activation. Video is the existing negative-source run, not a new combination."
+      ],
+      "configuration": {
+        "scene": "goal_table",
+        "suite": "libero_goal",
+        "task_id": 8,
+        "seed": 0,
+        "init_state_index": 0,
+        "cases": {
+          "bowl_wine": {
+            "request": "先将碗放到盘子上，再将酒瓶放到架子上。",
+            "capabilities": [
+              "bowl_to_plate",
+              "wine_to_rack"
+            ]
+          },
+          "bowl_stove": {
+            "request": "先将碗放到盘子上，再打开灶台。",
+            "capabilities": [
+              "bowl_to_plate",
+              "stove_on"
+            ]
+          }
+        },
+        "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+        "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+        "source_sha256": {
+          "First_Phase/scene_demo/finish_v1/combo_pilot.py": "7da3635ea387bc5dbd85096785bcfaa7bfa99116d17c78c9a24b7636f8f6b191",
+          "First_Phase/scene_demo/finish_v1/simple_checker.py": "0909ea6fe85c7da3a18e51d07dd526a7e8f72710ea8583111639338ee2772d99",
+          "First_Phase/scene_demo/finish_v1/runtime.py": "421d7fd925a2d2261804fbdd8d6bb36d0e7731d4a609dd98da5c4b25d66c199a",
+          "First_Phase/scene_demo/finish_v1/vision.py": "47b900dfb70aa270679e1dbf2e8399410f2b551abce3811570e09de2c32023c3",
+          "First_Phase/scene_demo/finish_v1/control.py": "66f6741def59c8a6f92cbe3af5108d20d57b185114c097aa801bfbb803d77d20",
+          "First_Phase/scene_demo/finish_v1/sensors.py": "403576acee777920f98c58d51cccdcde4b1c818ebf24dd3db71efbf511b204bf",
+          "First_Phase/scene_demo/finish_v1/geometry.py": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70",
+          "First_Phase/scene_demo/service.py": "c9fdbf2495a11d6821ec2b254c0e2f5677ee46adb44fb3d924263071008b2a52",
+          "First_Phase/scene_demo/joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21",
+          "First_Phase/scene_demo/safe_exit.py": "54824e433307a5eb9634783f66b9cb654967f35cec7ec661ff0e70b6c3f635b5",
+          "First_Phase/scene_demo/safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+          "First_Phase/scene_demo/catalog.py": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02",
+          "First_Phase/scene_demo/placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+          "First_Phase/scene_demo/finish_v1/two_view_pilot.py": "83fd1c1424c2614f407391fee3c3221ad4323ca60c3c6878dfcf514bf9d3b915"
+        },
+        "vla_budget_per_subgoal": 300,
+        "qwen_max_per_subgoal": 6,
+        "completion_mode": "release_verified",
+        "grasp_guard_mode": "shadow",
+        "finish_mode": "visual",
+        "checker": "generic_state_handoff_two_current_views_no_stage",
+        "thinking_budget": 1024,
+        "check_schedule": "VLA150/300 only; max2 prechecks plus final cleanup check",
+        "home": "original streaming, .01rad waypoints, kp50, max360, five ready samples",
+        "execution": "single primary agent and local worker; no delegation or claimed model override",
+        "negative_cases": [
+          {
+            "id": "before_wrong_release",
+            "context": {
+              "user_request": "先将碗放到盘子上，再将酒瓶放到架子上。",
+              "current_subtask": {
+                "operation": "place",
+                "target": "akita_black_bowl_1",
+                "destination": "plate_1",
+                "phase": "executing"
+              },
+              "criteria": {
+                "must_release": true,
+                "must_stabilize": true,
+                "must_clear": true,
+                "must_preserve_target": true,
+                "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it"
+              },
+              "sensor_frames": [
+                {
+                  "frame": 0,
+                  "view": "wrist",
+                  "timestamp": 3.499999999999836
+                },
+                {
+                  "frame": 1,
+                  "view": "sideview",
+                  "timestamp": 3.499999999999836
+                }
+              ],
+              "actuator_measurements": {
+                "timestamp": 3.499999999999836,
+                "stage": "executing",
+                "finger_qpos": [
+                  0.0024278535258504008,
+                  -0.0025736590054936067
+                ],
+                "max_abs_arm_qvel": 0.8997384338079935,
+                "standard_open_finger_qpos": [
+                  0.03873057586502897,
+                  -0.03872776397868675
+                ]
+              }
+            },
+            "source_request": "First_Phase/scene_demo/results/2026-10-11-generic-combos/bowl_wine/runs/20261011T044326Z_goal_table_6e6d28d2/cap_01_bowl_to_plate_18c32a1f/finish/model_requests/call_01_request.json",
+            "source_sha256": "b54d395687f8a6c95cfd15abd2777564077775c9346263eb6f6c98b245efeff8",
+            "images": [
+              {
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-generic-combos/bowl_wine/runs/20261011T044326Z_goal_table_6e6d28d2/cap_01_bowl_to_plate_18c32a1f/finish/sensors/cap000038_wrist.png",
+                "sha256": "b1dcd43e3a6e96bf6afa0be147473161d9a17fbaedab3658b235cb3943973e9a"
+              },
+              {
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-generic-combos/bowl_wine/runs/20261011T044326Z_goal_table_6e6d28d2/cap_01_bowl_to_plate_18c32a1f/finish/sensors/cap000039_sideview.png",
+                "sha256": "0c0f5834c2382da033f19f17ebed1b98270a2ba564ad6082bad7adef32cecf07"
+              }
+            ],
+            "expected_goal_achieved": false
+          },
+          {
+            "id": "beside_plate_after_home",
+            "context": {
+              "user_request": "先将碗放到盘子上，再将酒瓶放到架子上。",
+              "current_subtask": {
+                "operation": "place",
+                "target": "akita_black_bowl_1",
+                "destination": "plate_1",
+                "phase": "home"
+              },
+              "criteria": {
+                "must_release": true,
+                "must_stabilize": true,
+                "must_clear": true,
+                "must_preserve_target": true,
+                "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it"
+              },
+              "sensor_frames": [
+                {
+                  "frame": 0,
+                  "view": "wrist",
+                  "timestamp": 14.350000000001462
+                },
+                {
+                  "frame": 1,
+                  "view": "sideview",
+                  "timestamp": 14.350000000001462
+                }
+              ],
+              "actuator_measurements": {
+                "timestamp": 14.350000000001462,
+                "stage": "home",
+                "finger_qpos": [
+                  0.03871346584047291,
+                  -0.03874461678773336
+                ],
+                "max_abs_arm_qvel": 0.005687527695109356,
+                "standard_open_finger_qpos": [
+                  0.03873057586502897,
+                  -0.03872776397868675
+                ]
+              }
+            },
+            "source_request": "First_Phase/scene_demo/results/2026-10-11-generic-combos/bowl_wine/runs/20261011T044326Z_goal_table_6e6d28d2/cap_01_bowl_to_plate_18c32a1f/finish/model_requests/call_02_request.json",
+            "source_sha256": "c105349d6ce3a812469db74552ef5ccdcfe52a2c55f28ed746ee2cca6bcef01e",
+            "images": [
+              {
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-generic-combos/bowl_wine/runs/20261011T044326Z_goal_table_6e6d28d2/cap_01_bowl_to_plate_18c32a1f/finish/sensors/cap000212_wrist.png",
+                "sha256": "b90fa6f80fcee98db76e03b3c094b8a321a91a1f240af35f5d6f469949b3ad69"
+              },
+              {
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-generic-combos/bowl_wine/runs/20261011T044326Z_goal_table_6e6d28d2/cap_01_bowl_to_plate_18c32a1f/finish/sensors/cap000213_sideview.png",
+                "sha256": "24ab0e0f7eb20635e3958cdd1f8abd7eaa2e8b6202862c6fb10688dea1685eba"
+              }
+            ],
+            "expected_goal_achieved": false
+          }
+        ],
+        "qwen_negative_max": 2,
+        "actual_execution": "analyze_saved_negatives_only; new_physical_actions0"
+      },
+      "configuration_complete": false,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-11-two-view-combos.json",
+          "sha256": "a87ccf4fa956c5c9ca4f88addf66dae6ef2960c7f06426b7a5b60b8fbe0e0098"
+        },
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-11-two-view-negatives.json",
+          "sha256": "27091063317bd95f0c02a26ae7b2a5444eeccb3a9275ffed13969196692d3a4b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/README.md",
+          "sha256": "d11c9fe5875adf7d5cf8df6a44a4b582df3913f21147958c32f5867a8d07ab2a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/negatives/call_01_complete_prompt.txt",
+          "sha256": "b6e418a08eea45d30d13ef781acb24b54bb696cc88a72011e2cfda9bdfa1997f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/negatives/call_01_request.json",
+          "sha256": "8bbe46467d99c6cb79f6805b41290057f266636f6bcf5622f986ab60490304bb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/negatives/call_01_response.json",
+          "sha256": "75122d033c28f38bf5b3a5632e9f1c93f51c221b6d846b04d3eb83bf2f80a643"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/negatives/call_02_complete_prompt.txt",
+          "sha256": "465af02ecbf0caeb78eaaddf12f2fb121b838fde1fc37ca7f5b37cadf09eff7f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/negatives/call_02_request.json",
+          "sha256": "e10d2874d8b9ce5d05a8c3aa10e73ba7b34320b36825141f99aadbc09d6f34b7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/negatives/call_02_response.json",
+          "sha256": "f2282f6ea12e75f4749cd57d6314739ed2afd0d9b395053e9503f5803cfcee77"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/negatives/preflight.log",
+          "sha256": "f2e95d90457c7442d2ae7dec66ed3aff5d642c71337f1296ca66533087d1f35c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/negatives/result.json",
+          "sha256": "f747a0615795ae520e16eedb5326970825c85b94533ef98c3479cde1d0b5a9e9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/source_snapshot.zip",
+          "sha256": "a432247993f416a8143f2f8f22d27610cd8a410b5013dd65fe599c607d8738c4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/summary.json",
+          "sha256": "884e30590de6cbafd9d32728b2b6d2b4f27a14297b4d64ed6325b2c052a60696"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-two-view-combos/manifest.json",
+          "sha256": "f9c86b5be6ec69071442bc764f82e3cc0437acb3192210eaa2b7f3f872ad8089"
+        }
+      ]
     }
   ]
 }
