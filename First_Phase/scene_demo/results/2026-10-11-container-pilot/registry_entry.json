@@ -1,0 +1,10 @@
+{
+  "id": "20261011-container-pilot",
+  "title": "番茄酱与微波炉初测：相机覆盖不足、杯子入炉误判，关门未启动",
+  "date": "2026-10-11",
+  "question_keys": ["container-goal-finish-transfer"],
+  "tags": ["tomato", "basket", "microwave", "cup", "visual", "camera", "failure"],
+  "conditions": ["原生LIBERO10 task0/task9，Panda seed0 init0，每例一次；同一预训练SmolVLA，150/300检查，双视角同步编码器，新门开关接口；无微调、回放或子agent。", "运行源码a3c6edd，当前反馈退离与原归位复用，独立固定入篮/入炉/关门目标不输入Qwen。"],
+  "findings": ["番茄酱150步Qwen因sideview没有篮子返回null，零收尾；原生入篮150个样本均假。", "杯子150步false，300步Qwen称杯子在炉腔而判true，实际开爪9/退离26/归位107；原home五连通过，但原生入炉300个VLA样本均假、独立五连0，关门未启动。", "原始发送图片确认sideview漏篮子/主要看微波炉背面；同时保存的agentview有更好的目标覆盖。新VLA450、收尾144、Qwen4次8483tokens。"],
+  "limits": ["未完成两场景完整流程，关门零执行不能评价关门技能。", "少量失败不能证明训练缺陷；归位成功不能代替目标成功；相机选择与后续提示修正需实际补测。"]
+}

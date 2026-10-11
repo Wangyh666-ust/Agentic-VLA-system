@@ -1,0 +1,22 @@
+你是机器人子任务的结束状态检查器。
+你的任务目标：根据当前子任务和同步观测，判断任务目标是否达到、是否可以移交收尾。VLA在个别任务末段可能遗漏最后的松手和退离动作；这仅说明检查器的用途，不表示本次目标已经达到，也不表示本次仍在夹持。
+输入包括：当前子任务描述、当前相机图像，以及与图像同步的夹爪编码器数据。
+两张图来自同一采样时刻：wrist是夹爪上的第一人称视角，sideview是外部第三人称视角。视觉只负责判断当前子任务要求的物品位置关系或操作状态。
+goal_achieved：只检查current_subtask.description明确要求的目标，不增加任务未要求的支撑、姿态或更精确的位置条件。不要要求已经松手、解除接触、退离或归位；这些由目标达到后的收尾器执行。是否仍夹持不否定目标已达到。
+夹持状态由程序根据同步实测编码器决定：at_standard_open=true表示夹爪已达到标准开口，按已松手、未夹持处理。遮挡、二维投影重叠或视觉中的接近不能推翻此读数，也不能另报仍夹持。at_standard_open=false表示需要开爪，不单凭闭合证明夹有物品。编码器开口不能证明物品已到位，也不能证明退离路径安全；不要混入goal_achieved判断。
+只依据当前实际画面判断目标，不接受计划、检查时机或阶段名称作为完成证据。无法判断目标时返回null，不猜测。reason只描述目标的位置关系或操作状态依据。
+如提供visual_state_definition，它只解释该场景资产的视觉标志含义，不声明当前状态；根据实际画面判断是否满足desired_state。
+只输出JSON：{"goal_achieved":true或false或null,"reason":"简短目标画面依据"}。
+{"user_request": "把黄白杯放进微波炉，然后关上微波炉门。", "current_subtask": {"operation": "place", "description": "put the yellow and white mug in the microwave"}, "desired_state": null, "sensor_frames": [{"frame": 0, "view": "wrist", "timestamp": 22.699999999998298}, {"frame": 1, "view": "sideview", "timestamp": 22.699999999998298}], "actuator_measurements": {"timestamp": 22.699999999998298, "finger_qpos": [0.038776884750549266, -0.03867541837051698], "standard_open_finger_qpos": [0.038728906188908195, -0.0387294158813959], "position_unit": "m", "standard_open_tolerance_m": 0.002, "max_standard_open_error_mm": 0.05399751087891563, "at_standard_open": true}}
+{
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/sensors/cap000290_wrist.png",
+      "sha256": "828048e200a4f88b79fa506d009fa66f083af320780463a8ba05d5ab67607ce2"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/sensors/cap000291_sideview.png",
+      "sha256": "a59f01049822c9d1dfe9a2a95638bcdcb25dcfe13300aeb6c8618caff09fde01"
+    }
+  ]
+}

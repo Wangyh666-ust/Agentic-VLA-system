@@ -1,0 +1,518 @@
+{
+  "id": "20261011-container-pilot",
+  "cases": [
+    {
+      "case": "sauce_basket",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "sauce_to_basket",
+          "success": false,
+          "reason": "visual_unknown",
+          "actual_vla": 150,
+          "grasp_actions": 0,
+          "actual_finish_counts": {},
+          "finish_triggered": false,
+          "native_goal_true_samples": 0,
+          "last_native_goal": {
+            "in|tomato_sauce_1|basket_1_contain_region": false
+          },
+          "release_open_actions": 0,
+          "concurrent_open_retreat": null,
+          "movement_with_open_target": 0,
+          "home_streak": 0,
+          "independent_streak": 0,
+          "final_independent": null,
+          "finish_reason": null,
+          "feedback_retreat": {
+            "ok": null,
+            "reason": null,
+            "mode": null,
+            "travel_m": null,
+            "endpoint_clearance": null
+          },
+          "initial_encoder_open": true,
+          "checks": [
+            {
+              "call_index": 1,
+              "final_answer": {
+                "goal_achieved": null,
+                "reason": "sideview图像中未显示篮子，无法确认番茄酱罐是否在篮子内"
+              },
+              "encoder_open": true
+            }
+          ],
+          "first_finish_command": null,
+          "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/sauce_basket/runs/20261011T113125Z_basket_two_8d7e3fef/cap_01_sauce_to_basket_f2ead706"
+        }
+      ],
+      "checks": [
+        {
+          "capability": "sauce_to_basket",
+          "call_index": 1,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": null,
+            "reason": "sideview图像中未显示篮子，无法确认番茄酱罐是否在篮子内"
+          },
+          "final_answer_text": "{\"goal_achieved\": null, \"reason\": \"sideview图像中未显示篮子，无法确认番茄酱罐是否在篮子内\"}",
+          "actual_vla_at_check": null,
+          "last_action_source": null,
+          "usage": {
+            "prompt_tokens": 1094,
+            "completion_tokens": 884,
+            "total_tokens": 1978,
+            "completion_tokens_details": {
+              "reasoning_tokens": 849,
+              "text_tokens": 35
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 324,
+              "text_tokens": 770,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/sauce_basket/runs/20261011T113125Z_basket_two_8d7e3fef/cap_01_sauce_to_basket_f2ead706/finish/sensors/cap000092_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/sauce_basket/runs/20261011T113125Z_basket_two_8d7e3fef/cap_01_sauce_to_basket_f2ead706/finish/sensors/cap000093_sideview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": true,
+          "scheduled_vla_at_check": 150,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/sauce_basket/runs/20261011T113125Z_basket_two_8d7e3fef/cap_01_sauce_to_basket_f2ead706/finish/model_requests/call_01_request.txt"
+        }
+      ],
+      "video_frames": 151,
+      "new_vla": 150,
+      "grasp_actions": 0
+    },
+    {
+      "case": "mug_microwave",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "mug_to_microwave",
+          "success": false,
+          "reason": "independent_finish_failed",
+          "actual_vla": 300,
+          "grasp_actions": 0,
+          "actual_finish_counts": {
+            "release": 9,
+            "movement": 26,
+            "confirm": 2,
+            "home": 107
+          },
+          "finish_triggered": true,
+          "native_goal_true_samples": 0,
+          "last_native_goal": {
+            "in|white_yellow_mug_1|microwave_1_heating_region": false
+          },
+          "release_open_actions": 9,
+          "concurrent_open_retreat": null,
+          "movement_with_open_target": 26,
+          "home_streak": 5,
+          "independent_streak": 0,
+          "final_independent": {
+            "timestamp": 22.699999999998298,
+            "predicates": {
+              "in|white_yellow_mug_1|microwave_1_heating_region": false
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.00013178045485959938,
+                0.0008781841658979384,
+                0.0005731036329480283,
+                0.0016654995393934335,
+                0.0019170332401919703,
+                0.0020551746472299293,
+                0.00333852249752431
+              ],
+              "arm_speed_rad_s": [
+                9.019492671561463e-06,
+                0.0017743977289614212,
+                2.807656366362485e-05,
+                0.0020704454134496996,
+                0.0033760081830974922,
+                0.00048500625052054887,
+                0.006564678174472791
+              ],
+              "max_joint_error_rad": 0.00333852249752431,
+              "max_joint_speed_rad_s": 0.006564678174472791,
+              "finger_error_m": [
+                4.797856164107106e-05,
+                5.399751087891563e-05
+              ],
+              "finger_speed_m_s": [
+                4.0672206479958964e-05,
+                4.595464622539852e-05
+              ],
+              "max_finger_error_m": 5.399751087891563e-05,
+              "max_finger_speed_m_s": 4.595464622539852e-05,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": false,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "in|white_yellow_mug_1|microwave_1_heating_region": {
+                  "linear_speed": 1.724321601588916e-14,
+                  "angular_speed": 7.270602746829595e-15
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": false
+          },
+          "finish_reason": "complete",
+          "feedback_retreat": {
+            "ok": true,
+            "reason": "retreated and settled",
+            "mode": "measured_pose_feedback",
+            "travel_m": 0.030359165821395844,
+            "endpoint_clearance": {
+              "ok": true,
+              "reason": "clear",
+              "min_distance": -0.011793353927676428,
+              "endpoint_hand_clear": true,
+              "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+              "diagnostic": {
+                "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+              }
+            }
+          },
+          "initial_encoder_open": false,
+          "checks": [
+            {
+              "call_index": 1,
+              "final_answer": {
+                "goal_achieved": false,
+                "reason": "黄白杯仍在夹爪上，未放入微波炉内部"
+              },
+              "encoder_open": false
+            },
+            {
+              "call_index": 2,
+              "final_answer": {
+                "goal_achieved": true,
+                "reason": "sideview显示黄白杯已位于微波炉内部腔体中，满足'put the yellow and white mug in the microwave'目标"
+              },
+              "encoder_open": false
+            },
+            {
+              "call_index": 3,
+              "final_answer": {
+                "goal_achieved": true,
+                "reason": "黄白杯位于微波炉内部"
+              },
+              "encoder_open": true
+            }
+          ],
+          "first_finish_command": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              0.004546709115030665,
+              0.3993847099422041,
+              0.0950930482275474,
+              -1.8806072866735142,
+              0.5970530578269964,
+              2.143637820887598,
+              1.6485669445468871
+            ],
+            "arm_qvel": [
+              -0.007970385661127599,
+              -0.03452540058881064,
+              -0.009391121871093845,
+              0.04636413057416581,
+              0.050695972557726544,
+              -0.17074341351043024,
+              0.03717086296165866
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.013357024298564175,
+              -0.01299141131604061
+            ],
+            "finger_qvel": [
+              0.18717061455196554,
+              -0.1843868337373209
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ],
+            "phase": "release",
+            "qtarget": [
+              0.005167631788247197,
+              0.4020416358299097,
+              0.0958292707162612,
+              -1.8842184871543912,
+              0.5929576900285243,
+              2.1570318958923735,
+              1.64551861993461
+            ],
+            "finger_target": [
+              0.038728906188908195,
+              -0.0387294158813959
+            ],
+            "action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3"
+        }
+      ],
+      "checks": [
+        {
+          "capability": "mug_to_microwave",
+          "call_index": 1,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": false,
+            "reason": "黄白杯仍在夹爪上，未放入微波炉内部"
+          },
+          "final_answer_text": "{\"goal_achieved\": false, \"reason\": \"黄白杯仍在夹爪上，未放入微波炉内部\"}",
+          "actual_vla_at_check": null,
+          "last_action_source": null,
+          "usage": {
+            "prompt_tokens": 1106,
+            "completion_tokens": 1057,
+            "total_tokens": 2163,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1025,
+              "text_tokens": 32
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 324,
+              "text_tokens": 782,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/sensors/cap000092_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/sensors/cap000093_sideview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": false,
+          "scheduled_vla_at_check": 150,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/model_requests/call_01_request.txt"
+        },
+        {
+          "capability": "mug_to_microwave",
+          "call_index": 2,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": true,
+            "reason": "sideview显示黄白杯已位于微波炉内部腔体中，满足'put the yellow and white mug in the microwave'目标"
+          },
+          "final_answer_text": "{\"goal_achieved\": true, \"reason\": \"sideview显示黄白杯已位于微波炉内部腔体中，满足'put the yellow and white mug in the microwave'目标\"}",
+          "actual_vla_at_check": null,
+          "last_action_source": null,
+          "usage": {
+            "prompt_tokens": 1110,
+            "completion_tokens": 1072,
+            "total_tokens": 2182,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1025,
+              "text_tokens": 47
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 324,
+              "text_tokens": 786,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/sensors/cap000185_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/sensors/cap000186_sideview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": false,
+          "scheduled_vla_at_check": 300,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/model_requests/call_02_request.txt"
+        },
+        {
+          "capability": "mug_to_microwave",
+          "call_index": 3,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": true,
+            "reason": "黄白杯位于微波炉内部"
+          },
+          "final_answer_text": "{\"goal_achieved\":true,\"reason\":\"黄白杯位于微波炉内部\"}",
+          "actual_vla_at_check": null,
+          "last_action_source": null,
+          "usage": {
+            "prompt_tokens": 1111,
+            "completion_tokens": 1049,
+            "total_tokens": 2160,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1025,
+              "text_tokens": 24
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 324,
+              "text_tokens": 787,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/sensors/cap000290_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/sensors/cap000291_sideview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": true,
+          "scheduled_vla_at_check": 300,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs/20261011T113453Z_microwave_mug_ad291c97/cap_01_mug_to_microwave_71297aa3/finish/model_requests/call_03_request.txt"
+        }
+      ],
+      "video_frames": 329,
+      "new_vla": 300,
+      "grasp_actions": 0
+    }
+  ],
+  "subagents": 0,
+  "training": false,
+  "replay_actions": 0,
+  "standalone_home_trials": 0,
+  "qwen_calls": 4,
+  "qwen_total_tokens": 8483
+}

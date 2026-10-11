@@ -1,0 +1,56 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+WARNING:robosuite_logs:No private macro file found!
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+WARNING:robosuite_logs:It is recommended to use a private macro file
+[robosuite WARNING] To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+WARNING:robosuite_logs:To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py
+[scene-service 2026-10-11T11:34:21Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-pilot/mug_microwave/runs)
+[libero-service 2026-10-11T11:34:22Z] loading config from /home/yhwang/fyp/libero_demo/models/smolvla_libero
+[libero-service 2026-10-11T11:34:23Z] loading SmolVLA weights (n_action_steps=1, dtype=None)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[scene-service 2026-10-11T11:34:53Z] policy ready (n_action_steps=1)
+Loading weights from local directory
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+{"event": "subtask_start", "utc": "2026-10-11T11:34:57.592450+00:00", "capability": "mug_to_microwave", "state_sha": "2188676893adb00e6a4b4b05072f5529df0617cc0917e120b8016fd8b4e91191"}
+Warning: make sure gym is installed if you want to use the GymWrapper.
+{"event": "visual_check_done", "utc": "2026-10-11T11:36:44.451847+00:00", "capability": "mug_to_microwave", "seconds": 14.300424873999987, "decision": {"state": "incomplete", "reason": "subtask purpose not achieved", "allow_release": false, "allow_retreat": false}}
+{"event": "visual_check_done", "utc": "2026-10-11T11:38:27.077426+00:00", "capability": "mug_to_microwave", "seconds": 15.43946141899994, "decision": {"state": "needs_release", "reason": "purpose achieved; open fingers", "allow_release": true, "allow_retreat": false}}
+{"event": "visual_check_done", "utc": "2026-10-11T11:39:16.991017+00:00", "capability": "mug_to_microwave", "seconds": 15.28590227999996, "decision": {"state": "complete", "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home", "allow_release": false, "allow_retreat": false}}
+[scene-service 2026-10-11T11:39:17Z] job 71297aa3aaba42c1ac9f5458ff02b830 completed | capability=mug_to_microwave steps=300 success=False ended=independent_finish_failed
+{"event": "subtask_end", "utc": "2026-10-11T11:39:17.319345+00:00", "capability": "mug_to_microwave", "ok": false, "steps": 300, "helper_counts": {"release": 9, "movement": 26, "confirm": 2, "home": 107}, "reason": "independent_finish_failed"}
+{"event": "case_done", "utc": "2026-10-11T11:39:17.570254+00:00", "state": "blocked", "plan_success": null}
+Exception ignored in: <function MjRenderContext.__del__ at 0x7fcfcb92f100>
+Traceback (most recent call last):
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/utils/binding_utils.py", line 199, in __del__
+    self.gl_ctx.free()
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/renderers/context/egl_context.py", line 150, in free
+    EGL.eglDestroyContext(EGL_DISPLAY, self._context)
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/OpenGL/error.py", line 230, in glCheckError
+    raise self._errorClass(
+OpenGL.raw.EGL._errors.EGLError: EGLError(
+	err = EGL_NOT_INITIALIZED,
+	baseOperation = eglDestroyContext,
+	cArguments = (
+		<OpenGL._opaque.EGLDisplay_pointer object at 0x7fced05147d0>,
+		<OpenGL._opaque.EGLContext_pointer object at 0x7fced0515bd0>,
+	),
+	result = 0
+)
+Exception ignored in: <function EGLGLContext.__del__ at 0x7fcfcb92efc0>
+Traceback (most recent call last):
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/renderers/context/egl_context.py", line 155, in __del__
+    self.free()
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/renderers/context/egl_context.py", line 150, in free
+    EGL.eglDestroyContext(EGL_DISPLAY, self._context)
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/OpenGL/error.py", line 230, in glCheckError
+    raise self._errorClass(
+OpenGL.raw.EGL._errors.EGLError: EGLError(
+	err = EGL_NOT_INITIALIZED,
+	baseOperation = eglDestroyContext,
+	cArguments = (
+		<OpenGL._opaque.EGLDisplay_pointer object at 0x7fced05147d0>,
+		<OpenGL._opaque.EGLContext_pointer object at 0x7fced0515bd0>,
+	),
+	result = 0
+)
