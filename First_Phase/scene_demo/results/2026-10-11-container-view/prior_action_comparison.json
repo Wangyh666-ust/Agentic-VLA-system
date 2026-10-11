@@ -1,0 +1,129 @@
+[
+  {
+    "case": "sauce_basket",
+    "capability": "sauce_to_basket",
+    "prefix_length": 150,
+    "same_initial_state_sha": true,
+    "same_sent_action_prefix": true,
+    "same_native_predicate_prefix": true,
+    "checks": [
+      {
+        "vla_step": 150,
+        "same_wrist_pixels": true,
+        "same_robot_feedback": true,
+        "old_verdict": {
+          "at_destination": null,
+          "boxes": {},
+          "clear_of_target": null,
+          "destination_visible": null,
+          "evidence": [
+            "sideview图像中未显示篮子，无法确认番茄酱罐是否在篮子内"
+          ],
+          "operation_achieved": null,
+          "released": null,
+          "stable": null,
+          "supported": null,
+          "target_visible": null,
+          "unknown_reasons": []
+        },
+        "new_verdict": {
+          "at_destination": null,
+          "boxes": {},
+          "clear_of_target": null,
+          "destination_visible": null,
+          "evidence": [
+            "agentview中番茄酱罐位于桌面，未进入篮子内部；wrist视角无法确认位置关系"
+          ],
+          "operation_achieved": null,
+          "released": null,
+          "stable": null,
+          "supported": null,
+          "target_visible": null,
+          "unknown_reasons": []
+        }
+      }
+    ],
+    "limitation": "Observed equality only; not a preregistered isolated-camera control or proof of full RNG/policy state pairing"
+  },
+  {
+    "case": "mug_microwave",
+    "capability": "mug_to_microwave",
+    "prefix_length": 300,
+    "same_initial_state_sha": true,
+    "same_sent_action_prefix": true,
+    "same_native_predicate_prefix": true,
+    "checks": [
+      {
+        "vla_step": 150,
+        "same_wrist_pixels": true,
+        "same_robot_feedback": true,
+        "old_verdict": {
+          "at_destination": false,
+          "boxes": {},
+          "clear_of_target": null,
+          "destination_visible": null,
+          "evidence": [
+            "黄白杯仍在夹爪上，未放入微波炉内部"
+          ],
+          "operation_achieved": false,
+          "released": null,
+          "stable": null,
+          "supported": null,
+          "target_visible": null,
+          "unknown_reasons": []
+        },
+        "new_verdict": {
+          "at_destination": false,
+          "boxes": {},
+          "clear_of_target": null,
+          "destination_visible": null,
+          "evidence": [
+            "黄白杯未完全进入微波炉内部，位于入口处，未满足放入内部的要求"
+          ],
+          "operation_achieved": false,
+          "released": null,
+          "stable": null,
+          "supported": null,
+          "target_visible": null,
+          "unknown_reasons": []
+        }
+      },
+      {
+        "vla_step": 300,
+        "same_wrist_pixels": true,
+        "same_robot_feedback": true,
+        "old_verdict": {
+          "at_destination": true,
+          "boxes": {},
+          "clear_of_target": null,
+          "destination_visible": null,
+          "evidence": [
+            "sideview显示黄白杯已位于微波炉内部腔体中，满足'put the yellow and white mug in the microwave'目标"
+          ],
+          "operation_achieved": true,
+          "released": null,
+          "stable": null,
+          "supported": null,
+          "target_visible": null,
+          "unknown_reasons": []
+        },
+        "new_verdict": {
+          "at_destination": null,
+          "boxes": {},
+          "clear_of_target": null,
+          "destination_visible": null,
+          "evidence": [
+            "agentview显示黄白杯在微波炉入口处，但未完全进入内部；wrist view无法确认位置关系，无法判断是否满足'放进'要求"
+          ],
+          "operation_achieved": null,
+          "released": null,
+          "stable": null,
+          "supported": null,
+          "target_visible": null,
+          "unknown_reasons": []
+        }
+      }
+    ],
+    "limitation": "Observed equality only; not a preregistered isolated-camera control or proof of full RNG/policy state pairing"
+  }
+]
