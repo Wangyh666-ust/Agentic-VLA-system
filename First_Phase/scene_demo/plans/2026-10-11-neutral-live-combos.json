@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "id": "20261011-neutral-live-combos",
+  "intent": "new_experiment",
+  "question_key": "visual-goal-encoder-authority",
+  "purpose": "验证当前中性目标检查＋同步编码器开口判定版本能否在碗→酒瓶、碗→灶台中真正触发并完成松手、退离和原归位，保留前任务成果；各一次。",
+  "prior_evidence": [
+    "20261011-neutral-encoder-checker",
+    "20261011-final-input-audit",
+    "20261011-feedback-retreat",
+    "20261011-stove-exit-repair",
+    "20261011-stove-candidate-start",
+    "20261011-goal-finish"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261011-neutral-encoder-checker",
+      "disposition": "reuse",
+      "reason": "新中性提示词与编码器主导已通过软件和旧记录融合，尚无新版真实模型/运动证据。"
+    },
+    {
+      "experiment_id": "20261011-final-input-audit",
+      "disposition": "reuse",
+      "reason": "原HTTP输入、双视角图像与编码器已核对；不重复保存画面复查。"
+    },
+    {
+      "experiment_id": "20261011-feedback-retreat",
+      "disposition": "reuse",
+      "reason": "酒瓶已实际归位但最终视觉否决；灶台原回程碰旋钮，不能合并为视觉失败。"
+    },
+    {
+      "experiment_id": "20261011-stove-exit-repair",
+      "disposition": "reuse",
+      "reason": "候选退出点资格首修订误用起点导致退离0，失败保留。"
+    },
+    {
+      "experiment_id": "20261011-stove-candidate-start",
+      "disposition": "reuse",
+      "reason": "候选起点已修；前碗视觉接触否决使灶台未启动，修订路线仍缺实测。"
+    },
+    {
+      "experiment_id": "20261011-goal-finish",
+      "disposition": "reuse",
+      "reason": "复用原归位与收尾成功证据，不单独重测归位。"
+    }
+  ],
+  "hypothesis": "视觉只判当前子任务目标、标准开口由实测编码器决定，可以消除视觉接触幻觉造成的末次否决，并允许已有收尾和归位完成交接。",
+  "information_gain": "新版提示词首次真实Qwen＋新VLA在线组合；验证此前未进入的灶台修订路线。固定顺序，不测Hermes规划增益、不作为同随机流配对对照。",
+  "success_criteria": "每个目标达到时在实际VLA150/300检查触发；actual release_open>0、movement>0、home>0且原home_streak>=5；末次视觉目标true且同步编码器标准开口，不被视觉接触否决。独立固定已执行全部literal目标、无持物/手接触及原home连续5个actual post样本通过；前碗成果保留，第二技能实际启动。",
+  "failure_criteria": "目标应触发却未触发/对应目标动作0时标记该链路未验证，停止依赖后续；真实执行后目标丢失、退离或归位失败分别记录；末次视觉目标false保留，不据开爪改写位置成功。",
+  "unknown_criteria": "Qwen null、传输/协议失败、初始化或反馈不同步则unknown并停止，不自动重试或更换prompt，不用软件通过代替实测。",
+  "changed_factors": [
+    {
+      "name": "completion_checker",
+      "before": "two_question_goal_contact_v2; visual holding/contact may veto measured opening",
+      "after": "visual_goal_encoder_v3; neutral current-goal-only VLM; synchronized calibrated opening authoritative",
+      "reason": "用户要求视觉判目标、编码器判开口，旧图遮挡或投影重叠不能否决松手"
+    }
+  ],
+  "fixed_factors": {
+    "environment": "same goal_table LIBERO goal8/Panda seed0 init0; one reset per combination",
+    "policy": "same pretrained SmolVLA; reset queue and fresh observations between subtasks; no training",
+    "home": "original streaming .01rad kp50 max360 five ready samples; path checks unchanged",
+    "bowl": "feedback retreat disabled; previous release/retreat/home unchanged",
+    "wine_grasp": "validated collision side-grasp with one dual-view visual association unchanged",
+    "retreat": "current measured-pose wine/stove feedback, candidate home qualification and explicit hypothetical start unchanged from current code; older wine run lacked endpoint qualification, no isolated causal attribution",
+    "checks": "actual VLA150/300; current wrist+sideview and synchronized encoder; no phase/stage in prompt",
+    "independent": "fixed literal executed goals, no holding/hand contacts/home five samples; never sent to Qwen"
+  },
+  "scope": {
+    "max_cases": 2,
+    "max_vla_actions_per_case": 600,
+    "max_helper_actions_per_case": 1960,
+    "stop_rule": "每组合一次，无现场改词/重跑。先碗→酒瓶：首碗失败停止第二技能及另一组合；首碗通过后酒瓶失败时灶台为独立第二技能可继续。应触发但实际目标动作0停止该例依赖验证，不单独测试归位、不微调、不扩大、不开子agent。"
+  },
+  "new_physical_actions": 5120,
+  "configuration": {
+    "scene": "goal_table",
+    "suite": "libero_goal",
+    "task_id": 8,
+    "seed": 0,
+    "init_state_index": 0,
+    "cases": {
+      "bowl_wine": {
+        "request": "先将碗放到盘子上，再将酒瓶放到架子上。",
+        "capabilities": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ]
+      },
+      "bowl_stove": {
+        "request": "先将碗放到盘子上，再打开灶台。",
+        "capabilities": [
+          "bowl_to_plate",
+          "stove_on"
+        ]
+      }
+    },
+    "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "source_sha256": {
+      "First_Phase/scene_demo/finish_v1/combo_pilot.py": "22feadc33fe0f76545bb2c0de46489758f44227d7cf24bffbc2e03561ceac792",
+      "First_Phase/scene_demo/finish_v1/simple_checker.py": "a62d41ebbf6f917601bb9aabfad5754aac272056b54dcb3ea99851b1a649c79f",
+      "First_Phase/scene_demo/finish_v1/runtime.py": "421d7fd925a2d2261804fbdd8d6bb36d0e7731d4a609dd98da5c4b25d66c199a",
+      "First_Phase/scene_demo/finish_v1/vision.py": "47b900dfb70aa270679e1dbf2e8399410f2b551abce3811570e09de2c32023c3",
+      "First_Phase/scene_demo/finish_v1/control.py": "e713a804373a4c3eafc3bfb20f462bc36a5ca031c345876d12145baf10df6d71",
+      "First_Phase/scene_demo/finish_v1/sensors.py": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+      "First_Phase/scene_demo/finish_v1/geometry.py": "d4a5bb664760e3ee39027caac9a51b23a13eaee4b9ef8c55854dfd9f935f61b9",
+      "First_Phase/scene_demo/service.py": "c9fdbf2495a11d6821ec2b254c0e2f5677ee46adb44fb3d924263071008b2a52",
+      "First_Phase/scene_demo/joint_home.py": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+      "First_Phase/scene_demo/safe_exit.py": "54824e433307a5eb9634783f66b9cb654967f35cec7ec661ff0e70b6c3f635b5",
+      "First_Phase/scene_demo/safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+      "First_Phase/scene_demo/catalog.py": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02",
+      "First_Phase/scene_demo/placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+      "First_Phase/scene_demo/finish_v1/assisted_combo_pilot.py": "f0cb90be7bf4fd9e9df5a5df4eba2eba466ff431f0515919e22f81248e416597",
+      "First_Phase/scene_demo/finish_v1/calibrated_grasp.py": "76831690b0791222374b303c2bb77a035ab256c8f7b13d9eac2fac1af3717644",
+      "First_Phase/scene_demo/collision_grasp.py": "451d31c6e671b86c6f6fde4407de60d937107b6f6dd2c226245de1c5762f4898",
+      "First_Phase/scene_demo/collision_geometry.py": "a5e54ab21b6943b47b177691cf1691d0e8a775ad4ea36d59f7bf53eb04c0c202",
+      "First_Phase/scene_demo/local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d",
+      "First_Phase/scene_demo/side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+      "First_Phase/scene_demo/preparation_diagnostics.py": "00861b6cc8f9619c630dacced029fdcd8733a195c5f4027de92cc70ae0e87eb7",
+      "First_Phase/scene_demo/placement_experiments.py": "bc4959ace0e534644e655b2fda7f1fcde22f022a35d9e587e378e9936a57bc10",
+      "First_Phase/scene_demo/finish_v1/feedback_retreat.py": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+      "First_Phase/scene_demo/finish_v1/feedback_combo_pilot.py": "8fe2d32bc3ba96ff3ca730ff3b1381ce3692d2caaa43b44f50371183e78057b2",
+      "First_Phase/scene_demo/finish_v1/stove_exit_repair_pilot.py": "6c9bf3e09c170d90cfdc0476af6ca52ff932b9de5d81a4961ce29a17259fabff",
+      "First_Phase/scene_demo/finish_v1/stove_candidate_start_pilot.py": "126c8d17db8610f1ef92096be67c7f8d5783dc1ddba9807f8c628fef3612b85d",
+      "First_Phase/scene_demo/finish_v1/neutral_combo_pilot.py": "10f6d25548360db16241ba107c8b578fa8f4f822ee9a26ff5d67be4dc2f90bbc"
+    },
+    "vla_budget_per_subgoal": 300,
+    "qwen_max_per_subgoal": 6,
+    "completion_mode": "release_verified",
+    "grasp_guard_mode": "shadow",
+    "finish_mode": "visual",
+    "checker": "visual_goal_encoder_v3",
+    "thinking_budget": 1024,
+    "check_schedule": "actual VLA150/300; local grasp counted separately",
+    "home": "original streaming, .01rad waypoints, kp50, max360, five ready samples",
+    "execution": "no subagents; primary agent and local tools; no effort override claimed",
+    "saved_negative_status": "failed and unresolved; retained as prior risk, not a pass",
+    "authorization": "用户授权按该版本再走碗→酒瓶、碗→灶台；各一次，不开子agent、不训练。",
+    "wine_helper": "collision_grasp unchanged validated three-waypoint side grasp",
+    "pregrasp": "qwen3-vl-plus, temperature0, thinking false, max1 call; no simulator pose in prompt; projected association tolerance .03 normalized",
+    "geometry_source": "precise pose, orientation and contact protection remain simulator geometry; real RGBD estimation deferred",
+    "grasp_budget_per_subgoal": 200,
+    "physical_policy_loop_budget_per_subgoal": 500,
+    "release": "turn-only measured/half/open shape-screened concurrent opening after stationary20 exhausted; exact home gate unchanged",
+    "max_session_actions": 2000,
+    "retreat": "pilot wine/stove only: measured-pose 8mm lookahead; cloud refresh10; short path .003rad CAD sampling; no intermediate endpoint gate; final >=3cm travel +1cm clearance; <=3 alternative replans, max480 movement; final opening/settling then unchanged home",
+    "exit_endpoint": "candidate and actual exit use unchanged original home_screen; blocked actual return continues exiting or replans",
+    "candidate_screen": "explicit hypothetical start_q only; no contact exemptions, actual return default unchanged",
+    "base_commit": "1364b62"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "new committed goal/encoder checker; no live run of this version yet"
+  }
+}
