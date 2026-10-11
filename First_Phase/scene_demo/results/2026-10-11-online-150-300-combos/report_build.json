@@ -1,0 +1,695 @@
+{
+  "id": "20261011-online-150-300-combos",
+  "cases": [
+    {
+      "case": "bowl_wine",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "bowl_to_plate",
+          "new_vla": 150,
+          "success": true,
+          "reason": "complete",
+          "actual_open": 2,
+          "counts": {
+            "release": 2,
+            "movement": 103,
+            "confirm": 5,
+            "home": 131
+          },
+          "home_streak": 5,
+          "independent_streak": 5,
+          "final_independent": {
+            "timestamp": 20.049999999999766,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.00019925107771644364,
+                0.0013939524654421886,
+                0.0005071056802482196,
+                0.002279721637079124,
+                0.0014420510916458868,
+                0.002252855584750524,
+                0.002682552473561417
+              ],
+              "arm_speed_rad_s": [
+                0.00016119352686135707,
+                0.004820547498402374,
+                4.520297771245232e-05,
+                0.005675729270586926,
+                0.0004160051257762315,
+                0.0016461473362198067,
+                0.0010282939836526595
+              ],
+              "max_joint_error_rad": 0.002682552473561417,
+              "max_joint_speed_rad_s": 0.005675729270586926,
+              "finger_error_m": [
+                1.4389235110302823e-05,
+                1.4450041610061803e-05
+              ],
+              "finger_speed_m_s": [
+                1.1832363882172866e-05,
+                1.188564332511047e-05
+              ],
+              "max_finger_error_m": 1.4450041610061803e-05,
+              "max_finger_speed_m_s": 1.188564332511047e-05,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": true,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.3038555516982554e-07,
+                  "angular_speed": 1.9056510984660071e-06
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": true
+          },
+          "finish_reason": "complete",
+          "qwen": [
+            {
+              "kind": "online",
+              "vla_step": 150,
+              "timestamp": 7.999999999999341,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":true,\"reason\":\"sideview shows bowl resting on plate, gripper still in contact with bowl\"}",
+              "usage": {
+                "prompt_tokens": 1012,
+                "completion_tokens": 959,
+                "total_tokens": 1971,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 924,
+                  "text_tokens": 35
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 688,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_01_bowl_to_plate_ff46e1eb/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_01_bowl_to_plate_ff46e1eb/finish/sensors/cap000092_wrist.png",
+                  "sha256": "092524404da8b4952c6707083c0544c5346b75c4740748b55c44f092f34cd814"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_01_bowl_to_plate_ff46e1eb/finish/sensors/cap000093_sideview.png",
+                  "sha256": "1de64cebcb77b846220617a16773c23c0c5713632ea7605283f762cc6af0e161"
+                }
+              ],
+              "input_image_count": 2,
+              "stage_sent": false
+            },
+            {
+              "kind": "after_cleanup",
+              "vla_step": 150,
+              "timestamp": 20.049999999999766,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":false,\"reason\":\"sideview shows bowl resting on plate with gripper lifted and not in contact\"}",
+              "usage": {
+                "prompt_tokens": 1018,
+                "completion_tokens": 691,
+                "total_tokens": 1709,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 656,
+                  "text_tokens": 35
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 694,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_01_bowl_to_plate_ff46e1eb/finish/model_requests/call_02_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_01_bowl_to_plate_ff46e1eb/finish/sensors/cap000278_wrist.png",
+                  "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_01_bowl_to_plate_ff46e1eb/finish/sensors/cap000279_sideview.png",
+                  "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+                }
+              ],
+              "input_image_count": 2,
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 199
+        },
+        {
+          "capability": "wine_to_rack",
+          "new_vla": 150,
+          "success": false,
+          "reason": "independent_finish_failed",
+          "actual_open": 14,
+          "counts": {
+            "release": 14,
+            "movement": 131,
+            "confirm": 5,
+            "home": 133
+          },
+          "home_streak": 5,
+          "independent_streak": 0,
+          "final_independent": {
+            "timestamp": 41.700000000005,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true,
+              "on|wine_bottle_1|wine_rack_1_top_region": false
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.00015233850084931007,
+                0.0003545326635543411,
+                0.00038639904178535377,
+                0.0009448477495346275,
+                0.0016146376178108588,
+                0.0022199673429041944,
+                0.002987579759503811
+              ],
+              "arm_speed_rad_s": [
+                0.0002510368655394991,
+                0.00011101654651955496,
+                0.00038511522619200767,
+                0.00018724782396704903,
+                0.0030474255697601274,
+                0.0005205108606302309,
+                0.005739878111549782
+              ],
+              "max_joint_error_rad": 0.002987579759503811,
+              "max_joint_speed_rad_s": 0.005739878111549782,
+              "finger_error_m": [
+                5.89877520732196e-05,
+                5.939677831987705e-05
+              ],
+              "finger_speed_m_s": [
+                5.107146593422159e-05,
+                5.1429684091041333e-05
+              ],
+              "max_finger_error_m": 5.939677831987705e-05,
+              "max_finger_speed_m_s": 5.1429684091041333e-05,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": false,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.3038987663447555e-07,
+                  "angular_speed": 1.9059153253668297e-06
+                },
+                "on|wine_bottle_1|wine_rack_1_top_region": {
+                  "linear_speed": 4.458703755502881e-15,
+                  "angular_speed": 1.2818446347139331e-14
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": false
+          },
+          "finish_reason": "complete",
+          "qwen": [
+            {
+              "kind": "online",
+              "vla_step": 150,
+              "timestamp": 27.54999999999561,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":false,\"reason\":\"sideview显示酒瓶已稳定放置在架子下层木板上，wrist view确认位置关系；sideview中夹爪悬停于酒瓶上方无接触，编码器数据结合图像判断未持物\"}",
+              "usage": {
+                "prompt_tokens": 1013,
+                "completion_tokens": 1093,
+                "total_tokens": 2106,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 68
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 689,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_02_wine_to_rack_460c1ce7/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_02_wine_to_rack_460c1ce7/finish/sensors/cap000092_wrist.png",
+                  "sha256": "f6368ed960ffbaff681c96008b468998a8766a5abb7e9796db41a123ba49dead"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_02_wine_to_rack_460c1ce7/finish/sensors/cap000093_sideview.png",
+                  "sha256": "32a179cc0db2202d398544337af8087d7d11586fc7b4068cfef0a118aef0c35a"
+                }
+              ],
+              "input_image_count": 2,
+              "stage_sent": false
+            },
+            {
+              "kind": "after_cleanup",
+              "vla_step": 150,
+              "timestamp": 41.700000000005,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":false,\"reason\":\"sideview shows wine bottle placed on rack, gripper above bottle without contact\"}",
+              "usage": {
+                "prompt_tokens": 1004,
+                "completion_tokens": 678,
+                "total_tokens": 1682,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 643,
+                  "text_tokens": 35
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 680,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_02_wine_to_rack_460c1ce7/finish/model_requests/call_02_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_02_wine_to_rack_460c1ce7/finish/sensors/cap000311_wrist.png",
+                  "sha256": "b2be11e654541a4a3eff261e5674492aa8fa6a779973ecead925fcea1b515eb4"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/runs/20261011T061520Z_goal_table_c1a4e41f/cap_02_wine_to_rack_460c1ce7/finish/sensors/cap000312_sideview.png",
+                  "sha256": "93d205f659e2ed7f1dfd9732c6131ace62777493dd6eaa962b4d78bb2db58a52"
+                }
+              ],
+              "input_image_count": 2,
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 207
+        }
+      ],
+      "wall_seconds": 422.29837399099995,
+      "timings": [
+        {
+          "kind": "qwen_check",
+          "capability": "bowl_to_plate",
+          "seconds": 13.971690479000017
+        },
+        {
+          "kind": "qwen_check",
+          "capability": "bowl_to_plate",
+          "seconds": 10.184022056999993
+        },
+        {
+          "kind": "qwen_check",
+          "capability": "wine_to_rack",
+          "seconds": 16.122908602000052
+        },
+        {
+          "kind": "qwen_check",
+          "capability": "wine_to_rack",
+          "seconds": 10.286715284000024
+        }
+      ],
+      "video": "First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_wine/sequence.mp4"
+    },
+    {
+      "case": "bowl_stove",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "bowl_to_plate",
+          "new_vla": 150,
+          "success": true,
+          "reason": "complete",
+          "actual_open": 2,
+          "counts": {
+            "release": 2,
+            "movement": 103,
+            "confirm": 5,
+            "home": 131
+          },
+          "home_streak": 5,
+          "independent_streak": 5,
+          "final_independent": {
+            "timestamp": 20.049999999999766,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.00019925107771644364,
+                0.0013939524654421886,
+                0.0005071056802482196,
+                0.002279721637079124,
+                0.0014420510916458868,
+                0.002252855584750524,
+                0.002682552473561417
+              ],
+              "arm_speed_rad_s": [
+                0.00016119352686135707,
+                0.004820547498402374,
+                4.520297771245232e-05,
+                0.005675729270586926,
+                0.0004160051257762315,
+                0.0016461473362198067,
+                0.0010282939836526595
+              ],
+              "max_joint_error_rad": 0.002682552473561417,
+              "max_joint_speed_rad_s": 0.005675729270586926,
+              "finger_error_m": [
+                1.4389235110302823e-05,
+                1.4450041610061803e-05
+              ],
+              "finger_speed_m_s": [
+                1.1832363882172866e-05,
+                1.188564332511047e-05
+              ],
+              "max_finger_error_m": 1.4450041610061803e-05,
+              "max_finger_speed_m_s": 1.188564332511047e-05,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": true,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.3038555516982554e-07,
+                  "angular_speed": 1.9056510984660071e-06
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": true
+          },
+          "finish_reason": "complete",
+          "qwen": [
+            {
+              "kind": "online",
+              "vla_step": 150,
+              "timestamp": 7.999999999999341,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":true,\"reason\":\"sideview显示碗已稳定放置在盘子上，满足子任务位置要求；wrist和sideview均显示夹爪仍接触碗，编码器数据与开合状态一致但需结合图像确认接触\"}",
+              "usage": {
+                "prompt_tokens": 1009,
+                "completion_tokens": 1092,
+                "total_tokens": 2101,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 67
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 685,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_stove/runs/20261011T062317Z_goal_table_7dcebff5/cap_01_bowl_to_plate_0681d8a0/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_stove/runs/20261011T062317Z_goal_table_7dcebff5/cap_01_bowl_to_plate_0681d8a0/finish/sensors/cap000092_wrist.png",
+                  "sha256": "092524404da8b4952c6707083c0544c5346b75c4740748b55c44f092f34cd814"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_stove/runs/20261011T062317Z_goal_table_7dcebff5/cap_01_bowl_to_plate_0681d8a0/finish/sensors/cap000093_sideview.png",
+                  "sha256": "1de64cebcb77b846220617a16773c23c0c5713632ea7605283f762cc6af0e161"
+                }
+              ],
+              "input_image_count": 2,
+              "stage_sent": false
+            },
+            {
+              "kind": "after_cleanup",
+              "vla_step": 150,
+              "timestamp": 20.049999999999766,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":false,\"reason\":\"sideview显示碗已稳定放置在盘子中央，位置符合要求；wrist和sideview均显示夹爪悬停于碗上方无接触，编码器开合状态与标准开合值接近且图像确认无持物\"}",
+              "usage": {
+                "prompt_tokens": 1015,
+                "completion_tokens": 1097,
+                "total_tokens": 2112,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 72
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 691,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_stove/runs/20261011T062317Z_goal_table_7dcebff5/cap_01_bowl_to_plate_0681d8a0/finish/model_requests/call_02_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_stove/runs/20261011T062317Z_goal_table_7dcebff5/cap_01_bowl_to_plate_0681d8a0/finish/sensors/cap000278_wrist.png",
+                  "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_stove/runs/20261011T062317Z_goal_table_7dcebff5/cap_01_bowl_to_plate_0681d8a0/finish/sensors/cap000279_sideview.png",
+                  "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+                }
+              ],
+              "input_image_count": 2,
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 199
+        },
+        {
+          "capability": "stove_on",
+          "new_vla": 150,
+          "success": false,
+          "reason": "release not confirmed",
+          "actual_open": 20,
+          "counts": {
+            "release": 20,
+            "movement": 0,
+            "confirm": 0,
+            "home": 0
+          },
+          "home_streak": 0,
+          "independent_streak": 0,
+          "final_independent": {
+            "timestamp": 28.549999999995055,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true,
+              "turnon|flat_stove_1": true
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.15625283976330875,
+                0.49406043922344856,
+                0.24809078291183603,
+                0.3375313956965953,
+                1.209922064761077,
+                0.7341778756597006,
+                0.4977500868906279
+              ],
+              "arm_speed_rad_s": [
+                1.2877374728783616e-05,
+                0.0009380019589466139,
+                0.00013750359360783541,
+                0.001530856825149146,
+                7.331943326490104e-05,
+                0.0003467463985121417,
+                0.00017416697202870285
+              ],
+              "max_joint_error_rad": 1.209922064761077,
+              "max_joint_speed_rad_s": 0.001530856825149146,
+              "finger_error_m": [
+                0.01723500357564124,
+                0.0006966118786437686
+              ],
+              "finger_speed_m_s": [
+                0.0007346340353907228,
+                0.0005811363840745929
+              ],
+              "max_finger_error_m": 0.01723500357564124,
+              "max_finger_speed_m_s": 0.0007346340353907228,
+              "ready": false
+            },
+            "contacts": [
+              {
+                "geom1": 209,
+                "geom2": 73,
+                "pair": [
+                  73,
+                  209
+                ],
+                "geom1_name": "flat_stove_1_g5",
+                "geom2_name": "gripper0_finger1_collision",
+                "dist": -4.7931617866314724e-05,
+                "pos": [
+                  -0.3754017873981711,
+                  0.2034902374561498,
+                  0.9177560341910669
+                ],
+                "normal": [
+                  1.1581322246639588e-12,
+                  5.790661123319794e-13,
+                  1.0
+                ],
+                "outward_normal": [
+                  1.1581322246639588e-12,
+                  5.790661123319794e-13,
+                  1.0
+                ],
+                "self": false
+              }
+            ],
+            "release_status": {
+              "ready": true,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.303872503848485e-07,
+                  "angular_speed": 1.9057548447433853e-06
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": false
+          },
+          "finish_reason": "release not confirmed",
+          "qwen": [
+            {
+              "kind": "online",
+              "vla_step": 150,
+              "timestamp": 27.54999999999561,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":false,\"reason\":\"sideview中灶台红色加热圈激活表示已开启，夹爪未接触灶台旋钮\"}",
+              "usage": {
+                "prompt_tokens": 1009,
+                "completion_tokens": 1068,
+                "total_tokens": 2077,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 43
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 685,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_stove/runs/20261011T062317Z_goal_table_7dcebff5/cap_02_stove_on_92a8a287/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_stove/runs/20261011T062317Z_goal_table_7dcebff5/cap_02_stove_on_92a8a287/finish/sensors/cap000092_wrist.png",
+                  "sha256": "508a3c92b95a255c73676116857a89fc40975eef03dbff92dfdbad07450e8000"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_stove/runs/20261011T062317Z_goal_table_7dcebff5/cap_02_stove_on_92a8a287/finish/sensors/cap000093_sideview.png",
+                  "sha256": "6cf79604a363eaf674389dcd9d512afa943e21d618245e2cfd66fe4e19c11523"
+                }
+              ],
+              "input_image_count": 2,
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 155
+        }
+      ],
+      "wall_seconds": 340.26298063900003,
+      "timings": [
+        {
+          "kind": "qwen_check",
+          "capability": "bowl_to_plate",
+          "seconds": 16.886084229000062
+        },
+        {
+          "kind": "qwen_check",
+          "capability": "bowl_to_plate",
+          "seconds": 16.6496727629999
+        },
+        {
+          "kind": "qwen_check",
+          "capability": "stove_on",
+          "seconds": 15.145534216999977
+        }
+      ],
+      "video": "First_Phase/scene_demo/results/2026-10-11-online-150-300-combos/bowl_stove/sequence.mp4"
+    }
+  ],
+  "new_vla": 600,
+  "qwen_calls": 7,
+  "qwen_tokens": 13758,
+  "replay_actions": 0,
+  "subagents": 0,
+  "scope": "fixed user sequence, no new Hermes planning call",
+  "not_run": {},
+  "helper_actions": 785
+}
