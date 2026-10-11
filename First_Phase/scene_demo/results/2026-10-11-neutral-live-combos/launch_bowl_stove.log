@@ -1,0 +1,59 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+WARNING:robosuite_logs:No private macro file found!
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+WARNING:robosuite_logs:It is recommended to use a private macro file
+[robosuite WARNING] To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+WARNING:robosuite_logs:To setup, run: python /home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/scripts/setup_macros.py
+[scene-service 2026-10-11T10:11:27Z] worker started (model_path=/home/yhwang/fyp/libero_demo/models/smolvla_libero, run_root=/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/runs)
+[libero-service 2026-10-11T10:11:28Z] loading config from /home/yhwang/fyp/libero_demo/models/smolvla_libero
+[libero-service 2026-10-11T10:11:28Z] loading SmolVLA weights (n_action_steps=1, dtype=None)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[scene-service 2026-10-11T10:12:00Z] policy ready (n_action_steps=1)
+Loading weights from local directory
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+{"event": "subtask_start", "utc": "2026-10-11T10:12:03.931087+00:00", "capability": "bowl_to_plate", "state_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd"}
+Warning: make sure gym is installed if you want to use the GymWrapper.
+{"event": "visual_check_done", "utc": "2026-10-11T10:13:45.810503+00:00", "capability": "bowl_to_plate", "seconds": 8.592903551000006, "decision": {"state": "complete", "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home", "allow_release": false, "allow_retreat": false}}
+{"event": "visual_check_done", "utc": "2026-10-11T10:15:18.802811+00:00", "capability": "bowl_to_plate", "seconds": 9.76466284899999, "decision": {"state": "complete", "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home", "allow_release": false, "allow_retreat": false}}
+[scene-service 2026-10-11T10:15:19Z] job a63a1e2acfee4b78a036d0b11a983e51 completed | capability=bowl_to_plate steps=150 success=True ended=complete
+{"event": "subtask_end", "utc": "2026-10-11T10:15:19.190523+00:00", "capability": "bowl_to_plate", "ok": true, "steps": 150, "helper_counts": {"release": 2, "movement": 103, "confirm": 5, "home": 131}, "reason": "complete"}
+{"event": "subtask_start", "utc": "2026-10-11T10:15:19.192681+00:00", "capability": "stove_on", "state_sha": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914"}
+{"event": "visual_check_done", "utc": "2026-10-11T10:16:58.876740+00:00", "capability": "stove_on", "seconds": 5.724845158999983, "decision": {"state": "unknown", "reason": "subtask purpose unknown", "allow_release": false, "allow_retreat": false}}
+[scene-service 2026-10-11T10:16:59Z] job dfbfb1e583fa4ad2bdc0ba272c775f6c completed | capability=stove_on steps=150 success=False ended=visual_unknown
+{"event": "subtask_end", "utc": "2026-10-11T10:16:59.109298+00:00", "capability": "stove_on", "ok": false, "steps": 150, "helper_counts": {"release": 0, "movement": 0, "confirm": 0, "home": 0}, "reason": "visual_unknown"}
+{"event": "case_done", "utc": "2026-10-11T10:16:59.337427+00:00", "state": "blocked", "plan_success": null}
+Exception ignored in: <function MjRenderContext.__del__ at 0x7d4eaa799c60>
+Traceback (most recent call last):
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/utils/binding_utils.py", line 199, in __del__
+    self.gl_ctx.free()
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/renderers/context/egl_context.py", line 150, in free
+    EGL.eglDestroyContext(EGL_DISPLAY, self._context)
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/OpenGL/error.py", line 230, in glCheckError
+    raise self._errorClass(
+OpenGL.raw.EGL._errors.EGLError: EGLError(
+	err = EGL_NOT_INITIALIZED,
+	baseOperation = eglDestroyContext,
+	cArguments = (
+		<OpenGL._opaque.EGLDisplay_pointer object at 0x7d4ba6f32fd0>,
+		<OpenGL._opaque.EGLContext_pointer object at 0x7d4ba7188250>,
+	),
+	result = 0
+)
+Exception ignored in: <function EGLGLContext.__del__ at 0x7d4eaa799b20>
+Traceback (most recent call last):
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/renderers/context/egl_context.py", line 155, in __del__
+    self.free()
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/robosuite/renderers/context/egl_context.py", line 150, in free
+    EGL.eglDestroyContext(EGL_DISPLAY, self._context)
+  File "/home/yhwang/fyp/libero_demo/venv/lib/python3.12/site-packages/OpenGL/error.py", line 230, in glCheckError
+    raise self._errorClass(
+OpenGL.raw.EGL._errors.EGLError: EGLError(
+	err = EGL_NOT_INITIALIZED,
+	baseOperation = eglDestroyContext,
+	cArguments = (
+		<OpenGL._opaque.EGLDisplay_pointer object at 0x7d4ba6f32fd0>,
+		<OpenGL._opaque.EGLContext_pointer object at 0x7d4ba7188250>,
+	),
+	result = 0
+)

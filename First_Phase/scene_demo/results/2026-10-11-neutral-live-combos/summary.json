@@ -1,0 +1,1190 @@
+{
+  "id": "20261011-neutral-live-combos",
+  "cases": [
+    {
+      "case": "bowl_wine",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "bowl_to_plate",
+          "actual_vla": 150,
+          "local_grasp_actions": 0,
+          "success": true,
+          "reason": "complete",
+          "error": null,
+          "finish_counts": {
+            "release": 2,
+            "movement": 103,
+            "confirm": 5,
+            "home": 131
+          },
+          "open_and_retreat_actions": 0,
+          "concurrent_open_retreat": null,
+          "feedback_retreat": {
+            "mode": null,
+            "ok": null,
+            "reason": null,
+            "travel_m": null,
+            "replans": null,
+            "endpoint_clearance": null
+          },
+          "return_eligibility_checks": [],
+          "home_streak": 5,
+          "independent_streak": 5,
+          "final_independent": {
+            "timestamp": 20.049999999999766,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.00019925107771644364,
+                0.0013939524654421886,
+                0.0005071056802482196,
+                0.002279721637079124,
+                0.0014420510916458868,
+                0.002252855584750524,
+                0.002682552473561417
+              ],
+              "arm_speed_rad_s": [
+                0.00016119352686135707,
+                0.004820547498402374,
+                4.520297771245232e-05,
+                0.005675729270586926,
+                0.0004160051257762315,
+                0.0016461473362198067,
+                0.0010282939836526595
+              ],
+              "max_joint_error_rad": 0.002682552473561417,
+              "max_joint_speed_rad_s": 0.005675729270586926,
+              "finger_error_m": [
+                1.4389235110302823e-05,
+                1.4450041610061803e-05
+              ],
+              "finger_speed_m_s": [
+                1.1832363882172866e-05,
+                1.188564332511047e-05
+              ],
+              "max_finger_error_m": 1.4450041610061803e-05,
+              "max_finger_speed_m_s": 1.188564332511047e-05,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": true,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.3038555516982554e-07,
+                  "angular_speed": 1.9056510984660071e-06
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": true
+          },
+          "grasp": null,
+          "qwen": [
+            {
+              "kind": "online",
+              "actual_vla": 150,
+              "timestamp": 7.999999999999341,
+              "content": "{\"goal_achieved\":true,\"reason\":\"sideview显示碗已稳定放置在盘子上，夹爪已退离\"}",
+              "usage": {
+                "prompt_tokens": 1070,
+                "completion_tokens": 602,
+                "total_tokens": 1672,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 571,
+                  "text_tokens": 31
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 746,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_01_bowl_to_plate_b1745455/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_01_bowl_to_plate_b1745455/finish/sensors/cap000092_wrist.png",
+                  "sha256": "092524404da8b4952c6707083c0544c5346b75c4740748b55c44f092f34cd814"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_01_bowl_to_plate_b1745455/finish/sensors/cap000093_sideview.png",
+                  "sha256": "1de64cebcb77b846220617a16773c23c0c5713632ea7605283f762cc6af0e161"
+                }
+              ],
+              "stage_sent": false
+            },
+            {
+              "kind": "after_cleanup",
+              "actual_vla": 150,
+              "timestamp": 20.049999999999766,
+              "content": "{\"goal_achieved\":true,\"reason\":\"sideview显示碗已放置在盘子上，位置关系符合要求\"}",
+              "usage": {
+                "prompt_tokens": 1077,
+                "completion_tokens": 1056,
+                "total_tokens": 2133,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 31
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 753,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_01_bowl_to_plate_b1745455/finish/model_requests/call_02_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_01_bowl_to_plate_b1745455/finish/sensors/cap000278_wrist.png",
+                  "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_01_bowl_to_plate_b1745455/finish/sensors/cap000279_sideview.png",
+                  "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+                }
+              ],
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 199,
+          "timeline_frames": 199
+        },
+        {
+          "capability": "wine_to_rack",
+          "actual_vla": 300,
+          "local_grasp_actions": 182,
+          "success": false,
+          "reason": "exception:finger qpos outside ctrlrange",
+          "error": null,
+          "finish_counts": {
+            "release": 0,
+            "movement": 0,
+            "confirm": 0,
+            "home": 0
+          },
+          "open_and_retreat_actions": 0,
+          "concurrent_open_retreat": null,
+          "feedback_retreat": {
+            "mode": null,
+            "ok": null,
+            "reason": null,
+            "travel_m": null,
+            "replans": null,
+            "endpoint_clearance": null
+          },
+          "return_eligibility_checks": [],
+          "home_streak": 0,
+          "independent_streak": 0,
+          "final_independent": null,
+          "grasp": {
+            "helper": {
+              "assisted": true,
+              "phase": "confirmed",
+              "reason": null,
+              "total_actions": 182,
+              "stage_counts": {
+                "above": 137,
+                "descend": 24,
+                "close": 10,
+                "lift": 11
+              },
+              "trigger": {
+                "command": 1.0077210664749146,
+                "grasped": false,
+                "grasp_observation_complete": true,
+                "held_objects": [],
+                "distance_m": 0.11753144860032771,
+                "satisfied": true,
+                "target_ready": true
+              },
+              "target": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.0721750645731474,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342609,
+                    -0.32177686299714203,
+                    0.03062016804053074
+                  ],
+                  [
+                    -0.14959752714095026,
+                    0.3520311694348847,
+                    -0.9239559706066182
+                  ],
+                  [
+                    0.28652840020567655,
+                    -0.8789389661324748,
+                    -0.3812712547380795
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750313,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.2009547946507822,
+                  -0.07161896769679212,
+                  1.0283841725493734
+                ]
+              },
+              "targets": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.0721750645731474,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342609,
+                    -0.32177686299714203,
+                    0.03062016804053074
+                  ],
+                  [
+                    -0.14959752714095026,
+                    0.3520311694348847,
+                    -0.9239559706066182
+                  ],
+                  [
+                    0.28652840020567655,
+                    -0.8789389661324748,
+                    -0.3812712547380795
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750313,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.2009547946507822,
+                  -0.07161896769679212,
+                  1.0283841725493734
+                ]
+              },
+              "last_errors": {
+                "above_position_error_m": 0.0022042700338587564,
+                "above_rotation_error_rad": 0.006618916768267578,
+                "descend_position_error_m": 0.0021517028197245414,
+                "descend_rotation_error_rad": 0.0015102324446881938,
+                "close_grasped": true,
+                "lift_grasped": true,
+                "lift_metres": 0.027931211897636588
+              },
+              "grasp_mode": "demonstrated_side",
+              "reference": {
+                "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "step": 93,
+                "quaternion_order": "wxyz",
+                "policy_orientation": "axis_angle_body",
+                "relative_position": [
+                  -0.0029941513870073433,
+                  0.01052424244341749,
+                  0.09384945135656639
+                ],
+                "relative_orientation": [
+                  [
+                    0.3217877768160636,
+                    -0.9463167125463993,
+                    -0.030615457650521972
+                  ],
+                  [
+                    -0.3520318440699383,
+                    -0.14959777039620165,
+                    0.9239556741820488
+                  ],
+                  [
+                    -0.8789347003347259,
+                    -0.28654002625787023,
+                    -0.38127235134434434
+                  ]
+                ]
+              },
+              "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset",
+              "approach_mode": "clear_then_side",
+              "route_index": 2,
+              "route_stage": "approach_open",
+              "route_counts": [
+                54,
+                35,
+                48
+              ],
+              "route_targets": [
+                {
+                  "position": [
+                    -0.27568618389195626,
+                    0.0004222236604061874,
+                    1.184046907457057
+                  ],
+                  "orientation": [
+                    [
+                      -0.9937926635070872,
+                      0.10898739274577256,
+                      0.02231345293687364
+                    ],
+                    [
+                      0.05169814586104994,
+                      0.6300413782228839,
+                      -0.7748387983584306
+                    ],
+                    [
+                      -0.09850605907261217,
+                      -0.7688755490646622,
+                      -0.631764945510983
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750313,
+                    1.184046907457057
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342609,
+                      -0.32177686299714203,
+                      0.03062016804053074
+                    ],
+                    [
+                      -0.14959752714095026,
+                      0.3520311694348847,
+                      -0.9239559706066182
+                    ],
+                    [
+                      0.28652840020567655,
+                      -0.8789389661324748,
+                      -0.3812712547380795
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750313,
+                    1.0156012493693716
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342609,
+                      -0.32177686299714203,
+                      0.03062016804053074
+                    ],
+                    [
+                      -0.14959752714095026,
+                      0.3520311694348847,
+                      -0.9239559706066182
+                    ],
+                    [
+                      0.28652840020567655,
+                      -0.8789389661324748,
+                      -0.3812712547380795
+                    ]
+                  ]
+                }
+              ],
+              "high_z": 1.184046907457057,
+              "rotation_lower_extent_m": 0.11164355420949007
+            },
+            "visual_calibration": {
+              "ok": true,
+              "response": {
+                "verdict": {
+                  "target_visible": null,
+                  "destination_visible": null,
+                  "at_destination": null,
+                  "supported": null,
+                  "released": null,
+                  "stable": null,
+                  "operation_achieved": null,
+                  "clear_of_target": null,
+                  "boxes": {},
+                  "evidence": [],
+                  "unknown_reasons": []
+                },
+                "usage": {
+                  "prompt_tokens": 776,
+                  "completion_tokens": 131,
+                  "total_tokens": 907,
+                  "completion_tokens_details": {
+                    "text_tokens": 131
+                  },
+                  "prompt_tokens_details": {
+                    "image_tokens": 324,
+                    "text_tokens": 452,
+                    "cached_tokens": 0
+                  }
+                },
+                "model": "qwen3-vl-plus",
+                "http_status": 200,
+                "request_sha256": "09156637f37663ed77b6f7ad32c5debf741514c738f5e0f648bbd7950842370c",
+                "response_sha256": "e1d36837dea1d73829073ea18c876d48891e4a2f4ccdf69c7cad8dc8494c54ed",
+                "call_index": 1,
+                "localization": {
+                  "target_visible": true,
+                  "upright": true,
+                  "sideview_box": [
+                    0.58,
+                    0.54,
+                    0.62,
+                    0.62
+                  ],
+                  "reason": "sideview中可见一个深色细长瓶身（酒瓶），位于机械臂末端前方、金属圆盘左侧，瓶身垂直立于桌面，无明显倾倒；背景有木架与抽屉柜，该瓶为唯一符合酒瓶形态的物体；wrist视角中亦可见同一瓶身倾斜视角，标签朝上，进一步确认目标。"
+                }
+              },
+              "capture": {
+                "timestamp": 24.199999999997466,
+                "frames": [
+                  {
+                    "view": "agentview",
+                    "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/pregrasp/sensors/cap000001_agentview.png",
+                    "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/pregrasp/sensors/cap000001_agentview.npy",
+                    "K": [
+                      [
+                        309.01933598375615,
+                        0.0,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        309.01933598375615,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "T_world_camera": [
+                      [
+                        -7.268184498698815e-08,
+                        0.6282664504107425,
+                        -0.7779982437565529,
+                        0.6586131746834771
+                      ],
+                      [
+                        0.9999999999999858,
+                        -7.268184498698815e-08,
+                        -1.521152659944569e-07,
+                        0.0
+                      ],
+                      [
+                        -1.521152659944569e-07,
+                        -0.7779982437565529,
+                        -0.6282664504107283,
+                        1.6103500240372424
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "pixel_center_offset": 0.5
+                  },
+                  {
+                    "view": "wrist",
+                    "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/pregrasp/sensors/cap000002_wrist.png",
+                    "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/pregrasp/sensors/cap000002_wrist.npy",
+                    "K": [
+                      [
+                        166.81284772367434,
+                        0.0,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        166.81284772367434,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "T_world_camera": [
+                      [
+                        0.9937926635070872,
+                        -0.10898739274577256,
+                        0.02231345293687364,
+                        -0.2346552082542423
+                      ],
+                      [
+                        -0.05169814586104994,
+                        -0.6300413782228839,
+                        -0.7748387983584306,
+                        0.07429282408520693
+                      ],
+                      [
+                        0.09850605907261217,
+                        0.7688755490646622,
+                        -0.631764945510983,
+                        1.0304327639060216
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "pixel_center_offset": 0.5
+                  }
+                ],
+                "verification_frames": [
+                  {
+                    "view": "agentview",
+                    "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/pregrasp/sensors/cap000001_agentview.png",
+                    "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/pregrasp/sensors/cap000001_agentview.npy",
+                    "K": [
+                      [
+                        309.01933598375615,
+                        0.0,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        309.01933598375615,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "T_world_camera": [
+                      [
+                        -7.268184498698815e-08,
+                        0.6282664504107425,
+                        -0.7779982437565529,
+                        0.6586131746834771
+                      ],
+                      [
+                        0.9999999999999858,
+                        -7.268184498698815e-08,
+                        -1.521152659944569e-07,
+                        0.0
+                      ],
+                      [
+                        -1.521152659944569e-07,
+                        -0.7779982437565529,
+                        -0.6282664504107283,
+                        1.6103500240372424
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "pixel_center_offset": 0.5
+                  },
+                  {
+                    "view": "sideview",
+                    "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/pregrasp/sensors/cap000003_sideview.png"
+                  }
+                ],
+                "robot": {
+                  "robot_name": "MountedPanda",
+                  "joint_names": [
+                    "robot0_joint1",
+                    "robot0_joint2",
+                    "robot0_joint3",
+                    "robot0_joint4",
+                    "robot0_joint5",
+                    "robot0_joint6",
+                    "robot0_joint7"
+                  ],
+                  "joint_indexes": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "qpos_indexes": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "qvel_indexes": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "joint_limits_low": [
+                    -2.8973,
+                    -1.7628,
+                    -2.8973,
+                    -3.0718,
+                    -2.8973,
+                    -0.0175,
+                    -2.8973
+                  ],
+                  "joint_limits_high": [
+                    2.8973,
+                    1.7628,
+                    2.8973,
+                    -0.0698,
+                    2.8973,
+                    3.7525,
+                    2.8973
+                  ],
+                  "arm_qpos": [
+                    0.08382726802740426,
+                    0.29305416565186815,
+                    0.10814968866271366,
+                    -2.470232682823008,
+                    -1.1629985629286366,
+                    2.116314722918926,
+                    0.4765413402902171
+                  ],
+                  "arm_qvel": [
+                    -0.019408905601012327,
+                    0.1939315977966561,
+                    -0.1250742853135243,
+                    -0.033665241310534104,
+                    -0.2076385707221345,
+                    0.09501321385378489,
+                    0.30044421669866783
+                  ],
+                  "finger_qpos_indexes": [
+                    7,
+                    8
+                  ],
+                  "finger_qvel_indexes": [
+                    7,
+                    8
+                  ],
+                  "finger_qpos": [
+                    0.03991504527230935,
+                    -0.04000351025430054
+                  ],
+                  "finger_qvel": [
+                    -7.827340993147484e-06,
+                    -1.0337240745525071e-06
+                  ],
+                  "torque_limits_low": [
+                    -80.0,
+                    -80.0,
+                    -80.0,
+                    -80.0,
+                    -80.0,
+                    -12.0,
+                    -12.0
+                  ],
+                  "torque_limits_high": [
+                    80.0,
+                    80.0,
+                    80.0,
+                    80.0,
+                    80.0,
+                    12.0,
+                    12.0
+                  ]
+                },
+                "eef_position": [
+                  -0.23794017295665418,
+                  -0.03236860826670504,
+                  1.0075953416446894
+                ],
+                "eef_rotation": [
+                  [
+                    -0.9937926635070872,
+                    0.10898739274577256,
+                    0.02231345293687364
+                  ],
+                  [
+                    0.05169814586104994,
+                    0.6300413782228839,
+                    -0.7748387983584306
+                  ],
+                  [
+                    -0.09850605907261217,
+                    -0.7688755490646622,
+                    -0.631764945510983
+                  ]
+                ]
+              },
+              "projected_body_points": [
+                [
+                  0.5965748958437255,
+                  0.6082306138401756
+                ],
+                [
+                  0.5971653928387264,
+                  0.5848927624531217
+                ],
+                [
+                  0.5977633483889294,
+                  0.561260131152973
+                ]
+              ],
+              "side_K": [
+                [
+                  618.0386719675123,
+                  0.0,
+                  256.0
+                ],
+                [
+                  0.0,
+                  618.0386719675123,
+                  256.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "side_T": [
+                [
+                  -0.9997091666008313,
+                  0.007842430312378452,
+                  -0.022805229686757997,
+                  -0.05651774593317116
+                ],
+                [
+                  0.02410806582695458,
+                  0.30071489741996155,
+                  -0.9534093305772627,
+                  1.2761224129427358
+                ],
+                [
+                  -0.0006191739283314818,
+                  -0.9536818372793395,
+                  -0.30081650531037846,
+                  1.4879572214102434
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "target_position": [
+                -0.20123991372177524,
+                -0.0721750645731474,
+                0.9927249740850868
+              ],
+              "target_orientation": [
+                [
+                  -0.9463202712342609,
+                  -0.32177686299714203,
+                  0.03062016804053074
+                ],
+                [
+                  -0.14959752714095026,
+                  0.3520311694348847,
+                  -0.9239559706066182
+                ],
+                [
+                  0.28652840020567655,
+                  -0.8789389661324748,
+                  -0.3812712547380795
+                ]
+              ],
+              "geometry_source": "simulator measured pose; same validated relative side-grasp reference",
+              "actual_vla_before": 83,
+              "initial_position_error_m": 0.056147936942880686
+            },
+            "actual_vla": 300,
+            "local_grasp_actions": 182,
+            "limitation": "Visual target association; precise pose and collision/contact geometry still from simulation"
+          },
+          "qwen": [
+            {
+              "kind": "online",
+              "actual_vla": 150,
+              "timestamp": 36.649999999998826,
+              "content": "{\"goal_achieved\":false,\"reason\":\"酒瓶仍被夹爪夹持，未接触架子表面\"}",
+              "usage": {
+                "prompt_tokens": 1077,
+                "completion_tokens": 503,
+                "total_tokens": 1580,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 476,
+                  "text_tokens": 27
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 753,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/finish/sensors/cap000200_wrist.png",
+                  "sha256": "c2d628b2a2186b578c7e0515f52ec50d758a356bfc527a73f8377ecca752d556"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/finish/sensors/cap000201_sideview.png",
+                  "sha256": "6dea1ce77768546995056d4128c21b493c8c92c31dc414dfbc80066a834055b3"
+                }
+              ],
+              "stage_sent": false
+            },
+            {
+              "kind": "online",
+              "actual_vla": 300,
+              "timestamp": 44.15000000000799,
+              "content": "{\"goal_achieved\":true,\"reason\":\"wine bottle is on the rack in sideview\"}",
+              "usage": {
+                "prompt_tokens": 1070,
+                "completion_tokens": 517,
+                "total_tokens": 1587,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 494,
+                  "text_tokens": 23
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 746,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/finish/model_requests/call_02_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/finish/sensors/cap000293_wrist.png",
+                  "sha256": "9f020a8f2f177d241b3b19ad76d36509c705396c68246db6cba4a52d2853ffb0"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/finish/sensors/cap000294_sideview.png",
+                  "sha256": "73b5bc2846cb412ecc0d2ccff0ad7a8d8534d4391b0115b4faa8fe0966af2fd6"
+                }
+              ],
+              "stage_sent": false
+            },
+            {
+              "kind": "pregrasp",
+              "actual_vla": 83,
+              "timestamp": 24.199999999997466,
+              "content": "{\n  \"target_visible\": true,\n  \"upright\": true,\n  \"sideview_box\": [0.58, 0.54, 0.62, 0.62],\n  \"reason\": \"sideview中可见一个深色细长瓶身（酒瓶），位于机械臂末端前方、金属圆盘左侧，瓶身垂直立于桌面，无明显倾倒；背景有木架与抽屉柜，该瓶为唯一符合酒瓶形态的物体；wrist视角中亦可见同一瓶身倾斜视角，标签朝上，进一步确认目标。\"\n}",
+              "usage": {
+                "prompt_tokens": 776,
+                "completion_tokens": 131,
+                "total_tokens": 907,
+                "completion_tokens_details": {
+                  "text_tokens": 131
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 452,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/pregrasp/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/pregrasp/sensors/cap000002_wrist.png",
+                  "sha256": "04fea0bb28b84f996a6211168fd0213da6edf693c0d5d5058f7c6c9aad4de903"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/runs/20261011T100138Z_goal_table_746c1a26/cap_02_wine_to_rack_b8708bf3/pregrasp/sensors/cap000003_sideview.png",
+                  "sha256": "4b3b5124104c2512cfcfc14e0c0a50e161e4a36369253f83f25125d4bceafc53"
+                }
+              ],
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 483,
+          "timeline_frames": 483
+        }
+      ],
+      "wall_seconds": 490.103235884,
+      "video": "First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_wine/sequence.mp4"
+    },
+    {
+      "case": "bowl_stove",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "bowl_to_plate",
+          "actual_vla": 150,
+          "local_grasp_actions": 0,
+          "success": true,
+          "reason": "complete",
+          "error": null,
+          "finish_counts": {
+            "release": 2,
+            "movement": 103,
+            "confirm": 5,
+            "home": 131
+          },
+          "open_and_retreat_actions": 0,
+          "concurrent_open_retreat": null,
+          "feedback_retreat": {
+            "mode": null,
+            "ok": null,
+            "reason": null,
+            "travel_m": null,
+            "replans": null,
+            "endpoint_clearance": null
+          },
+          "return_eligibility_checks": [],
+          "home_streak": 5,
+          "independent_streak": 5,
+          "final_independent": {
+            "timestamp": 20.049999999999766,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.00019925107771644364,
+                0.0013939524654421886,
+                0.0005071056802482196,
+                0.002279721637079124,
+                0.0014420510916458868,
+                0.002252855584750524,
+                0.002682552473561417
+              ],
+              "arm_speed_rad_s": [
+                0.00016119352686135707,
+                0.004820547498402374,
+                4.520297771245232e-05,
+                0.005675729270586926,
+                0.0004160051257762315,
+                0.0016461473362198067,
+                0.0010282939836526595
+              ],
+              "max_joint_error_rad": 0.002682552473561417,
+              "max_joint_speed_rad_s": 0.005675729270586926,
+              "finger_error_m": [
+                1.4389235110302823e-05,
+                1.4450041610061803e-05
+              ],
+              "finger_speed_m_s": [
+                1.1832363882172866e-05,
+                1.188564332511047e-05
+              ],
+              "max_finger_error_m": 1.4450041610061803e-05,
+              "max_finger_speed_m_s": 1.188564332511047e-05,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": true,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.3038555516982554e-07,
+                  "angular_speed": 1.9056510984660071e-06
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": true
+          },
+          "grasp": null,
+          "qwen": [
+            {
+              "kind": "online",
+              "actual_vla": 150,
+              "timestamp": 7.999999999999341,
+              "content": "{\"goal_achieved\":true,\"reason\":\"sideview显示碗已稳定放置在盘子上，wrist视角确认碗与盘子重叠\"}",
+              "usage": {
+                "prompt_tokens": 1067,
+                "completion_tokens": 669,
+                "total_tokens": 1736,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 633,
+                  "text_tokens": 36
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 743,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/runs/20261011T101200Z_goal_table_223413f1/cap_01_bowl_to_plate_a63a1e2a/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/runs/20261011T101200Z_goal_table_223413f1/cap_01_bowl_to_plate_a63a1e2a/finish/sensors/cap000092_wrist.png",
+                  "sha256": "092524404da8b4952c6707083c0544c5346b75c4740748b55c44f092f34cd814"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/runs/20261011T101200Z_goal_table_223413f1/cap_01_bowl_to_plate_a63a1e2a/finish/sensors/cap000093_sideview.png",
+                  "sha256": "1de64cebcb77b846220617a16773c23c0c5713632ea7605283f762cc6af0e161"
+                }
+              ],
+              "stage_sent": false
+            },
+            {
+              "kind": "after_cleanup",
+              "actual_vla": 150,
+              "timestamp": 20.049999999999766,
+              "content": "{\"goal_achieved\":true,\"reason\":\"bowl is placed on the plate in sideview\"}",
+              "usage": {
+                "prompt_tokens": 1074,
+                "completion_tokens": 595,
+                "total_tokens": 1669,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 571,
+                  "text_tokens": 24
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 750,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/runs/20261011T101200Z_goal_table_223413f1/cap_01_bowl_to_plate_a63a1e2a/finish/model_requests/call_02_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/runs/20261011T101200Z_goal_table_223413f1/cap_01_bowl_to_plate_a63a1e2a/finish/sensors/cap000278_wrist.png",
+                  "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/runs/20261011T101200Z_goal_table_223413f1/cap_01_bowl_to_plate_a63a1e2a/finish/sensors/cap000279_sideview.png",
+                  "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+                }
+              ],
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 199,
+          "timeline_frames": 199
+        },
+        {
+          "capability": "stove_on",
+          "actual_vla": 150,
+          "local_grasp_actions": 0,
+          "success": false,
+          "reason": "visual_unknown",
+          "error": null,
+          "finish_counts": {},
+          "open_and_retreat_actions": 0,
+          "concurrent_open_retreat": null,
+          "feedback_retreat": {
+            "mode": null,
+            "ok": null,
+            "reason": null,
+            "travel_m": null,
+            "replans": null,
+            "endpoint_clearance": null
+          },
+          "return_eligibility_checks": [],
+          "home_streak": 0,
+          "independent_streak": 0,
+          "final_independent": null,
+          "grasp": null,
+          "qwen": [
+            {
+              "kind": "online",
+              "actual_vla": 150,
+              "timestamp": 27.54999999999561,
+              "content": "{\"goal_achieved\":null,\"reason\":\"sideview中灶台无明确开启状态视觉标识，无法判断是否已turn on\"}",
+              "usage": {
+                "prompt_tokens": 1066,
+                "completion_tokens": 277,
+                "total_tokens": 1343,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 245,
+                  "text_tokens": 32
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 742,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/runs/20261011T101200Z_goal_table_223413f1/cap_02_stove_on_dfbfb1e5/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/runs/20261011T101200Z_goal_table_223413f1/cap_02_stove_on_dfbfb1e5/finish/sensors/cap000092_wrist.png",
+                  "sha256": "508a3c92b95a255c73676116857a89fc40975eef03dbff92dfdbad07450e8000"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/runs/20261011T101200Z_goal_table_223413f1/cap_02_stove_on_dfbfb1e5/finish/sensors/cap000093_sideview.png",
+                  "sha256": "6cf79604a363eaf674389dcd9d512afa943e21d618245e2cfd66fe4e19c11523"
+                }
+              ],
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 151,
+          "timeline_frames": 151
+        }
+      ],
+      "wall_seconds": 332.00232785000003,
+      "video": "First_Phase/scene_demo/results/2026-10-11-neutral-live-combos/bowl_stove/sequence.mp4"
+    }
+  ],
+  "new_vla": 750,
+  "local_grasp_actions": 182,
+  "finish_actions": 482,
+  "qwen_calls": 8,
+  "qwen_tokens": 12627,
+  "replay_actions": 0,
+  "subagents": 0,
+  "scope": "Fixed user sequences; no Hermes planning evaluation; no training",
+  "not_run": []
+}
