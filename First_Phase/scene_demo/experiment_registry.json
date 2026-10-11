@@ -8608,6 +8608,55 @@
           "sha256": "7987eda95fc705053932fb6a9d709ec0de9a33160e9448717c713ddb0d98d230"
         }
       ]
+    },
+    {
+      "id": "20261011-withdrawal-diagnosis",
+      "title": "酒瓶退离停滞与灶台旧路径阻断的零动作几何诊断",
+      "date": "2026-10-11",
+      "question_keys": [
+        "withdrawal-control-progress",
+        "joint-home-handoff",
+        "collision-approach"
+      ],
+      "tags": [
+        "offline-analysis",
+        "wine",
+        "stove",
+        "retreat",
+        "no-new-motion"
+      ],
+      "conditions": [
+        "仅复用20261011-assisted-combos的动作、深度、相机与接触记录，及20261011-goal-finish成功版本来源；新物理动作0、模型请求0、子agent0。",
+        "静态Panda FK与MountedPanda保存腕部相机外参交叉核对；MuJoCo mj_forward/mj_geomDistance几何计算，无任务环境、step/reset或动力学回放。"
+      ],
+      "findings": [
+        "两例home0；当前两首碗home131/131通过。原成功home执行后缀与两个旧来源快照完全一致（仅比较时规范换行）。",
+        "酒瓶open10/movement54，5次路径复查通过，卡第一个目标；最大关节误差0.004815rad超过0.004rad，实际上抬1.186mm；旧目标回追将保存手指接触点沿架子法向向内移动约1.631mm。",
+        "灶台open20/movement10后opening0阻断；保存深度重现OBB -1.319到-2.566mm。该触发点的原生形状间隙3.242到2.181mm，回追旧首目标为-0.379mm重叠。包围盒有保守成分，但该旧路径不能直接认定安全并取消保护。"
+      ],
+      "limits": [
+        "静态几何诊断，未实际执行候选路径，不证明动态碰撞或任何修复成功；单个深度点不证明完整路径/场景安全。",
+        "酒瓶未保存完整力矩，接触/摩擦/控制误差贡献无法分别定量归因；不据此归因VLA训练缺陷。",
+        "仅定位当前样例，运行期实现与成功归位保持不变；退离重规划修复尚未实施。"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-11-withdrawal-diagnosis.json",
+          "sha256": "3a52bb8cd185f4fad6f01cba2be045ea5fb94f5b53f0cfbb2196e587513b482b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-withdrawal-diagnosis/README.md",
+          "sha256": "2ade60a440133b38d8b3d869bfdedf6278365e18375eca0c6869edfaf1af9202"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-withdrawal-diagnosis/analyze.py",
+          "sha256": "747edd04a5bc72ff0193110b5ffd00f578965cd2f6b245f042b96133dad46094"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-withdrawal-diagnosis/diagnosis.json",
+          "sha256": "7f6c4743d1fbc1f15f6d44d76e8cc582523c9f7f7951e235ef59fb1c7494ed47"
+        }
+      ]
     }
   ]
 }

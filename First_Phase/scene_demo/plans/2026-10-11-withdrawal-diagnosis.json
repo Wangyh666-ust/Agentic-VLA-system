@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "20261011-withdrawal-diagnosis",
+  "intent": "analyze_existing",
+  "question_key": "withdrawal-control-progress",
+  "purpose": "用已有记录定位酒瓶退离停滞和灶台路径阻断，核查是否为跟踪或路径检查问题，不执行新运动。",
+  "prior_evidence": [
+    "20261011-assisted-combos",
+    "20261011-online-150-300-combos",
+    "20261011-goal-finish",
+    "20261010-shape-home"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261011-assisted-combos",
+      "disposition": "reuse",
+      "reason": "本次两个退离失败的原始动作、接触、路径检查与双视角标定。"
+    },
+    {
+      "experiment_id": "20261011-online-150-300-combos",
+      "disposition": "reuse",
+      "reason": "先前在线组合的灶台开口阻断及酒瓶未放架但归位成功，区分失败阶段。"
+    },
+    {
+      "experiment_id": "20261011-goal-finish",
+      "disposition": "reuse",
+      "reason": "历史酒瓶和灶台末态退离及归位已成功，但来源姿态不同。"
+    },
+    {
+      "experiment_id": "20261010-shape-home",
+      "disposition": "reuse",
+      "reason": "原成功归位流程的实现与适用条件。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "related_search": "检索experiment_registry.json的joint-home-handoff条目，读取上述四例原始result.json、finish_actions.jsonl、independent_finish.jsonl及control.py/geometry.py/sensors.py；原记录尚未提供对应世界坐标位移。",
+  "analysis_steps": [
+    "核对失败阶段、实际指令及原成功归位后缀。",
+    "仅使用静态机器人模型和mj_forward重建关节记录的几何位姿，以保存的腕部相机外参校验，不创建任务环境或调用step/reset。",
+    "比较已执行位移和剩余路径第一段；结合已保存接触法向和路径检查判断，报告可证实原因与未知。"
+  ]
+}
