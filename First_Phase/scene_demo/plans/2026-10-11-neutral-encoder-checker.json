@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "20261011-neutral-encoder-checker",
+  "intent": "analyze_existing",
+  "question_key": "visual-goal-encoder-authority",
+  "purpose": "按用户要求修正检查器：视觉仅判断当前子任务目标，同步实测编码器决定标准开口，视觉遮挡或投影重叠不能否决已松手；离线复用已存回答验证融合分支，不新增Qwen请求或机械臂动作。",
+  "prior_evidence": ["20261011-final-input-audit", "20261011-feedback-retreat", "20261011-stove-exit-repair", "20261011-stove-candidate-start"],
+  "history_review": [
+    {"experiment_id": "20261011-final-input-audit", "disposition": "reuse", "reason": "五份实际HTTP输入、图像和编码器已核对，原始回答和开口误差可直接复用。"},
+    {"experiment_id": "20261011-feedback-retreat", "disposition": "reuse", "reason": "酒瓶开口后视觉误报夹持，以及灶台回程几何阻断；本次修检查器，不重复归位。"},
+    {"experiment_id": "20261011-stove-exit-repair", "disposition": "reuse", "reason": "相同碗末态曾获视觉放手回答，用作融合结果一致性对照。"},
+    {"experiment_id": "20261011-stove-candidate-start", "disposition": "reuse", "reason": "相同碗末态改判接触导致下游未启动，复用原回答验证已开爪不再被视觉接触否决。"}
+  ],
+  "new_physical_actions": 0,
+  "related_search": "查阅上轮输入核查、相关台账及simple_checker/runtime/control调用链。当前用户明确调整证据职责，优先于skill中旧的视觉分离门槛；路径保护和原归位执行配置保持不变。",
+  "analysis_steps": [
+    "软件回归：目标为真且同步编码器标准开口时，视觉夹持或接触回答不得阻断；目标假或未知不因开口改成真，缺失、非有限或不同步反馈不得判成功。",
+    "复用输入核查的五份原始请求和回答，核对原始哈希及同步机器人反馈后运行新融合规则；不调用真实Qwen，不改写历史实验结果。",
+    "保存新中性提示词与派生结果，明确旧酒瓶回答的goal_achieved=false仍然保留，灶台几何问题未获新验证；软件通过不宣称组合物理成功。"
+  ]
+}

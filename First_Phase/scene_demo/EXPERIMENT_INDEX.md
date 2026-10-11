@@ -91,3 +91,5 @@
 - `20261011-stove-candidate-start`：假想回程起点已修，前碗实测归位/目标五连通过却遭末次视觉否决；灶台未启动，修订目标未验证。[本轮结论与三段视频](results/2026-10-11-stove-candidate-start/README.md)。
 
 - `20261011-final-input-audit`：五份完整HTTP请求体与原记录匹配，实际图片和同步编码器正确、没有阶段标签；酒瓶/前碗是归位后的视觉否决，灶台初测则是回程碰撞阻断。零真实模型/机械臂动作。[核查与原图、完整prompt](results/2026-10-11-final-input-audit/README.md)。
+
+- `20261011-neutral-encoder-checker`：中性提示词与编码器主导开口判定已接入检查器；45项软件回归、五份旧记录离线融合通过，相同碗末态不再因视觉接触回答相反而改变结果。酒瓶旧目标否定保留；零新Qwen/机械臂动作，不宣称新组合物理成功。[修复、完整提示词与限制](results/2026-10-11-neutral-encoder-checker/README.md)。

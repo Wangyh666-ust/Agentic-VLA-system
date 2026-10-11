@@ -1,9 +1,32 @@
-"""User's two-question checker; no simulator object truth enters the model."""
+"""Visual task goal + authoritative synchronized gripper opening feedback."""
 import json
 import hashlib
+import math
 import re
 from pathlib import Path
 from . import vision
+
+CHECKER_NAME = 'visual_goal_encoder_v3'
+OPEN_TOLERANCE_M = .002
+
+
+def encoder_observation(context):
+    """Describe measured opening, never a commanded opening or visual overlap."""
+    measurements = context['actuator_measurements']
+    fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+    reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+    timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+    if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                   or not math.isfinite(t) for t in timestamps):
+        raise ValueError('encoder/image timestamps must be finite numbers')
+    if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+        raise ValueError('encoder and image timestamps differ')
+    error = max(abs(a - b) for a, b in zip(fingers, reference))
+    return {'timestamp': timestamps[0], 'finger_qpos': fingers,
+            'standard_open_finger_qpos': reference, 'position_unit': 'm',
+            'standard_open_tolerance_m': OPEN_TOLERANCE_M,
+            'max_standard_open_error_mm': error * 1000,
+            'at_standard_open': error <= OPEN_TOLERANCE_M}
 
 
 def build_prompt(context):
@@ -25,21 +48,17 @@ def build_prompt(context):
         'sensor_frames': context['sensor_frames'],
         # Phase labels describe controller bookkeeping, not measured completion.
         # In particular, never send a stale post_execution label to the model.
-        'actuator_measurements': {
-            key: context['actuator_measurements'][key]
-            for key in ('timestamp', 'finger_qpos', 'max_abs_arm_qvel', 'standard_open_finger_qpos')
-            if key in context['actuator_measurements']
-        },
+        'actuator_measurements': encoder_observation(context),
     }
     return '\n'.join([
         '你是机器人子任务的结束状态检查器。',
-        '你的任务目标：VLA在执行某些子任务时，可能已经达到任务要求的位置或操作状态，但遗漏最后的松手、解除接触和退离动作。你负责根据当前子任务和实际观测，判断是否已经达到可以停止VLA、交给收尾器执行这些末段动作的条件。',
+        '你的任务目标：根据当前子任务和同步观测，判断任务目标是否达到、是否可以移交收尾。VLA在个别任务末段可能遗漏最后的松手和退离动作；这仅说明检查器的用途，不表示本次目标已经达到，也不表示本次仍在夹持。',
         '输入包括：当前子任务描述、当前相机图像，以及与图像同步的夹爪编码器数据。',
-        '两张图来自同一采样时刻：wrist是夹爪上的第一人称视角，sideview是外部第三人称视角。请结合两张图判断物品与目的地的位置关系；夹爪开合不能证明物品已经到位。',
-        '1. goal_achieved：当前子任务要求的物品位置关系或操作状态是否已经达到，从而可以结束VLA执行、触发收尾？只检查current_subtask.description明确要求的目标。不要额外要求支撑、特定姿态或更精确的位置。不要要求已经松手、解除接触、退离或归位：这些正是随后由收尾器补全的动作。仍然夹持或接触目标，不否定已经达到收尾触发条件。',
-        '2. holding_or_contact：夹爪是否仍夹持或接触当前操作对象？结合图像与同步夹爪编码器判断。编码器开合状态不能单独证明持物或分离。',
-        '根据实际观测判断，不接受计划中“已经完成”的自述。无法判断时返回null，不猜测。',
-        '只输出JSON：{"goal_achieved":true或false或null,"holding_or_contact":true或false或null,"reason":"简短画面依据"}。',
+        '两张图来自同一采样时刻：wrist是夹爪上的第一人称视角，sideview是外部第三人称视角。视觉只负责判断当前子任务要求的物品位置关系或操作状态。',
+        'goal_achieved：只检查current_subtask.description明确要求的目标，不增加任务未要求的支撑、姿态或更精确的位置条件。不要要求已经松手、解除接触、退离或归位；这些由目标达到后的收尾器执行。是否仍夹持不否定目标已达到。',
+        '夹持状态由程序根据同步实测编码器决定：at_standard_open=true表示夹爪已达到标准开口，按已松手、未夹持处理。遮挡、二维投影重叠或视觉中的接近不能推翻此读数，也不能另报仍夹持。at_standard_open=false表示需要开爪，不单凭闭合证明夹有物品。编码器开口不能证明物品已到位，也不能证明退离路径安全；不要混入goal_achieved判断。',
+        '只依据当前实际画面判断目标，不接受计划、检查时机或阶段名称作为完成证据。无法判断目标时返回null，不猜测。reason只描述目标的位置关系或操作状态依据。',
+        '只输出JSON：{"goal_achieved":true或false或null,"reason":"简短目标画面依据"}。',
         json.dumps(safe, ensure_ascii=False),
     ])
 
@@ -60,18 +79,16 @@ class SimpleQwenClient(vision.QwenClient):
 
     def parse_verdict(self, content):
         raw = vision._parse_verdict_content(content)
-        goal, contact = raw.get('goal_achieved'), raw.get('holding_or_contact')
-        for name, value in [('goal_achieved', goal), ('holding_or_contact', contact)]:
-            if value is not None and type(value) is not bool:
-                raise ValueError(name + ' must be bool or null')
+        goal = raw.get('goal_achieved')
+        if goal is not None and type(goal) is not bool:
+            raise ValueError('goal_achieved must be bool or null')
         reason = raw.get('reason', '')
         if not isinstance(reason, str):
             raise ValueError('reason must be string')
-        # Legacy interface aliases, NOT separate model observations. No support gate.
+        # Keep historical responses intact, but never turn visual contact into
+        # release or clearance evidence. Reconcile supplies measured opening.
         verdict = {key: None for key in vision._BOOL_FIELDS}
         verdict.update(operation_achieved=goal, at_destination=goal,
-                       released=None if contact is None else not contact,
-                       clear_of_target=None if contact is None else not contact,
                        boxes={}, evidence=[reason], unknown_reasons=[])
         self.last_two_question_verdict = raw
         return verdict
@@ -80,7 +97,9 @@ class SimpleQwenClient(vision.QwenClient):
         prompt = build_prompt(context)
         result = self._request(context, image_paths, prompt)
         result['prompt_text'] = prompt
-        result['checker'] = 'two_question_goal_contact_v2'
+        result['checker'] = CHECKER_NAME
+        result['visual_goal_verdict'] = self.last_two_question_verdict
+        # Historical report readers retain this alias; it is raw, not fused.
         result['two_question_verdict'] = self.last_two_question_verdict
         return result
 
@@ -92,17 +111,19 @@ def goal_achieved(context, verdict):
 def reconcile(context, verdict, robot, reference):
     out = vision.validate_verdict(verdict)
     measurements = context['actuator_measurements']
-    latest = max(f['timestamp'] for f in context['sensor_frames'])
-    if abs(measurements['timestamp'] - latest) > 1e-9:
-        raise ValueError('encoder and image timestamps differ')
+    encoder = encoder_observation(context)
     for key, values in (('finger_qpos', robot['finger_qpos']),
                         ('standard_open_finger_qpos', reference['finger_home'])):
-        if len(values) != 2 or any(abs(float(a) - float(b)) > 1e-9 for a, b in zip(measurements[key], values)):
+        values = vision._finite_pair(list(values), key)
+        if any(abs(a - b) > 1e-9 for a, b in zip(measurements[key], values)):
             raise ValueError('encoder/reference mismatch')
-    opened = max(abs(float(a) - float(b)) for a, b in zip(robot['finger_qpos'], reference['finger_home'])) <= .002
-    if not opened:
-        out['released'] = False
-        out['clear_of_target'] = False
+    out['released'] = encoder['at_standard_open']
+    # Physical hand clearance belongs to the retreat/path controller. Opening
+    # fingers must not fabricate clearance, nor allow visual overlap to veto it.
+    out['clear_of_target'] = None
+    if out['released']:
+        out['evidence'].append('同步实测编码器已达到标准开口，按已松手、未夹持处理；遮挡或投影重叠不改变此判断。')
+    else:
         out['evidence'].append('夹爪尚未达到标准开口，需要发出开爪命令；不据此推断物品未到位或仍被持有。')
     return out
 
@@ -115,6 +136,6 @@ def decide(context, verdict):
         return vision._decision('incomplete', 'subtask purpose not achieved')
     if verdict.get('released') is not True:
         return vision._decision('needs_release', 'purpose achieved; open fingers', allow_release=True)
-    if verdict.get('clear_of_target') is not True:
-        return vision._decision('needs_retreat', 'purpose achieved; withdraw hand', allow_retreat=True)
-    return vision._decision('complete', 'purpose achieved and hand separated')
+    # This is checker acceptance, not completion of retreat/home. Runtime always
+    # runs the atomic finishing controller, even for this initial state.
+    return vision._decision('complete', 'purpose achieved and encoder confirms open; controller verifies retreat/home')

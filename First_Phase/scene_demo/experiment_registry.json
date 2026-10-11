@@ -11533,6 +11533,106 @@
           "sha256": "60784135fc0690a3893f25f70f59858d5b665671bc3f343227deaa5ef637bba3"
         }
       ]
+    },
+{
+  "id": "20261011-neutral-encoder-checker",
+  "title": "中性目标检查与编码器主导开口判定修复",
+  "date": "2026-10-11",
+  "question_keys": [
+    "visual-goal-encoder-authority"
+  ],
+  "tags": [
+    "checker",
+    "encoder",
+    "neutral-prompt",
+    "offline",
+    "no-motion"
+  ],
+  "conditions": [
+    "按最新用户要求视觉只判断当前子任务目标，标准开口由同步实测编码器决定；旧视觉接触字段只保留原始审计。",
+    "复用输入核查的五份原请求、图像、回答和同步反馈；真实Qwen调用0，机械臂动作0，回放0。",
+    "原归位控制循环、配置和路径保护不变；control仅更改检查器版本标签。"
+  ],
+  "findings": [
+    "45项相关软件回归通过，包括初次已开爪仍执行收尾和原归位的模拟控制分支。",
+    "两份相同碗末态的相反视觉接触回答均由标准开口证据判为检查通过。",
+    "酒瓶末次原目标否定保留；编码器确认已松手不会改写视觉目标判断。"
+  ],
+  "limits": [
+    "新中性prompt尚未通过真实Qwen调用验证；没有新增组合任务物理成功或新视频。",
+    "灶台修订退出路线尚未得到新的实际验证，不以检查器程序通过替代。",
+    "用户要求不使用子agent，本轮由当前主会话与工具实现和验收，没有新增low实现模型调用证据。"
+  ],
+  "evidence": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/README.md",
+      "sha256": "1c5f878482f774896764c4b6effe36faebec91e5ad402ecf574789a9f8e69325"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/bowl_final_pass_new_prompt.txt",
+      "sha256": "c372030333118a8bbb9011807a4721859b860e9c738dcb76b8d79fe75786012e"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/bowl_final_veto_new_prompt.txt",
+      "sha256": "c372030333118a8bbb9011807a4721859b860e9c738dcb76b8d79fe75786012e"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/preflight.log",
+      "sha256": "c018ddcb402569667e56ac7fd39afe4160f04bf7da96198292ea404f1daed007"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/source_snapshot/control.py",
+      "sha256": "e713a804373a4c3eafc3bfb20f462bc36a5ca031c345876d12145baf10df6d71"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/source_snapshot/simple_checker.py",
+      "sha256": "a62d41ebbf6f917601bb9aabfad5754aac272056b54dcb3ea99851b1a649c79f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/source_snapshot/test_assisted_combos.py",
+      "sha256": "2cc69a517ffebdbafe6c7374da4d978a570f423610dd5a047799cb2b6965aea7"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/source_snapshot/test_runtime.py",
+      "sha256": "79ba835b0026596fd14c0734dc991730afedc706f91c672f63c4c2959e931690"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/source_snapshot/test_simple_checker.py",
+      "sha256": "af4bc0fdf76f77f770cb2abe7c47637fe089124fc474e7f4b11b5afdbb755e13"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/stove_trigger_new_prompt.txt",
+      "sha256": "39c839af850bcfd19125334e0cffe32132d0b94963c4705197eb901442f3770b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/tests.stderr.log",
+      "sha256": "c37b42ee2d631fd3cbd4eba490183f9f9ab1faf3468afe1b2644df57f39df761"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/tests.stdout.log",
+      "sha256": "d6ba59a03ea234820e5f541a05e5f187945c75aea7434ba3a82951bf3cc56529"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/verification.json",
+      "sha256": "c593350bd5ba0a40c07d35d6e98239939463f4d7a227ac90f0a812ca894e9c3a"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/verify_existing.py",
+      "sha256": "f56590781a6ae0d9c3ec54473f7830b5d369bde1a6ba54e64f22b65b651b1ec8"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/wine_final_new_prompt.txt",
+      "sha256": "4e960a05b06aab091a0deca442a53e364a62e1427d5325c308cfcc56b40aaceb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-neutral-encoder-checker/wine_trigger_new_prompt.txt",
+      "sha256": "baa93264b4677cc57eb15e903cb83fea893e9cc541987883903c4dbd027e7ba8"
+    },
+    {
+      "path": "First_Phase/scene_demo/plans/2026-10-11-neutral-encoder-checker.json",
+      "sha256": "b225e02117ad17bcc3e3a46d0f4239b361baffceccd6651bf33f16731566a79b"
     }
+  ]
+}
   ]
 }

@@ -80,7 +80,8 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
         if simple_handoff:
             # Purpose reached: explicitly open, including already-open fingers.
             d = {'state': 'needs_release', 'allow_release': True, 'allow_retreat': False}
-            r['handoff_mode'] = 'two_question_goal_contact_v2'
+            from .simple_checker import CHECKER_NAME
+            r['handoff_mode'] = CHECKER_NAME
             r['handoff_goal_latched'] = v.get('operation_achieved') is True
 
         if d['state'] == 'needs_release':

@@ -193,6 +193,19 @@ class RuntimeTests(unittest.TestCase):
         finish.assert_not_called()
         self.assertEqual(monitor.port.steps, 0)
 
+    def test_simple_visual_contact_cannot_veto_open_measured_feedback(self):
+        raw = copy.deepcopy(ALL_TRUE)
+        raw.update(released=False, clear_of_target=False)
+        client = FakeClient(raw)
+        client.simple_handoff = True
+        monitor = self.monitor(client)
+        self.add_side_view(monitor)
+        fused = monitor._check(self.context, [])
+        self.assertTrue(fused['released'])
+        self.assertIsNone(fused['clear_of_target'])
+        self.assertEqual(monitor._last_decision['state'], 'complete')
+        self.assertEqual(monitor.port.steps, 0)  # acceptance alone is not finishing
+
     def test_simple_checks_only_at_150_and_300_despite_candidate_and_force(self):
         raw = copy.deepcopy(ALL_TRUE)
         raw['operation_achieved'] = False

@@ -33,10 +33,16 @@ class AssistedTests(unittest.TestCase):
         port=ConstrainedPort(remain_blocked)
         initial=simple_checker.SimpleQwenClient(max_calls=0).parse_verdict('{"goal_achieved":true,"holding_or_contact":true}')
         final=simple_checker.SimpleQwenClient(max_calls=0).parse_verdict('{"goal_achieved":true,"holding_or_contact":false}')
+        def check(context, observations):
+            measured = port.read_robot()['finger_qpos'].tolist()
+            ctx = {**context, 'sensor_frames': [{'timestamp': 1.}],
+                   'actuator_measurements': {'timestamp': 1., 'finger_qpos': measured,
+                                              'standard_open_finger_qpos': list(port.reference['finger_home'])}}
+            return simple_checker.reconcile(ctx, final, {'finger_qpos': measured}, port.reference)
         events=[]
         with patch.object(control,'plan_retreat',return_value={'ok':plan_ok,'waypoints':[np.zeros(7),np.full(7,.02)]}), patch.object(control,'screen_shapes',return_value={'ok':True}), patch.object(control.jh,'home_metrics',side_effect=lambda ref,st:{'ready':np.max(np.abs(st['arm_qpos']))<.004}):
             result=control.run_finish(port,{'current_subtask':{'operation':operation}},initial,
-                simple_checker.decide,lambda *_:final,events.append,simple_handoff=True)
+                simple_checker.decide,check,events.append,simple_handoff=True)
         return port,result,events
 
     def test_turn_opens_during_retreat_and_original_home(self):

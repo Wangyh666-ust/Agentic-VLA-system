@@ -1,0 +1,384 @@
+{
+  "checker": "visual_goal_encoder_v3",
+  "physical_actions": 0,
+  "real_model_calls": 0,
+  "replayed_actions": 0,
+  "rows": [
+    {
+      "name": "wine_trigger",
+      "source_request": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_01_request.json",
+      "historical_answer": {
+        "goal_achieved": true,
+        "holding_or_contact": true,
+        "reason": "sideview显示酒瓶底部已接触架子上表面，满足'put on rack'要求；wrist和sideview均显示夹爪仍握持酒瓶，编码器闭合状态与图像一致"
+      },
+      "encoder": {
+        "timestamp": 36.649999999998826,
+        "finger_qpos": [
+          0.011133275288715083,
+          -0.010450612010512715
+        ],
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ],
+        "position_unit": "m",
+        "standard_open_tolerance_m": 0.002,
+        "max_standard_open_error_mm": 28.277151968174035,
+        "at_standard_open": false
+      },
+      "fused_verdict": {
+        "target_visible": null,
+        "destination_visible": null,
+        "at_destination": true,
+        "supported": null,
+        "released": false,
+        "stable": null,
+        "operation_achieved": true,
+        "clear_of_target": null,
+        "boxes": {},
+        "evidence": [
+          "sideview显示酒瓶底部已接触架子上表面，满足'put on rack'要求；wrist和sideview均显示夹爪仍握持酒瓶，编码器闭合状态与图像一致",
+          "夹爪尚未达到标准开口，需要发出开爪命令；不据此推断物品未到位或仍被持有。"
+        ],
+        "unknown_reasons": []
+      },
+      "new_decision": {
+        "state": "needs_release",
+        "reason": "purpose achieved; open fingers",
+        "allow_release": true,
+        "allow_retreat": false
+      },
+      "historical_physical_counts": {
+        "release": 10,
+        "movement": 27,
+        "confirm": 3,
+        "home": 218
+      },
+      "historical_independent_ready": true,
+      "limitation": "old visual goal reused; this is not a new Qwen response or physical run"
+    },
+    {
+      "name": "wine_final",
+      "source_request": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_02_request.json",
+      "historical_answer": {
+        "goal_achieved": false,
+        "holding_or_contact": true,
+        "reason": "sideview显示酒瓶仍被夹爪夹持且悬停在架子上方，未与架子接触；wrist view确认夹爪持物状态"
+      },
+      "encoder": {
+        "timestamp": 49.55000000001459,
+        "finger_qpos": [
+          0.03872204834698867,
+          -0.03873639441445069
+        ],
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ],
+        "position_unit": "m",
+        "standard_open_tolerance_m": 0.002,
+        "max_standard_open_error_mm": 0.008630435763941346,
+        "at_standard_open": true
+      },
+      "fused_verdict": {
+        "target_visible": null,
+        "destination_visible": null,
+        "at_destination": false,
+        "supported": null,
+        "released": true,
+        "stable": null,
+        "operation_achieved": false,
+        "clear_of_target": null,
+        "boxes": {},
+        "evidence": [
+          "sideview显示酒瓶仍被夹爪夹持且悬停在架子上方，未与架子接触；wrist view确认夹爪持物状态",
+          "同步实测编码器已达到标准开口，按已松手、未夹持处理；遮挡或投影重叠不改变此判断。"
+        ],
+        "unknown_reasons": []
+      },
+      "new_decision": {
+        "state": "incomplete",
+        "reason": "subtask purpose not achieved",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "historical_physical_counts": {
+        "release": 10,
+        "movement": 27,
+        "confirm": 3,
+        "home": 218
+      },
+      "historical_independent_ready": true,
+      "limitation": "old visual goal reused; this is not a new Qwen response or physical run"
+    },
+    {
+      "name": "stove_trigger",
+      "source_request": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/model_requests/call_01_request.json",
+      "historical_answer": {
+        "goal_achieved": true,
+        "holding_or_contact": true,
+        "reason": "sideview显示灶台有红色加热圈（已开启状态），符合turn on the stove目标；夹爪在灶台旋钮位置且编码器qpos接近0（闭合状态），表明仍接触"
+      },
+      "encoder": {
+        "timestamp": 27.54999999999561,
+        "finger_qpos": [
+          0.0020752033792521916,
+          -0.02348144741871255
+        ],
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ],
+        "position_unit": "m",
+        "standard_open_tolerance_m": 0.002,
+        "max_standard_open_error_mm": 36.65537248577678,
+        "at_standard_open": false
+      },
+      "fused_verdict": {
+        "target_visible": null,
+        "destination_visible": null,
+        "at_destination": true,
+        "supported": null,
+        "released": false,
+        "stable": null,
+        "operation_achieved": true,
+        "clear_of_target": null,
+        "boxes": {},
+        "evidence": [
+          "sideview显示灶台有红色加热圈（已开启状态），符合turn on the stove目标；夹爪在灶台旋钮位置且编码器qpos接近0（闭合状态），表明仍接触",
+          "夹爪尚未达到标准开口，需要发出开爪命令；不据此推断物品未到位或仍被持有。"
+        ],
+        "unknown_reasons": []
+      },
+      "new_decision": {
+        "state": "needs_release",
+        "reason": "purpose achieved; open fingers",
+        "allow_release": true,
+        "allow_retreat": false
+      },
+      "historical_physical_counts": {
+        "release": 20,
+        "movement": 28,
+        "confirm": 4,
+        "home": 0
+      },
+      "historical_independent_ready": false,
+      "limitation": "old visual goal reused; this is not a new Qwen response or physical run"
+    },
+    {
+      "name": "bowl_final_pass",
+      "source_request": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/model_requests/call_02_request.json",
+      "historical_answer": {
+        "goal_achieved": true,
+        "holding_or_contact": false,
+        "reason": "sideview图显示碗已稳定放置在盘子中央，满足'put the bowl on the plate'要求；wrist和sideview图均显示夹爪悬停于碗上方且未接触，编码器数据接近标准开合位置，结合图像确认无接触"
+      },
+      "encoder": {
+        "timestamp": 20.049999999999766,
+        "finger_qpos": [
+          0.038716186629918665,
+          -0.03874221402029681
+        ],
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ],
+        "position_unit": "m",
+        "standard_open_tolerance_m": 0.002,
+        "max_standard_open_error_mm": 0.014450041610061803,
+        "at_standard_open": true
+      },
+      "fused_verdict": {
+        "target_visible": null,
+        "destination_visible": null,
+        "at_destination": true,
+        "supported": null,
+        "released": true,
+        "stable": null,
+        "operation_achieved": true,
+        "clear_of_target": null,
+        "boxes": {},
+        "evidence": [
+          "sideview图显示碗已稳定放置在盘子中央，满足'put the bowl on the plate'要求；wrist和sideview图均显示夹爪悬停于碗上方且未接触，编码器数据接近标准开合位置，结合图像确认无接触",
+          "同步实测编码器已达到标准开口，按已松手、未夹持处理；遮挡或投影重叠不改变此判断。"
+        ],
+        "unknown_reasons": []
+      },
+      "new_decision": {
+        "state": "complete",
+        "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "historical_physical_counts": {
+        "release": 2,
+        "movement": 103,
+        "confirm": 5,
+        "home": 131
+      },
+      "historical_independent_ready": true,
+      "limitation": "old visual goal reused; this is not a new Qwen response or physical run"
+    },
+    {
+      "name": "bowl_final_veto",
+      "source_request": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_request.json",
+      "historical_answer": {
+        "goal_achieved": true,
+        "holding_or_contact": true,
+        "reason": "sideview显示碗已置于盘子上，wrist和sideview均显示夹爪仍接触碗"
+      },
+      "encoder": {
+        "timestamp": 20.049999999999766,
+        "finger_qpos": [
+          0.038716186629918665,
+          -0.03874221402029681
+        ],
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ],
+        "position_unit": "m",
+        "standard_open_tolerance_m": 0.002,
+        "max_standard_open_error_mm": 0.014450041610061803,
+        "at_standard_open": true
+      },
+      "fused_verdict": {
+        "target_visible": null,
+        "destination_visible": null,
+        "at_destination": true,
+        "supported": null,
+        "released": true,
+        "stable": null,
+        "operation_achieved": true,
+        "clear_of_target": null,
+        "boxes": {},
+        "evidence": [
+          "sideview显示碗已置于盘子上，wrist和sideview均显示夹爪仍接触碗",
+          "同步实测编码器已达到标准开口，按已松手、未夹持处理；遮挡或投影重叠不改变此判断。"
+        ],
+        "unknown_reasons": []
+      },
+      "new_decision": {
+        "state": "complete",
+        "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "historical_physical_counts": {
+        "release": 2,
+        "movement": 103,
+        "confirm": 5,
+        "home": 131
+      },
+      "historical_independent_ready": true,
+      "limitation": "old visual goal reused; this is not a new Qwen response or physical run"
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/checks.jsonl",
+      "sha256": "e96f65b414f79c91ac7f039a60bd465ffa68e0bdf135b9488feaeee948e78e7b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/model_requests/call_01_request.json",
+      "sha256": "3b26e3e030952dbd05b2f9ef60541438f887746b69a3d07e896aead1e0320494"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/model_requests/call_01_response.json",
+      "sha256": "271edf89d270ce6544d240bd8ee7805bf174a6e0f2848e79374edaa078a3a407"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000092_wrist.png",
+      "sha256": "508a3c92b95a255c73676116857a89fc40975eef03dbff92dfdbad07450e8000"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000093_sideview.png",
+      "sha256": "6cf79604a363eaf674389dcd9d512afa943e21d618245e2cfd66fe4e19c11523"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/checks.jsonl",
+      "sha256": "180b24b3c509e0c351e4a99d4a2803b963cb83607f1ea5bcebfc89634a58f137"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_01_request.json",
+      "sha256": "458caf077e4c648bec9938f0ca0523278bc7f0e1cd17dbdffa6a24b2ae9c1ebc"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_01_response.json",
+      "sha256": "44def84f17880d499c56c27ee432c6424926a102339e46946ba272866dbebac9"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_02_request.json",
+      "sha256": "1a7bbb3eba172c2360414fcc8626968fa67fb9f17caebfdf59df86c787a1f72f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_02_response.json",
+      "sha256": "db2bd65569ed71b6dfe9cd704f8c7aa1480676a88db939ca7248329f0e9bb902"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000200_wrist.png",
+      "sha256": "c2d628b2a2186b578c7e0515f52ec50d758a356bfc527a73f8377ecca752d556"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000201_sideview.png",
+      "sha256": "6dea1ce77768546995056d4128c21b493c8c92c31dc414dfbc80066a834055b3"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000374_wrist.png",
+      "sha256": "914a0b8c01680bb3f14fbd56a50e1b6ea1e4dae812716cc4438b51d558628b23"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000375_sideview.png",
+      "sha256": "b17de835fe31645fceeb5fd2ef8d1a4e3b35d21e52a01e34e589e6ed3f99f443"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-final-input-audit/audit.json",
+      "sha256": "aa885b12233b0308a958064d57cb569bee96a8bed67b3b08497b5c7acbf4c745"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/checks.jsonl",
+      "sha256": "58a8aac3a7a2ed5459a387028a345f6e56549db240923b1b7126c0317d43032c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_request.json",
+      "sha256": "d178f4e6810455adef70874cc6f62a50116fcb7dcebd10e5a21dbbf651fd83c1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_response.json",
+      "sha256": "56fea4ba1a16b9cfc26dfadbbfc518e6c00d9dab21a6627b122e0bbc0bc84f8f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000278_wrist.png",
+      "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000279_sideview.png",
+      "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/checks.jsonl",
+      "sha256": "1e8c335d3c8864f9183698b6ac9117df809ad81e80807c18dd146acee330a4fb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/model_requests/call_02_request.json",
+      "sha256": "926e0387a4ebfcb03f01b277b8adfaeb8c0607b5f48cfae5e485585b2c861e96"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/model_requests/call_02_response.json",
+      "sha256": "5905f74de72e0d048d4449d0f2d99b1952c56391afd671a36d3556208513f87f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/sensors/cap000278_wrist.png",
+      "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/sensors/cap000279_sideview.png",
+      "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+    }
+  ],
+  "limits": [
+    "New neutral prompt has not yet been tested with a live Qwen request.",
+    "No new combination or stove retreat/home result is claimed."
+  ]
+}
