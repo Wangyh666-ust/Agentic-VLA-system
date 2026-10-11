@@ -92,6 +92,8 @@ def main(output=OUT, proposal=PLAN, campaign_id='20261011-assisted-combos', case
                             if count==len(timeline)-1:imageio.imwrite(run/'final_frame.png',frame)
                             count+=1
                     finally:reader.close()
+                    if count != len(timeline):
+                        raise RuntimeError(f'Video/action timeline mismatch: {run}: {count} != {len(timeline)}')
                 jobs.append({'capability':sub['capability'],'actual_vla':sub['actual_vla'],
                     'local_grasp_actions':sub['local_grasp_actions'],'success':job['success'],
                     'reason':job['ended_reason'],'error':job.get('error'),
@@ -99,6 +101,9 @@ def main(output=OUT, proposal=PLAN, campaign_id='20261011-assisted-combos', case
                     'open_and_retreat_actions':sum(a.get('phase')=='movement' and a.get('finger_target') is not None for a in actions),
                     'concurrent_open_retreat':finish.get('concurrent_open_retreat'),
                     'feedback_retreat':{key:feedback.get(key) for key in ('mode','ok','reason','travel_m','replans','endpoint_clearance')},
+                    'return_eligibility_checks':[{'actions':x['actions'], **{
+                        key:x['home_screen'].get(key) for key in ('ok','collision_count','sample_count','live_unchanged')
+                    }} for x in feedback.get('home_candidates',[])],
                     'home_streak':finish.get('home_streak',0),'independent_streak':sub['independent_streak'],
                     'final_independent':independent[-1] if independent else None,
                     'grasp':grasp,'qwen':checks,'decoded_frames':count,'timeline_frames':len(timeline)})

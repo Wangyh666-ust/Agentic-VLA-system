@@ -1,0 +1,190 @@
+{
+  "id": "20261011-stove-candidate-start",
+  "cases": [
+    {
+      "case": "bowl_stove",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "bowl_to_plate",
+          "actual_vla": 150,
+          "local_grasp_actions": 0,
+          "success": false,
+          "reason": "final visual failed",
+          "error": null,
+          "finish_counts": {
+            "release": 2,
+            "movement": 103,
+            "confirm": 5,
+            "home": 131
+          },
+          "open_and_retreat_actions": 0,
+          "concurrent_open_retreat": null,
+          "feedback_retreat": {
+            "mode": null,
+            "ok": null,
+            "reason": null,
+            "travel_m": null,
+            "replans": null,
+            "endpoint_clearance": null
+          },
+          "return_eligibility_checks": [],
+          "home_streak": 5,
+          "independent_streak": 5,
+          "final_independent": {
+            "timestamp": 20.049999999999766,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.00019925107771644364,
+                0.0013939524654421886,
+                0.0005071056802482196,
+                0.002279721637079124,
+                0.0014420510916458868,
+                0.002252855584750524,
+                0.002682552473561417
+              ],
+              "arm_speed_rad_s": [
+                0.00016119352686135707,
+                0.004820547498402374,
+                4.520297771245232e-05,
+                0.005675729270586926,
+                0.0004160051257762315,
+                0.0016461473362198067,
+                0.0010282939836526595
+              ],
+              "max_joint_error_rad": 0.002682552473561417,
+              "max_joint_speed_rad_s": 0.005675729270586926,
+              "finger_error_m": [
+                1.4389235110302823e-05,
+                1.4450041610061803e-05
+              ],
+              "finger_speed_m_s": [
+                1.1832363882172866e-05,
+                1.188564332511047e-05
+              ],
+              "max_finger_error_m": 1.4450041610061803e-05,
+              "max_finger_speed_m_s": 1.188564332511047e-05,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": true,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.3038555516982554e-07,
+                  "angular_speed": 1.9056510984660071e-06
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": true
+          },
+          "grasp": null,
+          "qwen": [
+            {
+              "kind": "online",
+              "actual_vla": 150,
+              "timestamp": 7.999999999999341,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":true,\"reason\":\"sideview显示碗已稳定放置在盘子中心，wrist图确认碗与盘子接触；sideview中夹爪指尖仍接触碗边缘，编码器数据与开合状态一致但需以图像为准\"}",
+              "usage": {
+                "prompt_tokens": 1009,
+                "completion_tokens": 1093,
+                "total_tokens": 2102,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 68
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 685,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000092_wrist.png",
+                  "sha256": "092524404da8b4952c6707083c0544c5346b75c4740748b55c44f092f34cd814"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000093_sideview.png",
+                  "sha256": "1de64cebcb77b846220617a16773c23c0c5713632ea7605283f762cc6af0e161"
+                }
+              ],
+              "stage_sent": false
+            },
+            {
+              "kind": "after_cleanup",
+              "actual_vla": 150,
+              "timestamp": 20.049999999999766,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":true,\"reason\":\"sideview显示碗已置于盘子上，wrist和sideview均显示夹爪仍接触碗\"}",
+              "usage": {
+                "prompt_tokens": 1015,
+                "completion_tokens": 311,
+                "total_tokens": 1326,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 269,
+                  "text_tokens": 42
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 691,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000278_wrist.png",
+                  "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000279_sideview.png",
+                  "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+                }
+              ],
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 199,
+          "timeline_frames": 199
+        }
+      ],
+      "wall_seconds": 280.75161682000004,
+      "video": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/sequence.mp4"
+    }
+  ],
+  "new_vla": 150,
+  "local_grasp_actions": 0,
+  "finish_actions": 241,
+  "qwen_calls": 2,
+  "qwen_tokens": 3428,
+  "replay_actions": 0,
+  "subagents": 0,
+  "scope": "Fixed user sequences; no Hermes planning evaluation; no training",
+  "not_run": []
+}

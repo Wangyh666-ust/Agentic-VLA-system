@@ -1,0 +1,46 @@
+{
+  "physical_actions": 0,
+  "model_calls": 0,
+  "checks": {
+    "state_after_sha": true,
+    "request_sha256": true,
+    "prompt_sha256": true,
+    "image_sha256": true,
+    "request_options": true
+  },
+  "rows": [
+    {
+      "experiment": "2026-10-11-stove-exit-repair",
+      "state_after_sha": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914",
+      "request_path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/model_requests/call_02_request.json",
+      "request_sha256": "0c08e090993c1e2629f97742c854ab315e11356285d210afebdbf7c77a9319eb",
+      "prompt_sha256": "05416c0e71bd265b673ccdde73ec48d74664993ef1d4720efe4ef263e967d25c",
+      "image_sha256": [
+        "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b",
+        "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+      ],
+      "request_options": {
+        "enable_thinking": true,
+        "thinking_budget": 1024
+      },
+      "response": "{\"goal_achieved\":true,\"holding_or_contact\":false,\"reason\":\"sideview图显示碗已稳定放置在盘子中央，满足'put the bowl on the plate'要求；wrist和sideview图均显示夹爪悬停于碗上方且未接触，编码器数据接近标准开合位置，结合图像确认无接触\"}"
+    },
+    {
+      "experiment": "2026-10-11-stove-candidate-start",
+      "state_after_sha": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914",
+      "request_path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_request.json",
+      "request_sha256": "0c08e090993c1e2629f97742c854ab315e11356285d210afebdbf7c77a9319eb",
+      "prompt_sha256": "05416c0e71bd265b673ccdde73ec48d74664993ef1d4720efe4ef263e967d25c",
+      "image_sha256": [
+        "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b",
+        "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+      ],
+      "request_options": {
+        "enable_thinking": true,
+        "thinking_budget": 1024
+      },
+      "response": "{\"goal_achieved\":true,\"holding_or_contact\":true,\"reason\":\"sideview显示碗已置于盘子上，wrist和sideview均显示夹爪仍接触碗\"}"
+    }
+  ],
+  "limit": "Identical recorded input does not establish a specific internal model cause; answers are inconsistent."
+}

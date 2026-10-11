@@ -10818,6 +10818,470 @@
           "sha256": "15a2f34f0fd2d731a2d23080001dcba39a64156d990572c0fadfd35314c37f27"
         }
       ]
+    },
+    {
+      "id": "20261011-stove-candidate-start",
+      "title": "候选回程起点修订：前碗实际归位但末次视觉否决，灶台未启动",
+      "date": "2026-10-11",
+      "question_keys": [
+        "withdrawal-control-progress",
+        "joint-home-handoff",
+        "release-stop"
+      ],
+      "tags": [
+        "candidate-start",
+        "stove",
+        "visual-veto",
+        "target-not-started"
+      ],
+      "conditions": [
+        "仅碗→灶台补充一次；假想路径显式候选起点，原home默认实测起点、原控制不变；150/300视觉检查和原碗不变，无子agent/训练/回放/单测归位。"
+      ],
+      "findings": [
+        "本次前碗VLA150、open2/move103/confirm5/home131；独立及home五连通过，最终Qwen却说仍接触，原blocked保持。",
+        "首碗失败停止灶台；本修订灶台VLA0/退离0/home0，退出到回程的修订效果未验证，不能用前碗归位替代目标。",
+        "42项接口/路径相关软件通过；保存记录零动作诊断确认上修订的假想路径第0点误用当前接触姿态。代码纠正不等于物理验证。",
+        "保存对照确认两张RGB图、完整prompt和实测末态相同：前次Qwen说已分离，本次说仍接触；没有新动作/模型调用。"
+      ],
+      "limits": [
+        "前置视觉否决导致目标未执行，不评价反馈退离物理效果。",
+        "本轮首版酒瓶退离与原home通过但最终视觉否决；首版灶台退出而回程阻断，分别保留，不汇总成全部通过。",
+        "没有额外模型复查保存图像或继续扩大现场重复；新控制仅在试点启用。"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-11-stove-candidate-start.json",
+          "sha256": "d7bb841207c153314ddc3f456bfe0ce62943537784c96fd9877f8add3444d37f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/README.md",
+          "sha256": "f5c74ddf552904582526180690e20e9dd15b80361b630233d28c9f710443c8a1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/analysis_source_snapshot.zip",
+          "sha256": "d6a2b4d99d69833ddbae3a12cabf6414f5bf4b3be5eb5e50a7ab72dcac96cea9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/events.jsonl",
+          "sha256": "4ac1549fc10967ecaa3c0f04448314969d15988a7260e76813bd0bbc9ac41c5f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/health.json",
+          "sha256": "83e094ab146526d93b257fb1c8e442a8c41a8ccb4983775cd65e57b623beb886"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/preflight.log",
+          "sha256": "4fe5a6972862e09c7d43ee31611cd45ea33db437a5a32feab4ecfbb72eca2d06"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/result.json",
+          "sha256": "da85c1012f9b9acfb74bd83a74f517649cebdb4d7e52d794125f0c0d79ac1db1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/agentview.png",
+          "sha256": "4ee501f3e352464c2bce13e3b492868e9b495a9bc56560115f1bbc9e5f4ec06b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/action_sources.jsonl",
+          "sha256": "b6d95b2a9fbf3e73c0451f0a6a2cdf5ae2c5b48d1c7edfb04446e94992f110b3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/events.jsonl",
+          "sha256": "ddc3ef1d37cef434dcbf243b457ea680c06f1d92d9cdf9111115632286eec066"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/final_frame.png",
+          "sha256": "10ede1b877bc4ff817cc7116641070c8696af262e96ba5c2f0064cbf16db6f7e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/checks.jsonl",
+          "sha256": "58a8aac3a7a2ed5459a387028a345f6e56549db240923b1b7126c0317d43032c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_01_request.json",
+          "sha256": "3366a3c7fb42475c6e6adf3984ba496b8d71b01f780655107a98ff38dfd30ece"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_01_request.txt",
+          "sha256": "6898330fdd1edf259951ddbfcd46df6d659a16de7b6ec8f604d220dece4078ae"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_01_response.json",
+          "sha256": "ba95bf8a9731110d2a2ba0ceef8e6805356d13b47043114ca8a815b29ea82a2f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_request.json",
+          "sha256": "d178f4e6810455adef70874cc6f62a50116fcb7dcebd10e5a21dbbf651fd83c1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_request.txt",
+          "sha256": "576cf27467c34f753360b71e40e7c8c9973e99b58e780f777a8d05e5df1596b9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_response.json",
+          "sha256": "56fea4ba1a16b9cfc26dfadbbfc518e6c00d9dab21a6627b122e0bbc0bc84f8f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000092_wrist.png",
+          "sha256": "092524404da8b4952c6707083c0544c5346b75c4740748b55c44f092f34cd814"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000093_sideview.png",
+          "sha256": "1de64cebcb77b846220617a16773c23c0c5713632ea7605283f762cc6af0e161"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000103_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000103_agentview.npy",
+          "sha256": "95ec3597260bed9120a2a64527cc0157e971229b25708acd2a53daa617a8c258"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000103_agentview.png",
+          "sha256": "13d2d534c7d2358c8ea7e908dd26e908eb8c84162197f90b7e37b38fd22fa7ce"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000104_wrist.json",
+          "sha256": "4a342136ba37124939b3b13fa06d846dc0b8bab8fc8f859499abf5e61fb460af"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000104_wrist.npy",
+          "sha256": "e32af724c271945915644d8650e403ece06fa6a2463674af5a828a109c058402"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000104_wrist.png",
+          "sha256": "4ac78f6130b58d739e959a8ea8859b0c818b1c811f403c3a1a2080dfe39f9877"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000112_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000112_agentview.npy",
+          "sha256": "bc14accca9cf02a303dd9695edd68ac421845508c4d56a9138a807edd4e4049a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000112_agentview.png",
+          "sha256": "07394514b61b95db61fb10e4493178874463b18ce5f223449a62b743274ecfa3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000113_wrist.json",
+          "sha256": "1fecd76ccbebd57c348ec99cfc543e8cce1f333a64f776a465b4cb6c53744176"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000113_wrist.npy",
+          "sha256": "f2496e7fff983488245836c5f227a1d7e07023dfe9792412547a2695d0de633d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000113_wrist.png",
+          "sha256": "134a1f73ca48f0ad3e5dacce0c387ac89966fb945d26c48dad4c723ff5ad7be6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000121_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000121_agentview.npy",
+          "sha256": "764759de58b0ef6b29efdab0511796e11aa3c557d3da4abf612c87b537e120dd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000121_agentview.png",
+          "sha256": "0f0572ed258dd06c986b03c238d181aeeeddd4f127daf6fcd5f158708d3d07fe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000122_wrist.json",
+          "sha256": "92b8e453145d769159e641a45d62854358d5a2a1f9d41fc4e2b59ce7747dfd41"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000122_wrist.npy",
+          "sha256": "691e387aa8a37881693b5a5bfc807bb115c92bd9f1d366bca222ee2ab0376095"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000122_wrist.png",
+          "sha256": "ee9eea5b0e55f6c55b8960f8f65e3902b9c6394fe96eacb7f231d0e769ca9e28"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000130_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000130_agentview.npy",
+          "sha256": "4dccd9d71d902a34247ea37c7ffa4cc31e431fd0ad40e04507522701ede5f353"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000130_agentview.png",
+          "sha256": "62c77a3a3e8c459431ac96c4afad86f41058cdd97e03b6eef54fedfa251b9147"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000131_wrist.json",
+          "sha256": "703841c3f30f09de91eeba401d6a1df9091257f6dea0f8a293d42ad54a867132"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000131_wrist.npy",
+          "sha256": "2bf724d7ce354feda079c80efd1f99d596ba6c1b5fbc25104ce0c51bff813daf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000131_wrist.png",
+          "sha256": "560e612928ede162510f0d29092cce2b96c3a576ca89c572547a9c3e8f7c26e9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000139_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000139_agentview.npy",
+          "sha256": "4a48fb9c8a6e0b985af053e1a1e7bd3f1e4ce8826e0d27682e5208b69ebe8e78"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000139_agentview.png",
+          "sha256": "2910989b0659e8df270ccafd196f8151765d5c3f6a4650aa220f3a1292f70393"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000140_wrist.json",
+          "sha256": "d66c2d90bd55040d4dd51171dd2a9b2ea2d482deffb2e987d842708519a17d90"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000140_wrist.npy",
+          "sha256": "153186f77c2fda6806c4167da72ad2395c941c825aef1f557767078c578b4bea"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000140_wrist.png",
+          "sha256": "876dc400f72ade43a89e526341e9b051d72a7a1d0049f4ba343edbac6aafd56d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000148_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000148_agentview.npy",
+          "sha256": "806a84837739e63e73950158a50566cca07e84797e4ee2de559a10b6e973cfdb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000148_agentview.png",
+          "sha256": "da482543db87bbdd19a7b17662428dd60b13feb1e62779a0fb01e3e99c903e10"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000149_wrist.json",
+          "sha256": "b651f048b203945598333d070cc62ae59cd42d1ad39d1b3985dfa6a3aadb7484"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000149_wrist.npy",
+          "sha256": "8acbb0abbdc3f2286e2388e0ab8bce50a1a9354c9627d4e26e1ba49d6080ece3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000149_wrist.png",
+          "sha256": "630d4ed7e7ecc8a4c2f17954f8eaf7c7b49d311c9a1093dab134d17cb2149c2d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000157_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000157_agentview.npy",
+          "sha256": "597c836f2e864091190f57876baa9f449dfe9fcb1c22e7533636bc17b8ae4a61"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000157_agentview.png",
+          "sha256": "232efd852498396c27535413e687f0d98b6ef9a87aa7abcb128c0fd12fc5a220"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000158_wrist.json",
+          "sha256": "24430ed71323406fdda0ffc04ae57c01dd5907f4b33251ffbe9c0b683fa7aecb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000158_wrist.npy",
+          "sha256": "430e01106a553fe1d3890f621a494295d95dfbbde73136973404f1ac576ae6e2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000158_wrist.png",
+          "sha256": "24f3bdf0f9ab665a397adc68fcf86e5f45be27b50d75192cd3731da54d09f010"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000166_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000166_agentview.npy",
+          "sha256": "34b0c5e500168f4ee87d44d012f5c549b588d4a698132cbcda37166adf1ee393"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000166_agentview.png",
+          "sha256": "820f000f48f10b82ea32606afd80007a203ee7d3ea4f0af90e755ce89911e345"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000167_wrist.json",
+          "sha256": "1f0854a4d19de71bf8337453b9bfc178008c4d05fd1b3ef9a5f1dbfd53e01b24"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000167_wrist.npy",
+          "sha256": "c3ec1b7d4e9fd174d7c66a3d4cb9fa3be341dfec9d0ceb11c7fd4a6fcf609e3e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000167_wrist.png",
+          "sha256": "b004b844971a7a38d5f08aaab8af323a28eeba576a9400c3cb63764352108a6e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000175_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000175_agentview.npy",
+          "sha256": "bcbba63c43cf15cae277ba6419296edcb9f09571218e0b1ed46f790ac8f8f83d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000175_agentview.png",
+          "sha256": "d325eecd1001946c43649c8a54b8d6ccc7359dc7d16f50a8fa7cb28c8c22208b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000176_wrist.json",
+          "sha256": "44b2116ab65bdb03351c595b8a8f44656d47101044153398be2bb651a668586c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000176_wrist.npy",
+          "sha256": "fe7f10069993dca186f81cde554705c311b73cd8c194855d071d5e8792368840"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000176_wrist.png",
+          "sha256": "a74b3c8c848a8c4752f427a0eec36c0df1b9a6f4218ffea4585001163e1ab9b7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000184_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000184_agentview.npy",
+          "sha256": "a86c760211a34eab3e9a7a36444ec49c9f761c2524a4ea14ba58cf4fc983dbb5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000184_agentview.png",
+          "sha256": "15eb1e29bb0d666f327644cc270f68621c84f1173c7b6e1322b57b1a9fb19030"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000185_wrist.json",
+          "sha256": "013f2561b24e63bf13ef3d881a2b9f8c9da07334699b73f16fbe321ba72d6bcf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000185_wrist.npy",
+          "sha256": "f453ad3f1a6eac9303cb66f97bdf04a00de6ea761861c9dab28ffa086bce9995"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000185_wrist.png",
+          "sha256": "1c1ed01a1ad2d6ed0922e8406b62e5ce57ff3bcba08799e045e9bceb8b952592"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000193_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000193_agentview.npy",
+          "sha256": "49e5e11c7d80399fd7371b57fcf9a72621a377cb48d84297bb377134d06b790c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000193_agentview.png",
+          "sha256": "60fe9a4b6df5ee4c0a30d60d208c228a0047cfdcdec5dc91789f38de5471926d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000194_wrist.json",
+          "sha256": "392908149f879c5c0c80b307a73a9512e06fc2c34b723bc2244beed26f4a6a8c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000194_wrist.npy",
+          "sha256": "417639349c526c9532534748a97acc4ebb4fe8772dc4ed9aa29f52eda2410177"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000194_wrist.png",
+          "sha256": "d9e9ad35dbaca1c0ed06c5b6454e55fdf6159ee9ea004d9ee40ec1e0937e6b5f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000278_wrist.png",
+          "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000279_sideview.png",
+          "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish_actions.jsonl",
+          "sha256": "2e910193f8c056a618ab9e2f1b6b1ccf42a9a8b029ed819baf52c083a4885fed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/first.png",
+          "sha256": "405ab89e7a8c0d283bbd99d00e886606ccd7d7b81d6ac228cf9f22c7338e6914"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/independent_finish.jsonl",
+          "sha256": "e60df4b953e556034518e92ae046fb47c0a42e8b1f4f2a6f22a8ff0944b2e94a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/last.png",
+          "sha256": "4ee501f3e352464c2bce13e3b492868e9b495a9bc56560115f1bbc9e5f4ec06b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/latest.png",
+          "sha256": "4ee501f3e352464c2bce13e3b492868e9b495a9bc56560115f1bbc9e5f4ec06b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/pilot_result.json",
+          "sha256": "246e799cb12651fa208954b99055ade42fce18d791947100b95539edc5231069"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/result.json",
+          "sha256": "590d6d9e0773bad1963769738aa2aef1d0b558ff14855b1613e9d70e2940a9c1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/rollout.mp4",
+          "sha256": "a729f61999e6f517001796dfef56df3ceee9abda2fb6d273feddc5a2ad3c3ef0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/initial_state.npy",
+          "sha256": "06614c9d0257b469c53610edc07922b278cc73411bdbc2659a64d38f3ba1cd74"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/latest.png",
+          "sha256": "4ee501f3e352464c2bce13e3b492868e9b495a9bc56560115f1bbc9e5f4ec06b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/wrist.png",
+          "sha256": "86ab9894cd82b812cacc065d7a13908de49eb39b4a5772e6e3156ff2e0bafe87"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/sequence.mp4",
+          "sha256": "432b6a24456b6815438e88e7b1a6dc643d219c24d031e9f82a30ecbf834bd95a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/submitted_plan.json",
+          "sha256": "db29a90688b1b80e453ee3ce827269ed944d531edb5cc029e5f527962c832994"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/identical_bowl_inputs.json",
+          "sha256": "4df624cca624402a186446251ecc80e4623ed39b2612ea49ecd7583d1708438f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/saved_state_interface_audit.json",
+          "sha256": "0880b5e4ffc29798159bb9e093017d556cc1bc465fdb6cf82944b7b8c349ed4d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/software_verification.json",
+          "sha256": "f65d4c1d18c85a631e30bfc5a0f204ec8a286f80705d2e5a1d8dbefc8bc041e7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/source_snapshot.zip",
+          "sha256": "b7c1f7b46396b4d479ce5df84477a53e57b7273048f9021f95994d35e032487c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/stdout.log",
+          "sha256": "2bd86eaf57c0ef7e2ccd7500c02ec374786fd66f12275fb0904490ef609431dd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/summary.json",
+          "sha256": "bd23addd041b3349338c3cdcc71b566f04467ef9ed22fdde4f9697084960fbd3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/manifest.json",
+          "sha256": "fb8a79fed75bde40db022e076fd73f155eed547865560361f49b5dbbdbb2c867"
+        }
+      ]
     }
   ]
 }

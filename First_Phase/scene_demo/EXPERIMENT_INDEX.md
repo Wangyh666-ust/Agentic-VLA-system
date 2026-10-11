@@ -87,3 +87,5 @@
 退离2/2，第二任务归位1/2；酒瓶物理五连通过但末次视觉否决，灶台当前已退出但原回程预测碰旋钮，在线完整0/2。见[原始结果与视频](results/2026-10-11-feedback-retreat/README.md)。
 
 - `20261011-stove-exit-repair`：首碗通过；灶台候选检查把当前接触姿态误插第0点，退离0/home0。[完整失败记录](results/2026-10-11-stove-exit-repair/README.md)。
+
+- `20261011-stove-candidate-start`：假想回程起点已修，前碗实测归位/目标五连通过却遭末次视觉否决；灶台未启动，修订目标未验证。[本轮结论与三段视频](results/2026-10-11-stove-candidate-start/README.md)。
