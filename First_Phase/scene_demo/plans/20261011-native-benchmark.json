@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "id": "20261011-native-benchmark",
+  "intent": "new_experiment",
+  "question_key": "benchmark-success-rate",
+  "purpose": "\u6d4b\u91cf\u516c\u5f00SmolVLA\u6743\u91cd\u5728\u5f53\u524d\u73af\u588340\u539f\u751f\u5b8c\u6574\u4efb\u52a1200\u6b21\u6210\u529f\u60c5\u51b5\uff0c\u6392\u9664\u81ea\u5b9a\u4e49harness\u5f71\u54cd\uff1b\u4ec5\u603b\u4f53\u7edf\u8ba1\uff0c\u4e0d\u4f5c\u591a\u56e0\u7d20\u56e0\u679c\u5f52\u56e0\u3002",
+  "prior_evidence": [
+    "20261008-grasp-config",
+    "20261011-container-budget"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261008-grasp-config",
+      "disposition": "insufficient",
+      "reason": "\u65e7\u5355\u9152\u74f6strict\u548c\u5bb9\u5668\u62c6\u5206\u8bed\u8a00\u4e0d\u80fd\u56de\u7b54\u6807\u51c6\u5168\u5957\u6210\u529f\u7387"
+    },
+    {
+      "experiment_id": "20261011-container-budget",
+      "disposition": "insufficient",
+      "reason": "\u65e7\u5355\u9152\u74f6strict\u548c\u5bb9\u5668\u62c6\u5206\u8bed\u8a00\u4e0d\u80fd\u56de\u7b54\u6807\u51c6\u5168\u5957\u6210\u529f\u7387"
+    }
+  ],
+  "related_search": "\u4e3bAgent\u67e5\u8be2\u672a\u627e\u5230\u516840\u4efb\u52a1\u6807\u51c6\u6210\u529f\u7387\uff0c\u5df2\u8bfb\u8bbe\u7f6e\u5ba1\u8ba1\u4e0e\u4e0a\u8ff0\u539f\u59cb\u8bc1\u636e\u3002",
+  "new_physical_actions": 1144000,
+  "scope": {
+    "max_cases": 200,
+    "max_vla_actions_per_case": 520,
+    "max_helper_actions_per_case": 5200,
+    "stop_rule": "\u9996\u4f8b\u96f6VLA\u3001\u5f02\u5e38\u3001\u8ba1\u5206\u4e0d\u4e00\u81f4\u7acb\u5373\u505c\u6b62\uff0c\u672a\u77e5\u4e0d\u8ba1\u6a21\u578b\u5931\u8d25\uff1b40\u4efb\u52a1200\u6b21\u5373\u505c\u6216STOP\u505c\u6b62\u3002"
+  },
+  "hypothesis": "\u5f53\u524dnative\u6210\u529f\u7387\u53ef\u80fd\u4f4e\u4e8e\u8bba\u6587\uff0c\u9700\u8981\u5b9e\u6d4b\u3002",
+  "information_gain": "40\u4efb\u52a1\u6bcf\u4efb\u52a15\u6b21\u539f\u751f\u6807\u51c6\u8ba1\u5206\u8986\u76d6\u3002",
+  "success_criteria": "\u5b9e\u9645policy\u8c03\u7528\u4e0e\u52a8\u4f5c\u53d1\u751f\uff0c\u6bcftask5\u6b21\u6709\u6548\u539f\u751fis_success\u8ba1\u5206\u4e14\u9010\u9879\u5ba1\u8ba1\u4e00\u81f4\u3002",
+  "failure_criteria": "\u539f\u751f\u9884\u7b97\u8017\u5c3d\u4e14success=false\u4e3a\u5f53\u524d\u6808\u6267\u884c\u5931\u8d25\uff1b\u542f\u52a8\u9519\u8bef\u53e6\u5217\u3002",
+  "unknown_criteria": "OOM\u3001\u5f02\u5e38\u3001\u8bc1\u636e\u7f3a\u5931\u6216\u5ba1\u8ba1\u4e0d\u4e00\u81f4\u4e3a\u672a\u77e5\u3002",
+  "changed_factors": [
+    {
+      "name": "\u8bc4\u6d4b\u8303\u56f4\u4e0e\u8ba1\u5206",
+      "before": "\u9009\u5b9a\u8bca\u65ad\u4efb\u52a1\u4e0estrict\u6216\u62c6\u5206\u8bed\u8a00",
+      "after": "\u516840\u4efb\u52a1\u4e585\u6b21\u539f\u751f\u8bed\u8a00\u548cnative\u8ba1\u5206",
+      "reason": "\u8986\u76d6\u6807\u51c6\u6837\u672c\u7edf\u8ba1\uff0c\u4e0d\u6df7\u65e7strict\u7ed3\u679c\u3002"
+    }
+  ],
+  "fixed_factors": {
+    "weights": "revision6721902bc4d61e50a3bfdb11dfb4cb626f05d102 sha25671d9563c8295284acba8fc2d5c19de000d6fe9ba58a406832af7ef3d221ed52f",
+    "versions": "lerobot0.6.2 git8c920c4270460851cedd2737657584586d3dc66f hf-libero0.1.4 mujoco3.8.1 robosuite1.4.0 torch2.11.0+cu128 transformers5.5.4",
+    "harness": "\u65e2\u6709harness\u4ee3\u7801\u4e0d\u6539"
+  },
+  "configuration": {
+    "suites": [
+      "libero_spatial",
+      "libero_object",
+      "libero_goal",
+      "libero_10"
+    ],
+    "task_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "episodes_per_task": 5,
+    "n_envs": 5,
+    "use_async_envs": false,
+    "image_size": [
+      256,
+      256
+    ],
+    "control_mode": "relative",
+    "init_states": true,
+    "hard_reset": true,
+    "official_first_5_init_states": true,
+    "env_seeds": [
+      1000,
+      1001,
+      1002,
+      1003,
+      1004
+    ],
+    "model_seed_per_task": 1000,
+    "chunk_size": 50,
+    "n_action_steps": 1,
+    "num_steps": 10,
+    "device": "cuda",
+    "load_vlm_weights": false,
+    "use_amp": false,
+    "no_grad": true,
+    "cudnn_benchmark": true,
+    "allow_tf32": true,
+    "hf_offline": true,
+    "episode_lengths": [
+      280,
+      280,
+      300,
+      520
+    ],
+    "language": "original full task_description",
+    "enhancements": "none: no Hermes/Qwen/helpers/finish/return/extra waits",
+    "native_stopping": true,
+    "sdk_padding": "record separately, not scored sample",
+    "sdk_reset_noops": 10,
+    "initial_episode_warmup_actions": 2000,
+    "automatic_reset_warmup_total": "unknown; conservatively bounded in helper budget",
+    "scored_steps_total_max": 69000,
+    "physical_actions_conservative_max": 1144000,
+    "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+    "implementation_model": "gpt-6.1-sol",
+    "implementation_reasoning_effort": "low",
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "model_sha256": "71d9563c8295284acba8fc2d5c19de000d6fe9ba58a406832af7ef3d221ed52f",
+    "sdk_versions": "lerobot0.6.2 git8c920c4270460851cedd2737657584586d3dc66f hf-libero0.1.4 mujoco3.8.1 robosuite1.4.0 torch2.11.0+cu128 transformers5.5.4"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": true,
+    "reason": "\u6807\u51c6\u4efb\u52a1\u6837\u672c\u8986\u76d6\uff0c\u65e7strict\u7ed3\u679c\u4e0d\u6df7\u5165\u3002"
+  }
+}
