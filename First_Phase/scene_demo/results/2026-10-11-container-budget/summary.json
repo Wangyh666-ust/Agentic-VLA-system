@@ -1,0 +1,590 @@
+{
+  "id": "20261011-container-budget",
+  "cases": [
+    {
+      "case": "sauce_basket",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "sauce_to_basket",
+          "success": false,
+          "reason": "budget_exhausted",
+          "actual_vla": 600,
+          "grasp_actions": 0,
+          "actual_finish_counts": {},
+          "finish_triggered": false,
+          "native_goal_true_samples": 0,
+          "last_native_goal": {
+            "in|tomato_sauce_1|basket_1_contain_region": false
+          },
+          "release_open_actions": 0,
+          "concurrent_open_retreat": null,
+          "movement_with_open_target": 0,
+          "home_streak": 0,
+          "independent_streak": 0,
+          "final_independent": null,
+          "finish_reason": null,
+          "feedback_retreat": {
+            "ok": null,
+            "reason": null,
+            "mode": null,
+            "travel_m": null,
+            "endpoint_clearance": null
+          },
+          "initial_encoder_open": true,
+          "checks": [
+            {
+              "call_index": 1,
+              "final_answer": {
+                "goal_achieved": false,
+                "reason": "番茄酱罐在桌子上，未进入篮子内部"
+              },
+              "encoder_open": true
+            },
+            {
+              "call_index": 2,
+              "final_answer": {
+                "goal_achieved": false,
+                "reason": "agentview显示番茄酱罐被夹爪夹持，未进入篮子内部；篮子为空且罐头位于篮子外。"
+              },
+              "encoder_open": false
+            },
+            {
+              "call_index": 3,
+              "final_answer": {
+                "goal_achieved": false,
+                "reason": "番茄酱罐仍在机械臂夹持中，未进入篮子内部；agentview显示篮子空置，罐头未放入。"
+              },
+              "encoder_open": false
+            },
+            {
+              "call_index": 4,
+              "final_answer": {
+                "goal_achieved": false,
+                "reason": "Tomato sauce can is still held by gripper and not inside basket; agentview shows can outside basket, wrist view shows can near basket entrance but not fully entered"
+              },
+              "encoder_open": false
+            }
+          ],
+          "first_finish_command": null,
+          "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4"
+        }
+      ],
+      "checks": [
+        {
+          "capability": "sauce_to_basket",
+          "call_index": 1,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": false,
+            "reason": "番茄酱罐在桌子上，未进入篮子内部"
+          },
+          "final_answer_text": "{\"goal_achieved\":false,\"reason\":\"番茄酱罐在桌子上，未进入篮子内部\"}",
+          "actual_vla_at_check": 150,
+          "last_action_source": "vla",
+          "usage": {
+            "prompt_tokens": 1205,
+            "completion_tokens": 1052,
+            "total_tokens": 2257,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1025,
+              "text_tokens": 27
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 132,
+              "text_tokens": 1073,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000092_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000091_agentview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": true,
+          "scheduled_vla_at_check": 150,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_01_request.txt"
+        },
+        {
+          "capability": "sauce_to_basket",
+          "call_index": 2,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": false,
+            "reason": "agentview显示番茄酱罐被夹爪夹持，未进入篮子内部；篮子为空且罐头位于篮子外。"
+          },
+          "final_answer_text": "{\"goal_achieved\": false, \"reason\": \"agentview显示番茄酱罐被夹爪夹持，未进入篮子内部；篮子为空且罐头位于篮子外。\"}",
+          "actual_vla_at_check": 300,
+          "last_action_source": "vla",
+          "usage": {
+            "prompt_tokens": 1208,
+            "completion_tokens": 1037,
+            "total_tokens": 2245,
+            "completion_tokens_details": {
+              "reasoning_tokens": 992,
+              "text_tokens": 45
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 132,
+              "text_tokens": 1076,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000185_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000184_agentview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": false,
+          "scheduled_vla_at_check": 300,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_02_request.txt"
+        },
+        {
+          "capability": "sauce_to_basket",
+          "call_index": 3,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": false,
+            "reason": "番茄酱罐仍在机械臂夹持中，未进入篮子内部；agentview显示篮子空置，罐头未放入。"
+          },
+          "final_answer_text": "{\"goal_achieved\": false, \"reason\": \"番茄酱罐仍在机械臂夹持中，未进入篮子内部；agentview显示篮子空置，罐头未放入。\"}",
+          "actual_vla_at_check": 450,
+          "last_action_source": "vla",
+          "usage": {
+            "prompt_tokens": 1206,
+            "completion_tokens": 982,
+            "total_tokens": 2188,
+            "completion_tokens_details": {
+              "reasoning_tokens": 937,
+              "text_tokens": 45
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 132,
+              "text_tokens": 1074,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000278_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000277_agentview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": false,
+          "scheduled_vla_at_check": 450,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_03_request.txt"
+        },
+        {
+          "capability": "sauce_to_basket",
+          "call_index": 4,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": false,
+            "reason": "Tomato sauce can is still held by gripper and not inside basket; agentview shows can outside basket, wrist view shows can near basket entrance but not fully entered"
+          },
+          "final_answer_text": "{\"goal_achieved\": false, \"reason\": \"Tomato sauce can is still held by gripper and not inside basket; agentview shows can outside basket, wrist view shows can near basket entrance but not fully entered\"}",
+          "actual_vla_at_check": 600,
+          "last_action_source": "vla",
+          "usage": {
+            "prompt_tokens": 1211,
+            "completion_tokens": 1076,
+            "total_tokens": 2287,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1025,
+              "text_tokens": 51
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 132,
+              "text_tokens": 1079,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000371_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000370_agentview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": false,
+          "scheduled_vla_at_check": 600,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_04_request.txt"
+        }
+      ],
+      "video_frames": 601,
+      "new_vla": 600,
+      "grasp_actions": 0
+    },
+    {
+      "case": "mug_microwave",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "mug_to_microwave",
+          "success": false,
+          "reason": "budget_exhausted",
+          "actual_vla": 600,
+          "grasp_actions": 0,
+          "actual_finish_counts": {},
+          "finish_triggered": false,
+          "native_goal_true_samples": 0,
+          "last_native_goal": {
+            "in|white_yellow_mug_1|microwave_1_heating_region": false
+          },
+          "release_open_actions": 0,
+          "concurrent_open_retreat": null,
+          "movement_with_open_target": 0,
+          "home_streak": 0,
+          "independent_streak": 0,
+          "final_independent": null,
+          "finish_reason": null,
+          "feedback_retreat": {
+            "ok": null,
+            "reason": null,
+            "mode": null,
+            "travel_m": null,
+            "endpoint_clearance": null
+          },
+          "initial_encoder_open": false,
+          "checks": [
+            {
+              "call_index": 1,
+              "final_answer": {
+                "goal_achieved": false,
+                "reason": "黄白杯被夹爪夹持，但位于微波炉外部台面，未进入微波炉内部"
+              },
+              "encoder_open": false
+            },
+            {
+              "call_index": 2,
+              "final_answer": {
+                "goal_achieved": false,
+                "reason": "黄白杯仍在微波炉入口外，未完全进入内部腔体；agentview显示杯子被机械臂持于微波炉开口处，wrist view确认夹爪仍夹持杯子，但位置未达内部要求"
+              },
+              "encoder_open": false
+            },
+            {
+              "call_index": 3,
+              "final_answer": {
+                "goal_achieved": false,
+                "reason": "黄白杯仍在微波炉入口外，未完全进入内部；agentview显示杯被夹爪持于微波炉开口处，wrist view确认杯未脱离夹爪且未进入容器。"
+              },
+              "encoder_open": false
+            },
+            {
+              "call_index": 4,
+              "final_answer": {
+                "goal_achieved": false,
+                "reason": "黄白杯在微波炉外部（agentview显示杯位于微波炉门下方地面，未进入腔体内部）"
+              },
+              "encoder_open": true
+            }
+          ],
+          "first_finish_command": null,
+          "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a"
+        }
+      ],
+      "checks": [
+        {
+          "capability": "mug_to_microwave",
+          "call_index": 1,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": false,
+            "reason": "黄白杯被夹爪夹持，但位于微波炉外部台面，未进入微波炉内部"
+          },
+          "final_answer_text": "{\"goal_achieved\":false,\"reason\":\"黄白杯被夹爪夹持，但位于微波炉外部台面，未进入微波炉内部\"}",
+          "actual_vla_at_check": 150,
+          "last_action_source": "vla",
+          "usage": {
+            "prompt_tokens": 1180,
+            "completion_tokens": 616,
+            "total_tokens": 1796,
+            "completion_tokens_details": {
+              "reasoning_tokens": 578,
+              "text_tokens": 38
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 132,
+              "text_tokens": 1048,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000092_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000091_agentview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": false,
+          "scheduled_vla_at_check": 150,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_01_request.txt"
+        },
+        {
+          "capability": "mug_to_microwave",
+          "call_index": 2,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": false,
+            "reason": "黄白杯仍在微波炉入口外，未完全进入内部腔体；agentview显示杯子被机械臂持于微波炉开口处，wrist view确认夹爪仍夹持杯子，但位置未达内部要求"
+          },
+          "final_answer_text": "{\"goal_achieved\": false, \"reason\": \"黄白杯仍在微波炉入口外，未完全进入内部腔体；agentview显示杯子被机械臂持于微波炉开口处，wrist view确认夹爪仍夹持杯子，但位置未达内部要求\"}",
+          "actual_vla_at_check": 300,
+          "last_action_source": "vla",
+          "usage": {
+            "prompt_tokens": 1184,
+            "completion_tokens": 1092,
+            "total_tokens": 2276,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1025,
+              "text_tokens": 67
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 132,
+              "text_tokens": 1052,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000185_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000184_agentview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": false,
+          "scheduled_vla_at_check": 300,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_02_request.txt"
+        },
+        {
+          "capability": "mug_to_microwave",
+          "call_index": 3,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": false,
+            "reason": "黄白杯仍在微波炉入口外，未完全进入内部；agentview显示杯被夹爪持于微波炉开口处，wrist view确认杯未脱离夹爪且未进入容器。"
+          },
+          "final_answer_text": "{\"goal_achieved\": false, \"reason\": \"黄白杯仍在微波炉入口外，未完全进入内部；agentview显示杯被夹爪持于微波炉开口处，wrist view确认杯未脱离夹爪且未进入容器。\"}",
+          "actual_vla_at_check": 450,
+          "last_action_source": "vla",
+          "usage": {
+            "prompt_tokens": 1180,
+            "completion_tokens": 1087,
+            "total_tokens": 2267,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1025,
+              "text_tokens": 62
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 132,
+              "text_tokens": 1048,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000278_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000277_agentview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": false,
+          "scheduled_vla_at_check": 450,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_03_request.txt"
+        },
+        {
+          "capability": "mug_to_microwave",
+          "call_index": 4,
+          "model": "qwen3-vl-plus",
+          "final_answer": {
+            "goal_achieved": false,
+            "reason": "黄白杯在微波炉外部（agentview显示杯位于微波炉门下方地面，未进入腔体内部）"
+          },
+          "final_answer_text": "{\"goal_achieved\": false, \"reason\": \"黄白杯在微波炉外部（agentview显示杯位于微波炉门下方地面，未进入腔体内部）\"}",
+          "actual_vla_at_check": 600,
+          "last_action_source": "vla",
+          "usage": {
+            "prompt_tokens": 1182,
+            "completion_tokens": 1070,
+            "total_tokens": 2252,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1025,
+              "text_tokens": 45
+            },
+            "prompt_tokens_details": {
+              "image_tokens": 132,
+              "text_tokens": 1050,
+              "cached_tokens": 0
+            }
+          },
+          "images": [
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000371_wrist.png",
+              "hash_ok": true
+            },
+            {
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000370_agentview.png",
+              "hash_ok": true
+            }
+          ],
+          "same_timestamp": true,
+          "encoder_matches_robot": true,
+          "at_standard_open": true,
+          "scheduled_vla_at_check": 600,
+          "no_phase_stage": true,
+          "visual_state_definition": null,
+          "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_04_request.txt"
+        }
+      ],
+      "video_frames": 601,
+      "new_vla": 600,
+      "grasp_actions": 0
+    }
+  ],
+  "subagents": 0,
+  "training": false,
+  "replay_actions": 0,
+  "standalone_home_trials": 0,
+  "qwen_calls": 8,
+  "qwen_total_tokens": 17568,
+  "saved_negative_checks": [
+    {
+      "id": "sauce_150",
+      "source_request": "First_Phase/scene_demo/results/2026-10-11-container-view/sauce_basket/runs/20261011T114522Z_basket_two_820f1054/cap_01_sauce_to_basket_8b6cd5e1/finish/model_requests/call_01_request.json",
+      "source_request_sha256": "d89799187fb836103460fc200efb8a4e9792cb643b59c1d9353bcb5df4d6cbe6",
+      "answer": {
+        "goal_achieved": false,
+        "reason": "番茄酱罐（红绿标签）在agentview中位于桌子表面，未进入篮子内部；篮子可见且空，wrist view仅显示罐头但未显示篮子，无证据表明罐头在篮内。"
+      },
+      "pass": true,
+      "usage": {
+        "prompt_tokens": 1205,
+        "completion_tokens": 1093,
+        "total_tokens": 2298,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 68
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 132,
+          "text_tokens": 1073,
+          "cached_tokens": 0
+        }
+      },
+      "robot_actions": 0
+    },
+    {
+      "id": "mug_150",
+      "source_request": "First_Phase/scene_demo/results/2026-10-11-container-view/mug_microwave/runs/20261011T115103Z_microwave_mug_64d5b558/cap_01_mug_to_microwave_8638d09a/finish/model_requests/call_01_request.json",
+      "source_request_sha256": "55ad6ebb6239dd808ea3bc8474bfa73c8897b6a4ab3c2a14b893ffe63ebe9bde",
+      "answer": {
+        "goal_achieved": false,
+        "reason": "黄白杯未进入微波炉内部，agentview显示其仍在微波炉入口外，夹爪正夹持中"
+      },
+      "pass": true,
+      "usage": {
+        "prompt_tokens": 1180,
+        "completion_tokens": 1028,
+        "total_tokens": 2208,
+        "completion_tokens_details": {
+          "reasoning_tokens": 985,
+          "text_tokens": 43
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 132,
+          "text_tokens": 1048,
+          "cached_tokens": 0
+        }
+      },
+      "robot_actions": 0
+    },
+    {
+      "id": "mug_300",
+      "source_request": "First_Phase/scene_demo/results/2026-10-11-container-view/mug_microwave/runs/20261011T115103Z_microwave_mug_64d5b558/cap_01_mug_to_microwave_8638d09a/finish/model_requests/call_02_request.json",
+      "source_request_sha256": "8101aad87ea2541de38e1f13e905a6feb927eed6b00947458e742a4db7407dcb",
+      "answer": {
+        "goal_achieved": false,
+        "reason": "黄白杯被夹爪持于微波炉入口外，未进入内部；agentview显示杯子在微波炉门开口处但未完全进入腔体"
+      },
+      "pass": true,
+      "usage": {
+        "prompt_tokens": 1184,
+        "completion_tokens": 675,
+        "total_tokens": 1859,
+        "completion_tokens_details": {
+          "reasoning_tokens": 626,
+          "text_tokens": 49
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 132,
+          "text_tokens": 1052,
+          "cached_tokens": 0
+        }
+      },
+      "robot_actions": 0
+    }
+  ],
+  "saved_negative_qwen_calls": 3,
+  "saved_negative_tokens": 6365,
+  "total_qwen_calls": 11,
+  "total_qwen_tokens": 23933,
+  "checker_identity_limit": "Live sauce checks300/450/600 describe milk carton as tomato-sauce can; false goal does not prove identity reliability",
+  "new_vla_total": 1200
+}

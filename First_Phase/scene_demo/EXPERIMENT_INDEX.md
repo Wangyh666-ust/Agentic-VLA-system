@@ -101,3 +101,5 @@
 - `20261011-container-pilot`：番茄酱与微波炉初测：相机覆盖不足、杯子入炉误判，关门未启动。[报告、视频与明确结论](results/2026-10-11-container-pilot/README.md)。
 
 - `20261011-container-view`：容器补测：正面检查避免杯子误松手，入篮/入炉仍未完成，关门未启动。[报告、视频与明确结论](results/2026-10-11-container-view/README.md)。
+
+- `20261011-container-budget`：600步容器补测：未到位均false且继续执行；牛奶误抓/杯子炉外失败，收尾与关门未触发。[报告、视频与明确结论](results/2026-10-11-container-budget/README.md)。

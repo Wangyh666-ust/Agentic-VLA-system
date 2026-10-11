@@ -1,0 +1,33 @@
+{
+  "id": "20261011-container-budget",
+  "title": "600步容器补测：未到位均false且继续执行；牛奶误抓/杯子炉外失败，收尾与关门未触发",
+  "date": "2026-10-11",
+  "question_keys": [
+    "container-goal-finish-transfer"
+  ],
+  "tags": [
+    "tomato",
+    "milk",
+    "basket",
+    "microwave",
+    "cup",
+    "600-step",
+    "visual-negative",
+    "identity-failure"
+  ],
+  "conditions": [
+    "原生LIBERO10 task0/task9/Panda，seed0/init0，各一次；同一预训练SmolVLA原子指令，腕部+正面agentview，编码器同步；实际VLA150/300/450/600检查，单目标600步。",
+    "源码a39a6dd；v5目标身份与false/null提示，预算前有效null继续。原收尾/反馈退离/归位源码不变；无抓辅、微调、回放、子agent或单独归位；未重启UI服务。"
+  ],
+  "findings": [
+    "三个保存负例新prompt复核均false，零动作；现场两技能分别600个VLA动作，四次均false，无提前停止。",
+    "策略任务文本全600步一致；番茄误抓Milk，罐头未入篮。Qwen300/450/600虽判false却把Milk误认成被持番茄罐，身份能力未解决。",
+    "杯子600末在炉外台面，全部动作来自VLA；原生入炉0/600，关门0执行。两个场景原生目标均0/600，收尾/归位0动作是未达目标的拒绝接管，不是下游恢复失败。",
+    "旧动作前缀及初态SHA一致。新VLA1200，现场Qwen8次17568tokens，保存复核3次6365tokens，共11次23933tokens；241软件检查及实际MCP解释器预算探针通过。"
+  ],
+  "limits": [
+    "没有有效正例触发，容器场景收尾与归位效果未验证；关门未启动不能评判其能力。",
+    "false目标判断正确不等于物体识别正确；小样本、多因素改动不证明泛化或训练缺陷。",
+    "固定用户指定技能序列，不是新的Hermes自主规划实验。默认预算源码更新，已运行演示服务配置未切换。"
+  ]
+}

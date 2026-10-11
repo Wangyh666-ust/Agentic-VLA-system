@@ -14806,6 +14806,619 @@
           "sha256": "749c70039213e65ef7871c8bfc25825d4735d259f84a9fca523e2135ce0cf7c2"
         }
       ]
+    },
+    {
+      "id": "20261011-container-budget",
+      "title": "600步容器补测：未到位均false且继续执行；牛奶误抓/杯子炉外失败，收尾与关门未触发",
+      "date": "2026-10-11",
+      "question_keys": [
+        "container-goal-finish-transfer"
+      ],
+      "tags": [
+        "tomato",
+        "milk",
+        "basket",
+        "microwave",
+        "cup",
+        "600-step",
+        "visual-negative",
+        "identity-failure"
+      ],
+      "conditions": [
+        "原生LIBERO10 task0/task9/Panda，seed0/init0，各一次；同一预训练SmolVLA原子指令，腕部+正面agentview，编码器同步；实际VLA150/300/450/600检查，单目标600步。",
+        "源码a39a6dd；v5目标身份与false/null提示，预算前有效null继续。原收尾/反馈退离/归位源码不变；无抓辅、微调、回放、子agent或单独归位；未重启UI服务。"
+      ],
+      "findings": [
+        "三个保存负例新prompt复核均false，零动作；现场两技能分别600个VLA动作，四次均false，无提前停止。",
+        "策略任务文本全600步一致；番茄误抓Milk，罐头未入篮。Qwen300/450/600虽判false却把Milk误认成被持番茄罐，身份能力未解决。",
+        "杯子600末在炉外台面，全部动作来自VLA；原生入炉0/600，关门0执行。两个场景原生目标均0/600，收尾/归位0动作是未达目标的拒绝接管，不是下游恢复失败。",
+        "旧动作前缀及初态SHA一致。新VLA1200，现场Qwen8次17568tokens，保存复核3次6365tokens，共11次23933tokens；241软件检查及实际MCP解释器预算探针通过。"
+      ],
+      "limits": [
+        "没有有效正例触发，容器场景收尾与归位效果未验证；关门未启动不能评判其能力。",
+        "false目标判断正确不等于物体识别正确；小样本、多因素改动不证明泛化或训练缺陷。",
+        "固定用户指定技能序列，不是新的Hermes自主规划实验。默认预算源码更新，已运行演示服务配置未切换。"
+      ],
+      "configuration": {
+        "cases": {
+          "sauce_basket": {
+            "scene_id": "basket_two",
+            "request": "把番茄酱罐放进篮子。",
+            "capabilities": [
+              "sauce_to_basket"
+            ]
+          },
+          "mug_microwave": {
+            "scene_id": "microwave_mug",
+            "request": "把黄白杯放进微波炉，然后关上微波炉门。",
+            "capabilities": [
+              "mug_to_microwave",
+              "microwave_close"
+            ]
+          }
+        },
+        "gold_goals": {
+          "sauce_to_basket": [
+            "in",
+            "tomato_sauce_1",
+            "basket_1_contain_region"
+          ],
+          "mug_to_microwave": [
+            "in",
+            "white_yellow_mug_1",
+            "microwave_1_heating_region"
+          ],
+          "microwave_close": [
+            "close",
+            "microwave_1"
+          ]
+        },
+        "seed": 0,
+        "init_state_index": 0,
+        "scenes": {
+          "basket_two": {
+            "suite": "libero_10",
+            "task_id": 0
+          },
+          "microwave_mug": {
+            "suite": "libero_10",
+            "task_id": 9
+          }
+        },
+        "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+        "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+        "source_sha256": {
+          "First_Phase/scene_demo/finish_v1/combo_pilot.py": "1c5a8a02101af2675ede64bf7036fcc42b7e87d7088360880b51db9f2506ce3f",
+          "First_Phase/scene_demo/finish_v1/simple_checker.py": "6150701b4e7e4e2b5142b082327f1cdea099be335b9d3d0d33094454514e3f11",
+          "First_Phase/scene_demo/finish_v1/runtime.py": "e3f4dbfdeb4eb0704d4c0f102ff46ca147110eb35b7464846b02a42cc8960183",
+          "First_Phase/scene_demo/finish_v1/vision.py": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534",
+          "First_Phase/scene_demo/finish_v1/control.py": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+          "First_Phase/scene_demo/finish_v1/sensors.py": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+          "First_Phase/scene_demo/finish_v1/geometry.py": "d4a5bb664760e3ee39027caac9a51b23a13eaee4b9ef8c55854dfd9f935f61b9",
+          "First_Phase/scene_demo/service.py": "b24490dd5f1654740f53c9031d5d9468b6792303b899b026dd3f0e90ee09255d",
+          "First_Phase/scene_demo/joint_home.py": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+          "First_Phase/scene_demo/safe_exit.py": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+          "First_Phase/scene_demo/safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+          "First_Phase/scene_demo/catalog.py": "f4bb264148442c213418b8ace29d47cafcb8db5df3f6a551b845c7be13552338",
+          "First_Phase/scene_demo/placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+          "First_Phase/scene_demo/finish_v1/feedback_retreat.py": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+          "First_Phase/scene_demo/finish_v1/container_pilot.py": "d323f71e2fa7c8e2bdb75074b001a20643fca37dcee75f0e1c17dc37857b1007",
+          "First_Phase/scene_demo/finish_v1/container_budget_pilot.py": "14b7807ec174392086cb75a0b7c9cc1011ec153b2e0ed0aaed370158e3659372",
+          "First_Phase/scene_demo/mcp_server.py": "128ee0d730a7dafdb228128778aab24d87b9dd5fa23bbd1ff4ddf74f63c73aec",
+          "First_Phase/scene_demo/run_agent.py": "65b585e814d79ab28ad47861070de3900cba9454616bffdfbde02e4f6445f16b"
+        },
+        "checker": "visual_goal_encoder_v5",
+        "qwen_model": "qwen3-vl-plus",
+        "thinking_budget": 1024,
+        "check_schedule": [
+          150,
+          300,
+          450,
+          600
+        ],
+        "qwen_max_per_subgoal": 6,
+        "vla_budget_per_subgoal": 600,
+        "grasp_helper": "none",
+        "completion_mode": "release_verified",
+        "grasp_guard_mode": "shadow",
+        "finish_mode": "visual",
+        "retreat": "existing measured-pose 8mm feedback; CAD/depth path screens, max480 and max3 replans",
+        "release": "existing 20-cycle opening; fixture operation may open during screened retreat",
+        "home": "unchanged streaming .01rad kp50 max360; five ready post-action samples",
+        "execution": "user requests no subagents; primary session + local workers; no low-model invocation or effort override claimed",
+        "initialization": "one original reset per case; persistent scene between mug and door; fresh observations and policy reset between subgoals",
+        "runtime_base_commit": "926b99a",
+        "checker_external_view": "agentview",
+        "action_audit": "every actual env.step source, VLA count and simulator timestamp; no simulator goal sent to model",
+        "initial_failures": "20261011-container-pilot preserved unchanged",
+        "valid_null_before_budget": "continue",
+        "offline_negative_calls": 3,
+        "wall_budget_seconds_per_case": 1800,
+        "session_step_limit": 2000
+      },
+      "configuration_complete": true,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-11-container-budget.json",
+          "sha256": "d9f844348f849c72260fb649bae9ac6a6c499d7350a1682ef083bd55210aaf54"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/.gitignore",
+          "sha256": "2aa141dbc2492c8624ec0b3637feb49c59dcd3156e49c1055e9d174e4493f5fe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/README.md",
+          "sha256": "ee08957c6d1f6edb435fb10b86beea1824e20410a20bf637523a2b78bb844c3d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/archive.py",
+          "sha256": "9552193852673c29fa45848b89eecc1615abfc2969ee2b6ebd654fec3313a2d0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/asset_identity.png",
+          "sha256": "9ab1abc7da1c09770b80dff82d40b59f5fbc48eaeff96688a7b8af99d9ac5b3c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/check_saved_negatives.py",
+          "sha256": "ce27710c6fd80c64ac136509e4b18e74fe77c1b235b245d78b33811d58ec5cc8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/downstream_source_comparison.json",
+          "sha256": "683011029f7e5ea29fade9a5b6e1a7761bc5c98a8571efab34ddf33fd2ba8a0a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/launch_case.py",
+          "sha256": "3beb85ec83c5c227b4943e7a9b7d308aab044bc4bbdf683afff382b0d82062af"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/launch_mug_microwave.json",
+          "sha256": "2b2c7e3fbd8f7345d5bc45c5e95777e20a9fead51cb4526d11875b53bbe4938a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/launch_mug_microwave.log",
+          "sha256": "d90bd2bc6b06c6bdb2dcffc5dbb465a900498779cc78e34625d038d07d06b4f9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/launch_sauce_basket.json",
+          "sha256": "1faf47fa6f4caaef2c3f16251759734abf0cbddee6e49686f5ab4526de69f680"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/launch_sauce_basket.log",
+          "sha256": "fabee72f924c08c52ae952c7895925a7dd2cd786af1807d1f663b6cde1fa6a62"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mcp_budget_probe.json",
+          "sha256": "4a0dae12d000c7b0b82a52ab5b82630fcdea4412c335f7a72ecee5e6b2b2adde"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_action_diagnostic.json",
+          "sha256": "a0564c7b990b680daea82bee55e12b5cc11fc199d0b208d982814031ec6230b5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/events.jsonl",
+          "sha256": "b8a2aed4df6d89badc4668adb175eb25f0036b558b89cc82e8919a8e20954abe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/health.json",
+          "sha256": "83e094ab146526d93b257fb1c8e442a8c41a8ccb4983775cd65e57b623beb886"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/policy_input_audit.jsonl",
+          "sha256": "04e18e92c6e7140717ada230e11065163c75821bc9bf453398b668e730377e33"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/preflight.log",
+          "sha256": "0f55ba029c785b4ac997171276c49986512a2a24fab53a8f4c55a0d195f4ee9e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/result.json",
+          "sha256": "c1890ebec7c6fe33dd274c4379cfd834a79f50aac9fe8d5844ed4d89a1c4be81"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/agentview.png",
+          "sha256": "8a6797f6ca2b2b0d378453be0275faa3a24c3db0a49dadb3fb4fe6640e2cc752"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/action_sources.jsonl",
+          "sha256": "f745babd891642e915ae347eca5b030b4d60711b9cf5493c103f3cfd96ffa64b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/events.jsonl",
+          "sha256": "aca270fa07180aec5034b4dded838547d3641ee09cb0777855c336da935add65"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/checks.jsonl",
+          "sha256": "0667397a03f3400f0c313abdea75d7d0f62480d54f46a706c64c839ad454ef6a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_01_request.json",
+          "sha256": "fc0e5cffa05961c6a49db3f504114cee8e28fc0acef48c57f5c27288c0916f21"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_01_request.txt",
+          "sha256": "c7bd235dcd960603a536511fe670440788e6fd63b5e7c9e0ca425996f8a6ebd6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_01_response.json",
+          "sha256": "ed7b82c2020d3d2cef15efe6c01e99d921af0622f4003de804366b10e3a4737d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_02_request.json",
+          "sha256": "da498bcf8050b9ed5aab754f9d9038ff81576594553c39fcbb882a17a7778251"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_02_request.txt",
+          "sha256": "7b65d336878dbd51f16b61aca3841bbbd1a896fec6538f1ea6b6192bcdbe8790"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_02_response.json",
+          "sha256": "de571416d790c4ea3704d53f5e9edc7c6e434a86c1b4a03dc2dedebada173560"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_03_request.json",
+          "sha256": "3c1f133aee449a4f64e64b7bb3ebe5168f6752055ddefe83e2e07136671a7ed2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_03_request.txt",
+          "sha256": "631aae6f89408a8e7a7327ce175e576af8ad2fb622a56171b454b005bd2ed884"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_03_response.json",
+          "sha256": "e531bcc888a3c123ab2490306fa0042d3fca0bbe15ee1eca3f31f7faf8cbcaab"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_04_request.json",
+          "sha256": "e786954984fe49b32dfd8aa35a0a982ada46f75a4a62611bc464a356de92234b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_04_request.txt",
+          "sha256": "29da27c210a541f5628d9773883ec2ec0322665e485b6f9b561ea7370f0bf7b3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/model_requests/call_04_response.json",
+          "sha256": "611da36eb7e6336286a58ca4fadbd3aeea9f9e3f63dc2012b8201389a7d0dffc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000091_agentview.png",
+          "sha256": "bada781373602a999c5d2751fafac79eb57d09daa206fcaa43967553a7411a59"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000092_wrist.png",
+          "sha256": "0e47e1c7b393521cc17c47d537e2bfb67c1abda890278d5c744b47e63d05ee53"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000184_agentview.png",
+          "sha256": "0148f8626b4681730e50da971df0e848fb57cde59fe623ac8e4bcac8eb8414f6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000185_wrist.png",
+          "sha256": "b87bf944c642574e2c5b7a9079e3b2f4a678ade8b43b8a4bb858747732399e2c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000277_agentview.png",
+          "sha256": "4765a761efbce55a48247092a6017414e49ce1aa376cf6f54691c52dbe01456f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000278_wrist.png",
+          "sha256": "217ec2806e16df406ba42fc4e65a587b5ed3471442a792107e690e81afb94661"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000370_agentview.png",
+          "sha256": "4637d7455f7d8e549fb8b812a18c6fe28a2536c095e21dc1b0201c94f600212b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/finish/sensors/cap000371_wrist.png",
+          "sha256": "d9bb9660be1240b95a3a434fb1949df570450e48329f6fdac10c79a5f422c397"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/first.png",
+          "sha256": "ad41cd5861db8f9531b616cebc1b43adf1803a4c04c1f3ad763930c7aa77eea6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/last.png",
+          "sha256": "8a6797f6ca2b2b0d378453be0275faa3a24c3db0a49dadb3fb4fe6640e2cc752"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/latest.png",
+          "sha256": "8a6797f6ca2b2b0d378453be0275faa3a24c3db0a49dadb3fb4fe6640e2cc752"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/pilot_result.json",
+          "sha256": "9a4949e0c08206be7d33e6bd84d2734d4e869849476912cafad138863fefb09f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/result.json",
+          "sha256": "843fe6b2e3dcc6963b0ee266100c9db62617857ac77db3837f4b95affa0f1f50"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/cap_01_mug_to_microwave_1428de9a/rollout.mp4",
+          "sha256": "869e495e3f2df0f80410c972fa1afb2878e4909a9da5f5e1a3e3d5b4751f1bd1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/initial_state.npy",
+          "sha256": "5fda2c881033bb187e8635bd8a70b79ff6170224012318b513a631ae3f657a5f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/latest.png",
+          "sha256": "8a6797f6ca2b2b0d378453be0275faa3a24c3db0a49dadb3fb4fe6640e2cc752"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/runs/20261011T123743Z_microwave_mug_e3beca8b/wrist.png",
+          "sha256": "bcbdab5222412dfd209f6811492d75d2f2dd88bae264d2b005df453e28392d95"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/sequence.mp4",
+          "sha256": "3306ca8d1f5ef14fd0e8c1cbc337b4a328ce28940c036b4486c1569d8cface6f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/submitted_plan.json",
+          "sha256": "4af6490ab0b4e0fdbd43a3be60f85fb17a5f588f2a739c4906096c8b11c1c0e2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/video_encoding.log",
+          "sha256": "1a2508bda18180f31521e6c4f5210151b7f260fcbb9f96291f27ec554550f2ff"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_microwave/video_inputs.txt",
+          "sha256": "75c8e0153175ab7e8213800caadd3bcd9305db562fdb0d368bb20992ce733da4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/mug_prefix_comparison.json",
+          "sha256": "897a8e87d90c0ef28341cb3909daf225268ecb55872ac63aef23b6bf860c4997"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/native_basket.bddl",
+          "sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/object_identity.json",
+          "sha256": "9b4f494bc4e1f05f087fba1be66fb2ba98704eb6ee77eb8d5308c2ecf40acf0d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/offline_inputs.json",
+          "sha256": "57bc5cf24fd6af12fd811c641f967494f00c407d61fc3de29ff25e4496f1c249"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/preflight.log",
+          "sha256": "0f55ba029c785b4ac997171276c49986512a2a24fab53a8f4c55a0d195f4ee9e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/registry_entry.json",
+          "sha256": "722a34b64fdfe174bfa319c94562576a41f7109a8fc0e33db6d9b840afd08d62"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/events.jsonl",
+          "sha256": "e147896bf5f758e556515a7685f7ddb818c291d0898780f28c3dfd6449a1525d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/health.json",
+          "sha256": "83e094ab146526d93b257fb1c8e442a8c41a8ccb4983775cd65e57b623beb886"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/policy_input_audit.jsonl",
+          "sha256": "bd512cb075f6820d4173fc1fd6d6a11cfc502c141689b30aeb0873f8b132d4b3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/preflight.log",
+          "sha256": "0f55ba029c785b4ac997171276c49986512a2a24fab53a8f4c55a0d195f4ee9e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/result.json",
+          "sha256": "10b9774aa117ca8595fe213e5fc0c4ddddeb40bd1ef1dfca86e9e7d137cd068d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/agentview.png",
+          "sha256": "67715fff4e1afea69e108c1fc2b70487b3578b4c4b176d964708f1b11ad4970e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/action_sources.jsonl",
+          "sha256": "d290f74a461f56dbd17e9db1de37424b9ea9deb4d93c47ddd325693729f22ad0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/events.jsonl",
+          "sha256": "79f6bd817028d70293772e8d6702934ab748851b36d6f4549f0202617110c8c9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/checks.jsonl",
+          "sha256": "80c99f4872a20fa0a9b204b5bd294cd7547d8bad5a85ab68c77c9c6a39e297a6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_01_request.json",
+          "sha256": "ae5f4a78690e1ddeed4b7256d87a30dcf581a797864ff26a6f9008d07049bc1d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_01_request.txt",
+          "sha256": "2df8aa51892d3da42fe36a44e6aa31df6dfd2b3c52bb1f2a22a27a724a8602db"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_01_response.json",
+          "sha256": "25c983ba845aa9307d7da8061498d9298cd5805a1cb00f90942ccf029045689e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_02_request.json",
+          "sha256": "e1bf5edf36d0ef82f342af10fff53a30987ef8edc104a1d16f5f2ae92abe06e2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_02_request.txt",
+          "sha256": "206e96928f21a0105fdabd77ce07e2009f8d44d03678a3fb554a0db17af1d3e1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_02_response.json",
+          "sha256": "b30870d16d518451056e31dd2b31fbdd2c4795b4226b003e6db80d40211b57e7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_03_request.json",
+          "sha256": "4fd6347756ef59ce7fa26e2b907603502e5a2076303eb6e246b92342ebe64c4d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_03_request.txt",
+          "sha256": "69ef470f1e3bc9efdaa93bf9845aa5723851cb6eabaf3b8751b320a3dd7a21aa"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_03_response.json",
+          "sha256": "dbce299dbcdb53f118dfc140e384ed51eddb7929c960c1a732d09f35045a13fe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_04_request.json",
+          "sha256": "3e6645f2d0d01d447df012dfcdc628860d0635ff518cada688589bd0d2d4776c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_04_request.txt",
+          "sha256": "176cc2ff98b4fa933e378ae9f2c933b0a3588dd157f3fcc0498dbe4398e5ea7d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/model_requests/call_04_response.json",
+          "sha256": "44b482ed455064293d2658f5ec782c4f3bd6d540a92c6742952779bdfcd7210b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000091_agentview.png",
+          "sha256": "732d41cc3a6207b762955e02c4036bf9912be24baa33aa405780609e5072c8d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000092_wrist.png",
+          "sha256": "384b3cd180f05e026e436c1aa3f43938148d789501826a567274a8a18bfd19ae"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000184_agentview.png",
+          "sha256": "35127aa18cb47bae6c3e918ee3795953827701d4d304e39a1adfe2a0237fbcf2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000185_wrist.png",
+          "sha256": "9e45d26d774aaf2978569f5bf9f16d0b68ff6d6e6aa4692826dc2e4fd915902c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000277_agentview.png",
+          "sha256": "5155b594a21b4011e441962c59ceba9c52e781024c24bd8aa736d6b64e6f12af"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000278_wrist.png",
+          "sha256": "f4170f3954ac849a3ed116c7ab721ffd1101fd92a2f4583e3f469b7825572fe2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000370_agentview.png",
+          "sha256": "11a125ad7a2c4b06ead534dfad6b45bfc1ed601041c0e5409fbc2d2006eeac59"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/finish/sensors/cap000371_wrist.png",
+          "sha256": "920b69db1565865c264ff601d1db844b8d5922283a4ce40e9f6905eebe165f95"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/first.png",
+          "sha256": "3d2631f1814f156bb8744293cd6326264f6c4525cc97e6fb840276573871463b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/last.png",
+          "sha256": "67715fff4e1afea69e108c1fc2b70487b3578b4c4b176d964708f1b11ad4970e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/latest.png",
+          "sha256": "67715fff4e1afea69e108c1fc2b70487b3578b4c4b176d964708f1b11ad4970e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/pilot_result.json",
+          "sha256": "a1822d8691e135cd09fb7e2778d274c2a112ce03c6ab4ac2c941183c0d89902a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/result.json",
+          "sha256": "d0b1ca0e2dba146721b0ef0627d90ff91d752ee9fc618c7ec65be536a887c2e3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/cap_01_sauce_to_basket_7c3ce2d4/rollout.mp4",
+          "sha256": "da8800672aa996f84e2626f11e5d71b5b29dc1c1c26f8c08587fe0c87f2245db"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/initial_state.npy",
+          "sha256": "68d78254de47635aad00feb5bc670561e7c732f6b7b53fd8187b7b3840e85115"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/latest.png",
+          "sha256": "67715fff4e1afea69e108c1fc2b70487b3578b4c4b176d964708f1b11ad4970e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/runs/20261011T122830Z_basket_two_77eabfb2/wrist.png",
+          "sha256": "29b0662830a035b6cade287eb70f1f58a62147c4dcfaa2c4edefe777eebf020a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/sequence.mp4",
+          "sha256": "4ca460fa20503c56371cfefe982c7fe007e5d6d6eafbf3b52947d376a67d39c7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/submitted_plan.json",
+          "sha256": "fe1284e9495bb93c5ef24662a42a8ec32b9a8e1d7b2bd8dc948f4498fb2e7897"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/video_encoding.log",
+          "sha256": "9c820dfee9a45ec713bd0593bae596859714a09d92b0857c9c628efb7038e9ed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_basket/video_inputs.txt",
+          "sha256": "54b84c3667f55a0ea9a64743c9c73b5369c470280172e60b00f8948f06e78c76"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/sauce_prefix_comparison.json",
+          "sha256": "562a57f7b7b42cee1010f7908530c6b451c3f7ea62fdffb592c0bc3204483c63"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/saved_negative_summary.json",
+          "sha256": "98fc0db61a2df723f3dfd77491a1ceff6f6698dc5b86990bcb07c02bd9f4a28a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/saved_negatives/mug_150/call_01_request.json",
+          "sha256": "e9aea7a41309d52c243bdb5f03ae412e4a2a349cd6103aa77b962e42e5be8e69"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/saved_negatives/mug_150/call_01_response.json",
+          "sha256": "850f4b9fd449a354ef28cd54a8d45356f061cbf24a19fdc37eb9ec9485c376a6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/saved_negatives/mug_300/call_01_request.json",
+          "sha256": "336b294e38c2053a518a13a9db129d92c277b0da984dc42f260cfc246999c2ca"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/saved_negatives/mug_300/call_01_response.json",
+          "sha256": "a89c5197289b3aa493983397432c4b24d96cdab89c269bb20409a463b4c86443"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/saved_negatives/sauce_150/call_01_request.json",
+          "sha256": "f479b1044683051bff8728d1bd5e2a078edc7d49d27dd2ecdacabb81fe3ae49b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/saved_negatives/sauce_150/call_01_response.json",
+          "sha256": "ce5565c48d8318b863a1277be7a00c1d51e088f343e962eca1e2464ea3506714"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/software_startup_error.log",
+          "sha256": "1aa23e731b7aa1c582edf5452295e65429da149f70778536c5a47243ae1184f0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/software_validation.log",
+          "sha256": "e5334e81c72a68a802be643a27fe1a9849b6b03d8fca28fcbb3577be33152a9f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/source_snapshot.zip",
+          "sha256": "a9f65f9ad78f4e0dfabe803c21e883390f88cad423efaf8ee9cc024abb3d4a8a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/summarize.py",
+          "sha256": "2e52b06859bdc37adc2a8da321801a8d874a48563ba68d95d299ea4ccbcc7ac5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/summary.json",
+          "sha256": "32a88f9e584f70b3efaa3fa606ce2734f09c3f9f62446a089b1e3aba29711835"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/user_milk_grasp.png",
+          "sha256": "72032b68154a5b957ad52ee580e6f723576d9be7caeb0e839f594850f25c2e8e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/user_scene_identity.png",
+          "sha256": "be209e973a994d03ef4b6ff002a792df0c18d04ae84853f01d55b7358efd81cc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-container-budget/manifest.json",
+          "sha256": "32d3af9ae18ffa3e4985d066cadb5faf16fa59acd54fc533138356a52950ed9e"
+        }
+      ]
     }
   ]
 }
