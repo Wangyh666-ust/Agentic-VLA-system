@@ -96,12 +96,23 @@ class RuntimeTests(unittest.TestCase):
             raise RuntimeError('cancelled')
         return fn()
 
-    def monitor(self, client=None, ready=lambda: True, on_action=None):
+    def monitor(self, client=None, ready=lambda: True, on_action=None, budget=100):
         return runtime.FinishMonitor(
             None, self.reference, Path(self.temp.name), self.context,
             self.guard, self.rows.append if on_action is None else on_action,
-            ready, 100, FakeClient() if client is None else client,
+            ready, budget, FakeClient() if client is None else client,
         )
+
+    def add_side_view(self, monitor):
+        original_capture = monitor.port.capture
+        def capture():
+            cap = original_capture()
+            cap['verification_frames'] = [cap['frames'][0], {
+                'view': 'sideview',
+                'rgb_path': f'{monitor.port.timestamp}_{monitor.port.capture_version}_sideview.png',
+            }]
+            return cap
+        monitor.port.capture = capture
 
     def record_pair(self, monitor):
         for step in (5, 10):
@@ -150,36 +161,66 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual([frame['frame'] for frame in ctx['sensor_frames']], list(range(6)))
         json.loads(Path(self.temp.name, 'checks.jsonl').read_text().splitlines()[0])
 
-    def test_simple_checker_receives_two_synced_three_view_samples(self):
+    def test_simple_checker_receives_one_current_synced_two_view_sample(self):
         client = FakeClient()
         client.simple_handoff = True
         monitor = self.monitor(client)
-        monitor.port.phase = 'release'
-        original_capture = monitor.port.capture
-        def capture():
-            cap = original_capture()
-            cap['verification_frames'] = [cap['frames'][0], {'view': 'sideview', 'rgb_path': 'side.png'}]
-            return cap
-        monitor.port.capture = capture
+        self.add_side_view(monitor)
         for step in (5, 10, 15):
             monitor.port.timestamp = float(step)
             monitor.record(step)
-        monitor._check(self.context, [])
-        ctx, paths = client.calls[-1]
-        self.assertEqual(len(paths), 6)
-        self.assertEqual([fr['view'] for fr in ctx['sensor_frames']], ['agentview', 'sideview', 'wrist'] * 2)
-        self.assertEqual([fr['timestamp'] for fr in ctx['sensor_frames']], [10.] * 3 + [15.] * 3)
-        self.assertEqual(ctx['actuator_measurements']['timestamp'], 15.)
-        monitor.port.phase = 'confirm'
-        monitor._check(self.context, [])
-        ctx, paths = client.calls[-1]
-        self.assertEqual(len(paths), 4)
-        self.assertEqual([fr['view'] for fr in ctx['sensor_frames']], ['agentview','sideview'] * 2)
-        monitor.port.phase = 'home'
-        monitor._check(self.context, [])
-        ctx, paths = client.calls[-1]
-        self.assertEqual(len(paths),2)
-        self.assertEqual([fr['view'] for fr in ctx['sensor_frames']],['agentview'] * 2)
+        monitor.port.capture_version = 2
+        for phase in (None, 'release', 'confirm', 'home'):
+            with self.subTest(phase=phase):
+                monitor.port.phase = phase
+                monitor._check(self.context, [])
+                ctx, paths = client.calls[-1]
+                self.assertEqual(paths, ['15.0_2_wrist.png', '15.0_2_sideview.png'])
+                self.assertEqual([fr['view'] for fr in ctx['sensor_frames']], ['wrist', 'sideview'])
+                self.assertEqual([fr['timestamp'] for fr in ctx['sensor_frames']], [15., 15.])
+                self.assertEqual(ctx['actuator_measurements']['timestamp'], 15.)
+                self.assertEqual(ctx['actuator_measurements']['stage'], phase or 'executing')
+                self.assertEqual(ctx['current_subtask']['phase'], phase or 'executing')
+
+    def test_simple_missing_camera_never_calls_model_or_opens(self):
+        client = FakeClient()
+        client.simple_handoff = True
+        monitor = self.monitor(client, budget=300)
+        with mock.patch.object(control, 'run_finish') as finish:
+            with self.assertRaisesRegex(RuntimeError, 'wrist and sideview'):
+                monitor.poll(150)
+        self.assertEqual(client.calls, [])
+        finish.assert_not_called()
+        self.assertEqual(monitor.port.steps, 0)
+
+    def test_simple_checks_only_at_150_and_300_despite_candidate_and_force(self):
+        raw = copy.deepcopy(ALL_TRUE)
+        raw['operation_achieved'] = False
+        client = FakeClient(raw)
+        # Reproduce the pilot's late client replacement.
+        monitor = self.monitor(budget=300)
+        monitor.call_client = client
+        client.simple_handoff = True
+        self.add_side_view(monitor)
+        with mock.patch.object(control, 'run_finish') as finish:
+            for step in range(1, 302):
+                monitor.port.timestamp = float(step)
+                monitor.record(step)
+                self.assertIsNone(monitor.poll(step, candidate=True, force=True))
+            for step in (150, 300):
+                self.assertIsNone(monitor.poll(step, candidate=True, force=True))
+        self.assertEqual([ctx['actuator_measurements']['timestamp'] for ctx, _ in client.calls], [150., 300.])
+        self.assertEqual(monitor.prechecks, 2)
+        self.assertEqual(monitor.port.steps, 0)
+        finish.assert_not_called()
+
+    def test_simple_does_not_force_an_early_check_for_short_budget(self):
+        client = FakeClient()
+        client.simple_handoff = True
+        monitor = self.monitor(client, budget=149)
+        for step in (60, 149, 150, 300):
+            self.assertIsNone(monitor.poll(step, candidate=True, force=True))
+        self.assertEqual(client.calls, [])
 
     def test_latest_capture_overwrites_same_timestamp(self):
         monitor = self.monitor()
@@ -263,10 +304,11 @@ class RuntimeTests(unittest.TestCase):
     def test_simple_poll_dispatches_atomic_finish_and_initial_wrist(self):
         client = FakeClient()
         client.simple_handoff = True
-        monitor = self.monitor(client)
-        self.record_pair(monitor)
+        monitor = self.monitor(client, budget=300)
+        self.add_side_view(monitor)
+        monitor.port.timestamp = 150.
         with mock.patch.object(control, 'run_finish', return_value={'ok': False, 'reason': 'probe'}) as finish:
-            monitor.poll(25, candidate=False)
+            monitor.poll(150, candidate=False)
         self.assertTrue(finish.call_args.kwargs['simple_handoff'])
         from scene_demo.finish_v1 import simple_checker
         self.assertIs(finish.call_args.args[3], simple_checker.decide)

@@ -23,12 +23,19 @@ def build_prompt(context):
         'current_subtask': {'operation': task['operation'], 'description': description},
         'desired_state': context.get('criteria', {}).get('desired_state'),
         'sensor_frames': context['sensor_frames'],
-        'actuator_measurements': context['actuator_measurements'],
+        # Phase labels describe controller bookkeeping, not measured completion.
+        # In particular, never send a stale post_execution label to the model.
+        'actuator_measurements': {
+            key: context['actuator_measurements'][key]
+            for key in ('timestamp', 'finger_qpos', 'max_abs_arm_qvel', 'standard_open_finger_qpos')
+            if key in context['actuator_measurements']
+        },
     }
     return '\n'.join([
         '你是机器人子任务的结束状态检查器。',
         '你的任务目标：VLA在执行某些子任务时，可能已经达到任务要求的位置或操作状态，但遗漏最后的松手、解除接触和退离动作。你负责根据当前子任务和实际观测，判断是否已经达到可以停止VLA、交给收尾器执行这些末段动作的条件。',
         '输入包括：当前子任务描述、当前相机图像，以及与图像同步的夹爪编码器数据。',
+        '两张图来自同一采样时刻：wrist是夹爪上的第一人称视角，sideview是外部第三人称视角。请结合两张图判断物品与目的地的位置关系；夹爪开合不能证明物品已经到位。',
         '1. goal_achieved：当前子任务要求的物品位置关系或操作状态是否已经达到，从而可以结束VLA执行、触发收尾？只检查current_subtask.description明确要求的目标。不要额外要求支撑、特定姿态或更精确的位置。不要要求已经松手、解除接触、退离或归位：这些正是随后由收尾器补全的动作。仍然夹持或接触目标，不否定已经达到收尾触发条件。',
         '2. holding_or_contact：夹爪是否仍夹持或接触当前操作对象？结合图像与同步夹爪编码器判断。编码器开合状态不能单独证明持物或分离。',
         '根据实际观测判断，不接受计划中“已经完成”的自述。无法判断时返回null，不猜测。',

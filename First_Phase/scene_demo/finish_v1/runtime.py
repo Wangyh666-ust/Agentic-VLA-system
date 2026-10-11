@@ -14,6 +14,7 @@ from collections import deque
 
 _PLACE_OPS = ("on", "in")
 _TURN_OPS = ("turnon", "turnoff")
+_SIMPLE_CHECK_STEPS = (150, 300)
 
 
 def build_context(capability, user_request):
@@ -82,7 +83,7 @@ def build_context(capability, user_request):
             "operation": kind,
             "target": target,
             "destination": destination,
-            "phase": "post_execution",
+            "phase": "executing",
         },
         "criteria": criteria,
     }
@@ -125,6 +126,7 @@ class FinishMonitor:
         self.history = deque(maxlen=3)
         self.calls = 0
         self.prechecks = 0
+        self._simple_checked_steps = set()
         self.interval = max(25, int(math.ceil(self.budget / 5.0)))
         self.next_due = self.interval
         self.last_candidate = False
@@ -214,7 +216,7 @@ class FinishMonitor:
                 max_v = float(max(abs(float(x)) for x in arm_qvel))
             except (TypeError, ValueError):
                 max_v = None
-        stage = self.port.phase if self.port.phase is not None else "post_execution"
+        stage = self.port.phase if self.port.phase is not None else "executing"
         return {
             "finger_qpos": robot.get("finger_qpos"),
             "max_abs_arm_qvel": max_v,
@@ -275,20 +277,18 @@ class FinishMonitor:
         selected = self._collect_observations(observations)
         simple = bool(getattr(self.call_client, 'simple_handoff', False))
         if simple:
-            selected = selected[-2:]
+            # Exactly two current views, not two historical samples per view.
+            selected = selected[-1:]
         paths = []
         sensor_frames = []
         for cap in selected:
             frames = cap.get('verification_frames') or cap.get('frames') or []
-            if simple and context['current_subtask']['operation'] == 'place' and self.port.phase == 'home':
-                # At home, the fixed primary scene view preserves target/hand
-                # separation; the side view may be occluded by the arm.
-                frames = [fr for fr in frames if fr['view'] == 'agentview']
-            if simple and context['current_subtask']['operation'] == 'place' and self.port.phase in (None, 'release'):
-                frames = list(frames[:2])
+            if simple:
                 wrist = next((fr for fr in cap.get('frames', []) if fr['view'] in ('wrist', 'robot0_eye_in_hand')), None)
-                if wrist is not None and not any(fr['view'] == wrist['view'] for fr in frames):
-                    frames.append(wrist)
+                side = next((fr for fr in frames if fr['view'] == 'sideview'), None)
+                if wrist is None or side is None:
+                    raise RuntimeError('simple checker requires synchronized wrist and sideview images')
+                frames = [wrist, side]
             for fr in frames[:3 if simple else 2]:
                 frame = len(paths)
                 if frame >= 6:
@@ -300,7 +300,7 @@ class FinishMonitor:
             raise RuntimeError('latest captured observation missing robot feedback')
         measurements = {
             'timestamp': float(selected[-1]['timestamp']),
-            'stage': self.port.phase or 'post_execution',
+            'stage': self.port.phase or 'executing',
             'finger_qpos': [float(x) for x in robot['finger_qpos']],
             'max_abs_arm_qvel': max(abs(float(x)) for x in robot['arm_qvel']),
             'standard_open_finger_qpos': [float(x) for x in self.reference['finger_home']],
@@ -311,7 +311,7 @@ class FinishMonitor:
             raise RuntimeError('standard_open_finger_qpos must have two elements')
         ctx = {
             'user_request': context.get('user_request'),
-            'current_subtask': context.get('current_subtask'),
+            'current_subtask': {**context['current_subtask'], 'phase': self.port.phase or 'executing'},
             'criteria': context.get('criteria'),
             'sensor_frames': sensor_frames,
             'actuator_measurements': measurements,
@@ -398,13 +398,19 @@ class FinishMonitor:
     def poll(self, step, candidate=False, force=False):
         if self.terminal is not None:
             return self.terminal
-        first_candidate = bool(candidate) and not self.last_candidate
-        distinct = len({float(cap['timestamp']) for cap in self.history})
-        due = step >= self.next_due
-        if not (distinct >= 2 and self.prechecks < 5 and (due or first_candidate or force)):
-            return None
-        if distinct < 2:
-            return None
+        simple = bool(getattr(self.call_client, 'simple_handoff', False))
+        if simple:
+            # Inspect the client here: the pilot replaces it after construction.
+            # Native candidates and force cannot cause an early visual handoff.
+            if step not in _SIMPLE_CHECK_STEPS or step > self.budget or step in self._simple_checked_steps:
+                return None
+            self._simple_checked_steps.add(step)
+        else:
+            first_candidate = bool(candidate) and not self.last_candidate
+            distinct = len({float(cap['timestamp']) for cap in self.history})
+            due = step >= self.next_due
+            if not (distinct >= 2 and self.prechecks < 5 and (due or first_candidate or force)):
+                return None
         try:
             verdict = self._check(self.context, [])
         except Exception:

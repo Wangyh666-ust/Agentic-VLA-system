@@ -1,3 +1,4 @@
+import json
 import unittest
 from unittest.mock import patch
 import numpy as np
@@ -57,6 +58,23 @@ class SimpleCheckerTests(unittest.TestCase):
         self.assertIn('遗漏最后的松手', prompt)
         self.assertNotIn('放架任务', prompt)
         self.assertNotIn('放盘任务', prompt)
+
+    def test_prompt_drops_stage_labels_but_retains_synchronized_encoders(self):
+        self.ctx['current_subtask']['phase'] = 'post_execution'
+        self.ctx['actuator_measurements']['stage'] = 'post_execution'
+        self.ctx['actuator_measurements']['max_abs_arm_qvel'] = .9
+        prompt = checker.build_prompt(self.ctx)
+        payload = json.loads(prompt.splitlines()[-1])
+        self.assertNotIn('post_execution', prompt)
+        self.assertNotIn('stage', payload['actuator_measurements'])
+        self.assertNotIn('phase', payload['current_subtask'])
+        self.assertEqual(payload['actuator_measurements'], {
+            'timestamp': 1., 'finger_qpos': [.01, -.01],
+            'standard_open_finger_qpos': [.04, -.04], 'max_abs_arm_qvel': .9,
+        })
+        self.assertIn('同一采样时刻', prompt)
+        self.assertIn('第一人称', prompt)
+        self.assertIn('第三人称', prompt)
 
     def test_first_action_really_opens_without_settle_gate(self):
         class Port:
