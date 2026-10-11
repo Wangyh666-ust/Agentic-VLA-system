@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "id": "20261012-native-benchmark-resume",
+  "intent": "new_experiment",
+  "question_key": "benchmark-success-rate",
+  "purpose": "完成同一40任务×5次原生SmolVLA benchmark，复用22完整任务110有效次数，仅继续18任务×5次。",
+  "prior_evidence": [
+    "20261008-grasp-config",
+    "20261011-container-budget"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261008-grasp-config",
+      "disposition": "insufficient",
+      "reason": "旧单酒瓶strict和容器拆分语言不能回答标准全套成功率"
+    },
+    {
+      "experiment_id": "20261011-container-budget",
+      "disposition": "insufficient",
+      "reason": "旧单酒瓶strict和容器拆分语言不能回答标准全套成功率"
+    }
+  ],
+  "related_search": "主Agent查询未找到全40任务标准成功率，已读设置审计与上述原始证据。",
+  "new_physical_actions": 514800,
+  "scope": {
+    "max_cases": 90,
+    "max_vla_actions_per_case": 520,
+    "max_helper_actions_per_case": 5200,
+    "stop_rule": "用户暂停立即停止；异常、零VLA动作或审计不一致立即停止，未知不计成功失败；最终总有效200次停止。"
+  },
+  "hypothesis": "当前native成功率可能低于论文，需要实测。",
+  "information_gain": "40任务每任务5次原生标准计分覆盖。",
+  "success_criteria": "实际policy调用与动作发生，每task5次有效原生is_success计分且逐项审计一致。",
+  "failure_criteria": "原生预算耗尽且success=false为当前栈执行失败；启动错误另列。",
+  "unknown_criteria": "OOM、异常、证据缺失或审计不一致为未知。",
+  "changed_factors": [
+    {
+      "name": "进程中断恢复",
+      "before": "原连续运行",
+      "after": "只跳过完整前缀，保存部分记录后重新执行未完成组",
+      "reason": "补齐同一benchmark剩余任务，保留已有110次完整证据"
+    }
+  ],
+  "fixed_factors": {
+    "weights": "revision6721902bc4d61e50a3bfdb11dfb4cb626f05d102 sha25671d9563c8295284acba8fc2d5c19de000d6fe9ba58a406832af7ef3d221ed52f",
+    "versions": "lerobot0.6.2 git8c920c4270460851cedd2737657584586d3dc66f hf-libero0.1.4 mujoco3.8.1 robosuite1.4.0 torch2.11.0+cu128 transformers5.5.4",
+    "harness": "既有harness代码不改"
+  },
+  "configuration": {
+    "suites": [
+      "libero_spatial",
+      "libero_object",
+      "libero_goal",
+      "libero_10"
+    ],
+    "task_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "episodes_per_task": 5,
+    "n_envs": 5,
+    "use_async_envs": false,
+    "image_size": [
+      256,
+      256
+    ],
+    "control_mode": "relative",
+    "init_states": true,
+    "hard_reset": true,
+    "official_first_5_init_states": true,
+    "env_seeds": [
+      1000,
+      1001,
+      1002,
+      1003,
+      1004
+    ],
+    "model_seed_per_task": 1000,
+    "chunk_size": 50,
+    "n_action_steps": 1,
+    "num_steps": 10,
+    "device": "cuda",
+    "load_vlm_weights": false,
+    "use_amp": false,
+    "no_grad": true,
+    "cudnn_benchmark": true,
+    "allow_tf32": true,
+    "hf_offline": true,
+    "episode_lengths": [
+      280,
+      280,
+      300,
+      520
+    ],
+    "language": "original full task_description",
+    "enhancements": "none: no Hermes/Qwen/helpers/finish/return/extra waits",
+    "native_stopping": true,
+    "sdk_padding": "record separately, not scored sample",
+    "sdk_reset_noops": 10,
+    "initial_episode_warmup_actions": 2000,
+    "automatic_reset_warmup_total": "unknown; conservatively bounded in helper budget",
+    "scored_steps_total_max": 69000,
+    "physical_actions_conservative_max": 1144000,
+    "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+    "implementation_model": "gpt-6.1-sol",
+    "implementation_reasoning_effort": "low",
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "model_sha256": "71d9563c8295284acba8fc2d5c19de000d6fe9ba58a406832af7ef3d221ed52f",
+    "sdk_versions": "lerobot0.6.2 git8c920c4270460851cedd2737657584586d3dc66f hf-libero0.1.4 mujoco3.8.1 robosuite1.4.0 torch2.11.0+cu128 transformers5.5.4"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": true,
+    "reason": "只补未完成组，不重复已完成110次；514800为保守动作预算，不代表真实动作数。"
+  }
+}

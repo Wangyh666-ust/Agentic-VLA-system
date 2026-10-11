@@ -6,6 +6,10 @@ import traceback
 import dataclasses
 import importlib.metadata
 import subprocess
+import argparse
+import hashlib
+import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 
 import torch
@@ -19,6 +23,66 @@ from lerobot.utils.random_utils import set_seed
 OUT = Path('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-native-benchmark')
 MODEL = Path('/home/yhwang/fyp/libero_demo/models/smolvla_libero')
 SUITES = ['libero_spatial', 'libero_object', 'libero_goal', 'libero_10']
+WEIGHT_SHA256 = '71d9563c8295284acba8fc2d5c19de000d6fe9ba58a406832af7ef3d221ed52f'
+LIMITS = dict(zip(SUITES, [280, 280, 300, 520]))
+
+
+def inspect_existing():
+    rows, partial_dirs = [], []
+    first_pending = None
+    for suite in SUITES:
+        for task_id in range(10):
+            name = f'{suite}_{task_id:02d}'
+            taskdir = OUT / name
+            audit_path, info_path = taskdir / 'audit.json', taskdir / 'eval_info.json'
+            if audit_path.exists() != info_path.exists():
+                raise RuntimeError(f'Incomplete scoring evidence: {name}')
+            if audit_path.exists():
+                if first_pending is not None:
+                    raise RuntimeError(f'Completed prefix has a gap before {name}')
+                audit = json.loads(audit_path.read_text(encoding='utf-8'))
+                info = json.loads(info_path.read_text(encoding='utf-8'))
+                tasks = info['per_task']
+                if len(tasks) != 1 or tasks[0]['task_group'] != suite or tasks[0]['task_id'] != task_id:
+                    raise RuntimeError(f'Task identity mismatch: {name}')
+                successes = tasks[0]['metrics']['successes']
+                episodes = audit['episodes']
+                if audit.get('valid') is not True or len(successes) != 5 or \
+                        any(type(s) is not bool for s in successes) or len(episodes) != 5 or \
+                        any(type(s) is not bool for s in audit['native_successes']) or \
+                        audit['native_successes'] != successes or \
+                        any(type(e['success']) is not bool for e in episodes) or \
+                        [e['success'] for e in episodes] != successes:
+                    raise RuntimeError(f'Success audit mismatch: {name}')
+                for episode in episodes:
+                    steps = episode['scored_steps']
+                    expected = 'native_success' if episode['success'] else 'budget_exhausted'
+                    if type(steps) is not int or not 0 < steps <= LIMITS[suite] or \
+                            episode['end_condition'] != expected or \
+                            (not episode['success'] and steps != LIMITS[suite]):
+                        raise RuntimeError(f'Budget/end-condition mismatch: {name}')
+                rows.append({'suite': suite, 'task_id': task_id, 'episodes': 5,
+                             'successes': sum(successes),
+                             'scored_steps': sum(e['scored_steps'] for e in episodes)})
+            else:
+                if first_pending is None:
+                    first_pending = name
+                if taskdir.exists() and any(taskdir.iterdir()):
+                    if name != first_pending:
+                        raise RuntimeError(f'Unexpected non-prefix partial directory: {name}')
+                    partial_dirs.append(name)
+    return rows, first_pending, partial_dirs
+
+
+def weight_sha256():
+    digest = hashlib.sha256()
+    with (MODEL / 'model.safetensors').open('rb') as stream:
+        for block in iter(lambda: stream.read(8 * 1024 * 1024), b''):
+            digest.update(block)
+    actual = digest.hexdigest()
+    if actual != WEIGHT_SHA256:
+        raise RuntimeError(f'Model weight hash mismatch: {actual}')
+    return actual
 
 
 def serial(value):
@@ -36,8 +100,11 @@ def save(path, value):
 
 
 def main():
-    OUT.mkdir(parents=True, exist_ok=True)
-    if list(OUT.glob('*/eval_info.json')):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--resume', action='store_true')
+    parser.add_argument('--dry-run', action='store_true')
+    args = parser.parse_args()
+    if not args.resume and list(OUT.glob('*/eval_info.json')):
         raise RuntimeError('Existing eval_info.json: duplicate launch prohibited')
     torch.backends.cudnn.benchmark = True
     torch.backends.cuda.matmul.allow_tf32 = True
@@ -47,11 +114,50 @@ def main():
     cfg.load_vlm_weights = False
     cfg.use_amp = False
     assert (cfg.chunk_size, cfg.n_action_steps, cfg.num_steps) == (50, 1, 10)
-    save(OUT / 'run_metadata.json', {'policy_config': dataclasses.asdict(cfg),
+    metadata = {'policy_config': dataclasses.asdict(cfg),
         'source_head': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
         'versions': {name: importlib.metadata.version(name) for name in
                      ['lerobot', 'hf-libero', 'mujoco', 'robosuite', 'torch', 'transformers']},
-        'implementation_model': 'gpt-6.1-sol', 'implementation_reasoning_effort': 'low'})
+        'implementation_model': 'gpt-6.1-sol', 'implementation_reasoning_effort': 'low'}
+    rows, first_pending, partial_dirs = inspect_existing() if args.resume else ([], None, [])
+    sha = None
+    if args.resume:
+        original = json.loads((OUT / 'run_metadata.json').read_text(encoding='utf-8'))
+        normalized = json.loads(json.dumps(metadata['policy_config'], default=serial))
+        if normalized != original['policy_config'] or metadata['versions'] != original['versions']:
+            raise RuntimeError('Resume policy configuration/package versions differ from original run')
+        sha = weight_sha256()
+    if args.dry_run:
+        print(json.dumps({'completed_tasks': len(rows), 'valid_episodes': len(rows) * 5,
+            'successes': sum(r['successes'] for r in rows), 'remaining_tasks': 40 - len(rows),
+            'first_pending': first_pending, 'partial_dirs': partial_dirs,
+            'configuration_match': True, 'weight_sha256': sha}, indent=2))
+        return
+    OUT.mkdir(parents=True, exist_ok=True)
+    old_progress = {}
+    if args.resume:
+        old_progress = json.loads((OUT / 'progress.json').read_text(encoding='utf-8'))
+        stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
+        archive = OUT / 'interrupted_attempts' / stamp
+        root = OUT.resolve()
+        for name in partial_dirs:
+            source, destination = OUT / name, archive / name
+            if not source.resolve().is_relative_to(root) or not destination.resolve().is_relative_to(root):
+                raise RuntimeError('Interrupted archive path escapes output directory')
+            if destination.exists():
+                raise RuntimeError(f'Archive destination exists: {destination}')
+            archive.mkdir(parents=True, exist_ok=True)
+            source.rename(destination)
+        archive.mkdir(parents=True, exist_ok=True)
+        for name in ['progress.json', 'summary.json']:
+            if (OUT / name).exists():
+                shutil.copy2(OUT / name, archive / name)
+        save(OUT / f'resume_metadata_{stamp}.json', dict(metadata,
+            weight_sha256=sha, resumed_at_utc=stamp, archive_directory=str(archive),
+            archived_task_directories=partial_dirs, valid_episodes=len(rows) * 5,
+            incomplete_groups_scoring='excluded from successes and failures'))
+    else:
+        save(OUT / 'run_metadata.json', metadata)
     initial_env = LiberoEnv(task=SUITES[0], task_ids=[0], observation_height=256,
                             observation_width=256, control_mode='relative', init_states=True, hard_reset=True)
     policy = make_policy(cfg=cfg, env_cfg=initial_env, rename_map={})
@@ -59,9 +165,9 @@ def main():
         preprocessor_overrides={'device_processor': {'device': 'cuda'},
                                'rename_observations_processor': {'rename_map': {}}})
     original_select = policy.select_action
-    progress = {'status': 'running', 'policy_select_calls': 0, 'completed_tasks': 0,
+    progress = {'status': 'running', 'policy_select_calls': old_progress.get('policy_select_calls', 0), 'completed_tasks': len(rows),
                 'implementation_model': 'gpt-6.1-sol', 'implementation_reasoning_effort': 'low'}
-    rows = []
+    completed = {(r['suite'], r['task_id']) for r in rows}
     current = {}
 
     def select(batch, *args, **kwargs):
@@ -80,6 +186,8 @@ def main():
     policy.select_action = select
     for suite in SUITES:
         for task_id in range(10):
+            if (suite, task_id) in completed:
+                continue
             if (OUT / 'STOP').exists():
                 progress['status'] = 'stopped'
                 save(OUT / 'progress.json', progress)
@@ -172,7 +280,10 @@ if __name__ == '__main__':
     try:
         main()
     except Exception:
-        OUT.mkdir(parents=True, exist_ok=True)
-        save(OUT / 'error.json', {'status': 'unknown', 'error': traceback.format_exc()})
+        if '--dry-run' not in __import__('sys').argv:
+            OUT.mkdir(parents=True, exist_ok=True)
+            error_name = ('resume_error_' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ') + '.json'
+                          if '--resume' in __import__('sys').argv else 'error.json')
+            save(OUT / error_name, {'status': 'unknown', 'error': traceback.format_exc()})
         traceback.print_exc()
         raise
