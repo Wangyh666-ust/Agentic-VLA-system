@@ -1,0 +1,183 @@
+{
+  "cases": [
+    {
+      "case": "bowl_wine",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "bowl_to_plate",
+          "new_vla": 60,
+          "success": false,
+          "reason": "independent_finish_failed",
+          "actual_open": 13,
+          "counts": {
+            "release": 13,
+            "movement": 115,
+            "confirm": 5,
+            "home": 84
+          },
+          "home_streak": 5,
+          "independent_streak": 0,
+          "final_independent": {
+            "timestamp": 14.350000000001462,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": false
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.00021596750667021714,
+                0.001525384270320479,
+                0.0005452917453423892,
+                0.0022821317362264892,
+                0.0014658162082074062,
+                0.0021337837137052063,
+                0.0027987885708045113
+              ],
+              "arm_speed_rad_s": [
+                0.00026533642909753243,
+                0.005605379575779525,
+                0.0002605140135391309,
+                0.005687527695109356,
+                0.0005585547747959755,
+                0.0009322180880979508,
+                0.0017176097687381464
+              ],
+              "max_joint_error_rad": 0.0027987885708045113,
+              "max_joint_speed_rad_s": 0.005687527695109356,
+              "finger_error_m": [
+                1.711002455605931e-05,
+                1.6852809046612183e-05
+              ],
+              "finger_speed_m_s": [
+                1.427300287976779e-05,
+                1.4047205912510151e-05
+              ],
+              "max_finger_error_m": 1.711002455605931e-05,
+              "max_finger_speed_m_s": 1.427300287976779e-05,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": false,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.9077633150592777e-07,
+                  "angular_speed": 8.298686020523624e-06
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": false
+          },
+          "finish_reason": "complete",
+          "qwen": [
+            {
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":true,\"reason\":\"wrist view显示碗已接触盘子，夹爪编码器闭合值远小于标准开合值\"}",
+              "usage": {
+                "prompt_tokens": 1690,
+                "completion_tokens": 634,
+                "total_tokens": 2324,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 591,
+                  "text_tokens": 43
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 780,
+                  "text_tokens": 910,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-generic-combos/bowl_wine/runs/20261011T044326Z_goal_table_6e6d28d2/cap_01_bowl_to_plate_18c32a1f/finish/model_requests/call_01_request.json"
+            },
+            {
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":false,\"reason\":\"frame 1中碗已稳定放置在盘子上，夹爪编码器显示手指开合状态与标准开合位置一致，表明已释放碗\"}",
+              "usage": {
+                "prompt_tokens": 784,
+                "completion_tokens": 1080,
+                "total_tokens": 1864,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 55
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 132,
+                  "text_tokens": 652,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-generic-combos/bowl_wine/runs/20261011T044326Z_goal_table_6e6d28d2/cap_01_bowl_to_plate_18c32a1f/finish/model_requests/call_02_request.json"
+            }
+          ],
+          "decoded_frames": 104
+        }
+      ],
+      "wall_seconds": 162.235804534,
+      "timings": [
+        {
+          "kind": "qwen_check",
+          "capability": "bowl_to_plate",
+          "seconds": 8.118340055000004
+        },
+        {
+          "kind": "qwen_check",
+          "capability": "bowl_to_plate",
+          "seconds": 11.334867817000003
+        }
+      ],
+      "video": "First_Phase/scene_demo/results/2026-10-11-generic-combos/bowl_wine/sequence.mp4"
+    }
+  ],
+  "new_vla": 60,
+  "qwen_calls": 3,
+  "qwen_tokens": 6786,
+  "replay_actions": 0,
+  "subagents": 0,
+  "scope": "fixed user-specified order; no new Hermes planning invocation",
+  "not_run": {
+    "bowl_stove": "common first bowl step failed independent acceptance; stop rule"
+  },
+  "negative_recheck": {
+    "two_question_verdict": {
+      "goal_achieved": true,
+      "holding_or_contact": true,
+      "reason": "Wrist view (frame 5) shows bowl fully resting on plate with aligned edges and no visible gap; sideview (frame 4) confirms bowl positioned on plate while gripper remains in light contact. Position relationship for 'put bowl on plate' is satisfied."
+    },
+    "usage": {
+      "prompt_tokens": 1759,
+      "completion_tokens": 839,
+      "total_tokens": 2598,
+      "completion_tokens_details": {
+        "reasoning_tokens": 765,
+        "text_tokens": 74
+      },
+      "prompt_tokens_details": {
+        "image_tokens": 780,
+        "text_tokens": 979,
+        "cached_tokens": 0
+      }
+    },
+    "robot_actions": 0,
+    "effect": "still false-positive; added grounding sentence reverted"
+  }
+}

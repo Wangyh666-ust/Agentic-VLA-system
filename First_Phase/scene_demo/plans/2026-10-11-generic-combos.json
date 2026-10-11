@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "id": "20261011-generic-combos",
+  "intent": "new_experiment",
+  "question_key": "release-stop",
+  "purpose": "用用户确认的通用结束状态提示词，让碗→酒瓶、碗→灶台各子任务实际触发松手/退离/原归位后交接，并保留前序成果。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261010-visual-finish",
+    "20261010-finish-takeover-v2",
+    "20261010-shape-home",
+    "20261010-live-handoff",
+    "20261010-simple-checker",
+    "20261011-goal-finish",
+    "20261009-joint-home",
+    "20261009-joint-home-12"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "复用已成功的归位和末态诊断；旧12组合/上轮单例未使用本轮通用角色提示词及在线两问接管，不能回答这两个新在线组合。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "复用已成功的归位和末态诊断；旧12组合/上轮单例未使用本轮通用角色提示词及在线两问接管，不能回答这两个新在线组合。"
+    },
+    {
+      "experiment_id": "20261010-finish-takeover-v2",
+      "disposition": "reuse",
+      "reason": "复用已成功的归位和末态诊断；旧12组合/上轮单例未使用本轮通用角色提示词及在线两问接管，不能回答这两个新在线组合。"
+    },
+    {
+      "experiment_id": "20261010-shape-home",
+      "disposition": "reuse",
+      "reason": "复用已成功的归位和末态诊断；旧12组合/上轮单例未使用本轮通用角色提示词及在线两问接管，不能回答这两个新在线组合。"
+    },
+    {
+      "experiment_id": "20261010-live-handoff",
+      "disposition": "reuse",
+      "reason": "复用已成功的归位和末态诊断；旧12组合/上轮单例未使用本轮通用角色提示词及在线两问接管，不能回答这两个新在线组合。"
+    },
+    {
+      "experiment_id": "20261010-simple-checker",
+      "disposition": "reuse",
+      "reason": "复用已成功的归位和末态诊断；旧12组合/上轮单例未使用本轮通用角色提示词及在线两问接管，不能回答这两个新在线组合。"
+    },
+    {
+      "experiment_id": "20261011-goal-finish",
+      "disposition": "reuse",
+      "reason": "复用已成功的归位和末态诊断；旧12组合/上轮单例未使用本轮通用角色提示词及在线两问接管，不能回答这两个新在线组合。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "复用已成功的归位和末态诊断；旧12组合/上轮单例未使用本轮通用角色提示词及在线两问接管，不能回答这两个新在线组合。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用已成功的归位和末态诊断；旧12组合/上轮单例未使用本轮通用角色提示词及在线两问接管，不能回答这两个新在线组合。"
+    }
+  ],
+  "hypothesis": "明确检查器负责判定收尾触发条件，可在不附加支撑条件时配合已有恢复流程串联两个子任务。",
+  "information_gain": "首次在同一持久场景使用本轮通用提示词进行新VLA两步执行，无回放；固定用户指定顺序，不作为Hermes规划增益测量。",
+  "success_criteria": "每步Qwen目的true；实际open>0、movement>0、home>0且home ready；最终视觉分离与独立已执行全部literal目标/无持物/无手接触/归位连续5个actual post真，第二步读取新图并重置策略队列；全序列两目标保留。",
+  "failure_criteria": "应触发未触发或目标动作0记触发失败，停止依赖交接；动作执行后未达效果记相应阶段失败；第二技能抓取/位置失败与第一步收尾失败分开。",
+  "unknown_criteria": "模型null、传输/协议失败或初始化未知则unknown并停止；不将软件通过或归位单独替代组合效果。",
+  "changed_factors": [
+    {
+      "name": "checker_prompt",
+      "before": "task examples and literal wine-specific correction",
+      "after": "user-approved generic end-state inspector role + current subtask natural language",
+      "reason": "检验通用语义而不枚举任务"
+    },
+    {
+      "name": "online_dispatch",
+      "before": "runtime.poll default old vision decide and simple_handoff false",
+      "after": "explicit SimpleQwenClient dispatch to simple_checker.decide and simple_handoff true; initial place includes wrist",
+      "reason": "独立末态试点成功路径接入在线入口"
+    },
+    {
+      "name": "new_sequence",
+      "before": "historical terminal replay only",
+      "after": "real VLA bowl then wine/stove in persistent scene; periodic check without native candidate trigger",
+      "reason": "用户授权组合试点，不把回放称作新执行"
+    }
+  ],
+  "fixed_factors": {
+    "home_controller": "joint_home.py and control.py unchanged from46f197e",
+    "geometry": "sensors/geometry unchanged",
+    "policy": "same pretrained SmolVLA; no training",
+    "scene": "goal_table original, seed0 init0; one reset per whole sequence"
+  },
+  "scope": {
+    "max_cases": 2,
+    "max_vla_actions_per_case": 600,
+    "max_helper_actions_per_case": 1800,
+    "stop_rule": "每组合最多一次；首例碗若未完成实际收尾/归位则停止第二步及另一组合；碗通过但酒瓶失败时碗→灶台为独立第二技能对照可继续。零触发停止依赖动作，不继续调归位；不微调、不扩大、不开子agent。"
+  },
+  "new_physical_actions": 4800,
+  "configuration": {
+    "scene": "goal_table",
+    "suite": "libero_goal",
+    "task_id": 8,
+    "seed": 0,
+    "init_state_index": 0,
+    "cases": {
+      "bowl_wine": {
+        "request": "先将碗放到盘子上，再将酒瓶放到架子上。",
+        "capabilities": [
+          "bowl_to_plate",
+          "wine_to_rack"
+        ]
+      },
+      "bowl_stove": {
+        "request": "先将碗放到盘子上，再打开灶台。",
+        "capabilities": [
+          "bowl_to_plate",
+          "stove_on"
+        ]
+      }
+    },
+    "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "source_sha256": {
+      "First_Phase/scene_demo/finish_v1/combo_pilot.py": "7da3635ea387bc5dbd85096785bcfaa7bfa99116d17c78c9a24b7636f8f6b191",
+      "First_Phase/scene_demo/finish_v1/simple_checker.py": "026d7e2aebbe6790b1afc46f540d7ac7814ec70c15e480987d3efb79fecf2630",
+      "First_Phase/scene_demo/finish_v1/runtime.py": "e2b2165129fd29a6f9d9f45efb49943906cc57295867cc54ddb4d52c358d459c",
+      "First_Phase/scene_demo/finish_v1/vision.py": "47b900dfb70aa270679e1dbf2e8399410f2b551abce3811570e09de2c32023c3",
+      "First_Phase/scene_demo/finish_v1/control.py": "66f6741def59c8a6f92cbe3af5108d20d57b185114c097aa801bfbb803d77d20",
+      "First_Phase/scene_demo/finish_v1/sensors.py": "403576acee777920f98c58d51cccdcde4b1c818ebf24dd3db71efbf511b204bf",
+      "First_Phase/scene_demo/finish_v1/geometry.py": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70",
+      "First_Phase/scene_demo/service.py": "c9fdbf2495a11d6821ec2b254c0e2f5677ee46adb44fb3d924263071008b2a52",
+      "First_Phase/scene_demo/joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21",
+      "First_Phase/scene_demo/safe_exit.py": "54824e433307a5eb9634783f66b9cb654967f35cec7ec661ff0e70b6c3f635b5",
+      "First_Phase/scene_demo/safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+      "First_Phase/scene_demo/catalog.py": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02",
+      "First_Phase/scene_demo/placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de"
+    },
+    "vla_budget_per_subgoal": 300,
+    "qwen_max_per_subgoal": 6,
+    "completion_mode": "release_verified",
+    "grasp_guard_mode": "shadow",
+    "finish_mode": "visual",
+    "checker": "generic_state_handoff",
+    "thinking_budget": 1024,
+    "check_schedule": "interval60 VLA actions, max5 prechecks; native candidate ignored by pilot",
+    "home": "original streaming, .01rad waypoints, kp50, max360, five ready samples",
+    "execution": "single primary agent and local worker; no delegation or claimed model override"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "new generic prompt, online dispatch and real two-step sequence"
+  },
+  "startup_correction": "Invalid enum release rejected at constructor before model/environment/actions/API. Correct actual supported release_verified, original command/output/source preserved."
+}

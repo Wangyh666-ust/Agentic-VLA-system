@@ -53,6 +53,10 @@ class SimpleCheckerTests(unittest.TestCase):
         self.assertIn('put the wine bottle on the rack',prompt)
         self.assertNotIn('wine_rack_1_top_region',prompt)
         self.assertNotIn('top region',prompt)
+        self.assertIn('结束状态检查器', prompt)
+        self.assertIn('遗漏最后的松手', prompt)
+        self.assertNotIn('放架任务', prompt)
+        self.assertNotIn('放盘任务', prompt)
 
     def test_first_action_really_opens_without_settle_gate(self):
         class Port:

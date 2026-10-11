@@ -284,7 +284,7 @@ class FinishMonitor:
                 # At home, the fixed primary scene view preserves target/hand
                 # separation; the side view may be occluded by the arm.
                 frames = [fr for fr in frames if fr['view'] == 'agentview']
-            if simple and context['current_subtask']['operation'] == 'place' and self.port.phase == 'release':
+            if simple and context['current_subtask']['operation'] == 'place' and self.port.phase in (None, 'release'):
                 frames = list(frames[:2])
                 wrist = next((fr for fr in cap.get('frames', []) if fr['view'] in ('wrist', 'robot0_eye_in_hand')), None)
                 if wrist is not None and not any(fr['view'] == wrist['view'] for fr in frames):
@@ -425,7 +425,12 @@ class FinishMonitor:
             raise RuntimeError('invalid visual state: %r' % (state,))
         from scene_demo.finish_v1 import control, vision
         try:
-            finish = control.run_finish(self.port, self.context, verdict, vision.decide, self._check, emit=lambda _: None)
+            if getattr(self.call_client, 'simple_handoff', False):
+                from scene_demo.finish_v1 import simple_checker
+                finish = control.run_finish(self.port, self.context, verdict, simple_checker.decide,
+                                            self._check, emit=lambda _: None, simple_handoff=True)
+            else:
+                finish = control.run_finish(self.port, self.context, verdict, vision.decide, self._check, emit=lambda _: None)
         except Exception:
             self.close()
             raise

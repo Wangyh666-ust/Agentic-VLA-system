@@ -260,6 +260,18 @@ class RuntimeTests(unittest.TestCase):
         self.assertTrue(monitor.port.closed)
         self.assertEqual(json.loads(json.dumps(monitor.status()))['phase'], 'done')
 
+    def test_simple_poll_dispatches_atomic_finish_and_initial_wrist(self):
+        client = FakeClient()
+        client.simple_handoff = True
+        monitor = self.monitor(client)
+        self.record_pair(monitor)
+        with mock.patch.object(control, 'run_finish', return_value={'ok': False, 'reason': 'probe'}) as finish:
+            monitor.poll(25, candidate=False)
+        self.assertTrue(finish.call_args.kwargs['simple_handoff'])
+        from scene_demo.finish_v1 import simple_checker
+        self.assertIs(finish.call_args.args[3], simple_checker.decide)
+        self.assertIn('wrist', [fr['view'] for fr in client.calls[0][0]['sensor_frames']])
+
     def test_four_posts_fail_and_callback_errors_propagate(self):
         monitor = self.monitor()
         self.record_pair(monitor)
