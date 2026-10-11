@@ -1,0 +1,2696 @@
+{
+  "case": "bowl_stove",
+  "user_request": "先将碗放到盘子上，再打开灶台。",
+  "plan": {
+    "ok": true,
+    "request_id": "generic_bowl_stove",
+    "session_id": "3d794ec6918d4d18ba907b1d842107d4",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "original_capability_ids": [
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "rationale": "用户指定顺序；固定执行组合试点，不作为Hermes规划评估",
+    "job_ids": [
+      "db256feafef045d7b8429a4267f40047",
+      "48c0da39415f4ced9056762f99817fdb"
+    ],
+    "completed_capability_ids": [
+      "bowl_to_plate"
+    ],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "movement screen blocked",
+    "repair_history": [],
+    "scene_version": 2
+  },
+  "subtasks": [
+    {
+      "capability": "bowl_to_plate",
+      "outcome": {
+        "ok": true,
+        "cancelled": false,
+        "reason": "complete",
+        "detail": ""
+      },
+      "job": {
+        "job_id": "db256feafef045d7b8429a4267f40047",
+        "request_id": "generic_bowl_stove",
+        "session_id": "3d794ec6918d4d18ba907b1d842107d4",
+        "capability_id": "bowl_to_plate",
+        "state": "completed",
+        "steps": 150,
+        "total_steps": 391,
+        "success": true,
+        "ended_reason": "complete",
+        "error": null,
+        "instruction": "put the bowl on the plate",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+        "state_after_sha": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": {
+          "phase": "done",
+          "calls": 2,
+          "prechecks": 1,
+          "helper_counts": {
+            "release": 2,
+            "movement": 103,
+            "confirm": 5,
+            "home": 131
+          },
+          "last_decision": {
+            "state": "complete",
+            "reason": "purpose achieved and hand separated",
+            "allow_release": false,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": true,
+            "reason": "complete",
+            "checks": 2
+          },
+          "independent_streak": 5
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/rollout.mp4",
+        "wall_s": 197.458
+      },
+      "state_before": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+      "actual_vla": 150,
+      "local_grasp_actions": 0,
+      "state_after": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914",
+      "elapsed_seconds": 197.6691467259999,
+      "finish": {
+        "ready": true,
+        "ok": true,
+        "reason": "complete",
+        "counts": {
+          "release": 2,
+          "movement": 103,
+          "confirm": 5,
+          "home": 131
+        },
+        "release_settle_actions": 0,
+        "release_open_actions": 2,
+        "plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.045298443329670764,
+              0.8784073984671172,
+              0.0017038834748652003,
+              -1.2884127961576688,
+              -0.08436247278909477,
+              1.9383074889548715,
+              1.0012305436167541
+            ],
+            [
+              0.04530008535040871,
+              0.875303246841166,
+              0.0017459219965035911,
+              -1.2885764944283582,
+              -0.08428971397180457,
+              1.9353723223411174,
+              1.001011832774056
+            ],
+            [
+              0.04530210816934392,
+              0.8721990978837978,
+              0.0017878771185181896,
+              -1.2887138851547275,
+              -0.08421660798165813,
+              1.932412503734731,
+              1.0007911281137603
+            ],
+            [
+              0.045304583434236496,
+              0.8691178040627561,
+              0.0018294067830601276,
+              -1.2888096964769284,
+              -0.08414323573382124,
+              1.929434040863154,
+              1.0005692172435927
+            ],
+            [
+              0.04530752284016323,
+              0.8660599796570859,
+              0.0018705028474118618,
+              -1.2888630444667735,
+              -0.08406960213790182,
+              1.9264366391973318,
+              1.0003460835465086
+            ],
+            [
+              0.04531093156720554,
+              0.8630257099285283,
+              0.0019111584214099166,
+              -1.2888738772730075,
+              -0.08399572388895175,
+              1.9234203299343509,
+              1.00012173401519
+            ],
+            [
+              0.04531481431583181,
+              0.8600150515272021,
+              0.0019513667833981783,
+              -1.2888421928713676,
+              -0.08392161847366442,
+              1.9203851673336991,
+              0.9998961772261489
+            ],
+            [
+              0.04531917570864317,
+              0.8570280617100416,
+              0.0019911213063396297,
+              -1.2887679878423717,
+              -0.08384730340964827,
+              1.9173312049940927,
+              0.9996694216305388
+            ],
+            [
+              0.04532402031825856,
+              0.8540648002582009,
+              0.0020304154518618477,
+              -1.288651253971396,
+              -0.0837727961939415,
+              1.9142584942550842,
+              0.9994414754378254
+            ],
+            [
+              0.045329352670056416,
+              0.8511253296019241,
+              0.002069242769003845,
+              -1.288491978016902,
+              -0.0836981142981643,
+              1.9111670840826351,
+              0.9992123466059267
+            ],
+            [
+              0.045335177243298296,
+              0.8482097148285377,
+              0.002107596893197789,
+              -1.2882901416852408,
+              -0.08362327516675391,
+              1.9080570210516028,
+              0.9989820428382762
+            ],
+            [
+              0.04534149847222156,
+              0.845318023684826,
+              0.0021454715451711638,
+              -1.2880457216152708,
+              -0.08354829621542458,
+              1.904928349332915,
+              0.9987505715812078
+            ],
+            [
+              0.04534832074719782,
+              0.8424503265811809,
+              0.002182860529749474,
+              -1.2877586893597321,
+              -0.08347319482966173,
+              1.9017811106793092,
+              0.9985179400212209
+            ],
+            [
+              0.04535564841596774,
+              0.8396066965980166,
+              0.0022197577345554683,
+              -1.2874290113624856,
+              -0.08339798836324455,
+              1.89861534440921,
+              0.9982841550820977
+            ],
+            [
+              0.04536348578495252,
+              0.836787209494567,
+              0.002256157128604698,
+              -1.287056648931443,
+              -0.0833226941367981,
+              1.8954310873886955,
+              0.9980492234218681
+            ],
+            [
+              0.04537183712064379,
+              0.8339919437200093,
+              0.002292052760793271,
+              -1.2866415582072557,
+              -0.08324732943638279,
+              1.8922283740115435,
+              0.9978131514296241
+            ],
+            [
+              0.04538070665106853,
+              0.8312209804270229,
+              0.0023274387582808112,
+              -1.2861836901275963,
+              -0.08317191151211924,
+              1.8890072361773291,
+              0.9975759452221765
+            ],
+            [
+              0.04539009856733428,
+              0.828474403487755,
+              0.0023623093247629543,
+              -1.28568299038707,
+              -0.08309645757685702,
+              1.8857677032675502,
+              0.9973376106405608
+            ],
+            [
+              0.04540001702525009,
+              0.8257522995122801,
+              0.0023966587386365164,
+              -1.2851393993926046,
+              -0.08302098480488636,
+              1.8825098021197446,
+              0.9970981532463798
+            ],
+            [
+              0.045410466147027415,
+              0.8230547578695673,
+              0.0024304813510503146,
+              -1.2845528522143028,
+              -0.0829455103307024,
+              1.8792335569995782,
+              0.9968575783179902
+            ],
+            [
+              0.04542145002306022,
+              0.820381870711006,
+              0.0024637715838461884,
+              -1.2839232785316441,
+              -0.08287005124781908,
+              1.8759389895708534,
+              0.996615890846522
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "checks": [
+          {
+            "target_visible": null,
+            "destination_visible": null,
+            "at_destination": true,
+            "supported": null,
+            "released": true,
+            "stable": null,
+            "operation_achieved": true,
+            "clear_of_target": true,
+            "boxes": {},
+            "evidence": [
+              "sideview图显示碗已稳定放置在盘子上，满足子任务目标；夹爪在碗上方悬停且未接触，编码器数据接近开合状态，结合图像判断无接触"
+            ],
+            "unknown_reasons": []
+          }
+        ],
+        "restored": true,
+        "limitation": "visible geometry only",
+        "opening_confirmed": true,
+        "object_release_not_yet_confirmed": true,
+        "handoff_mode": "two_question_goal_contact_v2",
+        "handoff_goal_latched": true,
+        "_release_path": true,
+        "active_retreat_plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.045298443329670764,
+              0.8784073984671172,
+              0.0017038834748652003,
+              -1.2884127961576688,
+              -0.08436247278909477,
+              1.9383074889548715,
+              1.0012305436167541
+            ],
+            [
+              0.04530008535040871,
+              0.875303246841166,
+              0.0017459219965035911,
+              -1.2885764944283582,
+              -0.08428971397180457,
+              1.9353723223411174,
+              1.001011832774056
+            ],
+            [
+              0.04530210816934392,
+              0.8721990978837978,
+              0.0017878771185181896,
+              -1.2887138851547275,
+              -0.08421660798165813,
+              1.932412503734731,
+              1.0007911281137603
+            ],
+            [
+              0.045304583434236496,
+              0.8691178040627561,
+              0.0018294067830601276,
+              -1.2888096964769284,
+              -0.08414323573382124,
+              1.929434040863154,
+              1.0005692172435927
+            ],
+            [
+              0.04530752284016323,
+              0.8660599796570859,
+              0.0018705028474118618,
+              -1.2888630444667735,
+              -0.08406960213790182,
+              1.9264366391973318,
+              1.0003460835465086
+            ],
+            [
+              0.04531093156720554,
+              0.8630257099285283,
+              0.0019111584214099166,
+              -1.2888738772730075,
+              -0.08399572388895175,
+              1.9234203299343509,
+              1.00012173401519
+            ],
+            [
+              0.04531481431583181,
+              0.8600150515272021,
+              0.0019513667833981783,
+              -1.2888421928713676,
+              -0.08392161847366442,
+              1.9203851673336991,
+              0.9998961772261489
+            ],
+            [
+              0.04531917570864317,
+              0.8570280617100416,
+              0.0019911213063396297,
+              -1.2887679878423717,
+              -0.08384730340964827,
+              1.9173312049940927,
+              0.9996694216305388
+            ],
+            [
+              0.04532402031825856,
+              0.8540648002582009,
+              0.0020304154518618477,
+              -1.288651253971396,
+              -0.0837727961939415,
+              1.9142584942550842,
+              0.9994414754378254
+            ],
+            [
+              0.045329352670056416,
+              0.8511253296019241,
+              0.002069242769003845,
+              -1.288491978016902,
+              -0.0836981142981643,
+              1.9111670840826351,
+              0.9992123466059267
+            ],
+            [
+              0.045335177243298296,
+              0.8482097148285377,
+              0.002107596893197789,
+              -1.2882901416852408,
+              -0.08362327516675391,
+              1.9080570210516028,
+              0.9989820428382762
+            ],
+            [
+              0.04534149847222156,
+              0.845318023684826,
+              0.0021454715451711638,
+              -1.2880457216152708,
+              -0.08354829621542458,
+              1.904928349332915,
+              0.9987505715812078
+            ],
+            [
+              0.04534832074719782,
+              0.8424503265811809,
+              0.002182860529749474,
+              -1.2877586893597321,
+              -0.08347319482966173,
+              1.9017811106793092,
+              0.9985179400212209
+            ],
+            [
+              0.04535564841596774,
+              0.8396066965980166,
+              0.0022197577345554683,
+              -1.2874290113624856,
+              -0.08339798836324455,
+              1.89861534440921,
+              0.9982841550820977
+            ],
+            [
+              0.04536348578495252,
+              0.836787209494567,
+              0.002256157128604698,
+              -1.287056648931443,
+              -0.0833226941367981,
+              1.8954310873886955,
+              0.9980492234218681
+            ],
+            [
+              0.04537183712064379,
+              0.8339919437200093,
+              0.002292052760793271,
+              -1.2866415582072557,
+              -0.08324732943638279,
+              1.8922283740115435,
+              0.9978131514296241
+            ],
+            [
+              0.04538070665106853,
+              0.8312209804270229,
+              0.0023274387582808112,
+              -1.2861836901275963,
+              -0.08317191151211924,
+              1.8890072361773291,
+              0.9975759452221765
+            ],
+            [
+              0.04539009856733428,
+              0.828474403487755,
+              0.0023623093247629543,
+              -1.28568299038707,
+              -0.08309645757685702,
+              1.8857677032675502,
+              0.9973376106405608
+            ],
+            [
+              0.04540001702525009,
+              0.8257522995122801,
+              0.0023966587386365164,
+              -1.2851393993926046,
+              -0.08302098480488636,
+              1.8825098021197446,
+              0.9970981532463798
+            ],
+            [
+              0.045410466147027415,
+              0.8230547578695673,
+              0.0024304813510503146,
+              -1.2845528522143028,
+              -0.0829455103307024,
+              1.8792335569995782,
+              0.9968575783179902
+            ],
+            [
+              0.04542145002306022,
+              0.820381870711006,
+              0.0024637715838461884,
+              -1.2839232785316441,
+              -0.08287005124781908,
+              1.8759389895708534,
+              0.996615890846522
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "movement_budget": 360,
+        "movement_progress": {
+          "waypoint": 20,
+          "waypoints": 21,
+          "joint_error": 0.003618732071670072
+        },
+        "movement_screens": [
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000103_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000103_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000104_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000104_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11662620480845887,
+                    -0.9685984552346448,
+                    -0.21957996463482804,
+                    0.10980746094532766
+                  ],
+                  [
+                    -0.986438644869697,
+                    0.1386767716595273,
+                    -0.08779267002275551,
+                    0.02096112224989613
+                  ],
+                  [
+                    0.11548648518163719,
+                    0.2063632368401607,
+                    -0.9716362931782861,
+                    1.1065135692048267
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000112_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000112_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000113_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000113_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11703538657919893,
+                    -0.9685889860915696,
+                    -0.21940395235810964,
+                    0.10984866515920885
+                  ],
+                  [
+                    -0.9863630714031709,
+                    0.13910765511255047,
+                    -0.08795994350377773,
+                    0.020886985129212887
+                  ],
+                  [
+                    0.11571780182995836,
+                    0.2061175303344912,
+                    -0.9716609254407886,
+                    1.1106687222301315
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000121_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000121_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000122_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000122_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11741069066495458,
+                    -0.9685421138750103,
+                    -0.21941035383067295,
+                    0.10983984601239798
+                  ],
+                  [
+                    -0.9862891106826013,
+                    0.13952596356709668,
+                    -0.08812658872095774,
+                    0.020814927724987706
+                  ],
+                  [
+                    0.11596775356321251,
+                    0.20605503910653566,
+                    -0.9716443799005386,
+                    1.1146683460117264
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000130_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000130_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000131_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000131_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11776804923314232,
+                    -0.9684804065067734,
+                    -0.2194912043620248,
+                    0.10979788251911915
+                  ],
+                  [
+                    -0.9862167237667796,
+                    0.13993420363934128,
+                    -0.08828925424161169,
+                    0.020744959345859428
+                  ],
+                  [
+                    0.11622073972633595,
+                    0.20606824322125758,
+                    -0.971611351721029,
+                    1.1186246255971637
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000139_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000139_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000140_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000140_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11806287950006672,
+                    -0.9684110408628029,
+                    -0.2196388226593209,
+                    0.10972527850334587
+                  ],
+                  [
+                    -0.9861525134831545,
+                    0.14028609163199407,
+                    -0.08844790922047817,
+                    0.020679246400194078
+                  ],
+                  [
+                    0.1164662038318709,
+                    0.20615496217564022,
+                    -0.9715635619635759,
+                    1.1225446656190026
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000148_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000148_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000149_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000149_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11809400621296828,
+                    -0.9683706827825087,
+                    -0.21979996911716604,
+                    0.10964833412888145
+                  ],
+                  [
+                    -0.9861285684611534,
+                    0.14036690545611252,
+                    -0.08858655833380569,
+                    0.020636438227537038
+                  ],
+                  [
+                    0.11663726746338575,
+                    0.20628948732305902,
+                    -0.9715144853570954,
+                    1.1262271614492187
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000157_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000157_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000158_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000158_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11805481306151744,
+                    -0.9683679146665771,
+                    -0.21983321622837673,
+                    0.10963217267217223
+                  ],
+                  [
+                    -0.9861210366269422,
+                    0.14035339633866362,
+                    -0.0886917428964179,
+                    0.020621745879714635
+                  ],
+                  [
+                    0.11674057664245305,
+                    0.20631167194442512,
+                    -0.9714973658145867,
+                    1.12984816649144
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000166_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000166_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000167_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000167_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11801813926342647,
+                    -0.9683731884195108,
+                    -0.2198296766931763,
+                    0.10963288999509156
+                  ],
+                  [
+                    -0.9861165887438781,
+                    0.14033297375108372,
+                    -0.08877347510552978,
+                    0.02061562013183134
+                  ],
+                  [
+                    0.1168152053841148,
+                    0.20630081053744215,
+                    -0.9714907016346881,
+                    1.1331001131378533
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000175_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000175_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000176_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000176_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.1179811239581256,
+                    -0.9683790853002937,
+                    -0.21982356912428874,
+                    0.1096356060405046
+                  ],
+                  [
+                    -0.9861119051397201,
+                    0.14031245783054386,
+                    -0.0888578905852504,
+                    0.020608930905996973
+                  ],
+                  [
+                    0.11689210807956991,
+                    0.20628708473996965,
+                    -0.9714843661831083,
+                    1.1365387765233839
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000184_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000184_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000185_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000185_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11794795921480755,
+                    -0.9683844442055324,
+                    -0.21981775892270985,
+                    0.10963831683251689
+                  ],
+                  [
+                    -0.9861073730421538,
+                    0.14029462488963357,
+                    -0.08893630900244245,
+                    0.020602015497204397
+                  ],
+                  [
+                    0.11696378819516332,
+                    0.2062740566523514,
+                    -0.9714785050649437,
+                    1.1398753347523158
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        ],
+        "home_entry": {
+          "visible_semantics": true,
+          "measured_open": true,
+          "settled": true,
+          "task_complete_before_home": false,
+          "label": "safety eligibility under review; task completion pending final verification",
+          "semantic_basis": "initial handoff purpose; final task acceptance pending",
+          "clearance_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000193_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000193_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000194_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000194_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11793552163269833,
+                    -0.9683865127118833,
+                    -0.21981531960930145,
+                    0.10963816126796103
+                  ],
+                  [
+                    -0.9861059560312216,
+                    0.14028741166786513,
+                    -0.08896339476031648,
+                    0.020600657925290193
+                  ],
+                  [
+                    0.11698827384388703,
+                    0.2062692515263653,
+                    -0.9714765769990439,
+                    1.1414864065498027
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        },
+        "home_screen": {
+          "sample_count": 117,
+          "planned_samples": 117,
+          "collisions": [],
+          "collision_count": 0,
+          "ok": true,
+          "live_unchanged": true
+        },
+        "home_mode": "original_joint_home_streaming",
+        "home_streak": 5
+      },
+      "independent_streak": 5
+    },
+    {
+      "capability": "stove_on",
+      "outcome": {
+        "ok": false,
+        "cancelled": false,
+        "reason": "movement screen blocked",
+        "detail": ""
+      },
+      "job": {
+        "job_id": "48c0da39415f4ced9056762f99817fdb",
+        "request_id": "generic_bowl_stove",
+        "session_id": "3d794ec6918d4d18ba907b1d842107d4",
+        "capability_id": "stove_on",
+        "state": "completed",
+        "steps": 150,
+        "total_steps": 571,
+        "success": false,
+        "ended_reason": "movement screen blocked",
+        "error": null,
+        "instruction": "turn on the stove",
+        "scene_version_before": 1,
+        "scene_version_after": 2,
+        "state_before_sha": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914",
+        "state_after_sha": "825c1f4c38415f4ce9dc643a94313fc134cfd4ad3f7b21841e763ccb7a0f6f5c",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": {
+          "phase": "blocked",
+          "calls": 1,
+          "prechecks": 1,
+          "helper_counts": {
+            "release": 20,
+            "movement": 10,
+            "confirm": 0,
+            "home": 0
+          },
+          "last_decision": {
+            "state": "needs_release",
+            "reason": "purpose achieved; open fingers",
+            "allow_release": true,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "movement screen blocked",
+            "checks": 1
+          },
+          "independent_streak": 0
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/rollout.mp4",
+        "wall_s": 117.375
+      },
+      "state_before": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914",
+      "actual_vla": 150,
+      "local_grasp_actions": 0,
+      "state_after": "825c1f4c38415f4ce9dc643a94313fc134cfd4ad3f7b21841e763ccb7a0f6f5c",
+      "elapsed_seconds": 117.552186646,
+      "finish": {
+        "ready": false,
+        "ok": false,
+        "reason": "movement screen blocked",
+        "counts": {
+          "release": 20,
+          "movement": 10,
+          "confirm": 0,
+          "home": 0
+        },
+        "release_settle_actions": 0,
+        "release_open_actions": 20,
+        "plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.16624831079144448,
+              0.32788266988786924,
+              0.2420580924723711,
+              -2.7725061497432484,
+              -1.2101978313956103,
+              2.9474842612649717,
+              0.29332083620189214
+            ],
+            [
+              0.16287375256548126,
+              0.32263373000808565,
+              0.24641579413685555,
+              -2.776001613503362,
+              -1.200934717537009,
+              2.94663207417176,
+              0.2850551447593185
+            ],
+            [
+              0.1560749649317814,
+              0.3127021268681806,
+              0.2553077624279941,
+              -2.782436802008936,
+              -1.1821513198569944,
+              2.944814646557246,
+              0.2683694057973795
+            ],
+            [
+              0.14921695692891138,
+              0.3030119084823173,
+              0.2643859195694312,
+              -2.7886076486909706,
+              -1.1632536402797713,
+              2.942967102046235,
+              0.25169896378657813
+            ],
+            [
+              0.14230973036576197,
+              0.2934269378944207,
+              0.2736289067430162,
+              -2.794642929365981,
+              -1.1442961194269359,
+              2.941128051656415,
+              0.235096631087475
+            ],
+            [
+              0.13542494074015102,
+              0.28400414878385255,
+              0.28294219974811374,
+              -2.800516455189323,
+              -1.1254476186363176,
+              2.939324267831662,
+              0.21871001134070905
+            ],
+            [
+              0.128686076029406,
+              0.2748796466713303,
+              0.29215808792397385,
+              -2.8061506009736217,
+              -1.1070114108888016,
+              2.9375901552819723,
+              0.2027977113388442
+            ],
+            [
+              0.12187879053209474,
+              0.2657462674457331,
+              0.30157124429010757,
+              -2.8117371403597766,
+              -1.088363149745058,
+              2.9358689702069007,
+              0.1868165032878502
+            ],
+            [
+              0.11496792494752199,
+              0.2565591431999242,
+              0.31124073687397463,
+              -2.8172971712960964,
+              -1.0693610667813378,
+              2.9341483265501105,
+              0.17064825237156073
+            ],
+            [
+              0.10800023979963388,
+              0.24736866978214,
+              0.3211110762958317,
+              -2.8227982208304034,
+              -1.0500920572381627,
+              2.932439520844495,
+              0.15437088555032852
+            ],
+            [
+              0.101057912478685,
+              0.23826380067783326,
+              0.33107332525425104,
+              -2.828188134797692,
+              -1.0307433645263406,
+              2.9307627515448305,
+              0.1381440970768101
+            ],
+            [
+              0.09415386670025849,
+              0.2292418128123303,
+              0.3411146692828909,
+              -2.833470185954063,
+              -1.0113111053806398,
+              2.9291198983107547,
+              0.12196379774140467
+            ],
+            [
+              0.08730141947246704,
+              0.2203036714398296,
+              0.3512222754531256,
+              -2.838644017441974,
+              -0.991789846113817,
+              2.927511406881895,
+              0.1058244429148389
+            ],
+            [
+              0.0805142328724981,
+              0.21145002896858311,
+              0.3613829327524425,
+              -2.843709415863432,
+              -0.9721741756614851,
+              2.9259372823575167,
+              0.08972043992863424
+            ],
+            [
+              0.07380638878319418,
+              0.20268107782854766,
+              0.3715829875522389,
+              -2.8486664340946395,
+              -0.9524587231051526,
+              2.924397146388983,
+              0.07364619374713113
+            ],
+            [
+              0.06391620863151792,
+              0.1898850872057917,
+              0.38692573812527775,
+              -2.8557213919438387,
+              -0.9226319416480041,
+              2.9220849952465726,
+              0.049500738577675056
+            ],
+            [
+              0.05746603347061847,
+              0.1813104549189106,
+              0.3971647564501189,
+              -2.8604232671989345,
+              -0.902651961145367,
+              2.9206278485237833,
+              0.033483652349560765
+            ],
+            [
+              0.05114889479211052,
+              0.17282072452183242,
+              0.40739105980771184,
+              -2.8650165846476003,
+              -0.8825521307846794,
+              2.919200605615762,
+              0.01747535327939847
+            ],
+            [
+              0.04194865561215491,
+              0.1603955117247431,
+              0.4226650894736872,
+              -2.871572953368093,
+              -0.8521298490137877,
+              2.917060043988864,
+              -0.00659526324102677
+            ],
+            [
+              0.036034763054628736,
+              0.1521053166125451,
+              0.43278872927584694,
+              -2.875901777003276,
+              -0.8317115274800189,
+              2.9156939494937077,
+              -0.0226035552709827
+            ],
+            [
+              0.02752606308964571,
+              0.13993745196007265,
+              0.4478204052220659,
+              -2.8820997704287987,
+              -0.8007977942990424,
+              2.913643876723319,
+              -0.046690039486987606
+            ],
+            [
+              0.02213702117621616,
+              0.13183127593356297,
+              0.457723178570245,
+              -2.8861704802298505,
+              -0.7800266798273376,
+              2.912319144730833,
+              -0.06273353484896188
+            ],
+            [
+              0.014517283652260177,
+              0.11989240954125648,
+              0.47232331660157295,
+              -2.892017914838225,
+              -0.7485692816178277,
+              2.9103228549990665,
+              -0.08688664387308626
+            ],
+            [
+              0.007528995787360761,
+              0.10811409228542622,
+              0.48655816282352155,
+              -2.8976313376949427,
+              -0.7167586794406636,
+              2.9083245647093414,
+              -0.1111200989418124
+            ],
+            [
+              0.0012619053015938799,
+              0.09645309656643261,
+              0.5003444094756174,
+              -2.9030365244032446,
+              -0.6845870781207286,
+              2.9063118868855495,
+              -0.13543618202732416
+            ],
+            [
+              -0.004189033320919255,
+              0.08489375613820942,
+              0.513587867539626,
+              -2.9082342294870887,
+              -0.6520444405765007,
+              2.904258380294143,
+              -0.15984687983236495
+            ],
+            [
+              -0.008723361506247647,
+              0.07342256492197051,
+              0.5261861175686348,
+              -2.913220870031487,
+              -0.619126184218793,
+              2.902131029275442,
+              -0.18436178367969344
+            ],
+            [
+              -0.012236605315836325,
+              0.06202439855484552,
+              0.5380295811474134,
+              -2.9179919308758393,
+              -0.5858363091809996,
+              2.8998913765098346,
+              -0.20898514526241707
+            ],
+            [
+              -0.014622818945408119,
+              0.050681362769617246,
+              0.5490032416478192,
+              -2.9225430246866857,
+              -0.5521901002473611,
+              2.8974956646358323,
+              -0.23371393632400703
+            ],
+            [
+              -0.015778189716806543,
+              0.039371849837287656,
+              0.5589895272828642,
+              -2.926870519209104,
+              -0.5182166833062768,
+              2.8948948161040082,
+              -0.2585359910312764
+            ],
+            [
+              -0.015605782136562888,
+              0.028069809154126383,
+              0.5678724198067733,
+              -2.930971834895615,
+              -0.48396114693442704,
+              2.892034354082317,
+              -0.28342851709537836
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "endpoint_hand_clear_fail"
+            },
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.06,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011791809108238668,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "checks": [],
+        "restored": true,
+        "limitation": "visible geometry only",
+        "opening_confirmed": true,
+        "object_release_not_yet_confirmed": true,
+        "handoff_mode": "two_question_goal_contact_v2",
+        "handoff_goal_latched": true,
+        "concurrent_open_retreat": {
+          "triggered": true,
+          "finger_qpos_before": [
+            0.02149557228938773,
+            -0.03803115210004298
+          ],
+          "exact_open_pending": true,
+          "release_proven": false,
+          "geometry": "measured/half/standard-open CAD envelope"
+        },
+        "_release_path": true,
+        "active_retreat_plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.16624831079144448,
+              0.32788266988786924,
+              0.2420580924723711,
+              -2.7725061497432484,
+              -1.2101978313956103,
+              2.9474842612649717,
+              0.29332083620189214
+            ],
+            [
+              0.16287375256548126,
+              0.32263373000808565,
+              0.24641579413685555,
+              -2.776001613503362,
+              -1.200934717537009,
+              2.94663207417176,
+              0.2850551447593185
+            ],
+            [
+              0.1560749649317814,
+              0.3127021268681806,
+              0.2553077624279941,
+              -2.782436802008936,
+              -1.1821513198569944,
+              2.944814646557246,
+              0.2683694057973795
+            ],
+            [
+              0.14921695692891138,
+              0.3030119084823173,
+              0.2643859195694312,
+              -2.7886076486909706,
+              -1.1632536402797713,
+              2.942967102046235,
+              0.25169896378657813
+            ],
+            [
+              0.14230973036576197,
+              0.2934269378944207,
+              0.2736289067430162,
+              -2.794642929365981,
+              -1.1442961194269359,
+              2.941128051656415,
+              0.235096631087475
+            ],
+            [
+              0.13542494074015102,
+              0.28400414878385255,
+              0.28294219974811374,
+              -2.800516455189323,
+              -1.1254476186363176,
+              2.939324267831662,
+              0.21871001134070905
+            ],
+            [
+              0.128686076029406,
+              0.2748796466713303,
+              0.29215808792397385,
+              -2.8061506009736217,
+              -1.1070114108888016,
+              2.9375901552819723,
+              0.2027977113388442
+            ],
+            [
+              0.12187879053209474,
+              0.2657462674457331,
+              0.30157124429010757,
+              -2.8117371403597766,
+              -1.088363149745058,
+              2.9358689702069007,
+              0.1868165032878502
+            ],
+            [
+              0.11496792494752199,
+              0.2565591431999242,
+              0.31124073687397463,
+              -2.8172971712960964,
+              -1.0693610667813378,
+              2.9341483265501105,
+              0.17064825237156073
+            ],
+            [
+              0.10800023979963388,
+              0.24736866978214,
+              0.3211110762958317,
+              -2.8227982208304034,
+              -1.0500920572381627,
+              2.932439520844495,
+              0.15437088555032852
+            ],
+            [
+              0.101057912478685,
+              0.23826380067783326,
+              0.33107332525425104,
+              -2.828188134797692,
+              -1.0307433645263406,
+              2.9307627515448305,
+              0.1381440970768101
+            ],
+            [
+              0.09415386670025849,
+              0.2292418128123303,
+              0.3411146692828909,
+              -2.833470185954063,
+              -1.0113111053806398,
+              2.9291198983107547,
+              0.12196379774140467
+            ],
+            [
+              0.08730141947246704,
+              0.2203036714398296,
+              0.3512222754531256,
+              -2.838644017441974,
+              -0.991789846113817,
+              2.927511406881895,
+              0.1058244429148389
+            ],
+            [
+              0.0805142328724981,
+              0.21145002896858311,
+              0.3613829327524425,
+              -2.843709415863432,
+              -0.9721741756614851,
+              2.9259372823575167,
+              0.08972043992863424
+            ],
+            [
+              0.07380638878319418,
+              0.20268107782854766,
+              0.3715829875522389,
+              -2.8486664340946395,
+              -0.9524587231051526,
+              2.924397146388983,
+              0.07364619374713113
+            ],
+            [
+              0.06391620863151792,
+              0.1898850872057917,
+              0.38692573812527775,
+              -2.8557213919438387,
+              -0.9226319416480041,
+              2.9220849952465726,
+              0.049500738577675056
+            ],
+            [
+              0.05746603347061847,
+              0.1813104549189106,
+              0.3971647564501189,
+              -2.8604232671989345,
+              -0.902651961145367,
+              2.9206278485237833,
+              0.033483652349560765
+            ],
+            [
+              0.05114889479211052,
+              0.17282072452183242,
+              0.40739105980771184,
+              -2.8650165846476003,
+              -0.8825521307846794,
+              2.919200605615762,
+              0.01747535327939847
+            ],
+            [
+              0.04194865561215491,
+              0.1603955117247431,
+              0.4226650894736872,
+              -2.871572953368093,
+              -0.8521298490137877,
+              2.917060043988864,
+              -0.00659526324102677
+            ],
+            [
+              0.036034763054628736,
+              0.1521053166125451,
+              0.43278872927584694,
+              -2.875901777003276,
+              -0.8317115274800189,
+              2.9156939494937077,
+              -0.0226035552709827
+            ],
+            [
+              0.02752606308964571,
+              0.13993745196007265,
+              0.4478204052220659,
+              -2.8820997704287987,
+              -0.8007977942990424,
+              2.913643876723319,
+              -0.046690039486987606
+            ],
+            [
+              0.02213702117621616,
+              0.13183127593356297,
+              0.457723178570245,
+              -2.8861704802298505,
+              -0.7800266798273376,
+              2.912319144730833,
+              -0.06273353484896188
+            ],
+            [
+              0.014517283652260177,
+              0.11989240954125648,
+              0.47232331660157295,
+              -2.892017914838225,
+              -0.7485692816178277,
+              2.9103228549990665,
+              -0.08688664387308626
+            ],
+            [
+              0.007528995787360761,
+              0.10811409228542622,
+              0.48655816282352155,
+              -2.8976313376949427,
+              -0.7167586794406636,
+              2.9083245647093414,
+              -0.1111200989418124
+            ],
+            [
+              0.0012619053015938799,
+              0.09645309656643261,
+              0.5003444094756174,
+              -2.9030365244032446,
+              -0.6845870781207286,
+              2.9063118868855495,
+              -0.13543618202732416
+            ],
+            [
+              -0.004189033320919255,
+              0.08489375613820942,
+              0.513587867539626,
+              -2.9082342294870887,
+              -0.6520444405765007,
+              2.904258380294143,
+              -0.15984687983236495
+            ],
+            [
+              -0.008723361506247647,
+              0.07342256492197051,
+              0.5261861175686348,
+              -2.913220870031487,
+              -0.619126184218793,
+              2.902131029275442,
+              -0.18436178367969344
+            ],
+            [
+              -0.012236605315836325,
+              0.06202439855484552,
+              0.5380295811474134,
+              -2.9179919308758393,
+              -0.5858363091809996,
+              2.8998913765098346,
+              -0.20898514526241707
+            ],
+            [
+              -0.014622818945408119,
+              0.050681362769617246,
+              0.5490032416478192,
+              -2.9225430246866857,
+              -0.5521901002473611,
+              2.8974956646358323,
+              -0.23371393632400703
+            ],
+            [
+              -0.015778189716806543,
+              0.039371849837287656,
+              0.5589895272828642,
+              -2.926870519209104,
+              -0.5182166833062768,
+              2.8948948161040082,
+              -0.2585359910312764
+            ],
+            [
+              -0.015605782136562888,
+              0.028069809154126383,
+              0.5678724198067733,
+              -2.930971834895615,
+              -0.48396114693442704,
+              2.892034354082317,
+              -0.28342851709537836
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "endpoint_hand_clear_fail"
+            },
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.06,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011791809108238668,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "movement_budget": 480,
+        "movement_progress": {
+          "waypoint": 1,
+          "waypoints": 31,
+          "joint_error": 0.01873952217619923
+        },
+        "movement_screens": [
+          {
+            "ok": false,
+            "reason": "approach_violation",
+            "min_distance": -0.011791809108238668,
+            "endpoint_hand_clear": false,
+            "limitation": "visible geometry only",
+            "diagnostic": {
+              "geom": "gripper0_finger1_collision@opening0",
+              "initial_clearance": -0.0013188155429750513,
+              "previous_clearance": -0.0013188155429750513,
+              "current_clearance": -0.002566385061161981,
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000115_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000115_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000116_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000116_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.8658675095856112,
+                    0.5000747009317189,
+                    0.014097848490476426,
+                    -0.4379490885447105
+                  ],
+                  [
+                    0.4984675895103752,
+                    -0.8600072293072851,
+                    -0.10916788789254839,
+                    0.23063325793983624
+                  ],
+                  [
+                    -0.042467847269725086,
+                    0.10155224777057248,
+                    -0.9939233486144778,
+                    1.0207486047335825
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        ]
+      },
+      "independent_streak": 0
+    }
+  ],
+  "timings": [
+    {
+      "kind": "qwen_check",
+      "capability": "bowl_to_plate",
+      "seconds": 14.676642036999965
+    },
+    {
+      "kind": "qwen_check",
+      "capability": "bowl_to_plate",
+      "seconds": 15.710908636999989
+    },
+    {
+      "kind": "qwen_check",
+      "capability": "stove_on",
+      "seconds": 10.647954918999972
+    }
+  ],
+  "wall_seconds": 349.50354517799997,
+  "new_vla": 300,
+  "local_grasp_actions": 0,
+  "replay_actions": 0,
+  "subagents": 0,
+  "limitation": "Fixed user-specified sequence, not new Hermes planner run"
+}

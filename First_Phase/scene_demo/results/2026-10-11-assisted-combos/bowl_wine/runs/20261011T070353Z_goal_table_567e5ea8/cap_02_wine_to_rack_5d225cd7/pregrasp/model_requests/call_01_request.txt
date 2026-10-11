@@ -1,0 +1,9 @@
+你是抓取前视觉定位检查器，不是任务完成检查器。机械臂准备夹取酒瓶；先确认找对目标，几何辅助器随后校准侧面抓取位姿。
+两张图为同一时刻：wrist为腕部第一视角，sideview为外部第三视角。
+仅依据图像定位待抓酒瓶，给sideview完整瓶身的紧致矩形框。坐标为相对图像宽高归一化的0到1，格式[xmin,ymin,xmax,ymax]，不可用0到1000。
+target_visible表示酒瓶是否可辨认；upright表示瓶身是否直立，明显倾倒或严重遮挡则false或null。未知不猜测。
+不要判断是否放到架子，也不要把酒瓶架、手或其他物品当瓶子。
+只输出JSON：{"target_visible":true或false或null,"upright":true或false或null,"sideview_box":[xmin,ymin,xmax,ymax]或null,"reason":"画面依据"}
+{"current_subtask": {"description": "pick up the wine bottle for placement on the rack"}, "sensor_frames": [{"frame": 0, "view": "wrist", "timestamp": 24.199999999997466}, {"frame": 1, "view": "sideview", "timestamp": 24.199999999997466}], "actuator_measurements": {"timestamp": 24.199999999997466, "finger_qpos": [0.03991504527230935, -0.04000351025430054]}}
+Image frame=0; view=wrist; timestamp=24.199999999997466; path=/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/sensors/cap000002_wrist.png; sha256=04fea0bb28b84f996a6211168fd0213da6edf693c0d5d5058f7c6c9aad4de903
+Image frame=1; view=sideview; timestamp=24.199999999997466; path=/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/sensors/cap000003_sideview.png; sha256=4b3b5124104c2512cfcfc14e0c0a50e161e4a36369253f83f25125d4bceafc53

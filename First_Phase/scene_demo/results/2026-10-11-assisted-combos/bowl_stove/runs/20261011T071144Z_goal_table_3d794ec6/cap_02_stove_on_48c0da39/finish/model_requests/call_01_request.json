@@ -1,0 +1,61 @@
+{
+  "prompt": "你是机器人子任务的结束状态检查器。\n你的任务目标：VLA在执行某些子任务时，可能已经达到任务要求的位置或操作状态，但遗漏最后的松手、解除接触和退离动作。你负责根据当前子任务和实际观测，判断是否已经达到可以停止VLA、交给收尾器执行这些末段动作的条件。\n输入包括：当前子任务描述、当前相机图像，以及与图像同步的夹爪编码器数据。\n两张图来自同一采样时刻：wrist是夹爪上的第一人称视角，sideview是外部第三人称视角。请结合两张图判断物品与目的地的位置关系；夹爪开合不能证明物品已经到位。\n1. goal_achieved：当前子任务要求的物品位置关系或操作状态是否已经达到，从而可以结束VLA执行、触发收尾？只检查current_subtask.description明确要求的目标。不要额外要求支撑、特定姿态或更精确的位置。不要要求已经松手、解除接触、退离或归位：这些正是随后由收尾器补全的动作。仍然夹持或接触目标，不否定已经达到收尾触发条件。\n2. holding_or_contact：夹爪是否仍夹持或接触当前操作对象？结合图像与同步夹爪编码器判断。编码器开合状态不能单独证明持物或分离。\n根据实际观测判断，不接受计划中“已经完成”的自述。无法判断时返回null，不猜测。\n只输出JSON：{\"goal_achieved\":true或false或null,\"holding_or_contact\":true或false或null,\"reason\":\"简短画面依据\"}。\n{\"user_request\": \"先将碗放到盘子上，再打开灶台。\", \"current_subtask\": {\"operation\": \"turn\", \"description\": \"turn on the stove\"}, \"desired_state\": \"on\", \"sensor_frames\": [{\"frame\": 0, \"view\": \"wrist\", \"timestamp\": 27.54999999999561}, {\"frame\": 1, \"view\": \"sideview\", \"timestamp\": 27.54999999999561}], \"actuator_measurements\": {\"timestamp\": 27.54999999999561, \"finger_qpos\": [0.0020752033792521916, -0.02348144741871255], \"max_abs_arm_qvel\": 0.21014812308682437, \"standard_open_finger_qpos\": [0.03873057586502897, -0.03872776397868675]}}",
+  "context": {
+    "user_request": "先将碗放到盘子上，再打开灶台。",
+    "current_subtask": {
+      "operation": "turn",
+      "target": "flat_stove_1",
+      "destination": null,
+      "phase": "executing"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "desired_state": "on",
+      "operation_semantics": "rotate the stove knob to ignite or extinguish the burner; this is not opening a lid, and is not grasping the target again"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": 27.54999999999561
+      },
+      {
+        "frame": 1,
+        "view": "sideview",
+        "timestamp": 27.54999999999561
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 27.54999999999561,
+      "stage": "executing",
+      "finger_qpos": [
+        0.0020752033792521916,
+        -0.02348144741871255
+      ],
+      "max_abs_arm_qvel": 0.21014812308682437,
+      "standard_open_finger_qpos": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ]
+    }
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 1024
+  },
+  "request_sha256": "ecd77344a4570d50f450a14af93e2130558746de6b6b517cfb3d3dd5a8199341",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000092_wrist.png",
+      "sha256": "508a3c92b95a255c73676116857a89fc40975eef03dbff92dfdbad07450e8000"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000093_sideview.png",
+      "sha256": "6cf79604a363eaf674389dcd9d512afa943e21d618245e2cfd66fe4e19c11523"
+    }
+  ]
+}

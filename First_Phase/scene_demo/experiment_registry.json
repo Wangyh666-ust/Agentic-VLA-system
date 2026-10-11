@@ -7353,6 +7353,1261 @@
           "sha256": "cf7da60969eab276ed3c781bdecf9d07d046502169e5c6819f02acaf530b4160"
         }
       ]
+    },
+    {
+      "id": "20261011-assisted-combos",
+      "title": "酒瓶视觉关联侧抓及灶台同时开爪退离：组合试点",
+      "date": "2026-10-11",
+      "question_keys": [
+        "release-stop",
+        "visual-completion",
+        "local-grasp",
+        "collision-approach",
+        "joint-home-handoff"
+      ],
+      "tags": [
+        "wine",
+        "bowl",
+        "stove",
+        "pregrasp",
+        "concurrent-open",
+        "real-online",
+        "two-combos",
+        "partial-effect",
+        "no-training",
+        "no-subagents"
+      ],
+      "conditions": [
+        "LIBERO goal_table/goal8，Panda robosuite/MuJoCo seed0 init0，每组合一次新场景、子任务间持久状态。SmolVLA既有权重，不训练；当前双视角+同步编码器，真实VLA150/300检查。新增酒瓶视觉目标关联、旧有效仿真几何侧抓与避碰；turn开口不足时同时开爪退离，三开口CAD外形筛查，原归位不变。每子目标VLA300/抓辅200，session2000。固定用户顺序，无新Hermes规划。"
+      ],
+      "findings": [
+        "完整组合0/2。两次碗各150 VLA、open2/move103/confirm5/home131，独立五连通过。酒瓶视觉关联通过，实际抓辅182、confirmed、抬升2.79cm，VLA150后放架谓词真；open10/move54，第一个退离点无进展，架子与手指仍接触，home0。灶台VLA150目标真；open20后新并行分支触发并实际move10且持续开爪，剩余路径approach_violation阻断，home0。两组合前碗目标保持；新VLA600、抓辅182、收尾576、回放0、Qwen7/12667tokens、子agent0。"
+      ],
+      "limits": [
+        "仅两个小样例，不估计可靠性，不是同随机流配对。酒瓶精确位姿/接触保护仍用仿真，不是已实现真机RGBD估计或通用抓取。新入口/动作执行不等于完整恢复成功。灶台中途复查阻断是真实软件判断，但尚不能区分开爪/退离跟踪偏差、几何近似和实际障碍各自影响；未据此认定新碰撞或VLA训练缺陷。两个第二子任务未归位，未扩大、不现场重试、未启用演示默认辅助。"
+      ],
+      "configuration": {
+        "scene": "goal_table",
+        "suite": "libero_goal",
+        "task_id": 8,
+        "seed": 0,
+        "init_state_index": 0,
+        "cases": {
+          "bowl_wine": {
+            "request": "先将碗放到盘子上，再将酒瓶放到架子上。",
+            "capabilities": [
+              "bowl_to_plate",
+              "wine_to_rack"
+            ]
+          },
+          "bowl_stove": {
+            "request": "先将碗放到盘子上，再打开灶台。",
+            "capabilities": [
+              "bowl_to_plate",
+              "stove_on"
+            ]
+          }
+        },
+        "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+        "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+        "source_sha256": {
+          "First_Phase/scene_demo/finish_v1/combo_pilot.py": "22feadc33fe0f76545bb2c0de46489758f44227d7cf24bffbc2e03561ceac792",
+          "First_Phase/scene_demo/finish_v1/simple_checker.py": "0909ea6fe85c7da3a18e51d07dd526a7e8f72710ea8583111639338ee2772d99",
+          "First_Phase/scene_demo/finish_v1/runtime.py": "421d7fd925a2d2261804fbdd8d6bb36d0e7731d4a609dd98da5c4b25d66c199a",
+          "First_Phase/scene_demo/finish_v1/vision.py": "47b900dfb70aa270679e1dbf2e8399410f2b551abce3811570e09de2c32023c3",
+          "First_Phase/scene_demo/finish_v1/control.py": "ea3a63d23f597eb4b7fe5325a105cc7bf881be98551f9fdd2de7b5639cfb25a2",
+          "First_Phase/scene_demo/finish_v1/sensors.py": "a4496c393b84433ac37896ed97d0bfeccfd9f885c92ad19e039fcb4ceef3bd21",
+          "First_Phase/scene_demo/finish_v1/geometry.py": "414b09c81d90f7588e19994affb54f5b16521d991e63909d1ad110f245395a70",
+          "First_Phase/scene_demo/service.py": "c9fdbf2495a11d6821ec2b254c0e2f5677ee46adb44fb3d924263071008b2a52",
+          "First_Phase/scene_demo/joint_home.py": "65325d16c8b47a4020c843d8b9cdc60608cef0f10cfbbb162351d98edec21a21",
+          "First_Phase/scene_demo/safe_exit.py": "54824e433307a5eb9634783f66b9cb654967f35cec7ec661ff0e70b6c3f635b5",
+          "First_Phase/scene_demo/safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+          "First_Phase/scene_demo/catalog.py": "602a7d3ef1bc5c2d28f9f1d893edac9275116fd824f408f79af2971bb2f48a02",
+          "First_Phase/scene_demo/placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+          "First_Phase/scene_demo/finish_v1/assisted_combo_pilot.py": "f0cb90be7bf4fd9e9df5a5df4eba2eba466ff431f0515919e22f81248e416597",
+          "First_Phase/scene_demo/finish_v1/calibrated_grasp.py": "76831690b0791222374b303c2bb77a035ab256c8f7b13d9eac2fac1af3717644",
+          "First_Phase/scene_demo/collision_grasp.py": "451d31c6e671b86c6f6fde4407de60d937107b6f6dd2c226245de1c5762f4898",
+          "First_Phase/scene_demo/collision_geometry.py": "a5e54ab21b6943b47b177691cf1691d0e8a775ad4ea36d59f7bf53eb04c0c202",
+          "First_Phase/scene_demo/local_grasp.py": "b9f19e38caa1fb4d60e1237185e80a114222418452d73dca7c526ce765d5168d",
+          "First_Phase/scene_demo/side_grasp.py": "7ff8bad6e7c656a20f59409efb1125d63839678607117790c942a011925bbd54",
+          "First_Phase/scene_demo/preparation_diagnostics.py": "00861b6cc8f9619c630dacced029fdcd8733a195c5f4027de92cc70ae0e87eb7",
+          "First_Phase/scene_demo/placement_experiments.py": "bc4959ace0e534644e655b2fda7f1fcde22f022a35d9e587e378e9936a57bc10"
+        },
+        "vla_budget_per_subgoal": 300,
+        "qwen_max_per_subgoal": 6,
+        "completion_mode": "release_verified",
+        "grasp_guard_mode": "shadow",
+        "finish_mode": "visual",
+        "checker": "generic_state_handoff_two_current_views_no_stage",
+        "thinking_budget": 1024,
+        "check_schedule": "actual VLA150/300; local grasp counted separately",
+        "home": "original streaming, .01rad waypoints, kp50, max360, five ready samples",
+        "execution": "single primary agent + local tools; user explicitly forbids subagents; no claimed model effort override",
+        "saved_negative_status": "failed and unresolved; retained as prior risk, not a pass",
+        "authorization": "latest user authorizes fixes and two small sequences, no subagents/no training",
+        "wine_helper": "collision_grasp unchanged validated three-waypoint side grasp",
+        "pregrasp": "qwen3-vl-plus, temperature0, thinking false, max1 call; no simulator pose in prompt; projected association tolerance .03 normalized",
+        "geometry_source": "precise pose, orientation and contact protection remain simulator geometry; real RGBD estimation deferred",
+        "grasp_budget_per_subgoal": 200,
+        "physical_policy_loop_budget_per_subgoal": 500,
+        "release": "turn-only measured/half/open shape-screened concurrent opening after stationary20 exhausted; exact home gate unchanged",
+        "max_session_actions": 2000
+      },
+      "configuration_complete": true,
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/plans/2026-10-11-assisted-combos.json",
+          "sha256": "a84061c92436d3fb52a8cc2f4fad26b9c26b492d8df0527bbd6690731e2230eb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/README.md",
+          "sha256": "6f66ddf9d0d6fa61810fbfa1d92b7fade805a2ff946777a8fadab041436226b9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/analysis_source_snapshot.zip",
+          "sha256": "d278190747061af118beaa35ef5a47fe8e060cb7cd4b2a61212bdc6d33345d13"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/events.jsonl",
+          "sha256": "4d8d90c0c1fae107e1eac2e2a799ceb154ff93858f884a19caa1a7c4280e8cb2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/health.json",
+          "sha256": "83e094ab146526d93b257fb1c8e442a8c41a8ccb4983775cd65e57b623beb886"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/preflight.log",
+          "sha256": "4bee1ab3d06427d69e41403f39adde5fced8acda7151effdc78af356077aebed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/result.json",
+          "sha256": "d8df49ca844fbcf3b23f36f6a8cf362a6827e7e93801d1b107f9a65edfcde31d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/agentview.png",
+          "sha256": "4b2e21a3d6d3013b8aeed1a5216cd7ac9f2432ed6911d28c26f26be1e68a209b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/action_sources.jsonl",
+          "sha256": "b6d95b2a9fbf3e73c0451f0a6a2cdf5ae2c5b48d1c7edfb04446e94992f110b3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/events.jsonl",
+          "sha256": "ddc3ef1d37cef434dcbf243b457ea680c06f1d92d9cdf9111115632286eec066"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/final_frame.png",
+          "sha256": "10ede1b877bc4ff817cc7116641070c8696af262e96ba5c2f0064cbf16db6f7e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/checks.jsonl",
+          "sha256": "c6a568d015e6071cffc1328d9fc0f93a3118039e26a77b08e5b61a4d39a45670"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/model_requests/call_01_request.json",
+          "sha256": "94723f9c2ecc4a50697b372392162252de72d58a7136ab9fa052916bb7441678"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/model_requests/call_01_request.txt",
+          "sha256": "33c0aed57e5717492168b774b600ddeadee74913dcf3d1e5c9b56c18d63fd1f9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/model_requests/call_01_response.json",
+          "sha256": "196ff36693510d0cd4141ab0ecb601cf994bb2d12b2fcf4edac823eb084605fb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/model_requests/call_02_request.json",
+          "sha256": "0b621e4e0d26b5cdb25beeba40828e1e3d2df6ebaec59e20b6e8e9b0b0c28143"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/model_requests/call_02_request.txt",
+          "sha256": "ee7048118518f299c1d4eab8908c79b0493ad5da6953eff2e6b60efd18653bcb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/model_requests/call_02_response.json",
+          "sha256": "10be925de7ba5a5819c5de6b26663794ea6152cb67dca418110f7201e0c9e4c7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000092_wrist.png",
+          "sha256": "092524404da8b4952c6707083c0544c5346b75c4740748b55c44f092f34cd814"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000093_sideview.png",
+          "sha256": "1de64cebcb77b846220617a16773c23c0c5713632ea7605283f762cc6af0e161"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000103_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000103_agentview.npy",
+          "sha256": "95ec3597260bed9120a2a64527cc0157e971229b25708acd2a53daa617a8c258"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000103_agentview.png",
+          "sha256": "13d2d534c7d2358c8ea7e908dd26e908eb8c84162197f90b7e37b38fd22fa7ce"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000104_wrist.json",
+          "sha256": "4a342136ba37124939b3b13fa06d846dc0b8bab8fc8f859499abf5e61fb460af"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000104_wrist.npy",
+          "sha256": "e32af724c271945915644d8650e403ece06fa6a2463674af5a828a109c058402"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000104_wrist.png",
+          "sha256": "4ac78f6130b58d739e959a8ea8859b0c818b1c811f403c3a1a2080dfe39f9877"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000112_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000112_agentview.npy",
+          "sha256": "bc14accca9cf02a303dd9695edd68ac421845508c4d56a9138a807edd4e4049a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000112_agentview.png",
+          "sha256": "07394514b61b95db61fb10e4493178874463b18ce5f223449a62b743274ecfa3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000113_wrist.json",
+          "sha256": "1fecd76ccbebd57c348ec99cfc543e8cce1f333a64f776a465b4cb6c53744176"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000113_wrist.npy",
+          "sha256": "f2496e7fff983488245836c5f227a1d7e07023dfe9792412547a2695d0de633d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000113_wrist.png",
+          "sha256": "134a1f73ca48f0ad3e5dacce0c387ac89966fb945d26c48dad4c723ff5ad7be6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000121_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000121_agentview.npy",
+          "sha256": "764759de58b0ef6b29efdab0511796e11aa3c557d3da4abf612c87b537e120dd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000121_agentview.png",
+          "sha256": "0f0572ed258dd06c986b03c238d181aeeeddd4f127daf6fcd5f158708d3d07fe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000122_wrist.json",
+          "sha256": "92b8e453145d769159e641a45d62854358d5a2a1f9d41fc4e2b59ce7747dfd41"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000122_wrist.npy",
+          "sha256": "691e387aa8a37881693b5a5bfc807bb115c92bd9f1d366bca222ee2ab0376095"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000122_wrist.png",
+          "sha256": "ee9eea5b0e55f6c55b8960f8f65e3902b9c6394fe96eacb7f231d0e769ca9e28"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000130_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000130_agentview.npy",
+          "sha256": "4dccd9d71d902a34247ea37c7ffa4cc31e431fd0ad40e04507522701ede5f353"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000130_agentview.png",
+          "sha256": "62c77a3a3e8c459431ac96c4afad86f41058cdd97e03b6eef54fedfa251b9147"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000131_wrist.json",
+          "sha256": "703841c3f30f09de91eeba401d6a1df9091257f6dea0f8a293d42ad54a867132"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000131_wrist.npy",
+          "sha256": "2bf724d7ce354feda079c80efd1f99d596ba6c1b5fbc25104ce0c51bff813daf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000131_wrist.png",
+          "sha256": "560e612928ede162510f0d29092cce2b96c3a576ca89c572547a9c3e8f7c26e9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000139_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000139_agentview.npy",
+          "sha256": "4a48fb9c8a6e0b985af053e1a1e7bd3f1e4ce8826e0d27682e5208b69ebe8e78"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000139_agentview.png",
+          "sha256": "2910989b0659e8df270ccafd196f8151765d5c3f6a4650aa220f3a1292f70393"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000140_wrist.json",
+          "sha256": "d66c2d90bd55040d4dd51171dd2a9b2ea2d482deffb2e987d842708519a17d90"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000140_wrist.npy",
+          "sha256": "153186f77c2fda6806c4167da72ad2395c941c825aef1f557767078c578b4bea"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000140_wrist.png",
+          "sha256": "876dc400f72ade43a89e526341e9b051d72a7a1d0049f4ba343edbac6aafd56d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000148_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000148_agentview.npy",
+          "sha256": "806a84837739e63e73950158a50566cca07e84797e4ee2de559a10b6e973cfdb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000148_agentview.png",
+          "sha256": "da482543db87bbdd19a7b17662428dd60b13feb1e62779a0fb01e3e99c903e10"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000149_wrist.json",
+          "sha256": "b651f048b203945598333d070cc62ae59cd42d1ad39d1b3985dfa6a3aadb7484"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000149_wrist.npy",
+          "sha256": "8acbb0abbdc3f2286e2388e0ab8bce50a1a9354c9627d4e26e1ba49d6080ece3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000149_wrist.png",
+          "sha256": "630d4ed7e7ecc8a4c2f17954f8eaf7c7b49d311c9a1093dab134d17cb2149c2d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000157_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000157_agentview.npy",
+          "sha256": "597c836f2e864091190f57876baa9f449dfe9fcb1c22e7533636bc17b8ae4a61"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000157_agentview.png",
+          "sha256": "232efd852498396c27535413e687f0d98b6ef9a87aa7abcb128c0fd12fc5a220"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000158_wrist.json",
+          "sha256": "24430ed71323406fdda0ffc04ae57c01dd5907f4b33251ffbe9c0b683fa7aecb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000158_wrist.npy",
+          "sha256": "430e01106a553fe1d3890f621a494295d95dfbbde73136973404f1ac576ae6e2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000158_wrist.png",
+          "sha256": "24f3bdf0f9ab665a397adc68fcf86e5f45be27b50d75192cd3731da54d09f010"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000166_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000166_agentview.npy",
+          "sha256": "34b0c5e500168f4ee87d44d012f5c549b588d4a698132cbcda37166adf1ee393"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000166_agentview.png",
+          "sha256": "820f000f48f10b82ea32606afd80007a203ee7d3ea4f0af90e755ce89911e345"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000167_wrist.json",
+          "sha256": "1f0854a4d19de71bf8337453b9bfc178008c4d05fd1b3ef9a5f1dbfd53e01b24"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000167_wrist.npy",
+          "sha256": "c3ec1b7d4e9fd174d7c66a3d4cb9fa3be341dfec9d0ceb11c7fd4a6fcf609e3e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000167_wrist.png",
+          "sha256": "b004b844971a7a38d5f08aaab8af323a28eeba576a9400c3cb63764352108a6e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000175_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000175_agentview.npy",
+          "sha256": "bcbba63c43cf15cae277ba6419296edcb9f09571218e0b1ed46f790ac8f8f83d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000175_agentview.png",
+          "sha256": "d325eecd1001946c43649c8a54b8d6ccc7359dc7d16f50a8fa7cb28c8c22208b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000176_wrist.json",
+          "sha256": "44b2116ab65bdb03351c595b8a8f44656d47101044153398be2bb651a668586c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000176_wrist.npy",
+          "sha256": "fe7f10069993dca186f81cde554705c311b73cd8c194855d071d5e8792368840"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000176_wrist.png",
+          "sha256": "a74b3c8c848a8c4752f427a0eec36c0df1b9a6f4218ffea4585001163e1ab9b7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000184_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000184_agentview.npy",
+          "sha256": "a86c760211a34eab3e9a7a36444ec49c9f761c2524a4ea14ba58cf4fc983dbb5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000184_agentview.png",
+          "sha256": "15eb1e29bb0d666f327644cc270f68621c84f1173c7b6e1322b57b1a9fb19030"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000185_wrist.json",
+          "sha256": "013f2561b24e63bf13ef3d881a2b9f8c9da07334699b73f16fbe321ba72d6bcf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000185_wrist.npy",
+          "sha256": "f453ad3f1a6eac9303cb66f97bdf04a00de6ea761861c9dab28ffa086bce9995"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000185_wrist.png",
+          "sha256": "1c1ed01a1ad2d6ed0922e8406b62e5ce57ff3bcba08799e045e9bceb8b952592"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000193_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000193_agentview.npy",
+          "sha256": "49e5e11c7d80399fd7371b57fcf9a72621a377cb48d84297bb377134d06b790c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000193_agentview.png",
+          "sha256": "60fe9a4b6df5ee4c0a30d60d208c228a0047cfdcdec5dc91789f38de5471926d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000194_wrist.json",
+          "sha256": "392908149f879c5c0c80b307a73a9512e06fc2c34b723bc2244beed26f4a6a8c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000194_wrist.npy",
+          "sha256": "417639349c526c9532534748a97acc4ebb4fe8772dc4ed9aa29f52eda2410177"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000194_wrist.png",
+          "sha256": "d9e9ad35dbaca1c0ed06c5b6454e55fdf6159ee9ea004d9ee40ec1e0937e6b5f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000278_wrist.png",
+          "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish/sensors/cap000279_sideview.png",
+          "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/finish_actions.jsonl",
+          "sha256": "2e910193f8c056a618ab9e2f1b6b1ccf42a9a8b029ed819baf52c083a4885fed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/first.png",
+          "sha256": "405ab89e7a8c0d283bbd99d00e886606ccd7d7b81d6ac228cf9f22c7338e6914"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/independent_finish.jsonl",
+          "sha256": "e60df4b953e556034518e92ae046fb47c0a42e8b1f4f2a6f22a8ff0944b2e94a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/last.png",
+          "sha256": "4ee501f3e352464c2bce13e3b492868e9b495a9bc56560115f1bbc9e5f4ec06b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/latest.png",
+          "sha256": "4ee501f3e352464c2bce13e3b492868e9b495a9bc56560115f1bbc9e5f4ec06b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/pilot_result.json",
+          "sha256": "5c3876f8e642d81240b046849dd1aa13de4336d3c5a34402f2e94d58f97e5451"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/result.json",
+          "sha256": "f7b3f05dc65474b7ba4ea2dbe9d6c89a1c48a6f1e63bdd57eda427765320b7b0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_01_bowl_to_plate_db256fea/rollout.mp4",
+          "sha256": "a729f61999e6f517001796dfef56df3ceee9abda2fb6d273feddc5a2ad3c3ef0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/action_sources.jsonl",
+          "sha256": "af39b09be8a45617210cee6f479f704d202b4b9db706eb1b970b3b1f9cfe46ee"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/events.jsonl",
+          "sha256": "c2cf10c8387d1031605495cb6f830b412f56d1fe417e011930ba6b5363bb630e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/final_frame.png",
+          "sha256": "b5f774ea12d5d564a6d339d3b5cc7669cba4b24e2315c2730733ec913d601e14"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/checks.jsonl",
+          "sha256": "f5b5127ec22f5d83409726cc9b270d76921a6065a31ef9736e5326601fe9f7bc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/model_requests/call_01_request.json",
+          "sha256": "3af58e78f8fceaf7db2ca8928b6d5a02dd686c48bb05735e36a2899a973fc544"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/model_requests/call_01_request.txt",
+          "sha256": "8fa84f64c58f4d2f0d0b4e5ba28836d1588e83cbfce4d64f8d935469a9067633"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/model_requests/call_01_response.json",
+          "sha256": "3b61ffbd78f7db5f9756fec42a743106251ef1558b9a4707f04d8d848b0b661c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000092_wrist.png",
+          "sha256": "508a3c92b95a255c73676116857a89fc40975eef03dbff92dfdbad07450e8000"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000093_sideview.png",
+          "sha256": "6cf79604a363eaf674389dcd9d512afa943e21d618245e2cfd66fe4e19c11523"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000115_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000115_agentview.npy",
+          "sha256": "123edc99e035b6a7ada05c63e79279cb0d3f7475ef99e1c5f366d3003869aba0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000115_agentview.png",
+          "sha256": "1f773674c01e1b4240b4f4a25bcbe672e7a3a7b524f1e271ccb944e414d479b7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000116_wrist.json",
+          "sha256": "9a30113d76b70a10d43d6fb74fcea4a548598fa8562a9459eb0facd968a94df3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000116_wrist.npy",
+          "sha256": "919657c3debcf705d3b19ab085b1735c77e6254118b7275624f509c48f1b4fa7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish/sensors/cap000116_wrist.png",
+          "sha256": "d4f02f59312233259619c8fac0e9c2de1fa610a8f0b4b35ab9d0e13b1148aafb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/finish_actions.jsonl",
+          "sha256": "e3ef8fe3e730d472fec4be510f8bcd2842ba0f62197f259b001f50f7a997ff12"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/first.png",
+          "sha256": "d338cbfc87520a03818f409a7d2bfbfca3d41f87459b301a603b64cfa9908d4a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/independent_finish.jsonl",
+          "sha256": "e73f67684a6f918f9df0f13b5e94d54cbc238e6e789d6e31a38edd9ff78af626"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/last.png",
+          "sha256": "4b2e21a3d6d3013b8aeed1a5216cd7ac9f2432ed6911d28c26f26be1e68a209b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/latest.png",
+          "sha256": "4b2e21a3d6d3013b8aeed1a5216cd7ac9f2432ed6911d28c26f26be1e68a209b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/pilot_result.json",
+          "sha256": "729f7b744110fe5b1715dafeacd9040d6bbe17561e64e885e7c9abc69eff4d5c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/result.json",
+          "sha256": "b865d0e60a19fb63c57c1ba4959d31a6104d5ba0b495ba2e15b6d14465d66e2e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/cap_02_stove_on_48c0da39/rollout.mp4",
+          "sha256": "b648fb03f78ed6bc5adf30771ec627753e6607d5c6455bbfe904e5dd71d17814"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/initial_state.npy",
+          "sha256": "06614c9d0257b469c53610edc07922b278cc73411bdbc2659a64d38f3ba1cd74"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/latest.png",
+          "sha256": "4b2e21a3d6d3013b8aeed1a5216cd7ac9f2432ed6911d28c26f26be1e68a209b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/runs/20261011T071144Z_goal_table_3d794ec6/wrist.png",
+          "sha256": "1220e34216a0208258a824d8201a3166cdc2ffeee72b220eb43c7c50ab9fe7bb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/sequence.mp4",
+          "sha256": "85e60f58c16015cd109e99dace6457e7a73df6726da789c7d36b8a9a913652dd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove/submitted_plan.json",
+          "sha256": "19d248fe3ce36b8bd8fc3106c4d288c874e6882034ca0c33f7dc7e3e96eea277"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_stove_stdout.log",
+          "sha256": "0998b0710c632af8703df15144e37bf411311af0834fe8432937661e1dcc4c56"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/events.jsonl",
+          "sha256": "78408cfbc53b434940c759f86e15b873e1ae89faea7756615db8c73617d30b10"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/health.json",
+          "sha256": "83e094ab146526d93b257fb1c8e442a8c41a8ccb4983775cd65e57b623beb886"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/preflight.log",
+          "sha256": "4bee1ab3d06427d69e41403f39adde5fced8acda7151effdc78af356077aebed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/result.json",
+          "sha256": "f32b0b947a72b7a09295b55cbc038451f4f362174c4af32f1df1cc392b47e7a6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/agentview.png",
+          "sha256": "04754bc4f09593329273d8e66c9ee2867c47b68f30635e1edf706e0460685fd2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/action_sources.jsonl",
+          "sha256": "b6d95b2a9fbf3e73c0451f0a6a2cdf5ae2c5b48d1c7edfb04446e94992f110b3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/events.jsonl",
+          "sha256": "ddc3ef1d37cef434dcbf243b457ea680c06f1d92d9cdf9111115632286eec066"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/final_frame.png",
+          "sha256": "10ede1b877bc4ff817cc7116641070c8696af262e96ba5c2f0064cbf16db6f7e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/checks.jsonl",
+          "sha256": "ab9be07c14de4aa7e7e7167a09c939a28df4af4acea4df4610543807ffdf3ec0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/model_requests/call_01_request.json",
+          "sha256": "97228df6e0f1f338b65118e8959e75a25126da4a3d4fd9a84dbc767c6ad39437"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/model_requests/call_01_request.txt",
+          "sha256": "17bf5c9b051646b43bae5f0f3142ba57d331c106e10b34bfeeb1260630e16436"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/model_requests/call_01_response.json",
+          "sha256": "e9b2606183c1f84be9f4eddc930659ce37cf083347cc376c73fa10fbcc0b9558"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/model_requests/call_02_request.json",
+          "sha256": "e19dff333acaf55d9a0e2431576ab6785bf9d7af550147f61aac31121aca2750"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/model_requests/call_02_request.txt",
+          "sha256": "528be8f8a6c32d4e451a099b4e734e9d61472914f2f5918d6d7bbba3119d2960"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/model_requests/call_02_response.json",
+          "sha256": "d6aa5d614889c770e3175236497d3c773496ecf5b27a9a3f519d7658a62934d2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000092_wrist.png",
+          "sha256": "092524404da8b4952c6707083c0544c5346b75c4740748b55c44f092f34cd814"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000093_sideview.png",
+          "sha256": "1de64cebcb77b846220617a16773c23c0c5713632ea7605283f762cc6af0e161"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000103_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000103_agentview.npy",
+          "sha256": "95ec3597260bed9120a2a64527cc0157e971229b25708acd2a53daa617a8c258"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000103_agentview.png",
+          "sha256": "13d2d534c7d2358c8ea7e908dd26e908eb8c84162197f90b7e37b38fd22fa7ce"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000104_wrist.json",
+          "sha256": "4a342136ba37124939b3b13fa06d846dc0b8bab8fc8f859499abf5e61fb460af"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000104_wrist.npy",
+          "sha256": "e32af724c271945915644d8650e403ece06fa6a2463674af5a828a109c058402"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000104_wrist.png",
+          "sha256": "4ac78f6130b58d739e959a8ea8859b0c818b1c811f403c3a1a2080dfe39f9877"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000112_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000112_agentview.npy",
+          "sha256": "bc14accca9cf02a303dd9695edd68ac421845508c4d56a9138a807edd4e4049a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000112_agentview.png",
+          "sha256": "07394514b61b95db61fb10e4493178874463b18ce5f223449a62b743274ecfa3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000113_wrist.json",
+          "sha256": "1fecd76ccbebd57c348ec99cfc543e8cce1f333a64f776a465b4cb6c53744176"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000113_wrist.npy",
+          "sha256": "f2496e7fff983488245836c5f227a1d7e07023dfe9792412547a2695d0de633d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000113_wrist.png",
+          "sha256": "134a1f73ca48f0ad3e5dacce0c387ac89966fb945d26c48dad4c723ff5ad7be6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000121_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000121_agentview.npy",
+          "sha256": "764759de58b0ef6b29efdab0511796e11aa3c557d3da4abf612c87b537e120dd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000121_agentview.png",
+          "sha256": "0f0572ed258dd06c986b03c238d181aeeeddd4f127daf6fcd5f158708d3d07fe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000122_wrist.json",
+          "sha256": "92b8e453145d769159e641a45d62854358d5a2a1f9d41fc4e2b59ce7747dfd41"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000122_wrist.npy",
+          "sha256": "691e387aa8a37881693b5a5bfc807bb115c92bd9f1d366bca222ee2ab0376095"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000122_wrist.png",
+          "sha256": "ee9eea5b0e55f6c55b8960f8f65e3902b9c6394fe96eacb7f231d0e769ca9e28"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000130_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000130_agentview.npy",
+          "sha256": "4dccd9d71d902a34247ea37c7ffa4cc31e431fd0ad40e04507522701ede5f353"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000130_agentview.png",
+          "sha256": "62c77a3a3e8c459431ac96c4afad86f41058cdd97e03b6eef54fedfa251b9147"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000131_wrist.json",
+          "sha256": "703841c3f30f09de91eeba401d6a1df9091257f6dea0f8a293d42ad54a867132"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000131_wrist.npy",
+          "sha256": "2bf724d7ce354feda079c80efd1f99d596ba6c1b5fbc25104ce0c51bff813daf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000131_wrist.png",
+          "sha256": "560e612928ede162510f0d29092cce2b96c3a576ca89c572547a9c3e8f7c26e9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000139_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000139_agentview.npy",
+          "sha256": "4a48fb9c8a6e0b985af053e1a1e7bd3f1e4ce8826e0d27682e5208b69ebe8e78"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000139_agentview.png",
+          "sha256": "2910989b0659e8df270ccafd196f8151765d5c3f6a4650aa220f3a1292f70393"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000140_wrist.json",
+          "sha256": "d66c2d90bd55040d4dd51171dd2a9b2ea2d482deffb2e987d842708519a17d90"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000140_wrist.npy",
+          "sha256": "153186f77c2fda6806c4167da72ad2395c941c825aef1f557767078c578b4bea"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000140_wrist.png",
+          "sha256": "876dc400f72ade43a89e526341e9b051d72a7a1d0049f4ba343edbac6aafd56d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000148_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000148_agentview.npy",
+          "sha256": "806a84837739e63e73950158a50566cca07e84797e4ee2de559a10b6e973cfdb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000148_agentview.png",
+          "sha256": "da482543db87bbdd19a7b17662428dd60b13feb1e62779a0fb01e3e99c903e10"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000149_wrist.json",
+          "sha256": "b651f048b203945598333d070cc62ae59cd42d1ad39d1b3985dfa6a3aadb7484"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000149_wrist.npy",
+          "sha256": "8acbb0abbdc3f2286e2388e0ab8bce50a1a9354c9627d4e26e1ba49d6080ece3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000149_wrist.png",
+          "sha256": "630d4ed7e7ecc8a4c2f17954f8eaf7c7b49d311c9a1093dab134d17cb2149c2d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000157_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000157_agentview.npy",
+          "sha256": "597c836f2e864091190f57876baa9f449dfe9fcb1c22e7533636bc17b8ae4a61"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000157_agentview.png",
+          "sha256": "232efd852498396c27535413e687f0d98b6ef9a87aa7abcb128c0fd12fc5a220"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000158_wrist.json",
+          "sha256": "24430ed71323406fdda0ffc04ae57c01dd5907f4b33251ffbe9c0b683fa7aecb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000158_wrist.npy",
+          "sha256": "430e01106a553fe1d3890f621a494295d95dfbbde73136973404f1ac576ae6e2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000158_wrist.png",
+          "sha256": "24f3bdf0f9ab665a397adc68fcf86e5f45be27b50d75192cd3731da54d09f010"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000166_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000166_agentview.npy",
+          "sha256": "34b0c5e500168f4ee87d44d012f5c549b588d4a698132cbcda37166adf1ee393"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000166_agentview.png",
+          "sha256": "820f000f48f10b82ea32606afd80007a203ee7d3ea4f0af90e755ce89911e345"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000167_wrist.json",
+          "sha256": "1f0854a4d19de71bf8337453b9bfc178008c4d05fd1b3ef9a5f1dbfd53e01b24"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000167_wrist.npy",
+          "sha256": "c3ec1b7d4e9fd174d7c66a3d4cb9fa3be341dfec9d0ceb11c7fd4a6fcf609e3e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000167_wrist.png",
+          "sha256": "b004b844971a7a38d5f08aaab8af323a28eeba576a9400c3cb63764352108a6e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000175_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000175_agentview.npy",
+          "sha256": "bcbba63c43cf15cae277ba6419296edcb9f09571218e0b1ed46f790ac8f8f83d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000175_agentview.png",
+          "sha256": "d325eecd1001946c43649c8a54b8d6ccc7359dc7d16f50a8fa7cb28c8c22208b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000176_wrist.json",
+          "sha256": "44b2116ab65bdb03351c595b8a8f44656d47101044153398be2bb651a668586c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000176_wrist.npy",
+          "sha256": "fe7f10069993dca186f81cde554705c311b73cd8c194855d071d5e8792368840"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000176_wrist.png",
+          "sha256": "a74b3c8c848a8c4752f427a0eec36c0df1b9a6f4218ffea4585001163e1ab9b7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000184_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000184_agentview.npy",
+          "sha256": "a86c760211a34eab3e9a7a36444ec49c9f761c2524a4ea14ba58cf4fc983dbb5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000184_agentview.png",
+          "sha256": "15eb1e29bb0d666f327644cc270f68621c84f1173c7b6e1322b57b1a9fb19030"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000185_wrist.json",
+          "sha256": "013f2561b24e63bf13ef3d881a2b9f8c9da07334699b73f16fbe321ba72d6bcf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000185_wrist.npy",
+          "sha256": "f453ad3f1a6eac9303cb66f97bdf04a00de6ea761861c9dab28ffa086bce9995"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000185_wrist.png",
+          "sha256": "1c1ed01a1ad2d6ed0922e8406b62e5ce57ff3bcba08799e045e9bceb8b952592"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000193_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000193_agentview.npy",
+          "sha256": "49e5e11c7d80399fd7371b57fcf9a72621a377cb48d84297bb377134d06b790c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000193_agentview.png",
+          "sha256": "60fe9a4b6df5ee4c0a30d60d208c228a0047cfdcdec5dc91789f38de5471926d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000194_wrist.json",
+          "sha256": "392908149f879c5c0c80b307a73a9512e06fc2c34b723bc2244beed26f4a6a8c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000194_wrist.npy",
+          "sha256": "417639349c526c9532534748a97acc4ebb4fe8772dc4ed9aa29f52eda2410177"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000194_wrist.png",
+          "sha256": "d9e9ad35dbaca1c0ed06c5b6454e55fdf6159ee9ea004d9ee40ec1e0937e6b5f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000278_wrist.png",
+          "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish/sensors/cap000279_sideview.png",
+          "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/finish_actions.jsonl",
+          "sha256": "2e910193f8c056a618ab9e2f1b6b1ccf42a9a8b029ed819baf52c083a4885fed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/first.png",
+          "sha256": "405ab89e7a8c0d283bbd99d00e886606ccd7d7b81d6ac228cf9f22c7338e6914"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/independent_finish.jsonl",
+          "sha256": "e60df4b953e556034518e92ae046fb47c0a42e8b1f4f2a6f22a8ff0944b2e94a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/last.png",
+          "sha256": "4ee501f3e352464c2bce13e3b492868e9b495a9bc56560115f1bbc9e5f4ec06b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/latest.png",
+          "sha256": "4ee501f3e352464c2bce13e3b492868e9b495a9bc56560115f1bbc9e5f4ec06b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/pilot_result.json",
+          "sha256": "c767a9e19437852780fe1e7f19187aa7bfcbd99f70a2eb9b8d747917aa917793"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/result.json",
+          "sha256": "5c7f8b36874da368b49432728a3bf9e18462f1945c2a7023aa509e3898726429"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_01_bowl_to_plate_56781bc3/rollout.mp4",
+          "sha256": "a729f61999e6f517001796dfef56df3ceee9abda2fb6d273feddc5a2ad3c3ef0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/action_sources.jsonl",
+          "sha256": "1a194a79481e66112a54c9126a2b474ceb1f49cb2c70b752b1f6ede11463f59c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/events.jsonl",
+          "sha256": "843d5ca95bccca216b68f4236a2d72eeda82a3e30ab0eaa8abaf6ad42637c0d8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/final_frame.png",
+          "sha256": "061f8d3e277a61dece0e6425b2e7cc7c3b4d5f9108a4fa984dac2f0d05f0e764"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/checks.jsonl",
+          "sha256": "81a475a60c7740df8720c5dfa2fd729dcf383c6120b3af0b8ba73f14b4015232"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/model_requests/call_01_request.json",
+          "sha256": "453dfef45ac2e8901ba9f28ee5e12017bff5921583f4048259a14186dab6c58f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/model_requests/call_01_request.txt",
+          "sha256": "4e82d11b5c207b2547654e2d24fc918d6d064193e19e710ed3f6fdaf5cd9f52b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/model_requests/call_01_response.json",
+          "sha256": "cb88d147b06ec5a166598e35b66e71fbaa536cc2c43c0499524091e5d170afcd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000200_wrist.png",
+          "sha256": "c2d628b2a2186b578c7e0515f52ec50d758a356bfc527a73f8377ecca752d556"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000201_sideview.png",
+          "sha256": "6dea1ce77768546995056d4128c21b493c8c92c31dc414dfbc80066a834055b3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000217_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000217_agentview.npy",
+          "sha256": "3bb0936fd55219c8c0db4a386606650c978fc9a22bf4163fb8057380caf09a18"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000217_agentview.png",
+          "sha256": "e403afb724d82d67899709de4faa78bc5bd708f78e3acb12673bece1e012d18e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000218_wrist.json",
+          "sha256": "78832a71cb0c71e65fb6016d7cf861c3c8e71acfd97b09b09068fca14d7e36c5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000218_wrist.npy",
+          "sha256": "ab5f8edc4416dc9e46374946945a51f4281c8d6a80a4bb69475271285a5445df"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000218_wrist.png",
+          "sha256": "e83dd19c6812f762598e167041bff1012b216949e32c72e84cf85759971faa4e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000226_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000226_agentview.npy",
+          "sha256": "9e01f6ec73c9276c12bb7cc2551cfc0cbba590f7d1c1449ba28626b94fb60c54"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000226_agentview.png",
+          "sha256": "712126420a6d3f20dc5f52a0b0e422480aae4b2ea81871f4e5ed48aa7c9ae1d7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000227_wrist.json",
+          "sha256": "a5b5c251fc95385b6b97c45f449423caebb1d388c13cc48cd2a659b204858e21"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000227_wrist.npy",
+          "sha256": "9b3b78edb5c3979450b3c43899be7d62501c540c42db9b0370b0deb19bffd306"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000227_wrist.png",
+          "sha256": "82d88f87a9dc1fda0d9178e278936893c2083beb64ec183532a32e0fbccad4c9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000235_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000235_agentview.npy",
+          "sha256": "99d4f780f5b2f471fa5e75d8fee472ab95ce246816a2921f33b7482c58eee95c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000235_agentview.png",
+          "sha256": "2530b3c0b62533778e79fe3b7ba155ce0c449766b32af3021d0fa5bcc0ee16da"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000236_wrist.json",
+          "sha256": "7b2b529f27db11954a6978de7dcbb3362928254abb69d799acbf14b10bcc4046"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000236_wrist.npy",
+          "sha256": "d000a20773f02fbe9a2cd3b449d6ea039a4ff803b5e6c769b5f0ecd3c8c4ec43"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000236_wrist.png",
+          "sha256": "a2956f5733051455b45b255aef3fdaf930830bfa4e5c6838f30f3964bb39afac"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000244_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000244_agentview.npy",
+          "sha256": "6352612f53181f5661c658635b9f2a57f1043e985bbeb2e7c7d6c61eca619c03"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000244_agentview.png",
+          "sha256": "bc54f009b01219a1324611877ec15a77e2af2112330cdd414e93847769d3f44a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000245_wrist.json",
+          "sha256": "cb8ce56a3eae491af4f0a0fd58090daf0fe9abbf428f8fea24948e84e69c1e53"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000245_wrist.npy",
+          "sha256": "23178320045bcacb5c8cc7902c382a8ced15905d73b9a8bae17cd41387754952"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000245_wrist.png",
+          "sha256": "0acdbaf809c1d3361599b2a92e9c7f424dbd52972bc371a807d03e9a3b3e25ec"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000253_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000253_agentview.npy",
+          "sha256": "3ef305382a8d9ca216a7a65c4c9830edf4700dcbe908b28d5156a85cf120738e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000253_agentview.png",
+          "sha256": "01cb7f5b889edc1bb421ee7d050789af8eeab7034bd84ca51a1d69a1e98d9e0b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000254_wrist.json",
+          "sha256": "7952008ebe730c46c5b37275bca2435d7ec7dff0aa6b73ac408cead4d0d7eaaa"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000254_wrist.npy",
+          "sha256": "465d7669e3c343b751f492e0ac2de2fb266894e904a0e9f638bc7b31bd70fab5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish/sensors/cap000254_wrist.png",
+          "sha256": "887ac093154209f631027e67dcfe3fd0ca97d54373eb037cfdf27c6f57002edc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/finish_actions.jsonl",
+          "sha256": "2acaec6d08ee92979cb0bcf7a583aaea9d4ff88fac91cf057d8bc43720f7c49c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/first.png",
+          "sha256": "d338cbfc87520a03818f409a7d2bfbfca3d41f87459b301a603b64cfa9908d4a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/grasp_assist.json",
+          "sha256": "e67746f5f128899208d0a086453d67af9d13c57dde89aaadcac2f1592bbb45bc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/independent_finish.jsonl",
+          "sha256": "5d572ab7f36df8a22e478ab8657848c7214661051c328aefb51d56b7d627f380"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/last.png",
+          "sha256": "04754bc4f09593329273d8e66c9ee2867c47b68f30635e1edf706e0460685fd2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/latest.png",
+          "sha256": "04754bc4f09593329273d8e66c9ee2867c47b68f30635e1edf706e0460685fd2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pilot_result.json",
+          "sha256": "64029f506ac909430f753b2bc04e7d38fab644aaba693da45eba7f28a991f801"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/calibration.json",
+          "sha256": "0efeac55c05c6eb52f216e7fadd18de2b52fb1b5e5f761d0f2e6111548ea86f1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/model_requests/call_01_request.json",
+          "sha256": "e18877fdf0822548380f9741c2af74f1f45a5599664eea01ff7a4600bdb5f16b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/model_requests/call_01_request.txt",
+          "sha256": "39922846e0aac16ee198272cc48b46a09cad99322153dc1a23a785f6708b2321"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/model_requests/call_01_response.json",
+          "sha256": "f5d45c1d27bc85122b9b7b12825edcc48b6eee6672213d1bc735f1cffdd674c1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/sensors/cap000001_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/sensors/cap000001_agentview.npy",
+          "sha256": "61c52a8cbc916fb976e0ea77ec363eae323fd86a6a46eba9afdeca1608892c73"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/sensors/cap000001_agentview.png",
+          "sha256": "ab894dc398817b3ccf623f93b39f337cd7879bbb799ebe9898d949df2526b0ce"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/sensors/cap000002_wrist.json",
+          "sha256": "5fe77ac5764c9972cede06eacdeb4cfdaec173fc0e152fe38fc9e53ebf3c19d2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/sensors/cap000002_wrist.npy",
+          "sha256": "012370b3010694723a96cca53a55568cf6d119cc3939eb9fb14427fa0267bc58"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/sensors/cap000002_wrist.png",
+          "sha256": "04fea0bb28b84f996a6211168fd0213da6edf693c0d5d5058f7c6c9aad4de903"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/pregrasp/sensors/cap000003_sideview.png",
+          "sha256": "4b3b5124104c2512cfcfc14e0c0a50e161e4a36369253f83f25125d4bceafc53"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/result.json",
+          "sha256": "514cd0af9f3eaf3c9038cc4037b3070f6d47fb96aa87e900ae0a166fbbe97dd5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/rollout.mp4",
+          "sha256": "f3950a352ff5c77545c458b3564191f051e653f9cecc798a614a2ff8699b02d6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/cap_02_wine_to_rack_5d225cd7/semantic_status.jsonl",
+          "sha256": "b01229393c9d5799b7bd15fef59863ec0303c1d86fa791b2eb180e348eedabc6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/initial_state.npy",
+          "sha256": "06614c9d0257b469c53610edc07922b278cc73411bdbc2659a64d38f3ba1cd74"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/latest.png",
+          "sha256": "04754bc4f09593329273d8e66c9ee2867c47b68f30635e1edf706e0460685fd2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/runs/20261011T070353Z_goal_table_567e5ea8/wrist.png",
+          "sha256": "a5218fb42367a2e2624fc3bab35aa6d585977559dd6b06f4cb2a4eb486329c16"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/sequence.mp4",
+          "sha256": "399c6643edf2a6fbe4aa5f11ea4cc520f77fe551b00a102a1d8a0085ec7f2635"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine/submitted_plan.json",
+          "sha256": "e6108abf3d5de94546a8cddae0457190e79d18e787248bcbbde191bbca8a84a5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/bowl_wine_stdout.log",
+          "sha256": "6278f3900cbe139c5b1ef452a0567e86cd7509654433c6c0abdfa0ba25546cc0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/software_verification.json",
+          "sha256": "3d95ea13e93aa5610ec3e205c8dd5a06638ea5526e8fb1f2df0e7daea20eb75e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/source_snapshot.zip",
+          "sha256": "6cdcfa172481099c4d334c6a41b0136b2c7b909b1473638f6ee15f372b2e4335"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/summary.json",
+          "sha256": "2a466cc8aa564c043d5a042c4ff8106abbf02215576f8c6b931952d26e91f550"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-11-assisted-combos/manifest.json",
+          "sha256": "7987eda95fc705053932fb6a9d709ec0de9a33160e9448717c713ddb0d98d230"
+        }
+      ]
     }
   ]
 }
