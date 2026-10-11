@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "20261011-final-input-audit",
+  "intent": "analyze_existing",
+  "question_key": "final-checker-input-provenance",
+  "purpose": "核对酒瓶与前置碗末次视觉误判的实际图片、HTTP请求、同步编码器和prompt，并区分灶台路径阻断；只读原始证据，不调用真实模型或机械臂。",
+  "prior_evidence": ["20261011-feedback-retreat", "20261011-stove-exit-repair", "20261011-stove-candidate-start"],
+  "history_review": [
+    {"experiment_id": "20261011-feedback-retreat", "disposition": "reuse", "reason": "酒瓶实际归位后Qwen否决与灶台回程阻断的原请求、原图、动作和检查记录。"},
+    {"experiment_id": "20261011-stove-exit-repair", "disposition": "reuse", "reason": "同末态碗的前次通过回答，用于核对输入一致性，不追加模型复查。"},
+    {"experiment_id": "20261011-stove-candidate-start", "disposition": "reuse", "reason": "前碗已归位但最终视觉否决，灶台未启动；已保存相同请求哈希的对照。"}
+  ],
+  "new_physical_actions": 0,
+  "related_search": "读取台账上述三条和索引；rg核对simple_checker、vision._request、runtime._check及control归位后verify路径。此请求来源问题此前仅记录输入一致性，尚未按原序列化代码核对完整HTTP字节。",
+  "analysis_steps": [
+    "核对冻结源码与当前序列化函数一致，mock网络和认证，仅捕获原函数生成的请求数据，与历史实际request_sha256逐字节哈希比较。",
+    "核对图像文件、相机顺序、frame时间及checks.jsonl保存的实际机器人反馈与输入编码器；报告标准开口误差及哪些字段实际发送。",
+    "对照实际动作数与Qwen调用时序，区分酒瓶末次视觉否决、前碗视觉否决和灶台回程碰撞阻断；保留原图、原prompt，提出中性措辞改进但不修改运行期检查器。"
+  ]
+}

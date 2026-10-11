@@ -89,3 +89,5 @@
 - `20261011-stove-exit-repair`：首碗通过；灶台候选检查把当前接触姿态误插第0点，退离0/home0。[完整失败记录](results/2026-10-11-stove-exit-repair/README.md)。
 
 - `20261011-stove-candidate-start`：假想回程起点已修，前碗实测归位/目标五连通过却遭末次视觉否决；灶台未启动，修订目标未验证。[本轮结论与三段视频](results/2026-10-11-stove-candidate-start/README.md)。
+
+- `20261011-final-input-audit`：五份完整HTTP请求体与原记录匹配，实际图片和同步编码器正确、没有阶段标签；酒瓶/前碗是归位后的视觉否决，灶台初测则是回程碰撞阻断。零真实模型/机械臂动作。[核查与原图、完整prompt](results/2026-10-11-final-input-audit/README.md)。

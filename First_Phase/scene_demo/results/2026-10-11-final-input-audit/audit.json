@@ -1,0 +1,598 @@
+{
+  "physical_actions": 0,
+  "real_model_calls": 0,
+  "mock_http_serializations": 5,
+  "rows": [
+    {
+      "name": "wine_trigger",
+      "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_01_request.json",
+      "frozen_serializer_matches": {
+        "First_Phase/scene_demo/finish_v1/vision.py": true,
+        "First_Phase/scene_demo/finish_v1/simple_checker.py": true,
+        "First_Phase/scene_demo/finish_v1/runtime.py": true
+      },
+      "full_http_body_hash_matches": true,
+      "request_sha256": "0db3fbe4539e9e0b57ae36a9831dac9250241e1fc89fdd81f9f13d95f868b452",
+      "prompt_rebuild_identical": true,
+      "image_labels": [
+        "Image frame=0; view=wrist; timestamp=36.649999999998826",
+        "Image frame=1; view=sideview; timestamp=36.649999999998826"
+      ],
+      "actual_images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000200_wrist.png",
+          "sha256": "c2d628b2a2186b578c7e0515f52ec50d758a356bfc527a73f8377ecca752d556",
+          "file_hash_matches": true
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000201_sideview.png",
+          "sha256": "6dea1ce77768546995056d4128c21b493c8c92c31dc414dfbc80066a834055b3",
+          "file_hash_matches": true
+        }
+      ],
+      "image_and_encoder_timestamps_match": true,
+      "encoder_matches_saved_robot": true,
+      "speed_matches_saved_robot": true,
+      "finger_qpos_m": [
+        0.011133275288715083,
+        -0.010450612010512715
+      ],
+      "standard_open_finger_qpos_m": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ],
+      "max_standard_open_error_mm": 28.277151968174035,
+      "calibrated_open": false,
+      "model": "qwen3-vl-plus",
+      "temperature": 0,
+      "finish_reason": "stop",
+      "phase_or_stage_labels_in_sent_text": false,
+      "message_count": 1,
+      "prior_responses_sent": false,
+      "answer": {
+        "goal_achieved": true,
+        "holding_or_contact": true,
+        "reason": "sideview显示酒瓶底部已接触架子上表面，满足'put on rack'要求；wrist和sideview均显示夹爪仍握持酒瓶，编码器闭合状态与图像一致"
+      },
+      "finish_counts": {
+        "release": 10,
+        "movement": 27,
+        "confirm": 3,
+        "home": 218
+      },
+      "job_end_reason": "final visual failed",
+      "last_independent": {
+        "timestamp": 49.55000000001459,
+        "predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "contacts": [],
+        "release_status": {
+          "ready": true,
+          "held_objects": [],
+          "grasp_observation_complete": true,
+          "goal_speeds": {
+            "on|akita_black_bowl_1|plate_1": {
+              "linear_speed": 1.3039144258978068e-07,
+              "angular_speed": 1.9060111150452686e-06
+            },
+            "on|wine_bottle_1|wine_rack_1_top_region": {
+              "linear_speed": 2.6159915725597915e-07,
+              "angular_speed": 1.8296417878931147e-07
+            }
+          },
+          "phase": "not_holding"
+        },
+        "ready": true
+      },
+      "actual_prompt_path": "First_Phase/scene_demo/results/2026-10-11-final-input-audit/wine_trigger_actual_prompt.txt"
+    },
+    {
+      "name": "wine_final",
+      "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_02_request.json",
+      "frozen_serializer_matches": {
+        "First_Phase/scene_demo/finish_v1/vision.py": true,
+        "First_Phase/scene_demo/finish_v1/simple_checker.py": true,
+        "First_Phase/scene_demo/finish_v1/runtime.py": true
+      },
+      "full_http_body_hash_matches": true,
+      "request_sha256": "ef32e6f2a7d420c5b1c477a01281a11e49b19f5e5281df862d60d12cc3c4eec6",
+      "prompt_rebuild_identical": true,
+      "image_labels": [
+        "Image frame=0; view=wrist; timestamp=49.55000000001459",
+        "Image frame=1; view=sideview; timestamp=49.55000000001459"
+      ],
+      "actual_images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000374_wrist.png",
+          "sha256": "914a0b8c01680bb3f14fbd56a50e1b6ea1e4dae812716cc4438b51d558628b23",
+          "file_hash_matches": true
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000375_sideview.png",
+          "sha256": "b17de835fe31645fceeb5fd2ef8d1a4e3b35d21e52a01e34e589e6ed3f99f443",
+          "file_hash_matches": true
+        }
+      ],
+      "image_and_encoder_timestamps_match": true,
+      "encoder_matches_saved_robot": true,
+      "speed_matches_saved_robot": true,
+      "finger_qpos_m": [
+        0.03872204834698867,
+        -0.03873639441445069
+      ],
+      "standard_open_finger_qpos_m": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ],
+      "max_standard_open_error_mm": 0.008630435763941346,
+      "calibrated_open": true,
+      "model": "qwen3-vl-plus",
+      "temperature": 0,
+      "finish_reason": "stop",
+      "phase_or_stage_labels_in_sent_text": false,
+      "message_count": 1,
+      "prior_responses_sent": false,
+      "answer": {
+        "goal_achieved": false,
+        "holding_or_contact": true,
+        "reason": "sideview显示酒瓶仍被夹爪夹持且悬停在架子上方，未与架子接触；wrist view确认夹爪持物状态"
+      },
+      "finish_counts": {
+        "release": 10,
+        "movement": 27,
+        "confirm": 3,
+        "home": 218
+      },
+      "job_end_reason": "final visual failed",
+      "last_independent": {
+        "timestamp": 49.55000000001459,
+        "predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "on|wine_bottle_1|wine_rack_1_top_region": true
+        },
+        "contacts": [],
+        "release_status": {
+          "ready": true,
+          "held_objects": [],
+          "grasp_observation_complete": true,
+          "goal_speeds": {
+            "on|akita_black_bowl_1|plate_1": {
+              "linear_speed": 1.3039144258978068e-07,
+              "angular_speed": 1.9060111150452686e-06
+            },
+            "on|wine_bottle_1|wine_rack_1_top_region": {
+              "linear_speed": 2.6159915725597915e-07,
+              "angular_speed": 1.8296417878931147e-07
+            }
+          },
+          "phase": "not_holding"
+        },
+        "ready": true
+      },
+      "actual_prompt_path": "First_Phase/scene_demo/results/2026-10-11-final-input-audit/wine_final_actual_prompt.txt"
+    },
+    {
+      "name": "stove_trigger",
+      "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/model_requests/call_01_request.json",
+      "frozen_serializer_matches": {
+        "First_Phase/scene_demo/finish_v1/vision.py": true,
+        "First_Phase/scene_demo/finish_v1/simple_checker.py": true,
+        "First_Phase/scene_demo/finish_v1/runtime.py": true
+      },
+      "full_http_body_hash_matches": true,
+      "request_sha256": "ecd77344a4570d50f450a14af93e2130558746de6b6b517cfb3d3dd5a8199341",
+      "prompt_rebuild_identical": true,
+      "image_labels": [
+        "Image frame=0; view=wrist; timestamp=27.54999999999561",
+        "Image frame=1; view=sideview; timestamp=27.54999999999561"
+      ],
+      "actual_images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000092_wrist.png",
+          "sha256": "508a3c92b95a255c73676116857a89fc40975eef03dbff92dfdbad07450e8000",
+          "file_hash_matches": true
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000093_sideview.png",
+          "sha256": "6cf79604a363eaf674389dcd9d512afa943e21d618245e2cfd66fe4e19c11523",
+          "file_hash_matches": true
+        }
+      ],
+      "image_and_encoder_timestamps_match": true,
+      "encoder_matches_saved_robot": true,
+      "speed_matches_saved_robot": true,
+      "finger_qpos_m": [
+        0.0020752033792521916,
+        -0.02348144741871255
+      ],
+      "standard_open_finger_qpos_m": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ],
+      "max_standard_open_error_mm": 36.65537248577678,
+      "calibrated_open": false,
+      "model": "qwen3-vl-plus",
+      "temperature": 0,
+      "finish_reason": "stop",
+      "phase_or_stage_labels_in_sent_text": false,
+      "message_count": 1,
+      "prior_responses_sent": false,
+      "answer": {
+        "goal_achieved": true,
+        "holding_or_contact": true,
+        "reason": "sideview显示灶台有红色加热圈（已开启状态），符合turn on the stove目标；夹爪在灶台旋钮位置且编码器qpos接近0（闭合状态），表明仍接触"
+      },
+      "finish_counts": {
+        "release": 20,
+        "movement": 28,
+        "confirm": 4,
+        "home": 0
+      },
+      "job_end_reason": "home screen blocked",
+      "last_independent": {
+        "timestamp": 30.14999999999417,
+        "predicates": {
+          "on|akita_black_bowl_1|plate_1": true,
+          "turnon|flat_stove_1": true
+        },
+        "contacts": [],
+        "release_status": {
+          "ready": true,
+          "held_objects": [],
+          "grasp_observation_complete": true,
+          "goal_speeds": {
+            "on|akita_black_bowl_1|plate_1": {
+              "linear_speed": 1.303875692576167e-07,
+              "angular_speed": 1.9057743692124684e-06
+            }
+          },
+          "phase": "not_holding"
+        },
+        "ready": false
+      },
+      "actual_prompt_path": "First_Phase/scene_demo/results/2026-10-11-final-input-audit/stove_trigger_actual_prompt.txt"
+    },
+    {
+      "name": "bowl_final_pass",
+      "request_path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/model_requests/call_02_request.json",
+      "frozen_serializer_matches": {
+        "First_Phase/scene_demo/finish_v1/vision.py": true,
+        "First_Phase/scene_demo/finish_v1/simple_checker.py": true,
+        "First_Phase/scene_demo/finish_v1/runtime.py": true
+      },
+      "full_http_body_hash_matches": true,
+      "request_sha256": "0c08e090993c1e2629f97742c854ab315e11356285d210afebdbf7c77a9319eb",
+      "prompt_rebuild_identical": true,
+      "image_labels": [
+        "Image frame=0; view=wrist; timestamp=20.049999999999766",
+        "Image frame=1; view=sideview; timestamp=20.049999999999766"
+      ],
+      "actual_images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/sensors/cap000278_wrist.png",
+          "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b",
+          "file_hash_matches": true
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/sensors/cap000279_sideview.png",
+          "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4",
+          "file_hash_matches": true
+        }
+      ],
+      "image_and_encoder_timestamps_match": true,
+      "encoder_matches_saved_robot": true,
+      "speed_matches_saved_robot": true,
+      "finger_qpos_m": [
+        0.038716186629918665,
+        -0.03874221402029681
+      ],
+      "standard_open_finger_qpos_m": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ],
+      "max_standard_open_error_mm": 0.014450041610061803,
+      "calibrated_open": true,
+      "model": "qwen3-vl-plus",
+      "temperature": 0,
+      "finish_reason": "stop",
+      "phase_or_stage_labels_in_sent_text": false,
+      "message_count": 1,
+      "prior_responses_sent": false,
+      "answer": {
+        "goal_achieved": true,
+        "holding_or_contact": false,
+        "reason": "sideview图显示碗已稳定放置在盘子中央，满足'put the bowl on the plate'要求；wrist和sideview图均显示夹爪悬停于碗上方且未接触，编码器数据接近标准开合位置，结合图像确认无接触"
+      },
+      "finish_counts": {
+        "release": 2,
+        "movement": 103,
+        "confirm": 5,
+        "home": 131
+      },
+      "job_end_reason": "complete",
+      "last_independent": {
+        "timestamp": 20.049999999999766,
+        "predicates": {
+          "on|akita_black_bowl_1|plate_1": true
+        },
+        "contacts": [],
+        "release_status": {
+          "ready": true,
+          "held_objects": [],
+          "grasp_observation_complete": true,
+          "goal_speeds": {
+            "on|akita_black_bowl_1|plate_1": {
+              "linear_speed": 1.3038555516982554e-07,
+              "angular_speed": 1.9056510984660071e-06
+            }
+          },
+          "phase": "not_holding"
+        },
+        "ready": true
+      },
+      "actual_prompt_path": "First_Phase/scene_demo/results/2026-10-11-final-input-audit/bowl_final_pass_actual_prompt.txt"
+    },
+    {
+      "name": "bowl_final_veto",
+      "request_path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_request.json",
+      "frozen_serializer_matches": {
+        "First_Phase/scene_demo/finish_v1/vision.py": true,
+        "First_Phase/scene_demo/finish_v1/simple_checker.py": true,
+        "First_Phase/scene_demo/finish_v1/runtime.py": true
+      },
+      "full_http_body_hash_matches": true,
+      "request_sha256": "0c08e090993c1e2629f97742c854ab315e11356285d210afebdbf7c77a9319eb",
+      "prompt_rebuild_identical": true,
+      "image_labels": [
+        "Image frame=0; view=wrist; timestamp=20.049999999999766",
+        "Image frame=1; view=sideview; timestamp=20.049999999999766"
+      ],
+      "actual_images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000278_wrist.png",
+          "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b",
+          "file_hash_matches": true
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000279_sideview.png",
+          "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4",
+          "file_hash_matches": true
+        }
+      ],
+      "image_and_encoder_timestamps_match": true,
+      "encoder_matches_saved_robot": true,
+      "speed_matches_saved_robot": true,
+      "finger_qpos_m": [
+        0.038716186629918665,
+        -0.03874221402029681
+      ],
+      "standard_open_finger_qpos_m": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ],
+      "max_standard_open_error_mm": 0.014450041610061803,
+      "calibrated_open": true,
+      "model": "qwen3-vl-plus",
+      "temperature": 0,
+      "finish_reason": "stop",
+      "phase_or_stage_labels_in_sent_text": false,
+      "message_count": 1,
+      "prior_responses_sent": false,
+      "answer": {
+        "goal_achieved": true,
+        "holding_or_contact": true,
+        "reason": "sideview显示碗已置于盘子上，wrist和sideview均显示夹爪仍接触碗"
+      },
+      "finish_counts": {
+        "release": 2,
+        "movement": 103,
+        "confirm": 5,
+        "home": 131
+      },
+      "job_end_reason": "final visual failed",
+      "last_independent": {
+        "timestamp": 20.049999999999766,
+        "predicates": {
+          "on|akita_black_bowl_1|plate_1": true
+        },
+        "contacts": [],
+        "release_status": {
+          "ready": true,
+          "held_objects": [],
+          "grasp_observation_complete": true,
+          "goal_speeds": {
+            "on|akita_black_bowl_1|plate_1": {
+              "linear_speed": 1.3038555516982554e-07,
+              "angular_speed": 1.9056510984660071e-06
+            }
+          },
+          "phase": "not_holding"
+        },
+        "ready": true
+      },
+      "actual_prompt_path": "First_Phase/scene_demo/results/2026-10-11-final-input-audit/bowl_final_veto_actual_prompt.txt"
+    }
+  ],
+  "bowl_identical_full_http_request": true,
+  "bowl_answers_disagree": true,
+  "limits": [
+    "Matching local request bytes establishes input provenance, not provider-internal image processing or an exact cause of model error.",
+    "Open encoders alone do not prove absence of contact; independent simulator truth is diagnosis evidence, not model input."
+  ],
+  "source_evidence": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/result.json",
+      "sha256": "17cd4288528073567eec1dc022c09ff2e09215fc5dc6862bb5e74653050fb6f8"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/action_sources.jsonl",
+      "sha256": "bc8b61acd142987f9eb8b564a02ab5d764eb040d5b0e9e88eb76ab4f4be637eb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/checks.jsonl",
+      "sha256": "e96f65b414f79c91ac7f039a60bd465ffa68e0bdf135b9488feaeee948e78e7b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/model_requests/call_01_request.json",
+      "sha256": "3b26e3e030952dbd05b2f9ef60541438f887746b69a3d07e896aead1e0320494"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/model_requests/call_01_response.json",
+      "sha256": "271edf89d270ce6544d240bd8ee7805bf174a6e0f2848e79374edaa078a3a407"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000092_wrist.png",
+      "sha256": "508a3c92b95a255c73676116857a89fc40975eef03dbff92dfdbad07450e8000"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000093_sideview.png",
+      "sha256": "6cf79604a363eaf674389dcd9d512afa943e21d618245e2cfd66fe4e19c11523"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish_actions.jsonl",
+      "sha256": "10dc38aa4fd821bf5123c679b18263514a4f0e3f78104106dfa1f4775f462d91"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/independent_finish.jsonl",
+      "sha256": "8e7840c1cdc6ce6e1a16d5f5bde631e054eddbd963cd158d1e4bdaa2894ebf42"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/result.json",
+      "sha256": "f8f61b3cc3eca1dee1e7bf680684126dbd02f5f7c93d70620e79b353cbce0d3d"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/action_sources.jsonl",
+      "sha256": "773556fd83de22aa3f3d20afb455c326debb91d2abece5137098dfcfd4ee706f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/checks.jsonl",
+      "sha256": "180b24b3c509e0c351e4a99d4a2803b963cb83607f1ea5bcebfc89634a58f137"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_01_request.json",
+      "sha256": "458caf077e4c648bec9938f0ca0523278bc7f0e1cd17dbdffa6a24b2ae9c1ebc"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_01_response.json",
+      "sha256": "44def84f17880d499c56c27ee432c6424926a102339e46946ba272866dbebac9"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_02_request.json",
+      "sha256": "1a7bbb3eba172c2360414fcc8626968fa67fb9f17caebfdf59df86c787a1f72f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_02_response.json",
+      "sha256": "db2bd65569ed71b6dfe9cd704f8c7aa1480676a88db939ca7248329f0e9bb902"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000200_wrist.png",
+      "sha256": "c2d628b2a2186b578c7e0515f52ec50d758a356bfc527a73f8377ecca752d556"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000201_sideview.png",
+      "sha256": "6dea1ce77768546995056d4128c21b493c8c92c31dc414dfbc80066a834055b3"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000374_wrist.png",
+      "sha256": "914a0b8c01680bb3f14fbd56a50e1b6ea1e4dae812716cc4438b51d558628b23"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000375_sideview.png",
+      "sha256": "b17de835fe31645fceeb5fd2ef8d1a4e3b35d21e52a01e34e589e6ed3f99f443"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish_actions.jsonl",
+      "sha256": "5a45b1e35ea96c099d3095a73e091526f4a560f4d1adbdb927b239905aa7dd8e"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/independent_finish.jsonl",
+      "sha256": "26dd0148552236d4a4670a7d4045d1ce0524aa588d6a405bd89738634511cc10"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/source_snapshot.zip",
+      "sha256": "ce9e123dacd4d79f321eccb13e3a97495a145860e6c1d5b2b2db039f27cd3e88"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/result.json",
+      "sha256": "da85c1012f9b9acfb74bd83a74f517649cebdb4d7e52d794125f0c0d79ac1db1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/action_sources.jsonl",
+      "sha256": "b6d95b2a9fbf3e73c0451f0a6a2cdf5ae2c5b48d1c7edfb04446e94992f110b3"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/checks.jsonl",
+      "sha256": "58a8aac3a7a2ed5459a387028a345f6e56549db240923b1b7126c0317d43032c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_request.json",
+      "sha256": "d178f4e6810455adef70874cc6f62a50116fcb7dcebd10e5a21dbbf651fd83c1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/model_requests/call_02_response.json",
+      "sha256": "56fea4ba1a16b9cfc26dfadbbfc518e6c00d9dab21a6627b122e0bbc0bc84f8f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000278_wrist.png",
+      "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish/sensors/cap000279_sideview.png",
+      "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/finish_actions.jsonl",
+      "sha256": "2e910193f8c056a618ab9e2f1b6b1ccf42a9a8b029ed819baf52c083a4885fed"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/bowl_stove/runs/20261011T084454Z_goal_table_09b9ed00/cap_01_bowl_to_plate_e9953b7d/independent_finish.jsonl",
+      "sha256": "e60df4b953e556034518e92ae046fb47c0a42e8b1f4f2a6f22a8ff0944b2e94a"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-candidate-start/source_snapshot.zip",
+      "sha256": "b7c1f7b46396b4d479ce5df84477a53e57b7273048f9021f95994d35e032487c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/result.json",
+      "sha256": "93ab79ccdbbf60cc38d08f2813375b9da41a239f01ef3310ebbb530565f2e445"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/action_sources.jsonl",
+      "sha256": "b6d95b2a9fbf3e73c0451f0a6a2cdf5ae2c5b48d1c7edfb04446e94992f110b3"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/checks.jsonl",
+      "sha256": "1e8c335d3c8864f9183698b6ac9117df809ad81e80807c18dd146acee330a4fb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/model_requests/call_02_request.json",
+      "sha256": "926e0387a4ebfcb03f01b277b8adfaeb8c0607b5f48cfae5e485585b2c861e96"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/model_requests/call_02_response.json",
+      "sha256": "5905f74de72e0d048d4449d0f2d99b1952c56391afd671a36d3556208513f87f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/sensors/cap000278_wrist.png",
+      "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish/sensors/cap000279_sideview.png",
+      "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/finish_actions.jsonl",
+      "sha256": "2e910193f8c056a618ab9e2f1b6b1ccf42a9a8b029ed819baf52c083a4885fed"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/bowl_stove/runs/20261011T083046Z_goal_table_2d8dc7d7/cap_01_bowl_to_plate_3d96c9db/independent_finish.jsonl",
+      "sha256": "e60df4b953e556034518e92ae046fb47c0a42e8b1f4f2a6f22a8ff0944b2e94a"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-11-stove-exit-repair/source_snapshot.zip",
+      "sha256": "60784135fc0690a3893f25f70f59858d5b665671bc3f343227deaa5ef637bba3"
+    }
+  ]
+}
