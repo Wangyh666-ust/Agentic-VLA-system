@@ -83,6 +83,15 @@ class SensorPort:
     def read_robot(self):
         return jh.read_robot_state(self.env)
 
+    def measured_pose(self):
+        """Current encoder FK without rendering, control commands or state writes."""
+        state = self.read_robot()
+        _, data = self._scratch(state['arm_qpos'])
+        site = self._site_id()
+        return {'robot': state,
+                'eef_position': np.asarray(data.site_xpos[site], float).tolist(),
+                'eef_rotation': np.asarray(data.site_xmat[site], float).reshape(3, 3).tolist()}
+
     def home_screen(self, waypoints):
         from scene_demo import joint_home as jh
         return jh.screen_joint_path(self.env, self.reference, waypoints)

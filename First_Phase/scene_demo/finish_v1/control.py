@@ -204,78 +204,88 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                         r['reason'] = 'retreat denied'
                         return r
 
-            p = plan_retreat(geometry_port(), port.capture(), v)
-            r['plan'] = p
-            r['active_retreat_plan'] = p
-            if not p['ok']:
-                r['reason'] = 'retreat plan blocked'
-                return r
-            qs = p['waypoints']
-            movement_limit = min(480, max(120, 16 * (len(qs) - 1) + 40)) if simple_handoff else 120
-            r['movement_budget'] = movement_limit
+            feedback_enabled = simple_handoff and getattr(port, 'feedback_retreat_enabled', False)
+            if feedback_enabled:
+                from .feedback_retreat import run as feedback_run
+                feedback = feedback_run(geometry_port(), v, act, limit=480)
+                r['feedback_retreat'] = feedback
+                r['plan'] = feedback['plan']
+                r['movement_budget'] = 480
+                if not feedback['ok']:
+                    r['reason'] = feedback['reason']
+                    return r
+            else:
+                p = plan_retreat(geometry_port(), port.capture(), v)
+                r['plan'] = p
+                r['active_retreat_plan'] = p
+                if not p['ok']:
+                    r['reason'] = 'retreat plan blocked'
+                    return r
+                qs = p['waypoints']
+                movement_limit = min(480, max(120, 16 * (len(qs) - 1) + 40)) if simple_handoff else 120
+                r['movement_budget'] = movement_limit
 
-            i = 1
-            while i < len(qs):
-                best_error = float('inf')
-                stagnant = 0
-                while np.max(np.abs(np.asarray(port.read_robot()['arm_qpos']) - np.asarray(qs[i]))) > 0.004:
-                    if r['counts']['movement'] >= movement_limit:
-                        r['reason'] = 'movement budget'
-                        return r
-                    st = act('movement', qs[i], ref['finger_home'] if concurrent_open else None,
-                             command_kind='open_and_retreat' if concurrent_open else None)
-                    error = float(np.max(np.abs(np.asarray(st['arm_qpos']) - np.asarray(qs[i]))))
-                    r['movement_progress'] = {'waypoint': i, 'waypoints': len(qs), 'joint_error': error}
-                    if error < best_error - 0.0002:
-                        best_error, stagnant = error, 0
-                    else:
-                        stagnant += 1
-                    if simple_handoff and stagnant >= 40:
-                        r['reason'] = 'movement no progress'
-                        return r
-                    if r['counts']['movement'] % 10 == 0:
-                        check = route_screen(qs[i:], 0.003)
-                        r.setdefault('movement_screens', []).append(check)
-                        if not check['ok']:
-                            if check['reason'] == 'endpoint_hand_clear_fail' and not r.get('retreat_replans'):
-                                r.setdefault('retreat_replans', []).append({'failed_screen': check, 'new_plan': None})
-                                newp = plan_retreat(geometry_port(), port.capture(), v)
-                                r['retreat_replans'][-1]['new_plan'] = newp
-                                if newp['ok']:
-                                    r['active_retreat_plan'] = newp
-                                    qs = newp['waypoints']
-                                    if simple_handoff:
-                                        movement_limit = min(480, r['counts']['movement'] + max(120, 16 * (len(qs) - 1) + 40))
-                                        r['movement_budget'] = movement_limit
-                                    i = 1
-                                    break
+                i = 1
+                while i < len(qs):
+                    best_error = float('inf')
+                    stagnant = 0
+                    while np.max(np.abs(np.asarray(port.read_robot()['arm_qpos']) - np.asarray(qs[i]))) > 0.004:
+                        if r['counts']['movement'] >= movement_limit:
+                            r['reason'] = 'movement budget'
+                            return r
+                        st = act('movement', qs[i], ref['finger_home'] if concurrent_open else None,
+                                 command_kind='open_and_retreat' if concurrent_open else None)
+                        error = float(np.max(np.abs(np.asarray(st['arm_qpos']) - np.asarray(qs[i]))))
+                        r['movement_progress'] = {'waypoint': i, 'waypoints': len(qs), 'joint_error': error}
+                        if error < best_error - 0.0002:
+                            best_error, stagnant = error, 0
+                        else:
+                            stagnant += 1
+                        if simple_handoff and stagnant >= 40:
+                            r['reason'] = 'movement no progress'
+                            return r
+                        if r['counts']['movement'] % 10 == 0:
+                            check = route_screen(qs[i:], 0.003)
+                            r.setdefault('movement_screens', []).append(check)
+                            if not check['ok']:
+                                if check['reason'] == 'endpoint_hand_clear_fail' and not r.get('retreat_replans'):
+                                    r.setdefault('retreat_replans', []).append({'failed_screen': check, 'new_plan': None})
+                                    newp = plan_retreat(geometry_port(), port.capture(), v)
+                                    r['retreat_replans'][-1]['new_plan'] = newp
+                                    if newp['ok']:
+                                        r['active_retreat_plan'] = newp
+                                        qs = newp['waypoints']
+                                        if simple_handoff:
+                                            movement_limit = min(480, r['counts']['movement'] + max(120, 16 * (len(qs) - 1) + 40))
+                                            r['movement_budget'] = movement_limit
+                                        i = 1
+                                        break
+                                    else:
+                                        r['reason'] = 'movement screen blocked'
+                                        return r
                                 else:
                                     r['reason'] = 'movement screen blocked'
                                     return r
-                            else:
-                                r['reason'] = 'movement screen blocked'
-                                return r
-                else:
-                    i += 1
+                    else:
+                        i += 1
+                        continue
                     continue
-                continue
 
-            streak = 0
-            for _ in range(20):
-                st = act('confirm', qs[-1], ref['finger_home'] if concurrent_open else None)
-                qerr = np.max(np.abs(np.asarray(port.read_robot()['arm_qpos']) - np.asarray(qs[-1])))
-                if qerr <= 0.004 and np.max(np.abs(st['arm_qvel'])) <= 0.02:
-                    streak += 1
-                else:
-                    streak = 0
-                if streak >= 5:
-                    break
-            if streak < 5:
-                r['reason'] = 'confirm not stable'
-                return r
-            if not simple_handoff:
-                v, d = verify()
-
+                streak = 0
+                for _ in range(20):
+                    st = act('confirm', qs[-1], ref['finger_home'] if concurrent_open else None)
+                    qerr = np.max(np.abs(np.asarray(port.read_robot()['arm_qpos']) - np.asarray(qs[-1])))
+                    if qerr <= 0.004 and np.max(np.abs(st['arm_qvel'])) <= 0.02:
+                        streak += 1
+                    else:
+                        streak = 0
+                    if streak >= 5:
+                        break
+                if streak < 5:
+                    r['reason'] = 'confirm not stable'
+                    return r
+                if not simple_handoff:
+                    v, d = verify()
         # Opening-envelope screening is only for withdrawal. Original measured
         # geometry and the original home path/controller remain in use for home.
         if concurrent_open:

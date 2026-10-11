@@ -285,7 +285,7 @@ def shape_distance(points, shape):
     inside = np.minimum(np.max(d, axis=1), 0.0)
     return outside + inside
 
-def screen_shapes(points, starts, path, margin=0.01):
+def screen_shapes(points, starts, path, margin=0.01, require_endpoint_clear=True):
     blocked = {
         "ok": False,
         "reason": "blocked",
@@ -397,10 +397,10 @@ def screen_shapes(points, starts, path, margin=0.01):
                         "current_clearance": float(d),
                         "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion",
                     }
-    ok = bool(endpoint_clear)
+    ok = bool(endpoint_clear or not require_endpoint_clear)
     return {
         "ok": ok,
-        "reason": "clear" if ok else "endpoint_hand_clear_fail",
+        "reason": ("clear" if endpoint_clear else "screened_exit") if ok else "endpoint_hand_clear_fail",
         "min_distance": min_dist,
         "endpoint_hand_clear": endpoint_clear,
         "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
@@ -409,7 +409,7 @@ def screen_shapes(points, starts, path, margin=0.01):
         },
     }
 
-def plan_retreat(port, observation, verdict):
+def plan_retreat(port, observation, verdict, directions_override=None):
     q0 = np.asarray(observation['robot']['arm_qpos'], float)
     eef = np.asarray(observation['eef_position'], float)
     R = np.asarray(observation['eef_rotation'], float)
@@ -463,6 +463,8 @@ def plan_retreat(port, observation, verdict):
             directions.extend([away, (away + np.array([0.0, 0.0, 1.0])) / np.linalg.norm(away + np.array([0.0, 0.0, 1.0]))])
         else:
             directions.append(np.array([0.0, 0.0, 1.0]))
+    if directions_override is not None:
+        directions = [np.asarray(direction, float) for direction in directions_override]
     start = port.robot_shapes(q0)
     for dist in (0.04, 0.06):
         for direction in directions:
