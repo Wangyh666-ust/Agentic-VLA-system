@@ -15,7 +15,7 @@ from collections import deque
 _PLACE_OPS = ("on", "in")
 _TURN_OPS = ("turnon", "turnoff")
 _ARTICULATE_OPS = ("open", "close")
-_SIMPLE_CHECK_STEPS = (150, 300)
+_SIMPLE_CHECK_INTERVAL = 150
 
 
 def build_context(capability, user_request):
@@ -416,7 +416,7 @@ class FinishMonitor:
         if simple:
             # Inspect the client here: the pilot replaces it after construction.
             # Native candidates and force cannot cause an early visual handoff.
-            if step not in _SIMPLE_CHECK_STEPS or step > self.budget or step in self._simple_checked_steps:
+            if step <= 0 or step % _SIMPLE_CHECK_INTERVAL or step > self.budget or step in self._simple_checked_steps:
                 return None
             self._simple_checked_steps.add(step)
         else:
@@ -439,6 +439,12 @@ class FinishMonitor:
             self._phase = 'observing'
             return None
         if state == 'unknown':
+            # A valid inconclusive observation is not a failed execution. Keep
+            # VLA running until the next scheduled observation / action budget.
+            # Missing sensors, invalid replies and transport errors still raise.
+            if simple and step < self.budget:
+                self._phase = 'observing'
+                return None
             return self._finish_outcome(False, 'visual_unknown')
         if state not in ('needs_release', 'needs_retreat', 'complete'):
             self.close()

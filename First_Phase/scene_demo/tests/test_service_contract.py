@@ -466,12 +466,14 @@ class PublicSchemaTests(unittest.TestCase):
             self.assertFalse(health["ready"])
             self.assertIsNone(health["worker_error"])
 
-    def test_scenes_lists_all_seven(self):
+    def test_scenes_includes_original_scenes_and_native_microwave(self):
         with tempfile.TemporaryDirectory() as tmp:
             svc = service.SceneService(run_root=tmp)
             payload = svc.scenes()
             ids = [entry["scene_id"] for entry in payload["scenes"]]
-            self.assertEqual(len(ids), 7)
+            self.assertEqual(set(ids), {'goal_table', 'goal_table_shifted', 'basket_two',
+                                       'mugs_two', 'mugs_left_occupied', 'mugs_right_occupied',
+                                       'mugs_both_occupied', 'microwave_mug'})
             self.assertEqual(set(ids), set(catalog.SCENES))
 
     def test_create_session_rejects_unknown_scene(self):

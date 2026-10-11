@@ -408,7 +408,7 @@ class PromptContractTests(unittest.TestCase):
             self.assertNotIn(forbidden, head)
 
     def test_both_phase_heads_state_separate_per_subgoal_budget(self):
-        """Both prompts must state the MCP gives EACH subgoal its OWN 300-step
+        """Both prompts must state the MCP gives EACH subgoal its OWN 600-step
         budget (not one shared budget), and the repair head must explain
         budget_exhausted without inventing a larger budget."""
         session = make_session()
@@ -417,7 +417,7 @@ class PromptContractTests(unittest.TestCase):
         repair = run_agent.build_repair_prompt(session, "整理桌面", "req-1", plan, ["/b.png"])
 
         for prompt in (initial, repair):
-            self.assertIn("300", prompt)
+            self.assertIn("600", prompt)
             self.assertIn("subgoal", prompt)
             self.assertIn("per subgoal", prompt)
         self.assertIn("budget_exhausted", repair)

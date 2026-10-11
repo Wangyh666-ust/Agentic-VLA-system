@@ -199,7 +199,7 @@ async def submit_scene_plan(
         "rationale": str(rationale),
         "decision": str(decision or "execute"),
         "audit": False,
-        "budget_per_subgoal": 300,
+        "budget_per_subgoal": 600,
     }
     return await _call("POST", "/plans", body, 20.0)
 
@@ -233,7 +233,7 @@ async def resume_scene_plan(
         "capability_ids": [str(capability_id) for capability_id in (capability_ids or [])],
         "rationale": str(rationale),
         "audit": False,
-        "budget_per_subgoal": 300,
+        "budget_per_subgoal": 600,
     }
     path = "/plans/" + _quote(request_id) + "/resume"
     return await _call("POST", path, body, 20.0)

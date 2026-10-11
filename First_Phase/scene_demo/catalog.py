@@ -127,6 +127,14 @@ SCENES: dict[str, dict] = {
 }
 
 # Static appearance meanings for this LIBERO asset, never its current state.
+# Static native asset appearance, not current location or simulator truth.
+# Verified against stable_hope_objects/{tomato_sauce,milk,ketchup}/texture_map.png.
+OBJECT_VISUAL_IDENTITY_DEFINITIONS = {
+    "tomato_sauce": "圆柱形罐头，红绿标签及Tomato Sauce文字；不同于Milk纸盒，也不同于Tomato Ketchup挤压瓶。",
+    "milk": "牛奶纸盒，红白绿包装及Milk文字。",
+    "ketchup": "橙色挤压瓶，标签Tomato Ketchup；与tomato sauce罐头为不同物品。",
+}
+
 OBJECT_VISUAL_STATE_DEFINITIONS = {
     "microwave": {
         "closed": "微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。",

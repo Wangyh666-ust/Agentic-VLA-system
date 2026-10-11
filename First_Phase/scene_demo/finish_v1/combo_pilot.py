@@ -127,7 +127,7 @@ def run(case_id, service_class=None, budget_per_subgoal=300, *, case_spec=None, 
                 if getattr(self, '_last_action_source', 'vla') != 'vla':
                     return None
                 actual = getattr(self, '_actual_vla', step)
-                return original_poll(actual, candidate=False, force=actual == 300)
+                return original_poll(actual, candidate=False, force=actual == budget_per_subgoal)
             monitor.poll = poll
             job._pilot_monitor = monitor
             return monitor
@@ -164,7 +164,7 @@ def run(case_id, service_class=None, budget_per_subgoal=300, *, case_spec=None, 
         write(directory/'submitted_plan.json',payload)
         submitted=svc.submit_plan(payload)
         if submitted.get('ok') is False:raise RuntimeError(str(submitted))
-        deadline=time.monotonic()+900
+        deadline=time.monotonic()+spec.get('wall_budget_seconds', 900)
         while True:
             plan=svc.plan(request_id)
             if plan['state'] in ('completed','blocked','error','cancelled'):break

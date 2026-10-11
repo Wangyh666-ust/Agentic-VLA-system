@@ -40,6 +40,16 @@ class ContainerContextTests(unittest.TestCase):
             verdict = simple_checker.reconcile(context, verdict, {'finger_qpos': [.02, -.02]}, {'finger_home': [.04, -.04]})
             self.assertEqual(simple_checker.decide(context, verdict)['allow_release'], allowed)
 
+    def test_prompt_requires_named_target_and_distinguishes_negative_from_unknown(self):
+        prompt = simple_checker.build_prompt(self.context('sauce_to_basket'))
+        self.assertIn('其他物品不能替代指定物品', prompt)
+        self.assertIn('明确看到未进入', prompt)
+        self.assertIn('应返回false，不是null', prompt)
+        self.assertIn('另一视角遮挡或看不清', prompt)
+        self.assertIn('reason', prompt)
+        payload = json.loads(prompt.splitlines()[-1])
+        self.assertEqual(payload['current_subtask']['description'], 'put the tomato sauce in the basket')
+
 
 if __name__ == '__main__':
     unittest.main()

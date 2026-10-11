@@ -235,6 +235,66 @@ class RuntimeTests(unittest.TestCase):
             self.assertIsNone(monitor.poll(step, candidate=True, force=True))
         self.assertEqual(client.calls, [])
 
+    def test_simple_600_budget_checks_every_150_without_duplicate_or_early_calls(self):
+        raw = copy.deepcopy(ALL_TRUE)
+        raw['operation_achieved'] = False
+        client = FakeClient(raw)
+        client.simple_handoff = True
+        monitor = self.monitor(client, budget=600)
+        self.add_side_view(monitor)
+        with mock.patch.object(control, 'run_finish') as finish:
+            for step in range(1, 602):
+                monitor.port.timestamp = float(step)
+                monitor.record(step)
+                self.assertIsNone(monitor.poll(step, candidate=True, force=True))
+                self.assertIsNone(monitor.poll(step))
+        self.assertEqual([ctx['actuator_measurements']['timestamp'] for ctx, _ in client.calls],
+                         [150., 300., 450., 600.])
+        finish.assert_not_called()
+        self.assertEqual(monitor.port.steps, 0)
+
+    def test_simple_unknown_continues_until_600_and_never_releases(self):
+        raw = copy.deepcopy(ALL_TRUE)
+        raw['operation_achieved'] = None
+        client = FakeClient(raw)
+        client.simple_handoff = True
+        monitor = self.monitor(client, budget=600)
+        self.add_side_view(monitor)
+        with mock.patch.object(control, 'run_finish') as finish:
+            for step in (150, 300, 450):
+                monitor.port.timestamp = float(step)
+                self.assertIsNone(monitor.poll(step))
+                self.assertIsNone(monitor.terminal)
+                self.assertFalse(monitor.port.closed)
+            monitor.port.timestamp = 600.
+            outcome = monitor.poll(600)
+        self.assertEqual(outcome['reason'], 'visual_unknown')
+        self.assertFalse(outcome['ok'])
+        self.assertTrue(monitor.port.closed)
+        self.assertEqual(monitor.calls, 4)
+        finish.assert_not_called()
+        self.assertEqual(monitor.port.steps, 0)
+
+    def test_simple_can_trigger_finish_at_450_after_unknown_150_and_incomplete_300(self):
+        raw = copy.deepcopy(ALL_TRUE)
+        raw['operation_achieved'] = None
+        client = FakeClient(raw)
+        client.simple_handoff = True
+        monitor = self.monitor(client, budget=600)
+        self.add_side_view(monitor)
+        with mock.patch.object(control, 'run_finish', return_value={'ok': False, 'reason': 'probe'}) as finish:
+            monitor.port.timestamp = 150.
+            self.assertIsNone(monitor.poll(150))
+            client.verdict['operation_achieved'] = False
+            monitor.port.timestamp = 300.
+            self.assertIsNone(monitor.poll(300))
+            finish.assert_not_called()
+            client.verdict['operation_achieved'] = True
+            monitor.port.timestamp = 450.
+            self.assertEqual(monitor.poll(450)['reason'], 'probe')
+        finish.assert_called_once()
+        self.assertTrue(finish.call_args.kwargs['simple_handoff'])
+
     def test_latest_capture_overwrites_same_timestamp(self):
         monitor = self.monitor()
         monitor.port.timestamp = 5.0

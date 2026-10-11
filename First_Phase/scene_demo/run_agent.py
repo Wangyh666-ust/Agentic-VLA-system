@@ -141,9 +141,9 @@ INITIAL_PROMPT_HEAD = (
 - 不要自动打开炉灶（stove）；当前场景没有垃圾桶或对应能力时，「丢弃 / 扔掉 / 扔进垃圾桶」不受支持。
 - 裸的「清理 / 清理一下」在没有明确处置方式或目的地时必须先澄清（decision="clarify"，capability_ids=[]），绝不用 storage_policy 静默化解歧义。
 - candidate 能力可以使用，但不要声称它们已被可靠验证。
-- 预算事实：当前 scene_tools MCP 为**每一个 subgoal 单独**提供 300 个控制步的预算
-  （separate 300 control steps per subgoal），**不是**多个 subgoal 共享一个总预算；
-  某个 subgoal 用完自己的 300 步，不代表其他 subgoal 也受限或共享同一预算。
+- 预算事实：当前 scene_tools MCP 为**每一个 subgoal 单独**提供最多 600 个控制步的预算
+  （separate 600 control steps per subgoal），**不是**多个 subgoal 共享这600步；
+  某个 subgoal 用完自己的 600 步，不代表其他 subgoal 也用完预算。服务另有整次会话2000步上限，提交或修复计划仍须通过该限制。
 
 """
     + MCP_ROUTING_GUIDANCE
@@ -159,9 +159,9 @@ REPAIR_PROMPT_HEAD = (
 
 执行计划被阻塞（blocked），需要你做**一次**修复。
 
-预算事实（务必遵守）：当前 scene_tools MCP 为**每一个 subgoal 单独**提供 300 个控制步的
-预算（separate 300 control steps per subgoal），**不是**多个 subgoal 共享一个总预算。
-若某个 subgoal 的 ended_reason 是 budget_exhausted，表示该 subgoal 在**自己的 300 步预算内
+预算事实（务必遵守）：当前 scene_tools MCP 为**每一个 subgoal 单独**提供最多 600 个控制步的
+预算（separate 600 control steps per subgoal），**不是**多个 subgoal 共享这600步。服务另有整次会话2000步上限，修复不得绕过剩余预算限制。
+若某个 subgoal 的 ended_reason 是 budget_exhausted，表示该 subgoal 在**自己的 600 步预算内
 没有完成**；不要据此推断存在跨多个 subgoal 的共享预算，也不要假设可以调大预算。
 已经 completed 的 subgoal 无需重复。
 
