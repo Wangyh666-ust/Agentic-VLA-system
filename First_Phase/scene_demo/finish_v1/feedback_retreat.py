@@ -1,6 +1,7 @@
 """Measured-pose withdrawal; screened short commands without waypoint gates."""
 import numpy as np
 from .geometry import plan_retreat, screen_shapes, shape_distance
+from scene_demo import joint_home
 
 LOOKAHEAD = .008
 MIN_TRAVEL = .03
@@ -47,39 +48,45 @@ def directions(port, observation, current=None):
 
 def run(port, verdict, act, limit=480):
     result = {'ok': False, 'reason': '', 'mode': 'measured_pose_feedback',
-              'screens': [], 'replans': [], 'trace': [], 'trace_actions': [], 'plan': None,
+              'screens': [], 'replans': [], 'home_candidates': [], 'trace': [], 'trace_actions': [], 'plan': None,
               'removed_gate': 'per-waypoint joint_error<=0.004',
               'retained_guards': 'CAD path, current endpoint clearance, joint limits, opening and home readiness'}
     observation = port.capture()
     result['initial_frames'] = observation['frames']
     origin = np.array(observation['eef_position'], float)
+    def home_eligible(q):
+        return port.home_screen(joint_home.joint_waypoints(q, port.reference['homeq']))
     current_plan = plan_retreat(port, observation, verdict,
-                               directions_override=directions(port, observation))
+                               directions_override=directions(port, observation), endpoint_eligible=home_eligible)
     result['plan'] = current_plan
     if not current_plan['ok']:
         result['reason'] = 'retreat plan blocked'
         return result
     direction = np.array(current_plan['candidate_reports'][-1]['direction'])
+    active_distance = current_plan['candidate_reports'][-1]['distance']
     cloud = port.obstacle_cloud(observation['frames'])
     cloud_frames = observation['frames']
     checkpoint = origin.copy()
     route_origin = origin.copy()
     since_refresh = 0
+    next_home_check_at = 0
 
     def replan(cause):
-        nonlocal direction, cloud, cloud_frames, checkpoint, route_origin, since_refresh
+        nonlocal direction, active_distance, cloud, cloud_frames, checkpoint, route_origin, since_refresh
         if len(result['replans']) >= MAX_REPLANS:
             result['reason'] = 'retreat replans exhausted'
             return False
         fresh = port.capture()
         alternatives = directions(port, fresh, current=direction)
-        new_plan = plan_retreat(port, fresh, verdict, directions_override=alternatives)
+        new_plan = plan_retreat(port, fresh, verdict, directions_override=alternatives,
+                               endpoint_eligible=home_eligible)
         result['replans'].append({'cause': cause, 'actual_q': fresh['robot']['arm_qpos'],
                                   'eef_position': fresh['eef_position'], 'frames': fresh['frames'], 'plan': new_plan})
         if not new_plan['ok']:
             result['reason'] = 'no screened retreat alternative'
             return False
         direction = np.array(new_plan['candidate_reports'][-1]['direction'])
+        active_distance = new_plan['candidate_reports'][-1]['distance']
         cloud = port.obstacle_cloud(fresh['frames'])
         cloud_frames = fresh['frames']
         checkpoint = np.array(fresh['eef_position'])
@@ -94,7 +101,7 @@ def run(port, verdict, act, limit=480):
         shapes = port.robot_shapes(q)
         clearance = screen_shapes(cloud, shapes, [shapes])
         travel = float(np.linalg.norm(xyz - origin))
-        if travel >= MIN_TRAVEL and clearance['ok']:
+        if travel >= MIN_TRAVEL and clearance['ok'] and len(result['trace_actions']) >= next_home_check_at:
             # Refresh before accepting an endpoint; cached geometry only guides steps.
             fresh = port.capture()
             cloud = port.obstacle_cloud(fresh['frames'])
@@ -104,10 +111,22 @@ def run(port, verdict, act, limit=480):
             clearance = screen_shapes(cloud, actual_shapes, [actual_shapes])
             result['endpoint_frames'] = fresh['frames']
             if clearance['ok']:
-                # Stop where the arm actually is, never pull it back to an old endpoint.
-                result['endpoint_clearance'] = clearance
-                result['travel_m'] = travel
-                break
+                eligibility = home_eligible(qfresh)
+                result['home_candidates'].append({'actions': len(result['trace_actions']),
+                                                  'actual_q': qfresh, 'frames': fresh['frames'],
+                                                  'home_screen': eligibility})
+                if eligibility.get('ok') is True:
+                    # Stop where the arm actually is, never pull it back to an old endpoint.
+                    result['endpoint_clearance'] = clearance
+                    result['travel_m'] = travel
+                    break
+                # Current separation is insufficient when the original return
+                # would sweep an obstacle. Continue exiting, without moving home.
+                next_home_check_at = len(result['trace_actions']) + REFRESH_EVERY
+                if np.dot(xyz - route_origin, direction) >= active_distance - .003:
+                    if not replan('home_path_not_clear_at_planned_exit'):
+                        return result
+                    continue
         if since_refresh >= REFRESH_EVERY:
             fresh = port.capture()
             xyz = np.array(fresh['eef_position'])

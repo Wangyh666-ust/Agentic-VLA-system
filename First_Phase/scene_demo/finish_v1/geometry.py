@@ -409,7 +409,7 @@ def screen_shapes(points, starts, path, margin=0.01, require_endpoint_clear=True
         },
     }
 
-def plan_retreat(port, observation, verdict, directions_override=None):
+def plan_retreat(port, observation, verdict, directions_override=None, endpoint_eligible=None):
     q0 = np.asarray(observation['robot']['arm_qpos'], float)
     eef = np.asarray(observation['eef_position'], float)
     R = np.asarray(observation['eef_rotation'], float)
@@ -488,7 +488,14 @@ def plan_retreat(port, observation, verdict, directions_override=None):
                     q_interp = np.asarray(qa) + (np.asarray(qb) - np.asarray(qa)) * a
                     poses.append(port.robot_shapes(q_interp))
             scr = screen_shapes(points, start, poses)
-            reports.append({'direction': direction.tolist(), 'distance': dist, 'reason': scr['reason']})
+            report = {'direction': direction.tolist(), 'distance': dist, 'reason': scr['reason']}
+            reports.append(report)
             if scr['ok']:
+                if endpoint_eligible is not None:
+                    eligibility = endpoint_eligible(qs[-1])
+                    report['home_screen'] = eligibility
+                    if eligibility.get('ok') is not True:
+                        report['reason'] = 'home_path_blocked'
+                        continue
                 return {'ok': True, 'reason': 'ok', 'waypoints': [q.tolist() for q in qs], 'candidate_reports': reports, 'sensor_screen': scr}
     return fail

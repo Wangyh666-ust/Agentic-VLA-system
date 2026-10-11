@@ -6,7 +6,7 @@ from scene_demo.finish_v1.geometry import screen_shapes
 
 
 class Port:
-    reference = {'finger_home': [.04, -.04]}
+    reference = {'finger_home': [.04, -.04], 'homeq': [0.] * 7}
 
     def __init__(self, stalled=False):
         self.q = np.zeros(7)
@@ -27,6 +27,9 @@ class Port:
     def obstacle_cloud(self, frames):
         return np.array([[0., 0., -.004]])
 
+    def home_screen(self, waypoints):
+        return {'ok': True}
+
     def robot_shapes(self, q):
         return [{'id': 'hand', 'hand': True, 'center': list(q[:3]),
                  'rotation': np.eye(3), 'half_extents': [.005, .005, .005]}]
@@ -45,10 +48,10 @@ class Port:
         return self.read_robot()
 
 
-def plan(port, obs, verdict, directions_override=None):
+def plan(port, obs, verdict, directions_override=None, endpoint_eligible=None):
     d = np.asarray(directions_override[0]).tolist()
     return {'ok': True, 'waypoints': [obs['robot']['arm_qpos']],
-            'candidate_reports': [{'direction': d}], 'sensor_screen': {'ok': True}}
+            'candidate_reports': [{'direction': d, 'distance': .06}], 'sensor_screen': {'ok': True}}
 
 
 class FeedbackTests(unittest.TestCase):
@@ -104,6 +107,16 @@ class FeedbackTests(unittest.TestCase):
         self.assertEqual(result['reason'], 'movement budget')
         self.assertEqual(len(p.commands), 15)
         self.assertTrue(all(phase == 'movement' for phase, _, _ in p.commands))
+
+    def test_current_clear_but_return_blocked_continues_exiting(self):
+        p = Port()
+        with patch.object(feedback, 'plan_retreat', side_effect=plan), patch.object(
+                p, 'home_screen', side_effect=[{'ok': False}, {'ok': True}]):
+            result = feedback.run(p, {}, p.act)
+        self.assertTrue(result['ok'], result)
+        self.assertEqual([x['home_screen']['ok'] for x in result['home_candidates']], [False, True])
+        self.assertGreater(result['home_candidates'][1]['actions'], result['home_candidates'][0]['actions'])
+        self.assertGreater(result['travel_m'], .03)
 
 
 if __name__ == '__main__':

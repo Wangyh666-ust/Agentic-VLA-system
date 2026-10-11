@@ -1,0 +1,1368 @@
+{
+  "id": "20261011-feedback-retreat",
+  "cases": [
+    {
+      "case": "bowl_wine",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "bowl_to_plate",
+          "actual_vla": 150,
+          "local_grasp_actions": 0,
+          "success": true,
+          "reason": "complete",
+          "error": null,
+          "finish_counts": {
+            "release": 2,
+            "movement": 103,
+            "confirm": 5,
+            "home": 131
+          },
+          "open_and_retreat_actions": 0,
+          "concurrent_open_retreat": null,
+          "feedback_retreat": {
+            "mode": null,
+            "ok": null,
+            "reason": null,
+            "travel_m": null,
+            "replans": null,
+            "endpoint_clearance": null
+          },
+          "home_streak": 5,
+          "independent_streak": 5,
+          "final_independent": {
+            "timestamp": 20.049999999999766,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.00019925107771644364,
+                0.0013939524654421886,
+                0.0005071056802482196,
+                0.002279721637079124,
+                0.0014420510916458868,
+                0.002252855584750524,
+                0.002682552473561417
+              ],
+              "arm_speed_rad_s": [
+                0.00016119352686135707,
+                0.004820547498402374,
+                4.520297771245232e-05,
+                0.005675729270586926,
+                0.0004160051257762315,
+                0.0016461473362198067,
+                0.0010282939836526595
+              ],
+              "max_joint_error_rad": 0.002682552473561417,
+              "max_joint_speed_rad_s": 0.005675729270586926,
+              "finger_error_m": [
+                1.4389235110302823e-05,
+                1.4450041610061803e-05
+              ],
+              "finger_speed_m_s": [
+                1.1832363882172866e-05,
+                1.188564332511047e-05
+              ],
+              "max_finger_error_m": 1.4450041610061803e-05,
+              "max_finger_speed_m_s": 1.188564332511047e-05,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": true,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.3038555516982554e-07,
+                  "angular_speed": 1.9056510984660071e-06
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": true
+          },
+          "grasp": null,
+          "qwen": [
+            {
+              "kind": "online",
+              "actual_vla": 150,
+              "timestamp": 7.999999999999341,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":false,\"reason\":\"sideview和wrist view均显示碗已稳定放置在盘子上，位置关系满足子任务要求；夹爪在sideview中张开且未接触碗，编码器数据接近标准张开位置\"}",
+              "usage": {
+                "prompt_tokens": 1012,
+                "completion_tokens": 1092,
+                "total_tokens": 2104,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 67
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 688,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_01_bowl_to_plate_d6d94ccb/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_01_bowl_to_plate_d6d94ccb/finish/sensors/cap000092_wrist.png",
+                  "sha256": "092524404da8b4952c6707083c0544c5346b75c4740748b55c44f092f34cd814"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_01_bowl_to_plate_d6d94ccb/finish/sensors/cap000093_sideview.png",
+                  "sha256": "1de64cebcb77b846220617a16773c23c0c5713632ea7605283f762cc6af0e161"
+                }
+              ],
+              "stage_sent": false
+            },
+            {
+              "kind": "after_cleanup",
+              "actual_vla": 150,
+              "timestamp": 20.049999999999766,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":false,\"reason\":\"sideview显示碗已放置在盘子上，夹爪悬停未接触碗\"}",
+              "usage": {
+                "prompt_tokens": 1018,
+                "completion_tokens": 382,
+                "total_tokens": 1400,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 344,
+                  "text_tokens": 38
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 694,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_01_bowl_to_plate_d6d94ccb/finish/model_requests/call_02_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_01_bowl_to_plate_d6d94ccb/finish/sensors/cap000278_wrist.png",
+                  "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_01_bowl_to_plate_d6d94ccb/finish/sensors/cap000279_sideview.png",
+                  "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+                }
+              ],
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 199,
+          "timeline_frames": 199
+        },
+        {
+          "capability": "wine_to_rack",
+          "actual_vla": 150,
+          "local_grasp_actions": 182,
+          "success": false,
+          "reason": "final visual failed",
+          "error": null,
+          "finish_counts": {
+            "release": 10,
+            "movement": 27,
+            "confirm": 3,
+            "home": 218
+          },
+          "open_and_retreat_actions": 27,
+          "concurrent_open_retreat": null,
+          "feedback_retreat": {
+            "mode": "measured_pose_feedback",
+            "ok": true,
+            "reason": "retreated and settled",
+            "travel_m": 0.031126807882504593,
+            "replans": [],
+            "endpoint_clearance": {
+              "ok": true,
+              "reason": "clear",
+              "min_distance": -0.011791809108238668,
+              "endpoint_hand_clear": true,
+              "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+              "diagnostic": {
+                "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+              }
+            }
+          },
+          "home_streak": 5,
+          "independent_streak": 5,
+          "final_independent": {
+            "timestamp": 49.55000000001459,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true,
+              "on|wine_bottle_1|wine_rack_1_top_region": true
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.0002335215497627583,
+                0.0006182276302902912,
+                0.0008150182633912071,
+                0.0014120240875001855,
+                0.001596659240931264,
+                0.002009725270907481,
+                0.0032677885231088277
+              ],
+              "arm_speed_rad_s": [
+                0.00010433039534977599,
+                0.00020068482856790826,
+                0.0004281906121773906,
+                0.0005379681211554536,
+                0.0012469044201175753,
+                0.00021213811510156658,
+                0.006028792215543229
+              ],
+              "max_joint_error_rad": 0.0032677885231088277,
+              "max_joint_speed_rad_s": 0.006028792215543229,
+              "finger_error_m": [
+                8.527518040299387e-06,
+                8.630435763941346e-06
+              ],
+              "finger_speed_m_s": [
+                6.8405757954073e-06,
+                6.9304666827149644e-06
+              ],
+              "max_finger_error_m": 8.630435763941346e-06,
+              "max_finger_speed_m_s": 6.9304666827149644e-06,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": true,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.3039144258978068e-07,
+                  "angular_speed": 1.9060111150452686e-06
+                },
+                "on|wine_bottle_1|wine_rack_1_top_region": {
+                  "linear_speed": 2.6159915725597915e-07,
+                  "angular_speed": 1.8296417878931147e-07
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": true
+          },
+          "grasp": {
+            "helper": {
+              "assisted": true,
+              "phase": "confirmed",
+              "reason": null,
+              "total_actions": 182,
+              "stage_counts": {
+                "above": 137,
+                "descend": 24,
+                "close": 10,
+                "lift": 11
+              },
+              "trigger": {
+                "command": 1.0077210664749146,
+                "grasped": false,
+                "grasp_observation_complete": true,
+                "held_objects": [],
+                "distance_m": 0.11753144860032771,
+                "satisfied": true,
+                "target_ready": true
+              },
+              "target": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.0721750645731474,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342609,
+                    -0.32177686299714203,
+                    0.03062016804053074
+                  ],
+                  [
+                    -0.14959752714095026,
+                    0.3520311694348847,
+                    -0.9239559706066182
+                  ],
+                  [
+                    0.28652840020567655,
+                    -0.8789389661324748,
+                    -0.3812712547380795
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750313,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.2009547946507822,
+                  -0.07161896769679212,
+                  1.0283841725493734
+                ]
+              },
+              "targets": {
+                "eef_position": [
+                  -0.20123991372177524,
+                  -0.0721750645731474,
+                  0.9927249740850868
+                ],
+                "orientation": [
+                  [
+                    -0.9463202712342609,
+                    -0.32177686299714203,
+                    0.03062016804053074
+                  ],
+                  [
+                    -0.14959752714095026,
+                    0.3520311694348847,
+                    -0.9239559706066182
+                  ],
+                  [
+                    0.28652840020567655,
+                    -0.8789389661324748,
+                    -0.3812712547380795
+                  ]
+                ],
+                "above_position": [
+                  -0.2030771238042071,
+                  -0.016737706336750313,
+                  1.0156012493693716
+                ],
+                "lift_position": [
+                  -0.2009547946507822,
+                  -0.07161896769679212,
+                  1.0283841725493734
+                ]
+              },
+              "last_errors": {
+                "above_position_error_m": 0.0022042700338587564,
+                "above_rotation_error_rad": 0.006618916768267578,
+                "descend_position_error_m": 0.0021517028197245414,
+                "descend_rotation_error_rad": 0.0015102324446881938,
+                "close_grasped": true,
+                "lift_grasped": true,
+                "lift_metres": 0.027931211897636588
+              },
+              "grasp_mode": "demonstrated_side",
+              "reference": {
+                "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-08-skill-context/physical/trials/native_goal9_m0_a9270b6b/job/wine_telemetry.jsonl.gz",
+                "source_sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "sha256": "3b546bcf49a3b01f31799212ff509a30c8a73c6836373680d07584f2c4800c10",
+                "step": 93,
+                "quaternion_order": "wxyz",
+                "policy_orientation": "axis_angle_body",
+                "relative_position": [
+                  -0.0029941513870073433,
+                  0.01052424244341749,
+                  0.09384945135656639
+                ],
+                "relative_orientation": [
+                  [
+                    0.3217877768160636,
+                    -0.9463167125463993,
+                    -0.030615457650521972
+                  ],
+                  [
+                    -0.3520318440699383,
+                    -0.14959777039620165,
+                    0.9239556741820488
+                  ],
+                  [
+                    -0.8789347003347259,
+                    -0.28654002625787023,
+                    -0.38127235134434434
+                  ]
+                ]
+              },
+              "approach_offset_explanation": "above_target = target - ABOVE_CLEARANCE_M * R[:, 2] (hand approach axis), not the legacy world +Z offset",
+              "approach_mode": "clear_then_side",
+              "route_index": 2,
+              "route_stage": "approach_open",
+              "route_counts": [
+                54,
+                35,
+                48
+              ],
+              "route_targets": [
+                {
+                  "position": [
+                    -0.27568618389195626,
+                    0.0004222236604061874,
+                    1.184046907457057
+                  ],
+                  "orientation": [
+                    [
+                      -0.9937926635070872,
+                      0.10898739274577256,
+                      0.02231345293687364
+                    ],
+                    [
+                      0.05169814586104994,
+                      0.6300413782228839,
+                      -0.7748387983584306
+                    ],
+                    [
+                      -0.09850605907261217,
+                      -0.7688755490646622,
+                      -0.631764945510983
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750313,
+                    1.184046907457057
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342609,
+                      -0.32177686299714203,
+                      0.03062016804053074
+                    ],
+                    [
+                      -0.14959752714095026,
+                      0.3520311694348847,
+                      -0.9239559706066182
+                    ],
+                    [
+                      0.28652840020567655,
+                      -0.8789389661324748,
+                      -0.3812712547380795
+                    ]
+                  ]
+                },
+                {
+                  "position": [
+                    -0.2030771238042071,
+                    -0.016737706336750313,
+                    1.0156012493693716
+                  ],
+                  "orientation": [
+                    [
+                      -0.9463202712342609,
+                      -0.32177686299714203,
+                      0.03062016804053074
+                    ],
+                    [
+                      -0.14959752714095026,
+                      0.3520311694348847,
+                      -0.9239559706066182
+                    ],
+                    [
+                      0.28652840020567655,
+                      -0.8789389661324748,
+                      -0.3812712547380795
+                    ]
+                  ]
+                }
+              ],
+              "high_z": 1.184046907457057,
+              "rotation_lower_extent_m": 0.11164355420949007
+            },
+            "visual_calibration": {
+              "ok": true,
+              "response": {
+                "verdict": {
+                  "target_visible": null,
+                  "destination_visible": null,
+                  "at_destination": null,
+                  "supported": null,
+                  "released": null,
+                  "stable": null,
+                  "operation_achieved": null,
+                  "clear_of_target": null,
+                  "boxes": {},
+                  "evidence": [],
+                  "unknown_reasons": []
+                },
+                "usage": {
+                  "prompt_tokens": 776,
+                  "completion_tokens": 123,
+                  "total_tokens": 899,
+                  "completion_tokens_details": {
+                    "text_tokens": 123
+                  },
+                  "prompt_tokens_details": {
+                    "image_tokens": 324,
+                    "text_tokens": 452,
+                    "cached_tokens": 0
+                  }
+                },
+                "model": "qwen3-vl-plus",
+                "http_status": 200,
+                "request_sha256": "09156637f37663ed77b6f7ad32c5debf741514c738f5e0f648bbd7950842370c",
+                "response_sha256": "f60656d402207fe4e7f54cb2470d87d5c889bc95e4bd9cdcdab30a4de24567d7",
+                "call_index": 1,
+                "localization": {
+                  "target_visible": true,
+                  "upright": true,
+                  "sideview_box": [
+                    0.58,
+                    0.54,
+                    0.62,
+                    0.63
+                  ],
+                  "reason": "sideview中可见一个深色细长酒瓶立于桌面上，位于机械臂末端左侧、金属盘右侧；瓶身垂直，无明显倾倒；背景为浅色墙面与木纹桌面，无遮挡；wrist视角中同一酒瓶呈倾斜视角但标签清晰，佐证其为同一目标。"
+                }
+              },
+              "capture": {
+                "timestamp": 24.199999999997466,
+                "frames": [
+                  {
+                    "view": "agentview",
+                    "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/pregrasp/sensors/cap000001_agentview.png",
+                    "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/pregrasp/sensors/cap000001_agentview.npy",
+                    "K": [
+                      [
+                        309.01933598375615,
+                        0.0,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        309.01933598375615,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "T_world_camera": [
+                      [
+                        -7.268184498698815e-08,
+                        0.6282664504107425,
+                        -0.7779982437565529,
+                        0.6586131746834771
+                      ],
+                      [
+                        0.9999999999999858,
+                        -7.268184498698815e-08,
+                        -1.521152659944569e-07,
+                        0.0
+                      ],
+                      [
+                        -1.521152659944569e-07,
+                        -0.7779982437565529,
+                        -0.6282664504107283,
+                        1.6103500240372424
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "pixel_center_offset": 0.5
+                  },
+                  {
+                    "view": "wrist",
+                    "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/pregrasp/sensors/cap000002_wrist.png",
+                    "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/pregrasp/sensors/cap000002_wrist.npy",
+                    "K": [
+                      [
+                        166.81284772367434,
+                        0.0,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        166.81284772367434,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "T_world_camera": [
+                      [
+                        0.9937926635070872,
+                        -0.10898739274577256,
+                        0.02231345293687364,
+                        -0.2346552082542423
+                      ],
+                      [
+                        -0.05169814586104994,
+                        -0.6300413782228839,
+                        -0.7748387983584306,
+                        0.07429282408520693
+                      ],
+                      [
+                        0.09850605907261217,
+                        0.7688755490646622,
+                        -0.631764945510983,
+                        1.0304327639060216
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "pixel_center_offset": 0.5
+                  }
+                ],
+                "verification_frames": [
+                  {
+                    "view": "agentview",
+                    "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/pregrasp/sensors/cap000001_agentview.png",
+                    "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/pregrasp/sensors/cap000001_agentview.npy",
+                    "K": [
+                      [
+                        309.01933598375615,
+                        0.0,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        309.01933598375615,
+                        128.0
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "T_world_camera": [
+                      [
+                        -7.268184498698815e-08,
+                        0.6282664504107425,
+                        -0.7779982437565529,
+                        0.6586131746834771
+                      ],
+                      [
+                        0.9999999999999858,
+                        -7.268184498698815e-08,
+                        -1.521152659944569e-07,
+                        0.0
+                      ],
+                      [
+                        -1.521152659944569e-07,
+                        -0.7779982437565529,
+                        -0.6282664504107283,
+                        1.6103500240372424
+                      ],
+                      [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                      ]
+                    ],
+                    "pixel_center_offset": 0.5
+                  },
+                  {
+                    "view": "sideview",
+                    "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/pregrasp/sensors/cap000003_sideview.png"
+                  }
+                ],
+                "robot": {
+                  "robot_name": "MountedPanda",
+                  "joint_names": [
+                    "robot0_joint1",
+                    "robot0_joint2",
+                    "robot0_joint3",
+                    "robot0_joint4",
+                    "robot0_joint5",
+                    "robot0_joint6",
+                    "robot0_joint7"
+                  ],
+                  "joint_indexes": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "qpos_indexes": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "qvel_indexes": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "joint_limits_low": [
+                    -2.8973,
+                    -1.7628,
+                    -2.8973,
+                    -3.0718,
+                    -2.8973,
+                    -0.0175,
+                    -2.8973
+                  ],
+                  "joint_limits_high": [
+                    2.8973,
+                    1.7628,
+                    2.8973,
+                    -0.0698,
+                    2.8973,
+                    3.7525,
+                    2.8973
+                  ],
+                  "arm_qpos": [
+                    0.08382726802740426,
+                    0.29305416565186815,
+                    0.10814968866271366,
+                    -2.470232682823008,
+                    -1.1629985629286366,
+                    2.116314722918926,
+                    0.4765413402902171
+                  ],
+                  "arm_qvel": [
+                    -0.019408905601012327,
+                    0.1939315977966561,
+                    -0.1250742853135243,
+                    -0.033665241310534104,
+                    -0.2076385707221345,
+                    0.09501321385378489,
+                    0.30044421669866783
+                  ],
+                  "finger_qpos_indexes": [
+                    7,
+                    8
+                  ],
+                  "finger_qvel_indexes": [
+                    7,
+                    8
+                  ],
+                  "finger_qpos": [
+                    0.03991504527230935,
+                    -0.04000351025430054
+                  ],
+                  "finger_qvel": [
+                    -7.827340993147484e-06,
+                    -1.0337240745525071e-06
+                  ],
+                  "torque_limits_low": [
+                    -80.0,
+                    -80.0,
+                    -80.0,
+                    -80.0,
+                    -80.0,
+                    -12.0,
+                    -12.0
+                  ],
+                  "torque_limits_high": [
+                    80.0,
+                    80.0,
+                    80.0,
+                    80.0,
+                    80.0,
+                    12.0,
+                    12.0
+                  ]
+                },
+                "eef_position": [
+                  -0.23794017295665418,
+                  -0.03236860826670504,
+                  1.0075953416446894
+                ],
+                "eef_rotation": [
+                  [
+                    -0.9937926635070872,
+                    0.10898739274577256,
+                    0.02231345293687364
+                  ],
+                  [
+                    0.05169814586104994,
+                    0.6300413782228839,
+                    -0.7748387983584306
+                  ],
+                  [
+                    -0.09850605907261217,
+                    -0.7688755490646622,
+                    -0.631764945510983
+                  ]
+                ]
+              },
+              "projected_body_points": [
+                [
+                  0.5965748958437255,
+                  0.6082306138401756
+                ],
+                [
+                  0.5971653928387264,
+                  0.5848927624531217
+                ],
+                [
+                  0.5977633483889294,
+                  0.561260131152973
+                ]
+              ],
+              "side_K": [
+                [
+                  618.0386719675123,
+                  0.0,
+                  256.0
+                ],
+                [
+                  0.0,
+                  618.0386719675123,
+                  256.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "side_T": [
+                [
+                  -0.9997091666008313,
+                  0.007842430312378452,
+                  -0.022805229686757997,
+                  -0.05651774593317116
+                ],
+                [
+                  0.02410806582695458,
+                  0.30071489741996155,
+                  -0.9534093305772627,
+                  1.2761224129427358
+                ],
+                [
+                  -0.0006191739283314818,
+                  -0.9536818372793395,
+                  -0.30081650531037846,
+                  1.4879572214102434
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "target_position": [
+                -0.20123991372177524,
+                -0.0721750645731474,
+                0.9927249740850868
+              ],
+              "target_orientation": [
+                [
+                  -0.9463202712342609,
+                  -0.32177686299714203,
+                  0.03062016804053074
+                ],
+                [
+                  -0.14959752714095026,
+                  0.3520311694348847,
+                  -0.9239559706066182
+                ],
+                [
+                  0.28652840020567655,
+                  -0.8789389661324748,
+                  -0.3812712547380795
+                ]
+              ],
+              "geometry_source": "simulator measured pose; same validated relative side-grasp reference",
+              "actual_vla_before": 83,
+              "initial_position_error_m": 0.056147936942880686
+            },
+            "actual_vla": 150,
+            "local_grasp_actions": 182,
+            "limitation": "Visual target association; precise pose and collision/contact geometry still from simulation"
+          },
+          "qwen": [
+            {
+              "kind": "online",
+              "actual_vla": 150,
+              "timestamp": 36.649999999998826,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":true,\"reason\":\"sideview显示酒瓶底部已接触架子上表面，满足'put on rack'要求；wrist和sideview均显示夹爪仍握持酒瓶，编码器闭合状态与图像一致\"}",
+              "usage": {
+                "prompt_tokens": 1019,
+                "completion_tokens": 1090,
+                "total_tokens": 2109,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 65
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 695,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000200_wrist.png",
+                  "sha256": "c2d628b2a2186b578c7e0515f52ec50d758a356bfc527a73f8377ecca752d556"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000201_sideview.png",
+                  "sha256": "6dea1ce77768546995056d4128c21b493c8c92c31dc414dfbc80066a834055b3"
+                }
+              ],
+              "stage_sent": false
+            },
+            {
+              "kind": "after_cleanup",
+              "actual_vla": 150,
+              "timestamp": 49.55000000001459,
+              "content": "{\"goal_achieved\":false,\"holding_or_contact\":true,\"reason\":\"sideview显示酒瓶仍被夹爪夹持且悬停在架子上方，未与架子接触；wrist view确认夹爪持物状态\"}",
+              "usage": {
+                "prompt_tokens": 1013,
+                "completion_tokens": 1079,
+                "total_tokens": 2092,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 54
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 689,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/model_requests/call_02_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000374_wrist.png",
+                  "sha256": "914a0b8c01680bb3f14fbd56a50e1b6ea1e4dae812716cc4438b51d558628b23"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/finish/sensors/cap000375_sideview.png",
+                  "sha256": "b17de835fe31645fceeb5fd2ef8d1a4e3b35d21e52a01e34e589e6ed3f99f443"
+                }
+              ],
+              "stage_sent": false
+            },
+            {
+              "kind": "pregrasp",
+              "actual_vla": 83,
+              "timestamp": 24.199999999997466,
+              "content": "{\n  \"target_visible\": true,\n  \"upright\": true,\n  \"sideview_box\": [0.58, 0.54, 0.62, 0.63],\n  \"reason\": \"sideview中可见一个深色细长酒瓶立于桌面上，位于机械臂末端左侧、金属盘右侧；瓶身垂直，无明显倾倒；背景为浅色墙面与木纹桌面，无遮挡；wrist视角中同一酒瓶呈倾斜视角但标签清晰，佐证其为同一目标。\"\n}",
+              "usage": {
+                "prompt_tokens": 776,
+                "completion_tokens": 123,
+                "total_tokens": 899,
+                "completion_tokens_details": {
+                  "text_tokens": 123
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 452,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/pregrasp/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/pregrasp/sensors/cap000002_wrist.png",
+                  "sha256": "04fea0bb28b84f996a6211168fd0213da6edf693c0d5d5058f7c6c9aad4de903"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/runs/20261011T080357Z_goal_table_a4b99757/cap_02_wine_to_rack_efa2106c/pregrasp/sensors/cap000003_sideview.png",
+                  "sha256": "4b3b5124104c2512cfcfc14e0c0a50e161e4a36369253f83f25125d4bceafc53"
+                }
+              ],
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 384,
+          "timeline_frames": 384
+        }
+      ],
+      "wall_seconds": 572.2107973259999,
+      "video": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_wine/sequence.mp4"
+    },
+    {
+      "case": "bowl_stove",
+      "state": "blocked",
+      "plan_success": null,
+      "jobs": [
+        {
+          "capability": "bowl_to_plate",
+          "actual_vla": 150,
+          "local_grasp_actions": 0,
+          "success": true,
+          "reason": "complete",
+          "error": null,
+          "finish_counts": {
+            "release": 2,
+            "movement": 103,
+            "confirm": 5,
+            "home": 131
+          },
+          "open_and_retreat_actions": 0,
+          "concurrent_open_retreat": null,
+          "feedback_retreat": {
+            "mode": null,
+            "ok": null,
+            "reason": null,
+            "travel_m": null,
+            "replans": null,
+            "endpoint_clearance": null
+          },
+          "home_streak": 5,
+          "independent_streak": 5,
+          "final_independent": {
+            "timestamp": 20.049999999999766,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.00019925107771644364,
+                0.0013939524654421886,
+                0.0005071056802482196,
+                0.002279721637079124,
+                0.0014420510916458868,
+                0.002252855584750524,
+                0.002682552473561417
+              ],
+              "arm_speed_rad_s": [
+                0.00016119352686135707,
+                0.004820547498402374,
+                4.520297771245232e-05,
+                0.005675729270586926,
+                0.0004160051257762315,
+                0.0016461473362198067,
+                0.0010282939836526595
+              ],
+              "max_joint_error_rad": 0.002682552473561417,
+              "max_joint_speed_rad_s": 0.005675729270586926,
+              "finger_error_m": [
+                1.4389235110302823e-05,
+                1.4450041610061803e-05
+              ],
+              "finger_speed_m_s": [
+                1.1832363882172866e-05,
+                1.188564332511047e-05
+              ],
+              "max_finger_error_m": 1.4450041610061803e-05,
+              "max_finger_speed_m_s": 1.188564332511047e-05,
+              "ready": true
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": true,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.3038555516982554e-07,
+                  "angular_speed": 1.9056510984660071e-06
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": true
+          },
+          "grasp": null,
+          "qwen": [
+            {
+              "kind": "online",
+              "actual_vla": 150,
+              "timestamp": 7.999999999999341,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":true,\"reason\":\"sideview图显示碗已稳定放置在盘子上，满足'put the bowl on the plate'要求；wrist和sideview图均显示夹爪仍接触碗，编码器数据接近但略大于标准开合值，结合图像确认接触状态\"}",
+              "usage": {
+                "prompt_tokens": 1009,
+                "completion_tokens": 1102,
+                "total_tokens": 2111,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 77
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 685,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000092_wrist.png",
+                  "sha256": "092524404da8b4952c6707083c0544c5346b75c4740748b55c44f092f34cd814"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000093_sideview.png",
+                  "sha256": "1de64cebcb77b846220617a16773c23c0c5713632ea7605283f762cc6af0e161"
+                }
+              ],
+              "stage_sent": false
+            },
+            {
+              "kind": "after_cleanup",
+              "actual_vla": 150,
+              "timestamp": 20.049999999999766,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":false,\"reason\":\"sideview显示碗已稳定放置在盘子上，wrist视角确认碗与盘子接触；夹爪编码器数据(finger_qpos接近standard_open)结合sideview中夹爪已退离碗，表明接触解除但位置目标达成\"}",
+              "usage": {
+                "prompt_tokens": 1015,
+                "completion_tokens": 1100,
+                "total_tokens": 2115,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 75
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 691,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/model_requests/call_02_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000278_wrist.png",
+                  "sha256": "28b4b7a19139e5c15e1cdcecf43f4ea1f5e903e44c4d184821f6d0222894420b"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000279_sideview.png",
+                  "sha256": "f7e80f5429636f7fb0fc045c9b731531e448f9b3b122677c611c4b2a7452c6b4"
+                }
+              ],
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 199,
+          "timeline_frames": 199
+        },
+        {
+          "capability": "stove_on",
+          "actual_vla": 150,
+          "local_grasp_actions": 0,
+          "success": false,
+          "reason": "home screen blocked",
+          "error": null,
+          "finish_counts": {
+            "release": 20,
+            "movement": 28,
+            "confirm": 4,
+            "home": 0
+          },
+          "open_and_retreat_actions": 28,
+          "concurrent_open_retreat": {
+            "triggered": true,
+            "finger_qpos_before": [
+              0.02149557228938773,
+              -0.03803115210004298
+            ],
+            "exact_open_pending": true,
+            "release_proven": false,
+            "geometry": "measured/half/standard-open CAD envelope",
+            "finger_qpos_after": [
+              0.0383484538300404,
+              -0.0385292408286532
+            ]
+          },
+          "feedback_retreat": {
+            "mode": "measured_pose_feedback",
+            "ok": true,
+            "reason": "retreated and settled",
+            "travel_m": 0.030341908390461286,
+            "replans": [],
+            "endpoint_clearance": {
+              "ok": true,
+              "reason": "clear",
+              "min_distance": -0.011791809108238668,
+              "endpoint_hand_clear": true,
+              "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+              "diagnostic": {
+                "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+              }
+            }
+          },
+          "home_streak": 0,
+          "independent_streak": 0,
+          "final_independent": {
+            "timestamp": 30.14999999999417,
+            "predicates": {
+              "on|akita_black_bowl_1|plate_1": true,
+              "turnon|flat_stove_1": true
+            },
+            "home": {
+              "joint_names": [
+                "robot0_joint1",
+                "robot0_joint2",
+                "robot0_joint3",
+                "robot0_joint4",
+                "robot0_joint5",
+                "robot0_joint6",
+                "robot0_joint7"
+              ],
+              "joint_indexes": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "arm_error_rad": [
+                0.07915134336502233,
+                0.4209502641410509,
+                0.3978137724888041,
+                0.35077903819481815,
+                0.93808444553582,
+                0.6844717353515226,
+                0.6977770554942971
+              ],
+              "arm_speed_rad_s": [
+                0.0049507480379450295,
+                0.0039328628105534695,
+                0.009282842285255265,
+                3.5924730256377267e-06,
+                0.015376394500632252,
+                7.57589495197117e-05,
+                0.008267439122124014
+              ],
+              "max_joint_error_rad": 0.93808444553582,
+              "max_joint_speed_rad_s": 0.015376394500632252,
+              "finger_error_m": [
+                0.00038212203498856623,
+                0.00019852315003354715
+              ],
+              "finger_speed_m_s": [
+                0.00036600103417327594,
+                0.0001435241967391449
+              ],
+              "max_finger_error_m": 0.00038212203498856623,
+              "max_finger_speed_m_s": 0.00036600103417327594,
+              "ready": false
+            },
+            "contacts": [],
+            "release_status": {
+              "ready": true,
+              "held_objects": [],
+              "grasp_observation_complete": true,
+              "goal_speeds": {
+                "on|akita_black_bowl_1|plate_1": {
+                  "linear_speed": 1.303875692576167e-07,
+                  "angular_speed": 1.9057743692124684e-06
+                }
+              },
+              "phase": "not_holding"
+            },
+            "ready": false
+          },
+          "grasp": null,
+          "qwen": [
+            {
+              "kind": "online",
+              "actual_vla": 150,
+              "timestamp": 27.54999999999561,
+              "content": "{\"goal_achieved\":true,\"holding_or_contact\":true,\"reason\":\"sideview显示灶台有红色加热圈（已开启状态），符合turn on the stove目标；夹爪在灶台旋钮位置且编码器qpos接近0（闭合状态），表明仍接触\"}",
+              "usage": {
+                "prompt_tokens": 1009,
+                "completion_tokens": 1091,
+                "total_tokens": 2100,
+                "completion_tokens_details": {
+                  "reasoning_tokens": 1025,
+                  "text_tokens": 66
+                },
+                "prompt_tokens_details": {
+                  "image_tokens": 324,
+                  "text_tokens": 685,
+                  "cached_tokens": 0
+                }
+              },
+              "request_path": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/model_requests/call_01_request.json",
+              "images": [
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000092_wrist.png",
+                  "sha256": "508a3c92b95a255c73676116857a89fc40975eef03dbff92dfdbad07450e8000"
+                },
+                {
+                  "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000093_sideview.png",
+                  "sha256": "6cf79604a363eaf674389dcd9d512afa943e21d618245e2cfd66fe4e19c11523"
+                }
+              ],
+              "stage_sent": false
+            }
+          ],
+          "decoded_frames": 161,
+          "timeline_frames": 161
+        }
+      ],
+      "wall_seconds": 389.083784488,
+      "video": "First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/sequence.mp4"
+    }
+  ],
+  "new_vla": 600,
+  "local_grasp_actions": 182,
+  "finish_actions": 792,
+  "qwen_calls": 8,
+  "qwen_tokens": 14930,
+  "replay_actions": 0,
+  "subagents": 0,
+  "scope": "Fixed user sequences; no Hermes planning evaluation; no training",
+  "not_run": []
+}

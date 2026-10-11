@@ -5,7 +5,8 @@ from .assisted_combo_pilot import ROOT, OUT, PLAN
 from .combo_pilot import sha, write
 
 
-def main():
+def main(output=OUT, proposal=PLAN, campaign_id='20261011-assisted-combos', case_names=('bowl_wine','bowl_stove')):
+    OUT, PLAN = Path(output), Path(proposal)
     import imageio.v2 as imageio
     import numpy as np
     from PIL import Image, ImageDraw
@@ -24,7 +25,7 @@ def main():
         elif isinstance(value,list):
             for item in value:refs(item)
 
-    for name in ('bowl_wine','bowl_stove'):
+    for name in case_names:
         directory=OUT/name
         if not (directory/'result.json').exists():continue
         result=json.loads((directory/'result.json').read_text())
@@ -58,6 +59,17 @@ def main():
                 grasp_path=run/'grasp_assist.json'
                 grasp=json.loads(grasp_path.read_text()) if grasp_path.exists() else None
                 refs(grasp);refs(finish)
+                feedback = finish.get('feedback_retreat') or {}
+                initial_frames = feedback.get('initial_frames') or []
+                if initial_frames:
+                    # Preserve all clouds used during feedback, including successful
+                    # refreshes whose compact trace records do not repeat frame paths.
+                    first = int(Path(initial_frames[0]['rgb_path']).stem[3:9])
+                    endpoint = feedback.get('endpoint_frames') or []
+                    last = max(int(Path(fr['rgb_path']).stem[3:9]) for fr in endpoint) + 1 if endpoint else None
+                    keep.extend(p for p in (run/'finish/sensors').iterdir()
+                                if p.is_file() and p.name.startswith('cap') and
+                                int(p.name[3:9]) >= first and (last is None or int(p.name[3:9]) <= last))
                 timeline=[{'source':'initial','actual_vla':0,'local_grasp_actions':0}]
                 helper_count=0
                 for source in sources:
@@ -86,20 +98,21 @@ def main():
                     'finish_counts':finish.get('counts',{}),
                     'open_and_retreat_actions':sum(a.get('phase')=='movement' and a.get('finger_target') is not None for a in actions),
                     'concurrent_open_retreat':finish.get('concurrent_open_retreat'),
+                    'feedback_retreat':{key:feedback.get(key) for key in ('mode','ok','reason','travel_m','replans','endpoint_clearance')},
                     'home_streak':finish.get('home_streak',0),'independent_streak':sub['independent_streak'],
                     'final_independent':independent[-1] if independent else None,
                     'grasp':grasp,'qwen':checks,'decoded_frames':count,'timeline_frames':len(timeline)})
         cases.append({'case':name,'state':result['plan']['state'],'plan_success':result['plan']['plan_success'],
             'jobs':jobs,'wall_seconds':result['wall_seconds'],'video':(directory/'sequence.mp4').relative_to(ROOT).as_posix()})
         keep.extend(p for p in directory.rglob('*') if p.is_file() and 'sensors' not in p.parts)
-    summary={'id':'20261011-assisted-combos','cases':cases,
+    summary={'id':campaign_id,'cases':cases,
         'new_vla':sum(j['actual_vla'] for c in cases for j in c['jobs']),
         'local_grasp_actions':sum(j['local_grasp_actions'] for c in cases for j in c['jobs']),
         'finish_actions':sum(sum(j['finish_counts'].values()) for c in cases for j in c['jobs']),
         'qwen_calls':sum(len(j['qwen']) for c in cases for j in c['jobs']),
         'qwen_tokens':sum(q['usage'].get('total_tokens',0) for c in cases for j in c['jobs'] for q in j['qwen']),
         'replay_actions':0,'subagents':0,'scope':'Fixed user sequences; no Hermes planning evaluation; no training',
-        'not_run':[n for n in ('bowl_wine','bowl_stove') if not (OUT/n/'result.json').exists()]}
+        'not_run':[n for n in case_names if not (OUT/n/'result.json').exists()]}
     write(OUT/'summary.json',summary)
     keep.extend(p for p in OUT.iterdir() if p.is_file() and p.name!='manifest.json')
     write(OUT/'manifest.json',{'tracked_files':[{'path':p.relative_to(ROOT).as_posix(),'sha256':sha(p)} for p in sorted(set(keep))]})

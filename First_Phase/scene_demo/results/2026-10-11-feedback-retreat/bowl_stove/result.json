@@ -1,0 +1,4081 @@
+{
+  "case": "bowl_stove",
+  "user_request": "先将碗放到盘子上，再打开灶台。",
+  "plan": {
+    "ok": true,
+    "request_id": "generic_bowl_stove",
+    "session_id": "2629aa6297f845bb83a2148e6aec284b",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "original_capability_ids": [
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "rationale": "用户指定顺序；固定执行组合试点，不作为Hermes规划评估",
+    "job_ids": [
+      "06faee33ebbc4af49652bdb1e80f0986",
+      "fe65eb626be34ebdb178ec1a4ed20ed2"
+    ],
+    "completed_capability_ids": [
+      "bowl_to_plate"
+    ],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "home screen blocked",
+    "repair_history": [],
+    "scene_version": 2
+  },
+  "subtasks": [
+    {
+      "capability": "bowl_to_plate",
+      "outcome": {
+        "ok": true,
+        "cancelled": false,
+        "reason": "complete",
+        "detail": ""
+      },
+      "job": {
+        "job_id": "06faee33ebbc4af49652bdb1e80f0986",
+        "request_id": "generic_bowl_stove",
+        "session_id": "2629aa6297f845bb83a2148e6aec284b",
+        "capability_id": "bowl_to_plate",
+        "state": "completed",
+        "steps": 150,
+        "total_steps": 391,
+        "success": true,
+        "ended_reason": "complete",
+        "error": null,
+        "instruction": "put the bowl on the plate",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+        "state_after_sha": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": {
+          "phase": "done",
+          "calls": 2,
+          "prechecks": 1,
+          "helper_counts": {
+            "release": 2,
+            "movement": 103,
+            "confirm": 5,
+            "home": 131
+          },
+          "last_decision": {
+            "state": "complete",
+            "reason": "purpose achieved and hand separated",
+            "allow_release": false,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": true,
+            "reason": "complete",
+            "checks": 2
+          },
+          "independent_streak": 5
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/rollout.mp4",
+        "wall_s": 205.198
+      },
+      "state_before": "8b8be634a018202744096727ae139fd1401257b2046592ef8e5f8dc164e467bd",
+      "actual_vla": 150,
+      "local_grasp_actions": 0,
+      "state_after": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914",
+      "elapsed_seconds": 205.43999801100006,
+      "finish": {
+        "ready": true,
+        "ok": true,
+        "reason": "complete",
+        "counts": {
+          "release": 2,
+          "movement": 103,
+          "confirm": 5,
+          "home": 131
+        },
+        "release_settle_actions": 0,
+        "release_open_actions": 2,
+        "plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.045298443329670764,
+              0.8784073984671172,
+              0.0017038834748652003,
+              -1.2884127961576688,
+              -0.08436247278909477,
+              1.9383074889548715,
+              1.0012305436167541
+            ],
+            [
+              0.04530008535040871,
+              0.875303246841166,
+              0.0017459219965035911,
+              -1.2885764944283582,
+              -0.08428971397180457,
+              1.9353723223411174,
+              1.001011832774056
+            ],
+            [
+              0.04530210816934392,
+              0.8721990978837978,
+              0.0017878771185181896,
+              -1.2887138851547275,
+              -0.08421660798165813,
+              1.932412503734731,
+              1.0007911281137603
+            ],
+            [
+              0.045304583434236496,
+              0.8691178040627561,
+              0.0018294067830601276,
+              -1.2888096964769284,
+              -0.08414323573382124,
+              1.929434040863154,
+              1.0005692172435927
+            ],
+            [
+              0.04530752284016323,
+              0.8660599796570859,
+              0.0018705028474118618,
+              -1.2888630444667735,
+              -0.08406960213790182,
+              1.9264366391973318,
+              1.0003460835465086
+            ],
+            [
+              0.04531093156720554,
+              0.8630257099285283,
+              0.0019111584214099166,
+              -1.2888738772730075,
+              -0.08399572388895175,
+              1.9234203299343509,
+              1.00012173401519
+            ],
+            [
+              0.04531481431583181,
+              0.8600150515272021,
+              0.0019513667833981783,
+              -1.2888421928713676,
+              -0.08392161847366442,
+              1.9203851673336991,
+              0.9998961772261489
+            ],
+            [
+              0.04531917570864317,
+              0.8570280617100416,
+              0.0019911213063396297,
+              -1.2887679878423717,
+              -0.08384730340964827,
+              1.9173312049940927,
+              0.9996694216305388
+            ],
+            [
+              0.04532402031825856,
+              0.8540648002582009,
+              0.0020304154518618477,
+              -1.288651253971396,
+              -0.0837727961939415,
+              1.9142584942550842,
+              0.9994414754378254
+            ],
+            [
+              0.045329352670056416,
+              0.8511253296019241,
+              0.002069242769003845,
+              -1.288491978016902,
+              -0.0836981142981643,
+              1.9111670840826351,
+              0.9992123466059267
+            ],
+            [
+              0.045335177243298296,
+              0.8482097148285377,
+              0.002107596893197789,
+              -1.2882901416852408,
+              -0.08362327516675391,
+              1.9080570210516028,
+              0.9989820428382762
+            ],
+            [
+              0.04534149847222156,
+              0.845318023684826,
+              0.0021454715451711638,
+              -1.2880457216152708,
+              -0.08354829621542458,
+              1.904928349332915,
+              0.9987505715812078
+            ],
+            [
+              0.04534832074719782,
+              0.8424503265811809,
+              0.002182860529749474,
+              -1.2877586893597321,
+              -0.08347319482966173,
+              1.9017811106793092,
+              0.9985179400212209
+            ],
+            [
+              0.04535564841596774,
+              0.8396066965980166,
+              0.0022197577345554683,
+              -1.2874290113624856,
+              -0.08339798836324455,
+              1.89861534440921,
+              0.9982841550820977
+            ],
+            [
+              0.04536348578495252,
+              0.836787209494567,
+              0.002256157128604698,
+              -1.287056648931443,
+              -0.0833226941367981,
+              1.8954310873886955,
+              0.9980492234218681
+            ],
+            [
+              0.04537183712064379,
+              0.8339919437200093,
+              0.002292052760793271,
+              -1.2866415582072557,
+              -0.08324732943638279,
+              1.8922283740115435,
+              0.9978131514296241
+            ],
+            [
+              0.04538070665106853,
+              0.8312209804270229,
+              0.0023274387582808112,
+              -1.2861836901275963,
+              -0.08317191151211924,
+              1.8890072361773291,
+              0.9975759452221765
+            ],
+            [
+              0.04539009856733428,
+              0.828474403487755,
+              0.0023623093247629543,
+              -1.28568299038707,
+              -0.08309645757685702,
+              1.8857677032675502,
+              0.9973376106405608
+            ],
+            [
+              0.04540001702525009,
+              0.8257522995122801,
+              0.0023966587386365164,
+              -1.2851393993926046,
+              -0.08302098480488636,
+              1.8825098021197446,
+              0.9970981532463798
+            ],
+            [
+              0.045410466147027415,
+              0.8230547578695673,
+              0.0024304813510503146,
+              -1.2845528522143028,
+              -0.0829455103307024,
+              1.8792335569995782,
+              0.9968575783179902
+            ],
+            [
+              0.04542145002306022,
+              0.820381870711006,
+              0.0024637715838461884,
+              -1.2839232785316441,
+              -0.08287005124781908,
+              1.8759389895708534,
+              0.996615890846522
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "checks": [
+          {
+            "target_visible": null,
+            "destination_visible": null,
+            "at_destination": true,
+            "supported": null,
+            "released": true,
+            "stable": null,
+            "operation_achieved": true,
+            "clear_of_target": true,
+            "boxes": {},
+            "evidence": [
+              "sideview显示碗已稳定放置在盘子上，wrist视角确认碗与盘子接触；夹爪编码器数据(finger_qpos接近standard_open)结合sideview中夹爪已退离碗，表明接触解除但位置目标达成"
+            ],
+            "unknown_reasons": []
+          }
+        ],
+        "restored": true,
+        "limitation": "visible geometry only",
+        "opening_confirmed": true,
+        "object_release_not_yet_confirmed": true,
+        "handoff_mode": "two_question_goal_contact_v2",
+        "handoff_goal_latched": true,
+        "_release_path": true,
+        "active_retreat_plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.045298443329670764,
+              0.8784073984671172,
+              0.0017038834748652003,
+              -1.2884127961576688,
+              -0.08436247278909477,
+              1.9383074889548715,
+              1.0012305436167541
+            ],
+            [
+              0.04530008535040871,
+              0.875303246841166,
+              0.0017459219965035911,
+              -1.2885764944283582,
+              -0.08428971397180457,
+              1.9353723223411174,
+              1.001011832774056
+            ],
+            [
+              0.04530210816934392,
+              0.8721990978837978,
+              0.0017878771185181896,
+              -1.2887138851547275,
+              -0.08421660798165813,
+              1.932412503734731,
+              1.0007911281137603
+            ],
+            [
+              0.045304583434236496,
+              0.8691178040627561,
+              0.0018294067830601276,
+              -1.2888096964769284,
+              -0.08414323573382124,
+              1.929434040863154,
+              1.0005692172435927
+            ],
+            [
+              0.04530752284016323,
+              0.8660599796570859,
+              0.0018705028474118618,
+              -1.2888630444667735,
+              -0.08406960213790182,
+              1.9264366391973318,
+              1.0003460835465086
+            ],
+            [
+              0.04531093156720554,
+              0.8630257099285283,
+              0.0019111584214099166,
+              -1.2888738772730075,
+              -0.08399572388895175,
+              1.9234203299343509,
+              1.00012173401519
+            ],
+            [
+              0.04531481431583181,
+              0.8600150515272021,
+              0.0019513667833981783,
+              -1.2888421928713676,
+              -0.08392161847366442,
+              1.9203851673336991,
+              0.9998961772261489
+            ],
+            [
+              0.04531917570864317,
+              0.8570280617100416,
+              0.0019911213063396297,
+              -1.2887679878423717,
+              -0.08384730340964827,
+              1.9173312049940927,
+              0.9996694216305388
+            ],
+            [
+              0.04532402031825856,
+              0.8540648002582009,
+              0.0020304154518618477,
+              -1.288651253971396,
+              -0.0837727961939415,
+              1.9142584942550842,
+              0.9994414754378254
+            ],
+            [
+              0.045329352670056416,
+              0.8511253296019241,
+              0.002069242769003845,
+              -1.288491978016902,
+              -0.0836981142981643,
+              1.9111670840826351,
+              0.9992123466059267
+            ],
+            [
+              0.045335177243298296,
+              0.8482097148285377,
+              0.002107596893197789,
+              -1.2882901416852408,
+              -0.08362327516675391,
+              1.9080570210516028,
+              0.9989820428382762
+            ],
+            [
+              0.04534149847222156,
+              0.845318023684826,
+              0.0021454715451711638,
+              -1.2880457216152708,
+              -0.08354829621542458,
+              1.904928349332915,
+              0.9987505715812078
+            ],
+            [
+              0.04534832074719782,
+              0.8424503265811809,
+              0.002182860529749474,
+              -1.2877586893597321,
+              -0.08347319482966173,
+              1.9017811106793092,
+              0.9985179400212209
+            ],
+            [
+              0.04535564841596774,
+              0.8396066965980166,
+              0.0022197577345554683,
+              -1.2874290113624856,
+              -0.08339798836324455,
+              1.89861534440921,
+              0.9982841550820977
+            ],
+            [
+              0.04536348578495252,
+              0.836787209494567,
+              0.002256157128604698,
+              -1.287056648931443,
+              -0.0833226941367981,
+              1.8954310873886955,
+              0.9980492234218681
+            ],
+            [
+              0.04537183712064379,
+              0.8339919437200093,
+              0.002292052760793271,
+              -1.2866415582072557,
+              -0.08324732943638279,
+              1.8922283740115435,
+              0.9978131514296241
+            ],
+            [
+              0.04538070665106853,
+              0.8312209804270229,
+              0.0023274387582808112,
+              -1.2861836901275963,
+              -0.08317191151211924,
+              1.8890072361773291,
+              0.9975759452221765
+            ],
+            [
+              0.04539009856733428,
+              0.828474403487755,
+              0.0023623093247629543,
+              -1.28568299038707,
+              -0.08309645757685702,
+              1.8857677032675502,
+              0.9973376106405608
+            ],
+            [
+              0.04540001702525009,
+              0.8257522995122801,
+              0.0023966587386365164,
+              -1.2851393993926046,
+              -0.08302098480488636,
+              1.8825098021197446,
+              0.9970981532463798
+            ],
+            [
+              0.045410466147027415,
+              0.8230547578695673,
+              0.0024304813510503146,
+              -1.2845528522143028,
+              -0.0829455103307024,
+              1.8792335569995782,
+              0.9968575783179902
+            ],
+            [
+              0.04542145002306022,
+              0.820381870711006,
+              0.0024637715838461884,
+              -1.2839232785316441,
+              -0.08287005124781908,
+              1.8759389895708534,
+              0.996615890846522
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "movement_budget": 360,
+        "movement_progress": {
+          "waypoint": 20,
+          "waypoints": 21,
+          "joint_error": 0.003618732071670072
+        },
+        "movement_screens": [
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000103_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000103_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000104_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000104_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11662620480845887,
+                    -0.9685984552346448,
+                    -0.21957996463482804,
+                    0.10980746094532766
+                  ],
+                  [
+                    -0.986438644869697,
+                    0.1386767716595273,
+                    -0.08779267002275551,
+                    0.02096112224989613
+                  ],
+                  [
+                    0.11548648518163719,
+                    0.2063632368401607,
+                    -0.9716362931782861,
+                    1.1065135692048267
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000112_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000112_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000113_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000113_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11703538657919893,
+                    -0.9685889860915696,
+                    -0.21940395235810964,
+                    0.10984866515920885
+                  ],
+                  [
+                    -0.9863630714031709,
+                    0.13910765511255047,
+                    -0.08795994350377773,
+                    0.020886985129212887
+                  ],
+                  [
+                    0.11571780182995836,
+                    0.2061175303344912,
+                    -0.9716609254407886,
+                    1.1106687222301315
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000121_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000121_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000122_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000122_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11741069066495458,
+                    -0.9685421138750103,
+                    -0.21941035383067295,
+                    0.10983984601239798
+                  ],
+                  [
+                    -0.9862891106826013,
+                    0.13952596356709668,
+                    -0.08812658872095774,
+                    0.020814927724987706
+                  ],
+                  [
+                    0.11596775356321251,
+                    0.20605503910653566,
+                    -0.9716443799005386,
+                    1.1146683460117264
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000130_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000130_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000131_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000131_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11776804923314232,
+                    -0.9684804065067734,
+                    -0.2194912043620248,
+                    0.10979788251911915
+                  ],
+                  [
+                    -0.9862167237667796,
+                    0.13993420363934128,
+                    -0.08828925424161169,
+                    0.020744959345859428
+                  ],
+                  [
+                    0.11622073972633595,
+                    0.20606824322125758,
+                    -0.971611351721029,
+                    1.1186246255971637
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000139_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000139_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000140_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000140_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11806287950006672,
+                    -0.9684110408628029,
+                    -0.2196388226593209,
+                    0.10972527850334587
+                  ],
+                  [
+                    -0.9861525134831545,
+                    0.14028609163199407,
+                    -0.08844790922047817,
+                    0.020679246400194078
+                  ],
+                  [
+                    0.1164662038318709,
+                    0.20615496217564022,
+                    -0.9715635619635759,
+                    1.1225446656190026
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000148_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000148_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000149_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000149_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11809400621296828,
+                    -0.9683706827825087,
+                    -0.21979996911716604,
+                    0.10964833412888145
+                  ],
+                  [
+                    -0.9861285684611534,
+                    0.14036690545611252,
+                    -0.08858655833380569,
+                    0.020636438227537038
+                  ],
+                  [
+                    0.11663726746338575,
+                    0.20628948732305902,
+                    -0.9715144853570954,
+                    1.1262271614492187
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000157_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000157_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000158_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000158_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11805481306151744,
+                    -0.9683679146665771,
+                    -0.21983321622837673,
+                    0.10963217267217223
+                  ],
+                  [
+                    -0.9861210366269422,
+                    0.14035339633866362,
+                    -0.0886917428964179,
+                    0.020621745879714635
+                  ],
+                  [
+                    0.11674057664245305,
+                    0.20631167194442512,
+                    -0.9714973658145867,
+                    1.12984816649144
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000166_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000166_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000167_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000167_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11801813926342647,
+                    -0.9683731884195108,
+                    -0.2198296766931763,
+                    0.10963288999509156
+                  ],
+                  [
+                    -0.9861165887438781,
+                    0.14033297375108372,
+                    -0.08877347510552978,
+                    0.02061562013183134
+                  ],
+                  [
+                    0.1168152053841148,
+                    0.20630081053744215,
+                    -0.9714907016346881,
+                    1.1331001131378533
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000175_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000175_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000176_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000176_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.1179811239581256,
+                    -0.9683790853002937,
+                    -0.21982356912428874,
+                    0.1096356060405046
+                  ],
+                  [
+                    -0.9861119051397201,
+                    0.14031245783054386,
+                    -0.0888578905852504,
+                    0.020608930905996973
+                  ],
+                  [
+                    0.11689210807956991,
+                    0.20628708473996965,
+                    -0.9714843661831083,
+                    1.1365387765233839
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000184_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000184_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000185_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000185_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11794795921480755,
+                    -0.9683844442055324,
+                    -0.21981775892270985,
+                    0.10963831683251689
+                  ],
+                  [
+                    -0.9861073730421538,
+                    0.14029462488963357,
+                    -0.08893630900244245,
+                    0.020602015497204397
+                  ],
+                  [
+                    0.11696378819516332,
+                    0.2062740566523514,
+                    -0.9714785050649437,
+                    1.1398753347523158
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        ],
+        "home_entry": {
+          "visible_semantics": true,
+          "measured_open": true,
+          "settled": true,
+          "task_complete_before_home": false,
+          "label": "safety eligibility under review; task completion pending final verification",
+          "semantic_basis": "initial handoff purpose; final task acceptance pending",
+          "clearance_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.009399280336657517,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000193_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000193_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000194_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_01_bowl_to_plate_06faee33/finish/sensors/cap000194_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -0.11793552163269833,
+                    -0.9683865127118833,
+                    -0.21981531960930145,
+                    0.10963816126796103
+                  ],
+                  [
+                    -0.9861059560312216,
+                    0.14028741166786513,
+                    -0.08896339476031648,
+                    0.020600657925290193
+                  ],
+                  [
+                    0.11698827384388703,
+                    0.2062692515263653,
+                    -0.9714765769990439,
+                    1.1414864065498027
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        },
+        "home_screen": {
+          "sample_count": 117,
+          "planned_samples": 117,
+          "collisions": [],
+          "collision_count": 0,
+          "ok": true,
+          "live_unchanged": true
+        },
+        "home_mode": "original_joint_home_streaming",
+        "home_streak": 5
+      },
+      "independent_streak": 5
+    },
+    {
+      "capability": "stove_on",
+      "outcome": {
+        "ok": false,
+        "cancelled": false,
+        "reason": "home screen blocked",
+        "detail": ""
+      },
+      "job": {
+        "job_id": "fe65eb626be34ebdb178ec1a4ed20ed2",
+        "request_id": "generic_bowl_stove",
+        "session_id": "2629aa6297f845bb83a2148e6aec284b",
+        "capability_id": "stove_on",
+        "state": "completed",
+        "steps": 150,
+        "total_steps": 593,
+        "success": false,
+        "ended_reason": "home screen blocked",
+        "error": null,
+        "instruction": "turn on the stove",
+        "scene_version_before": 1,
+        "scene_version_after": 2,
+        "state_before_sha": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914",
+        "state_after_sha": "254058cfdead3d5633a7e57af8a2d7f3bbb4b4deec1fc93e0d2a7f30b3ad8a00",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": {
+          "phase": "blocked",
+          "calls": 1,
+          "prechecks": 1,
+          "helper_counts": {
+            "release": 20,
+            "movement": 28,
+            "confirm": 4,
+            "home": 0
+          },
+          "last_decision": {
+            "state": "needs_release",
+            "reason": "purpose achieved; open fingers",
+            "allow_release": true,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "home screen blocked",
+            "checks": 1
+          },
+          "independent_streak": 0
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/rollout.mp4",
+        "wall_s": 146.684
+      },
+      "state_before": "299bb5edb9f412dd81387a8e7953e61cc8b46e9c1ac8f9d26c1549a266068914",
+      "actual_vla": 150,
+      "local_grasp_actions": 0,
+      "state_after": "254058cfdead3d5633a7e57af8a2d7f3bbb4b4deec1fc93e0d2a7f30b3ad8a00",
+      "elapsed_seconds": 146.86334332599995,
+      "finish": {
+        "ready": false,
+        "ok": false,
+        "reason": "home screen blocked",
+        "counts": {
+          "release": 20,
+          "movement": 28,
+          "confirm": 4,
+          "home": 0
+        },
+        "release_settle_actions": 0,
+        "release_open_actions": 20,
+        "plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.16624831079144448,
+              0.32788266988786924,
+              0.2420580924723711,
+              -2.7725061497432484,
+              -1.2101978313956103,
+              2.9474842612649717,
+              0.29332083620189214
+            ],
+            [
+              0.1637573884166909,
+              0.32513595220324987,
+              0.24725589055431293,
+              -2.7731721571159706,
+              -1.1995544285144482,
+              2.9456695393166994,
+              0.28512236461735163
+            ],
+            [
+              0.15842900487352096,
+              0.31950870031385853,
+              0.2576395005616976,
+              -2.7746767843269,
+              -1.1784766774707605,
+              2.9420707588541744,
+              0.26861200030836757
+            ],
+            [
+              0.1529711005661149,
+              0.31393505695817564,
+              0.2680374611449181,
+              -2.776125809995015,
+              -1.1578079883816217,
+              2.9384663193311353,
+              0.2524153043602985
+            ],
+            [
+              0.15023110953493793,
+              0.31117084146932805,
+              0.2734577478167357,
+              -2.7767203290348057,
+              -1.1472777156579503,
+              2.9365621802916535,
+              0.24431553817414525
+            ],
+            [
+              0.1445698227023874,
+              0.30559073592740965,
+              0.284379116460806,
+              -2.7779268078028987,
+              -1.1263155736093036,
+              2.9327299292995423,
+              0.22813083235092366
+            ],
+            [
+              0.13875036154798207,
+              0.2999879100299994,
+              0.29545522295385296,
+              -2.779074210676838,
+              -1.105428439509328,
+              2.9288358057966555,
+              0.2120297294711985
+            ],
+            [
+              0.13351241547384118,
+              0.2950334242034187,
+              0.3054350266505469,
+              -2.779981617125162,
+              -1.0869348472611802,
+              2.925306816857735,
+              0.19786385302863313
+            ],
+            [
+              0.1306297373735957,
+              0.2923330666200102,
+              0.31119415161306335,
+              -2.780310436746184,
+              -1.0764474057742723,
+              2.9232267092772486,
+              0.19000196287884527
+            ],
+            [
+              0.12467472483458952,
+              0.28682866465085377,
+              0.32273458955474466,
+              -2.7810493480363365,
+              -1.0555864798266836,
+              2.9190757662243576,
+              0.17425243356981387
+            ],
+            [
+              0.11890767425525264,
+              0.28156570948121107,
+              0.3337810774955006,
+              -2.7817095475485143,
+              -1.03586014107252,
+              2.91509301716304,
+              0.15937175832643463
+            ],
+            [
+              0.11594225521595435,
+              0.27888663497298627,
+              0.33971919456551397,
+              -2.7818672965129725,
+              -1.0254077968808661,
+              2.912899236947534,
+              0.1516465683680561
+            ],
+            [
+              0.10985067708803672,
+              0.2734165610529958,
+              0.3516039607492657,
+              -2.7822647756160928,
+              -1.0046019187359756,
+              2.908524374405314,
+              0.13617167291734777
+            ],
+            [
+              0.10422133147562548,
+              0.2683906473709341,
+              0.36249157014341504,
+              -2.7825867985463413,
+              -0.9857111114996125,
+              2.904500778388509,
+              0.12213494002296803
+            ],
+            [
+              0.10122624352224649,
+              0.2657441273817283,
+              0.3685785461489658,
+              -2.78254240040552,
+              -0.9752719253198049,
+              2.902180165300019,
+              0.11454479649283358
+            ],
+            [
+              0.09507080379320727,
+              0.26029713435068863,
+              0.3807263737927181,
+              -2.7825859574733154,
+              -0.9544971235453832,
+              2.8975759610644527,
+              0.09931377994871392
+            ],
+            [
+              0.09204523127911088,
+              0.2576361824482948,
+              0.3868684096430297,
+              -2.782457019728976,
+              -0.9440784528414496,
+              2.895193329790187,
+              0.09177730958251794
+            ],
+            [
+              0.08588311914713675,
+              0.25219572989997513,
+              0.3991411355798469,
+              -2.7822709302055686,
+              -0.9233122856655267,
+              2.890438539476865,
+              0.07668277631224682
+            ],
+            [
+              0.08044567799726567,
+              0.2473714587120125,
+              0.4099070443299348,
+              -2.7820757509766554,
+              -0.9051681350190072,
+              2.8862394883402906,
+              0.06350194464365568
+            ],
+            [
+              0.07746980072223716,
+              0.24475964560411861,
+              0.41614752303384295,
+              -2.7816890074597915,
+              -0.8947324988816329,
+              2.883697859776433,
+              0.056094714096187624
+            ],
+            [
+              0.07147917775866602,
+              0.23942598128689432,
+              0.4282873868561237,
+              -2.7811473311132846,
+              -0.874408342010386,
+              2.878801513833704,
+              0.041507851995355206
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "endpoint_hand_clear_fail"
+            },
+            {
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "distance": 0.04,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011791809108238668,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "checks": [],
+        "restored": true,
+        "limitation": "visible geometry only",
+        "opening_confirmed": true,
+        "object_release_not_yet_confirmed": true,
+        "handoff_mode": "two_question_goal_contact_v2",
+        "handoff_goal_latched": true,
+        "concurrent_open_retreat": {
+          "triggered": true,
+          "finger_qpos_before": [
+            0.02149557228938773,
+            -0.03803115210004298
+          ],
+          "exact_open_pending": true,
+          "release_proven": false,
+          "geometry": "measured/half/standard-open CAD envelope",
+          "finger_qpos_after": [
+            0.0383484538300404,
+            -0.0385292408286532
+          ]
+        },
+        "_release_path": true,
+        "feedback_retreat": {
+          "ok": true,
+          "reason": "retreated and settled",
+          "mode": "measured_pose_feedback",
+          "screens": [],
+          "replans": [],
+          "trace": [
+            {
+              "actions": 10,
+              "travel_m": 0.007925673487043552,
+              "progress_m": 0.0076546273268995315,
+              "lateral_m": 0.0020549892236963224
+            },
+            {
+              "actions": 20,
+              "travel_m": 0.02025243430433479,
+              "progress_m": 0.012552629833525392,
+              "lateral_m": 0.0013519812512946276
+            }
+          ],
+          "trace_actions": [
+            {
+              "actual_q": [
+                0.16624831079144448,
+                0.32788266988786924,
+                0.2420580924723711,
+                -2.7725061497432484,
+                -1.2101978313956103,
+                2.9474842612649717,
+                0.29332083620189214
+              ],
+              "target_q": [
+                0.1502223758268183,
+                0.31114425639868354,
+                0.2736857589057394,
+                -2.7766440413351727,
+                -1.1469116622867335,
+                2.936461845709886,
+                0.24414840091708465
+              ],
+              "from_xyz": [
+                -0.4036791117591571,
+                0.18157625636225752,
+                0.9286155521425351
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_hand_collision@opening0",
+                  "initial_clearance": 0.003639521849425245,
+                  "previous_clearance": 0.008783079989290954,
+                  "current_clearance": 0.009026406477752616,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.16532097972583754,
+                0.3262743137538335,
+                0.2433366628167663,
+                -2.7749942340845366,
+                -1.2073972351224547,
+                2.9465792108687965,
+                0.29098783564253056
+              ],
+              "target_q": [
+                0.14929718518759896,
+                0.30951011254309096,
+                0.27502686857385444,
+                -2.779112439255232,
+                -1.1440943743725909,
+                2.9355770325978385,
+                0.24187901153306615
+              ],
+              "from_xyz": [
+                -0.40448688762803797,
+                0.18112535380558084,
+                0.928748645163553
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_hand_collision@opening0",
+                  "initial_clearance": 0.003695327075045274,
+                  "previous_clearance": 0.008837411838141157,
+                  "current_clearance": 0.009080629254907213,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.1634109878290683,
+                0.32353296635466744,
+                0.24638823732194978,
+                -2.778357379839091,
+                -1.2009783258025086,
+                2.9449665161311396,
+                0.2858307812960626
+              ],
+              "target_q": [
+                0.14733349992759692,
+                0.3067487654554495,
+                0.2782544300033809,
+                -2.782396786159245,
+                -1.1376726923029405,
+                2.9339479878089936,
+                0.23686098173043377
+              ],
+              "from_xyz": [
+                -0.40540800720624953,
+                0.1807455763927662,
+                0.9291205818797208
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_hand_collision@opening0",
+                  "initial_clearance": 0.003984696395711411,
+                  "previous_clearance": 0.00912988294056774,
+                  "current_clearance": 0.009373203688067072,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.1611512229037677,
+                0.32085703027326107,
+                0.2505041290874627,
+                -2.7801592123027907,
+                -1.1926131714807564,
+                2.9434122648481003,
+                0.27934246697631
+              ],
+              "target_q": [
+                0.14494766246562502,
+                0.30409238221686935,
+                0.28262643112695746,
+                -2.784056980395433,
+                -1.129338838930468,
+                2.9323073116687017,
+                0.23054264665411384
+              ],
+              "from_xyz": [
+                -0.4055371614475324,
+                0.18098653220509767,
+                0.9297227322769616
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_hand_collision@opening0",
+                  "initial_clearance": 0.0045964055929528305,
+                  "previous_clearance": 0.009752038118727747,
+                  "current_clearance": 0.009995848759547538,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.15872604246691743,
+                0.31821354144665687,
+                0.255119561878452,
+                -2.7812200452697753,
+                -1.1833717140351854,
+                2.941883362592625,
+                0.2722676506400558
+              ],
+              "target_q": [
+                0.14236828886156844,
+                0.30148632903015704,
+                0.2875284638461874,
+                -2.784946663761486,
+                -1.1201433582937865,
+                2.9306606125964265,
+                0.22365019678647577
+              ],
+              "from_xyz": [
+                -0.4052961735100975,
+                0.18151456218700834,
+                0.9304334524996707
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": -0.005175651922700192,
+                  "previous_clearance": -0.0004902758029411702,
+                  "current_clearance": -0.00022170256207566796,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.15621367552474422,
+                0.315588016297759,
+                0.25998353508968064,
+                -2.7819425265260564,
+                -1.1737414741358285,
+                2.9403538537001577,
+                0.26494528100385795
+              ],
+              "target_q": [
+                0.1396937194435315,
+                0.2989055762096567,
+                0.2926873502510954,
+                -2.7854841357500995,
+                -1.1105648435617188,
+                2.928999994865337,
+                0.21651449056811725
+              ],
+              "from_xyz": [
+                -0.4048936342475356,
+                0.18216997173075142,
+                0.931193598060331
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": -0.004456775733279135,
+                  "previous_clearance": 0.00024184694413889596,
+                  "current_clearance": 0.0005112510095746994,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.15364786261277907,
+                0.3129747291225726,
+                0.2649850434258739,
+                -2.7825031171948047,
+                -1.1639418518590903,
+                2.938811084460871,
+                0.25752839870723104
+              ],
+              "target_q": [
+                0.13696663148963029,
+                0.29633968116322895,
+                0.2979822459739456,
+                -2.7858528369633437,
+                -1.1008186355681442,
+                2.9273207894729576,
+                0.20928485596970403
+              ],
+              "from_xyz": [
+                -0.4044211549217686,
+                0.18288206540069926,
+                0.9319768924197382
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": -0.003690351265815503,
+                  "previous_clearance": 0.0013734935367652294,
+                  "current_clearance": 0.0016438157674187291,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.1510435377879855,
+                0.3103713613838463,
+                0.2700745527668509,
+                -2.7829779173786138,
+                -1.1540713264653157,
+                2.937249169971804,
+                0.25008591442279093
+              ],
+              "target_q": [
+                0.13420589800850474,
+                0.293784217745117,
+                0.3033592692167893,
+                -2.7861319673079055,
+                -1.0910013506525407,
+                2.92562057478625,
+                0.20202846078182415
+              ],
+              "from_xyz": [
+                -0.40391827693551086,
+                0.1836198399758661,
+                0.9327717930730107
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": -0.002618088421053915,
+                  "previous_clearance": 0.0019169372885926165,
+                  "current_clearance": 0.002104590682045586,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.1484077108927974,
+                0.3077768883174931,
+                0.2752295066859638,
+                -2.7833991776219587,
+                -1.1441739812132337,
+                2.9356655651270622,
+                0.2426487092882765
+              ],
+              "target_q": [
+                0.13142023784533255,
+                0.2912372106542562,
+                0.30879395606841253,
+                -2.7863551498390215,
+                -1.0811562053387604,
+                2.923898252065245,
+                0.19477533836116648
+              ],
+              "from_xyz": [
+                -0.4034017658297389,
+                0.18436985005946657,
+                0.9335733277402324
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": -0.00173299733267622,
+                  "previous_clearance": 0.0020727099746680054,
+                  "current_clearance": 0.002160282672972064,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.14574406166643022,
+                0.3051907793045293,
+                0.28043917979384886,
+                -2.7837802281692574,
+                -1.134269445504916,
+                2.93405927935362,
+                0.2352304790714963
+              ],
+              "target_q": [
+                0.1286140481670422,
+                0.28869768519642225,
+                0.3142747568197047,
+                -2.786536320908517,
+                -1.0713024152428732,
+                2.9221533810329055,
+                0.18753874785495017
+              ],
+              "from_xyz": [
+                -0.4028785649762346,
+                0.1851263505323848,
+                0.9343794242949401
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": -0.0007643795981404806,
+                  "previous_clearance": 0.0025250864552594987,
+                  "current_clearance": 0.002759608261542624,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.1430548722095521,
+                0.30261269485727427,
+                0.2856980324295264,
+                -2.7841263562714467,
+                -1.124366361328852,
+                2.9324300022109315,
+                0.2278371541223751
+              ],
+              "target_q": [
+                0.12578988987990844,
+                0.28616507580315087,
+                0.3197957872949276,
+                -2.786681035177777,
+                -1.0614484149718229,
+                2.9203858057101963,
+                0.18032437446288307
+              ],
+              "from_xyz": [
+                -0.40235145174384,
+                0.18588693930479117,
+                0.9351892728335774
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 3.825765519227184e-05,
+                  "previous_clearance": 0.0024525598613864877,
+                  "current_clearance": 0.0023290964849818504,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.14034183684779641,
+                0.30004237614481044,
+                0.2910027961705409,
+                -2.7844395906820556,
+                -1.1144684444917536,
+                2.930777669940285,
+                0.22047115995984368
+              ],
+              "target_q": [
+                0.12294954419433365,
+                0.2836389869256291,
+                0.3253536465175879,
+                -2.7867914417550317,
+                -1.051597807235701,
+                2.9185954452476714,
+                0.17313449058873792
+              ],
+              "from_xyz": [
+                -0.40182152821307277,
+                0.18665061938030097,
+                0.9360025858089367
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.0008197354945194517,
+                  "previous_clearance": 0.0020945695416934407,
+                  "current_clearance": 0.002151001638403042,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.13760640026550724,
+                0.2974795919106844,
+                0.29635119976973995,
+                -2.784720604114006,
+                -1.1045771959047,
+                2.9291023093457844,
+                0.2131333333757544
+              ],
+              "target_q": [
+                0.12009446053075981,
+                0.28111908730557605,
+                0.3309460224299301,
+                -2.7868682683397994,
+                -1.041752023488998,
+                2.9167822348187213,
+                0.1659698245819374
+              ],
+              "from_xyz": [
+                -0.401289202368979,
+                0.1874169966108637,
+                0.936819299478816
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.0018523810569390092,
+                  "previous_clearance": 0.0024533954931537476,
+                  "current_clearance": 0.0026640543067034104,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.1348498981453301,
+                0.2949240977085484,
+                0.30174141555678136,
+                -2.7849692373851225,
+                -1.0946930966635793,
+                2.9274040475412844,
+                0.20582377176610508
+              ],
+              "target_q": [
+                0.11722594596989187,
+                0.2786050528069825,
+                0.33657108248596695,
+                -2.786911375188472,
+                -1.0319114965019531,
+                2.914946173078589,
+                0.158830384945916
+              ],
+              "from_xyz": [
+                -0.40075444213368017,
+                0.18818601623775189,
+                0.9376394964749005
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.0028884633028674195,
+                  "previous_clearance": 0.003306167242764095,
+                  "current_clearance": 0.00343392934905814,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.13207361583184293,
+                0.2923756565607513,
+                0.3071718076502195,
+                -2.785185268784312,
+                -1.084816191409993,
+                2.9256829609536728,
+                0.19854224882955845
+              ],
+              "target_q": [
+                0.11434524615331135,
+                0.2760965673064021,
+                0.3422272007199379,
+                -2.7869205498397975,
+                -1.0220762325039843,
+                2.913087198045957,
+                0.15171587070604095
+              ],
+              "from_xyz": [
+                -0.4002171944675688,
+                0.18895768449784606,
+                0.9384632722380158
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.0030036739742096627,
+                  "previous_clearance": 0.003775927010223185,
+                  "current_clearance": 0.003976239089100786,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.12927881288205653,
+                0.2898340297669551,
+                0.3126408261076908,
+                -2.785368478908345,
+                -1.074946327655679,
+                2.923939083044903,
+                0.19128838716824542
+              ],
+              "target_q": [
+                0.11145357938654,
+                0.27359331100708567,
+                0.3479128406218495,
+                -2.786895577554778,
+                -1.0122460459269391,
+                2.911205201925003,
+                0.14462583834621223
+              ],
+              "from_xyz": [
+                -0.3996774136863229,
+                0.18973202622132979,
+                0.9392907241528423
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.0023011837620158827,
+                  "previous_clearance": 0.004556604691367081,
+                  "current_clearance": 0.004814600953585262,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.1264667336114202,
+                0.28729897071162125,
+                0.3181469606408822,
+                -2.785518650184334,
+                -1.06508326135348,
+                2.922172415369076,
+                0.18406173521989785
+              ],
+              "target_q": [
+                0.10855215139926201,
+                0.2710949537113478,
+                0.35362650348853125,
+                -2.78683624290386,
+                -1.002420662956683,
+                2.9093000448479063,
+                0.13755977572048056
+              ],
+              "from_xyz": [
+                -0.39913505743388283,
+                0.1905090745374291,
+                0.9401219519728972
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.0016837736774555918,
+                  "previous_clearance": 0.00539100554015638,
+                  "current_clearance": 0.00558664444445633,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.12363861192116814,
+                0.28477022186537865,
+                0.32368871987919795,
+                -2.7856355661226484,
+                -1.0552267046017425,
+                2.9203829324941237,
+                0.17686180244364041
+              ],
+              "target_q": [
+                0.10564216200835655,
+                0.26860115148995434,
+                0.35936670515126895,
+                -2.78674233014467,
+                -0.9925997683491333,
+                2.907371561030367,
+                0.1305171357392324
+              ],
+              "from_xyz": [
+                -0.39859008465790663,
+                0.19128886636878698,
+                0.9409570581575377
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.0018192473193810723,
+                  "previous_clearance": 0.006129742299083451,
+                  "current_clearance": 0.006354876155533821,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.12079567380542942,
+                0.2822475131992695,
+                0.32926462176526833,
+                -2.7857190108184726,
+                -1.0453763472912565,
+                2.91857058426255,
+                0.1696880755576713
+              ],
+              "target_q": [
+                0.10272480837612055,
+                0.26611154483132005,
+                0.3651319650987005,
+                -2.786613623463593,
+                -0.9827830267209949,
+                2.9054195616335496,
+                0.12349735179855563
+              ],
+              "from_xyz": [
+                -0.3980424546729765,
+                0.19207144040273652,
+                0.941796148116699
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.002649069856555907,
+                  "previous_clearance": 0.0067458731217866375,
+                  "current_clearance": 0.006943186414977618,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.11793913892183212,
+                0.2797305612072324,
+                0.33487318878599304,
+                -2.7857687686440498,
+                -1.0355318670126823,
+                2.9167352969332527,
+                0.16254002615909016
+              ],
+              "target_q": [
+                0.09980128682611351,
+                0.26362575740644306,
+                0.37092080099616026,
+                -2.786449907273605,
+                -0.9729700923611259,
+                2.9034438362442905,
+                0.11649984490443163
+              ],
+              "from_xyz": [
+                -0.39749212673998463,
+                0.1928568361451685,
+                0.9426393304092853
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.0031495902563510383,
+                  "previous_clearance": 0.007478843765039972,
+                  "current_clearance": 0.0077159790288951775,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.11507021776676542,
+                0.2772190175299868,
+                0.3405129420467583,
+                -2.785784846677039,
+                -1.0256929260008891,
+                2.914877014618939,
+                0.15541711943441908
+              ],
+              "target_q": [
+                0.09687278759958162,
+                0.26114334407821455,
+                0.37673172533303756,
+                -2.7862511946753625,
+                -0.9631606059543807,
+                2.9014442009042223,
+                0.1095240340278955
+              ],
+              "from_xyz": [
+                -0.39693916213199776,
+                0.19364504817961234,
+                0.9434866986069159
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.004540096353309785,
+                  "previous_clearance": 0.008409723055335404,
+                  "current_clearance": 0.008648910358193124,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.11218976556397757,
+                0.27470810322453626,
+                0.34618212076783755,
+                -2.7857866542919667,
+                -1.0158585148245531,
+                2.9129992497034154,
+                0.14831925149259734
+              ],
+              "target_q": [
+                0.09393993990049458,
+                0.25865939954666134,
+                0.38256322950955113,
+                -2.786037382001305,
+                -0.9533535137181122,
+                2.899424603687227,
+                0.10256994470659417
+              ],
+              "from_xyz": [
+                -0.396392511351128,
+                0.19443210601563646,
+                0.9443367208676193
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision@opening0",
+                  "initial_clearance": 0.004791529122906961,
+                  "previous_clearance": 0.009291299602888433,
+                  "current_clearance": 0.00955657811479622,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.10929873055356633,
+                0.27219442540325506,
+                0.3518790684257034,
+                -2.785787479717254,
+                -1.0060278414157733,
+                2.911104517545804,
+                0.14124618871167915
+              ],
+              "target_q": [
+                0.09100353378506058,
+                0.25617042204465834,
+                0.3884138299211734,
+                -2.785822114630291,
+                -0.9435479822997501,
+                2.897387850973615,
+                0.09563741735124173
+              ],
+              "from_xyz": [
+                -0.3958582436364244,
+                0.19521522380339468,
+                0.9451882640847967
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.10639827275566463,
+                0.26967756181046093,
+                0.35760234397194385,
+                -2.7857875878183753,
+                -0.9962005619351839,
+                2.9091930066056064,
+                0.13419741250686357
+              ],
+              "target_q": [
+                0.08806471325473596,
+                0.2536759011323017,
+                0.3942820792734374,
+                -2.7856057027251713,
+                -0.9337436434822485,
+                2.895334059963728,
+                0.08872589205886092
+              ],
+              "from_xyz": [
+                -0.39533643390963874,
+                0.1959942611341296,
+                0.9460412438446179
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.10348954050330683,
+                0.26715715108097227,
+                0.36335052826047765,
+                -2.78578697855727,
+                -0.9863763380618769,
+                2.9072648778561456,
+                0.1271724013854953
+              ],
+              "target_q": [
+                0.0851246161286016,
+                0.25117538585048355,
+                0.40016654386505335,
+                -2.785388188037636,
+                -0.9239401372500248,
+                2.8932633162461663,
+                0.08183480524139876
+              ],
+              "from_xyz": [
+                -0.39482703534083585,
+                0.1967691397159826,
+                0.9468955987401788
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.10057367386762904,
+                0.2646328259617647,
+                0.3691222095127463,
+                -2.785785650708317,
+                -0.9765548280401978,
+                2.905320293859096,
+                0.12017063115568039
+              ],
+              "target_q": [
+                0.08218437645872408,
+                0.2486684164432525,
+                0.40606579090779776,
+                -2.7851696144097,
+                -0.9141371017414369,
+                2.8911757106386022,
+                0.07496359150031523
+              ],
+              "from_xyz": [
+                -0.39432999832058113,
+                0.19753978446648213,
+                0.9477512688833309
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.09765180877240923,
+                0.2621042097442082,
+                0.37491597784335656,
+                -2.7857836031822574,
+                -0.9667356868727105,
+                2.9033594101653835,
+                0.11319157238115062
+              ],
+              "target_q": [
+                0.0792451294192238,
+                0.24615452008011687,
+                0.41197838209739207,
+                -2.7849500296852177,
+                -0.9043341731311715,
+                2.889071330909238,
+                0.06811168063685384
+              ],
+              "from_xyz": [
+                -0.39384527008019915,
+                0.19830612071462306,
+                0.9486081959213397
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                0.09472512085176318,
+                0.2595714177251629,
+                0.38073045380098874,
+                -2.7857785956086327,
+                -0.956918639762361,
+                2.9013819172281847,
+                0.10623463638831505
+              ],
+              "target_q": [
+                0.07630808116032406,
+                0.24363371153355634,
+                0.41790286744205885,
+                -2.784727188129289,
+                -0.8945310630461623,
+                2.8869497339594465,
+                0.061278423588061834
+              ],
+              "from_xyz": [
+                -0.39337178169552295,
+                0.19906854128385956,
+                0.9494665334784494
+              ],
+              "direction": [
+                0.39303612381844016,
+                0.5878117091159173,
+                0.7071067811865475
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011791809108238668,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            }
+          ],
+          "plan": {
+            "ok": true,
+            "reason": "ok",
+            "waypoints": [
+              [
+                0.16624831079144448,
+                0.32788266988786924,
+                0.2420580924723711,
+                -2.7725061497432484,
+                -1.2101978313956103,
+                2.9474842612649717,
+                0.29332083620189214
+              ],
+              [
+                0.1637573884166909,
+                0.32513595220324987,
+                0.24725589055431293,
+                -2.7731721571159706,
+                -1.1995544285144482,
+                2.9456695393166994,
+                0.28512236461735163
+              ],
+              [
+                0.15842900487352096,
+                0.31950870031385853,
+                0.2576395005616976,
+                -2.7746767843269,
+                -1.1784766774707605,
+                2.9420707588541744,
+                0.26861200030836757
+              ],
+              [
+                0.1529711005661149,
+                0.31393505695817564,
+                0.2680374611449181,
+                -2.776125809995015,
+                -1.1578079883816217,
+                2.9384663193311353,
+                0.2524153043602985
+              ],
+              [
+                0.15023110953493793,
+                0.31117084146932805,
+                0.2734577478167357,
+                -2.7767203290348057,
+                -1.1472777156579503,
+                2.9365621802916535,
+                0.24431553817414525
+              ],
+              [
+                0.1445698227023874,
+                0.30559073592740965,
+                0.284379116460806,
+                -2.7779268078028987,
+                -1.1263155736093036,
+                2.9327299292995423,
+                0.22813083235092366
+              ],
+              [
+                0.13875036154798207,
+                0.2999879100299994,
+                0.29545522295385296,
+                -2.779074210676838,
+                -1.105428439509328,
+                2.9288358057966555,
+                0.2120297294711985
+              ],
+              [
+                0.13351241547384118,
+                0.2950334242034187,
+                0.3054350266505469,
+                -2.779981617125162,
+                -1.0869348472611802,
+                2.925306816857735,
+                0.19786385302863313
+              ],
+              [
+                0.1306297373735957,
+                0.2923330666200102,
+                0.31119415161306335,
+                -2.780310436746184,
+                -1.0764474057742723,
+                2.9232267092772486,
+                0.19000196287884527
+              ],
+              [
+                0.12467472483458952,
+                0.28682866465085377,
+                0.32273458955474466,
+                -2.7810493480363365,
+                -1.0555864798266836,
+                2.9190757662243576,
+                0.17425243356981387
+              ],
+              [
+                0.11890767425525264,
+                0.28156570948121107,
+                0.3337810774955006,
+                -2.7817095475485143,
+                -1.03586014107252,
+                2.91509301716304,
+                0.15937175832643463
+              ],
+              [
+                0.11594225521595435,
+                0.27888663497298627,
+                0.33971919456551397,
+                -2.7818672965129725,
+                -1.0254077968808661,
+                2.912899236947534,
+                0.1516465683680561
+              ],
+              [
+                0.10985067708803672,
+                0.2734165610529958,
+                0.3516039607492657,
+                -2.7822647756160928,
+                -1.0046019187359756,
+                2.908524374405314,
+                0.13617167291734777
+              ],
+              [
+                0.10422133147562548,
+                0.2683906473709341,
+                0.36249157014341504,
+                -2.7825867985463413,
+                -0.9857111114996125,
+                2.904500778388509,
+                0.12213494002296803
+              ],
+              [
+                0.10122624352224649,
+                0.2657441273817283,
+                0.3685785461489658,
+                -2.78254240040552,
+                -0.9752719253198049,
+                2.902180165300019,
+                0.11454479649283358
+              ],
+              [
+                0.09507080379320727,
+                0.26029713435068863,
+                0.3807263737927181,
+                -2.7825859574733154,
+                -0.9544971235453832,
+                2.8975759610644527,
+                0.09931377994871392
+              ],
+              [
+                0.09204523127911088,
+                0.2576361824482948,
+                0.3868684096430297,
+                -2.782457019728976,
+                -0.9440784528414496,
+                2.895193329790187,
+                0.09177730958251794
+              ],
+              [
+                0.08588311914713675,
+                0.25219572989997513,
+                0.3991411355798469,
+                -2.7822709302055686,
+                -0.9233122856655267,
+                2.890438539476865,
+                0.07668277631224682
+              ],
+              [
+                0.08044567799726567,
+                0.2473714587120125,
+                0.4099070443299348,
+                -2.7820757509766554,
+                -0.9051681350190072,
+                2.8862394883402906,
+                0.06350194464365568
+              ],
+              [
+                0.07746980072223716,
+                0.24475964560411861,
+                0.41614752303384295,
+                -2.7816890074597915,
+                -0.8947324988816329,
+                2.883697859776433,
+                0.056094714096187624
+              ],
+              [
+                0.07147917775866602,
+                0.23942598128689432,
+                0.4282873868561237,
+                -2.7811473311132846,
+                -0.874408342010386,
+                2.878801513833704,
+                0.041507851995355206
+              ]
+            ],
+            "candidate_reports": [
+              {
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "distance": 0.04,
+                "reason": "endpoint_hand_clear_fail"
+              },
+              {
+                "direction": [
+                  0.39303612381844016,
+                  0.5878117091159173,
+                  0.7071067811865475
+                ],
+                "distance": 0.04,
+                "reason": "clear"
+              }
+            ],
+            "sensor_screen": {
+              "ok": true,
+              "reason": "clear",
+              "min_distance": -0.011791809108238668,
+              "endpoint_hand_clear": true,
+              "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+              "diagnostic": {
+                "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+              }
+            }
+          },
+          "removed_gate": "per-waypoint joint_error<=0.004",
+          "retained_guards": "CAD path, current endpoint clearance, joint limits, opening and home readiness",
+          "initial_frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000106_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000106_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000107_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000107_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  0.8661838758433007,
+                  0.49920696371349277,
+                  0.022757429754485966,
+                  -0.43084577955264874
+                ],
+                [
+                  0.4987026792874409,
+                  -0.8606022706745098,
+                  -0.10324422202429993,
+                  0.23462168086436136
+                ],
+                [
+                  -0.03195513887628626,
+                  0.1007776715836924,
+                  -0.9943956606952606,
+                  1.0200329448722898
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            }
+          ],
+          "endpoint_frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000130_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000130_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000131_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000131_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  0.868428202539047,
+                  0.4953306192956914,
+                  0.02190969244293489,
+                  -0.41981450991176883
+                ],
+                [
+                  0.49484546089871545,
+                  -0.8631214631078764,
+                  -0.10074378268882743,
+                  0.2527275061354273
+                ],
+                [
+                  -0.03099075447185793,
+                  0.09833065397251613,
+                  -0.9946711293822695,
+                  1.0418597778162464
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            }
+          ],
+          "endpoint_clearance": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011791809108238668,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          },
+          "travel_m": 0.030341908390461286,
+          "hold_q": [
+            0.09179495873511584,
+            0.2570366189793839,
+            0.3865643821017565,
+            -2.785759163937144,
+            -0.9471037069891618,
+            2.899385577527688,
+            0.09929900671924154
+          ]
+        },
+        "movement_budget": 480,
+        "home_entry": {
+          "visible_semantics": true,
+          "measured_open": true,
+          "settled": true,
+          "task_complete_before_home": false,
+          "label": "safety eligibility under review; task completion pending final verification",
+          "semantic_basis": "initial handoff purpose; final task acceptance pending",
+          "clearance_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011791809108238668,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000136_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000136_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000137_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-11-feedback-retreat/bowl_stove/runs/20261011T081520Z_goal_table_2629aa62/cap_02_stove_on_fe65eb62/finish/sensors/cap000137_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.8686010720598528,
+                    0.49502630755788063,
+                    0.021934731411212646,
+                    -0.4193692487492048
+                  ],
+                  [
+                    0.49455653573691954,
+                    -0.8633286160492203,
+                    -0.10038691981743346,
+                    0.2534381409266373
+                  ],
+                  [
+                    -0.03075728493167959,
+                    0.09804415095325845,
+                    -0.9947066572047677,
+                    1.0426935510959918
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        },
+        "home_screen": {
+          "sample_count": 95,
+          "planned_samples": 95,
+          "collisions": [
+            {
+              "point_index": 6,
+              "point": [
+                0.08409460098688001,
+                0.2279033290092343,
+                0.366388713592607,
+                -2.763363640867334,
+                -0.878482481604237,
+                2.85408843572159,
+                0.1378328285872206
+              ],
+              "geom1": 223,
+              "geom2": 76,
+              "name1": "flat_stove_1_g19",
+              "name2": "gripper0_finger2_collision",
+              "dist": -0.0010394820315091492
+            },
+            {
+              "point_index": 6,
+              "point": [
+                0.08409460098688001,
+                0.2279033290092343,
+                0.366388713592607,
+                -2.763363640867334,
+                -0.878482481604237,
+                2.85408843572159,
+                0.1378328285872206
+              ],
+              "geom1": 77,
+              "geom2": 223,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g19",
+              "dist": -0.0005599469793070832
+            },
+            {
+              "point_index": 6,
+              "point": [
+                0.08409460098688001,
+                0.2279033290092343,
+                0.366388713592607,
+                -2.763363640867334,
+                -0.878482481604237,
+                2.85408843572159,
+                0.1378328285872206
+              ],
+              "geom1": 77,
+              "geom2": 223,
+              "name1": "gripper0_finger2_pad_collision",
+              "name2": "flat_stove_1_g19",
+              "dist": -0.0005772416015337716
+            },
+            {
+              "point_index": 7,
+              "point": [
+                0.08325256541916701,
+                0.22342513470986142,
+                0.36215665218315163,
+                -2.7596319489716445,
+                -0.8685028598432176,
+                2.846806821515723,
+                0.14525598875205353
+              ],
+              "geom1": 223,
+              "geom2": 76,
+              "name1": "flat_stove_1_g19",
+              "name2": "gripper0_finger2_collision",
+              "dist": -0.0035226837054103117
+            },
+            {
+              "point_index": 8,
+              "point": [
+                0.08241052985145401,
+                0.21894694041048854,
+                0.35792459077369626,
+                -2.7559002570759548,
+                -0.8585232380821982,
+                2.8395252073098556,
+                0.1526791489168865
+              ],
+              "geom1": 223,
+              "geom2": 76,
+              "name1": "flat_stove_1_g19",
+              "name2": "gripper0_finger2_collision",
+              "dist": -0.002116389112008243
+            },
+            {
+              "point_index": 9,
+              "point": [
+                0.08156849428374101,
+                0.21446874611111566,
+                0.3536925293642409,
+                -2.7521685651802654,
+                -0.8485436163211789,
+                2.832243593103988,
+                0.16010230908171943
+              ],
+              "geom1": 223,
+              "geom2": 76,
+              "name1": "flat_stove_1_g19",
+              "name2": "gripper0_finger2_collision",
+              "dist": -0.0007006690892842843
+            }
+          ],
+          "collision_count": 6,
+          "ok": false,
+          "live_unchanged": true
+        }
+      },
+      "independent_streak": 0
+    }
+  ],
+  "timings": [
+    {
+      "kind": "qwen_check",
+      "capability": "bowl_to_plate",
+      "seconds": 15.510372949000043
+    },
+    {
+      "kind": "qwen_check",
+      "capability": "bowl_to_plate",
+      "seconds": 20.76740105600004
+    },
+    {
+      "kind": "qwen_check",
+      "capability": "stove_on",
+      "seconds": 19.50028337599997
+    }
+  ],
+  "wall_seconds": 389.083784488,
+  "new_vla": 300,
+  "local_grasp_actions": 0,
+  "replay_actions": 0,
+  "subagents": 0,
+  "limitation": "Fixed user-specified sequence, not new Hermes planner run"
+}
