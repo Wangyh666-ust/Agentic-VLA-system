@@ -77,7 +77,7 @@ def prepare():
     print(str(PLAN))
 
 
-def run(case_id, service_class=None, budget_per_subgoal=300):
+def run(case_id, service_class=None, budget_per_subgoal=300, *, case_spec=None, gold=None):
     proposal = json.loads(PLAN.read_text())
     for name, digest in proposal['configuration']['source_sha256'].items():
         assert sha(ROOT/name) == digest, name
@@ -89,7 +89,8 @@ def run(case_id, service_class=None, budget_per_subgoal=300):
     if gate.returncode: raise RuntimeError('Preflight rejected')
     from scene_demo import service, joint_home, safe_exit_contacts
     from scene_demo.finish_v1.simple_checker import SimpleQwenClient
-    spec = CASES[case_id]
+    spec = CASES[case_id] if case_spec is None else case_spec
+    gold = GOLD if gold is None else gold
     timings, subresults = [], []
     def event(name, **fields):
         row = {'event':name,'utc':datetime.now(timezone.utc).isoformat(),**fields}
@@ -101,7 +102,7 @@ def run(case_id, service_class=None, budget_per_subgoal=300):
             monitor.call_client = SimpleQwenClient(max_calls=6)
             monitor._client_explicit = True
             index = spec['capabilities'].index(job.capability_id)
-            fixed_goals = [GOLD[c] for c in spec['capabilities'][:index+1]]
+            fixed_goals = [gold[c] for c in spec['capabilities'][:index+1]]
             def independent():
                 values = {service.catalog.goal_key(g): bool(service.eval_goal_predicate(env,g)) for g in fixed_goals}
                 state = joint_home.read_robot_state(env)
@@ -152,7 +153,7 @@ def run(case_id, service_class=None, budget_per_subgoal=300):
             if svc.health().get('worker_error') or time.monotonic()>deadline:raise RuntimeError(str(svc.health()))
             time.sleep(.2)
         write(directory/'health.json',svc.health())
-        session=svc.create_session('goal_table',seed=0,init_state_index=0)
+        session=svc.create_session(spec.get('scene_id', 'goal_table'),seed=0,init_state_index=0)
         if not session.get('ok'):raise RuntimeError(str(session))
         sid=session['session_id'];request_id='generic_'+case_id
         bound=svc.bind_request_context(request_id,sid,spec['request'])

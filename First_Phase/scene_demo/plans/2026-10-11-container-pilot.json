@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "id": "20261011-container-pilot",
+  "intent": "new_experiment",
+  "question_key": "container-goal-finish-transfer",
+  "purpose": "在原生番茄酱入篮、杯子入微波炉→关门任务上，检查现有视觉目标/编码器检查器是否实际触发收尾、退离与原归位，并保留前序目标。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261009-joint-home-12",
+    "20261010-visual-finish",
+    "20261010-simple-checker",
+    "20261011-goal-finish",
+    "20261011-takeover-stove-cue"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261010-simple-checker",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261011-goal-finish",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261011-takeover-stove-cue",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    }
+  ],
+  "related_search": "检索registry、EXPERIMENT_INDEX、results README和catalog中的microwave/微波炉，无已归档微波炉动作证据；安装版BDDL核实LIBERO10 task9及LIBERO90 close task。",
+  "hypothesis": "通用目标检查和已验证的恢复流程可移用于容器放置与关门；若VLA未到目标，检查器应拒绝收尾而不强制松手。",
+  "information_gain": "两个新场景各一次实际执行；微波炉接口原先未支持close，新增明确门状态语义。不是Hermes规划增益实验、同状态配对或可靠性统计。",
+  "success_criteria": "预期VLA150/300目标达成时Qwen true触发；记录release_open、movement、home实际动作>0、编码器开口和原home五连。各步独立固定已执行literal目标/无持物/无手接触/原home连续5个post样本通过；杯子完整成功后才关门，关门后杯子入炉成果保留。",
+  "failure_criteria": "独立目标达到却检查未触发或目标动作0记触发链路未验证；VLA300未达到目标记底层执行失败，不能称收尾无效；动作已执行后目标丢失或退离/归位未完成分阶段记录。",
+  "unknown_criteria": "Qwen null、接口错误、同步反馈缺失等记录unknown并停止，不补造成功或反复现场修改提示词。",
+  "changed_factors": [
+    {
+      "name": "scene_and_subgoal",
+      "before": "goal_table bowl/wine/stove",
+      "after": "original basket tomato; original LIBERO10 task9 mug then microwave door",
+      "reason": "用户要求扩大到这两个具体场景"
+    },
+    {
+      "name": "articulated_context",
+      "before": "on/in/turnon/turnoff only",
+      "after": "explicit open/close door goal, same goal-only checker and recovery",
+      "reason": "必须准确表示关门目标，不能伪装为灶台开火"
+    },
+    {
+      "name": "retreat_scope",
+      "before": "current feedback recovery enabled on tested wine/stove",
+      "after": "same feedback recovery enabled for new container/door subgoals",
+      "reason": "使用已验证的实时退离流程，不回用已停滞的旧逐点退离"
+    }
+  ],
+  "fixed_factors": {
+    "policy": "same pretrained SmolVLA; no training or replay",
+    "checker": "current dual-view synchronized encoder goal-only prompt, no stage/phase labels or simulator truth",
+    "home": "original implementation and settings unchanged; no standalone retest",
+    "protection": "same CAD/depth route and original home screens",
+    "budget": "150/300 checks, max300 VLA per subgoal; one attempt per case"
+  },
+  "scope": {
+    "max_cases": 2,
+    "max_vla_actions_per_case": 600,
+    "max_helper_actions_per_case": 1760,
+    "stop_rule": "每例一次，不现场改词重跑；番茄失败时微波炉是独立场景可继续。杯子未完整收尾归位则关门不得启动；应触发而未触发/零目标动作停止依赖验证。不重复单独归位、不微调、不开子agent、不扩大。"
+  },
+  "new_physical_actions": 3540,
+  "configuration": {
+    "cases": {
+      "sauce_basket": {
+        "scene_id": "basket_two",
+        "request": "把番茄酱罐放进篮子。",
+        "capabilities": [
+          "sauce_to_basket"
+        ]
+      },
+      "mug_microwave": {
+        "scene_id": "microwave_mug",
+        "request": "把黄白杯放进微波炉，然后关上微波炉门。",
+        "capabilities": [
+          "mug_to_microwave",
+          "microwave_close"
+        ]
+      }
+    },
+    "gold_goals": {
+      "sauce_to_basket": [
+        "in",
+        "tomato_sauce_1",
+        "basket_1_contain_region"
+      ],
+      "mug_to_microwave": [
+        "in",
+        "white_yellow_mug_1",
+        "microwave_1_heating_region"
+      ],
+      "microwave_close": [
+        "close",
+        "microwave_1"
+      ]
+    },
+    "seed": 0,
+    "init_state_index": 0,
+    "scenes": {
+      "basket_two": {
+        "suite": "libero_10",
+        "task_id": 0
+      },
+      "microwave_mug": {
+        "suite": "libero_10",
+        "task_id": 9
+      }
+    },
+    "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "source_sha256": {
+      "First_Phase/scene_demo/finish_v1/combo_pilot.py": "b4bd21c28eb772fccb242e352d1fd666bfecff88524b4f88aa33d61a8529a67f",
+      "First_Phase/scene_demo/finish_v1/simple_checker.py": "fdfd898f48692e572b0096c8ba4cabae7fa91e60e021f5a0e0f29671406b076b",
+      "First_Phase/scene_demo/finish_v1/runtime.py": "7b00e25557e9b2d5b6b2f0b0dbdb08935f5f063419ab9e29ca174b54fe64f79c",
+      "First_Phase/scene_demo/finish_v1/vision.py": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534",
+      "First_Phase/scene_demo/finish_v1/control.py": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+      "First_Phase/scene_demo/finish_v1/sensors.py": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+      "First_Phase/scene_demo/finish_v1/geometry.py": "d4a5bb664760e3ee39027caac9a51b23a13eaee4b9ef8c55854dfd9f935f61b9",
+      "First_Phase/scene_demo/service.py": "c9fdbf2495a11d6821ec2b254c0e2f5677ee46adb44fb3d924263071008b2a52",
+      "First_Phase/scene_demo/joint_home.py": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+      "First_Phase/scene_demo/safe_exit.py": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+      "First_Phase/scene_demo/safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+      "First_Phase/scene_demo/catalog.py": "4ae973058e334fda857f52f4d0aadefc4ab2cef87f62ee5cb2e2d2fb6b2b7f33",
+      "First_Phase/scene_demo/placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+      "First_Phase/scene_demo/finish_v1/feedback_retreat.py": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+      "First_Phase/scene_demo/finish_v1/container_pilot.py": "d323f71e2fa7c8e2bdb75074b001a20643fca37dcee75f0e1c17dc37857b1007"
+    },
+    "checker": "visual_goal_encoder_v4",
+    "qwen_model": "qwen3-vl-plus",
+    "thinking_budget": 1024,
+    "check_schedule": [
+      150,
+      300
+    ],
+    "qwen_max_per_subgoal": 6,
+    "vla_budget_per_subgoal": 300,
+    "grasp_helper": "none",
+    "completion_mode": "release_verified",
+    "grasp_guard_mode": "shadow",
+    "finish_mode": "visual",
+    "retreat": "existing measured-pose 8mm feedback; CAD/depth path screens, max480 and max3 replans",
+    "release": "existing 20-cycle opening; fixture operation may open during screened retreat",
+    "home": "unchanged streaming .01rad kp50 max360; five ready post-action samples",
+    "execution": "user requests no subagents; primary session + local workers; no low-model invocation or effort override claimed",
+    "initialization": "one original reset per case; persistent scene between mug and door; fresh observations and policy reset between subgoals",
+    "runtime_base_commit": "752b42f"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "current recovery and checker have no live results for these new scene/subgoal interfaces"
+  }
+}

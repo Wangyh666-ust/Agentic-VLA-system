@@ -145,13 +145,13 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                 if streak >= (2 if simple_handoff else 5):
                     break
             if streak < (2 if simple_handoff else 5):
-                # A stove contact may physically constrain one finger. Requiring
+                # An articulated fixture contact may constrain one finger. Requiring
                 # full opening before retreat deadlocks. Keep opening commanded
                 # along a CAD-screened exit; exact opening is still required by
                 # the unchanged home-entry gate below. Place tasks retain their gate.
                 state = port.read_robot()
                 finite = all(np.all(np.isfinite(state[k])) for k in ('arm_qpos', 'arm_qvel', 'finger_qpos'))
-                if (simple_handoff and op == 'turn' and r.get('handoff_goal_latched')
+                if (simple_handoff and op in ('turn', 'articulate') and r.get('handoff_goal_latched')
                         and finite and np.max(np.abs(state['arm_qvel'])) <= .02
                         and hasattr(port, 'opening_shapes')):
                     concurrent_open = True

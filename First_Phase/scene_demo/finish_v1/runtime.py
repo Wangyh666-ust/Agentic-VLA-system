@@ -14,6 +14,7 @@ from collections import deque
 
 _PLACE_OPS = ("on", "in")
 _TURN_OPS = ("turnon", "turnoff")
+_ARTICULATE_OPS = ("open", "close")
 _SIMPLE_CHECK_STEPS = (150, 300)
 
 
@@ -37,9 +38,9 @@ def build_context(capability, user_request):
         destination = goal[2]
     elif len(goal) == 2:
         op_raw = goal[0]
-        if not isinstance(op_raw, str) or op_raw.strip() not in ("turnon", "turnoff"):
+        if not isinstance(op_raw, str) or op_raw.strip() not in _TURN_OPS + _ARTICULATE_OPS:
             raise ValueError("unsupported operation: %r" % (op_raw,))
-        kind = "turn"
+        kind = "turn" if op_raw.strip() in _TURN_OPS else "articulate"
         target = goal[1]
         destination = None
     else:
@@ -64,7 +65,7 @@ def build_context(capability, user_request):
             "place the target inside it, then open the fingers and retreat away "
             "without disturbing it"
         )
-    else:
+    elif kind == "turn":
         criteria = {
             "must_release": True,
             "must_stabilize": True,
@@ -76,6 +77,16 @@ def build_context(capability, user_request):
             "rotate the stove knob to ignite or extinguish the burner; "
             "this is not opening a lid, and is not grasping the target again"
         )
+
+    else:
+        criteria = {
+            "must_release": True, "must_stabilize": True,
+            "must_clear": True, "must_preserve_target": True,
+            "desired_state": "closed" if op == "close" else "open",
+            "operation_semantics": "move the articulated door to its requested open or closed state; then release contact and retreat without changing that state",
+        }
+    if capability.get("instruction"):
+        criteria["task_description"] = capability["instruction"]
 
     return {
         "user_request": user_request,

@@ -36,9 +36,10 @@ def build_prompt(context):
             return None
         return re.sub(r'_\d+(?=_|$)', '', identifier).replace('_', ' ')
     from scene_demo import catalog
+    state_goal = {'on': 'turnon', 'off': 'turnoff', 'open': 'open', 'closed': 'close'}.get(context.get('criteria', {}).get('desired_state'))
     descriptions = [cap['instruction'] for cap in catalog.CAPABILITIES.values()
                     if cap.get('object_id') == task.get('target') and cap.get('target_id') == task.get('destination')
-                    and (task['operation'] != 'turn' or cap['goals'][0][0] == ('turnoff' if context.get('criteria',{}).get('desired_state') == 'off' else 'turnon'))]
+                    and (task['operation'] == 'place' or cap['goals'][0][0] == state_goal)]
     description = context.get('criteria',{}).get('task_description') or (descriptions[0] if descriptions else
                    f"{task['operation']} {display_name(task.get('target'))} at {display_name(task.get('destination'))}")
     safe = {
@@ -51,7 +52,7 @@ def build_prompt(context):
         'actuator_measurements': encoder_observation(context),
     }
     category = re.sub(r'_\d+(?=_|$)', '', task.get('target', ''))
-    if task['operation'] == 'turn' and category in catalog.OBJECT_VISUAL_STATE_DEFINITIONS:
+    if task['operation'] in ('turn', 'articulate') and category in catalog.OBJECT_VISUAL_STATE_DEFINITIONS:
         safe['visual_state_definition'] = catalog.OBJECT_VISUAL_STATE_DEFINITIONS[category]
     return '\n'.join([
         '你是机器人子任务的结束状态检查器。',

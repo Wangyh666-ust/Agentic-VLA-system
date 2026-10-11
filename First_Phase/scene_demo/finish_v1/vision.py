@@ -36,8 +36,8 @@ def _validate_context(context):
     if not isinstance(subtask, dict):
         raise TypeError("current_subtask must be a dict")
     operation = subtask.get("operation")
-    if operation not in ("place", "turn"):
-        raise ValueError("current_subtask.operation must be 'place' or 'turn'")
+    if operation not in ("place", "turn", "articulate"):
+        raise ValueError("current_subtask.operation must be place, turn or articulate")
     target = subtask.get("target")
     if not isinstance(target, str) or not target.strip():
         raise ValueError("current_subtask.target must be a nonempty string")
@@ -50,7 +50,7 @@ def _validate_context(context):
             raise ValueError("current_subtask.destination must be a nonempty string for place")
     else:
         if destination is not None:
-            raise ValueError("current_subtask.destination must be None for turn")
+            raise ValueError("current_subtask.destination must be None for non-placement operations")
     criteria = context.get("criteria")
     if not isinstance(criteria, dict) or not criteria:
         raise ValueError("criteria must be a nonempty dict")

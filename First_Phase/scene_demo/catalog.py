@@ -59,6 +59,15 @@ SCENES: dict[str, dict] = {
             "the tomato sauce can."
         ),
     },
+    "microwave_mug": {
+        "label": "Mug into microwave, then close door",
+        "suite": "libero_10",
+        "task_id": 9,
+        "variant": "original",
+        "patches": [],
+        "storage_policy": {"white_yellow_mug_1": "microwave_1_heating_region"},
+        "description": "Original kitchen scene with an initially open microwave and a yellow and white mug.",
+    },
     "mugs_two": {
         "label": "Two mugs, two plates",
         "suite": "libero_10",
@@ -119,6 +128,10 @@ SCENES: dict[str, dict] = {
 
 # Static appearance meanings for this LIBERO asset, never its current state.
 OBJECT_VISUAL_STATE_DEFINITIONS = {
+    "microwave": {
+        "closed": "微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。",
+        "open": "微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。",
+    },
     "flat_stove": {
         "on": "灶台炉面出现亮起的红色加热圈表示灶台开启。任一视角清楚显示此标志即可，不要求另一视角也看到，不要求旋钮已松开，也不要求提供此前的扭转过程。",
         "off": "炉面清晰可见且红色加热圈熄灭表示灶台关闭。炉面被遮挡或无法辨认时不能仅凭看不到红圈判断关闭。",
@@ -126,6 +139,26 @@ OBJECT_VISUAL_STATE_DEFINITIONS = {
 }
 
 CAPABILITIES: dict[str, dict] = {
+    "mug_to_microwave": {
+        "instruction": "put the yellow and white mug in the microwave",
+        "goals": [["in", "white_yellow_mug_1", "microwave_1_heating_region"]],
+        "object_id": "white_yellow_mug_1",
+        "target_id": "microwave_1_heating_region",
+        "scene_ids": ["microwave_mug"],
+        "evidence": "candidate atomic instruction in native LIBERO-10 task9; execution unverified",
+        "audit_only": False,
+        "exclusive_target": True,
+    },
+    "microwave_close": {
+        "instruction": "close the microwave",
+        "goals": [["close", "microwave_1"]],
+        "object_id": "microwave_1",
+        "target_id": None,
+        "scene_ids": ["microwave_mug"],
+        "evidence": "candidate; native close instruction exists in LIBERO-90; execution here unverified",
+        "audit_only": False,
+        "exclusive_target": False,
+    },
     "bowl_to_plate": {
         "instruction": "put the bowl on the plate",
         "goals": [["on", "akita_black_bowl_1", "plate_1"]],
