@@ -506,6 +506,8 @@ def screen_joint_path(
     env: Any,
     reference: Mapping[str, Any],
     waypoints: Sequence[Any],
+    *,
+    start_q: Optional[Sequence[Any]] = None,
 ) -> Dict[str, Any]:
     """Sample the nominal joint path on a private ``MjData`` scratch copy.
 
@@ -513,6 +515,8 @@ def screen_joint_path(
     scratch contact between robot geoms (including self and target contacts)
     with ``dist <= 0`` is reported.  The result only characterises the sampled
     nominal path -- it is not a full-physics avoidance guarantee.
+    ``start_q`` is only for hypothetical exit planning. Normal home execution
+    omits it and retains the measured current start.
     """
 
     if not isinstance(reference, Mapping):
@@ -529,7 +533,8 @@ def screen_joint_path(
     if not points:
         raise HomeError("waypoints must be a non-empty sequence")
     current_arm_qpos = _require_arm7(state["arm_qpos"], "state.arm_qpos")
-    parsed: List[np.ndarray] = [current_arm_qpos]
+    parsed: List[np.ndarray] = [current_arm_qpos if start_q is None else
+                               _require_arm7(start_q, "start_q")]
     parsed.extend(
         _require_arm7(point, "waypoints[%d]" % index) for index, point in enumerate(points)
     )

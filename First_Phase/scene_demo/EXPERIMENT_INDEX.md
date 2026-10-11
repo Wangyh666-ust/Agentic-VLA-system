@@ -85,3 +85,5 @@
 ### 20261011-feedback-retreat：实测反馈退离两组合
 
 退离2/2，第二任务归位1/2；酒瓶物理五连通过但末次视觉否决，灶台当前已退出但原回程预测碰旋钮，在线完整0/2。见[原始结果与视频](results/2026-10-11-feedback-retreat/README.md)。
+
+- `20261011-stove-exit-repair`：首碗通过；灶台候选检查把当前接触姿态误插第0点，退离0/home0。[完整失败记录](results/2026-10-11-stove-exit-repair/README.md)。

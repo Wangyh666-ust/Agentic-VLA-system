@@ -30,6 +30,9 @@ class Port:
     def home_screen(self, waypoints):
         return {'ok': True}
 
+    def candidate_home_screen(self, q):
+        return {'ok': True}
+
     def robot_shapes(self, q):
         return [{'id': 'hand', 'hand': True, 'center': list(q[:3]),
                  'rotation': np.eye(3), 'half_extents': [.005, .005, .005]}]

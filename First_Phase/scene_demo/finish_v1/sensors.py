@@ -96,6 +96,11 @@ class SensorPort:
         from scene_demo import joint_home as jh
         return jh.screen_joint_path(self.env, self.reference, waypoints)
 
+    def candidate_home_screen(self, q):
+        """Read-only return feasibility starting at the hypothetical exit."""
+        waypoints = jh.joint_waypoints(q, self.reference['homeq'])
+        return jh.screen_joint_path(self.env, self.reference, waypoints, start_q=q)
+
     def close(self):
         if not self._started:
             return

@@ -57,7 +57,7 @@ def run(port, verdict, act, limit=480):
     def home_eligible(q):
         return port.home_screen(joint_home.joint_waypoints(q, port.reference['homeq']))
     current_plan = plan_retreat(port, observation, verdict,
-                               directions_override=directions(port, observation), endpoint_eligible=home_eligible)
+                               directions_override=directions(port, observation), endpoint_eligible=port.candidate_home_screen)
     result['plan'] = current_plan
     if not current_plan['ok']:
         result['reason'] = 'retreat plan blocked'
@@ -79,7 +79,7 @@ def run(port, verdict, act, limit=480):
         fresh = port.capture()
         alternatives = directions(port, fresh, current=direction)
         new_plan = plan_retreat(port, fresh, verdict, directions_override=alternatives,
-                               endpoint_eligible=home_eligible)
+                               endpoint_eligible=port.candidate_home_screen)
         result['replans'].append({'cause': cause, 'actual_q': fresh['robot']['arm_qpos'],
                                   'eef_position': fresh['eef_position'], 'frames': fresh['frames'], 'plan': new_plan})
         if not new_plan['ok']:

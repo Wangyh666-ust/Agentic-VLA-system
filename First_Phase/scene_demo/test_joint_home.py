@@ -409,6 +409,39 @@ class TestJointHome(unittest.TestCase):
         self.assertEqual(res["collision_count"], 0)
         self.assertTrue(res["ok"])
 
+    def test_candidate_screen_uses_candidate_start_and_preserves_live_state(self):
+        env = make_env(qpos=[0.] * 12)
+        state = jh.read_robot_state(env)
+        ref = make_reference(state)
+        visited = []
+
+        class Scratch:
+            def __init__(self, model):
+                self.qpos = np.zeros(12)
+                self.qvel = np.zeros(12)
+                self.time = 0.
+                self.contact = []
+                self.ncon = 0
+
+        fake_mj = types.ModuleType('mujoco')
+        fake_mj.MjData = Scratch
+        fake_mj.mj_forward = lambda m, d: visited.append(d.qpos[:7].copy())
+        candidate = [.2] * 7
+        target = [.3] * 7
+        before = jh._snapshot_live(env.robots[0].sim)
+        with mock.patch.dict(sys.modules, {'mujoco': fake_mj}):
+            result = jh.screen_joint_path(env, ref, [target], start_q=candidate)
+            np.testing.assert_array_equal(visited[0], candidate)
+            np.testing.assert_array_equal(visited[1], target)
+            self.assertTrue(result['live_unchanged'])
+            visited.clear()
+            jh.screen_joint_path(env, ref, [target])
+            np.testing.assert_array_equal(visited[0], state['arm_qpos'])
+        after = jh._snapshot_live(env.robots[0].sim)
+        np.testing.assert_array_equal(before[0], after[0])
+        np.testing.assert_array_equal(before[1], after[1])
+        self.assertEqual(before[2], after[2])
+
     def test_adapter_set_goal_layout(self):
         qpos = [0.0] * 12
         env = make_env(qpos=qpos)
