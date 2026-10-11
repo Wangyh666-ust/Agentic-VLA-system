@@ -15,6 +15,17 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
     }
     v = initial_verdict
     caps = {'release': 20, 'movement': 480 if simple_handoff else 120, 'confirm': 20, 'home': 360}
+    concurrent_open = False
+
+    class OpeningPort:
+        def __getattr__(self, name):
+            return getattr(port, name)
+
+        def robot_shapes(self, q):
+            return port.opening_shapes(q)
+
+    def geometry_port():
+        return OpeningPort() if concurrent_open else port
 
     def act(ph, q, f=None, command_kind=None):
         if r['counts'][ph] >= caps[ph]:
@@ -45,9 +56,9 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
             q = np.asarray(q)
             n = max(1, int(np.ceil(np.max(np.abs(q - previous)) / delta)))
             for alpha in np.linspace(0, 1, n + 1)[1:]:
-                poses.append(port.robot_shapes(previous + (q - previous) * alpha))
+                poses.append(geometry_port().robot_shapes(previous + (q - previous) * alpha))
             previous = q
-        report = dict(screen_shapes(port.obstacle_cloud(fresh['frames']), port.robot_shapes(actualq), poses))
+        report = dict(screen_shapes(port.obstacle_cloud(fresh['frames']), geometry_port().robot_shapes(actualq), poses))
         report['frames'] = fresh['frames']
         if 'depth_path' in fresh:
             report['depth_path'] = fresh['depth_path']
@@ -133,8 +144,24 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                 if streak >= (2 if simple_handoff else 5):
                     break
             if streak < (2 if simple_handoff else 5):
-                r['reason'] = 'release not confirmed'
-                return r
+                # A stove contact may physically constrain one finger. Requiring
+                # full opening before retreat deadlocks. Keep opening commanded
+                # along a CAD-screened exit; exact opening is still required by
+                # the unchanged home-entry gate below. Place tasks retain their gate.
+                state = port.read_robot()
+                finite = all(np.all(np.isfinite(state[k])) for k in ('arm_qpos', 'arm_qvel', 'finger_qpos'))
+                if (simple_handoff and op == 'turn' and r.get('handoff_goal_latched')
+                        and finite and np.max(np.abs(state['arm_qvel'])) <= .02
+                        and hasattr(port, 'opening_shapes')):
+                    concurrent_open = True
+                    r['concurrent_open_retreat'] = {
+                        'triggered': True, 'finger_qpos_before': list(state['finger_qpos']),
+                        'exact_open_pending': True, 'release_proven': False,
+                        'geometry': 'measured/half/standard-open CAD envelope',
+                    }
+                else:
+                    r['reason'] = 'release not confirmed'
+                    return r
             if simple_handoff:
                 # Once accepted, finishing is an atomic recovery sequence.
                 # Task acceptance is checked again after home, not used to
@@ -177,7 +204,7 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                         r['reason'] = 'retreat denied'
                         return r
 
-            p = plan_retreat(port, port.capture(), v)
+            p = plan_retreat(geometry_port(), port.capture(), v)
             r['plan'] = p
             r['active_retreat_plan'] = p
             if not p['ok']:
@@ -195,7 +222,8 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                     if r['counts']['movement'] >= movement_limit:
                         r['reason'] = 'movement budget'
                         return r
-                    st = act('movement', qs[i])
+                    st = act('movement', qs[i], ref['finger_home'] if concurrent_open else None,
+                             command_kind='open_and_retreat' if concurrent_open else None)
                     error = float(np.max(np.abs(np.asarray(st['arm_qpos']) - np.asarray(qs[i]))))
                     r['movement_progress'] = {'waypoint': i, 'waypoints': len(qs), 'joint_error': error}
                     if error < best_error - 0.0002:
@@ -211,7 +239,7 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                         if not check['ok']:
                             if check['reason'] == 'endpoint_hand_clear_fail' and not r.get('retreat_replans'):
                                 r.setdefault('retreat_replans', []).append({'failed_screen': check, 'new_plan': None})
-                                newp = plan_retreat(port, port.capture(), v)
+                                newp = plan_retreat(geometry_port(), port.capture(), v)
                                 r['retreat_replans'][-1]['new_plan'] = newp
                                 if newp['ok']:
                                     r['active_retreat_plan'] = newp
@@ -234,7 +262,7 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
 
             streak = 0
             for _ in range(20):
-                st = act('confirm', qs[-1])
+                st = act('confirm', qs[-1], ref['finger_home'] if concurrent_open else None)
                 qerr = np.max(np.abs(np.asarray(port.read_robot()['arm_qpos']) - np.asarray(qs[-1])))
                 if qerr <= 0.004 and np.max(np.abs(st['arm_qvel'])) <= 0.02:
                     streak += 1
@@ -247,6 +275,12 @@ def run_finish(port, context, initial_verdict, decide_fn, check_fn, emit, simple
                 return r
             if not simple_handoff:
                 v, d = verify()
+
+        # Opening-envelope screening is only for withdrawal. Original measured
+        # geometry and the original home path/controller remain in use for home.
+        if concurrent_open:
+            r['concurrent_open_retreat']['finger_qpos_after'] = list(port.read_robot()['finger_qpos'])
+            concurrent_open = False
 
         r['home_entry'] = {
             'visible_semantics': False,

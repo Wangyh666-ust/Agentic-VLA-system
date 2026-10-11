@@ -77,7 +77,7 @@ def prepare():
     print(str(PLAN))
 
 
-def run(case_id):
+def run(case_id, service_class=None, budget_per_subgoal=300):
     proposal = json.loads(PLAN.read_text())
     for name, digest in proposal['configuration']['source_sha256'].items():
         assert sha(ROOT/name) == digest, name
@@ -95,7 +95,7 @@ def run(case_id):
         row = {'event':name,'utc':datetime.now(timezone.utc).isoformat(),**fields}
         with (directory/'events.jsonl').open('a') as f: f.write(json.dumps(row,ensure_ascii=False)+'\n')
         print(json.dumps(row,ensure_ascii=False),flush=True)
-    class PilotService(service.SceneService):
+    class PilotService(service_class or service.SceneService):
         def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
             monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
             monitor.call_client = SimpleQwenClient(max_calls=6)
@@ -122,7 +122,12 @@ def run(case_id):
                     event('visual_check_done',capability=job.capability_id,seconds=timings[-1]['seconds'],decision=monitor._last_decision)
             monitor._check = check
             original_poll = monitor.poll
-            monitor.poll = lambda step, candidate=False, force=False: original_poll(step,candidate=False,force=force)
+            def poll(step, candidate=False, force=False):
+                if getattr(self, '_last_action_source', 'vla') != 'vla':
+                    return None
+                actual = getattr(self, '_actual_vla', step)
+                return original_poll(actual, candidate=False, force=actual == 300)
+            monitor.poll = poll
             job._pilot_monitor = monitor
             return monitor
         def _run_capability(self, session, plan, job, capability_id):
@@ -131,6 +136,8 @@ def run(case_id):
             outcome = super()._run_capability(session,plan,job,capability_id)
             monitor = getattr(job,'_pilot_monitor',None)
             row={'capability':capability_id,'outcome':outcome,'job':job.public(),'state_before':before,
+                 'actual_vla':getattr(self,'_actual_vla',job.steps),
+                 'local_grasp_actions':getattr(self,'_local_grasp_actions',0),
                  'state_after':service.state_sha(self._env),'elapsed_seconds':time.perf_counter()-t,
                  'finish':None if monitor is None else monitor._finish,'independent_streak':None if monitor is None else monitor.independent_streak}
             write(job.run_dir/'pilot_result.json',row);subresults.append(row)
@@ -151,7 +158,7 @@ def run(case_id):
         bound=svc.bind_request_context(request_id,sid,spec['request'])
         if not bound.get('ok'):raise RuntimeError(str(bound))
         payload={'session_id':sid,'scene_version':session['scene_version'],'request_id':request_id,
-                 'decision':'execute','capability_ids':spec['capabilities'],'budget_per_subgoal':300,
+                 'decision':'execute','capability_ids':spec['capabilities'],'budget_per_subgoal':budget_per_subgoal,
                  'rationale':'用户指定顺序；固定执行组合试点，不作为Hermes规划评估'}
         write(directory/'submitted_plan.json',payload)
         submitted=svc.submit_plan(payload)
@@ -164,7 +171,8 @@ def run(case_id):
                 svc.cancel(request_id);raise RuntimeError('pilot wall budget exceeded')
             time.sleep(.25)
         write(directory/'result.json',{'case':case_id,'user_request':spec['request'],'plan':plan,'subtasks':subresults,
-                                      'timings':timings,'wall_seconds':time.perf_counter()-start,'new_vla':sum(r['job']['steps'] for r in subresults),
+                                      'timings':timings,'wall_seconds':time.perf_counter()-start,'new_vla':sum(r['actual_vla'] for r in subresults),
+                                      'local_grasp_actions':sum(r['local_grasp_actions'] for r in subresults),
                                       'replay_actions':0,'subagents':0,'limitation':'Fixed user-specified sequence, not new Hermes planner run'})
         event('case_done',state=plan['state'],plan_success=plan.get('plan_success'))
     finally:svc.stop()

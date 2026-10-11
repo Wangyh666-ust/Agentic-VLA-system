@@ -156,7 +156,7 @@ class SensorPort:
         out['eef_rotation'] = np.asarray(robot.sim.data.site_xmat[sid], float).reshape(3, 3).tolist()
         return out
 
-    def _scratch(self, q):
+    def _scratch(self, q, fingers=None):
         import mujoco
         robot = self._robot_()
         sim = robot.sim
@@ -168,6 +168,8 @@ class SensorPort:
         state = jh.read_robot_state(self.env)
         idx = np.asarray(state['qpos_indexes'], int)
         data.qpos[idx] = np.asarray(q, float)
+        if fingers is not None:
+            data.qpos[np.asarray(robot._ref_gripper_joint_pos_indexes, int)] = np.asarray(fingers, float)
         mujoco.mj_forward(raw, data)
         return raw, data
 
@@ -210,7 +212,7 @@ class SensorPort:
             raise RuntimeError('bad shape bounds')
         return lo, hi
 
-    def robot_shapes(self, q):
+    def robot_shapes(self, q, fingers=None):
         import mujoco
         robot = self._robot_()
         sim = robot.sim
@@ -222,7 +224,7 @@ class SensorPort:
             raise RuntimeError('robot_model.contact_geoms missing')
         arm_names = list(rm.contact_geoms)
         hand_names = list(gr.contact_geoms) if (gr is not None and hasattr(gr, 'contact_geoms')) else []
-        raw, rd = self._scratch(q)
+        raw, rd = self._scratch(q, fingers)
         out = []
         for name, hand in [(n, False) for n in arm_names] + [(n, True) for n in hand_names]:
             gid = mdl.geom_name2id(name)
@@ -244,6 +246,20 @@ class SensorPort:
                 'hand': bool(hand),
             })
         return out
+
+    def opening_shapes(self, q):
+        """CAD envelope at measured, half-open and standard-open finger positions.
+
+        Scratch FK only: does not teleport the real hand or move scene objects.
+        Keep distinct IDs so each part retains its initial-contact exit rule.
+        """
+        measured = np.asarray(self.read_robot()['finger_qpos'], float)
+        opened = np.asarray(self.reference['finger_home'], float)
+        shapes = []
+        for index, alpha in enumerate((0., .5, 1.)):
+            for shape in self.robot_shapes(q, measured + alpha * (opened - measured)):
+                shapes.append(dict(shape, id=shape['id'] + '@opening' + str(index)))
+        return shapes
 
     def ik(self, target_xyz, orientation, seedq):
         import mujoco
