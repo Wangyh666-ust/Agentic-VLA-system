@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "id": "20261011-container-view",
+  "intent": "new_experiment",
+  "question_key": "container-goal-finish-transfer",
+  "purpose": "修正新场景外部观察相机，避免把容器旁或入口外误判为入内；在番茄入篮和杯子入炉→关门各一次中验证检查触发、实际收尾归位和目标保留。",
+  "prior_evidence": [
+    "20261007-placement",
+    "20261009-joint-home-12",
+    "20261010-visual-finish",
+    "20261010-simple-checker",
+    "20261011-goal-finish",
+    "20261011-takeover-stove-cue",
+    "20261011-container-pilot"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261007-placement",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261010-visual-finish",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261010-simple-checker",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261011-goal-finish",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261011-takeover-stove-cue",
+      "disposition": "reuse",
+      "reason": "复用既有番茄酱未入篮/原生技能失败证据和新版两组合成功流程；旧结果没有回答当前检查器在篮子或微波炉原生场景的完整执行效果，不重复旧基线。"
+    },
+    {
+      "experiment_id": "20261011-container-pilot",
+      "disposition": "reuse",
+      "reason": "原始两图证实sideview漏篮子/微波炉背面；番茄150未知，杯子300误判入炉，原归位成功但入炉假、关门未启动。只补修正观察输入后的各一次，不重复独立归位。"
+    }
+  ],
+  "related_search": "检索registry、EXPERIMENT_INDEX、results README和catalog中的microwave/微波炉，无已归档微波炉动作证据；安装版BDDL核实LIBERO10 task9及LIBERO90 close task。",
+  "hypothesis": "通用目标检查和已验证的恢复流程可移用于容器放置与关门；若VLA未到目标，检查器应拒绝收尾而不强制松手。",
+  "information_gain": "保留首次相机覆盖不足/误判记录，只补当前原生正面外部相机与空间关系提示下的完整流程；不是同随机流对照，不分离两个修正的贡献。",
+  "success_criteria": "预期VLA150/300目标达成时Qwen true触发；记录release_open、movement、home实际动作>0、编码器开口和原home五连。各步独立固定已执行literal目标/无持物/无手接触/原home连续5个post样本通过；杯子完整成功后才关门，关门后杯子入炉成果保留。",
+  "failure_criteria": "独立目标达到却检查未触发或目标动作0记触发链路未验证；VLA300未达到目标记底层执行失败，不能称收尾无效；动作已执行后目标丢失或退离/归位未完成分阶段记录。",
+  "unknown_criteria": "Qwen null、接口错误、同步反馈缺失等记录unknown并停止，不补造成功或反复现场修改提示词。",
+  "changed_factors": [
+    {
+      "name": "checker_external_camera",
+      "before": "wrist + native sideview which misses basket and views microwave back",
+      "after": "wrist + current native agentview with scene targets in view; actual camera labels preserved",
+      "reason": "同一时刻已存图证实正面相机覆盖任务目标；仅选择检查输入，不改变VLA或路径几何"
+    },
+    {
+      "name": "goal_relation_clarity",
+      "before": "goal-only generic prompt permits ambiguous projection interpretation",
+      "after": "explicit required in-relation: beside/entrance-outside/projection overlap does not establish inside",
+      "reason": "杯子300步位于入口附近却被判入内；不新增支撑、姿态或松手条件"
+    }
+  ],
+  "fixed_factors": {
+    "policy": "same pretrained policy and atomic instructions; no training; new draws, no paired RNG claim",
+    "checker": "current dual-view synchronized encoder goal-only prompt, no stage/phase labels or simulator truth",
+    "home": "same control, geometry, joint_home implementations/settings as first trial; only checker input selection and wording change",
+    "protection": "same CAD/depth route and original home screens",
+    "budget": "150/300 checks, max300 VLA per subgoal; one attempt per case"
+  },
+  "scope": {
+    "max_cases": 2,
+    "max_vla_actions_per_case": 600,
+    "max_helper_actions_per_case": 1760,
+    "stop_rule": "每例一次，不现场改词重跑；番茄失败时微波炉是独立场景可继续。杯子未完整收尾归位则关门不得启动；应触发而未触发/零目标动作停止依赖验证。不重复单独归位、不微调、不开子agent、不扩大。"
+  },
+  "new_physical_actions": 3540,
+  "configuration": {
+    "cases": {
+      "sauce_basket": {
+        "scene_id": "basket_two",
+        "request": "把番茄酱罐放进篮子。",
+        "capabilities": [
+          "sauce_to_basket"
+        ]
+      },
+      "mug_microwave": {
+        "scene_id": "microwave_mug",
+        "request": "把黄白杯放进微波炉，然后关上微波炉门。",
+        "capabilities": [
+          "mug_to_microwave",
+          "microwave_close"
+        ]
+      }
+    },
+    "gold_goals": {
+      "sauce_to_basket": [
+        "in",
+        "tomato_sauce_1",
+        "basket_1_contain_region"
+      ],
+      "mug_to_microwave": [
+        "in",
+        "white_yellow_mug_1",
+        "microwave_1_heating_region"
+      ],
+      "microwave_close": [
+        "close",
+        "microwave_1"
+      ]
+    },
+    "seed": 0,
+    "init_state_index": 0,
+    "scenes": {
+      "basket_two": {
+        "suite": "libero_10",
+        "task_id": 0
+      },
+      "microwave_mug": {
+        "suite": "libero_10",
+        "task_id": 9
+      }
+    },
+    "model_path": "/home/yhwang/fyp/libero_demo/models/smolvla_libero",
+    "model_revision": "6721902bc4d61e50a3bfdb11dfb4cb626f05d102",
+    "source_sha256": {
+      "First_Phase/scene_demo/finish_v1/combo_pilot.py": "b4bd21c28eb772fccb242e352d1fd666bfecff88524b4f88aa33d61a8529a67f",
+      "First_Phase/scene_demo/finish_v1/simple_checker.py": "775a2706e7661d503f23af437ef22328ab692233aeb565f0734773c53c2df964",
+      "First_Phase/scene_demo/finish_v1/runtime.py": "52ad0f01b0b3623ab9ddeacc2dc1d1308c4e0fe7e1100dd170d2cb7fa154e219",
+      "First_Phase/scene_demo/finish_v1/vision.py": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534",
+      "First_Phase/scene_demo/finish_v1/control.py": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+      "First_Phase/scene_demo/finish_v1/sensors.py": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+      "First_Phase/scene_demo/finish_v1/geometry.py": "d4a5bb664760e3ee39027caac9a51b23a13eaee4b9ef8c55854dfd9f935f61b9",
+      "First_Phase/scene_demo/service.py": "c9fdbf2495a11d6821ec2b254c0e2f5677ee46adb44fb3d924263071008b2a52",
+      "First_Phase/scene_demo/joint_home.py": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+      "First_Phase/scene_demo/safe_exit.py": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+      "First_Phase/scene_demo/safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+      "First_Phase/scene_demo/catalog.py": "4ae973058e334fda857f52f4d0aadefc4ab2cef87f62ee5cb2e2d2fb6b2b7f33",
+      "First_Phase/scene_demo/placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+      "First_Phase/scene_demo/finish_v1/feedback_retreat.py": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+      "First_Phase/scene_demo/finish_v1/container_pilot.py": "d323f71e2fa7c8e2bdb75074b001a20643fca37dcee75f0e1c17dc37857b1007",
+      "First_Phase/scene_demo/finish_v1/container_view_pilot.py": "be741e6f6055ec011631510f8a2efd7fd1057c01c684a9591098b4bd8be4ad88"
+    },
+    "checker": "visual_goal_encoder_v4",
+    "qwen_model": "qwen3-vl-plus",
+    "thinking_budget": 1024,
+    "check_schedule": [
+      150,
+      300
+    ],
+    "qwen_max_per_subgoal": 6,
+    "vla_budget_per_subgoal": 300,
+    "grasp_helper": "none",
+    "completion_mode": "release_verified",
+    "grasp_guard_mode": "shadow",
+    "finish_mode": "visual",
+    "retreat": "existing measured-pose 8mm feedback; CAD/depth path screens, max480 and max3 replans",
+    "release": "existing 20-cycle opening; fixture operation may open during screened retreat",
+    "home": "unchanged streaming .01rad kp50 max360; five ready post-action samples",
+    "execution": "user requests no subagents; primary session + local workers; no low-model invocation or effort override claimed",
+    "initialization": "one original reset per case; persistent scene between mug and door; fresh observations and policy reset between subgoals",
+    "runtime_base_commit": "a3c6edd",
+    "checker_external_view": "agentview",
+    "action_audit": "every actual env.step source, VLA count and simulator timestamp; no simulator goal sent to model",
+    "initial_failures": "20261011-container-pilot preserved unchanged"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "new checker camera and relation wording; no result under corrected inputs"
+  }
+}

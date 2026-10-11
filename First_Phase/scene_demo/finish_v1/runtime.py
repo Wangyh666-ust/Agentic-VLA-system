@@ -296,9 +296,12 @@ class FinishMonitor:
             frames = cap.get('verification_frames') or cap.get('frames') or []
             if simple:
                 wrist = next((fr for fr in cap.get('frames', []) if fr['view'] in ('wrist', 'robot0_eye_in_hand')), None)
-                side = next((fr for fr in frames if fr['view'] == 'sideview'), None)
+                external_view = getattr(self.port, 'checker_external_view', 'sideview')
+                if external_view not in ('sideview', 'agentview'):
+                    raise RuntimeError('unsupported checker external view')
+                side = next((fr for fr in frames + cap.get('frames', []) if fr['view'] == external_view), None)
                 if wrist is None or side is None:
-                    raise RuntimeError('simple checker requires synchronized wrist and sideview images')
+                    raise RuntimeError('simple checker requires synchronized wrist and %s images' % external_view)
                 frames = [wrist, side]
             for fr in frames[:3 if simple else 2]:
                 frame = len(paths)

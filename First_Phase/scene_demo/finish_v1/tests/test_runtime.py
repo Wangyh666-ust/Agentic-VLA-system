@@ -327,6 +327,18 @@ class RuntimeTests(unittest.TestCase):
         self.assertIs(finish.call_args.args[3], simple_checker.decide)
         self.assertIn('wrist', [fr['view'] for fr in client.calls[0][0]['sensor_frames']])
 
+    def test_simple_configured_external_camera_uses_real_view_names(self):
+        client = FakeClient()
+        client.simple_handoff = True
+        monitor = self.monitor(client, budget=300)
+        monitor.port.checker_external_view = 'agentview'
+        monitor.port.timestamp = 150.
+        with mock.patch.object(control, 'run_finish', return_value={'ok': False, 'reason': 'probe'}):
+            monitor.poll(150, candidate=False)
+        context, paths = client.calls[0]
+        self.assertEqual([fr['view'] for fr in context['sensor_frames']], ['wrist', 'agentview'])
+        self.assertTrue(paths[1].endswith('_agentview.png'))
+
     def test_four_posts_fail_and_callback_errors_propagate(self):
         monitor = self.monitor()
         self.record_pair(monitor)
