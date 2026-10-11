@@ -103,3 +103,5 @@
 - `20261011-container-view`：容器补测：正面检查避免杯子误松手，入篮/入炉仍未完成，关门未启动。[报告、视频与明确结论](results/2026-10-11-container-view/README.md)。
 
 - `20261011-container-budget`：600步容器补测：未到位均false且继续执行；牛奶误抓/杯子炉外失败，收尾与关门未触发。[报告、视频与明确结论](results/2026-10-11-container-budget/README.md)。
+
+- `20261011-native-benchmark`：原生40任务×5次完成，139/200=69.5%；Spatial34/50、Object44/50、Goal39/50、Long22/50。110次原结果保留，仅补90次，88证据哈希不变。无Hermes/Qwen/辅助或微调；非论文严格复现，不直接归因训练缺陷。[结论与代表视频](results/2026-10-11-native-benchmark/CONCLUSIONS.md)、[完整逐任务报告](results/2026-10-11-native-benchmark/README.md)。
