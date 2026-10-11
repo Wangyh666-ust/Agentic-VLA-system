@@ -55,19 +55,19 @@ Long0 episode0的第一蓝罐已移入篮，末帧红绿罐倒在篮外；此样
 
 酒瓶成功 episode0（native T）
 
-![酒瓶成功 episode0（native T）](D:/FYP/First_Phase/scene_demo/results/2026-10-11-native-benchmark/presentation/libero_goal_08/eval_episode_0.mp4)
+![酒瓶成功 episode0（native T）](D:/FYP/First_Phase/scene_demo/results/2026-10-11-native-benchmark/presentation/libero_goal_09/eval_episode_0.mp4)
 
 酒瓶失败 episode2（native F）
 
-![酒瓶失败 episode2（native F）](D:/FYP/First_Phase/scene_demo/results/2026-10-11-native-benchmark/presentation/libero_goal_08/eval_episode_2.mp4)
+![酒瓶失败 episode2（native F）](D:/FYP/First_Phase/scene_demo/results/2026-10-11-native-benchmark/presentation/libero_goal_09/eval_episode_2.mp4)
 
 碗成功 episode0（native T）
 
-![碗成功 episode0（native T）](D:/FYP/First_Phase/scene_demo/results/2026-10-11-native-benchmark/presentation/libero_goal_09/eval_episode_0.mp4)
+![碗成功 episode0（native T）](D:/FYP/First_Phase/scene_demo/results/2026-10-11-native-benchmark/presentation/libero_goal_08/eval_episode_0.mp4)
 
 碗失败 episode2（native F）
 
-![碗失败 episode2（native F）](D:/FYP/First_Phase/scene_demo/results/2026-10-11-native-benchmark/presentation/libero_goal_09/eval_episode_2.mp4)
+![碗失败 episode2（native F）](D:/FYP/First_Phase/scene_demo/results/2026-10-11-native-benchmark/presentation/libero_goal_08/eval_episode_2.mp4)
 
 ## 中断恢复与实际执行
 
