@@ -117,6 +117,14 @@ SCENES: dict[str, dict] = {
     },
 }
 
+# Static appearance meanings for this LIBERO asset, never its current state.
+OBJECT_VISUAL_STATE_DEFINITIONS = {
+    "flat_stove": {
+        "on": "灶台炉面出现亮起的红色加热圈表示灶台开启。任一视角清楚显示此标志即可，不要求另一视角也看到，不要求旋钮已松开，也不要求提供此前的扭转过程。",
+        "off": "炉面清晰可见且红色加热圈熄灭表示灶台关闭。炉面被遮挡或无法辨认时不能仅凭看不到红圈判断关闭。",
+    },
+}
+
 CAPABILITIES: dict[str, dict] = {
     "bowl_to_plate": {
         "instruction": "put the bowl on the plate",

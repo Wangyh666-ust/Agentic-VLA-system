@@ -75,11 +75,13 @@ def _finger_hold(env, state):
         actual = float(finger_qpos[axis])
         if not np.isfinite(actual):
             raise jh.HomeError("finger qpos not finite")
-        if actual < float(cr[0]) or actual > float(cr[1]):
-            raise jh.HomeError("finger qpos outside ctrlrange")
+        # ctrlrange bounds commands, not measured positions. Dynamics may
+        # overshoot it slightly; retain the measurement and clamp only the
+        # hold target used when taking over the controller.
+        hold_target = float(np.clip(actual, cr[0], cr[1]))
         mid = 0.5 * (float(cr[0]) + float(cr[1]))
         half = 0.5 * (float(cr[1]) - float(cr[0]))
-        norms.append((actual - mid) / half)
+        norms.append(float(np.clip((hold_target - mid) / half, -1.0, 1.0)))
     ca = np.asarray(gripper.current_action, dtype=float)
     if ca.shape != (2,) or not np.all(np.isfinite(ca)):
         raise jh.HomeError("gripper current_action shape must be (2,)")

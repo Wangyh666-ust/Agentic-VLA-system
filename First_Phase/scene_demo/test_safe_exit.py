@@ -789,6 +789,29 @@ def test_finger_hold_real(finger_hold_env):
     assert np.allclose(result[1], -0.5)
 
 
+@pytest.mark.parametrize("positions, expected", [
+    ([0.04001874449002873, -0.03954909296524739], [1.0, -0.9774546482623695]),
+    ([0.04002, -0.04002], [1.0, -1.0]),
+    ([-0.00002, 0.00002], [-1.0, 1.0]),
+])
+def test_finger_hold_clamps_commands_not_measurements(finger_hold_env, positions, expected):
+    env, state = finger_hold_env
+    state['finger_qpos'] = np.asarray(positions)
+    before = state['finger_qpos'].copy()
+    result = s._finger_hold(env, state)
+    np.testing.assert_allclose(result, expected, atol=1e-7)
+    np.testing.assert_array_equal(state['finger_qpos'], before)
+    assert np.all(np.abs(result) <= 1.0)
+
+
+@pytest.mark.parametrize("value", [float('nan'), float('inf'), -float('inf')])
+def test_finger_hold_nonfinite_measurement_still_rejected(finger_hold_env, value):
+    env, state = finger_hold_env
+    state['finger_qpos'][0] = value
+    with pytest.raises(jh.HomeError, match='finger qpos not finite'):
+        s._finger_hold(env, state)
+
+
 def test_finger_hold_invalid_gear_first(finger_hold_env):
     env, state = finger_hold_env
     env.robot.sim.model.actuator_gear[8, 0] = 2.0

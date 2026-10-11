@@ -84,6 +84,22 @@ class SimpleCheckerTests(unittest.TestCase):
         self.assertIn('第一人称', prompt)
         self.assertIn('第三人称', prompt)
 
+    def test_stove_visual_definition_is_static_and_does_not_claim_completion(self):
+        from scene_demo.finish_v1.runtime import build_context
+        from scene_demo import catalog
+        for operation in ('turnon', 'turnoff'):
+            capability = copy.deepcopy(catalog.CAPABILITIES['stove_on'])
+            capability['goals'][0][0] = operation
+            ctx = build_context(capability, '操作灶台')
+            ctx.update(sensor_frames=self.ctx['sensor_frames'], actuator_measurements=self.ctx['actuator_measurements'])
+            prompt = checker.build_prompt(ctx)
+            payload = json.loads(prompt.splitlines()[-1])
+            self.assertIn('红色加热圈', payload['visual_state_definition']['on'])
+            self.assertIn('熄灭', payload['visual_state_definition']['off'])
+            self.assertNotIn('goal_achieved', payload)
+            self.assertNotIn('post_execution', prompt)
+        self.assertNotIn('visual_state_definition', json.loads(checker.build_prompt(self.ctx).splitlines()[-1]))
+
     def fused_open(self, goal=True, contact=True):
         ctx = copy.deepcopy(self.ctx)
         ctx['actuator_measurements']['finger_qpos'] = [.04, -.04]

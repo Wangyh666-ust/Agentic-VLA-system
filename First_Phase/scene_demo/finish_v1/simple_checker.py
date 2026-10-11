@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 from . import vision
 
-CHECKER_NAME = 'visual_goal_encoder_v3'
+CHECKER_NAME = 'visual_goal_encoder_v4'
 OPEN_TOLERANCE_M = .002
 
 
@@ -50,6 +50,9 @@ def build_prompt(context):
         # In particular, never send a stale post_execution label to the model.
         'actuator_measurements': encoder_observation(context),
     }
+    category = re.sub(r'_\d+(?=_|$)', '', task.get('target', ''))
+    if task['operation'] == 'turn' and category in catalog.OBJECT_VISUAL_STATE_DEFINITIONS:
+        safe['visual_state_definition'] = catalog.OBJECT_VISUAL_STATE_DEFINITIONS[category]
     return '\n'.join([
         '你是机器人子任务的结束状态检查器。',
         '你的任务目标：根据当前子任务和同步观测，判断任务目标是否达到、是否可以移交收尾。VLA在个别任务末段可能遗漏最后的松手和退离动作；这仅说明检查器的用途，不表示本次目标已经达到，也不表示本次仍在夹持。',
@@ -58,6 +61,7 @@ def build_prompt(context):
         'goal_achieved：只检查current_subtask.description明确要求的目标，不增加任务未要求的支撑、姿态或更精确的位置条件。不要要求已经松手、解除接触、退离或归位；这些由目标达到后的收尾器执行。是否仍夹持不否定目标已达到。',
         '夹持状态由程序根据同步实测编码器决定：at_standard_open=true表示夹爪已达到标准开口，按已松手、未夹持处理。遮挡、二维投影重叠或视觉中的接近不能推翻此读数，也不能另报仍夹持。at_standard_open=false表示需要开爪，不单凭闭合证明夹有物品。编码器开口不能证明物品已到位，也不能证明退离路径安全；不要混入goal_achieved判断。',
         '只依据当前实际画面判断目标，不接受计划、检查时机或阶段名称作为完成证据。无法判断目标时返回null，不猜测。reason只描述目标的位置关系或操作状态依据。',
+        '如提供visual_state_definition，它只解释该场景资产的视觉标志含义，不声明当前状态；根据实际画面判断是否满足desired_state。',
         '只输出JSON：{"goal_achieved":true或false或null,"reason":"简短目标画面依据"}。',
         json.dumps(safe, ensure_ascii=False),
     ])
