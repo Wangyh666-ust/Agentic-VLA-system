@@ -1,0 +1,34 @@
+COMMAND: /home/yhwang/fyp/xvla_native/sim_venv/bin/python -m pytest -q /mnt/d/FYP/First_Phase/scene_demo/tests/test_xvla_sim_finish.py /mnt/d/FYP/First_Phase/scene_demo/tests/test_xvla_sim_io.py /mnt/d/FYP/First_Phase/scene_demo/tests/test_xvla_integration.py
+........F............................................................... [ 94%]
+....                                                                     [100%]
+=================================== FAILURES ===================================
+____________ test_no_periodic_history_but_every_action_independent _____________
+
+monitor = <scene_demo.xvla_sim_finish.SimFinishMonitor object at 0x7ac3a2352230>
+
+    def test_no_periodic_history_but_every_action_independent(monitor):
+        monitor.independent_ready = Mock(side_effect=[True, True, False] + [True]*5)
+        monitor.on_action = Mock()
+        for i in range(8):
+            monitor._on_action({'phase':'home'})
+            if i == 2:
+                assert monitor.independent_streak == 0
+        assert monitor.independent_streak == 5
+        assert monitor.independent_ready.call_count == monitor.on_action.call_count == 8
+        assert monitor.helper_counts['home'] == 8
+        monitor.record(5); monitor.record(5); monitor.record(10)
+        monitor.port.capture.assert_not_called()
+>       assert monitor.history == []
+E       assert deque([]) == []
+E         
+E         Use -v to get more diff
+
+First_Phase/scene_demo/tests/test_xvla_sim_finish.py:101: AssertionError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/tests/test_xvla_sim_finish.py::test_no_periodic_history_but_every_action_independent
+1 failed, 75 passed in 3.40s
+
+COMMAND: /home/yhwang/fyp/xvla_native/sim_venv/bin/python -m pytest -q /mnt/d/FYP/First_Phase/scene_demo/tests/test_xvla_sim_finish.py /mnt/d/FYP/First_Phase/scene_demo/tests/test_xvla_sim_io.py /mnt/d/FYP/First_Phase/scene_demo/tests/test_xvla_integration.py
+........................................................................ [ 94%]
+....                                                                     [100%]
+76 passed in 1.42s

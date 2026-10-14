@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 from scene_demo import service
 from scene_demo.xvla_sim_finish import validate_checker_mode
+from scene_demo.xvla_sim_io import CachedNativeXvlaEnv
 from scene_demo.xvla_skills import route_capabilities
 from scene_demo.xvla_backend import MODEL_PATH, MODEL_REVISION, NativeXvlaEnv, make_client, reference_for, reference_metrics
 
@@ -144,8 +145,14 @@ class XvlaSceneService(service.SceneService):
         return result
 
     def _build_env(self, suite_name, task_id, seed, init_state_index):
-        return NativeXvlaEnv(suite_name, task_id, seed, init_state_index,
+        env_class = CachedNativeXvlaEnv if getattr(self, 'checker_mode', 'visual') == 'simulator' else NativeXvlaEnv
+        return env_class(suite_name, task_id, seed, init_state_index,
                              self._session_run_dir / 'native', session_limit=8000)
+
+    def _refresh_observation(self, env):
+        if getattr(self, 'checker_mode', 'visual') == 'simulator' and isinstance(env, CachedNativeXvlaEnv):
+            return env.get_current_observation()
+        return super()._refresh_observation(env)
 
     def bind_request_context(self, request_id, session_id, user_request, combined_planner=None):
         result = super().bind_request_context(request_id, session_id, user_request)
@@ -429,8 +436,10 @@ class XvlaSceneService(service.SceneService):
         monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
         if getattr(self, '_grounding_enabled', False):
             from scene_demo.xvla_grounding import attach_checker_cameras, seed_checker
-            attach_checker_cameras(monitor.port)
-            if not simulation:
+            if simulation:
+                monitor.release_external_views = True
+            else:
+                attach_checker_cameras(monitor.port)
                 initial = monitor.port.capture()
                 seed_checker(monitor.call_client, session.scene_inventory, plan.target_bindings,
                          session.planning_capture, monitor._release_context(initial),

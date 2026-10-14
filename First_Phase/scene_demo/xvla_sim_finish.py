@@ -29,6 +29,9 @@ class SimFinishMonitor(FinishMonitor):
         self._observed_vla_steps = set()
         self.release_sampler = ReleaseSampler(list(self.reference['finger_home']))
         self.release_events = 0
+        self.release_external_views = False
+        self.skipped_policy_captures = 0
+        self.skipped_helper_captures = 0
 
     def configure_simulation(self, goals: list[list[str]], preserved_goals: list[list[str]]) -> None:
         if not isinstance(goals, list) or not goals or any(not isinstance(g, list) or not g for g in goals):
@@ -98,7 +101,7 @@ class SimFinishMonitor(FinishMonitor):
 
     def _observe_release(self):
         robot = self.port.read_robot()
-        event = self.release_sampler.observe(list(robot['finger_qpos']), self.port.capture)
+        event = self.release_sampler.observe(list(robot['finger_qpos']), self._capture_release)
         if event is not None:
             event['images'] = [{'view':f['view'],'path':str(f['rgb_path']),
                 'sha256':hashlib.sha256(Path(f['rgb_path']).read_bytes()).hexdigest()} for f in capture_frames(event['capture'])]
@@ -106,14 +109,37 @@ class SimFinishMonitor(FinishMonitor):
             self.release_events += 1
             self._append('process_events.jsonl', event)
 
+    def _capture_release(self) -> dict:
+        cap = self.port.capture()
+        if self.release_external_views:
+            from scene_demo.xvla_grounding import render_external
+            wrist = next(f for f in cap['frames'] if f['view'] == 'wrist')
+            stem = Path(wrist['rgb_path']).stem + '_checker'
+            cap['checker_frames'] = [copy.deepcopy(wrist)] + render_external(self.port.env, self.port.output_dir, stem)
+        return cap
+
     def record(self, step):
         if self.terminal is None and step not in self._observed_vla_steps:
             self._observed_vla_steps.add(step)
+            if int(step) % 5 == 0:
+                self.skipped_policy_captures += 1
             self._observe_release()
-        super().record(step)
 
     def _on_action(self, row):
-        super()._on_action(row)
+        if isinstance(row, dict):
+            phase = row.get('phase')
+            if phase in self.helper_counts:
+                self.helper_counts[phase] += 1
+            self._helper_actions += 1
+        if self.on_action is not None:
+            self.on_action(row)
+        ready = bool(self.independent_ready())
+        if ready:
+            self.independent_streak += 1
+        else:
+            self.independent_streak = 0
+        if self._helper_actions % 5 == 0:
+            self.skipped_helper_captures += 1
         self._observe_release()
 
     def _finish_outcome(self, ok, reason):
@@ -131,4 +157,9 @@ class SimFinishMonitor(FinishMonitor):
             simulator_checks=self.simulator_checks, sample_count=self.sample_count,
             candidate_streak=self.candidate_streak, trigger_count=self.trigger_count,
             actual_visual_requests=0, calls=0, release_events=self.release_events)
+        result.update(skipped_policy_captures=self.skipped_policy_captures,
+            skipped_helper_captures=self.skipped_helper_captures)
+        for name in ('observation_cache_hits', 'observation_cache_misses', 'native_step_seconds', 'native_step_count'):
+            if hasattr(self.env, name):
+                result[name] = getattr(self.env, name)
         return result
