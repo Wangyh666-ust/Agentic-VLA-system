@@ -13,6 +13,20 @@ from scene_demo import xvla_console as ui
 from scene_demo import service
 
 
+def test_checker_mode_default_and_validation(tmp_path):
+    assert ui.Console(tmp_path).snapshot()['checker_mode']=='visual'
+    with pytest.raises(ValueError):ui.Console(tmp_path,checker_mode='invalid')
+    c=ui.Console(tmp_path)
+    with pytest.raises(ValueError):c.load('goal_table',checker_mode='invalid')
+
+
+def test_runtime_mode_mismatch_rejected(console):
+    c,plan=console;c.capture_plan(plan);c.state.update(stage='draft',checker_mode='simulator')
+    c.svc.checker_mode='visual'
+    with pytest.raises(ValueError,match='runtime checker mode mismatch'):c.execute()
+    c.svc.submit_plan.assert_not_called()
+
+
 @pytest.fixture
 def console(tmp_path, monkeypatch):
     monkeypatch.setattr(service, 'MAX_BUDGET', 900)
@@ -27,6 +41,7 @@ def console(tmp_path, monkeypatch):
     plan = ui.read(ui.OFFLINE / 'heat_yellow_mug/submitted_plans.json')[0]
     c.state = {'mode': 'live', 'stage': 'planning', 'request_id': plan['request_id'], 'events': []}
     c.svc = Mock()
+    c.svc.checker_mode = 'visual'
     c.svc.session.return_value = copy.deepcopy(c.session)
     return c, plan
 

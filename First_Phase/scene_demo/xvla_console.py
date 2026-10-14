@@ -111,7 +111,9 @@ def validate_draft(session, payload, request_id):
 
 
 class Console:
-    def __init__(self, root=None):
+    def __init__(self, root=None, checker_mode='visual'):
+        from scene_demo.xvla_sim_finish import validate_checker_mode
+        self.default_checker_mode = validate_checker_mode(checker_mode)
         self.root = Path(root or RESULTS / 'interactive-console')
         self.lock = threading.RLock()
         self.token = secrets.token_urlsafe(32)
@@ -136,7 +138,9 @@ class Console:
 
     def snapshot(self):
         with self.lock:
-            return copy.deepcopy({**self.state, 'busy': self.busy})
+            return copy.deepcopy({**self.state, 'busy': self.busy,
+                'default_checker_mode': self.default_checker_mode,
+                'checker_mode': self.state.get('checker_mode', self.default_checker_mode)})
 
     def start(self, fn):
         with self.lock:
@@ -219,6 +223,7 @@ class Console:
             data = item.read_bytes()
             target.write_bytes(data)
             record['source_sha256'][str(relative)] = hashlib.sha256(data).hexdigest()
+        record['checker_mode'] = self.state.get('checker_mode', self.default_checker_mode)
         write(self.directory / 'run_setup.json', record)
 
     def ensure_runtime(self):
@@ -267,7 +272,8 @@ class Console:
                     raise RuntimeError('X-VLA模型加载超时。')
                 self.cancel.wait(1)
             from scene_demo.xvla_service import XvlaSceneService
-            self.svc = XvlaSceneService(str(self.root / 'runs'), expected_capabilities=None, grounding_enabled=True)
+            self.svc = XvlaSceneService(str(self.root / 'runs'), expected_capabilities=None, grounding_enabled=True,
+                checker_mode=self.state.get('checker_mode', self.default_checker_mode))
             self.svc.start()
             deadline = time.monotonic() + 60
             while not self.svc.health().get('ready'):
@@ -315,14 +321,20 @@ class Console:
                     raise RuntimeError('场景拍摄失败，请查看本次 preview.log。')
         return result['frames']
 
-    def load(self, scene):
+    def load(self, scene, checker_mode=None):
+        from scene_demo.xvla_sim_finish import validate_checker_mode
+        selected = validate_checker_mode(self.default_checker_mode if checker_mode is None else checker_mode)
+        if self.state.get('stage') in ('draft', 'executing', 'stopping'):
+            raise ValueError('cannot change run mode during draft or execution')
         if scene not in {s['id'] for s in catalog_data()}:
             raise ValueError('请选择场景。')
+        if self.svc and getattr(self.svc, 'checker_mode', 'visual') != selected:
+            self.close_runtime()
         self.directory = self.root / (time.strftime('%Y%m%d-%H%M%S-') + secrets.token_hex(4))
         self.directory.mkdir(parents=True)
         self.session = self.draft = None
         with self.lock:
-            self.state = {'mode': 'live', 'stage': 'loading', 'request': '', 'scene': scene,
+            self.state = {'mode': 'live', 'stage': 'loading', 'request': '', 'scene': scene, 'checker_mode': selected,
                           'request_id': 'console-' + secrets.token_hex(12), 'events': [], 'run_path': str(self.directory)}
         self.check_cancel()
         self.update(stage='loading', message='正在载入场景并拍摄三视图；不启动模型、不执行任务。')
@@ -362,6 +374,7 @@ class Console:
             self.check_cancel()
         rid, sid = self.state['request_id'], self.session['session_id']
         write(self.directory / 'task_request.json', {'request_id': rid, 'session_id': sid,
+              'checker_mode': self.state.get('checker_mode', self.default_checker_mode),
               'scene_version': self.session['scene_version'], 'request': request, 'submitted_at': time.time()})
         self.update(stage='planning', request=request, message='Hermes 正在联合识别三视图并规划完整原生技能，随后进行一次独立复核。')
         from scene_demo.xvla_planning import plan_from_capture
@@ -400,11 +413,15 @@ class Console:
             if self.state.get('stage') != 'draft' or not self.draft or self.draft['decision'] != 'execute':
                 raise ValueError('没有可执行的草稿。')
             self.check_cancel()
+            runtime_mode = getattr(self.svc, 'checker_mode', 'visual')
+            if runtime_mode != self.state.get('checker_mode', 'visual'):
+                raise ValueError('runtime checker mode mismatch')
             payload = copy.deepcopy(self.draft)
             current = self.svc.session(payload['session_id'])
             validate_draft(current, payload, self.state['request_id'])
             self.update(stage='executing', message='用户已确认，正在将同一计划交给原 X-VLA 流程。')
-            write(self.directory / 'user_execution_confirmation.json', {'time': time.time(), 'payload': payload})
+            write(self.directory / 'user_execution_confirmation.json', {'time': time.time(), 'payload': payload,
+                'checker_mode': self.state.get('checker_mode', 'visual')})
             submitted = self.svc.submit_plan(payload)
             if submitted.get('ok') is not True:
                 raise RuntimeError(json.dumps(submitted, ensure_ascii=False))
@@ -493,6 +510,8 @@ class Handler(BaseHTTPRequestHandler):
                 self.wfile.write(blob)
             elif path == '/api/bootstrap':
                 self.send({'token': console.token, 'examples': EXAMPLES, 'scenes': catalog_data(),
+                           'default_checker_mode': console.default_checker_mode,
+                           'checker_mode': console.snapshot()['checker_mode'],
                            'app': 'xvla_interactive_console_v1'})
             elif path == '/api/state':
                 self.send(console.snapshot())
@@ -568,9 +587,11 @@ class Handler(BaseHTTPRequestHandler):
             if self.path == '/api/history':
                 console.history(payload['id'])
             elif self.path == '/api/load':
+                from scene_demo.xvla_sim_finish import validate_checker_mode
+                selected = validate_checker_mode(payload.get('checker_mode', console.default_checker_mode))
                 if console.state.get('mode') == 'live' and console.state.get('stage') == 'draft':
                     raise ValueError('请先停止当前尝试，再创建新场景。')
-                console.start(lambda: console.load(payload.get('scene')))
+                console.start(lambda: console.load(payload.get('scene'), selected))
             elif self.path == '/api/plan':
                 request = task_text(payload.get('request'))
                 with console.lock:

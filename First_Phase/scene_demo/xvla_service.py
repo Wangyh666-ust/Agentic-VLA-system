@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import numpy as np
 from scene_demo import service
+from scene_demo.xvla_sim_finish import validate_checker_mode
 from scene_demo.xvla_skills import route_capabilities
 from scene_demo.xvla_backend import MODEL_PATH, MODEL_REVISION, NativeXvlaEnv, make_client, reference_for, reference_metrics
 
@@ -102,12 +103,18 @@ def handoff_evidence(pilot: dict) -> dict:
         'orientation_goal_reset': within(cache.get('goal_ori_error')),
         'gripper_command_reset': within(cache.get('gripper_hold_error')),
     }
+    if pilot.get('checker_mode', status.get('checker_mode')) == 'simulator':
+        checks.pop('visual_trigger')
+        checks['simulator_trigger'] = positive(status.get('trigger_count'))
+        checks['execution_vlm_zero'] = status.get('actual_visual_requests') == 0
     return {'ok': all(checks.values()), 'checks': checks}
 
 
 class XvlaSceneService(service.SceneService):
     def __init__(self, run_root: str, *, expected_capabilities: list[str] | None = None,
-                 event_checker_enabled: bool = False, grounding_enabled: bool = False):
+                 event_checker_enabled: bool = False, grounding_enabled: bool = False,
+                 checker_mode: str = 'visual'):
+        self.checker_mode = validate_checker_mode(checker_mode)
         if type(event_checker_enabled) is not bool:
             raise TypeError('event_checker_enabled must be bool')
         # Candidate checker remains opt-in until its offline positive/negative gate passes.
@@ -311,7 +318,7 @@ class XvlaSceneService(service.SceneService):
         target = None
         result = {'ok': False, 'reason': 'pilot_precondition_failed'}
         try:
-            if getattr(self, '_grounding_enabled', False) and not getattr(plan, '_visual_selection_confirmed', False):
+            if getattr(self, 'checker_mode', 'visual') == 'visual' and getattr(self, '_grounding_enabled', False) and not getattr(plan, '_visual_selection_confirmed', False):
                 from scene_demo.xvla_grounding import verify_plan
                 from scene_demo.xvla_planning import reusable_review
                 checked = reusable_review(session, plan)
@@ -359,7 +366,8 @@ class XvlaSceneService(service.SceneService):
             result = {'ok': False, 'reason': job.ended_reason, 'detail': str(exc)}
         finally:
             monitor = getattr(job, '_xvla_monitor', None)
-            pilot = {'capability': capability_id,
+            pilot = {'capability': capability_id, 'checker_mode': getattr(self, 'checker_mode', 'visual'),
+                'decision_source': 'simulator_predicates' if getattr(self, 'checker_mode', 'visual') == 'simulator' else 'visual',
                 'outcome': result, 'job': job.public(), 'source_counts':
                 {k: self._env.counts[k]-before_counts[k] for k in before_counts},
                 'vla_calls': self._xvla_client.job_calls, 'handoff_reference': target,
@@ -381,7 +389,8 @@ class XvlaSceneService(service.SceneService):
             if base_path.exists():
                 (job.run_dir / 'base_result.json').write_bytes(base_path.read_bytes())
             write_json(base_path, {'ok': result.get('ok') is True, 'job': job.public(),
-                                  'outcome': result})
+                                  'outcome': result, 'checker_mode': getattr(self, 'checker_mode', 'visual'),
+                                  'decision_source': pilot['decision_source']})
             write_json(job.run_dir / 'pilot_result.json', pilot)
         return result
 
@@ -390,6 +399,9 @@ class XvlaSceneService(service.SceneService):
         return build_skill_context(capability, user_request)
 
     def _finish_monitor_class(self):
+        if getattr(self, 'checker_mode', 'visual') == 'simulator':
+            from scene_demo.xvla_sim_finish import SimFinishMonitor
+            return SimFinishMonitor
         from scene_demo.xvla_monitor import XvlaFinishMonitor
         return XvlaFinishMonitor
 
@@ -399,10 +411,16 @@ class XvlaSceneService(service.SceneService):
         from scene_demo.xvla_subtask_evidence import service_evidence_store
         from scene_demo import safe_exit_contacts
         monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
-        monitor.configure_checks(capability)
+        simulation = getattr(self, 'checker_mode', 'visual') == 'simulator'
+        if simulation:
+            prior = [list(g) for cid in session.xvla_completed for g in service.catalog.CAPABILITIES[cid]['goals']]
+            monitor.configure_simulation([list(g) for g in capability['goals']], prior)
+        else:
+            monitor.configure_checks(capability)
         bridge_port(monitor.port)
         use_events = getattr(self, '_event_checker_enabled', False)
-        monitor.call_client = (XvlaSubtaskReviewClient(max_calls=24,
+        if not simulation:
+            monitor.call_client = (XvlaSubtaskReviewClient(max_calls=24,
             evidence_store=service_evidence_store(session,plan,job),
             event_namespace=str(job.run_dir)) if use_events else XvlaQwenClient(max_calls=14))
         monitor._client_explicit = True
@@ -412,11 +430,12 @@ class XvlaSceneService(service.SceneService):
         if getattr(self, '_grounding_enabled', False):
             from scene_demo.xvla_grounding import attach_checker_cameras, seed_checker
             attach_checker_cameras(monitor.port)
-            initial = monitor.port.capture()
-            seed_checker(monitor.call_client, session.scene_inventory, plan.target_bindings,
+            if not simulation:
+                initial = monitor.port.capture()
+                seed_checker(monitor.call_client, session.scene_inventory, plan.target_bindings,
                          session.planning_capture, monitor._release_context(initial),
                          verified_review=getattr(plan,'_visual_grounding_review',None))
-        if use_events:
+        if use_events and not simulation:
             identity_capture = monitor.port.capture()
             monitor.call_client.remember_observation(identity_capture, monitor._release_context(identity_capture))
             monitor.call_client.audit_dir = job.run_dir / 'finish/model_requests'
