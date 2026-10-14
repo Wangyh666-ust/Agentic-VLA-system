@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "id": "20261015-sim-io-bowl",
+  "intent": "new_experiment",
+  "question_key": "xvla-simulator-fast-handoff",
+  "purpose": "Measure simulator execution time and files saved by observation I/O optimization while preserving original full-native completion, release, retreat, reset, and independent five-sample acceptance.",
+  "prior_evidence": [
+    "20261012-xvla-native-benchmark",
+    "20261014-generic-retreat",
+    "20261014-native-joint-planning",
+    "20261014-sim-fast"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261012-xvla-native-benchmark",
+      "disposition": "reuse",
+      "reason": "原生200例使用环境目标判据；复用模型输入和成功步数，不重复基线。"
+    },
+    {
+      "experiment_id": "20261014-generic-retreat",
+      "disposition": "reuse",
+      "reason": "完整碗抽屉在线在视觉纠错超时前阻断；旧动作回放验证退离/home，复用其执行器和筛查。"
+    },
+    {
+      "experiment_id": "20261014-native-joint-planning",
+      "disposition": "reuse",
+      "reason": "复用完整原生技能规划、一次独立复核及能力覆盖说明。"
+    },
+    {
+      "experiment_id": "20261014-sim-fast",
+      "disposition": "reuse",
+      "reason": "Existing simulator baseline: bowl execution 152.7734s and chain execution 392.1394s; all four full native skills passed independent 5/5 and handoff. Reuse native completion evidence and original timing; compare only changed observation I/O."
+    }
+  ],
+  "related_search": "Reuse original prior history and registered 20261014-sim-fast matching question; original successful bowl/chain evidence supplies latency and all-four-skills acceptance baseline.",
+  "new_physical_actions": 3900,
+  "hypothesis": "Eliminating unused periodic captures and repeated same-state captures reduces simulator observation I/O while preserving original acceptance.",
+  "information_gain": "New I/O timing, capture/cache counts and file sizes against existing original evidence; model RNG is not paired, so causal speed cannot be isolated from action-count differences unless those are checked.",
+  "success_criteria": "Optimized path actually skips captures and cache_hits>0; original synchronized release wrist/agentview/sideview images present; native trigger>0, actual release_open_actions/movement/home>0; independent five-sample acceptance, next reference, queue/proprio/controller resets and all previous goals pass; execution VLM calls=0 and planning calls=2 recorded. Record monotonic stage timings, action/capture/cache counts and file sizes. ",
+  "failure_criteria": "Expected branch not triggered or actual target actions zero means trigger-chain failure and target effect unverified; stop dependent validation. Executed actions with acceptance failure are effect failures. Preserve original failures and never automatically rerun.",
+  "unknown_criteria": "Missing evidence, startup/network/interface failure or unpaired model RNG/action-count differences remain unknown; no claim of causal speed or native reliability from one case.",
+  "changed_factors": [
+    {
+      "name": "execution_observation_io",
+      "before": "Periodic unused history captures, repeated force observations, and extra external 512px views on every geometry capture",
+      "after": "No unused periodic history; same-state observation cache; extra external 512px views on release only",
+      "reason": "Measure redundant simulator observation I/O reduction with original completion and control path preserved."
+    }
+  ],
+  "fixed_factors": {
+    "scene": "bowl_drawer",
+    "seed": 142,
+    "init_state_index": 0,
+    "native_skill": "xvla_bowl_drawer_close",
+    "VLA": "原权重/30chunk/10denoise/domain3/absolute",
+    "planning": "qwen3.8-max joint three-view planning plus one independent review; two calls",
+    "helpers": false,
+    "finish": "原control/sensors/geometry/feedback_retreat/joint_home与净空、5/5不改",
+    "protected_controls": {
+      "finish_v1/control.py": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+      "finish_v1/sensors.py": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+      "finish_v1/runtime.py": "4861c5dc18530b2ddf324a0dc653c9b1ea1cb3708679f25fd180b392f6f0690d",
+      "finish_v1/geometry.py": "5c70d4906c2a74e3a653af81e89051771fb8f8297eb148d443f0965e83557acc",
+      "finish_v1/feedback_retreat.py": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+      "finish_v1/simple_checker.py": "5e5286e2532bfc843ecc86bf6c43d07f93bef0930be50e79f054202beae6aa72",
+      "joint_home.py": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+      "xvla_backend.py": "ce86494c3273909dadd408bf96b0b94f223b5f5ec9c26912878fe6ca8f336fd1",
+      "placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+      "service.py": "e55365717b81dae89ad61ed5b26ab5d763a4afa365d6a153ae006fad89c6657c"
+    }
+  },
+  "scope": {
+    "max_cases": 1,
+    "max_vla_actions_per_case": 900,
+    "max_helper_actions_per_case": 3000,
+    "stop_rule": "Maximum one case, no automatic rerun. If first bowl target branch is not triggered, actual actions zero or acceptance fails, stop dependent chain. During chain any expected trigger/action/acceptance failure stops later skills; preserve evidence."
+  },
+  "configuration": {
+    "checker_mode": "simulator",
+    "scene": "bowl_drawer",
+    "request": "把桌上的碗放进最下层抽屉并关上抽屉",
+    "seed": 142,
+    "init_state_index": 0,
+    "vla_revision": "129e71460678b7236cee6fc9707f09d9fa0c3590",
+    "dtype": "float32",
+    "chunk": 30,
+    "denoise": 10,
+    "domain": 3,
+    "control": "absolute",
+    "native_instruction": "put the black bowl in the bottom drawer of the cabinet and close it",
+    "planning_model": "qwen3.8-max",
+    "execution_vlm_calls": 0,
+    "native_trigger_streak": 5,
+    "independent_finish_streak": 5,
+    "policy_budget": 900,
+    "helper_budget": 3000,
+    "session_step_limit": 8000,
+    "auxiliary_helpers": false,
+    "model_rng": "existing service default, not paired deterministic comparison",
+    "entry": "normal console load/plan/execute APIs; selected checker_mode simulator",
+    "observation_io": "simulator_deduplicated_v1",
+    "implementation_baseline": "ebfff5e"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": true,
+    "reason": "Compare new I/O against existing original evidence, not establish a new native success-rate baseline."
+  }
+}

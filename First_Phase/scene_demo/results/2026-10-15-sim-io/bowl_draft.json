@@ -1,0 +1,315 @@
+{
+  "mode": "live",
+  "stage": "draft",
+  "request": "把桌上的碗放进最下层抽屉并关上抽屉",
+  "scene": "bowl_drawer",
+  "checker_mode": "simulator",
+  "request_id": "console-2a5cc5de95ec48bb525a7d1f",
+  "events": [
+    {
+      "time": "00:14:10",
+      "text": "正在载入场景并拍摄三视图；不启动模型、不执行任务。"
+    },
+    {
+      "time": "00:14:17",
+      "text": "三视图已就绪。请先看看场景，再在下方填写你想做的任务。"
+    },
+    {
+      "time": "00:14:18",
+      "text": "正在准备当前任务。"
+    },
+    {
+      "time": "00:14:21",
+      "text": "正在加载 X-VLA；尚未创建场景。"
+    },
+    {
+      "time": "00:14:37",
+      "text": "Hermes 正在联合识别三视图并规划完整原生技能，随后进行一次独立复核。"
+    },
+    {
+      "time": "00:15:29",
+      "text": "规划完成，尚未执行。请核对目标与能力范围，再点击执行。"
+    }
+  ],
+  "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261015-001410-550657bd",
+  "message": "规划完成，尚未执行。请核对目标与能力范围，再点击执行。",
+  "session_id": "08a6dd2698ca487395d327e9310d62d4",
+  "capabilities": [
+    {
+      "instruction": "put the black bowl in the bottom drawer of the cabinet and close it",
+      "goals": [
+        [
+          "close",
+          "white_cabinet_1_bottom_region"
+        ],
+        [
+          "in",
+          "akita_black_bowl_1",
+          "white_cabinet_1_bottom_region"
+        ]
+      ],
+      "scene_ids": [
+        "bowl_drawer"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 3
+      },
+      "component_capability_ids": [
+        "xvla_t03_bowl_to_drawer",
+        "xvla_t03_drawer_close"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_bowl_drawer_close"
+    }
+  ],
+  "frames": [
+    {
+      "view": "wrist",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/cap000002_wrist.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "agentview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "sideview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "timestamp": 0.5000000000000003
+    }
+  ],
+  "preview_only": false,
+  "model_runtime": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261015-001410-550657bd/model-20261015-001422-fe44b0b6",
+  "model_log": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261015-001410-550657bd/model-20261015-001422-fe44b0b6/model.log",
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "银灰色带斑点纹理的圆形碗，位于桌面中央偏左位置",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              430,
+              0,
+              620,
+              130
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              445,
+              525,
+              575,
+              615
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              385,
+              500,
+              490,
+              575
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视清晰可见碗口及内部斑点纹理"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "侧前方视角完整呈现碗体形状与材质"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧面视角确认碗的位置与外观一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "浅灰色双层抽屉柜，下层抽屉处于拉开状态，带有深灰色横向把手，位于桌面右侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              0,
+              280,
+              320
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              495,
+              315,
+              795,
+              595
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              485,
+              445,
+              825,
+              765
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "仅可见柜体顶部边缘及部分侧面结构"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰展示上下两层抽屉结构，下层已拉出"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧面视角确认下层抽屉开启状态及把手细节"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "黑色细长瓶身配金色瓶盖的酒瓶，直立于碗与抽屉柜之间",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              230,
+              380,
+              340,
+              490
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              480,
+              415,
+              520,
+              525
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              570,
+              445,
+              605,
+              545
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视可见黑色瓶身与金色瓶盖顶部"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "正面视角完整呈现瓶身轮廓与颜色"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧面视角确认瓶子位置与形态无冲突"
+          }
+        ],
+        "confusable_with": [
+          "obj_1"
+        ],
+        "role": "distractor"
+      }
+    ],
+    "coverage": "full",
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/cap000002_wrist.png",
+        "sha256": "8f901dff03c994dda17eb4012e715f452a5832299d317cb5d36e6e087b409257"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "5cc2b2af91494cb92d9b6f07e8f56b484654ac88e0cd8880398d1dceaecaf0cb"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "44a540009036103c28d36f26f3a08ecb4d0e69e75725f0f853058eb96f9d302b"
+      }
+    ],
+    "corrections": "无修正，所有物品身份及框选经三视图核对无误。",
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ]
+  },
+  "draft": {
+    "request_id": "console-2a5cc5de95ec48bb525a7d1f",
+    "session_id": "08a6dd2698ca487395d327e9310d62d4",
+    "scene_version": 0,
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_bowl_drawer_close"
+    ],
+    "rationale": "用户需求为将桌上碗放入最下层抽屉并关闭，原生技能xvla_bowl_drawer_close完整覆盖该动作序列（入抽屉+关抽屉），目标物体与目的地在三视图中均明确可辨，无能力缺口。",
+    "request_scope": {
+      "coverage": "full",
+      "executable_outcomes": [
+        "将银灰色斑点碗放入浅灰色抽屉柜下层抽屉内",
+        "关闭下层抽屉至完全闭合状态"
+      ],
+      "unmet_outcomes": [],
+      "reason": "所选原生技能完整匹配用户任务的所有物理动作要求，无需额外澄清或部分执行"
+    },
+    "target_bindings": {
+      "akita_black_bowl_1": "obj_1",
+      "white_cabinet_1_bottom_region": "obj_2"
+    },
+    "audit": false,
+    "budget_per_subgoal": 900
+  },
+  "busy": false,
+  "default_checker_mode": "visual"
+}

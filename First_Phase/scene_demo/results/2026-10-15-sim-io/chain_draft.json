@@ -1,0 +1,542 @@
+{
+  "mode": "live",
+  "stage": "draft",
+  "request": "先把桌上的酒瓶放到酒架上，再把碗放到盘子上，最后打开灶台。",
+  "scene": "goal_table",
+  "checker_mode": "simulator",
+  "request_id": "console-59c0644130b02b0901cd81fd",
+  "events": [
+    {
+      "time": "00:18:40",
+      "text": "正在载入场景并拍摄三视图；不启动模型、不执行任务。"
+    },
+    {
+      "time": "00:18:48",
+      "text": "三视图已就绪。请先看看场景，再在下方填写你想做的任务。"
+    },
+    {
+      "time": "00:18:48",
+      "text": "正在准备当前任务。"
+    },
+    {
+      "time": "00:18:55",
+      "text": "Hermes 正在联合识别三视图并规划完整原生技能，随后进行一次独立复核。"
+    },
+    {
+      "time": "00:20:05",
+      "text": "规划完成，尚未执行。请核对目标与能力范围，再点击执行。"
+    }
+  ],
+  "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261015-001840-8dd2f93e",
+  "message": "规划完成，尚未执行。请核对目标与能力范围，再点击执行。",
+  "session_id": "7806cf91859d496b85d8939bf63b28bd",
+  "capabilities": [
+    {
+      "instruction": "put the bowl on the plate",
+      "goals": [
+        [
+          "on",
+          "akita_black_bowl_1",
+          "plate_1"
+        ]
+      ],
+      "object_id": "akita_black_bowl_1",
+      "target_id": "plate_1",
+      "scene_ids": [
+        "goal_table",
+        "goal_table_shifted"
+      ],
+      "evidence": "v0.1.0 single-task success in libero_goal/8; sequence and shifted-layout reliability unverified",
+      "audit_only": false,
+      "exclusive_target": true,
+      "capability_id": "bowl_to_plate"
+    },
+    {
+      "instruction": "put the wine bottle on the rack",
+      "goals": [
+        [
+          "on",
+          "wine_bottle_1",
+          "wine_rack_1_top_region"
+        ]
+      ],
+      "object_id": "wine_bottle_1",
+      "target_id": "wine_rack_1_top_region",
+      "scene_ids": [
+        "goal_table",
+        "goal_table_shifted"
+      ],
+      "evidence": "candidate here; v0.1.0 single-task wine success used libero_goal/9, a different task initialization",
+      "audit_only": false,
+      "exclusive_target": true,
+      "capability_id": "wine_to_rack"
+    },
+    {
+      "instruction": "turn on the stove",
+      "goals": [
+        [
+          "turnon",
+          "flat_stove_1"
+        ]
+      ],
+      "object_id": "flat_stove_1",
+      "target_id": null,
+      "scene_ids": [
+        "goal_table",
+        "goal_table_shifted"
+      ],
+      "evidence": "candidate here; v0.1.0 single-task stove success used libero_goal/7, a different task initialization",
+      "audit_only": false,
+      "exclusive_target": false,
+      "capability_id": "stove_on"
+    }
+  ],
+  "frames": [
+    {
+      "view": "wrist",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "agentview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "sideview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "timestamp": 0.5000000000000003
+    }
+  ],
+  "preview_only": false,
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "深色细长玻璃酒瓶，带浅色软木塞，直立于桌面中部偏后",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              560,
+              520,
+              670,
+              680
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              380,
+              430,
+              410,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              500,
+              390,
+              530,
+              480
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视清晰可见瓶身与瓶塞"
+          },
+          {
+            "frame": 1,
+            "visibility": "partial",
+            "reason": "被前方黑盒部分遮挡，仅见瓶颈上部"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整可见瓶身轮廓"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "木质斜放酒架，多层横档结构，位于桌面左后方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              730,
+              420,
+              980,
+              850
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              130,
+              320,
+              320,
+              480
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              360,
+              240,
+              560,
+              420
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视可见右侧木质格栅结构"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见倾斜木架及横档"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整展示酒架形态"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "银灰色金属质感圆碗，表面有斑点纹理，位于桌面中央",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              380,
+              280,
+              620,
+              520
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              430,
+              470,
+              520,
+              530
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              490,
+              460,
+              580,
+              520
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视正对碗口，纹理清晰"
+          },
+          {
+            "frame": 1,
+            "visibility": "partial",
+            "reason": "被黑盒遮挡下半部分，仅见碗沿"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整可见碗体"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "白色圆盘，边缘带粉红色环纹，平放于桌面中前部",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              350,
+              0,
+              600,
+              180
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              460,
+              530,
+              580,
+              620
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              410,
+              510,
+              530,
+              590
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视完整可见盘面及粉边"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见盘子位置与颜色"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视可见盘子平面形态"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_5",
+        "description": "方形单头电灶台，灰白底座配黑色圆形加热区及旋钮，位于桌面右侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              500,
+              280,
+              850
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              470,
+              380,
+              620,
+              480
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              620,
+              420,
+              780,
+              540
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视可见左下角灶台同心圆加热区"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见灶台整体及旋钮"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整展示灶台侧面与顶部"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_6",
+        "description": "蓝色长方体小盒，表面有椭圆凹陷图案，位于碗与灶台之间",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              200,
+              150,
+              320,
+              320
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              530,
+              470,
+              590,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              560,
+              490,
+              620,
+              540
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视清晰可见蓝色盒体"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "可见桌上蓝色小物件"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视确认蓝色长方体形态"
+          }
+        ],
+        "confusable_with": [
+          "obj_3"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_7",
+        "description": "黑色立方体收纳柜/抽屉组，正面有三个银色横向把手，位于桌面左侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              220,
+              440,
+              510,
+              720
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              230,
+              320,
+              480,
+              540
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "俯视视角未包含该区域或被截断"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见黑色柜体及三个把手"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整展示柜体侧面与把手"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      }
+    ],
+    "coverage": "所有目标物体与目的地在三视图中均有至少两个清晰视角确认，干扰物已区分。",
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist.png",
+        "sha256": "d430c88cf5634fed8d13d73c159d97887ac014175255e8a3ec67b662318a4009"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "ad600e81bfe02086f5a74d629394daa6cd97dfe8a859e52461c8e548706dec25"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "7801683b27d45f5eb09bed2b54d3bda7ee2e7e1a884b96eef4b2e059ebbd3137"
+      }
+    ],
+    "corrections": "无",
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ]
+  },
+  "draft": {
+    "request_id": "console-59c0644130b02b0901cd81fd",
+    "session_id": "7806cf91859d496b85d8939bf63b28bd",
+    "scene_version": 0,
+    "decision": "execute",
+    "capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "rationale": "用户任务包含三个独立子目标：酒瓶归位酒架、碗放置盘上、开启灶台。目录中存在对应的完整原生技能 wine_to_rack, bowl_to_plate, stove_on，且所有目标物体与目的地均在画面中清晰可辨并已完成绑定。按用户指定顺序执行即可完全覆盖需求。",
+    "request_scope": {
+      "coverage": "full",
+      "executable_outcomes": [
+        "酒瓶被放置到酒架顶层区域",
+        "碗被放置到盘子上",
+        "灶台被开启"
+      ],
+      "unmet_outcomes": [],
+      "reason": "所有用户请求的动作均有对应的已训练完整原生技能支持，且场景物体识别无歧义，可实现完整需求覆盖。"
+    },
+    "target_bindings": {
+      "akita_black_bowl_1": "obj_3",
+      "flat_stove_1": "obj_5",
+      "plate_1": "obj_4",
+      "wine_bottle_1": "obj_1",
+      "wine_rack_1_top_region": "obj_2"
+    },
+    "audit": false,
+    "budget_per_subgoal": 800
+  },
+  "busy": false,
+  "default_checker_mode": "visual"
+}

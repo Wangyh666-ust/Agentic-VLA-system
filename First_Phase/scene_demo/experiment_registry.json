@@ -70800,6 +70800,452 @@
         ],
         "multiple_attempts": true
       }
+    },
+    {
+      "id": "20261015-sim-io",
+      "title": "Simulator observation I/O optimization comparison",
+      "date": "2026-10-15",
+      "question_keys": [
+        "xvla-simulator-fast-handoff",
+        "xvla-simulator-io-latency"
+      ],
+      "tags": [
+        "xvla",
+        "simulator",
+        "io-optimization",
+        "latency",
+        "next-reference"
+      ],
+      "conditions": "One bowl_drawer flow and one wine→bowl→stove goal_table flow; seed142/state0, full native skills, qwen3.8-max joint three-view planning plus independent review (2 calls/run), simulator predicate triggers; original release/retreat/home/independent5 controls and all10 protected hashes preserved; no auxiliary helpers.",
+      "findings": "Two flows/four actual skills passed independent5/handoff. Execution152.773399792→74.420930427s (51.3% lower) and392.139429141→181.085704868s (53.8% lower); executionVLM0, next two skill references and final global home verified, previous goals retained. Capture groups107→14/218→34; sensor bytes147901650→12292050/305747649→31101940.",
+      "limits": "Single sample per flow, observations/RNG/first images/request payloads unpaired and action counts changed; no exact causal speed or broad reliability claim. New single includes16.423s cold model/build proxy versus warm baseline. Phase mtimes include overlapping capture/render/planning/motion/writes and are not pure physics. Simulator privileged predicates do not establish real-robot generalization.",
+      "configuration_complete": false,
+      "configuration": {
+        "baseline_commit": "ebfff5e",
+        "implementation_commit": "6b6bec3",
+        "branch": "codex/xvla-sim-io",
+        "checker_mode": "simulator",
+        "multiple_cases": true,
+        "paired_observations_rng": false,
+        "proposals": [
+          "First_Phase/scene_demo/results/2026-10-15-sim-io/bowl_proposal.json",
+          "First_Phase/scene_demo/results/2026-10-15-sim-io/chain_proposal.json"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/README.md",
+          "sha256": "39c9f93235c16b802d33faa49fd993a6d7e791032c6bf22851d389b7035b6eed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/comparison.json",
+          "sha256": "57ca2ec26c628f14647bedd23c8e4410d27fec46ce6711b2079eab7f63bd7ef9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence_manifest.json",
+          "sha256": "ff35c0a17686cf8e9bfe6d223296f66bea39381bab31b0d568e2cc49215c45da"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/bowl_acceptance.json",
+          "sha256": "e28506a136fa16399a9528e44397eda6c4f0af65d75fda77c78be63fef9cefc0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/chain_acceptance.json",
+          "sha256": "4d9540bea2b164ff98d28b35d3c57dcc66f3e680736d77cfba95861dd7d4fd08"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/bowl_timing.json",
+          "sha256": "82728555a5143c2a66574fe18e215344cfcd7931b14395570188bd00cd1a48ef"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/chain_timing.json",
+          "sha256": "0a4a92fbaddf3a21e05d41f3b7578ef466d70c9400300f26e58b0d34586b132d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/bowl_proposal.json",
+          "sha256": "b89c476739b201103280009e338d3e97459a37b414a4c08114d4b6c79c14fb42"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/chain_proposal.json",
+          "sha256": "bb380fdb8e8505026e33dfe98db60a89045a119408bd36f8b76e4e4d3e5d876d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/bowl_review.json",
+          "sha256": "853f825b48f19ea2f7380caefd2af8c0844636968d46497f17f6bea3e7ee6aee"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/chain_review.json",
+          "sha256": "853f825b48f19ea2f7380caefd2af8c0844636968d46497f17f6bea3e7ee6aee"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/software_tests.txt",
+          "sha256": "b4ac577e31ad529cd46834e78ff7638e8aac0861ab69b75d3d96b9142b13a81e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/implementation_context.json",
+          "sha256": "422763c7edb487d4b18c1d6a73b91cb39e5c4cda9e4677aadce67bc62d0b8d53"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/protected_controls.json",
+          "sha256": "a929fe6a5a138b30ebbe6b6fece099851c15e0f8a68bec34e9ea2a5634bb4d9d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/bowl_source_hashes.json",
+          "sha256": "babfafe8fcdaa7a5adb28a4f324cbc227422adbd3082a006f7714f9dfe45cd2a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/chain_source_hashes.json",
+          "sha256": "babfafe8fcdaa7a5adb28a4f324cbc227422adbd3082a006f7714f9dfe45cd2a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/online_bowl.py",
+          "sha256": "d8e4779ef7764a02a43ad55b56634dfa1306dd63ce9f6656d15c392569b94445"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/online_chain.py",
+          "sha256": "741dff6b0dd907690f827b89ac0ee1e9a0701f7b84b5335a68b277027f022968"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/analyze_compare.py",
+          "sha256": "c7cd4ab1fd71d619684eff946c514afb3a43a5e64531d9386327d07ddbc3231f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/prepare_harness.py",
+          "sha256": "347677abbb94903ccae95a4c434a20fd4db42dab649d7d2e0c2606bc204c1e25"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/register_results.py",
+          "sha256": "bd3596117cafa2c0d444791f088a46bd33223facef49ecb210265903cc3d2e7b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish/sensors/cap000001_agentview.npy",
+          "sha256": "95e801da7a88ebf454262504881dd8104668cde02387e1a0f3b3853d502956ab"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish/sensors/cap000001_agentview.png",
+          "sha256": "16e39724206ba4420fe68fe5c1c9cf365b9583c1550e09e846f1e4640b5a7036"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish/sensors/cap000002_wrist.npy",
+          "sha256": "9425dde41ffd64b877f88075aae4a27d2dba8327cd975e708d433ab055074c2d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish/sensors/cap000002_wrist.png",
+          "sha256": "2d6786e8f1d415ccfc3f1ca31df1b55e21bae0ebbe8ca39b2771f384370f116a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish/sensors/cap000002_wrist_checker_agentview.png",
+          "sha256": "650e14f5b35c6ce0b57fafe717fada009373780312ba174c6e70c059f7df4d6d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish/sensors/cap000002_wrist_checker_sideview.png",
+          "sha256": "e8277e13ed56eb1430c3c9be77afb69b6394c09fba9f46f35cee03ef2c33d0cf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish/sensors/cap000003_sideview.png",
+          "sha256": "1366893fd9267a5cc213d48b9a3131d19124096e99a25f064491639847d7653a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/pilot_result.json",
+          "sha256": "94522cfc8a239f814d078d57955fd7103be1a2362d080f29b7e2296cc3224f6f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/result.json",
+          "sha256": "46c8e444ea42e31206bf71534bdbd1d20938795baa6214e6bf86d0b304191211"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/events.jsonl",
+          "sha256": "cf46591f0db03049d80da537aee7e41fd360a0505d6defd550a427aa89c7ed78"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish_actions.jsonl",
+          "sha256": "10420788ebab72ef546e9f0b9898aa14a91061c6d8e4fc646437c0c82abe7974"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/independent_finish.jsonl",
+          "sha256": "6065e14b4778eb02c3029a6b75b893db8dc3de5e5b6e042b0751540e3d1b0553"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/handoff_reference.json",
+          "sha256": "6b069f8d55f4efd418f4409631b1ee3ce33d273425122260385020bf68359c83"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/first.png",
+          "sha256": "a6492bdb638eb2e29bd274e408bc9ffef20b8d98e174652a874f455b80041b2e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/last.png",
+          "sha256": "7242f010a09aae6dcfdb93be3ad2ab27c0ca6fd07f2550ffbb2f6a317bc63608"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish/checks.jsonl",
+          "sha256": "7874e384ae37c0a702d1b93a6960725ae18544bf6b7c6d3c9df684f9b8ab1a7b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish/simulator_samples.jsonl",
+          "sha256": "01d003a260107fc028f31d2d2ff82fa3e7f098283f02fb7c6cb1235670c761d3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/cap_01_xvla_bowl_drawer_close_bf53df9c/finish/process_events.jsonl",
+          "sha256": "1355c7da7f393302654ff268fd4963abaf7a13d9b4024dfcdb7e86a25cd097a6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/joint_planning_timing.json",
+          "sha256": "9088a3a8f923e773c6bf4163a9b8756cd597a522d9d18ef58c9545df04ab68cf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/joint_draft.json",
+          "sha256": "4e00706d96fc969dbd2d0c6f5adc481e2fb4a81a4a06db62c4c127a42e63fab5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/selected_targets_review.json",
+          "sha256": "56d811e083ab27c1ca6477d863aa7151765a8428d3d291093c0f480209b5ddf4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/inventory_confirmed.json",
+          "sha256": "5b0bb5de51a7e9ccfd98ce1f80a248ba0d7a9e8d9f817095994b014a04448bcc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161433Z_bowl_drawer_08a6dd26/planning_grounding/planning_three_views.png",
+          "sha256": "e5857d63c422d1bfb2ccde929c7b173abe12434107295556c08c2c0f2a2c9fe0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist_checker_agentview.png",
+          "sha256": "4599666d84be9977fdb9bcc3221d5df88bbf27eae0d0c82dce59297d2e303e35"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist_checker_sideview.png",
+          "sha256": "4a6f72f940ef204ce11703b2d9426904a1e4030afa7912d469170d84e9c7105a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist.npy",
+          "sha256": "73a7c99b05c9cb4a22fbf2e1d7235935ba675ac699d97fb116fdc8c87e64906c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist.png",
+          "sha256": "53dff274b75528c289b30a5487b21bb6311602638b1f5035a20eaa1a2b7520c5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000006_sideview.png",
+          "sha256": "d4c77ae6f5f7755fd06bba415b8fd59de922e1899aed3f2ed9c42f9cfda34429"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000004_agentview.png",
+          "sha256": "080e1f3b8ae1b2418e14cbd84fd21c6f05979e43e443b257ffc338e5ada08409"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000004_agentview.npy",
+          "sha256": "aaaf636fed876432ebdab95ed17dcf12c60f75f5d8f5a39b5580a89a28b049be"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/pilot_result.json",
+          "sha256": "c10466d72170989b352a27db71db34e09b3aa85536ddeea9b21a8faaa29cec9b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/result.json",
+          "sha256": "65a0ec2af66391db59b2756538c9c51e8b372e928287b33fd10ce516bfe95799"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/events.jsonl",
+          "sha256": "84a5326a084b89cca92f9569d032c8c7b519b05d3fd9a68d26d705c15938d66b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish_actions.jsonl",
+          "sha256": "559e3f7131781a6d15bf96f9d6603e4214368598ae58b0593adf403da62037ef"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/independent_finish.jsonl",
+          "sha256": "745f1427c60c012fade08bccae92c6da4b0f08b17a8df08bd34f8e6bf52fafd7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/handoff_reference.json",
+          "sha256": "b3a540b4a3b2c61dc6108a10b0128b716c8ae790d0e7f4b964cb501000ac4d4d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/first.png",
+          "sha256": "2220134d56dd23000bdda55bdb31ce84f272b269cf10531fbb9f0fdf6c5ada87"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/last.png",
+          "sha256": "aa725b065b387c7a6a84f7f09830c5fe06f75f71a77bf2ac9b138bd3fd14b604"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/checks.jsonl",
+          "sha256": "4506a220d42b1e0a256a505a083a4b56e5d153d6f1da56e4de9cd065c9ca8e51"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/simulator_samples.jsonl",
+          "sha256": "820d35670acb9341143daf014e1874611fa69aa7e134b3512c36c627971dc7e7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/process_events.jsonl",
+          "sha256": "342f9b77b4876492fc390084161f45af5acbae7484fac831e8a89dd59e8d960f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000004_agentview.png",
+          "sha256": "eac743e14f1f7771dfba773c3d6d75a0a79d72aad9e957df97209a314b24b40a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist_checker_agentview.png",
+          "sha256": "685b5d992776b5d38e3544dcd3b781251bd421a07fe8f2a2ce81b4f15e9af8c4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000006_sideview.png",
+          "sha256": "9becf864f0064d5b3f30d222725fcc03f2ef71a03b3e43274f0da70c5581ab86"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist.npy",
+          "sha256": "d3668f73b39e0c4858f2be53f938de35ad0bdef11655153ea1f39341552c520f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000004_agentview.npy",
+          "sha256": "4d585742704b68840385501756f53a27474b778ac05501c9c97051df0a573d9b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist.png",
+          "sha256": "1a5e743d02125d1e4b3699b6d55ff3ef24f26284554b2576c78f9d7aeeae7d90"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist_checker_sideview.png",
+          "sha256": "44be45e4ac458af8fec2b4c8b2fbcaaa6cf67bfd4372484a976f55f57be10f9f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/pilot_result.json",
+          "sha256": "dac71d409cc6520c25d76e81efb9fc19da5ece9c0c99992fd6d3da5de15d392b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/result.json",
+          "sha256": "b530b1599e05084139577e66da786f700e08fcdbd2ca8bf655e12b83dac40e02"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/events.jsonl",
+          "sha256": "e1d13bddb6aacd5546beb5aac67c5b2a9fd8ee63367856c656ceac0ca35e06e2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish_actions.jsonl",
+          "sha256": "a8dcfad22fcb58aa7e38d4cc77b67ee9d57d38b70e80ff24bb8d60851a442287"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/independent_finish.jsonl",
+          "sha256": "e66e68e062e18f7052298d7fd368347297c8f8ef032f16b2bcfa745043f72adb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/handoff_reference.json",
+          "sha256": "4336dfbeeabbd33ee007ff0d9e5c01ea0663fbb872f579be7dc8d25e5039db3b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/first.png",
+          "sha256": "aa725b065b387c7a6a84f7f09830c5fe06f75f71a77bf2ac9b138bd3fd14b604"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/last.png",
+          "sha256": "b50ef5abff0c5271f8c0a16eabbd1797f88b95de54e0873ec9c895b23b7ee2e1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/checks.jsonl",
+          "sha256": "4c82893f53156d348bbe4770a28b3e012c2b916e67cd327837a4292caef8f153"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/simulator_samples.jsonl",
+          "sha256": "6b9f4f536fd7c9955c5e890ab12171db9141f5c958808bb13748fe231d39f614"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/process_events.jsonl",
+          "sha256": "f8c4efcb0e365b6a3ef99907ddd9ca6bb24e1d2919ccc4d1e033be7cee9fd213"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000009_sideview.png",
+          "sha256": "b76d6f723378ebc1669e1f1ea89fcfa02e4fa1a7a48175379d8f7a9dd602c39c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist.npy",
+          "sha256": "b74e43fac3b961cc9477c0c3d539ef287927e19bc81b7077aebb1d5190986dbe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist_checker_agentview.png",
+          "sha256": "a232bc591e5162fe3b113dddf1a7bb6ca1b624b01b881b9b865e291a6ca97aa4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist.png",
+          "sha256": "c470fd455727c1c0b5e1ab9d7d00cca33eb84c6bba6f058aac45c7abc87e1fff"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist_checker_sideview.png",
+          "sha256": "58370267ea52eb71d81fc468b79eb5789ec68207d96fe43dcc4eba77d09764e8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000007_agentview.png",
+          "sha256": "b51e0f45fe48813e10401e9fa2afa16a08f9e803e30b9fe7fe4403c905643b4a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000007_agentview.npy",
+          "sha256": "dfa85f7b4ed2f40c762d56a78c67668c4f180961abea4bea191538aa01b03978"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/pilot_result.json",
+          "sha256": "7b0792d923d292f3963f03aa5ae26a38bd16f5ffeb65058e3c3f1c31589a2031"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/result.json",
+          "sha256": "071305cca1b2a4e94c4096db2eba8d063a790135ee24488e09aae60bdda7e0c7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/events.jsonl",
+          "sha256": "082575eecd9d3a22f73fb17141052ff55be19f5976c3b3f3dc336f2f998664cf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish_actions.jsonl",
+          "sha256": "49748610e2b0ecfadc67634caac0b5644d96fe63f2e239960ed8d82c6417c82d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/independent_finish.jsonl",
+          "sha256": "44e0413731f484ae3c42f5d51dc3dd2fa27e2db6f651763a5220ce0e493ae4b1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/handoff_reference.json",
+          "sha256": "33f5c6ebd05cfdad1d2482cb81e083baae443e706dad886065440c82a314856f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/first.png",
+          "sha256": "b50ef5abff0c5271f8c0a16eabbd1797f88b95de54e0873ec9c895b23b7ee2e1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/last.png",
+          "sha256": "df26f53436ed45eaa4c790c932acfdb725483bc1d44643dc65b38542c7a6291e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/checks.jsonl",
+          "sha256": "3e1d8fe92960ed828b127948d205c881153824ae781c048e7290ecb3afc09545"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/simulator_samples.jsonl",
+          "sha256": "7d142376b4f2c06cfdb4b71a9401fa7a871aa25257d7326e2a0b4c48b7c83683"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/process_events.jsonl",
+          "sha256": "0b0d286b52902bc186c789c2403767063076f233086de90896be38bcb5ace374"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/joint_planning_timing.json",
+          "sha256": "4947522b9880b5b90bc5937f322af75f579c765ca48948ee61ff775aeb907bcc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/joint_draft.json",
+          "sha256": "ed26e89d1bd27f747d9cd73622e1624defea36f7fda35637c280e93a813e47a0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/selected_targets_review.json",
+          "sha256": "a71ad8b327453beed62f926d4f9b7c0bb3b9373c86a276c9598dabcb884f41ba"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/inventory_confirmed.json",
+          "sha256": "7bb21ff76d039990bbf5f68a73cb9fe368b177499c135b3c8df49a36382070dc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-15-sim-io/evidence/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/planning_three_views.png",
+          "sha256": "79ca22c3f97f3f089981035c33a71262cf147a8220c806bd401f52083763cd4f"
+        }
+      ]
     }
   ]
 }

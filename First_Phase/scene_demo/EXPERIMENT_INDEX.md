@@ -282,3 +282,4 @@
 - 证据：[测量摘要](results/2026-10-14-generic-retreat/summary.json)，[旧动作重放](results/2026-10-14-generic-retreat/replay_v2/summary.json)。仅此样例效果，不代表所有任务成功率。
 
 | 20261014-sim-fast | 仿真真值快速版 | 2条流程/4次技能通过；执行VLM0，原5/5、下一起点接续与末项home通过；暖启动执行153s/392s，含规划总210s/493s；规划拒绝与启动错误保留 | [报告](results/2026-10-14-sim-fast/README.md) |
+| 20261015-sim-io | 仿真观测I/O优化 | 2流程/4技能原5/5与handoff通过；执行152.773→74.421s、392.139→181.086s；观测/RNG未配对，单例新增冷启动不做严格因果比较 | [报告](results/2026-10-15-sim-io/README.md) |

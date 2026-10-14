@@ -1,0 +1,2038 @@
+{
+  "mode": "live",
+  "stage": "completed",
+  "request": "先把桌上的酒瓶放到酒架上，再把碗放到盘子上，最后打开灶台。",
+  "scene": "goal_table",
+  "checker_mode": "simulator",
+  "request_id": "console-59c0644130b02b0901cd81fd",
+  "events": [
+    {
+      "time": "00:18:40",
+      "text": "正在载入场景并拍摄三视图；不启动模型、不执行任务。"
+    },
+    {
+      "time": "00:18:48",
+      "text": "三视图已就绪。请先看看场景，再在下方填写你想做的任务。"
+    },
+    {
+      "time": "00:18:48",
+      "text": "正在准备当前任务。"
+    },
+    {
+      "time": "00:18:55",
+      "text": "Hermes 正在联合识别三视图并规划完整原生技能，随后进行一次独立复核。"
+    },
+    {
+      "time": "00:20:05",
+      "text": "规划完成，尚未执行。请核对目标与能力范围，再点击执行。"
+    },
+    {
+      "time": "00:20:07",
+      "text": "用户已确认，正在将同一计划交给原 X-VLA 流程。"
+    },
+    {
+      "time": "00:23:04",
+      "text": "本次动作计划已结束。"
+    }
+  ],
+  "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261015-001840-8dd2f93e",
+  "message": "本次动作计划已结束。",
+  "session_id": "7806cf91859d496b85d8939bf63b28bd",
+  "capabilities": [
+    {
+      "instruction": "put the bowl on the plate",
+      "goals": [
+        [
+          "on",
+          "akita_black_bowl_1",
+          "plate_1"
+        ]
+      ],
+      "object_id": "akita_black_bowl_1",
+      "target_id": "plate_1",
+      "scene_ids": [
+        "goal_table",
+        "goal_table_shifted"
+      ],
+      "evidence": "v0.1.0 single-task success in libero_goal/8; sequence and shifted-layout reliability unverified",
+      "audit_only": false,
+      "exclusive_target": true,
+      "capability_id": "bowl_to_plate"
+    },
+    {
+      "instruction": "put the wine bottle on the rack",
+      "goals": [
+        [
+          "on",
+          "wine_bottle_1",
+          "wine_rack_1_top_region"
+        ]
+      ],
+      "object_id": "wine_bottle_1",
+      "target_id": "wine_rack_1_top_region",
+      "scene_ids": [
+        "goal_table",
+        "goal_table_shifted"
+      ],
+      "evidence": "candidate here; v0.1.0 single-task wine success used libero_goal/9, a different task initialization",
+      "audit_only": false,
+      "exclusive_target": true,
+      "capability_id": "wine_to_rack"
+    },
+    {
+      "instruction": "turn on the stove",
+      "goals": [
+        [
+          "turnon",
+          "flat_stove_1"
+        ]
+      ],
+      "object_id": "flat_stove_1",
+      "target_id": null,
+      "scene_ids": [
+        "goal_table",
+        "goal_table_shifted"
+      ],
+      "evidence": "candidate here; v0.1.0 single-task stove success used libero_goal/7, a different task initialization",
+      "audit_only": false,
+      "exclusive_target": false,
+      "capability_id": "stove_on"
+    }
+  ],
+  "frames": [
+    {
+      "view": "wrist",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "agentview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "sideview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "timestamp": 0.5000000000000003
+    }
+  ],
+  "preview_only": false,
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "深色细长玻璃酒瓶，带浅色软木塞，直立于桌面中部偏后",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              560,
+              520,
+              670,
+              680
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              380,
+              430,
+              410,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              500,
+              390,
+              530,
+              480
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视清晰可见瓶身与瓶塞"
+          },
+          {
+            "frame": 1,
+            "visibility": "partial",
+            "reason": "被前方黑盒部分遮挡，仅见瓶颈上部"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整可见瓶身轮廓"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "木质斜放酒架，多层横档结构，位于桌面左后方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              730,
+              420,
+              980,
+              850
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              130,
+              320,
+              320,
+              480
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              360,
+              240,
+              560,
+              420
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视可见右侧木质格栅结构"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见倾斜木架及横档"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整展示酒架形态"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "银灰色金属质感圆碗，表面有斑点纹理，位于桌面中央",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              380,
+              280,
+              620,
+              520
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              430,
+              470,
+              520,
+              530
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              490,
+              460,
+              580,
+              520
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视正对碗口，纹理清晰"
+          },
+          {
+            "frame": 1,
+            "visibility": "partial",
+            "reason": "被黑盒遮挡下半部分，仅见碗沿"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整可见碗体"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "白色圆盘，边缘带粉红色环纹，平放于桌面中前部",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              350,
+              0,
+              600,
+              180
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              460,
+              530,
+              580,
+              620
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              410,
+              510,
+              530,
+              590
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视完整可见盘面及粉边"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见盘子位置与颜色"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视可见盘子平面形态"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_5",
+        "description": "方形单头电灶台，灰白底座配黑色圆形加热区及旋钮，位于桌面右侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              500,
+              280,
+              850
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              470,
+              380,
+              620,
+              480
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              620,
+              420,
+              780,
+              540
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视可见左下角灶台同心圆加热区"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见灶台整体及旋钮"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整展示灶台侧面与顶部"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_6",
+        "description": "蓝色长方体小盒，表面有椭圆凹陷图案，位于碗与灶台之间",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              200,
+              150,
+              320,
+              320
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              530,
+              470,
+              590,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              560,
+              490,
+              620,
+              540
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视清晰可见蓝色盒体"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "可见桌上蓝色小物件"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视确认蓝色长方体形态"
+          }
+        ],
+        "confusable_with": [
+          "obj_3"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_7",
+        "description": "黑色立方体收纳柜/抽屉组，正面有三个银色横向把手，位于桌面左侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              220,
+              440,
+              510,
+              720
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              230,
+              320,
+              480,
+              540
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "俯视视角未包含该区域或被截断"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见黑色柜体及三个把手"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整展示柜体侧面与把手"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      }
+    ],
+    "coverage": "所有目标物体与目的地在三视图中均有至少两个清晰视角确认，干扰物已区分。",
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist.png",
+        "sha256": "d430c88cf5634fed8d13d73c159d97887ac014175255e8a3ec67b662318a4009"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "ad600e81bfe02086f5a74d629394daa6cd97dfe8a859e52461c8e548706dec25"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "7801683b27d45f5eb09bed2b54d3bda7ee2e7e1a884b96eef4b2e059ebbd3137"
+      }
+    ],
+    "corrections": "无",
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ]
+  },
+  "draft": {
+    "request_id": "console-59c0644130b02b0901cd81fd",
+    "session_id": "7806cf91859d496b85d8939bf63b28bd",
+    "scene_version": 0,
+    "decision": "execute",
+    "capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "rationale": "用户任务包含三个独立子目标：酒瓶归位酒架、碗放置盘上、开启灶台。目录中存在对应的完整原生技能 wine_to_rack, bowl_to_plate, stove_on，且所有目标物体与目的地均在画面中清晰可辨并已完成绑定。按用户指定顺序执行即可完全覆盖需求。",
+    "request_scope": {
+      "coverage": "full",
+      "executable_outcomes": [
+        "酒瓶被放置到酒架顶层区域",
+        "碗被放置到盘子上",
+        "灶台被开启"
+      ],
+      "unmet_outcomes": [],
+      "reason": "所有用户请求的动作均有对应的已训练完整原生技能支持，且场景物体识别无歧义，可实现完整需求覆盖。"
+    },
+    "target_bindings": {
+      "akita_black_bowl_1": "obj_3",
+      "flat_stove_1": "obj_5",
+      "plate_1": "obj_4",
+      "wine_bottle_1": "obj_1",
+      "wine_rack_1_top_region": "obj_2"
+    },
+    "audit": false,
+    "budget_per_subgoal": 800
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "console-59c0644130b02b0901cd81fd",
+    "session_id": "7806cf91859d496b85d8939bf63b28bd",
+    "state": "completed",
+    "decision": "execute",
+    "capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "original_capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "rationale": "用户任务包含三个独立子目标：酒瓶归位酒架、碗放置盘上、开启灶台。目录中存在对应的完整原生技能 wine_to_rack, bowl_to_plate, stove_on，且所有目标物体与目的地均在画面中清晰可辨并已完成绑定。按用户指定顺序执行即可完全覆盖需求。",
+    "request_scope": {
+      "coverage": "full",
+      "executable_outcomes": [
+        "酒瓶被放置到酒架顶层区域",
+        "碗被放置到盘子上",
+        "灶台被开启"
+      ],
+      "unmet_outcomes": [],
+      "reason": "所有用户请求的动作均有对应的已训练完整原生技能支持，且场景物体识别无歧义，可实现完整需求覆盖。"
+    },
+    "request_fulfilled": true,
+    "target_bindings": {
+      "akita_black_bowl_1": "obj_3",
+      "flat_stove_1": "obj_5",
+      "plate_1": "obj_4",
+      "wine_bottle_1": "obj_1",
+      "wine_rack_1_top_region": "obj_2"
+    },
+    "job_ids": [
+      "acd422437efb412cb5c3c2c4303be176",
+      "c5cd6a2585fb447e9d0715d52615faf3",
+      "4636555f76ca49f8ad7e01a6678275e0"
+    ],
+    "completed_capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "pending_capability_ids": [],
+    "plan_success": true,
+    "regressions": [],
+    "error": null,
+    "repair_history": [],
+    "scene_version": 3,
+    "native_skill_route": {
+      "requested_capability_ids": [
+        "wine_to_rack",
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "executed_capability_ids": [
+        "wine_to_rack",
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "replacements": []
+    }
+  },
+  "jobs": [
+    {
+      "job_id": "acd422437efb412cb5c3c2c4303be176",
+      "request_id": "console-59c0644130b02b0901cd81fd",
+      "session_id": "7806cf91859d496b85d8939bf63b28bd",
+      "capability_id": "wine_to_rack",
+      "state": "completed",
+      "steps": 152,
+      "total_steps": 417,
+      "success": true,
+      "ended_reason": "complete",
+      "error": null,
+      "instruction": "put the wine bottle on the rack",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "00dcd896e3b64dd8e462745548085b85a97bb8a1d1956cb9f3aa1ec25457175b",
+      "state_after_sha": "09de62f001fcd93a4330ce2b90f3e77e49d3af0d2a6a0713ba5ab4c98c1b7784",
+      "env_instance_id": 2,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": "semantic_wine_rack_v1",
+      "semantic_state": "incomplete",
+      "semantic_candidate_streak": 5,
+      "semantic_success": false,
+      "native_wine_predicate": true,
+      "semantic_observation_samples": 152,
+      "finish_status": {
+        "phase": "done",
+        "calls": 0,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 2,
+          "movement": 32,
+          "confirm": 3,
+          "home": 213
+        },
+        "last_decision": {
+          "state": "complete",
+          "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": true,
+          "reason": "complete",
+          "checks": 0
+        },
+        "independent_streak": 5,
+        "checker_mode": "simulator",
+        "decision_source": "simulator_predicates",
+        "simulator_checks": 2,
+        "sample_count": 152,
+        "candidate_streak": 5,
+        "trigger_count": 1,
+        "actual_visual_requests": 0,
+        "release_events": 1,
+        "skipped_policy_captures": 30,
+        "skipped_helper_captures": 50,
+        "observation_cache_hits": 458,
+        "observation_cache_misses": 0,
+        "native_step_seconds": 45.535255201002656,
+        "native_step_count": 427
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/rollout.mp4",
+      "wall_s": 66.395
+    },
+    {
+      "job_id": "c5cd6a2585fb447e9d0715d52615faf3",
+      "request_id": "console-59c0644130b02b0901cd81fd",
+      "session_id": "7806cf91859d496b85d8939bf63b28bd",
+      "capability_id": "bowl_to_plate",
+      "state": "completed",
+      "steps": 82,
+      "total_steps": 739,
+      "success": true,
+      "ended_reason": "complete",
+      "error": null,
+      "instruction": "put the bowl on the plate",
+      "scene_version_before": 1,
+      "scene_version_after": 2,
+      "state_before_sha": "09de62f001fcd93a4330ce2b90f3e77e49d3af0d2a6a0713ba5ab4c98c1b7784",
+      "state_after_sha": "e6261158adbb6aa60fb6271a284749d2f1c94bc64f2810781cc01636a27a31be",
+      "env_instance_id": 2,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": false,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "done",
+        "calls": 0,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 8,
+          "movement": 91,
+          "confirm": 5,
+          "home": 136
+        },
+        "last_decision": {
+          "state": "complete",
+          "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": true,
+          "reason": "complete",
+          "checks": 0
+        },
+        "independent_streak": 5,
+        "checker_mode": "simulator",
+        "decision_source": "simulator_predicates",
+        "simulator_checks": 2,
+        "sample_count": 82,
+        "candidate_streak": 5,
+        "trigger_count": 1,
+        "actual_visual_requests": 0,
+        "release_events": 1,
+        "skipped_policy_captures": 16,
+        "skipped_helper_captures": 48,
+        "observation_cache_hits": 833,
+        "observation_cache_misses": 0,
+        "native_step_seconds": 79.62874895701361,
+        "native_step_count": 749
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/rollout.mp4",
+      "wall_s": 66.767
+    },
+    {
+      "job_id": "4636555f76ca49f8ad7e01a6678275e0",
+      "request_id": "console-59c0644130b02b0901cd81fd",
+      "session_id": "7806cf91859d496b85d8939bf63b28bd",
+      "capability_id": "stove_on",
+      "state": "completed",
+      "steps": 80,
+      "total_steps": 935,
+      "success": true,
+      "ended_reason": "complete",
+      "error": null,
+      "instruction": "turn on the stove",
+      "scene_version_before": 2,
+      "scene_version_after": 3,
+      "state_before_sha": "e6261158adbb6aa60fb6271a284749d2f1c94bc64f2810781cc01636a27a31be",
+      "state_after_sha": "01d473b7797353ccb9d35bd9d53ca560f420a529600c111af9ae29027f49e8a0",
+      "env_instance_id": 2,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "done",
+        "calls": 0,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 20,
+          "movement": 25,
+          "confirm": 3,
+          "home": 68
+        },
+        "last_decision": {
+          "state": "complete",
+          "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": true,
+          "reason": "complete",
+          "checks": 0
+        },
+        "independent_streak": 5,
+        "checker_mode": "simulator",
+        "decision_source": "simulator_predicates",
+        "simulator_checks": 2,
+        "sample_count": 80,
+        "candidate_streak": 5,
+        "trigger_count": 1,
+        "actual_visual_requests": 0,
+        "release_events": 1,
+        "skipped_policy_captures": 16,
+        "skipped_helper_captures": 23,
+        "observation_cache_hits": 1057,
+        "observation_cache_misses": 0,
+        "native_step_seconds": 100.43223860501121,
+        "native_step_count": 945
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/rollout.mp4",
+      "wall_s": 43.587
+    }
+  ],
+  "evidence": [
+    {
+      "capability": "wine_to_rack",
+      "event": {
+        "event_id": "release_0001",
+        "capture": {
+          "timestamp": 8.949999999999658,
+          "frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000004_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000004_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  0.9992203879249837,
+                  0.03800307929570256,
+                  0.010694966998036725,
+                  -0.18100516879798215
+                ],
+                [
+                  0.03911295505463124,
+                  -0.9897510980903721,
+                  -0.1373424208895293,
+                  -0.18487159449602614
+                ],
+                [
+                  0.0053659204186186,
+                  0.1376536588432969,
+                  -0.9904658889154707,
+                  1.2825801235491996
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            }
+          ],
+          "verification_frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000004_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000004_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "sideview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000006_sideview.png"
+            }
+          ],
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.09538646199152,
+              0.012401875374597285,
+              -0.35227039349263367,
+              -2.218665368793939,
+              -0.15392781552141022,
+              2.2940050600911905,
+              -1.172834475650546
+            ],
+            "arm_qvel": [
+              7.5761446856046074e-06,
+              0.0012338368602829257,
+              0.005418501459738622,
+              -0.0013317592291164902,
+              0.003935956345001476,
+              -0.00012226155900735096,
+              0.015840354664303884
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.037245797142371535,
+              -0.037279612735602416
+            ],
+            "finger_qvel": [
+              0.005693402953236793,
+              -0.005310503566386793
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef_position": [
+            -0.17806760303438746,
+            -0.2476813642268291,
+            1.1933876152665637
+          ],
+          "eef_rotation": [
+            [
+              -0.9992203879249841,
+              -0.03800307929570258,
+              0.010694966998036728
+            ],
+            [
+              -0.03911295505463126,
+              0.9897510980903724,
+              -0.13734242088952936
+            ],
+            [
+              -0.005365920418618603,
+              -0.13765365884329694,
+              -0.9904658889154713
+            ]
+          ],
+          "checker_frames": [
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  0.9992203879249837,
+                  0.03800307929570256,
+                  0.010694966998036725,
+                  -0.18100516879798215
+                ],
+                [
+                  0.03911295505463124,
+                  -0.9897510980903721,
+                  -0.1373424208895293,
+                  -0.18487159449602614
+                ],
+                [
+                  0.0053659204186186,
+                  0.1376536588432969,
+                  -0.9904658889154707,
+                  1.2825801235491996
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist_checker_agentview.png",
+              "timestamp": 8.949999999999658,
+              "camera_position": [
+                0.8,
+                -0.65,
+                1.75
+              ],
+              "camera_target": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "camera_fovy": 55.0,
+              "camera_role": "checker_only"
+            },
+            {
+              "view": "sideview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist_checker_sideview.png",
+              "timestamp": 8.949999999999658,
+              "camera_position": [
+                0.8,
+                0.65,
+                1.75
+              ],
+              "camera_target": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "camera_fovy": 55.0,
+              "camera_role": "checker_only"
+            }
+          ]
+        },
+        "detector": "measured_open_transition",
+        "images": [
+          {
+            "view": "wrist",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist.png",
+            "sha256": "53dff274b75528c289b30a5487b21bb6311602638b1f5035a20eaa1a2b7520c5"
+          },
+          {
+            "view": "agentview",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist_checker_agentview.png",
+            "sha256": "4599666d84be9977fdb9bcc3221d5df88bbf27eae0d0c82dce59297d2e303e35"
+          },
+          {
+            "view": "sideview",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_01_wine_to_rack_acd42243/finish/sensors/cap000005_wrist_checker_sideview.png",
+            "sha256": "4a6f72f940ef204ce11703b2d9426904a1e4030afa7912d469170d84e9c7105a"
+          }
+        ],
+        "status": "recorded_only_simulator"
+      }
+    },
+    {
+      "capability": "bowl_to_plate",
+      "event": {
+        "event_id": "release_0001",
+        "capture": {
+          "timestamp": 25.84999999999655,
+          "frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000004_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000004_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -0.06810407024108212,
+                  -0.9891316889624202,
+                  -0.13030862406973726,
+                  0.12727151806665907
+                ],
+                [
+                  -0.9971418434852861,
+                  0.06320203310993366,
+                  0.04139621941115497,
+                  0.012328003304523336
+                ],
+                [
+                  -0.03271054244984921,
+                  0.13275543266142142,
+                  -0.9906089114840003,
+                  1.0231209777819699
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            }
+          ],
+          "verification_frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000004_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000004_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "sideview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000006_sideview.png"
+            }
+          ],
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              0.007698541506067249,
+              1.0594761475711836,
+              0.015030137817465353,
+              -1.201817861394217,
+              0.035848549896975314,
+              2.130859280137891,
+              0.8467804014013335
+            ],
+            "arm_qvel": [
+              -0.00013687225710383054,
+              0.005224361557561684,
+              -0.00033532468314122107,
+              -4.6113921883475784e-05,
+              6.8793670062227406e-06,
+              -7.468708240487898e-05,
+              -1.7062610155562093e-06
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03729282871479445,
+              -0.037167470436726635
+            ],
+            "finger_qvel": [
+              0.005580833348653169,
+              -0.0061650776196975916
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef_position": [
+            0.06517499708377354,
+            0.01950353824290205,
+            0.9336696850010928
+          ],
+          "eef_rotation": [
+            [
+              0.06810407024108216,
+              0.9891316889624202,
+              -0.13030862406973726
+            ],
+            [
+              0.9971418434852861,
+              -0.06320203310993362,
+              0.04139621941115497
+            ],
+            [
+              0.03271054244984921,
+              -0.13275543266142142,
+              -0.9906089114840002
+            ]
+          ],
+          "checker_frames": [
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -0.06810407024108212,
+                  -0.9891316889624202,
+                  -0.13030862406973726,
+                  0.12727151806665907
+                ],
+                [
+                  -0.9971418434852861,
+                  0.06320203310993366,
+                  0.04139621941115497,
+                  0.012328003304523336
+                ],
+                [
+                  -0.03271054244984921,
+                  0.13275543266142142,
+                  -0.9906089114840003,
+                  1.0231209777819699
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist_checker_agentview.png",
+              "timestamp": 25.84999999999655,
+              "camera_position": [
+                0.8,
+                -0.65,
+                1.75
+              ],
+              "camera_target": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "camera_fovy": 55.0,
+              "camera_role": "checker_only"
+            },
+            {
+              "view": "sideview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist_checker_sideview.png",
+              "timestamp": 25.84999999999655,
+              "camera_position": [
+                0.8,
+                0.65,
+                1.75
+              ],
+              "camera_target": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "camera_fovy": 55.0,
+              "camera_role": "checker_only"
+            }
+          ]
+        },
+        "detector": "measured_open_transition",
+        "images": [
+          {
+            "view": "wrist",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist.png",
+            "sha256": "1a5e743d02125d1e4b3699b6d55ff3ef24f26284554b2576c78f9d7aeeae7d90"
+          },
+          {
+            "view": "agentview",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist_checker_agentview.png",
+            "sha256": "685b5d992776b5d38e3544dcd3b781251bd421a07fe8f2a2ce81b4f15e9af8c4"
+          },
+          {
+            "view": "sideview",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_02_bowl_to_plate_c5cd6a25/finish/sensors/cap000005_wrist_checker_sideview.png",
+            "sha256": "44be45e4ac458af8fec2b4c8b2fbcaaa6cf67bfd4372484a976f55f57be10f9f"
+          }
+        ],
+        "status": "recorded_only_simulator"
+      }
+    },
+    {
+      "capability": "stove_on",
+      "event": {
+        "event_id": "release_0001",
+        "capture": {
+          "timestamp": 42.70000000000622,
+          "frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000007_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000007_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  0.6079154202615575,
+                  -0.7375275178309234,
+                  -0.2940952265004833,
+                  -0.3524278739246505
+                ],
+                [
+                  -0.7901155350239483,
+                  -0.5985148886356844,
+                  -0.13227762242811242,
+                  0.26221170103487923
+                ],
+                [
+                  -0.07846198520324128,
+                  0.31278281366400423,
+                  -0.946578379403626,
+                  1.012831188992682
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            }
+          ],
+          "verification_frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000007_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000007_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "sideview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000009_sideview.png"
+            }
+          ],
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              0.18050545333190782,
+              0.3248152909020579,
+              0.4504225552567452,
+              -2.7059459388719405,
+              -0.15967851472479436,
+              2.6719069806707183,
+              0.9047289902258939
+            ],
+            "arm_qvel": [
+              -0.04754378112577578,
+              -0.0918532161379922,
+              0.06875632753423726,
+              -0.0214339209311146,
+              0.07678839106067044,
+              -0.05953369874098749,
+              -0.04591795462128554
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03721548373372669,
+              -0.03809837773134906
+            ],
+            "finger_qvel": [
+              0.007055261178555665,
+              -0.0004782111684872158
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef_position": [
+            -0.4178314867867436,
+            0.21945502722756813,
+            0.9366522268737304
+          ],
+          "eef_rotation": [
+            [
+              -0.6079154202615575,
+              0.7375275178309234,
+              -0.2940952265004833
+            ],
+            [
+              0.7901155350239483,
+              0.5985148886356844,
+              -0.13227762242811242
+            ],
+            [
+              0.07846198520324128,
+              -0.31278281366400423,
+              -0.946578379403626
+            ]
+          ],
+          "checker_frames": [
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  0.6079154202615575,
+                  -0.7375275178309234,
+                  -0.2940952265004833,
+                  -0.3524278739246505
+                ],
+                [
+                  -0.7901155350239483,
+                  -0.5985148886356844,
+                  -0.13227762242811242,
+                  0.26221170103487923
+                ],
+                [
+                  -0.07846198520324128,
+                  0.31278281366400423,
+                  -0.946578379403626,
+                  1.012831188992682
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist_checker_agentview.png",
+              "timestamp": 42.70000000000622,
+              "camera_position": [
+                0.8,
+                -0.65,
+                1.75
+              ],
+              "camera_target": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "camera_fovy": 55.0,
+              "camera_role": "checker_only"
+            },
+            {
+              "view": "sideview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist_checker_sideview.png",
+              "timestamp": 42.70000000000622,
+              "camera_position": [
+                0.8,
+                0.65,
+                1.75
+              ],
+              "camera_target": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "camera_fovy": 55.0,
+              "camera_role": "checker_only"
+            }
+          ]
+        },
+        "detector": "measured_open_transition",
+        "images": [
+          {
+            "view": "wrist",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist.png",
+            "sha256": "c470fd455727c1c0b5e1ab9d7d00cca33eb84c6bba6f058aac45c7abc87e1fff"
+          },
+          {
+            "view": "agentview",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist_checker_agentview.png",
+            "sha256": "a232bc591e5162fe3b113dddf1a7bb6ca1b624b01b881b9b865e291a6ca97aa4"
+          },
+          {
+            "view": "sideview",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T161849Z_goal_table_7806cf91/cap_03_stove_on_4636555f/finish/sensors/cap000008_wrist_checker_sideview.png",
+            "sha256": "58370267ea52eb71d81fc468b79eb5789ec68207d96fe43dcc4eba77d09764e8"
+          }
+        ],
+        "status": "recorded_only_simulator"
+      }
+    }
+  ],
+  "busy": false,
+  "default_checker_mode": "visual"
+}
