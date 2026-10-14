@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "id": "20261014-sim-fast-three-skill-chain",
+  "intent": "new_experiment",
+  "question_key": "xvla-simulator-fast-handoff",
+  "purpose": "在黑碗快速版首例接管与归位通过后，验证酒瓶→碗→灶台三原生技能衔接，前两次复位至下一技能完整起点，末次回global home；执行零VLM，前序目标保持。",
+  "prior_evidence": [
+    "20261012-xvla-native-benchmark",
+    "20261014-generic-retreat",
+    "20261014-native-joint-planning",
+    "20261012-xvla-persistent-pilot"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261012-xvla-native-benchmark",
+      "disposition": "reuse",
+      "reason": "原生200例使用环境目标判据；复用模型输入和成功步数，不重复基线。"
+    },
+    {
+      "experiment_id": "20261014-generic-retreat",
+      "disposition": "reuse",
+      "reason": "完整碗抽屉在线在视觉纠错超时前阻断；旧动作回放验证退离/home，复用其执行器和筛查。"
+    },
+    {
+      "experiment_id": "20261014-native-joint-planning",
+      "disposition": "reuse",
+      "reason": "复用完整原生技能规划、一次独立复核及能力覆盖说明。"
+    },
+    {
+      "experiment_id": "20261012-xvla-persistent-pilot",
+      "disposition": "reuse",
+      "reason": "旧酒瓶已到下一碗reference并五连通过，但最终视觉否决，后两技能未执行；本次补验证真实后续策略接续。"
+    }
+  ],
+  "related_search": "检索索引、registry匹配native benchmark/generic retreat/native joint planning；读取原生结论、最近在线计时和收尾源码；未发现已有simulator快速模式实际验证。 读取persistent-pilot README和wine_bowl_stove原pilot，旧下一reference达到不等于下一策略执行。",
+  "new_physical_actions": 5400,
+  "hypothesis": "直接用当前技能完整目标的仿真谓词接管可消除执行中Qwen等待，同时原控制执行器能够完成松手、退离和复位。",
+  "information_gain": "验证仿真真值作为控制触发而非事后评分的实际完整链路；不是实机或感知泛化验证。",
+  "success_criteria": "先决条件：bowl2_valid_timing.completed=true且该pilot handoff全部通过。三项各有trigger>0、真实VLA/release/movement/home>0、执行VLM0及原独立5/5；前两项actual_final_metrics.ready且handoff_reference分别为bowl_to_plate/stove_on，最后global_home；每次queue/proprio/位置/姿态/夹爪缓存清空；下一技能真实VLA输入重建，前序目标全部保持；保存实际总耗时。",
+  "failure_criteria": "谓词未达/未触发/实际动作零分别记录未验证；触发后路径阻断、任务破坏、5/5失败分别记录；部分目标不得放行，预算耗尽不得当完成。",
+  "unknown_criteria": "缺原始记录、接口/网络错误或启动失败不算物理成功；只有仿真特权信息结果，不代表实机。",
+  "changed_factors": [
+    {
+      "name": "execution_completion_authority",
+      "before": "Qwen过程与当前视觉检查及纠错串行阻塞",
+      "after": "完整原生目标仿真谓词持续采样触发与最终复查；执行零VLM",
+      "reason": "用户明确要求独立快速demo版本"
+    }
+  ],
+  "fixed_factors": {
+    "scene": "goal_table",
+    "seed": 142,
+    "init_state_index": 0,
+    "native_skill": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "VLA": "原权重/30chunk/10denoise/domain3/absolute",
+    "planning": "原联合三视图识别规划+一次独立复核",
+    "helpers": false,
+    "finish": "原control/sensors/geometry/feedback_retreat/joint_home与净空、5/5不改"
+  },
+  "scope": {
+    "max_cases": 1,
+    "max_vla_actions_per_case": 2400,
+    "max_helper_actions_per_case": 3000,
+    "stop_rule": "黑碗首例不通过则不启动；三项按序，任一分支未触发、动作零或效果失败立即停止后续技能，不自动重试。"
+  },
+  "configuration": {
+    "checker_mode": "simulator",
+    "scene": "goal_table",
+    "request": "先把桌上的酒瓶放到酒架上，再把碗放到盘子上，最后打开灶台。",
+    "seed": 142,
+    "init_state_index": 0,
+    "vla_revision": "129e71460678b7236cee6fc9707f09d9fa0c3590",
+    "dtype": "float32",
+    "chunk": 30,
+    "denoise": 10,
+    "domain": 3,
+    "control": "absolute",
+    "native_instruction": [
+      "put the wine bottle on the rack",
+      "put the bowl on the plate",
+      "turn on the stove"
+    ],
+    "planning_model": "qwen3.8-max",
+    "execution_vlm_calls": 0,
+    "native_trigger_streak": 5,
+    "independent_finish_streak": 5,
+    "policy_budget": 800,
+    "helper_budget": 3000,
+    "session_step_limit": 8000,
+    "auxiliary_helpers": false,
+    "model_rng": "existing service default, not paired deterministic comparison",
+    "entry": "normal console load/plan/execute APIs; selected checker_mode simulator",
+    "total_policy_budget": 2400
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": true,
+    "reason": "新的仿真完成权威路径，旧链路在末端视觉阻断，缺真实接续与末项home证据；不重新测原生成功率。"
+  }
+}

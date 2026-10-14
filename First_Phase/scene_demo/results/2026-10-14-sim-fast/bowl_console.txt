@@ -1,0 +1,13 @@
+{"elapsed": 0.01, "stage": "idle", "message": "选择历史示例，或开始自己的仿真。"}
+{"elapsed": 2.02, "stage": "loading", "message": "正在载入场景并拍摄三视图；不启动模型、不执行任务。"}
+{"elapsed": 8.06, "stage": "ready", "message": "三视图已就绪。请先看看场景，再在下方填写你想做的任务。"}
+{"elapsed": 8.08, "stage": "preflight", "message": "正在准备当前任务。"}
+{"elapsed": 10.09, "stage": "loading", "message": "正在加载 X-VLA；尚未创建场景。"}
+{"elapsed": 30.2, "stage": "planning", "message": "Hermes 正在联合识别三视图并规划完整原生技能，随后进行一次独立复核。"}
+{"elapsed": 78.45, "stage": "error", "message": "三视图识别未完成，尚未生成计划。详细原因已保存到本次记录。"}
+Traceback (most recent call last):
+  File "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-sim-fast/online_bowl.py", line 41, in <module>
+    state=wait({'draft'},700);save('bowl_draft.json',state)
+  File "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-sim-fast/online_bowl.py", line 24, in wait
+    if state['stage'] in ('error','blocked','cancelled'):raise RuntimeError(str(state.get('error_detail') or key))
+RuntimeError: preplanning_grounding_failed: {"ok": false, "reason": "internal_error", "detail": "Traceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/service.py\", line 1384, in _worker_loop\n    work.result = work.fn()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/xvla_service.py\", line 168, in prepare\n    prepared = combined_planner(capture, user_request, record.public(), directory)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/xvla_console.py\", line 389, in combined\n    return plan_from_capture(capture,user_request,session,rid,directory,profile_home,self.cancel.is_set)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/xvla_planning.py\", line 101, in plan_from_capture\n    raise ValueError('Independent identity/plan review rejected draft; see selected_targets_review.json')\nValueError: Independent identity/plan review rejected draft; see selected_targets_review.json\n"}

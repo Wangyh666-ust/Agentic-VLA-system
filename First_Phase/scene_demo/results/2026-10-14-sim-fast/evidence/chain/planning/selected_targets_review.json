@@ -1,0 +1,689 @@
+{
+  "passed": true,
+  "response": {
+    "checks": [
+      {
+        "target_id": "wine_bottle_1",
+        "matches_request": true,
+        "features": "深色细长瓶身，顶部带浅色木塞/瓶盖，直立于桌面",
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              560,
+              540,
+              670,
+              680
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              390,
+              360,
+              420,
+              460
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              500,
+              380,
+              540,
+              480
+            ]
+          }
+        ],
+        "reason": "三视角均可见深色瓶身与浅色顶部，位于碗与酒架之间，符合酒瓶特征。"
+      },
+      {
+        "target_id": "akita_black_bowl_1",
+        "matches_request": true,
+        "features": "银灰色金属质感圆碗，开口朝上，位于桌面中央",
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              420,
+              280,
+              620,
+              480
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              440,
+              460,
+              520,
+              520
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              480,
+              460,
+              560,
+              520
+            ]
+          }
+        ],
+        "reason": "俯视清晰见圆形碗口与内部纹理，侧视见碗体弧度，确认为碗而非盘。"
+      },
+      {
+        "target_id": "plate_1",
+        "matches_request": true,
+        "features": "白色圆盘，边缘带粉红色环，平放于桌面",
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              380,
+              0,
+              600,
+              180
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              460,
+              540,
+              580,
+              620
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              420,
+              520,
+              540,
+              580
+            ]
+          }
+        ],
+        "reason": "三视角均可见粉边白盘平面，位置固定，确认为放置目的地。"
+      },
+      {
+        "target_id": "wine_rack_1_top_region",
+        "matches_request": true,
+        "features": "木质条状倾斜酒架，有多层横档结构",
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              780,
+              420,
+              1000,
+              850
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              140,
+              320,
+              320,
+              480
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              380,
+              220,
+              560,
+              420
+            ]
+          }
+        ],
+        "reason": "清晰可见木质纹理与倾斜横档，确认为酒架装置。"
+      },
+      {
+        "target_id": "flat_stove_1",
+        "matches_request": true,
+        "features": "方形灰白底座灶台，中心有黑色同心圆加热区",
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              500,
+              280,
+              850
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              480,
+              380,
+              620,
+              480
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              620,
+              420,
+              780,
+              540
+            ]
+          }
+        ],
+        "reason": "俯视见同心圆加热盘，侧视见旋钮区域，确认为可操作灶台。"
+      }
+    ],
+    "regions": [
+      {
+        "destination_id": "wine_rack_1_top_region",
+        "confirmed": true,
+        "description": "酒架最上层横档之间的凹槽区域",
+        "boundary": "由酒架顶部两根木条及两侧支撑界定",
+        "anchors": [
+          {
+            "frame": 2,
+            "box": [
+              400,
+              240,
+              540,
+              320
+            ]
+          }
+        ]
+      },
+      {
+        "destination_id": "plate_1",
+        "confirmed": true,
+        "description": "盘子中央平坦承载面",
+        "boundary": "粉红色边缘内侧的白色圆形区域",
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              420,
+              40,
+              560,
+              140
+            ]
+          }
+        ]
+      }
+    ],
+    "plan_approved": true,
+    "plan_reason": "所选三项原生技能（酒瓶归位、碗置盘上、开启灶台）完整覆盖用户需求，顺序合理，目标与目的地身份经三视图核对无误，无能力缺口。",
+    "reviewed_views": [
+      0,
+      1,
+      2
+    ],
+    "inventory_review": {
+      "reviewed_ids": [
+        "obj_1",
+        "obj_2",
+        "obj_3",
+        "obj_4",
+        "obj_5",
+        "obj_6",
+        "obj_7"
+      ],
+      "removed_ids": [],
+      "updates": [],
+      "coverage": "full",
+      "corrections": "所有选中目标与干扰物描述准确，框选范围贴合实物，跨视角身份一致，无需修正。",
+      "reviewed_views": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  "metadata": {
+    "verdict": {
+      "target_visible": null,
+      "destination_visible": null,
+      "at_destination": null,
+      "supported": null,
+      "released": null,
+      "stable": null,
+      "operation_achieved": null,
+      "clear_of_target": null,
+      "boxes": {},
+      "evidence": [
+        "scene identity only"
+      ],
+      "unknown_reasons": []
+    },
+    "usage": {
+      "completion_tokens": 1617,
+      "completion_tokens_details": {
+        "text_tokens": 1617
+      },
+      "prompt_tokens": 5908,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "image_tokens": 582,
+        "text_tokens": 5326
+      },
+      "total_tokens": 7525
+    },
+    "model": "qwen3.8-max",
+    "http_status": 200,
+    "request_sha256": "802db1df6be7f7ccd5060549ca09ea79f18dda6fbf6ed8b2eb96d055af6d4fc1",
+    "response_sha256": "6ef54113f93e4e0949075efb7586d8aa99bbfa966df2f8354123f0dfea65fd28",
+    "call_index": 1
+  },
+  "selection": {
+    "akita_black_bowl_1": "obj_3",
+    "flat_stove_1": "obj_5",
+    "plate_1": "obj_4",
+    "wine_bottle_1": "obj_1",
+    "wine_rack_1_top_region": "obj_2"
+  },
+  "image_sha256": [
+    "d430c88cf5634fed8d13d73c159d97887ac014175255e8a3ec67b662318a4009",
+    "ad600e81bfe02086f5a74d629394daa6cd97dfe8a859e52461c8e548706dec25",
+    "7801683b27d45f5eb09bed2b54d3bda7ee2e7e1a884b96eef4b2e059ebbd3137"
+  ],
+  "goal_keys": [
+    "[\"akita_black_bowl_1\", \"on\", \"plate_1\", false]",
+    "[\"wine_bottle_1\", \"on\", \"wine_rack_1_top_region\", false]",
+    "[\"flat_stove_1\", \"turnon\", null, false]"
+  ],
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "深色细长酒瓶，带浅色瓶塞/瓶盖，直立于桌面中部偏右",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              560,
+              540,
+              670,
+              680
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              390,
+              360,
+              420,
+              460
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              500,
+              380,
+              540,
+              480
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视清晰可见黑色瓶身与浅色顶部"
+          },
+          {
+            "frame": 1,
+            "visibility": "partial",
+            "reason": "被前方黑盒部分遮挡，但瓶颈可见"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整可见瓶身轮廓"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "木质条状酒架，倾斜放置于桌面左后方，有多层横档",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              780,
+              420,
+              1000,
+              850
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              140,
+              320,
+              320,
+              480
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              380,
+              220,
+              560,
+              420
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "右侧边缘可见木质纹理结构"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见倾斜木架结构"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "完整展示酒架形态与横档"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "银灰色金属质感碗，圆形开口，位于桌面中央",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              420,
+              280,
+              620,
+              480
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              440,
+              460,
+              520,
+              520
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              480,
+              460,
+              560,
+              520
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视清晰可见碗内纹理与圆形轮廓"
+          },
+          {
+            "frame": 1,
+            "visibility": "partial",
+            "reason": "被黑盒遮挡大部分，仅见边缘"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视可见碗体侧面与开口"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "白色圆盘，带粉红色边缘，平放于桌面中下方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              380,
+              0,
+              600,
+              180
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              460,
+              540,
+              580,
+              620
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              420,
+              520,
+              540,
+              580
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视完整可见盘面与粉色边"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见盘子位置与颜色"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视可见盘子平面与边缘"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_5",
+        "description": "方形单头灶台，灰白色底座配黑色圆形加热区，位于桌面右侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              500,
+              280,
+              850
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              480,
+              380,
+              620,
+              480
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              620,
+              420,
+              780,
+              540
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视清晰可见同心圆加热盘结构"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "完整可见灶台整体形态"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视可见灶台厚度与控制旋钮区域"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_6",
+        "description": "蓝色长方体小物件，疑似打火机或遥控器，位于盘子旁",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              220,
+              180,
+              320,
+              320
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              520,
+              460,
+              580,
+              500
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              560,
+              500,
+              620,
+              540
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视清晰可见蓝色外壳"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "可见其位于盘子右侧"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视可见其长方体形状"
+          }
+        ],
+        "confusable_with": [
+          "obj_1"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_7",
+        "description": "黑色立方体收纳盒/抽屉柜，带三个银色把手，位于桌面左侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              220,
+              420,
+              480,
+              680
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              220,
+              320,
+              440,
+              540
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕部视角未覆盖该区域"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "清晰可见三层抽屉结构与把手"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视完整展示柜体与把手排列"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      }
+    ],
+    "coverage": "full",
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T152821Z_goal_table_ab8b9b22/planning_grounding/cap000002_wrist.png",
+        "sha256": "d430c88cf5634fed8d13d73c159d97887ac014175255e8a3ec67b662318a4009"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T152821Z_goal_table_ab8b9b22/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "ad600e81bfe02086f5a74d629394daa6cd97dfe8a859e52461c8e548706dec25"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T152821Z_goal_table_ab8b9b22/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "7801683b27d45f5eb09bed2b54d3bda7ee2e7e1a884b96eef4b2e059ebbd3137"
+      }
+    ],
+    "corrections": "所有选中目标与干扰物描述准确，框选范围贴合实物，跨视角身份一致，无需修正。"
+  }
+}

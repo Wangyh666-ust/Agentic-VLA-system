@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "id": "20261014-sim-fast-bowl",
+  "intent": "new_experiment",
+  "question_key": "xvla-simulator-fast-handoff",
+  "purpose": "验证仿真快速版用完整原生目标触发实际松手/退离/归位，执行阶段零视觉模型调用且原5/5通过；记录总耗时。",
+  "prior_evidence": [
+    "20261012-xvla-native-benchmark",
+    "20261014-generic-retreat",
+    "20261014-native-joint-planning"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261012-xvla-native-benchmark",
+      "disposition": "reuse",
+      "reason": "原生200例使用环境目标判据；复用模型输入和成功步数，不重复基线。"
+    },
+    {
+      "experiment_id": "20261014-generic-retreat",
+      "disposition": "reuse",
+      "reason": "完整碗抽屉在线在视觉纠错超时前阻断；旧动作回放验证退离/home，复用其执行器和筛查。"
+    },
+    {
+      "experiment_id": "20261014-native-joint-planning",
+      "disposition": "reuse",
+      "reason": "复用完整原生技能规划、一次独立复核及能力覆盖说明。"
+    }
+  ],
+  "related_search": "检索索引、registry匹配native benchmark/generic retreat/native joint planning；读取原生结论、最近在线计时和收尾源码；未发现已有simulator快速模式实际验证。",
+  "new_physical_actions": 3900,
+  "hypothesis": "直接用当前技能完整目标的仿真谓词接管可消除执行中Qwen等待，同时原控制执行器能够完成松手、退离和复位。",
+  "information_gain": "验证仿真真值作为控制触发而非事后评分的实际完整链路；不是实机或感知泛化验证。",
+  "success_criteria": "完整当前及前序目标连续5个不同policy步成立才触发；trigger_count>0，release_open_actions>0，movement>0，home>0，执行阶段Qwen请求为0，原独立5/5与最终姿态、开口、关节速度、策略队列/控制器清空均通过，完整碗入抽屉且关抽屉状态保持。记录规划/执行/总墙钟；不以纯谓词成功替代实际运动。",
+  "failure_criteria": "谓词未达/未触发/实际动作零分别记录未验证；触发后路径阻断、任务破坏、5/5失败分别记录；部分目标不得放行，预算耗尽不得当完成。",
+  "unknown_criteria": "缺原始记录、接口/网络错误或启动失败不算物理成功；只有仿真特权信息结果，不代表实机。",
+  "changed_factors": [
+    {
+      "name": "execution_completion_authority",
+      "before": "Qwen过程与当前视觉检查及纠错串行阻塞",
+      "after": "完整原生目标仿真谓词持续采样触发与最终复查；执行零VLM",
+      "reason": "用户明确要求独立快速demo版本"
+    }
+  ],
+  "fixed_factors": {
+    "scene": "bowl_drawer",
+    "seed": 142,
+    "init_state_index": 0,
+    "native_skill": "xvla_bowl_drawer_close",
+    "VLA": "原权重/30chunk/10denoise/domain3/absolute",
+    "planning": "原联合三视图识别规划+一次独立复核",
+    "helpers": false,
+    "finish": "原control/sensors/geometry/feedback_retreat/joint_home与净空、5/5不改"
+  },
+  "scope": {
+    "max_cases": 1,
+    "max_vla_actions_per_case": 900,
+    "max_helper_actions_per_case": 3000,
+    "stop_rule": "先只跑黑碗完整技能一次。目标未触发、收尾无实际动作或效果不通过，停止依赖的多技能衔接验证；保留失败，不自动重跑。程序启动故障零动作可修入口并单独记录。"
+  },
+  "configuration": {
+    "checker_mode": "simulator",
+    "scene": "bowl_drawer",
+    "request": "把黑碗放进最下层抽屉并关上抽屉",
+    "seed": 142,
+    "init_state_index": 0,
+    "vla_revision": "129e71460678b7236cee6fc9707f09d9fa0c3590",
+    "dtype": "float32",
+    "chunk": 30,
+    "denoise": 10,
+    "domain": 3,
+    "control": "absolute",
+    "native_instruction": "put the black bowl in the bottom drawer of the cabinet and close it",
+    "planning_model": "qwen3.8-max",
+    "execution_vlm_calls": 0,
+    "native_trigger_streak": 5,
+    "independent_finish_streak": 5,
+    "policy_budget": 900,
+    "helper_budget": 3000,
+    "session_step_limit": 8000,
+    "auxiliary_helpers": false,
+    "model_rng": "existing service default, not paired deterministic comparison",
+    "entry": "normal console load/plan/execute APIs; selected checker_mode simulator"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": true,
+    "reason": "新完成触发方式；旧视觉运行未进入收尾，本次验证完整链路与耗时。"
+  }
+}

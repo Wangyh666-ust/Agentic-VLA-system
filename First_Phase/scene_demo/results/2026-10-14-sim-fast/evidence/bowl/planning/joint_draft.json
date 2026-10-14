@@ -1,0 +1,25 @@
+{
+  "request_id": "console-b76b69cb035dac8c35e23af4",
+  "session_id": "56adbd71b6464475882e885cfe2e0b8f",
+  "scene_version": 0,
+  "decision": "execute",
+  "capability_ids": [
+    "xvla_bowl_drawer_close"
+  ],
+  "rationale": "用户需求为将桌上碗放入最下层抽屉并关闭。场景中存在明确的银灰色碗(obj_1)和已拉开下层的灰色抽屉柜(obj_2)。原生技能'xvla_bowl_drawer_close'完整包含'放入碗'和'关闭抽屉'两个goals，与用户需求完全匹配。酒瓶(obj_3)为无关干扰物，不纳入操作范围。",
+  "request_scope": {
+    "coverage": "full",
+    "executable_outcomes": [
+      "将银灰色碗放入灰色抽屉柜的最下层抽屉内",
+      "关闭该抽屉柜的最下层抽屉"
+    ],
+    "unmet_outcomes": [],
+    "reason": "所选原生技能完整覆盖用户任务的所有动作步骤（抓取、放置、关门），无能力缺口，无需部分执行或澄清。"
+  },
+  "target_bindings": {
+    "akita_black_bowl_1": "obj_1",
+    "white_cabinet_1_bottom_region": "obj_2"
+  },
+  "audit": false,
+  "budget_per_subgoal": 900
+}

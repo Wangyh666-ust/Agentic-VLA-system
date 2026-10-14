@@ -70382,6 +70382,424 @@
         "stage": "online"
       },
       "configuration_complete": true
+    },
+    {
+      "id": "20261014-sim-fast",
+      "title": "X-VLA仿真真值快速版：完整长技能与三技能接续通过",
+      "date": "2026-10-14",
+      "question_keys": [
+        "xvla-simulator-fast-handoff"
+      ],
+      "tags": [
+        "xvla",
+        "simulator",
+        "fast-demo",
+        "next-reference",
+        "zero-execution-vlm"
+      ],
+      "conditions": [
+        "完整当前与前序原生goals连续5个唯一策略步触发；仅替换执行检查权威。",
+        "bowl_drawer与goal_table，seed142/state0；原权重/30chunk/10denoise/absolute；原控制/5连不改。",
+        "三视图Hermes/Qwen3.8联合规划+独立复核保留，执行无VLM；模型暖启动，不含人工等待。"
+      ],
+      "findings": [
+        "实际两条流程均通过：碗入抽屉并关抽屉；酒瓶→碗→灶台。4/4实际技能接管、松手、退离、复位及最终5/5通过。",
+        "碗接管232步；链中151/83/81步；前两次下一参考bowl_to_plate/stove_on，后续真实VLA执行；末项global_home。",
+        "执行视觉请求0，前序目标保持，位置/姿态/夹爪/队列/proprio/控制器复位全部通过；10受保护控制文件SHA不变。",
+        "单长技能执行152.77秒、总209.53秒；三技能执行392.14秒、总492.75秒。",
+        "保留黑碗外观描述冲突规划拒绝（任务VLA0）、验收脚本场景名错误（零任务动作）、首次Mock软件失败；最终99passed+4subtests。"
+      ],
+      "limits": [
+        "使用仿真特权信息，非实机验证或数学上界。",
+        "仅2条流程4次技能，不代表全原生目录可靠率；无同随机流配对速度比较。",
+        "规划仍有Qwen耗时和误识别；原动作/图像存储/5连开销保留。"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/archive.py",
+          "sha256": "6a285b1cf42267b87b3656918a4d1328058dcaf5a9e98803410a8c03cc7656fe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_console.txt",
+          "sha256": "e81af31ec5f3004b54557afd34d51a79e09fab7d05ea479a7908c55d3aaa8977"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_draft.json",
+          "sha256": "98717c18932a5c90792ccb928ec19fa103f798697d5cdafc905d3b1947a2a009"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_final.json",
+          "sha256": "1f55e655001f7b216c71f9ddb5ef14a1a31a3cb7c9fcfd425f4a8151c89a4545"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_latest.json",
+          "sha256": "9fa1a09c0cad176c8728f2ed3b74df2c01f645951b1af52a2a0d4116d0019d69"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_proposal.json",
+          "sha256": "0a4beb8085e0ca4ad4ffe486e0d4bb66ac85adbee3552bb176653ff2a177712f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_review.json",
+          "sha256": "eac5b1134e07c17ac62cdd9c3b68fa3c2d778d03a9ddd0d2ef5f9cabcc552b35"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_source_hashes.json",
+          "sha256": "ce4e1c30abe53f63e47f5be68b544052d1697142d01a7011641ce06e392acfd3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_timing.json",
+          "sha256": "f6d5a54354599758810023669e15acb2c911e8e6494e3cb49fc41135327681ed"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_valid_console.txt",
+          "sha256": "8e12398de20938b397848626272dc6d3a020829166ad4952340104dfc9d1d8a0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_valid_latest.json",
+          "sha256": "1f55e655001f7b216c71f9ddb5ef14a1a31a3cb7c9fcfd425f4a8151c89a4545"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl2_valid_timing.json",
+          "sha256": "82266f02eab5ed72357c1ff88ba4fe3d8eda40a47f75b9828b80fc4a25093812"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl_console.txt",
+          "sha256": "c939af54ae6e5767fb7f63a95dc90acabaf26cb588d3cf16daf48d57b4daf5c0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl_latest.json",
+          "sha256": "ff1f2fbd4b416f071796868dfa94f73972dfa4cc6ff1898302d083ce6eb71ecf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl_proposal.json",
+          "sha256": "a331b50f7f2e3ff5ae725fe7475f468ad94c53714a34d1543ba50fd9d3dcaf3c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl_review.json",
+          "sha256": "e6de4aa017bb4de3a5ac0ce5df82055da8674e0a5a49ca89e6e40273cda0ce55"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl_source_hashes.json",
+          "sha256": "ce4e1c30abe53f63e47f5be68b544052d1697142d01a7011641ce06e392acfd3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/bowl_timing.json",
+          "sha256": "9ce43b6fb6e4a5d67e6572f1b0ca1e337dcf57b770be91632c214bd8de255f72"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/chain_console.txt",
+          "sha256": "5c82fbedd79331daf0d1bc91c0aface185f1331634f6c02c1e6834a6246ceb2c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/chain_draft.json",
+          "sha256": "465e3a044e71fd0a74e853fc8d45a403391a9265032cab77031df1764397808b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/chain_final.json",
+          "sha256": "540fb05c63ef1e27e156d3e6674e9d38007daff0b516b52ac9ed2149f481c590"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/chain_latest.json",
+          "sha256": "540fb05c63ef1e27e156d3e6674e9d38007daff0b516b52ac9ed2149f481c590"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/chain_proposal.json",
+          "sha256": "5d4267ffe2be1aa7673a1bf87d8d803100d351cdaee9188f6309e2d84033699d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/chain_review.json",
+          "sha256": "e6de4aa017bb4de3a5ac0ce5df82055da8674e0a5a49ca89e6e40273cda0ce55"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/chain_source_hashes.json",
+          "sha256": "ce4e1c30abe53f63e47f5be68b544052d1697142d01a7011641ce06e392acfd3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/chain_timing.json",
+          "sha256": "180644b4a9a9275b18c1cc113f70353ef07a528170bc1b9a23f3e1c68852025e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/planning/inventory_confirmed.json",
+          "sha256": "bc4fd1549d7fba546f936222e1b0f142fdbf0912889440da84f4b8d120657c6b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/planning/joint_draft.json",
+          "sha256": "fb1fb59b986367e94af7f4c9ddfe77162a57856ab81325a3cd367f082fd9aba4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/planning/joint_planning_timing.json",
+          "sha256": "3911cabfd2ec425b7cd08b071a87a79ec55d2b0b56d3cf07cc055ded80e1fd3d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/planning/joint_prompt.txt",
+          "sha256": "5378a96f69ff5f4ade375d87f7663772ec15b1dee780aad6b42fa7392eaa7dc3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/planning/planning_three_views.png",
+          "sha256": "e5857d63c422d1bfb2ccde929c7b173abe12434107295556c08c2c0f2a2c9fe0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/planning/selected_targets_review.json",
+          "sha256": "cd228f3386c21d8bb44391ce9a7da9e5ad0a98c5ce29d00ff00a33d04d42fe2a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/events.jsonl",
+          "sha256": "0c6aa3fa7702bd0a1a409b74687255624e2da35b816d08923d0cf0c439ccbdbe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/finish/checks.jsonl",
+          "sha256": "05b5017300a0c896fe8052d4939f3ff741df18a1086429e36d60b97f26463213"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/finish/process_events.jsonl",
+          "sha256": "5ac81944081253753ed8e39dd56df2252124f679f0c53eb60c83d81ac86c9289"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/finish/simulator_samples.jsonl",
+          "sha256": "3379ff806119603f23f2de8af0868b4abf1776af11c6d3723c0b018a38d6d457"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/finish_actions.jsonl",
+          "sha256": "169f067a2233b8328835ec14f005d396283ef38ddd0b4d678681acd3da36e4d7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/first.png",
+          "sha256": "9f447184036431059193809c0b26beec05bd09ef6de766cdcdce4d1fc93f8cb9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/handoff_reference.json",
+          "sha256": "6b069f8d55f4efd418f4409631b1ee3ce33d273425122260385020bf68359c83"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/independent_finish.jsonl",
+          "sha256": "303ed8ac12a9aea22cafe68a4a8ca1127ae478ac7f0a35406c7e2a4a45d154dc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/last.png",
+          "sha256": "e116b249765aa94f6f282b962a5fc734187734f7027344c5bf02ed181742377f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/pilot_result.json",
+          "sha256": "3508a9340bf6586ffd444e33d6399be22adcdec4bcc88bf9575d46bf2822e295"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/bowl/xvla_bowl_drawer_close/result.json",
+          "sha256": "154b1c58ca7b6e323dce848e07e7775f9e05a7b04d7922702b01f9e1e7a08052"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/events.jsonl",
+          "sha256": "3630ca7a910fb49d2e25c2ee274ac3d558078957cb4b0831a7e31b50c3ed32c2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/finish/checks.jsonl",
+          "sha256": "4f7e0afb444dc8490f0ed4a2af700c45d3a0523a9b663b1282da0563e948bd58"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/finish/process_events.jsonl",
+          "sha256": "6445e29681b3ca9c90f3a23059f582e8435b75ec487712a56ccc1d3820bce950"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/finish/simulator_samples.jsonl",
+          "sha256": "a5b72881dcc8af33b32394bb03f299e13902ae68b2c40f2c345d5224513b21a2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/finish_actions.jsonl",
+          "sha256": "02c83e6babc805819e8fffbc2c2b44adff968850c2d06ca42421ac3599fd4fd5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/first.png",
+          "sha256": "214f5ca9d68dca63faa1ed3223d9ab71c08472935418782c600f841d89046142"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/handoff_reference.json",
+          "sha256": "4336dfbeeabbd33ee007ff0d9e5c01ea0663fbb872f579be7dc8d25e5039db3b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/independent_finish.jsonl",
+          "sha256": "3e9b3322b0161d6dd6784e6847b958c876f54d47b3c9e3481f931561aa70ddf7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/last.png",
+          "sha256": "79f8b9f432ebe2c2062e43fd1ead32eb2e57b4c99614dbad36b35f7f875f6666"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/pilot_result.json",
+          "sha256": "1e9a21d8f6a328a3fe441d27f231bddc70ada5ca49f1d7f86f1cad9dff0db334"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/bowl_to_plate/result.json",
+          "sha256": "851e0155984efd4e41493a220e0634810c789a6622ec03ab62e4356c296701b9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/planning/inventory_confirmed.json",
+          "sha256": "1a4c895d780418ebb82f5b73ebb6aa3a9105b6e08825ce4dba857634708bddd0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/planning/joint_draft.json",
+          "sha256": "4faa22a24490a4409a64b12156d26b33dbc168252ad6b08b91e2ea870a67ed27"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/planning/joint_planning_timing.json",
+          "sha256": "60a22fec0774116f8bac2596c28d4837d0de2f9d9074c1b872bf2f0a5869bb98"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/planning/joint_prompt.txt",
+          "sha256": "3ce92221f08e58bb3e06869b3c6bcd2e21ef1ce108d7eb3e9628de3d69043c73"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/planning/planning_three_views.png",
+          "sha256": "79ca22c3f97f3f089981035c33a71262cf147a8220c806bd401f52083763cd4f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/planning/selected_targets_review.json",
+          "sha256": "034f16558ae1feeb17a598f40dfb694efb28f8712abe186f3249e6efcbcb0799"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/events.jsonl",
+          "sha256": "fdadf4e9daf1c3aca917313474d0077aebe29773d1fbb6019a23f5e36a403a9e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/finish/checks.jsonl",
+          "sha256": "33d6e7db493f86f1105e64a29acf98ed03077279c530bc241f4f38cee6cb291b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/finish/process_events.jsonl",
+          "sha256": "4ea57961ffede3d0cb3fbe9f38017d7ee32d4752d284f1a312a4730b0baf11a6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/finish/simulator_samples.jsonl",
+          "sha256": "e958dd44b80165550260face20316953622ed904932e170411b56fc3149a3d7f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/finish_actions.jsonl",
+          "sha256": "9b9ed757e1a2dd74377a6c2e3deaa332f1a98e788c3e23a89640d6e135163401"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/first.png",
+          "sha256": "106d0e9e720ca717144a194adbcebd773fbe159189e581eb4e781193c299a636"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/handoff_reference.json",
+          "sha256": "33f5c6ebd05cfdad1d2482cb81e083baae443e706dad886065440c82a314856f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/independent_finish.jsonl",
+          "sha256": "ff1bbb4f18d0ac3876b7956487ead6a89cee1e640059a9c464b03f1ec11f23ae"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/last.png",
+          "sha256": "13a37befcbc4dceb5107afbc20f26ca20ad366a1d77ab9ad96f2f2fde9c0365b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/pilot_result.json",
+          "sha256": "a05bd12182c7d5d18b37cc240f9b4ebcfca5646e3dbbc92912e8054e9e6e102b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/stove_on/result.json",
+          "sha256": "cda1ff7fb2b95b5dfe403c4d4f8045d8f025ed6238bd48050b428bf439fedb3b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/events.jsonl",
+          "sha256": "34a037dcf963749585fefbc1beda4fb523dad3db32cc1d4a3fab715aa6920ebe"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/finish/checks.jsonl",
+          "sha256": "24f75179727429e32a8a63d767b578a19d874a49692bea4a795b2715b9498d3c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/finish/process_events.jsonl",
+          "sha256": "a09e1a19bc6acdb5384738cb3d6fcfb4b4d0957742cfa70df03dc381f01029ac"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/finish/simulator_samples.jsonl",
+          "sha256": "f0049271b6290d255e99b169a0965363c2eb4bb2ebf020ae4be39ce040840152"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/finish_actions.jsonl",
+          "sha256": "f55fd641426d2884824fb2a8c6e6207012c112244572f3fdd8b5d5e21263b7a8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/first.png",
+          "sha256": "a311fca480db182c3d4c0fce67ee36e502d3f314d0b1c2b58d7afe903c34ead8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/handoff_reference.json",
+          "sha256": "b3a540b4a3b2c61dc6108a10b0128b716c8ae790d0e7f4b964cb501000ac4d4d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/independent_finish.jsonl",
+          "sha256": "26b01b76dbbb86ca6ba8a4aae56ccb0f33d67a0dd798af11e042388aee59f68a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/last.png",
+          "sha256": "8c144b68d1595bfff3a55ff3e9a9c40872b2e33f7a4273ed35752d22aa68b778"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/pilot_result.json",
+          "sha256": "5279e6a20e5697d302d94ca7b3138bd548833e1717e594ca9066f31a5245f08d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/chain/wine_to_rack/result.json",
+          "sha256": "fefe674ae62b90f06dd8239bc82db9190e5642282f794a91450b9557e73d89a9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence/planning_rejected/selected_targets_review.json",
+          "sha256": "7367422baadb8081e3387185b4a8cb33e04b85603389866f4a4cf5e4b96403cf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/evidence_manifest.json",
+          "sha256": "04a86e76001e502f8b20e827d3ea8d2dac0af04a3bc1b8a7e880a8f51ecdcf6b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/implementation_context.json",
+          "sha256": "983fe54f5e3cd5235247c4f697fefd54580bb536f3f1af82cc4d02599793bfd3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/online_bowl.py",
+          "sha256": "3fa3827bd7a03d115b3b84fe582347cb06d508ea603c65be7d82e1dc767c931a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/online_bowl2.py",
+          "sha256": "9a72029c62beeb9c38c31715d8b45b28c31b321e417b165a959c68cee104f124"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/online_bowl2_valid.py",
+          "sha256": "63eac3671a23462468948656140b89edca91a3c2faf76ef4547427e09dc6d5cc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/online_chain.py",
+          "sha256": "8e8af351dd0a6449851cac74754a22e6893e89a18c06e998549ae9e0b4b54992"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/protected_controls.json",
+          "sha256": "a929fe6a5a138b30ebbe6b6fece099851c15e0f8a68bec34e9ea2a5634bb4d9d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/README.md",
+          "sha256": "4014c19ca2a74e25d571e4ac2032b714c82f183dd6070ccfe9069559cb1425af"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/software_tests.txt",
+          "sha256": "04a82b6d97a0ca06dfa30f733051db344f599619643d64fbc7647b61aa864c8c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-sim-fast/summary.json",
+          "sha256": "dee631ceae423b615cf1fa856c3772866a2f7a5df6a20e4734219bcec4fd5c12"
+        }
+      ],
+      "configuration_complete": false,
+      "configuration": {
+        "checker_mode": "simulator",
+        "implementation_commit": "4e6337c",
+        "baseline_commit": "1be31e3",
+        "proposals": [
+          "bowl_proposal.json",
+          "bowl2_proposal.json",
+          "chain_proposal.json"
+        ],
+        "multiple_attempts": true
+      }
     }
   ]
 }

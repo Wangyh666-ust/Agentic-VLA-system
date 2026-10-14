@@ -1,0 +1,628 @@
+{
+  "baseline_commit": "1be31e32a02760a79d81eebea77c0611c3b7063e",
+  "implementation_commit": "4e6337c",
+  "mode": "simulator",
+  "independent_finish_required": 5,
+  "cases": [
+    {
+      "case": "bowl",
+      "timing": {
+        "started_unix": 1791991445.1673076,
+        "request": "把桌上的碗放进最下层抽屉并关上抽屉",
+        "scene": "bowl_drawer",
+        "checker_mode": "simulator",
+        "human_wait_seconds": 0,
+        "helpers": false,
+        "completed": true,
+        "load_scene_seconds": 8.074853225000027,
+        "prepare_and_plan_seconds": 48.68293370499998,
+        "execution_seconds": 152.77339979200002,
+        "total_seconds": 209.53118672200003,
+        "stage": "completed",
+        "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-232405-d99e61a3",
+        "ended_unix": 1791991653.702156
+      },
+      "skills": [
+        {
+          "capability": "xvla_bowl_drawer_close",
+          "source_counts": {
+            "settling": 0,
+            "vla": 232,
+            "finish": 235,
+            "prepare": 11
+          },
+          "first_all_goals_true_step": 228,
+          "trigger_steps": [
+            232
+          ],
+          "finish_status": {
+            "phase": "done",
+            "calls": 0,
+            "prechecks": 1,
+            "helper_counts": {
+              "release": 2,
+              "movement": 86,
+              "confirm": 5,
+              "home": 142
+            },
+            "last_decision": {
+              "state": "complete",
+              "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+              "allow_release": false,
+              "allow_retreat": false
+            },
+            "terminal": {
+              "ok": true,
+              "reason": "complete",
+              "checks": 0
+            },
+            "independent_streak": 5,
+            "checker_mode": "simulator",
+            "decision_source": "simulator_predicates",
+            "simulator_checks": 2,
+            "sample_count": 232,
+            "candidate_streak": 5,
+            "trigger_count": 1,
+            "actual_visual_requests": 0,
+            "release_events": 1
+          },
+          "finish_counts": {
+            "release": 2,
+            "movement": 86,
+            "confirm": 5,
+            "home": 142
+          },
+          "release_open_actions": 2,
+          "handoff": {
+            "ok": true,
+            "checks": {
+              "vla_actions": true,
+              "vla_calls": true,
+              "finish_terminal": true,
+              "release_open_actions": true,
+              "movement_actions": true,
+              "home_actions": true,
+              "independent_five": true,
+              "reference_ready": true,
+              "queue_empty": true,
+              "proprio_cleared": true,
+              "absolute_controller": true,
+              "position_goal_reset": true,
+              "orientation_goal_reset": true,
+              "gripper_command_reset": true,
+              "simulator_trigger": true,
+              "execution_vlm_zero": true
+            }
+          },
+          "reference_kind": "global_home",
+          "next_capability": "global_home",
+          "final_native_predicates": {
+            "close|white_cabinet_1_bottom_region": true,
+            "in|akita_black_bowl_1|white_cabinet_1_bottom_region": true
+          },
+          "final_metrics": {
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "arm_error_rad": [
+              0.00022604878045717758,
+              0.001274170856741752,
+              0.000779810949365075,
+              0.002032087565062568,
+              0.0017719824323863959,
+              0.002113807347036367,
+              0.003281927771623838
+            ],
+            "arm_speed_rad_s": [
+              2.6968959874764545e-05,
+              0.004130900878132377,
+              0.000112702355808108,
+              0.004264375897916995,
+              0.0021479240897096033,
+              0.0008149619838523033,
+              0.00606904719935663
+            ],
+            "max_joint_error_rad": 0.003281927771623838,
+            "max_joint_speed_rad_s": 0.00606904719935663,
+            "finger_error_m": [
+              1.858554676267138e-05,
+              1.831385053561313e-05
+            ],
+            "finger_speed_m_s": [
+              1.4773791254972505e-05,
+              1.4536201626115658e-05
+            ],
+            "max_finger_error_m": 1.858554676267138e-05,
+            "max_finger_speed_m_s": 1.4773791254972505e-05,
+            "ready": true,
+            "eef_position_error_m": 0.0006774212651809392,
+            "eef_orientation_error_rad": 0.003846305594141915
+          },
+          "cache": {
+            "queue_size": 0,
+            "proprio_is_none": true,
+            "controller_use_delta": false,
+            "goal_pos_error": 0.0,
+            "goal_ori_error": 0.0,
+            "gripper_hold_error": 0.0
+          },
+          "execution_model_request_file_count": 0
+        }
+      ]
+    },
+    {
+      "case": "chain",
+      "timing": {
+        "started_unix": 1791991692.9464197,
+        "request": "先把桌上的酒瓶放到酒架上，再把碗放到盘子上，最后打开灶台。",
+        "scene": "goal_table",
+        "checker_mode": "simulator",
+        "human_wait_seconds": 0,
+        "helpers": false,
+        "completed": true,
+        "load_scene_seconds": 8.059150447999968,
+        "prepare_and_plan_seconds": 92.55053822700006,
+        "execution_seconds": 392.13942914100005,
+        "total_seconds": 492.7491178160001,
+        "stage": "completed",
+        "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-232812-00760768",
+        "ended_unix": 1791992179.9172962
+      },
+      "skills": [
+        {
+          "capability": "wine_to_rack",
+          "source_counts": {
+            "settling": 0,
+            "vla": 151,
+            "finish": 257,
+            "prepare": 15
+          },
+          "first_all_goals_true_step": 131,
+          "trigger_steps": [
+            151
+          ],
+          "finish_status": {
+            "phase": "done",
+            "calls": 0,
+            "prechecks": 1,
+            "helper_counts": {
+              "release": 5,
+              "movement": 31,
+              "confirm": 3,
+              "home": 218
+            },
+            "last_decision": {
+              "state": "complete",
+              "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+              "allow_release": false,
+              "allow_retreat": false
+            },
+            "terminal": {
+              "ok": true,
+              "reason": "complete",
+              "checks": 0
+            },
+            "independent_streak": 5,
+            "checker_mode": "simulator",
+            "decision_source": "simulator_predicates",
+            "simulator_checks": 2,
+            "sample_count": 151,
+            "candidate_streak": 5,
+            "trigger_count": 1,
+            "actual_visual_requests": 0,
+            "release_events": 1
+          },
+          "finish_counts": {
+            "release": 5,
+            "movement": 31,
+            "confirm": 3,
+            "home": 218
+          },
+          "release_open_actions": 5,
+          "handoff": {
+            "ok": true,
+            "checks": {
+              "vla_actions": true,
+              "vla_calls": true,
+              "finish_terminal": true,
+              "release_open_actions": true,
+              "movement_actions": true,
+              "home_actions": true,
+              "independent_five": true,
+              "reference_ready": true,
+              "queue_empty": true,
+              "proprio_cleared": true,
+              "absolute_controller": true,
+              "position_goal_reset": true,
+              "orientation_goal_reset": true,
+              "gripper_command_reset": true,
+              "simulator_trigger": true,
+              "execution_vlm_zero": true
+            }
+          },
+          "reference_kind": "next_subtask_native_initial",
+          "next_capability": "bowl_to_plate",
+          "final_native_predicates": {
+            "on|wine_bottle_1|wine_rack_1_top_region": true
+          },
+          "final_metrics": {
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "arm_error_rad": [
+              0.00023585363145087017,
+              0.0006327898773300367,
+              0.0008215116284144243,
+              0.0014206931452132032,
+              0.0015108234590438887,
+              0.0019722429623367788,
+              0.0032215559089653345
+            ],
+            "arm_speed_rad_s": [
+              0.00011595615395012402,
+              0.0002834435640857718,
+              0.0004602205310926395,
+              0.000605107173457201,
+              0.0007518368250317311,
+              8.872348773718417e-05,
+              0.005794636505549105
+            ],
+            "max_joint_error_rad": 0.0032215559089653345,
+            "max_joint_speed_rad_s": 0.005794636505549105,
+            "finger_error_m": [
+              8.650776201629684e-07,
+              9.610969720005857e-07
+            ],
+            "finger_speed_m_s": [
+              2.0610326933748376e-07,
+              2.900046937430471e-07
+            ],
+            "max_finger_error_m": 9.610969720005857e-07,
+            "max_finger_speed_m_s": 2.900046937430471e-07,
+            "ready": true,
+            "eef_position_error_m": 0.0006618855768296873,
+            "eef_orientation_error_rad": 0.0034608011129616486
+          },
+          "cache": {
+            "queue_size": 0,
+            "proprio_is_none": true,
+            "controller_use_delta": false,
+            "goal_pos_error": 0.0,
+            "goal_ori_error": 0.0,
+            "gripper_hold_error": 0.0
+          },
+          "execution_model_request_file_count": 0
+        },
+        {
+          "capability": "bowl_to_plate",
+          "source_counts": {
+            "settling": 0,
+            "vla": 83,
+            "finish": 238,
+            "prepare": 0
+          },
+          "first_all_goals_true_step": 79,
+          "trigger_steps": [
+            83
+          ],
+          "finish_status": {
+            "phase": "done",
+            "calls": 0,
+            "prechecks": 1,
+            "helper_counts": {
+              "release": 8,
+              "movement": 91,
+              "confirm": 5,
+              "home": 134
+            },
+            "last_decision": {
+              "state": "complete",
+              "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+              "allow_release": false,
+              "allow_retreat": false
+            },
+            "terminal": {
+              "ok": true,
+              "reason": "complete",
+              "checks": 0
+            },
+            "independent_streak": 5,
+            "checker_mode": "simulator",
+            "decision_source": "simulator_predicates",
+            "simulator_checks": 2,
+            "sample_count": 83,
+            "candidate_streak": 5,
+            "trigger_count": 1,
+            "actual_visual_requests": 0,
+            "release_events": 1
+          },
+          "finish_counts": {
+            "release": 8,
+            "movement": 91,
+            "confirm": 5,
+            "home": 134
+          },
+          "release_open_actions": 8,
+          "handoff": {
+            "ok": true,
+            "checks": {
+              "vla_actions": true,
+              "vla_calls": true,
+              "finish_terminal": true,
+              "release_open_actions": true,
+              "movement_actions": true,
+              "home_actions": true,
+              "independent_five": true,
+              "reference_ready": true,
+              "queue_empty": true,
+              "proprio_cleared": true,
+              "absolute_controller": true,
+              "position_goal_reset": true,
+              "orientation_goal_reset": true,
+              "gripper_command_reset": true,
+              "simulator_trigger": true,
+              "execution_vlm_zero": true
+            }
+          },
+          "reference_kind": "next_subtask_native_initial",
+          "next_capability": "stove_on",
+          "final_native_predicates": {
+            "on|wine_bottle_1|wine_rack_1_top_region": true,
+            "on|akita_black_bowl_1|plate_1": true
+          },
+          "final_metrics": {
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "arm_error_rad": [
+              0.00023041879080005524,
+              0.0015174935077874319,
+              0.0007646552451356565,
+              0.002286663862467009,
+              0.0013996753919585637,
+              0.0020344284710676064,
+              0.002290230806093696
+            ],
+            "arm_speed_rad_s": [
+              6.505672137077614e-05,
+              0.005550028480658125,
+              6.774786720704165e-05,
+              0.0057129960088789025,
+              0.00013798874626136297,
+              0.00034910479560265443,
+              0.0004163272126981812
+            ],
+            "max_joint_error_rad": 0.002290230806093696,
+            "max_joint_speed_rad_s": 0.0057129960088789025,
+            "finger_error_m": [
+              4.0730007484848785e-06,
+              4.1755969895571066e-06
+            ],
+            "finger_speed_m_s": [
+              2.269213370646204e-06,
+              2.3590493819646944e-06
+            ],
+            "max_finger_error_m": 4.1755969895571066e-06,
+            "max_finger_speed_m_s": 2.3590493819646944e-06,
+            "ready": true,
+            "eef_position_error_m": 0.0007103455740868695,
+            "eef_orientation_error_rad": 0.002648420151355253
+          },
+          "cache": {
+            "queue_size": 0,
+            "proprio_is_none": true,
+            "controller_use_delta": false,
+            "goal_pos_error": 0.0,
+            "goal_ori_error": 0.0,
+            "gripper_hold_error": 0.0
+          },
+          "execution_model_request_file_count": 0
+        },
+        {
+          "capability": "stove_on",
+          "source_counts": {
+            "settling": 0,
+            "vla": 81,
+            "finish": 116,
+            "prepare": 0
+          },
+          "first_all_goals_true_step": 77,
+          "trigger_steps": [
+            81
+          ],
+          "finish_status": {
+            "phase": "done",
+            "calls": 0,
+            "prechecks": 1,
+            "helper_counts": {
+              "release": 20,
+              "movement": 25,
+              "confirm": 3,
+              "home": 68
+            },
+            "last_decision": {
+              "state": "complete",
+              "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+              "allow_release": false,
+              "allow_retreat": false
+            },
+            "terminal": {
+              "ok": true,
+              "reason": "complete",
+              "checks": 0
+            },
+            "independent_streak": 5,
+            "checker_mode": "simulator",
+            "decision_source": "simulator_predicates",
+            "simulator_checks": 2,
+            "sample_count": 81,
+            "candidate_streak": 5,
+            "trigger_count": 1,
+            "actual_visual_requests": 0,
+            "release_events": 1
+          },
+          "finish_counts": {
+            "release": 20,
+            "movement": 25,
+            "confirm": 3,
+            "home": 68
+          },
+          "release_open_actions": 20,
+          "handoff": {
+            "ok": true,
+            "checks": {
+              "vla_actions": true,
+              "vla_calls": true,
+              "finish_terminal": true,
+              "release_open_actions": true,
+              "movement_actions": true,
+              "home_actions": true,
+              "independent_five": true,
+              "reference_ready": true,
+              "queue_empty": true,
+              "proprio_cleared": true,
+              "absolute_controller": true,
+              "position_goal_reset": true,
+              "orientation_goal_reset": true,
+              "gripper_command_reset": true,
+              "simulator_trigger": true,
+              "execution_vlm_zero": true
+            }
+          },
+          "reference_kind": "global_home",
+          "next_capability": "global_home",
+          "final_native_predicates": {
+            "on|wine_bottle_1|wine_rack_1_top_region": true,
+            "on|akita_black_bowl_1|plate_1": true,
+            "turnon|flat_stove_1": true
+          },
+          "final_metrics": {
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "arm_error_rad": [
+              0.00032500997200661,
+              0.0008821449881957488,
+              0.0011770290604083238,
+              0.0013464091433634806,
+              0.0014076515091652623,
+              0.002566219963752836,
+              0.002432699043101172
+            ],
+            "arm_speed_rad_s": [
+              0.001289494763685947,
+              0.0032769139351231202,
+              0.005072744004627775,
+              0.002560943678960956,
+              0.001788290962045147,
+              0.0026707566127491195,
+              0.00229442108423151
+            ],
+            "max_joint_error_rad": 0.002566219963752836,
+            "max_joint_speed_rad_s": 0.005072744004627775,
+            "finger_error_m": [
+              4.246224079942906e-05,
+              9.229978915455128e-06
+            ],
+            "finger_speed_m_s": [
+              3.809313910813135e-05,
+              8.930285331013051e-06
+            ],
+            "max_finger_error_m": 4.246224079942906e-05,
+            "max_finger_speed_m_s": 3.809313910813135e-05,
+            "ready": true,
+            "eef_position_error_m": 0.0009259953080291902,
+            "eef_orientation_error_rad": 0.004961428591800917
+          },
+          "cache": {
+            "queue_size": 0,
+            "proprio_is_none": true,
+            "controller_use_delta": false,
+            "goal_pos_error": 0.0,
+            "goal_ori_error": 0.0,
+            "gripper_hold_error": 0.0
+          },
+          "execution_model_request_file_count": 0
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Privileged simulation information, not a real-world result or mathematical upper bound.",
+    "Planning still uses Hermes/Qwen plus independent review. No extra grasp/transport helper."
+  ],
+  "prior_attempts": [
+    {
+      "type": "planning_rejected",
+      "vla_task_actions": 0,
+      "reason": "User test text black bowl versus visible silver patterned bowl; retained independent rejection."
+    },
+    {
+      "type": "harness_entry_error",
+      "vla_task_actions": 0,
+      "model_requests": 0,
+      "reason": "bowl2_drawer typo from test harness rename; corrected scene ID without production change."
+    }
+  ],
+  "protected_controls_unchanged": true
+}

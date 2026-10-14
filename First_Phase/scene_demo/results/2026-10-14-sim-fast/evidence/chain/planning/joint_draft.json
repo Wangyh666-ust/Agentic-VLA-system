@@ -1,0 +1,31 @@
+{
+  "request_id": "console-8c413cf9b29ffa70551579d2",
+  "session_id": "ab8b9b224dc44d79bca44bb19906759f",
+  "scene_version": 0,
+  "decision": "execute",
+  "capability_ids": [
+    "wine_to_rack",
+    "bowl_to_plate",
+    "stove_on"
+  ],
+  "rationale": "用户任务包含三项独立动作：酒瓶归位至酒架、碗置于盘上、开启灶台。当前技能目录完整支持这三项原生能力，且目标物体与目的地均在画面中明确可辨，无歧义或缺失关键组件。按顺序执行即可满足全部需求。",
+  "request_scope": {
+    "coverage": "full",
+    "executable_outcomes": [
+      "酒瓶被放置到酒架顶部区域",
+      "碗被放置到盘子中央",
+      "灶台被成功启动并进入工作状态"
+    ],
+    "unmet_outcomes": [],
+    "reason": "所有子任务均有对应完整原生技能支持，目标对象与装置均已确认，无需澄清或部分执行。"
+  },
+  "target_bindings": {
+    "akita_black_bowl_1": "obj_3",
+    "flat_stove_1": "obj_5",
+    "plate_1": "obj_4",
+    "wine_bottle_1": "obj_1",
+    "wine_rack_1_top_region": "obj_2"
+  },
+  "audit": false,
+  "budget_per_subgoal": 800
+}
