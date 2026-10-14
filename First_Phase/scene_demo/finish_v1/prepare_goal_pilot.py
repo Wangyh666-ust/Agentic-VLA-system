@@ -41,7 +41,7 @@ def main():
         'changed_factors': [
             {'name':'goal_checker','before':'11 model fields; goal AND supported AND at_destination','after':'two booleans goal_achieved/holding_or_contact and reason; goal alone triggers finishing','reason':'落实用户指定条件，无支撑/悬空附加检查'},
             {'name':'retreat_budget','before':'120 control samples for any path','after':'min(480,max(120,16*segments+40)); stalled40 samples stops; same waypoint tracking and .004 tolerance','reason':'旧记录每2mm约8-11周期，120仅覆盖14/20点，持续推进误停'}],
-        'fixed_factors': {'fixtures':'exact historical initialization/trajectory/terminal hashes', 'homing':'original joint_home controller, path screen and 360-sample streaming execution unchanged', 'retreat_geometry':'unchanged geometry.py and SensorPort', 'model':'qwen3-vl-plus temperature0 actual RGB+synced encoders, no object oracle inputs'},
+        'fixed_factors': {'fixtures':'exact historical initialization/trajectory/terminal hashes', 'homing':'original joint_home controller, path screen and 360-sample streaming execution unchanged', 'retreat_geometry':'unchanged geometry.py and SensorPort', 'model':'qwen3.8-max temperature0 actual RGB+synced encoders, no object oracle inputs'},
         'scope': {'max_cases':5, 'max_vla_actions_per_case':0, 'max_helper_actions_per_case':1500,
                   'stop_rule':'酒瓶、灶台、碗各一次，番茄负例一次；保留一次仅针对明确修复的重试。首例未触发不继续其依赖，独立灶台可检验预算。修复重试须另行冻结来源并过check。不组合、不训练、不子agent。'},
         'configuration': {'inputs_sha256':sha(inputs),'source_sha256':{rel:sha(ROOT/rel) for rel in source_paths},

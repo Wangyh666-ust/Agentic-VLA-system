@@ -1,0 +1,45 @@
+{
+  "prompt": "根据同步三视图建立现场物体清单，供规划和后续检查共用。用户任务：帮我整理一下桌子，把书本归位\n先辨认桌面可见物品、容器和装置，包括目标和易混淆物。外观只写实际可见颜色、形状、把手、包装；看不清文字不要猜品牌。同一实物跨视角只分配一个object_id；不同实物不能合并。识别门/抽屉时可用装置整体加可见活动部件描述。每个物体必须逐一检查frame 0/1/2；遮挡视角如实记录，不要求三张都看得见。至少一个清晰参照且其他视角无身份冲突才confirmed=true。框采用每幅原图0..1000的[x1,y1,x2,y2]，包住真实物体，不按期望位置猜框。输出JSON：{\"objects\":[{\"object_id\":\"obj_1\",\"description\":\"可见特征及初始相对位置\",\"confirmed\":true,\"anchors\":[{\"frame\":1,\"box\":[100,200,300,400]}],\"view_observations\":[{\"frame\":0,\"visibility\":\"occluded\",\"reason\":\"遮挡情况\"},{\"frame\":1,\"visibility\":\"visible\",\"reason\":\"辨认依据\"},{\"frame\":2,\"visibility\":\"partial\",\"reason\":\"对应依据\"}],\"confusable_with\":[],\"role\":\"target/destination/distractor/uncertain\"}],\"coverage\":{\"targets_identifiable\":true,\"destination_visible\":true,\"state_change_visible\":true,\"reason\":\"画面覆盖依据\"}}。",
+  "context": {
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": 0.5000000000000003
+      }
+    ]
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 2048,
+    "max_tokens": 6500
+  },
+  "timeout_seconds": 180,
+  "request_sha256": "605fced955c6de4086190554b6733416243876044c83dbfdcb3cf57c6138ceb9",
+  "requested_model": "qwen3.8-max",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist.png",
+      "sha256": "403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "sha256": "f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "sha256": "285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45"
+    }
+  ]
+}

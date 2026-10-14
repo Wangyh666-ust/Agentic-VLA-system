@@ -1,0 +1,207 @@
+...FFFFF.F...................................................            [100%]
+=================================== FAILURES ===================================
+_______________ test_catalog_backend_and_bddl[xvla_basket_both] ________________
+
+identifier = 'xvla_basket_both'
+
+    @pytest.mark.parametrize('identifier', list(NATIVE_LONG_SKILLS))
+    def test_catalog_backend_and_bddl(identifier):
+        skill = NATIVE_LONG_SKILLS[identifier]
+        scene = skill['scene_ids'][0]
+        assert identifier not in [c['capability_id'] for c in catalog.scene_capabilities(scene)]
+>       assert identifier in [c['capability_id'] for c in catalog.scene_capabilities(scene, backend='xvla')]
+E       TypeError: scene_capabilities() got an unexpected keyword argument 'backend'
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:35: TypeError
+________________ test_catalog_backend_and_bddl[xvla_mugs_both] _________________
+
+identifier = 'xvla_mugs_both'
+
+    @pytest.mark.parametrize('identifier', list(NATIVE_LONG_SKILLS))
+    def test_catalog_backend_and_bddl(identifier):
+        skill = NATIVE_LONG_SKILLS[identifier]
+        scene = skill['scene_ids'][0]
+        assert identifier not in [c['capability_id'] for c in catalog.scene_capabilities(scene)]
+>       assert identifier in [c['capability_id'] for c in catalog.scene_capabilities(scene, backend='xvla')]
+E       TypeError: scene_capabilities() got an unexpected keyword argument 'backend'
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:35: TypeError
+__________ test_catalog_backend_and_bddl[xvla_microwave_place_close] ___________
+
+identifier = 'xvla_microwave_place_close'
+
+    @pytest.mark.parametrize('identifier', list(NATIVE_LONG_SKILLS))
+    def test_catalog_backend_and_bddl(identifier):
+        skill = NATIVE_LONG_SKILLS[identifier]
+        scene = skill['scene_ids'][0]
+        assert identifier not in [c['capability_id'] for c in catalog.scene_capabilities(scene)]
+>       assert identifier in [c['capability_id'] for c in catalog.scene_capabilities(scene, backend='xvla')]
+E       TypeError: scene_capabilities() got an unexpected keyword argument 'backend'
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:35: TypeError
+________________________ test_public_and_route_snapshot ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_public_and_route_snapshot0')
+
+    def test_public_and_route_snapshot(tmp_path):
+        record = service.SessionRecord('s', 'basket_two', catalog.SCENES['basket_two'], 0, 0, tmp_path)
+>       assert record.public()['capability_backend'] == 'smolvla'
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.service.SessionRecord object at 0x762ff588a5c0>
+
+    def public(self) -> dict[str, Any]:
+        return {
+            "ok": True,
+            "session_id": self.session_id,
+            "scene_id": self.scene_id,
+            "capability_backend": self.capability_backend,
+            "state": self.state,
+            "scene_version": self.scene_version,
+            "env_instance_id": self.env_instance_id,
+            "episode_resets": self.episode_resets,
+            "policy_resets": self.policy_resets,
+            "total_steps": self.total_steps,
+            "seed": self.seed,
+            "init_state_index": self.init_state_index,
+            "description": self.scene.get("description"),
+            "storage_policy": dict(self.scene.get("storage_policy") or {}),
+            # Public capabilities are the detailed atomic records (dicts) that
+            # the browser renderCaps and the MCP _atomic_capabilities bridge
+            # consume, never bare id strings.  ``catalog.scene_capabilities``
+            # already deep-copies each record and excludes audit-only entries by
+            # default, so callers cannot mutate the catalog or see hidden
+            # fixture/coordinate state.
+>           "capabilities": catalog.scene_capabilities(self.scene_id, backend=self.capability_backend),
+            "images": [dict(image) for image in self.images],
+            "latest_png": self.latest_png,
+            "run_dir": str(self.run_dir),
+            "active_request_id": self.active_request_id,
+            "error": self.error,
+            "finish_mode": self.finish_mode,
+        }
+E       TypeError: scene_capabilities() got an unexpected keyword argument 'backend'
+
+First_Phase/scene_demo/service.py:965: TypeError
+_____________________________ test_submit_routing ______________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x762ff5812b90>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_submit_routing0')
+
+    def test_submit_routing(monkeypatch, tmp_path):
+        svc = object.__new__(xvla_service.XvlaSceneService)
+        record = service.SessionRecord('s', 'basket_two', catalog.SCENES['basket_two'], 0, 0, tmp_path)
+        record.capability_backend = 'xvla'
+        svc._sessions = {'s': record}
+        svc.expected_capabilities = ['xvla_basket_both']
+        parent = Mock(return_value={'ok':True})
+        monkeypatch.setattr(service.SceneService, 'submit_plan', parent)
+        payload = {'session_id':'s', 'decision':'execute', 'capability_ids':['soup_to_basket','sauce_to_basket']}
+        original = copy.deepcopy(payload)
+>       assert svc.submit_plan(payload) == {'ok':True}
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_service.py:200: in submit_plan
+    available = [c['capability_id'] for c in record.public()['capabilities']
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.service.SessionRecord object at 0x762ff5810850>
+
+    def public(self) -> dict[str, Any]:
+        return {
+            "ok": True,
+            "session_id": self.session_id,
+            "scene_id": self.scene_id,
+            "capability_backend": self.capability_backend,
+            "state": self.state,
+            "scene_version": self.scene_version,
+            "env_instance_id": self.env_instance_id,
+            "episode_resets": self.episode_resets,
+            "policy_resets": self.policy_resets,
+            "total_steps": self.total_steps,
+            "seed": self.seed,
+            "init_state_index": self.init_state_index,
+            "description": self.scene.get("description"),
+            "storage_policy": dict(self.scene.get("storage_policy") or {}),
+            # Public capabilities are the detailed atomic records (dicts) that
+            # the browser renderCaps and the MCP _atomic_capabilities bridge
+            # consume, never bare id strings.  ``catalog.scene_capabilities``
+            # already deep-copies each record and excludes audit-only entries by
+            # default, so callers cannot mutate the catalog or see hidden
+            # fixture/coordinate state.
+>           "capabilities": catalog.scene_capabilities(self.scene_id, backend=self.capability_backend),
+            "images": [dict(image) for image in self.images],
+            "latest_png": self.latest_png,
+            "run_dir": str(self.run_dir),
+            "active_request_id": self.active_request_id,
+            "error": self.error,
+            "finish_mode": self.finish_mode,
+        }
+E       TypeError: scene_capabilities() got an unexpected keyword argument 'backend'
+
+First_Phase/scene_demo/service.py:965: TypeError
+_______________________________ test_mcp_filter ________________________________
+
+    def test_mcp_filter():
+>       from scene_demo import mcp_server
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    #!/usr/bin/env python3
+    """Hermes MCP bridge (stdio) for the persistent-scene SmolVLA service.
+    
+    Thin client in the same ``anyio`` / HTTP style as the older ``libero_demo``
+    bridge: it owns no model, no simulation and no evaluation.  Every tool forwards
+    to ``scene_demo/service.py``'s HTTP JSON interface (default
+    ``http://127.0.0.1:8767``) and returns the service payload largely unchanged, so
+    Hermes and a plain HTTP runner observe identical execution semantics.
+    
+    Exactly SIX tools are registered:
+    
+      get_scene_session       read one persistent session (public state only)
+      list_scene_capabilities read the scene's public storage policy + capabilities
+      observe_scene           current images + public data (extra views optional)
+      submit_scene_plan       submit a plan and return (host owns waiting)
+      get_scene_plan          read one plan by its exact request_id
+      resume_scene_plan       resume a blocked plan (repair turn only)
+    
+    Scene creation, independent evaluation, capability audit and generic arbitrary
+    HTTP are deliberately NOT exposed: those belong to the host / the fixed service,
+    never to the planner.  The planner picks capabilities, submits a plan, says it
+    submitted the plan and finishes -- it must not poll the robot or sleep in
+    45-second rounds.
+    
+    Run:  /usr/bin/python3 -u mcp_server.py     (stdio)
+    """
+    
+    from __future__ import annotations
+    try:
+        from scene_demo.xvla_skills import NATIVE_LONG_SKILLS
+    except ModuleNotFoundError:
+        from xvla_skills import NATIVE_LONG_SKILLS
+    
+    import functools
+    import json
+    import os
+    import sys
+    import urllib.error
+    import urllib.parse
+    import urllib.request
+    from typing import Any
+    
+>   import anyio  # noqa: E402
+E   ModuleNotFoundError: No module named 'anyio'
+
+First_Phase/scene_demo/mcp_server.py:43: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_catalog_backend_and_bddl[xvla_basket_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_catalog_backend_and_bddl[xvla_mugs_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_catalog_backend_and_bddl[xvla_microwave_place_close]
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_public_and_route_snapshot
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_submit_routing
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_mcp_filter - Mo...
+6 failed, 55 passed in 2.29s

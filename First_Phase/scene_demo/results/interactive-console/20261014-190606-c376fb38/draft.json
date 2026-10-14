@@ -1,0 +1,27 @@
+{
+  "request_id": "console-426e84a02842d0d6d48cdc6e",
+  "session_id": "382fcdcae66a407f8c04c4518b178f37",
+  "scene_version": 0,
+  "decision": "execute",
+  "capability_ids": [
+    "xvla_t03_bowl_to_drawer"
+  ],
+  "rationale": "用户动作词为收拾与归位，属收纳意图，按公开 storage_policy 执行：policy 仅定义 akita_black_bowl_1 到 white_cabinet_1_bottom_region，对应画面 obj_2 灰白斑纹圆碗放入 obj_3 灰色抽屉柜拉开的最下层抽屉；选用原子能力 xvla_t03_bowl_to_drawer（candidate，未经物理验证）。用户未要求关抽屉，故不附加 close 动作、不套用含 close 的原生长程技能。瓶子 obj_1 在 storage_policy 中无目的地、能力库也无对应能力，该部分不执行。",
+  "request_scope": {
+    "coverage": "partial",
+    "executable_outcomes": [
+      "将碗 akita_black_bowl_1（obj_2）按公开 storage_policy 放入抽屉柜最下层抽屉 white_cabinet_1_bottom_region（obj_3）"
+    ],
+    "unmet_outcomes": [
+      "瓶子 obj_1 归位：storage_policy 无瓶子目的地，能力库无操作瓶子的能力，该部分不支持",
+      "关抽屉不在用户请求内，未包含；如需要请另行提出"
+    ],
+    "reason": "收拾桌面并将碗和瓶子归位为收纳意图；碗的归位有公开 policy 与对应能力可执行，瓶子归位缺目的地与能力，故为部分覆盖"
+  },
+  "target_bindings": {
+    "akita_black_bowl_1": "obj_2",
+    "white_cabinet_1_bottom_region": "obj_3"
+  },
+  "audit": false,
+  "budget_per_subgoal": 900
+}

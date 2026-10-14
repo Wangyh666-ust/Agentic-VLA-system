@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "session_id": "preview-aeb60614eebce93a597b6579",
+  "scene_id": "book_caddy",
+  "state": "ready",
+  "scene_version": 0,
+  "capability_backend": "xvla",
+  "capabilities": [
+    {
+      "instruction": "put the book in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "atomic_candidate",
+      "audit_only": false,
+      "exclusive_target": true,
+      "object_id": "black_book_1",
+      "target_id": "desk_caddy_1_back_contain_region",
+      "evidence": "Candidate atomic prompt; untested integration, not evidence of native single-task training",
+      "capability_id": "xvla_t05_book_to_caddy"
+    },
+    {
+      "instruction": "pick up the book and place it in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 5
+      },
+      "component_capability_ids": [
+        "xvla_t05_book_to_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_book_caddy"
+    }
+  ],
+  "storage_policy": {
+    "black_book_1": "desk_caddy_1_back_contain_region"
+  },
+  "preview_only": true
+}

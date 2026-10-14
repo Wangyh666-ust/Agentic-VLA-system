@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "20261014-console-startup-fix",
+  "intent": "analyze_existing",
+  "question_key": "xvla-console-model-startup",
+  "purpose": "解释交互界面本次 X-VLA 启动失败，修复复用输出目录导致的旧 info.json 阻断，并只验证模型服务启动、释放、再次启动。",
+  "prior_evidence": ["20261014-xvla-console-software", "20261014-conservative-handoff-offline"],
+  "history_review": [
+    {"experiment_id": "20261014-xvla-console-software", "disposition": "insufficient", "reason": "历史界面软件测试验证了确认边界，但未覆盖真实模型退出后输出目录残留对再次启动的影响。"},
+    {"experiment_id": "20261014-conservative-handoff-offline", "disposition": "reuse", "reason": "保留已更新检查器和原收尾复位实现；本次失败在服务启动阶段，任务和检查器均未执行。"}
+  ],
+  "related_search": "检索 EXPERIMENT_INDEX.md、registry console 条目、本次 console_error.log、共享 model.log 和实际 upstream/deploy.py；末次失败明确是已有 info.json 导致退出码1，进程与8794端口均已释放。",
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "保存原始失败日志、残留 info.json、失败界面状态和源码；不删除旧证据。",
+    "为每次模型启动分配独立输出及日志目录，保留8794端口冲突检查。",
+    "软件验证残留文件下首次启动、释放后重启、端口占用保护及失败日志指向。",
+    "真实运行 ensure_runtime / close_runtime 两轮；只GET服务schema，不调用/act、不创建任务环境、不调用Qwen或Hermes。",
+    "更新界面后台，恢复书与收纳架三视图预览；任务执行继续由用户确认。"
+  ]
+}

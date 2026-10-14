@@ -1,0 +1,203 @@
+{
+  "case": "book_inside_300_v93",
+  "expected": "allow",
+  "observed_at": 15.75000000000193,
+  "goal_achieved": true,
+  "handoff_review_triggered": true,
+  "decision": {
+    "state": "needs_release",
+    "reason": "purpose achieved; open fingers",
+    "allow_release": true,
+    "allow_retreat": false
+  },
+  "released_encoder": false,
+  "current_rows": [
+    {
+      "id": "goal_0",
+      "state": "at_destination",
+      "same_target": true,
+      "evidence": [
+        {
+          "frame": 23,
+          "box": [
+            492,
+            318,
+            576,
+            398
+          ]
+        },
+        {
+          "frame": 22,
+          "box": [
+            228,
+            168,
+            268,
+            200
+          ]
+        },
+        {
+          "frame": 21,
+          "box": [
+            95,
+            168,
+            200,
+            250
+          ]
+        }
+      ],
+      "identity_refs": [
+        {
+          "frame": 2,
+          "box": [
+            566,
+            490,
+            670,
+            608
+          ]
+        },
+        {
+          "frame": 0,
+          "box": [
+            0,
+            258,
+            318,
+            537
+          ]
+        }
+      ],
+      "supported": null,
+      "change": "none",
+      "comparison": "初态frame0/2中黑色硬壳书竖立在杯旁桌面；当前frame21-23中同一黑书（顶缘露白色书页）已不在桌面源位，而出现在收纳盒后格口内、夹爪下方，身份与初态绑定一致",
+      "placement": {
+        "region_confirmed": true,
+        "region_description": "收纳盒三格中离操作者最远、靠近机械臂底座的后格内部容纳空间",
+        "destination_evidence": [
+          {
+            "frame": 23,
+            "box": [
+              438,
+              303,
+              520,
+              362
+            ]
+          },
+          {
+            "frame": 22,
+            "box": [
+              150,
+              180,
+              240,
+              240
+            ]
+          }
+        ],
+        "boundary_observation": "frame23中书本位于后格口沿平面之下，四周被后格侧壁与隔板围合；前格与中格口内可见为空，书本未停在前排格或盒外",
+        "relation_evidence": [
+          {
+            "frame": 23,
+            "box": [
+              492,
+              318,
+              576,
+              398
+            ]
+          }
+        ],
+        "support_observation": "书本下端伸入后格内部，被格壁遮挡；夹爪仍在本体顶缘处闭合，未见书本落在桌面或挂在口沿",
+        "needs_motion": false,
+        "contradiction": false,
+        "views": [
+          {
+            "frame": 21,
+            "relation": "satisfied",
+            "reason": "腕视见书本顶缘贴近盒内隔板与后壁，本体向下伸入格内"
+          },
+          {
+            "frame": 22,
+            "relation": "occluded",
+            "reason": "agentview中机械臂与灯杆遮挡盒后格，仅见臂端停于盒后段上方"
+          },
+          {
+            "frame": 23,
+            "relation": "satisfied",
+            "reason": "sideview清楚见书本主体在后格口内、顶缘低于后格口沿平面"
+          }
+        ],
+        "support_contact": {
+          "visible": false,
+          "observation": "书本底面与后格底面的接触处被盒体侧壁遮挡，无法直接看见",
+          "evidence": []
+        },
+        "support_inference": {
+          "depth_sufficient": true,
+          "spatial_observation": "初态frame2中书本整体高度约118px立高；当前frame23露出部分仅约80px且顶缘已低于后格口沿，主体跨过后格口沿进入格内，未见悬空间隙或卡沿迹象",
+          "temporal_observation": "frame14(12.0s)书本顶缘尚高于后格口沿、正在插入；frame17(15.25s)、frame20(15.5s)到frame23(15.75s)书本相对后格保持同一深入位置，插入后关系延续未退出",
+          "evidence": [
+            {
+              "frame": 23,
+              "box": [
+                492,
+                318,
+                576,
+                398
+              ]
+            },
+            {
+              "frame": 20,
+              "box": [
+                492,
+                318,
+                576,
+                398
+              ]
+            },
+            {
+              "frame": 17,
+              "box": [
+                494,
+                316,
+                578,
+                396
+              ]
+            },
+            {
+              "frame": 14,
+              "box": [
+                486,
+                308,
+                566,
+                380
+              ]
+            }
+          ]
+        },
+        "supplemental_context_evidence": {
+          "destination_evidence": [],
+          "relation_evidence": [
+            {
+              "frame": 20,
+              "box": [
+                492,
+                318,
+                576,
+                398
+              ]
+            }
+          ]
+        },
+        "_geometry_sequence_validated": true,
+        "_inferred_motion_settled": true
+      },
+      "motion_check": {
+        "current_max_qvel": 0.06739513909276401,
+        "neighbor_max_qvel": 0.05959523142405943,
+        "pass": true
+      },
+      "capture_id": "2b84c3322fd6404e/capture_000062"
+    }
+  ],
+  "actual_model_calls": 3,
+  "new_robot_actions": 0,
+  "historical_proofs": [],
+  "passed": true
+}

@@ -1,0 +1,175 @@
+{
+  "source_request": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/model_requests/call_01_request.json",
+  "actions": 0,
+  "calls": 1,
+  "model": "qwen3.8-max",
+  "raw_review": {
+    "bindings": [
+      {
+        "target_id": "black_book_1",
+        "matched": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              255,
+              320,
+              540
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              565,
+              393,
+              602,
+              502
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              568,
+              495,
+              668,
+              605
+            ]
+          }
+        ],
+        "features": "黑色封面扁平书本，顶缘可见白色书页线，初态直立于杯子旁桌面上",
+        "distractors": [
+          {
+            "frame": 1,
+            "box": [
+              795,
+              378,
+              999,
+              510
+            ],
+            "features": "桌面右侧的黑色扁平贴面矩形，平贴桌面无书页厚度，非书本"
+          },
+          {
+            "frame": 2,
+            "box": [
+              700,
+              795,
+              999,
+              999
+            ],
+            "features": "sideview右下角桌面黑色贴面矩形，与立放书本不同"
+          }
+        ]
+      },
+      {
+        "target_id": "desk_caddy_1_back_contain_region",
+        "matched": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              320,
+              600,
+              1000,
+              840
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              150,
+              350,
+              485,
+              602
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              378,
+              300,
+              665,
+              508
+            ]
+          }
+        ],
+        "features": "红棕色长方形顶部开放收纳盒，可见约三个隔间，背侧隔间为目标放置区",
+        "distractors": []
+      }
+    ],
+    "current": [
+      {
+        "id": "goal_0",
+        "state": "at_destination",
+        "same_target": true,
+        "evidence": [
+          {
+            "frame": 5,
+            "box": [
+              452,
+              255,
+              548,
+              408
+            ]
+          },
+          {
+            "frame": 4,
+            "box": [
+              255,
+              340,
+              345,
+              400
+            ]
+          },
+          {
+            "frame": 3,
+            "box": [
+              150,
+              620,
+              420,
+              830
+            ]
+          }
+        ],
+        "identity_refs": [
+          {
+            "frame": 2,
+            "box": [
+              568,
+              495,
+              668,
+              605
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              565,
+              393,
+              602,
+              502
+            ]
+          }
+        ],
+        "supported": true,
+        "change": "none",
+        "comparison": "初态frame1/2中黑书直立于杯旁桌面；当前frame5中同一黑色封面、顶缘带白色书页线的书本插立在收纳盒背侧隔间内并斜靠隔壁受支撑，frame4agentview与frame3wrist亦见书在盒内/夹爪处位于后隔间上方；桌面原书位已空且桌上剩余黑色物仅为贴面矩形干扰物，身份与位置对应一致"
+      }
+    ],
+    "history": []
+  },
+  "usage": {
+    "completion_tokens": 1589,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1024,
+      "text_tokens": 564
+    },
+    "prompt_tokens": 3342,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "image_tokens": 1164,
+      "text_tokens": 2178
+    },
+    "total_tokens": 4931
+  }
+}

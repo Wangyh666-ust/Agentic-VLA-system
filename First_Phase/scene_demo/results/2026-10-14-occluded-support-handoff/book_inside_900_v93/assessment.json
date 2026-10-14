@@ -1,0 +1,199 @@
+{
+  "case": "book_inside_900_v93",
+  "expected": "allow",
+  "observed_at": 45.75000000000995,
+  "goal_achieved": true,
+  "handoff_review_triggered": true,
+  "decision": {
+    "state": "needs_release",
+    "reason": "purpose achieved; open fingers",
+    "allow_release": true,
+    "allow_retreat": false
+  },
+  "released_encoder": false,
+  "current_rows": [
+    {
+      "id": "goal_0",
+      "state": "at_destination",
+      "same_target": true,
+      "evidence": [
+        {
+          "frame": 23,
+          "box": [
+            487,
+            313,
+            573,
+            383
+          ]
+        },
+        {
+          "frame": 22,
+          "box": [
+            240,
+            150,
+            320,
+            200
+          ]
+        },
+        {
+          "frame": 21,
+          "box": [
+            80,
+            175,
+            200,
+            235
+          ]
+        }
+      ],
+      "identity_refs": [
+        {
+          "frame": 2,
+          "box": [
+            566,
+            490,
+            670,
+            608
+          ]
+        },
+        {
+          "frame": 0,
+          "box": [
+            0,
+            258,
+            318,
+            537
+          ]
+        }
+      ],
+      "supported": null,
+      "change": "none",
+      "comparison": "初态frame2中黑色硬壳书竖立在杯子右侧桌面；当前frame23/20/17中同一黑书（顶缘露白页）位于收纳盒中间格口内、仅上缘露出盒口， gripper仍在其上方夹持；桌面原书位已空，身份与位置对应一致",
+      "placement": {
+        "region_confirmed": true,
+        "region_description": "收纳盒三格中靠近机械臂底座/后侧的中后格内部容纳空间（frame23中中间格口，frame22中被臂遮挡的后侧格口）",
+        "destination_evidence": [
+          {
+            "frame": 23,
+            "box": [
+              455,
+              300,
+              540,
+              360
+            ]
+          }
+        ],
+        "boundary_observation": "frame23可见书本黑色主体位于该格口深色开口矩形之内，四周被格口隔板顶沿与盒壁顶沿包围，仅书顶一小条露出盒口上方；frame15/18/21腕视见书背贴近格内隔板面",
+        "relation_evidence": [
+          {
+            "frame": 23,
+            "box": [
+              487,
+              313,
+              573,
+              383
+            ]
+          },
+          {
+            "frame": 21,
+            "box": [
+              80,
+              175,
+              200,
+              235
+            ]
+          }
+        ],
+        "support_observation": "书本下端不可见，被盒体前壁与隔板遮挡；夹爪仍闭合夹持书顶，但书主体已在格口边界内，非悬在口沿外",
+        "needs_motion": false,
+        "contradiction": false,
+        "views": [
+          {
+            "frame": 21,
+            "relation": "satisfied",
+            "reason": "腕视见黑色书背/书顶处于格内深色空间，紧贴隔板下缘，书体在开口矩形内"
+          },
+          {
+            "frame": 22,
+            "relation": "occluded",
+            "reason": "agentview中臂与夹爪遮挡盒后格，仅见夹爪在盒口上方，无法直接看到书"
+          },
+          {
+            "frame": 23,
+            "relation": "satisfied",
+            "reason": "sideview清楚见黑书位于中间格口内，顶缘略高于隔板顶沿但主体在格内，未卡在口沿外"
+          }
+        ],
+        "support_contact": {
+          "visible": false,
+          "observation": "书底与格底的接触被盒体前壁和隔板完全遮挡，无法直接看见落底接触",
+          "evidence": []
+        },
+        "support_inference": {
+          "depth_sufficient": true,
+          "spatial_observation": "初态frame2书整体高度约118px（竖立整本书）；当前frame23露出部分仅约70px且顶缘只略高于隔板顶沿，书主体已跨过后格口入口平面深入格内，被隔板与盒壁包围，无悬空于口沿外的间隙",
+          "temporal_observation": "frame8(12s)书顶在盒口上方较高处→frame11(23.25s)书顶下降接近口沿→frame14(34.5s)与frame17(45.25s)书顶已低于/齐平隔板顶沿附近→frame20(45.5s)、frame23(45.75s)保持同一深入状态，未见回升或仍需推进的迹象",
+          "evidence": [
+            {
+              "frame": 23,
+              "box": [
+                487,
+                313,
+                573,
+                383
+              ]
+            },
+            {
+              "frame": 20,
+              "box": [
+                487,
+                313,
+                573,
+                383
+              ]
+            },
+            {
+              "frame": 17,
+              "box": [
+                487,
+                313,
+                573,
+                383
+              ]
+            },
+            {
+              "frame": 14,
+              "box": [
+                487,
+                313,
+                573,
+                383
+              ]
+            }
+          ]
+        },
+        "supplemental_context_evidence": {
+          "destination_evidence": [
+            {
+              "frame": 20,
+              "box": [
+                455,
+                300,
+                540,
+                360
+              ]
+            }
+          ],
+          "relation_evidence": []
+        },
+        "_geometry_sequence_validated": true,
+        "_inferred_motion_settled": true
+      },
+      "handoff_note": "当前与45.25s近邻样本最大关节速度0.135/0.022 rad/s均≤0.2，结合多视角几何与连续下降过程，深度已到位，剩余只需松手",
+      "capture_id": "7f53e3a8280ae3ab/capture_000182"
+    }
+  ],
+  "actual_model_calls": 3,
+  "new_robot_actions": 0,
+  "historical_proofs": [],
+  "passed": true
+}

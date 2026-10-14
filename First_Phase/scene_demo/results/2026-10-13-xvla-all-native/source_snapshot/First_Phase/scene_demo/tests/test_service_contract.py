@@ -1,0 +1,3102 @@
+#!/usr/bin/env python3
+"""GPU-free contract tests for ``scene_demo/service.py``.
+
+These tests never load a checkpoint, never build a LIBERO scene and never touch
+CUDA.  They exercise:
+
+* the pure request validators (scene version, cross-scene, busy, budgets,
+  audit gating, resume rules);
+* artifact path resolution (directory traversal, dot-files, suffix allow-list);
+* the independent-oracle ownership / cross-scene rules;
+* the public session schema (no private positions leak);
+* one end-to-end worker run against an injected fake simulator, to prove the
+  persistent-session plan loop works without a GPU.
+"""
+
+from __future__ import annotations
+
+import json
+import sys
+import tempfile
+import threading
+import time
+import types
+import unittest
+from pathlib import Path
+from unittest import mock
+
+import numpy as np
+
+_TESTS_DIR = Path(__file__).resolve().parent
+_SCENE_DEMO = _TESTS_DIR.parent
+if str(_SCENE_DEMO) not in sys.path:
+    sys.path.insert(0, str(_SCENE_DEMO))
+
+import catalog  # noqa: E402
+import service  # noqa: E402
+import wine_semantic  # noqa: E402
+
+
+def _ready_session(**overrides):
+    """A minimal *public* session dict, as ``SessionRecord.public`` yields it."""
+
+    base = {
+        "ok": True,
+        "session_id": "sess-1",
+        "scene_id": "goal_table",
+        "state": "ready",
+        "scene_version": 0,
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "policy_resets": 0,
+        "total_steps": 0,
+        "capabilities": ["bowl_to_plate", "wine_to_rack", "stove_on"],
+        "images": [],
+        "run_dir": "/tmp/none",
+        "active_request_id": None,
+        "error": None,
+    }
+    base.update(overrides)
+    return base
+
+
+class PlanValidationTests(unittest.TestCase):
+    """``validate_plan_request`` -- the POST /plans gate."""
+
+    def _payload(self, **overrides):
+        base = {
+            "session_id": "sess-1",
+            "request_id": "req-1",
+            "scene_version": 0,
+            "decision": "execute",
+            "capability_ids": ["bowl_to_plate"],
+            "rationale": "test",
+            "budget_per_subgoal": 300,
+        }
+        base.update(overrides)
+        return base
+
+    def test_unknown_session(self):
+        error = service.validate_plan_request(None, None, self._payload())
+        self.assertEqual(error["reason"], "unknown_session")
+        self.assertEqual(service.status_for_reason(error["reason"]), 404)
+
+    def test_session_not_ready(self):
+        error = service.validate_plan_request(_ready_session(state="closed"), None, self._payload())
+        self.assertEqual(error["reason"], "session_closed")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_busy_when_plan_active(self):
+        active = {"request_id": "other", "state": "running"}
+        error = service.validate_plan_request(_ready_session(), active, self._payload())
+        self.assertEqual(error["reason"], "busy")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_stale_scene_version(self):
+        error = service.validate_plan_request(
+            _ready_session(scene_version=3), None, self._payload(scene_version=1)
+        )
+        self.assertEqual(error["reason"], "stale_scene_version")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_scene_version_must_be_int(self):
+        error = service.validate_plan_request(
+            _ready_session(), None, self._payload(scene_version="0")
+        )
+        self.assertEqual(error["reason"], "stale_scene_version")
+
+    def test_cross_scene_capability_rejected(self):
+        error = service.validate_plan_request(
+            _ready_session(scene_id="goal_table"),
+            None,
+            self._payload(capability_ids=["white_mug_left"]),
+        )
+        self.assertEqual(error["reason"], "cross_scene")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_unknown_capability_rejected(self):
+        error = service.validate_plan_request(
+            _ready_session(), None, self._payload(capability_ids=["not_a_capability"])
+        )
+        self.assertEqual(error["reason"], "unknown_capability")
+        self.assertEqual(service.status_for_reason(error["reason"]), 404)
+
+    def test_audit_only_requires_explicit_audit(self):
+        payload = self._payload(capability_ids=["table_both"], budget_per_subgoal=600)
+        error = service.validate_plan_request(_ready_session(), None, payload)
+        self.assertEqual(error["reason"], "audit_required")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+        # The same request is accepted once audit=true is explicit.
+        payload["audit"] = True
+        self.assertIsNone(service.validate_plan_request(_ready_session(), None, payload))
+
+    def test_budget_bounds(self):
+        for budget in (0, -5, 601):
+            error = service.validate_plan_request(
+                _ready_session(), None, self._payload(budget_per_subgoal=budget)
+            )
+            self.assertEqual(error["reason"], "invalid_budget", budget)
+
+    def test_composite_audit_budget_matches_two_atomic(self):
+        # One audit capability at 600 == two atomic capabilities at 300.
+        one = self._payload(capability_ids=["table_both"], budget_per_subgoal=600, audit=True)
+        self.assertIsNone(service.validate_plan_request(_ready_session(), None, one))
+        two = self._payload(
+            capability_ids=["bowl_to_plate", "wine_to_rack"],
+            budget_per_subgoal=300,
+            scene_version=0,
+        )
+        self.assertIsNone(service.validate_plan_request(_ready_session(), None, two))
+
+    def test_total_budget_over_session_limit(self):
+        error = service.validate_plan_request(
+            _ready_session(),
+            None,
+            self._payload(
+                capability_ids=["bowl_to_plate", "wine_to_rack", "stove_on", "table_both"],
+                budget_per_subgoal=600,
+                audit=True,
+            ),
+        )
+        self.assertEqual(error["reason"], "invalid_budget")
+
+    def test_duplicate_and_too_many_capabilities(self):
+        duplicate = self._payload(capability_ids=["bowl_to_plate", "bowl_to_plate"])
+        self.assertEqual(
+            service.validate_plan_request(_ready_session(), None, duplicate)["reason"],
+            "invalid_capabilities",
+        )
+        too_many = self._payload(capability_ids=["bowl_to_plate"] * 7, budget_per_subgoal=100)
+        self.assertEqual(
+            service.validate_plan_request(_ready_session(), None, too_many)["reason"],
+            "invalid_capabilities",
+        )
+
+    def test_non_execute_decision_must_be_empty(self):
+        clarify_with_caps = self._payload(decision="clarify", capability_ids=["bowl_to_plate"])
+        self.assertEqual(
+            service.validate_plan_request(_ready_session(), None, clarify_with_caps)["reason"],
+            "invalid_capabilities",
+        )
+        clarify_empty = self._payload(decision="clarify", capability_ids=[])
+        self.assertIsNone(service.validate_plan_request(_ready_session(), None, clarify_empty))
+
+    def test_non_execute_decision_still_checks_scene_version(self):
+        for decision in ("clarify", "unsupported"):
+            error = service.validate_plan_request(
+                _ready_session(scene_version=2),
+                None,
+                self._payload(decision=decision, capability_ids=[], scene_version=1),
+            )
+            self.assertEqual(error["reason"], "stale_scene_version", decision)
+            self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_invalid_decision(self):
+        error = service.validate_plan_request(
+            _ready_session(), None, self._payload(decision="do_something")
+        )
+        self.assertEqual(error["reason"], "invalid_decision")
+
+    def test_request_id_required(self):
+        error = service.validate_plan_request(_ready_session(), None, self._payload(request_id=""))
+        self.assertEqual(error["reason"], "invalid_request_id")
+
+    def test_whitespace_request_id_is_invalid(self):
+        # A whitespace-only id is not a usable opaque identifier: it must be
+        # rejected as invalid_request_id (HTTP 400), never accepted as a plan.
+        for bad in (" ", "   ", "\t", "\n", " \t\n "):
+            error = service.validate_plan_request(_ready_session(), None, self._payload(request_id=bad))
+            self.assertEqual(error["reason"], "invalid_request_id", repr(bad))
+            self.assertEqual(service.status_for_reason(error["reason"]), 400)
+
+
+class ResumeValidationTests(unittest.TestCase):
+    def _plan(self, **overrides):
+        base = {
+            "ok": True,
+            "request_id": "req-1",
+            "session_id": "sess-1",
+            "state": "blocked",
+            "decision": "execute",
+            "capability_ids": ["bowl_to_plate"],
+            "original_capability_ids": ["bowl_to_plate", "wine_to_rack"],
+            "completed_capability_ids": [],
+            "repair_history": [],
+        }
+        base.update(overrides)
+        return base
+
+    def test_only_blocked_plan_can_resume(self):
+        error = service.validate_resume_request(
+            _ready_session(), self._plan(state="completed"),
+            {"scene_version": 0, "capability_ids": ["wine_to_rack"]},
+        )
+        self.assertEqual(error["reason"], "plan_not_blocked")
+
+    def test_single_repair_only(self):
+        error = service.validate_resume_request(
+            _ready_session(),
+            self._plan(repair_history=[{"capability_ids": ["x"]}]),
+            {"scene_version": 0, "capability_ids": ["wine_to_rack"]},
+        )
+        self.assertEqual(error["reason"], "resume_exhausted")
+
+    def test_resume_ownership(self):
+        error = service.validate_resume_request(
+            _ready_session(session_id="sess-2"),
+            self._plan(session_id="sess-1"),
+            {"scene_version": 0, "capability_ids": ["wine_to_rack"]},
+        )
+        self.assertEqual(error["reason"], "ownership")
+
+    def test_resume_ok(self):
+        error = service.validate_resume_request(
+            _ready_session(),
+            self._plan(),
+            {"scene_version": 0, "capability_ids": ["wine_to_rack"]},
+        )
+        self.assertIsNone(error)
+
+    def test_resume_audit_defaults_to_false(self):
+        # An audit-only capability requires an explicit audit flag even on resume.
+        without = service.validate_resume_request(
+            _ready_session(),
+            self._plan(),
+            {"scene_version": 0, "capability_ids": ["table_both"], "budget_per_subgoal": 100},
+        )
+        self.assertEqual(without["reason"], "audit_required")
+        with_audit = service.validate_resume_request(
+            _ready_session(),
+            self._plan(),
+            {
+                "scene_version": 0,
+                "capability_ids": ["table_both"],
+                "budget_per_subgoal": 100,
+                "audit": True,
+            },
+        )
+        self.assertIsNone(with_audit)
+
+    def test_resume_budget_must_be_int_in_range(self):
+        for bad in (True, False, 0, -1, 601, "300", 3.0):
+            error = service.validate_resume_request(
+                _ready_session(),
+                self._plan(),
+                {"scene_version": 0, "capability_ids": ["wine_to_rack"], "budget_per_subgoal": bad},
+            )
+            self.assertEqual(error["reason"], "invalid_budget", bad)
+
+    def test_resume_respects_remaining_session_budget(self):
+        error = service.validate_resume_request(
+            _ready_session(total_steps=1900),
+            self._plan(),
+            {
+                "scene_version": 0,
+                "capability_ids": ["wine_to_rack", "stove_on"],
+                "budget_per_subgoal": 100,
+            },
+        )
+        self.assertEqual(error["reason"], "invalid_budget")
+
+    def test_resume_cannot_substitute_object(self):
+        # Original goal: the white mug onto the RIGHT plate.  A repair that puts
+        # the YELLOW mug there instead introduces a new object.
+        error = service.validate_resume_request(
+            _ready_session(scene_id="mugs_two"),
+            self._plan(
+                original_capability_ids=["white_mug_right"],
+                capability_ids=["white_mug_right"],
+            ),
+            {"scene_version": 0, "capability_ids": ["yellow_mug_right"]},
+        )
+        self.assertEqual(error["reason"], "repair_scope")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_resume_cannot_substitute_destination(self):
+        # Original goal: the white mug onto the LEFT plate.  Putting the same mug
+        # onto the RIGHT plate changes the destination.
+        error = service.validate_resume_request(
+            _ready_session(scene_id="mugs_two"),
+            self._plan(
+                original_capability_ids=["white_mug_left"],
+                capability_ids=["white_mug_left"],
+            ),
+            {"scene_version": 0, "capability_ids": ["white_mug_right"]},
+        )
+        self.assertEqual(error["reason"], "repair_scope")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_resume_composite_may_split_into_original_atomic_goals(self):
+        # The original audit composite declared the bowl-on-plate AND
+        # wine-on-rack goals.  Retrying just the wine goal is a subset of the
+        # original goal set, so it is allowed -- and audit is NOT inherited, so
+        # audit=False is accepted.
+        error = service.validate_resume_request(
+            _ready_session(scene_id="goal_table"),
+            self._plan(
+                original_capability_ids=["table_both"],
+                capability_ids=["table_both"],
+                audit=True,
+            ),
+            {"scene_version": 0, "capability_ids": ["wine_to_rack"], "audit": False},
+        )
+        self.assertIsNone(error)
+
+
+class EvaluateValidationTests(unittest.TestCase):
+    def _plan(self, **overrides):
+        base = {
+            "request_id": "req-1",
+            "session_id": "sess-1",
+            "decision": "execute",
+            "state": "completed",
+            "scene_version": 0,
+        }
+        base.update(overrides)
+        return base
+
+    def test_unknown_case(self):
+        error = service.validate_evaluate_request(_ready_session(), self._plan(), None, "req-1")
+        self.assertEqual(error["reason"], "unknown_case")
+        self.assertEqual(service.status_for_reason(error["reason"]), 404)
+
+    def test_cross_scene_case(self):
+        case = {"case_id": "mugs_standard", "scene_id": "mugs_two"}
+        error = service.validate_evaluate_request(
+            _ready_session(scene_id="goal_table"), self._plan(), case, "req-1"
+        )
+        self.assertEqual(error["reason"], "cross_scene")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_ownership_requires_a_plan(self):
+        case = {"case_id": "table_tidy", "scene_id": "goal_table"}
+        error = service.validate_evaluate_request(_ready_session(), None, case, "req-1")
+        self.assertEqual(error["reason"], "ownership")
+
+    def test_ownership_rejects_other_session_plan(self):
+        case = {"case_id": "table_tidy", "scene_id": "goal_table"}
+        error = service.validate_evaluate_request(
+            _ready_session(session_id="sess-1"),
+            self._plan(session_id="sess-2"),
+            case,
+            "req-1",
+        )
+        self.assertEqual(error["reason"], "ownership")
+
+    def test_ownership_ok(self):
+        case = {"case_id": "table_tidy", "scene_id": "goal_table"}
+        error = service.validate_evaluate_request(_ready_session(), self._plan(), case, "req-1")
+        self.assertIsNone(error)
+
+    def test_running_plan_cannot_be_evaluated(self):
+        case = {"case_id": "table_tidy", "scene_id": "goal_table"}
+        for state in ("queued", "running"):
+            error = service.validate_evaluate_request(
+                _ready_session(), self._plan(state=state), case, "req-1"
+            )
+            self.assertEqual(error["reason"], "busy", state)
+            self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_stale_evaluation_rejected(self):
+        case = {"case_id": "table_tidy", "scene_id": "goal_table"}
+        error = service.validate_evaluate_request(
+            _ready_session(scene_version=2),
+            self._plan(state="completed", scene_version=1),
+            case,
+            "req-1",
+        )
+        self.assertEqual(error["reason"], "stale_evaluation")
+        self.assertEqual(service.status_for_reason(error["reason"]), 409)
+
+    def test_terminal_plan_with_current_version_ok(self):
+        case = {"case_id": "table_tidy", "scene_id": "goal_table"}
+        for state in service.TERMINAL_PLAN_STATES:
+            error = service.validate_evaluate_request(
+                _ready_session(scene_version=3),
+                self._plan(state=state, scene_version=3),
+                case,
+                "req-1",
+            )
+            self.assertIsNone(error, state)
+
+
+class ArtifactPathTests(unittest.TestCase):
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self._tmp.name)
+        (self.root / "sess").mkdir()
+        (self.root / "sess" / "latest.png").write_bytes(b"png")
+        (self.root / "sess" / "rollout.mp4").write_bytes(b"mp4")
+        (self.root / "result.json").write_text("{}", encoding="utf-8")
+        (self.root / "secret.env").write_text("TOKEN=1", encoding="utf-8")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_valid_artifacts_resolve(self):
+        for rel in ("sess/latest.png", "sess/rollout.mp4", "result.json"):
+            self.assertIsNotNone(service.resolve_artifact_path(self.root, rel), rel)
+
+    def test_directory_traversal_rejected(self):
+        for rel in ("../secret.env", "sess/../../etc/passwd", "..\\secret.env"):
+            self.assertIsNone(service.resolve_artifact_path(self.root, rel), rel)
+
+    def test_absolute_path_rejected(self):
+        self.assertIsNone(service.resolve_artifact_path(self.root, "/etc/passwd.png"))
+
+    def test_dotfiles_rejected(self):
+        self.assertIsNone(service.resolve_artifact_path(self.root, "secret.env"))
+        self.assertIsNone(service.resolve_artifact_path(self.root, ".git/config.json"))
+
+    def test_disallowed_suffix_rejected(self):
+        (self.root / "notes.txt").write_text("x", encoding="utf-8")
+        self.assertIsNone(service.resolve_artifact_path(self.root, "notes.txt"))
+
+    def test_missing_file_rejected(self):
+        self.assertIsNone(service.resolve_artifact_path(self.root, "sess/missing.png"))
+
+
+class PublicSchemaTests(unittest.TestCase):
+    def test_health_workflow(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            svc = service.SceneService(run_root=tmp)
+            health = svc.health()
+            self.assertTrue(health["ok"])
+            self.assertEqual(health["workflow"], "persistent_scene_v2")
+            self.assertFalse(health["ready"])
+            self.assertIsNone(health["worker_error"])
+
+    def test_scenes_includes_original_scenes_and_native_microwave(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            svc = service.SceneService(run_root=tmp)
+            payload = svc.scenes()
+            ids = [entry["scene_id"] for entry in payload["scenes"]]
+            self.assertEqual(set(ids), {'goal_table', 'goal_table_shifted', 'basket_two',
+                                       'mugs_two', 'mugs_left_occupied', 'mugs_right_occupied',
+                                       'mugs_both_occupied', 'microwave_mug'})
+            xvla_only = {'basket_cheese_butter', 'stove_moka', 'bowl_drawer',
+                         'book_caddy', 'mug_pudding', 'basket_soup_cheese', 'moka_two'}
+            self.assertEqual(set(catalog.SCENES) - set(ids), xvla_only)
+            for scene in xvla_only:
+                self.assertEqual(catalog.SCENES[scene]['backends'], ['xvla'])
+            self.assertEqual(payload['n_scenes'], 8)
+
+    def test_create_session_rejects_unknown_scene(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            svc = service.SceneService(run_root=tmp)
+            result = svc.create_session("no_such_scene")
+            self.assertFalse(result["ok"])
+            self.assertEqual(result["reason"], "unknown_scene")
+            self.assertEqual(service.status_for_reason(result["reason"]), 404)
+
+    def test_unknown_lookups(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            svc = service.SceneService(run_root=tmp)
+            self.assertIsNone(svc.session("nope"))
+            self.assertIsNone(svc.plan("nope"))
+            self.assertIsNone(svc.job("nope"))
+            self.assertEqual(svc.cancel("nope")["reason"], "unknown_plan")
+            self.assertEqual(svc.observe("nope")["reason"], "unknown_session")
+
+    def test_session_public_never_leaks_positions(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            record = service.SessionRecord(
+                "sid", "goal_table", catalog.SCENES["goal_table"], 0, 0, Path(tmp)
+            )
+            record.initial_positions = {"akita_black_bowl_1": [1.0, 2.0, 3.0]}
+            record.initial_state_path = "/private/initial_state.npy"
+            public = record.public()
+            for leaked in ("initial_positions", "positions", "initial_state_path", "xml_sha"):
+                self.assertNotIn(leaked, public)
+
+    def test_v1_bridge_reuse(self):
+        self.assertIn("v1_libero_service", sys.modules)
+        # ``_load_policy`` is a method of the v1 ``LiberoService`` class, not a
+        # module-level function.
+        self.assertTrue(hasattr(service.v1_libero_service.LiberoService, "_load_policy"))
+        self.assertEqual(
+            service.MODEL_REVISION_DEFAULT, service.v1_libero_service.MODEL_REVISION_DEFAULT
+        )
+
+    def test_persistent_env_overrides_ensure_env(self):
+        self.assertIn("_ensure_env", service.PersistentLiberoEnv.__dict__)
+        self.assertTrue(issubclass(service.PersistentLiberoEnv, service.LiberoEnv))
+
+
+class PublicCapabilityShapeTests(unittest.TestCase):
+    """The public session ``capabilities`` field is the exact catalog contract.
+
+    The browser ``renderCaps`` and the MCP ``_atomic_capabilities`` bridge both
+    require the *detailed atomic dictionaries* (not id strings): each entry must
+    carry ``capability_id``/``instruction``/``object_id``/``target_id``/
+    ``evidence``/``audit_only``, the goal-table ids must be exactly the three
+    atomic goals, every ``audit_only`` flag must be false, and no hidden
+    fixture/coordinate state may leak.
+    """
+
+    _REQUIRED_KEYS = (
+        "capability_id",
+        "instruction",
+        "object_id",
+        "target_id",
+        "evidence",
+        "audit_only",
+    )
+    _FORBIDDEN_KEYS = (
+        "xyz",
+        "patches",
+        "positions",
+        "initial_positions",
+        "initial_state_path",
+        "xml_sha",
+        "seed",
+    )
+    _EXPECTED_GOAL_TABLE_IDS = ["bowl_to_plate", "wine_to_rack", "stove_on"]
+
+    def _public(self, scene_id="goal_table"):
+        with tempfile.TemporaryDirectory() as tmp:
+            record = service.SessionRecord(
+                "sid", scene_id, catalog.SCENES[scene_id], 0, 0, Path(tmp)
+            )
+            return record.public()
+
+    def test_goal_table_capabilities_are_detailed_dicts(self):
+        capabilities = self._public()["capabilities"]
+        self.assertIsInstance(capabilities, list)
+        self.assertTrue(capabilities)
+        for entry in capabilities:
+            self.assertIsInstance(entry, dict)
+            for key in self._REQUIRED_KEYS:
+                self.assertIn(key, entry)
+            self.assertIsInstance(entry["capability_id"], str)
+            self.assertIsInstance(entry["instruction"], str)
+            self.assertIsInstance(entry["evidence"], str)
+            self.assertIs(entry["audit_only"], False)
+
+    def test_goal_table_capability_ids_are_exact(self):
+        capabilities = self._public()["capabilities"]
+        ids = [entry["capability_id"] for entry in capabilities]
+        self.assertEqual(ids, self._EXPECTED_GOAL_TABLE_IDS)
+
+    def test_public_capabilities_are_the_catalog_deepcopy_records(self):
+        # The public field must be exactly catalog.scene_capabilities(scene_id),
+        # not an invented or slimmed-down schema.
+        self.assertEqual(
+            self._public()["capabilities"], catalog.scene_capabilities("goal_table")
+        )
+
+    def test_public_capabilities_are_independent_deep_copies(self):
+        public = self._public()
+        public["capabilities"][0]["instruction"] = "mutated"
+        self.assertEqual(
+            catalog.CAPABILITIES["bowl_to_plate"]["instruction"],
+            "put the bowl on the plate",
+        )
+
+    def test_audit_only_entries_are_absent(self):
+        ids = {entry["capability_id"] for entry in self._public()["capabilities"]}
+        self.assertNotIn("table_both", ids)
+        for capability_id, capability in catalog.CAPABILITIES.items():
+            if capability["audit_only"] and "goal_table" in capability["scene_ids"]:
+                self.assertNotIn(capability_id, ids)
+
+    def test_no_hidden_fixture_or_coordinate_leaks(self):
+        public = self._public()
+        for entry in public["capabilities"]:
+            for forbidden in self._FORBIDDEN_KEYS:
+                self.assertNotIn(forbidden, entry, forbidden)
+        # ``seed`` is explicit public Session contract data (reproducibility),
+        # so it is legitimately present -- it must not be treated as a leak.
+        public_forbidden = tuple(k for k in self._FORBIDDEN_KEYS if k != "seed")
+        for forbidden in public_forbidden:
+            self.assertNotIn(forbidden, public, forbidden)
+        self.assertEqual(public["seed"], 0)
+
+
+# --- end-to-end worker test with an injected fake simulator -----------------
+
+
+class _FakeSimData:
+    """Minimal native ``sim.data``: joint qpos by name + body centres by index."""
+
+    def __init__(self):
+        self.qpos = np.zeros(7)
+        self.qvel = np.zeros(7)
+        self.body_xpos = np.zeros((8, 3))
+        self.joint_qpos: dict[str, np.ndarray] = {}
+
+    def get_joint_qpos(self, name):
+        return self.joint_qpos.setdefault(name, np.zeros(7, dtype=np.float64))
+
+    def set_joint_qpos(self, name, value):
+        self.joint_qpos[name] = np.asarray(value, dtype=np.float64).copy()
+
+
+class _FakeMjSimState:
+    """Native ``MjSimState`` stand-in: ``state_sha`` only uses ``flatten()``.
+
+    The real object does not support ``np.asarray`` directly, so the service must
+    call ``.flatten()`` first; ``flat_calls`` lets a test prove that path ran.
+    """
+
+    def __init__(self, values):
+        self._values = np.asarray(values, dtype=np.float64)
+        self.flat_calls = 0
+
+    def flatten(self):
+        self.flat_calls += 1
+        return self._values.copy()
+
+
+class _FakeSim:
+    def __init__(self):
+        self.data = _FakeSimData()
+        self.model = types.SimpleNamespace(
+            body_names=[], camera_names=[], get_xml=lambda: "<xml/>"
+        )
+        # A value that lives *only* in the returned MjSimState (never in
+        # qpos/qvel): a test can mutate it to prove the get_state()/.flatten()
+        # path is genuinely used rather than the qpos/qvel fallback.
+        self.extra_state = np.zeros(1, dtype=np.float64)
+        self.get_state_calls = 0
+        self.last_state = None
+
+    def get_state(self):
+        self.get_state_calls += 1
+        self.last_state = _FakeMjSimState(
+            np.concatenate(
+                [
+                    np.asarray(self.data.qpos, dtype=np.float64),
+                    np.asarray(self.data.qvel, dtype=np.float64),
+                    np.asarray(self.extra_state, dtype=np.float64),
+                ]
+            )
+        )
+        return self.last_state
+
+    def forward(self):
+        pass
+
+
+class _FakeObject:
+    """Native robosuite object: ``joints`` is a list of joint-name strings."""
+
+    def __init__(self, joint_name):
+        self.joints = [joint_name]
+
+
+class _FakeInnerEnv:
+    """Native-shaped inner env: object dict, body ids, one-arg predicate probe."""
+
+    def __init__(self, default_truth_at=3):
+        self.sim = _FakeSim()
+        self.steps = 0
+        self.default_truth_at = default_truth_at
+        self.truth_after: dict[str, int] = {}
+        self.objects_dict = {
+            "akita_black_bowl_1": _FakeObject("akita_black_bowl_1_joint0"),
+            "plate_1": _FakeObject("plate_1_joint0"),
+        }
+        self.object_states_dict = {"akita_black_bowl_1": "On"}
+        self.obj_body_id = {"akita_black_bowl_1": 0, "plate_1": 1}
+        self.sim.data.body_xpos[0] = [0.0, 0.0, 0.0]
+        self.sim.data.body_xpos[1] = [0.5, 0.6, 0.7]
+
+    def _get_observations(self):
+        return {}
+
+    def _eval_predicate(self, predicate):
+        key = "|".join(str(part) for part in predicate)
+        threshold = self.truth_after.get(key, self.default_truth_at)
+        return self.steps >= threshold
+
+    def step(self, action):
+        self.steps += 1
+        # Advance the mock simulator state so state hashes genuinely move: the
+        # no-reset seam then really depends on the env persisting between jobs.
+        self.sim.data.qpos[0] = float(self.steps)
+        return {}
+
+
+def _wrap(inner):
+    """Wrap a native inner env the way ``PersistentLiberoEnv`` does."""
+
+    return types.SimpleNamespace(_env=types.SimpleNamespace(env=inner))
+
+
+class _FakeObs:
+    pixels = {}
+    robot_state = {}
+
+
+class _FakeEnv:
+    def __init__(self, gate=None):
+        self._inner = _FakeInnerEnv(default_truth_at=3)
+        self._env = types.SimpleNamespace(env=self._inner)
+        self.action_space = types.SimpleNamespace(low=-np.ones(7), high=np.ones(7))
+        self.closed = False
+        self.gate = gate  # optional threading.Event that throttles env.step
+
+    def reset(self, seed=0):
+        return _FakeObs(), {}
+
+    def step(self, action):
+        if self.gate is not None:
+            self.gate.wait(timeout=15.0)
+        self._inner.step(action)
+        return _FakeObs(), 0.0, False, False, {"is_success": False}
+
+    def render(self):
+        return np.zeros((8, 8, 3), dtype=np.uint8)
+
+    def close(self):
+        self.closed = True
+
+
+class NativeApiShapeTests(unittest.TestCase):
+    """The patch/position/predicate helpers match the verified native API."""
+
+    def test_object_joint_is_a_name_string(self):
+        inner = _FakeInnerEnv()
+        name = service._object_joint(_wrap(inner), "akita_black_bowl_1")
+        self.assertIsInstance(name, str)
+        self.assertEqual(name, "akita_black_bowl_1_joint0")
+
+    def test_offset_patch_reads_and_writes_joint_qpos(self):
+        inner = _FakeInnerEnv()
+        inner.sim.data.joint_qpos["akita_black_bowl_1_joint0"] = np.array(
+            [1.0, 2.0, 3.0, 1.0, 0.0, 0.0, 0.0]
+        )
+        recorded: dict = {}
+
+        def _set(name, value):
+            recorded["name"] = name
+            recorded["value"] = np.asarray(value, dtype=np.float64).copy()
+
+        inner.sim.data.set_joint_qpos = _set
+        service.apply_scene_patch(
+            _wrap(inner),
+            {"kind": "offset", "object_id": "akita_black_bowl_1", "xyz": [0.1, -0.2, 0.3]},
+        )
+        self.assertEqual(recorded["name"], "akita_black_bowl_1_joint0")
+        np.testing.assert_allclose(recorded["value"][:3], [1.1, 1.8, 3.3])
+        # the quaternion tail is preserved
+        np.testing.assert_allclose(recorded["value"][3:], [1.0, 0.0, 0.0, 0.0])
+
+    def test_place_on_patch_centres_on_target_body(self):
+        inner = _FakeInnerEnv()
+        inner.sim.data.joint_qpos["akita_black_bowl_1_joint0"] = np.array(
+            [1.0, 2.0, 3.0, 1.0, 0.0, 0.0, 0.0]
+        )
+        recorded: dict = {}
+
+        def _set(name, value):
+            recorded["value"] = np.asarray(value, dtype=np.float64).copy()
+
+        inner.sim.data.set_joint_qpos = _set
+        service.apply_scene_patch(
+            _wrap(inner),
+            {"kind": "place_on", "object_id": "akita_black_bowl_1", "target_id": "plate_1"},
+        )
+        # plate_1 body centre [0.5, 0.6, 0.7] + [0, 0, 0.05]
+        np.testing.assert_allclose(recorded["value"][:3], [0.5, 0.6, 0.75])
+        np.testing.assert_allclose(recorded["value"][3:], [1.0, 0.0, 0.0, 0.0])
+
+    def test_body_position_uses_obj_body_id_not_body_names(self):
+        inner = _FakeInnerEnv()
+        # deliberately wrong body_names: the id must never be looked up there
+        inner.sim.model.body_names = ["totally_different_body"]
+        inner.obj_body_id = {"plate_1": 5}
+        inner.sim.data.body_xpos = np.zeros((6, 3))
+        inner.sim.data.body_xpos[5] = [9.0, 8.0, 7.0]
+        np.testing.assert_allclose(
+            service._body_position(_wrap(inner), "plate_1"), [9.0, 8.0, 7.0]
+        )
+
+    def test_object_states_uses_exact_native_mapping(self):
+        inner = _FakeInnerEnv()
+        inner.object_states = {"speculative": True}  # decoy must be ignored
+        inner.object_states_dict = {"akita_black_bowl_1": "On"}
+        self.assertEqual(service._object_states(inner), {"akita_black_bowl_1": "On"})
+
+
+class RefreshObservationTests(unittest.TestCase):
+    """``_refresh_observation`` must never step, and must fail closed."""
+
+    def _service(self):
+        return service.SceneService(run_root=tempfile.mkdtemp())
+
+    def test_real_path_uses_native_getter_and_formatter(self):
+        seen: dict = {}
+
+        class _Inner:
+            def _get_observations(self, force_update=False):
+                seen["force_update"] = force_update
+                return {"raw": 1}
+
+        class _Env:
+            def __init__(self):
+                self._env = types.SimpleNamespace(env=_Inner())
+
+            def _format_raw_obs(self, raw):
+                seen["raw"] = raw
+                return {"formatted": raw}
+
+        obs = self._service()._refresh_observation(_Env())
+        self.assertTrue(seen["force_update"])
+        self.assertEqual(seen["raw"], {"raw": 1})
+        self.assertEqual(obs, {"formatted": {"raw": 1}})
+
+    def test_fake_getter_without_force_update_is_used_without_stepping(self):
+        inner = _FakeInnerEnv()
+        before = inner.steps
+        obs = self._service()._refresh_observation(_wrap(inner))
+        self.assertEqual(obs, {})
+        self.assertEqual(inner.steps, before)  # no hidden control step
+
+    def test_refresh_impossible_fails_closed(self):
+        env = types.SimpleNamespace(_env=types.SimpleNamespace(env=types.SimpleNamespace()))
+        with self.assertRaises(service.SceneError) as ctx:
+            self._service()._refresh_observation(env)
+        self.assertEqual(ctx.exception.reason, "invalid_fixture")
+        self.assertEqual(service.status_for_reason("invalid_fixture"), 400)
+
+
+class PredicateApiTests(unittest.TestCase):
+    def test_eval_predicate_receives_single_list_argument(self):
+        seen: list = []
+
+        class _Recorder:
+            def _eval_predicate(self, predicate):
+                seen.append(predicate)
+                return True
+
+        env = types.SimpleNamespace(_env=types.SimpleNamespace(env=_Recorder()))
+        self.assertTrue(service.eval_goal_predicate(env, ["on", "a", "b"]))
+        self.assertEqual(seen, [["on", "a", "b"]])
+
+    def test_predicate_exception_raises_not_false(self):
+        class _Boom:
+            def _eval_predicate(self, predicate):
+                raise RuntimeError("boom")
+
+        env = types.SimpleNamespace(_env=types.SimpleNamespace(env=_Boom()))
+        with self.assertRaises(service.SceneError) as ctx:
+            service.eval_goal_predicate(env, ["on", "a", "b"])
+        self.assertEqual(ctx.exception.reason, "predicate_error")
+
+    def test_predicate_exception_under_not_still_raises(self):
+        class _Boom:
+            def _eval_predicate(self, predicate):
+                raise RuntimeError("boom")
+
+        env = types.SimpleNamespace(_env=types.SimpleNamespace(env=_Boom()))
+        with self.assertRaises(service.SceneError) as ctx:
+            # a failed inner query must never become True through negation
+            service.eval_goal_predicate(env, ["not", "on", "a", "b"])
+        self.assertEqual(ctx.exception.reason, "predicate_error")
+
+    def test_predicate_exception_under_nested_not_still_raises(self):
+        class _Boom:
+            def _eval_predicate(self, predicate):
+                raise RuntimeError("boom")
+
+        env = types.SimpleNamespace(_env=types.SimpleNamespace(env=_Boom()))
+        with self.assertRaises(service.SceneError) as ctx:
+            # even double negation cannot launder a failed inner query into truth
+            service.eval_goal_predicate(env, ["not", "not", "on", "a", "b"])
+        self.assertEqual(ctx.exception.reason, "predicate_error")
+
+    def test_not_negates_only_successful_booleans(self):
+        true_env = _wrap(_FakeInnerEnv(default_truth_at=0))
+        false_env = _wrap(_FakeInnerEnv(default_truth_at=10 ** 9))
+        self.assertFalse(service.eval_goal_predicate(true_env, ["not", "on", "a", "b"]))
+        self.assertTrue(service.eval_goal_predicate(false_env, ["not", "on", "a", "b"]))
+
+
+class StateHashTests(unittest.TestCase):
+    def test_state_sha_sees_a_tiny_real_float64_change(self):
+        inner = _FakeInnerEnv()
+        env = _wrap(inner)
+        first = service.state_sha(env)
+        inner.sim.data.qvel[0] = 1e-12  # far below any rounding grid
+        second = service.state_sha(env)
+        self.assertNotEqual(first, second)
+        inner.sim.data.qvel[0] = 0.0
+        self.assertEqual(first, service.state_sha(env))
+
+    def test_state_sha_uses_get_state_flatten_path(self):
+        inner = _FakeInnerEnv()
+        env = _wrap(inner)
+        sim = inner.sim
+        first = service.state_sha(env)
+        # The native getter ran and its MjSimState was actually flattened.
+        self.assertGreaterEqual(sim.get_state_calls, 1)
+        self.assertIsNotNone(sim.last_state)
+        self.assertGreaterEqual(sim.last_state.flat_calls, 1)
+        # A change that exists only in the MjSimState (never in qpos/qvel) must
+        # change the digest; the qpos/qvel fallback would ignore it entirely.
+        sim.extra_state[0] = 0.5
+        self.assertNotEqual(first, service.state_sha(env))
+
+    def test_state_sha_falls_back_to_qpos_qvel_only_on_exception(self):
+        inner = _FakeInnerEnv()
+        env = _wrap(inner)
+        inner.sim.data.qpos[0] = 2.0
+
+        def _boom():
+            raise RuntimeError("no get_state here")
+
+        inner.sim.get_state = _boom
+        # Must not raise; the digest must come from the raw qpos/qvel vectors.
+        flat = np.concatenate(
+            [inner.sim.data.qpos, inner.sim.data.qvel]
+        ).astype(np.float64)
+        expected = service._sha256_bytes(
+            np.ascontiguousarray(flat, dtype=np.float64).tobytes()
+        )
+        self.assertEqual(service.state_sha(env), expected)
+
+
+class FinalisePlanTests(unittest.TestCase):
+    """``_finalise_plan_success`` must never mark unsatisfied goals completed."""
+
+    def _service(self, truth_at):
+        svc = service.SceneService(run_root=tempfile.mkdtemp())
+        svc._env = _FakeEnv()
+        svc._env._inner.default_truth_at = truth_at
+        return svc
+
+    def test_missing_declared_goal_blocks_without_regressions(self):
+        svc = self._service(10 ** 9)  # every predicate is false
+        plan = service.PlanRecord(
+            "req", "sess", {"decision": "execute", "capability_ids": ["bowl_to_plate"]}
+        )
+        plan.completed_capability_ids = []  # no completed goals -> no regressions
+        svc._finalise_plan_success(plan)
+        self.assertEqual(plan.state, "blocked")
+        self.assertFalse(plan.plan_success)
+        self.assertEqual(plan.regressions, [])
+        self.assertIn("on|akita_black_bowl_1|plate_1", plan.error)
+
+    def test_completed_goal_regressions_are_preserved(self):
+        svc = self._service(10 ** 9)
+        plan = service.PlanRecord(
+            "req", "sess", {"decision": "execute", "capability_ids": ["bowl_to_plate"]}
+        )
+        plan.completed_capability_ids = ["bowl_to_plate"]
+        svc._finalise_plan_success(plan)
+        self.assertEqual(plan.state, "blocked")
+        self.assertEqual(plan.regressions, [["on", "akita_black_bowl_1", "plate_1"]])
+
+    def test_repair_cannot_erase_originally_declared_goals(self):
+        # Only the bowl goal is true; the wine goal stays false.
+        svc = self._service(10 ** 9)
+        svc._env._inner.truth_after["on|akita_black_bowl_1|plate_1"] = 0
+        plan = service.PlanRecord(
+            "req",
+            "sess",
+            {
+                "decision": "execute",
+                "capability_ids": ["bowl_to_plate", "wine_to_rack"],
+            },
+        )
+        # The snapshot is an independent copy of the initial declaration.
+        self.assertEqual(plan.original_capability_ids, ["bowl_to_plate", "wine_to_rack"])
+        snapshot = plan.public()
+        self.assertEqual(
+            snapshot["original_capability_ids"], ["bowl_to_plate", "wine_to_rack"]
+        )
+        self.assertIsNot(snapshot["original_capability_ids"], plan.original_capability_ids)
+        snapshot["original_capability_ids"].append("stove_on")
+        self.assertEqual(
+            plan.original_capability_ids, ["bowl_to_plate", "wine_to_rack"]
+        )
+
+        # A repair dropped the failed wine goal and kept only the bowl: the
+        # originally declared wine goal must still block the plan.
+        plan.capability_ids = ["bowl_to_plate"]
+        plan.pending_capability_ids = ["bowl_to_plate"]
+        plan.completed_capability_ids = ["bowl_to_plate"]
+        svc._finalise_plan_success(plan)
+        self.assertEqual(plan.state, "blocked", plan.public())
+        self.assertFalse(plan.plan_success)
+        self.assertIn("on|wine_bottle_1|wine_rack_1_top_region", plan.error)
+
+
+class PersistentWorkerTests(unittest.TestCase):
+    """One real worker run against a fake env: no torch, no LIBERO, no GPU."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.gate = threading.Event()
+        self.gate.set()
+
+        def _action(batch):  # noqa: ARG001
+            # Gate the inference seam as well as env.step.  Under the single-lock
+            # design the worker holds ``self._lock`` across ``env.step``, so a step
+            # parked on the gate would also park every public read (plan/session/
+            # evaluate).  Blocking inference -- which stays *outside* the lock --
+            # keeps the plan deterministically "running" while those reads stay
+            # responsive.
+            self.gate.wait(timeout=15.0)
+            return np.zeros(7)
+
+        self.service = service.SceneService(
+            run_root=self._tmp.name,
+            env_factory=lambda **kwargs: _FakeEnv(gate=self.gate),
+            policy_loader=lambda svc: setattr(svc._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+        )
+        self.service.start()
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not self.service.health()["ready"]:
+            time.sleep(0.05)
+
+    def tearDown(self):
+        self.gate.set()
+        self.service.stop()
+        self._tmp.cleanup()
+
+    def _wait_for_plan(self, request_id, deadline_s=20.0):
+        deadline = time.time() + deadline_s
+        while time.time() < deadline:
+            payload = self.service.plan(request_id)
+            if payload is not None and payload["state"] in service.TERMINAL_PLAN_STATES:
+                return payload
+            time.sleep(0.05)
+        self.fail("plan %s did not reach a terminal state" % request_id)
+
+    def test_session_and_plan_lifecycle(self):
+        session = self.service.create_session("goal_table", seed=0, init_state_index=0)
+        self.assertTrue(session["ok"], session)
+        self.assertEqual(session["state"], "ready")
+        self.assertEqual(session["episode_resets"], 1)
+        self.assertEqual(session["env_instance_id"], 1)
+        session_id = session["session_id"]
+
+        submitted = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-1",
+                "capability_ids": ["bowl_to_plate"],
+                "rationale": "goal_table test",
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(submitted["ok"], submitted)
+        self.assertEqual(submitted["state"], "queued")
+
+        plan = self._wait_for_plan("req-1")
+        self.assertEqual(plan["state"], "completed", plan)
+        self.assertTrue(plan["plan_success"])
+        self.assertEqual(plan["completed_capability_ids"], ["bowl_to_plate"])
+
+        job_id = plan["job_ids"][0]
+        job = self.service.job(job_id)
+        self.assertEqual(job["success"], True)
+        self.assertEqual(job["ended_reason"], "success")
+        self.assertGreaterEqual(job["steps"], service.GOAL_CONSECUTIVE_STEPS)
+
+        after = self.service.session(session_id)
+        self.assertEqual(after["scene_version"], 1)  # incremented per capability
+        self.assertEqual(after["episode_resets"], 1)  # still a single reset
+        self.assertEqual(after["active_request_id"], None)
+        # A terminal plan records the owning session's current scene version.
+        self.assertEqual(plan["scene_version"], after["scene_version"])
+
+    def test_busy_rejection_via_service(self):
+        session = self.service.create_session("goal_table")
+        session_id = session["session_id"]
+        # Close the gate so the first plan stays deterministically running.
+        self.gate.clear()
+        first = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-a",
+                "capability_ids": ["bowl_to_plate"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(first["ok"], first)
+        deadline = time.time() + 10.0
+        while time.time() < deadline and self.service.plan("req-a")["state"] != "running":
+            time.sleep(0.02)
+        self.assertEqual(self.service.plan("req-a")["state"], "running")
+
+        second = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-b",
+                "capability_ids": ["stove_on"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertFalse(second["ok"])
+        self.assertEqual(second["reason"], "busy")
+
+        self.gate.set()
+        self._wait_for_plan("req-a")
+
+    def test_clarify_plan_creates_zero_jobs(self):
+        session = self.service.create_session("goal_table")
+        result = self.service.submit_plan(
+            {
+                "session_id": session["session_id"],
+                "scene_version": 0,
+                "request_id": "req-c",
+                "capability_ids": [],
+                "rationale": "ambiguous",
+                "decision": "clarify",
+            }
+        )
+        self.assertTrue(result["ok"], result)
+        plan = self._wait_for_plan("req-c")
+        self.assertEqual(plan["state"], "completed")
+        self.assertEqual(plan["job_ids"], [])
+        self.assertIsNone(plan["plan_success"])
+
+    def test_cumulative_total_steps_are_session_wide(self):
+        session = self.service.create_session("goal_table")
+        self.assertTrue(session["ok"], session)
+        # Make the second capability satisfiable only well after the first, so a
+        # per-job (local) counter would report a strictly smaller total.
+        self.service._env._inner.truth_after["turnon|flat_stove_1"] = 9
+        submitted = self.service.submit_plan(
+            {
+                "session_id": session["session_id"],
+                "scene_version": 0,
+                "request_id": "req-cum",
+                "capability_ids": ["bowl_to_plate", "stove_on"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(submitted["ok"], submitted)
+        plan = self._wait_for_plan("req-cum")
+        self.assertEqual(plan["state"], "completed", plan)
+        job1 = self.service.job(plan["job_ids"][0])
+        job2 = self.service.job(plan["job_ids"][1])
+        after = self.service.session(session["session_id"])
+        self.assertEqual(job2["total_steps"], after["total_steps"])
+        self.assertEqual(job2["total_steps"], 13)
+        self.assertLess(job2["steps"], job2["total_steps"])  # local != cumulative
+        self.assertGreater(job2["total_steps"], job1["total_steps"])
+
+    def test_stale_evaluation_after_scene_change(self):
+        session = self.service.create_session("goal_table")
+        session_id = session["session_id"]
+        first = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-e1",
+                "capability_ids": ["bowl_to_plate"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(first["ok"], first)
+        plan = self._wait_for_plan("req-e1")
+        self.assertEqual(plan["state"], "completed", plan)
+        # The finished plan now matches the session, so evaluation is valid.
+        self.assertEqual(
+            self.service.plan("req-e1")["scene_version"],
+            self.service.session(session_id)["scene_version"],
+        )
+        # A later capability bumps the scene version -> the first plan is stale.
+        second = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": self.service.session(session_id)["scene_version"],
+                "request_id": "req-e2",
+                "capability_ids": ["stove_on"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(second["ok"], second)
+        self._wait_for_plan("req-e2")
+        result = self.service.evaluate(session_id, "table_tidy", "req-e1")
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["reason"], "stale_evaluation")
+        self.assertEqual(service.status_for_reason(result["reason"]), 409)
+
+    def test_two_sequential_subgoals_share_one_env(self):
+        session = self.service.create_session("goal_table", seed=0, init_state_index=0)
+        self.assertTrue(session["ok"], session)
+        session_id = session["session_id"]
+        # Make stove_on satisfiable only after the first capability's steps: the
+        # second job is then neither already-satisfied nor a per-job counter.
+        self.service._env._inner.truth_after["turnon|flat_stove_1"] = 9
+        submitted = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-seq",
+                "capability_ids": ["bowl_to_plate", "stove_on"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(submitted["ok"], submitted)
+        plan = self._wait_for_plan("req-seq")
+        self.assertEqual(plan["state"], "completed", plan)
+        job1 = self.service.job(plan["job_ids"][0])
+        job2 = self.service.job(plan["job_ids"][1])
+        after = self.service.session(session_id)
+
+        # One persistent environment and exactly one reset across both subgoals.
+        self.assertEqual(job1["env_instance_id"], job2["env_instance_id"])
+        self.assertEqual(after["env_instance_id"], job1["env_instance_id"])
+        self.assertEqual(after["episode_resets"], 1)
+
+        # The scene flows contiguously: the end of job1 is the start of job2.
+        self.assertEqual(job1["state_after_sha"], job2["state_before_sha"])
+
+        # The step counter is session-wide, not per job (fresh session).
+        self.assertEqual(job2["total_steps"], job1["steps"] + job2["steps"])
+        self.assertEqual(job2["total_steps"], after["total_steps"])
+        self.assertLess(job2["steps"], job2["total_steps"])
+
+        # The terminal plan records the session's current scene version.
+        self.assertEqual(plan["scene_version"], after["scene_version"])
+
+    def test_request_conflict_rejects_reused_request_id(self):
+        session = self.service.create_session("goal_table")
+        session_id = session["session_id"]
+        first = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-dup",
+                "capability_ids": [],
+                "decision": "clarify",
+                "rationale": "ambiguous",
+            }
+        )
+        self.assertTrue(first["ok"], first)
+        completed = self._wait_for_plan("req-dup")
+        self.assertEqual(completed["state"], "completed", completed)
+        snapshot = self.service.plan("req-dup")
+
+        again = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-dup",
+                "capability_ids": [],
+                "decision": "clarify",
+                "rationale": "again",
+            }
+        )
+        self.assertFalse(again["ok"])
+        self.assertEqual(again["reason"], "request_conflict")
+        self.assertEqual(service.status_for_reason(again["reason"]), 409)
+        # The original record is untouched: no overwrite, no idempotent replace.
+        self.assertEqual(self.service.plan("req-dup"), snapshot)
+
+    def test_evaluate_busy_while_new_request_runs(self):
+        session = self.service.create_session("goal_table")
+        session_id = session["session_id"]
+        first = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-old",
+                "capability_ids": ["bowl_to_plate"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(first["ok"], first)
+        old = self._wait_for_plan("req-old")
+        self.assertEqual(old["state"], "completed", old)
+        version = self.service.session(session_id)["scene_version"]
+
+        # The newer request must genuinely step (not be already satisfied), so
+        # the closed gate deterministically holds it in the running state.
+        self.service._env._inner.truth_after["turnon|flat_stove_1"] = 10 ** 9
+        self.gate.clear()
+        second = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": version,
+                "request_id": "req-new",
+                "capability_ids": ["stove_on"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(second["ok"], second)
+        deadline = time.time() + 10.0
+        while time.time() < deadline and self.service.plan("req-new")["state"] != "running":
+            time.sleep(0.02)
+        self.assertEqual(self.service.plan("req-new")["state"], "running")
+
+        # Scoring the old request now would score a later scene: refuse as busy.
+        result = self.service.evaluate(session_id, "table_tidy", "req-old")
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["reason"], "busy")
+        self.assertEqual(service.status_for_reason(result["reason"]), 409)
+
+        self.gate.set()
+        self._wait_for_plan("req-new")
+
+    def test_resume_keeps_originally_declared_goals(self):
+        session = self.service.create_session("goal_table", seed=0, init_state_index=0)
+        session_id = session["session_id"]
+        # The wine goal can never be satisfied; only the bowl goal can be.
+        self.service._env._inner.truth_after[
+            "on|wine_bottle_1|wine_rack_1_top_region"
+        ] = 10 ** 9
+        submitted = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-repair",
+                "capability_ids": ["bowl_to_plate", "wine_to_rack"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(submitted["ok"], submitted)
+        self.assertEqual(
+            submitted["original_capability_ids"], ["bowl_to_plate", "wine_to_rack"]
+        )
+        blocked = self._wait_for_plan("req-repair")
+        self.assertEqual(blocked["state"], "blocked", blocked)
+
+        # A repair that drops the failed wine goal: the original declaration
+        # must survive the resume untouched.
+        resumed = self.service.resume_plan(
+            {
+                "session_id": session_id,
+                "request_id": "req-repair",
+                "scene_version": self.service.session(session_id)["scene_version"],
+                "capability_ids": ["bowl_to_plate"],
+                "rationale": "drop the failed wine goal",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(resumed["ok"], resumed)
+        final = self._wait_for_plan("req-repair")
+        self.assertEqual(
+            final["original_capability_ids"], ["bowl_to_plate", "wine_to_rack"]
+        )
+        self.assertEqual(final["state"], "blocked", final)
+        self.assertFalse(final["plan_success"])
+        self.assertIn("on|wine_bottle_1|wine_rack_1_top_region", final["error"])
+
+    def test_resume_out_of_scope_is_rejected_without_any_mutation(self):
+        session = self.service.create_session("goal_table", seed=0, init_state_index=0)
+        session_id = session["session_id"]
+        # The wine goal can never be satisfied, so the plan blocks.
+        self.service._env._inner.truth_after[
+            "on|wine_bottle_1|wine_rack_1_top_region"
+        ] = 10 ** 9
+        submitted = self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": 0,
+                "request_id": "req-scope",
+                "capability_ids": ["bowl_to_plate", "wine_to_rack"],
+                "decision": "execute",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(submitted["ok"], submitted)
+        self.assertEqual(
+            submitted["original_capability_ids"], ["bowl_to_plate", "wine_to_rack"]
+        )
+        blocked = self._wait_for_plan("req-scope")
+        self.assertEqual(blocked["state"], "blocked", blocked)
+
+        plan_before = self.service.plan("req-scope")
+        session_before = self.service.session(session_id)
+        job_ids_before = list(plan_before["job_ids"])
+        jobs_before = [self.service.job(job_id) for job_id in job_ids_before]
+        n_jobs_before = len(self.service._jobs)
+
+        # stove_on is NOT one of the original goals -> the repair is out of scope
+        # and must be refused before any history/queue/job/simulator mutation.
+        rejected = self.service.resume_plan(
+            {
+                "session_id": session_id,
+                "request_id": "req-scope",
+                "scene_version": session_before["scene_version"],
+                "capability_ids": ["stove_on"],
+                "rationale": "attempt to add a brand new goal",
+            }
+        )
+        self.assertFalse(rejected["ok"], rejected)
+        self.assertEqual(rejected["reason"], "repair_scope")
+        self.assertEqual(service.status_for_reason(rejected["reason"]), 409)
+
+        # Nothing moved: still the same blocked plan, no new job, no repair
+        # history entry, and the session's steps/version are untouched.
+        plan_after = self.service.plan("req-scope")
+        session_after = self.service.session(session_id)
+        self.assertEqual(plan_after, plan_before)
+        self.assertEqual(plan_after["state"], "blocked")
+        self.assertEqual(plan_after["repair_history"], [])
+        self.assertEqual(plan_after["job_ids"], job_ids_before)
+        self.assertEqual(
+            [self.service.job(job_id) for job_id in job_ids_before], jobs_before
+        )
+        self.assertEqual(len(self.service._jobs), n_jobs_before)
+        self.assertEqual(session_after["total_steps"], session_before["total_steps"])
+        self.assertEqual(session_after["scene_version"], session_before["scene_version"])
+
+
+# --- opt-in release-verified completion gate --------------------------------
+
+
+class _ReleaseSimData:
+    """Minimal native ``sim.data`` including a free-joint velocity reader."""
+
+    def __init__(self):
+        self.qpos = np.zeros(7, dtype=np.float64)
+        self.qvel = np.zeros(7, dtype=np.float64)
+        self.linear = np.zeros(3, dtype=np.float64)
+        self.angular = np.zeros(3, dtype=np.float64)
+
+    def get_joint_qpos(self, name):
+        return np.zeros(7, dtype=np.float64)
+
+    def set_joint_qpos(self, name, value):
+        pass
+
+    def get_joint_qvel(self, name):
+        return np.concatenate([self.linear, self.angular])
+
+
+class _ReleaseObject:
+    def __init__(self, object_id):
+        self.joints = ["%s_joint0" % object_id]
+        self.contact_geoms = object_id
+
+
+class _ReleaseInnerEnv:
+    """Native-shaped inner env whose grasp/velocity change over the episode.
+
+    The declared soup predicate becomes raw-true at ``truth_at``; the soup is
+    additionally grasped (contact-proxy) until ``release_at`` steps have run.
+    """
+
+    def __init__(self, truth_at=3, release_at=10 ** 9):
+        self.sim = types.SimpleNamespace(
+            data=_ReleaseSimData(),
+            model=types.SimpleNamespace(camera_names=[], get_xml=lambda: "<xml/>"),
+        )
+        self.steps = 0
+        self.truth_at = truth_at
+        self.release_at = release_at
+        self.objects_dict = {
+            "alphabet_soup_1": _ReleaseObject("alphabet_soup_1"),
+            "basket_1": _ReleaseObject("basket_1"),
+        }
+        self.object_states_dict = {}
+        self.obj_body_id = {"alphabet_soup_1": 0, "basket_1": 1}
+        self.robots = [types.SimpleNamespace(gripper=types.SimpleNamespace())]
+
+    def _get_observations(self, force_update=False):  # noqa: ARG002
+        return {}
+
+    def _check_grasp(self, gripper, geoms):  # noqa: ARG002
+        if geoms == "alphabet_soup_1":
+            return self.steps < self.release_at
+        return False
+
+    def _eval_predicate(self, predicate):
+        key = "|".join(str(part) for part in predicate)
+        if key == "in|alphabet_soup_1|basket_1_contain_region":
+            return self.steps >= self.truth_at
+        return False
+
+    def step(self, action):  # noqa: ARG002
+        self.steps += 1
+        self.sim.data.qpos[0] = float(self.steps)
+        return {}
+
+
+class _ReleaseEnv:
+    """``env_factory`` output wrapping a :class:`_ReleaseInnerEnv`."""
+
+    def __init__(self, inner):
+        self._inner = inner
+        self._env = types.SimpleNamespace(env=inner)
+        self.action_space = types.SimpleNamespace(low=-np.ones(7), high=np.ones(7))
+        self.closed = False
+
+    def reset(self, seed=0):  # noqa: ARG002
+        return _FakeObs(), {}
+
+    def step(self, action):
+        self._inner.step(action)
+        return _FakeObs(), 0.0, False, False, {"is_success": False}
+
+    def render(self):
+        return np.zeros((8, 8, 3), dtype=np.uint8)
+
+    def close(self):
+        self.closed = True
+
+
+class ReleaseVerifiedWorkerTests(unittest.TestCase):
+    """One real worker run per gate against a native-shaped release fake."""
+
+    def _run_soup(self, mode, truth_at, release_at, budget=50):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        action_calls = {"n": 0}
+
+        def _action(batch):  # noqa: ARG001
+            action_calls["n"] += 1
+            return np.zeros(7)
+
+        svc = service.SceneService(
+            run_root=tmp.name,
+            env_factory=lambda **kwargs: _ReleaseEnv(
+                _ReleaseInnerEnv(truth_at=truth_at, release_at=release_at)
+            ),
+            policy_loader=lambda s: setattr(s._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+            completion_mode=mode,
+        )
+        svc.start()
+        try:
+            deadline = time.time() + 20.0
+            while time.time() < deadline and not svc.health()["ready"]:
+                time.sleep(0.05)
+            session = svc.create_session("basket_two", seed=0, init_state_index=0)
+            self.assertTrue(session["ok"], session)
+            submitted = svc.submit_plan(
+                {
+                    "session_id": session["session_id"],
+                    "scene_version": 0,
+                    "request_id": "req-soup",
+                    "capability_ids": ["soup_to_basket"],
+                    "decision": "execute",
+                    "budget_per_subgoal": budget,
+                }
+            )
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-soup")
+            job = svc.job(plan["job_ids"][0]) if plan.get("job_ids") else None
+            after = svc.session(session["session_id"])
+            health = svc.health()
+            return {
+                "session": session,
+                "plan": plan,
+                "job": job,
+                "after": after,
+                "health": health,
+                "action_calls": action_calls["n"],
+            }
+        finally:
+            svc.stop()
+
+    def _wait(self, svc, request_id, deadline_s=20.0):
+        deadline = time.time() + deadline_s
+        while time.time() < deadline:
+            payload = svc.plan(request_id)
+            if payload is not None and payload["state"] in service.TERMINAL_PLAN_STATES:
+                return payload
+            time.sleep(0.05)
+        self.fail("plan %s did not reach a terminal state" % request_id)
+
+    def test_release_continues_while_held_then_succeeds_after_stable_release(self):
+        result = self._run_soup("release_verified", truth_at=3, release_at=12)
+        job = result["job"]
+        self.assertEqual(job["state"], "completed")
+        self.assertEqual(job["ended_reason"], "success")
+        # Raw predicate truth begins at step 3; the first five raw-true samples
+        # (3..7) are still held, so the release gate must keep stepping past them.
+        self.assertGreater(job["steps"], 7)
+        # One persistent environment, exactly one episode reset, no reseeding.
+        self.assertEqual(result["session"]["episode_resets"], 1)
+        self.assertEqual(result["after"]["episode_resets"], 1)
+        self.assertEqual(result["after"]["env_instance_id"], 1)
+        # Every step corresponds to a real mock VLA action: nothing injected.
+        self.assertEqual(result["action_calls"], job["steps"])
+
+    def test_native_terminates_earlier_than_release(self):
+        native = self._run_soup("native", truth_at=3, release_at=10 ** 9)
+        release = self._run_soup("release_verified", truth_at=3, release_at=12)
+        self.assertEqual(native["job"]["ended_reason"], "success")
+        self.assertEqual(native["job"]["steps"], 7)
+        self.assertEqual(release["job"]["ended_reason"], "success")
+        self.assertGreater(release["job"]["steps"], native["job"]["steps"])
+
+    def test_release_prevents_initial_raw_true_but_held_instant_success(self):
+        native = self._run_soup("native", truth_at=0, release_at=10 ** 9)
+        self.assertEqual(native["job"]["ended_reason"], "already_satisfied")
+        self.assertEqual(native["job"]["steps"], 0)
+        self.assertEqual(native["action_calls"], 0)
+
+        release = self._run_soup("release_verified", truth_at=0, release_at=5)
+        self.assertNotEqual(release["job"]["ended_reason"], "already_satisfied")
+        self.assertEqual(release["job"]["ended_reason"], "success")
+        self.assertGreater(release["job"]["steps"], 0)
+
+    def test_completion_mode_is_reported_in_health_and_job(self):
+        result = self._run_soup("release_verified", truth_at=3, release_at=12)
+        self.assertEqual(result["health"]["completion_mode"], "release_verified")
+        self.assertEqual(result["job"]["completion_mode"], "release_verified")
+        self.assertEqual(result["job"]["phase"], "not_holding")
+
+        native = self._run_soup("native", truth_at=3, release_at=10 ** 9)
+        self.assertEqual(native["health"]["completion_mode"], "native")
+        self.assertEqual(native["job"]["completion_mode"], "native")
+        self.assertIsNone(native["job"]["phase"])
+
+    def test_events_record_completion_fields(self):
+        result = self._run_soup("release_verified", truth_at=3, release_at=12)
+        events_path = Path(result["job"]["run_dir"]) / "events.jsonl"
+        events = [
+            json.loads(line)
+            for line in events_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertTrue(events)
+        self.assertTrue(all(e["completion_mode"] == "release_verified" for e in events))
+        self.assertTrue(all("declared_predicates" in e for e in events))
+        self.assertTrue(all("native_success" in e for e in events))
+        held_true = [
+            e for e in events if e["completion_phase"] == "goal_still_held"
+        ]
+        self.assertTrue(held_true)
+        self.assertTrue(all(e["completion_ready"] is False for e in held_true))
+
+    def test_invalid_completion_mode_is_rejected(self):
+        with self.assertRaises(ValueError):
+            service.SceneService(run_root=tempfile.mkdtemp(), completion_mode="bogus")
+
+    def test_default_completion_mode_is_native(self):
+        svc = service.SceneService(run_root=tempfile.mkdtemp())
+        self.assertEqual(svc.completion_mode, "native")
+        self.assertEqual(service.DEFAULT_COMPLETION_MODE, "native")
+        self.assertEqual(tuple(service.COMPLETION_MODES), ("native", "release_verified"))
+
+
+# --- release-mode foreign-held-object placement handoff guard ----------------
+
+
+class _HandoffObject:
+    def __init__(self, object_id):
+        self.joints = ["%s_joint0" % object_id]
+        self.contact_geoms = object_id
+
+
+class _HandoffSimData:
+    """Minimal native ``sim.data``: joint qpos, body centres + free-joint vel."""
+
+    def __init__(self):
+        self.qpos = np.zeros(7, dtype=np.float64)
+        self.qvel = np.zeros(7, dtype=np.float64)
+        self.body_xpos = np.zeros((8, 3), dtype=np.float64)
+
+    def get_joint_qpos(self, name):  # noqa: ARG002
+        return np.zeros(7, dtype=np.float64)
+
+    def set_joint_qpos(self, name, value):  # noqa: ARG002
+        pass
+
+    def get_joint_qvel(self, name):  # noqa: ARG002
+        return np.zeros(6, dtype=np.float64)
+
+
+class _HandoffInnerEnv:
+    """goal_table native-shaped fake with a per-object hold window.
+
+    ``hold_until`` maps an object id to the (global) step at which its
+    contact-geom grasp proxy releases; ``truth_after`` maps a goal key to the
+    step at which the raw predicate turns true.  ``unknown_grasp`` makes the
+    grasp probe raise, so the screen is unknown (never a released grasp).
+    """
+
+    OBJECT_IDS = (
+        "akita_black_bowl_1",
+        "plate_1",
+        "wine_bottle_1",
+        "wine_rack_1_top_region",
+        "flat_stove_1",
+    )
+
+    def __init__(self, truth_after=None, hold_until=None, unknown_grasp=False):
+        self.sim = types.SimpleNamespace(
+            data=_HandoffSimData(),
+            model=types.SimpleNamespace(camera_names=[], get_xml=lambda: "<xml/>"),
+        )
+        self.steps = 0
+        self.truth_after = dict(truth_after or {})
+        self.hold_until = dict(hold_until or {})
+        self.unknown_grasp = bool(unknown_grasp)
+        self.objects_dict = {oid: _HandoffObject(oid) for oid in self.OBJECT_IDS}
+        self.object_states_dict = {}
+        self.obj_body_id = {oid: i for i, oid in enumerate(self.OBJECT_IDS)}
+        self.robots = [types.SimpleNamespace(gripper=types.SimpleNamespace())]
+
+    def _get_observations(self, force_update=False):  # noqa: ARG002
+        return {}
+
+    def _check_grasp(self, gripper, geoms):  # noqa: ARG002
+        if self.unknown_grasp:
+            raise RuntimeError("grasp probe unavailable")
+        release_at = self.hold_until.get(geoms)
+        if release_at is None:
+            return False
+        return self.steps < release_at
+
+    def _eval_predicate(self, predicate):
+        key = "|".join(str(part) for part in predicate)
+        threshold = self.truth_after.get(key)
+        if threshold is None:
+            return False
+        return self.steps >= threshold
+
+    def step(self, action):  # noqa: ARG002
+        self.steps += 1
+        self.sim.data.qpos[0] = float(self.steps)
+        return {}
+
+
+class _HandoffEnv:
+    def __init__(self, inner):
+        self._inner = inner
+        self._env = types.SimpleNamespace(env=inner)
+        self.action_space = types.SimpleNamespace(low=-np.ones(7), high=np.ones(7))
+        self.closed = False
+
+    def reset(self, seed=0):  # noqa: ARG002
+        return _FakeObs(), {}
+
+    def step(self, action):
+        self._inner.step(action)
+        return _FakeObs(), 0.0, False, False, {"is_success": False}
+
+    def render(self):
+        return np.zeros((8, 8, 3), dtype=np.uint8)
+
+    def close(self):
+        self.closed = True
+
+
+class HandoffGuardWorkerTests(unittest.TestCase):
+    """Release-mode physical handoff guards block with zero new steps/actions."""
+
+    def _service(self, mode, *, truth_after=None, hold_until=None, unknown_grasp=False):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        calls = {"n": 0}
+
+        def _action(batch):  # noqa: ARG001
+            calls["n"] += 1
+            return np.zeros(7)
+
+        svc = service.SceneService(
+            run_root=tmp.name,
+            env_factory=lambda **kwargs: _HandoffEnv(
+                _HandoffInnerEnv(
+                    truth_after=truth_after,
+                    hold_until=hold_until,
+                    unknown_grasp=unknown_grasp,
+                )
+            ),
+            policy_loader=lambda s: setattr(s._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+            completion_mode=mode,
+        )
+        svc.start()
+        self.addCleanup(svc.stop)
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not svc.health()["ready"]:
+            time.sleep(0.05)
+        return svc, calls
+
+    def _wait(self, svc, request_id, deadline_s=20.0):
+        deadline = time.time() + deadline_s
+        while time.time() < deadline:
+            payload = svc.plan(request_id)
+            if payload is not None and payload["state"] in service.TERMINAL_PLAN_STATES:
+                return payload
+            time.sleep(0.05)
+        self.fail("plan %s did not reach a terminal state" % request_id)
+
+    def _submit(self, svc, session_id, request_id, capability_ids, budget=50):
+        return svc.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": svc.session(session_id)["scene_version"],
+                "request_id": request_id,
+                "capability_ids": capability_ids,
+                "decision": "execute",
+                "budget_per_subgoal": budget,
+            }
+        )
+
+    def test_foreign_held_object_blocks_next_placement_without_steps(self):
+        svc, calls = self._service(
+            "release_verified",
+            truth_after={"on|akita_black_bowl_1|plate_1": 0},
+            hold_until={"akita_black_bowl_1": 10 ** 9},
+        )
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        self.assertEqual(svc._env._inner.steps, 0)
+        self.assertEqual(calls["n"], 0)
+
+        # First declared placement goal fails while the bowl is STILL held.
+        first = self._submit(svc, sid, "req-hold", ["bowl_to_plate", "wine_to_rack"], budget=5)
+        self.assertTrue(first["ok"], first)
+        plan = self._wait(svc, "req-hold")
+        self.assertEqual(plan["state"], "blocked", plan)
+        bowl_job = svc.job(plan["job_ids"][0])
+        self.assertFalse(bowl_job["success"])
+        self.assertEqual(bowl_job["ended_reason"], "budget_exhausted")
+        self.assertEqual(bowl_job["completion_mode"], "release_verified")
+        self.assertIn("akita_black_bowl_1", bowl_job["held_objects"])
+        steps_after_first = svc._env._inner.steps
+        calls_after_first = calls["n"]
+        self.assertEqual(steps_after_first, calls_after_first)
+
+        # The next declared placement goal names the WINE bottle only, but the
+        # bowl is still held -> physically blocked with zero new action/env steps.
+        resumed = svc.resume_plan(
+            {
+                "session_id": sid,
+                "request_id": "req-hold",
+                "scene_version": svc.session(sid)["scene_version"],
+                "capability_ids": ["wine_to_rack"],
+                "rationale": "retry the other declared placement goal",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(resumed["ok"], resumed)
+        plan2 = self._wait(svc, "req-hold")
+        self.assertEqual(plan2["state"], "blocked", plan2)
+        wine_job = svc.job(plan2["job_ids"][-1])
+        self.assertFalse(wine_job["success"])
+        self.assertEqual(wine_job["ended_reason"], "holding_other_object")
+        self.assertIsNone(wine_job["error"])
+        self.assertEqual(wine_job["steps"], 0)
+        self.assertEqual(wine_job["held_objects"], ["akita_black_bowl_1"])
+        self.assertEqual(wine_job["phase"], "holding_foreign_object")
+        self.assertIs(wine_job["grasp_observation_complete"], True)
+        self.assertIs(wine_job["completion_ready"], False)
+        # Exact before/after physics SHA over a physically-blocked, step-free job.
+        self.assertIsNotNone(wine_job["state_before_sha"])
+        self.assertEqual(wine_job["state_before_sha"], wine_job["state_after_sha"])
+        # Zero new actions and zero new simulator steps for the blocked job.
+        self.assertEqual(calls["n"], calls_after_first)
+        self.assertEqual(svc._env._inner.steps, steps_after_first)
+
+    def test_unknown_grasp_blocks_before_any_step(self):
+        svc, calls = self._service(
+            "release_verified",
+            truth_after={"on|akita_black_bowl_1|plate_1": 0},
+            unknown_grasp=True,
+        )
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        submitted = self._submit(svc, sid, "req-unknown", ["bowl_to_plate"], budget=50)
+        self.assertTrue(submitted["ok"], submitted)
+        plan = self._wait(svc, "req-unknown")
+        self.assertEqual(plan["state"], "blocked", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertFalse(job["success"])
+        self.assertEqual(job["ended_reason"], "holding_state_unknown")
+        self.assertIsNone(job["error"])
+        self.assertEqual(job["steps"], 0)
+        self.assertEqual(calls["n"], 0)
+        self.assertEqual(svc._env._inner.steps, 0)
+        self.assertEqual(job["state_before_sha"], job["state_after_sha"])
+        # An unknown probe keeps completion_ready None (never a boolean).
+        self.assertIs(job["grasp_observation_complete"], False)
+        self.assertIsNone(job["completion_ready"])
+        self.assertEqual(job["phase"], "unknown")
+
+    def test_same_goal_retry_allowed_and_succeeds_after_release(self):
+        svc, calls = self._service(
+            "release_verified",
+            truth_after={"on|akita_black_bowl_1|plate_1": 0},
+            hold_until={"akita_black_bowl_1": 8},
+        )
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        first = self._submit(svc, sid, "req-retry", ["bowl_to_plate"], budget=5)
+        self.assertTrue(first["ok"], first)
+        plan = self._wait(svc, "req-retry")
+        self.assertEqual(plan["state"], "blocked", plan)
+        job1 = svc.job(plan["job_ids"][0])
+        self.assertEqual(job1["ended_reason"], "budget_exhausted")
+        self.assertIn("akita_black_bowl_1", job1["held_objects"])
+        env_instance = svc.session(sid)["env_instance_id"]
+
+        # Retrying the SAME declared object while it is still held is allowed.
+        resumed = svc.resume_plan(
+            {
+                "session_id": sid,
+                "request_id": "req-retry",
+                "scene_version": svc.session(sid)["scene_version"],
+                "capability_ids": ["bowl_to_plate"],
+                "rationale": "retry the same declared goal",
+                "budget_per_subgoal": 50,
+            }
+        )
+        self.assertTrue(resumed["ok"], resumed)
+        plan2 = self._wait(svc, "req-retry")
+        self.assertEqual(plan2["state"], "completed", plan2)
+        job2 = svc.job(plan2["job_ids"][-1])
+        self.assertTrue(job2["success"])
+        self.assertEqual(job2["ended_reason"], "success")
+        self.assertGreater(job2["steps"], 0)
+        # The successful final sample observed the released grasp and no hold.
+        self.assertEqual(job2["held_objects"], [])
+        self.assertIs(job2["grasp_observation_complete"], True)
+        self.assertIs(job2["completion_ready"], True)
+        # One persistent environment, exactly one episode reset.
+        after = svc.session(sid)
+        self.assertEqual(after["episode_resets"], 1)
+        self.assertEqual(after["env_instance_id"], env_instance)
+
+    def test_native_mode_ignores_holding_handoff_guard(self):
+        svc, calls = self._service(
+            "native",
+            truth_after={"on|wine_bottle_1|wine_rack_1_top_region": 2},
+            hold_until={"akita_black_bowl_1": 10 ** 9},
+        )
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        submitted = self._submit(svc, sid, "req-native", ["wine_to_rack"], budget=50)
+        self.assertTrue(submitted["ok"], submitted)
+        plan = self._wait(svc, "req-native")
+        # A foreign held object never blocks native mode: predicate-only as before.
+        self.assertEqual(plan["state"], "completed", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertTrue(job["success"])
+        self.assertEqual(job["ended_reason"], "success")
+        self.assertGreater(job["steps"], 0)
+        self.assertEqual(job["completion_mode"], "native")
+        # Native mode publishes None for all three release probe fields.
+        self.assertIsNone(job["held_objects"])
+        self.assertIsNone(job["grasp_observation_complete"])
+        self.assertIsNone(job["completion_ready"])
+        self.assertIsNone(job["phase"])
+
+    def test_nonplacement_stove_goal_bypasses_holding_guard(self):
+        svc, calls = self._service(
+            "release_verified",
+            truth_after={"turnon|flat_stove_1": 2},
+            hold_until={"akita_black_bowl_1": 10 ** 9},
+        )
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        # The bowl is held but never declared; a non-placement goal must run.
+        submitted = self._submit(svc, sid, "req-stove", ["stove_on"], budget=50)
+        self.assertTrue(submitted["ok"], submitted)
+        plan = self._wait(svc, "req-stove")
+        self.assertEqual(plan["state"], "completed", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertTrue(job["success"])
+        self.assertEqual(job["ended_reason"], "success")
+        self.assertGreater(job["steps"], 0)
+        self.assertEqual(job["completion_mode"], "release_verified")
+
+
+# --- wine-only grasp guard (shadow records, enforce stops) --------------------
+
+
+def _scripted_probe(inner, script):
+    """A ``grasp_guard.read_probe`` replacement keyed on the inner step count."""
+
+    def _read_probe(env, object_id, goal_key):  # noqa: ARG001
+        return script(inner.steps, object_id, goal_key)
+
+    return _read_probe
+
+
+def _ghost_grasp_script(step, object_id, goal_key):
+    """A ghost-grasp probe: the eef retreats while the bottle never rises."""
+
+    eef = [0.0, 0.0, 0.0] if step <= 1 else [0.06, 0.0, 0.03]
+    qpos = [0.0, 0.04]
+    return {
+        "objects": {object_id: {"position": [0.0, 0.0, 0.0], "grasped": False}},
+        "eef_position": eef,
+        "predicates": {goal_key: False},
+        "gripper_qpos": qpos,
+        "gap": abs(qpos[0] - qpos[1]),
+    }
+
+
+class GraspGuardModeTests(unittest.TestCase):
+    """Constructor / health contracts for the grasp-guard mode."""
+
+    def test_default_mode_is_shadow(self):
+        svc = service.SceneService(run_root=tempfile.mkdtemp())
+        self.assertEqual(svc.grasp_guard_mode, "shadow")
+        self.assertEqual(service.DEFAULT_GRASP_GUARD_MODE, "shadow")
+        self.assertEqual(tuple(service.GRASP_GUARD_MODES), ("off", "shadow", "enforce"))
+
+    def test_invalid_mode_is_rejected(self):
+        with self.assertRaises(ValueError):
+            service.SceneService(run_root=tempfile.mkdtemp(), grasp_guard_mode="loud")
+
+    def test_health_reports_the_guard_mode(self):
+        svc = service.SceneService(run_root=tempfile.mkdtemp(), grasp_guard_mode="enforce")
+        self.assertEqual(svc.health()["grasp_guard_mode"], "enforce")
+
+
+class GraspGuardWorkerTests(unittest.TestCase):
+    """The wine-only guard against the injected fake simulator (no GPU)."""
+
+    def _make(self, mode, *, action_gate=None):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        envs: list = []
+        calls = {"n": 0}
+
+        def _factory(**kwargs):  # noqa: ARG001
+            env = _FakeEnv()
+            envs.append(env)
+            return env
+
+        def _action(batch):  # noqa: ARG001
+            calls["n"] += 1
+            if action_gate is not None:
+                action_gate.wait(timeout=15.0)
+            # A positive gripper command so the guard can arm.
+            return np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5])
+
+        svc = service.SceneService(
+            run_root=tmp.name,
+            env_factory=_factory,
+            policy_loader=lambda s: setattr(s._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+            grasp_guard_mode=mode,
+        )
+        svc.start()
+        self.addCleanup(svc.stop)
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not svc.health()["ready"]:
+            time.sleep(0.05)
+        return svc, envs, calls
+
+    def _wait(self, svc, request_id, deadline_s=20.0):
+        deadline = time.time() + deadline_s
+        while time.time() < deadline:
+            payload = svc.plan(request_id)
+            if payload is not None and payload["state"] in service.TERMINAL_PLAN_STATES:
+                return payload
+            time.sleep(0.05)
+        self.fail("plan %s did not reach a terminal state" % request_id)
+
+    def _submit(self, svc, session_id, request_id, capability_ids, budget=50):
+        return svc.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": svc.session(session_id)["scene_version"],
+                "request_id": request_id,
+                "capability_ids": capability_ids,
+                "decision": "execute",
+                "budget_per_subgoal": budget,
+            }
+        )
+
+    def test_off_mode_leaves_the_guard_fields_null(self):
+        svc, envs, calls = self._make("off")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        with mock.patch.object(
+            service.grasp_guard, "read_probe", _scripted_probe(inner, _ghost_grasp_script)
+        ):
+            submitted = self._submit(svc, sid, "req-off", ["wine_to_rack"], budget=8)
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-off")
+        job = svc.job(plan["job_ids"][0])
+        self.assertEqual(job["ended_reason"], "budget_exhausted")
+        self.assertEqual(job["steps"], 8)
+        # mode ``off`` never even starts a monitor: all three fields stay None.
+        self.assertIsNone(job["grasp_guard_mode"])
+        self.assertIsNone(job["grasp_stage"])
+        self.assertIsNone(job["grasp_guard_status"])
+
+    def test_non_wine_capability_bypasses_the_guard_entirely(self):
+        svc, envs, calls = self._make("enforce")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        probed = {"n": 0}
+
+        def _boom(env, object_id, goal_key):  # noqa: ARG001
+            probed["n"] += 1
+            raise AssertionError("the guard must never probe a non-wine goal")
+
+        with mock.patch.object(service.grasp_guard, "read_probe", _boom):
+            submitted = self._submit(svc, sid, "req-bowl", ["bowl_to_plate"], budget=50)
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-bowl")
+        self.assertEqual(plan["state"], "completed", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertTrue(job["success"])
+        self.assertEqual(job["ended_reason"], "success")
+        self.assertIsNone(job["grasp_guard_mode"])
+        self.assertIsNone(job["grasp_stage"])
+        self.assertEqual(probed["n"], 0)
+
+    def test_shadow_records_a_failure_without_changing_the_run(self):
+        # Enforce would stop at step 6; shadow must run the whole budget and only
+        # record the latched failure -- the action count is unchanged.
+        shadow, envs, calls = self._make("shadow")
+        session = shadow.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = shadow._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        with mock.patch.object(
+            service.grasp_guard, "read_probe", _scripted_probe(inner, _ghost_grasp_script)
+        ):
+            submitted = self._submit(shadow, sid, "req-shadow", ["wine_to_rack"], budget=10)
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(shadow, "req-shadow")
+        job = shadow.job(plan["job_ids"][0])
+        self.assertEqual(job["ended_reason"], "budget_exhausted")
+        self.assertEqual(job["steps"], 10)
+        self.assertEqual(calls["n"], 10)  # not truncated by the guard
+        self.assertFalse(job["success"])
+        self.assertEqual(job["grasp_guard_mode"], "shadow")
+        self.assertEqual(job["grasp_stage"], "failed_grasp")
+        self.assertTrue(job["grasp_guard_status"]["should_stop"])
+
+    def test_enforce_stops_wine_before_the_next_action_and_blocks_the_following(self):
+        svc, envs, calls = self._make("enforce")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        reset_steps: list = []
+        original_reset = svc._reset_policy_queues
+
+        def _spy_reset():
+            reset_steps.append(svc._env._inner.steps)
+            original_reset()
+
+        svc._reset_policy_queues = _spy_reset
+        with mock.patch.object(
+            service.grasp_guard, "read_probe", _scripted_probe(inner, _ghost_grasp_script)
+        ):
+            submitted = self._submit(
+                svc, sid, "req-enf", ["wine_to_rack", "bowl_to_plate"], budget=50
+            )
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-enf")
+
+        self.assertEqual(plan["state"], "blocked", plan)
+        # Only the wine job started; the following bowl goal was never executed.
+        self.assertEqual(len(plan["job_ids"]), 1)
+        self.assertEqual(plan["pending_capability_ids"], ["bowl_to_plate"])
+        job = svc.job(plan["job_ids"][0])
+        self.assertEqual(job["ended_reason"], "failed_grasp")
+        self.assertFalse(job["success"])
+        self.assertIsNone(job["error"])  # a physical failure, not an error
+        self.assertEqual(job["state"], "completed")
+        self.assertEqual(job["grasp_guard_mode"], "enforce")
+        self.assertEqual(job["grasp_stage"], "failed_grasp")
+        self.assertEqual(job["grasp_guard_status"]["failure_step"], 6)
+        self.assertTrue(job["grasp_guard_status"]["should_stop"])
+        # Stopped before the next VLA inference: exactly six actions and steps.
+        self.assertEqual(job["steps"], 6)
+        self.assertEqual(calls["n"], 6)
+        self.assertEqual(svc._env._inner.steps, 6)
+        # One persistent environment, one reset, no reseed/teleport by the guard.
+        self.assertEqual(svc.session(sid)["episode_resets"], 1)
+        self.assertEqual(svc.session(sid)["env_instance_id"], 1)
+        # The capability-scoped policy queues were cleared after the stop.
+        self.assertIn(6, reset_steps)
+
+        events_path = Path(job["run_dir"]) / "events.jsonl"
+        events = [
+            json.loads(line)
+            for line in events_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(len(events), 6)
+        self.assertTrue(all(e["grasp_guard_mode"] == "enforce" for e in events))
+        self.assertEqual(events[-1]["grasp_stage"], "failed_grasp")
+        self.assertTrue(events[-1]["grasp_guard_status"]["should_stop"])
+
+    def test_enforce_success_retains_priority_over_a_guard_failure(self):
+        svc, envs, calls = self._make("enforce")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        # The wine goal becomes true at step 1 -> success latches at step 5,
+        # one step before the guard's five-candidate failure would latch.
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 1
+        with mock.patch.object(
+            service.grasp_guard, "read_probe", _scripted_probe(inner, _ghost_grasp_script)
+        ):
+            submitted = self._submit(
+                svc, sid, "req-win", ["wine_to_rack", "bowl_to_plate"], budget=50
+            )
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-win")
+        self.assertEqual(plan["state"], "completed", plan)
+        wine_job = svc.job(plan["job_ids"][0])
+        bowl_job = svc.job(plan["job_ids"][1])
+        self.assertTrue(wine_job["success"])
+        self.assertEqual(wine_job["ended_reason"], "success")
+        self.assertEqual(wine_job["steps"], 5)
+        self.assertNotEqual(wine_job["grasp_stage"], "failed_grasp")
+        self.assertFalse(wine_job["grasp_guard_status"]["should_stop"])
+        # Normal success keeps priority: the following bowl goal still ran.
+        self.assertTrue(bowl_job["success"])
+
+    def test_enforce_cancellation_still_wins_and_is_never_failed_grasp(self):
+        gate = threading.Event()
+        gate.set()
+        svc, envs, calls = self._make("enforce", action_gate=gate)
+        self.addCleanup(gate.set)
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        with mock.patch.object(
+            service.grasp_guard, "read_probe", _scripted_probe(inner, _ghost_grasp_script)
+        ):
+            gate.clear()  # park the first inference
+            submitted = self._submit(svc, sid, "req-cancel", ["wine_to_rack"], budget=50)
+            self.assertTrue(submitted["ok"], submitted)
+            deadline = time.time() + 10.0
+            while time.time() < deadline and calls["n"] == 0:
+                time.sleep(0.02)
+            self.assertGreaterEqual(calls["n"], 1)
+            ack = svc.cancel_request("req-cancel", sid)
+            self.assertTrue(ack["ok"], ack)
+            self.assertEqual(ack["state"], "cancelling")
+            gate.set()
+            plan = self._wait(svc, "req-cancel")
+        self.assertEqual(plan["state"], "cancelled", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertEqual(job["state"], "cancelled")
+        self.assertEqual(job["ended_reason"], "cancelled")
+        # The guard recorded its mode/stage but never relabelled the cancel.
+        self.assertEqual(job["grasp_guard_mode"], "enforce")
+        self.assertNotEqual(job["grasp_stage"], "failed_grasp")
+        self.assertFalse(job["grasp_guard_status"]["should_stop"])
+        self.assertEqual(svc._env._inner.steps, 0)
+
+
+# --- cooperative user cancellation tombstones --------------------------------
+
+
+class CancellationRecordTests(unittest.TestCase):
+    """Pure tombstone/ownership/idempotence contracts (no worker, no GPU)."""
+
+    def _service_with_session(self, session_id="sess-1"):
+        tmp = tempfile.mkdtemp()
+        svc = service.SceneService(run_root=tmp)
+        svc._sessions[session_id] = service.SessionRecord(
+            session_id, "goal_table", catalog.SCENES["goal_table"], 0, 0, Path(tmp)
+        )
+        return svc, session_id
+
+    def test_request_id_must_be_nonempty_and_bounded(self):
+        svc, sid = self._service_with_session()
+        for bad in ("", None, 123):
+            result = svc.cancel_request(bad, sid)
+            self.assertFalse(result["ok"], bad)
+            self.assertEqual(result["reason"], "invalid_request_id", bad)
+            self.assertEqual(service.status_for_reason(result["reason"]), 400)
+        too_long = "x" * (service.MAX_REQUEST_ID_LEN + 1)
+        self.assertEqual(svc.cancel_request(too_long, sid)["reason"], "invalid_request_id")
+
+    def test_whitespace_request_id_is_invalid_request_id_400(self):
+        # Whitespace-only ids never name a cancellable request: they are a
+        # client error (HTTP 400), not an unknown plan/session.
+        svc, sid = self._service_with_session()
+        for bad in (" ", "   ", "\t", "\n", " \t "):
+            result = svc.cancel_request(bad, sid)
+            self.assertFalse(result["ok"], repr(bad))
+            self.assertEqual(result["reason"], "invalid_request_id", repr(bad))
+            self.assertEqual(service.status_for_reason(result["reason"]), 400)
+            self.assertNotIn(bad, svc._cancel_requests)
+
+    def test_unknown_session_is_404(self):
+        svc, _ = self._service_with_session()
+        result = svc.cancel_request("req-1", "nope")
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["reason"], "unknown_session")
+        self.assertEqual(service.status_for_reason(result["reason"]), 404)
+
+    def test_preplan_tombstone_never_synthesises_a_plan(self):
+        svc, sid = self._service_with_session()
+        result = svc.cancel_request("req-x", sid)
+        self.assertTrue(result["ok"], result)
+        self.assertEqual(result["request_id"], "req-x")
+        self.assertEqual(result["session_id"], sid)
+        self.assertTrue(result["cancel_requested"])
+        self.assertEqual(result["state"], "cancelled")
+        self.assertIsNone(result["plan"])  # preplanning -> never a plan object
+        # Persistent and idempotent: a second acknowledgement is unchanged.
+        again = svc.cancel_request("req-x", sid)
+        self.assertTrue(again["ok"])
+        self.assertIsNone(again["plan"])
+        self.assertEqual(again["state"], "cancelled")
+
+    def test_wrong_owner_is_409(self):
+        svc, sid = self._service_with_session("sess-1")
+        svc._sessions["sess-2"] = service.SessionRecord(
+            "sess-2", "goal_table", catalog.SCENES["goal_table"], 0, 0, Path(svc.run_root)
+        )
+        self.assertTrue(svc.cancel_request("req-x", sid)["ok"])
+        wrong = svc.cancel_request("req-x", "sess-2")
+        self.assertFalse(wrong["ok"])
+        self.assertEqual(wrong["reason"], "ownership")
+        self.assertEqual(service.status_for_reason(wrong["reason"]), 409)
+        # A plan owned by sess-1 is likewise protected from sess-2.
+        svc._plans["req-y"] = service.PlanRecord(
+            "req-y", "sess-1", {"decision": "execute", "capability_ids": ["bowl_to_plate"]}
+        )
+        self.assertEqual(svc.cancel_request("req-y", "sess-2")["reason"], "ownership")
+
+    def test_completed_plan_cancel_is_idempotent(self):
+        svc, sid = self._service_with_session()
+        plan = service.PlanRecord(
+            "req-1", sid, {"decision": "execute", "capability_ids": ["bowl_to_plate"]}
+        )
+        plan.state = "completed"
+        plan.plan_success = True
+        svc._plans["req-1"] = plan
+        before = plan.public()
+        result = svc.cancel_request("req-1", sid)
+        self.assertTrue(result["ok"], result)
+        self.assertEqual(result["state"], "completed")  # history is never rewritten
+        self.assertEqual(result["plan"], before)
+
+    def test_blocked_plan_cancel_terminalises_and_blocks_resume(self):
+        svc, sid = self._service_with_session()
+        plan = service.PlanRecord(
+            "req-1", sid, {"decision": "execute", "capability_ids": ["bowl_to_plate"]}
+        )
+        plan.state = "blocked"
+        svc._plans["req-1"] = plan
+        result = svc.cancel_request("req-1", sid)
+        self.assertTrue(result["ok"], result)
+        self.assertEqual(result["state"], "cancelled")
+        self.assertEqual(result["plan"]["state"], "cancelled")
+        resumed = svc.resume_plan(
+            {
+                "session_id": sid,
+                "request_id": "req-1",
+                "scene_version": 0,
+                "capability_ids": ["bowl_to_plate"],
+            }
+        )
+        self.assertFalse(resumed["ok"])
+        self.assertEqual(resumed["reason"], "cancelled")
+        self.assertEqual(service.status_for_reason(resumed["reason"]), 409)
+
+    def test_legacy_plan_cancel_routes_blocked_through_cancellation_intent(self):
+        svc, sid = self._service_with_session()
+        plan = service.PlanRecord(
+            "req-1", sid, {"decision": "execute", "capability_ids": ["bowl_to_plate"]}
+        )
+        plan.state = "blocked"
+        svc._plans["req-1"] = plan
+        payload = svc.cancel("req-1")  # legacy shape: plan.public()
+        self.assertTrue(payload["ok"])
+        self.assertEqual(payload["state"], "cancelled")
+        # unknown_plan behaviour is unchanged.
+        self.assertEqual(svc.cancel("missing")["reason"], "unknown_plan")
+        # A repair can no longer reopen the cancelled request.
+        resumed = svc.resume_plan(
+            {
+                "session_id": sid,
+                "request_id": "req-1",
+                "scene_version": 0,
+                "capability_ids": ["bowl_to_plate"],
+            }
+        )
+        self.assertEqual(resumed["reason"], "cancelled")
+
+
+class CancellationWorkerTests(unittest.TestCase):
+    """Cooperative cancellation against the fake simulator (no GPU, no torch)."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.env_gate = threading.Event()
+        self.env_gate.set()
+        # Deterministic delayed inference: env.step is never gated; the *action*
+        # sample is held until the test releases it (only after cancel ack).
+        self.action_gate = threading.Event()
+        self.action_gate.set()
+        self.action_calls = {"n": 0}
+        self.service = service.SceneService(
+            run_root=self._tmp.name,
+            env_factory=lambda **kwargs: _FakeEnv(gate=self.env_gate),
+            policy_loader=lambda svc: setattr(svc._v1, "_n_action_steps", 10),
+            action_function=self._action,
+            batch_builder=lambda obs, instruction: {},
+        )
+        self.service.start()
+        self.addCleanup(self._stop)
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not self.service.health()["ready"]:
+            time.sleep(0.05)
+
+    def _stop(self):
+        self.env_gate.set()
+        self.action_gate.set()
+        self.service.stop()
+        self._tmp.cleanup()
+
+    def _action(self, batch):  # noqa: ARG002
+        self.action_calls["n"] += 1
+        self.action_gate.wait(timeout=15.0)
+        return np.zeros(7)
+
+    def _create(self):
+        session = self.service.create_session("goal_table", seed=0, init_state_index=0)
+        self.assertTrue(session["ok"], session)
+        return session
+
+    def _submit(self, session_id, request_id, capability_ids, budget=50):
+        return self.service.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": self.service.session(session_id)["scene_version"],
+                "request_id": request_id,
+                "capability_ids": capability_ids,
+                "decision": "execute",
+                "budget_per_subgoal": budget,
+            }
+        )
+
+    def _wait_for_state(self, request_id, states, timeout=20.0):
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            payload = self.service.plan(request_id)
+            if payload is not None and payload["state"] in states:
+                return payload
+            time.sleep(0.02)
+        self.fail("plan %s never reached %s" % (request_id, list(states)))
+
+    def _await_inference(self):
+        deadline = time.time() + 10.0
+        while time.time() < deadline and self.action_calls["n"] == 0:
+            time.sleep(0.02)
+        self.assertGreaterEqual(self.action_calls["n"], 1)
+
+    def test_preplan_tombstone_rejects_late_submit(self):
+        session = self._create()
+        sid = session["session_id"]
+        cancelled = self.service.cancel_request("req-late", sid)
+        self.assertTrue(cancelled["ok"], cancelled)
+        self.assertIsNone(cancelled["plan"])
+        submitted = self._submit(sid, "req-late", ["bowl_to_plate"])
+        self.assertFalse(submitted["ok"])
+        self.assertEqual(submitted["reason"], "cancelled")
+        self.assertEqual(service.status_for_reason(submitted["reason"]), 409)
+        # The late submission never queued anything.
+        self.assertNotIn("req-late", self.service._plans)
+
+    def test_delayed_inference_action_is_never_stepped_after_cancel(self):
+        session = self._create()
+        sid = session["session_id"]
+        # The goal can never be satisfied, so the job must enter the step loop.
+        self.service._env._inner.truth_after["on|akita_black_bowl_1|plate_1"] = 10 ** 9
+        self.action_gate.clear()  # inference blocks here
+        submitted = self._submit(sid, "req-stop", ["bowl_to_plate"])
+        self.assertTrue(submitted["ok"], submitted)
+        self._await_inference()
+        # Acknowledge the cancellation BEFORE releasing the in-flight inference.
+        ack = self.service.cancel_request("req-stop", sid)
+        self.assertTrue(ack["ok"], ack)
+        self.assertEqual(ack["state"], "cancelling")
+        self.action_gate.set()  # only now is the sampled action released
+        plan = self._wait_for_state("req-stop", service.TERMINAL_PLAN_STATES)
+        self.assertEqual(plan["state"], "cancelled", plan)
+        job = self.service.job(plan["job_ids"][0])
+        self.assertEqual(job["state"], "cancelled")
+        self.assertEqual(job["ended_reason"], "cancelled")
+        # The action sampled during slow inference was NEVER sent to env.step.
+        self.assertEqual(self.service._env._inner.steps, 0)
+
+    def test_running_cancel_executes_no_following_goal_and_no_reset(self):
+        session = self._create()
+        sid = session["session_id"]
+        self.service._env._inner.truth_after["on|akita_black_bowl_1|plate_1"] = 10 ** 9
+        self.service._env._inner.truth_after["turnon|flat_stove_1"] = 10 ** 9
+        self.action_gate.clear()
+        submitted = self._submit(sid, "req-run", ["bowl_to_plate", "stove_on"], budget=50)
+        self.assertTrue(submitted["ok"], submitted)
+        self._await_inference()
+        ack = self.service.cancel_request("req-run", sid)
+        self.assertTrue(ack["ok"], ack)
+        self.action_gate.set()
+        plan = self._wait_for_state("req-run", service.TERMINAL_PLAN_STATES)
+        self.assertEqual(plan["state"], "cancelled", plan)
+        # Only the first capability was ever started; the following goal was not.
+        self.assertEqual(len(plan["job_ids"]), 1)
+        self.assertEqual(plan["pending_capability_ids"], ["stove_on"])
+        after = self.service.session(sid)
+        self.assertEqual(after["episode_resets"], 1)  # no reset / no env rebuild
+        self.assertEqual(self.service._env._inner.steps, 0)
+
+    def test_blocked_cancel_prevents_worker_resume(self):
+        session = self._create()
+        sid = session["session_id"]
+        self.service._env._inner.truth_after[
+            "on|wine_bottle_1|wine_rack_1_top_region"
+        ] = 10 ** 9
+        submitted = self._submit(sid, "req-blk", ["bowl_to_plate", "wine_to_rack"], budget=30)
+        self.assertTrue(submitted["ok"], submitted)
+        blocked = self._wait_for_state("req-blk", ("blocked",))
+        self.assertEqual(blocked["state"], "blocked", blocked)
+        ack = self.service.cancel_request("req-blk", sid)
+        self.assertTrue(ack["ok"], ack)
+        self.assertEqual(ack["plan"]["state"], "cancelled")
+        resumed = self.service.resume_plan(
+            {
+                "session_id": sid,
+                "request_id": "req-blk",
+                "scene_version": self.service.session(sid)["scene_version"],
+                "capability_ids": ["bowl_to_plate"],
+            }
+        )
+        self.assertFalse(resumed["ok"])
+        self.assertEqual(resumed["reason"], "cancelled")
+
+
+# --- wine semantic observer (independent read-only scalar status) -------------
+
+
+def _wine_sample(*, standard_predicate=None, candidate=True, held=None):
+    """A raw sample shaped exactly as ``wine_semantic.read_wine_semantic``.
+
+    ``candidate=True`` scores semantically True (unheld, at rest, support-like),
+    ``candidate=False`` scores False (e.g. a known held wine) and the default
+    (an incomplete observation) scores unknown -- so the helper tests exercise
+    the module's real ``score_wine_semantic``/``SemanticTracker`` unchanged.
+    """
+
+    sample = {
+        "spec_id": wine_semantic.SPEC.spec_id,
+        "object_id": wine_semantic.SPEC.object_id,
+        "target_id": wine_semantic.SPEC.target_id,
+        "rack_contact": None,
+        "support_contact": None,
+        "linear_speed": None,
+        "angular_speed": None,
+        "held_objects": None,
+        "observation_complete": False,
+        "standard_predicate": standard_predicate,
+        "semantic_candidate": None,
+        "contacts": [],
+    }
+    if candidate is True:
+        sample.update(
+            rack_contact=True,
+            support_contact=True,
+            linear_speed=0.0,
+            angular_speed=0.0,
+            held_objects=list(held or []),
+            observation_complete=True,
+            semantic_candidate=True,
+        )
+    elif candidate is False:
+        sample.update(
+            rack_contact=True,
+            support_contact=True,
+            linear_speed=0.0,
+            angular_speed=0.0,
+            held_objects=list(held or ["wine_bottle_1"]),
+            observation_complete=True,
+            semantic_candidate=False,
+        )
+    return sample
+
+
+class WineSemanticPublicFieldTests(unittest.TestCase):
+    """The public semantic scalars exist, default honestly, and are in scope."""
+
+    _SCALAR_FIELDS = (
+        "semantic_spec_id",
+        "semantic_state",
+        "semantic_candidate_streak",
+        "semantic_success",
+        "native_wine_predicate",
+    )
+
+    def test_job_public_defaults_are_null_and_zero(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            job = service.JobRecord("job", "req", "sess", "bowl_to_plate", Path(tmp))
+            public = job.public()
+            for field in self._SCALAR_FIELDS:
+                self.assertIn(field, public)
+                self.assertIsNone(public[field], field)
+            self.assertEqual(public["semantic_observation_samples"], 0)
+            # No coordinate/contact/force keys leak onto the public job.
+            for forbidden in ("sample", "contacts", "object_positions", "positions"):
+                self.assertNotIn(forbidden, public)
+
+    def test_observer_scope_is_only_the_literal_wine_goal(self):
+        svc = service.SceneService(run_root=tempfile.mkdtemp())
+        self.assertTrue(
+            svc._wine_semantic_applies("wine_to_rack", catalog.CAPABILITIES["wine_to_rack"])
+        )
+        self.assertFalse(
+            svc._wine_semantic_applies("bowl_to_plate", catalog.CAPABILITIES["bowl_to_plate"])
+        )
+        # A different capability id, a different object or a different goal are
+        # all out of scope (the observer is fixed to one literal goal).
+        same_goal = {
+            "object_id": "wine_bottle_1",
+            "goals": [["on", "wine_bottle_1", "wine_rack_1_top_region"]],
+        }
+        self.assertFalse(svc._wine_semantic_applies("wine_to_rack_v2", same_goal))
+        other_object = {
+            "object_id": "tomato_sauce_1",
+            "goals": [["on", "tomato_sauce_1", "wine_rack_1_top_region"]],
+        }
+        self.assertFalse(svc._wine_semantic_applies("wine_to_rack", other_object))
+        other_goal = {
+            "object_id": "wine_bottle_1",
+            "goals": [["on", "wine_bottle_1", "plate_1"]],
+        }
+        self.assertFalse(svc._wine_semantic_applies("wine_to_rack", other_goal))
+
+
+class WineSemanticObserverTests(unittest.TestCase):
+    """Pure ``_update_wine_semantic`` contract against crafted samples."""
+
+    def _setup(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        svc = service.SceneService(run_root=tmp.name)
+        job = service.JobRecord("job", "req", "sess", "wine_to_rack", Path(tmp.name))
+        tracker = wine_semantic.SemanticTracker()
+        return svc, job, tracker, Path(tmp.name)
+
+    def _handle(self, run_dir):
+        handle = open(run_dir / "semantic_status.jsonl", "w", encoding="utf-8")
+        self.addCleanup(handle.close)
+        return handle
+
+    def test_semantic_and_native_predicate_are_independent_fields(self):
+        svc, job, tracker, run_dir = self._setup()
+        handle = self._handle(run_dir)
+        # The native standard predicate is TRUE, but the wine is still held, so
+        # the fixed semantic rubric is FALSE: two independent fields.
+        reader = lambda env: _wine_sample(standard_predicate=True, candidate=False)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", reader):
+            svc._update_wine_semantic(job, object(), tracker, 1, handle)
+        public = job.public()
+        self.assertIs(public["native_wine_predicate"], True)
+        self.assertIs(public["semantic_success"], False)
+        self.assertEqual(public["semantic_state"], "incomplete")
+        self.assertEqual(public["semantic_spec_id"], wine_semantic.SPEC.spec_id)
+        self.assertEqual(public["semantic_observation_samples"], 1)
+
+    def test_semantic_true_after_twenty_candidates_native_false(self):
+        svc, job, tracker, run_dir = self._setup()
+        handle = self._handle(run_dir)
+        # An already-decided standard outcome must never be touched.
+        job.success = False
+        reader = lambda env: _wine_sample(standard_predicate=False, candidate=True)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", reader):
+            for step in range(1, 21):
+                svc._update_wine_semantic(job, object(), tracker, step, handle)
+        public = job.public()
+        self.assertEqual(public["semantic_state"], "semantic_complete")
+        self.assertIs(public["semantic_success"], True)
+        self.assertEqual(public["semantic_candidate_streak"], 20)
+        self.assertIs(public["native_wine_predicate"], False)
+        self.assertEqual(public["semantic_observation_samples"], 20)
+        # The standard success flag is a separate field and stays untouched.
+        self.assertIs(public["success"], False)
+
+    def test_probe_failure_resets_streak_and_stays_unknown(self):
+        svc, job, tracker, run_dir = self._setup()
+        handle = self._handle(run_dir)
+        good = lambda env: _wine_sample(candidate=True)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", good):
+            for step in range(1, 6):
+                svc._update_wine_semantic(job, object(), tracker, step, handle)
+        self.assertEqual(job.public()["semantic_candidate_streak"], 5)
+
+        def _boom(env):  # noqa: ARG001
+            raise RuntimeError("probe unavailable")
+
+        with mock.patch.object(wine_semantic, "read_wine_semantic", _boom):
+            svc._update_wine_semantic(job, object(), tracker, 6, handle)
+        public = job.public()
+        self.assertEqual(public["semantic_state"], "unknown")
+        self.assertEqual(public["semantic_candidate_streak"], 0)
+        self.assertIsNone(public["semantic_success"])
+        self.assertIsNone(public["native_wine_predicate"])
+        # A failed probe never fabricates an observation row.
+        self.assertEqual(public["semantic_observation_samples"], 5)
+
+    def test_telemetry_write_failure_is_passive_and_unknown(self):
+        svc, job, tracker, run_dir = self._setup()
+        good = lambda env: _wine_sample(candidate=True)  # noqa: E731
+        handle = self._handle(run_dir)
+        with mock.patch.object(wine_semantic, "read_wine_semantic", good):
+            for step in range(1, 5):
+                svc._update_wine_semantic(job, object(), tracker, step, handle)
+        self.assertEqual(job.public()["semantic_candidate_streak"], 4)
+
+        class _BoomHandle:
+            def write(self, *args, **kwargs):  # noqa: ARG002
+                raise OSError("disk full")
+
+            def flush(self):
+                raise OSError("disk full")
+
+        with mock.patch.object(wine_semantic, "read_wine_semantic", good):
+            svc._update_wine_semantic(job, object(), tracker, 5, _BoomHandle())
+        public = job.public()
+        self.assertEqual(public["semantic_state"], "unknown")
+        self.assertIsNone(public["semantic_success"])
+        self.assertEqual(public["semantic_candidate_streak"], 0)
+        self.assertEqual(tracker.candidate_streak, 0)
+        # No fabricated row: the sample counter is unchanged.
+        self.assertEqual(public["semantic_observation_samples"], 4)
+
+    def test_missing_telemetry_handle_exposes_unknown(self):
+        svc, job, tracker, _run_dir = self._setup()
+        reader = lambda env: _wine_sample(candidate=True)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", reader):
+            svc._update_wine_semantic(job, object(), tracker, 1, None)
+        public = job.public()
+        self.assertEqual(public["semantic_state"], "unknown")
+        self.assertIsNone(public["semantic_success"])
+        self.assertEqual(public["semantic_observation_samples"], 0)
+
+    def test_semantic_status_jsonl_records_one_row_per_step(self):
+        svc, job, tracker, run_dir = self._setup()
+        handle = self._handle(run_dir)
+        reader = lambda env: _wine_sample(standard_predicate=False, candidate=True)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", reader):
+            for step in range(1, 4):
+                svc._update_wine_semantic(job, object(), tracker, step, handle)
+        path = run_dir / "semantic_status.jsonl"
+        rows = [
+            json.loads(line)
+            for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertEqual(len(rows), 3)
+        self.assertEqual([row["step"] for row in rows], [1, 2, 3])
+        for row in rows:
+            self.assertIn("sample", row)  # the raw sample lives only here
+            self.assertIn("semantic_state", row)
+        self.assertEqual(rows[-1]["semantic_candidate_streak"], 3)
+        self.assertIs(rows[-1]["semantic_success"], False)
+
+    def test_observer_never_steps_resets_or_forwards(self):
+        svc, job, tracker, run_dir = self._setup()
+        handle = self._handle(run_dir)
+
+        class _SpyEnv:
+            def step(self, *args, **kwargs):  # noqa: ARG002
+                raise AssertionError("the observer must never step")
+
+            def reset(self, *args, **kwargs):  # noqa: ARG002
+                raise AssertionError("the observer must never reset")
+
+            def forward(self, *args, **kwargs):  # noqa: ARG002
+                raise AssertionError("the observer must never forward")
+
+        reader = lambda env: _wine_sample(candidate=True)  # noqa: E731
+        with mock.patch.object(wine_semantic, "read_wine_semantic", reader):
+            for step in range(1, 4):
+                svc._update_wine_semantic(job, _SpyEnv(), tracker, step, handle)
+        self.assertEqual(job.public()["semantic_observation_samples"], 3)
+
+
+class WineSemanticWorkerTests(unittest.TestCase):
+    """The wine observer against the injected fake simulator (no GPU)."""
+
+    def _make(self, mode="shadow"):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        envs: list = []
+        calls = {"n": 0}
+
+        def _factory(**kwargs):  # noqa: ARG001
+            env = _FakeEnv()
+            envs.append(env)
+            return env
+
+        def _action(batch):  # noqa: ARG001
+            calls["n"] += 1
+            return np.zeros(7)
+
+        svc = service.SceneService(
+            run_root=tmp.name,
+            env_factory=_factory,
+            policy_loader=lambda s: setattr(s._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+            grasp_guard_mode=mode,
+        )
+        svc.start()
+        self.addCleanup(svc.stop)
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not svc.health()["ready"]:
+            time.sleep(0.05)
+        return svc, envs, calls
+
+    def _wait(self, svc, request_id, deadline_s=20.0):
+        deadline = time.time() + deadline_s
+        while time.time() < deadline:
+            payload = svc.plan(request_id)
+            if payload is not None and payload["state"] in service.TERMINAL_PLAN_STATES:
+                return payload
+            time.sleep(0.05)
+        self.fail("plan %s did not reach a terminal state" % request_id)
+
+    def _submit(self, svc, session_id, request_id, capability_ids, budget=50):
+        return svc.submit_plan(
+            {
+                "session_id": session_id,
+                "scene_version": svc.session(session_id)["scene_version"],
+                "request_id": request_id,
+                "capability_ids": capability_ids,
+                "decision": "execute",
+                "budget_per_subgoal": budget,
+            }
+        )
+
+    def _rows(self, job):
+        path = Path(job["run_dir"]) / "semantic_status.jsonl"
+        return [
+            json.loads(line)
+            for line in path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+
+    def test_observer_active_with_guard_off_and_no_extra_steps(self):
+        svc, envs, calls = self._make("off")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        sample = _wine_sample(standard_predicate=False, candidate=True)
+        with mock.patch.object(wine_semantic, "read_wine_semantic", lambda env: sample):
+            submitted = self._submit(svc, sid, "req-sem", ["wine_to_rack"], budget=6)
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-sem")
+        job = svc.job(plan["job_ids"][0])
+        self.assertEqual(job["ended_reason"], "budget_exhausted")
+        self.assertEqual(job["steps"], 6)
+        # Exactly one action and one simulator step per loop iteration: the
+        # read-only observer adds nothing.
+        self.assertEqual(calls["n"], 6)
+        self.assertEqual(inner.steps, 6)
+        self.assertEqual(svc.session(sid)["episode_resets"], 1)
+        self.assertEqual(svc.session(sid)["env_instance_id"], 1)
+        # Guard off -> guard fields null, but the semantic observer still ran.
+        self.assertIsNone(job["grasp_guard_mode"])
+        self.assertEqual(job["semantic_spec_id"], wine_semantic.SPEC.spec_id)
+        self.assertEqual(job["semantic_observation_samples"], 6)
+        self.assertEqual(job["semantic_candidate_streak"], 6)
+        self.assertIs(job["native_wine_predicate"], False)
+        self.assertFalse(job["success"])
+        rows = self._rows(job)
+        self.assertEqual(len(rows), 6)
+        self.assertEqual([row["step"] for row in rows], [1, 2, 3, 4, 5, 6])
+
+    def test_nonwine_job_bypasses_the_observer(self):
+        svc, envs, calls = self._make("shadow")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+
+        def _boom(env):  # noqa: ARG001
+            raise AssertionError("the observer must never read a non-wine goal")
+
+        with mock.patch.object(wine_semantic, "read_wine_semantic", _boom):
+            submitted = self._submit(svc, sid, "req-bowl", ["bowl_to_plate"], budget=50)
+            self.assertTrue(submitted["ok"], submitted)
+            plan = self._wait(svc, "req-bowl")
+        job = svc.job(plan["job_ids"][0])
+        self.assertTrue(job["success"])
+        for field in (
+            "semantic_spec_id",
+            "semantic_state",
+            "semantic_candidate_streak",
+            "semantic_success",
+            "native_wine_predicate",
+        ):
+            self.assertIsNone(job[field], field)
+        self.assertEqual(job["semantic_observation_samples"], 0)
+        self.assertFalse((Path(job["run_dir"]) / "semantic_status.jsonl").exists())
+
+    def test_fresh_tracker_per_job_and_no_cross_job_streak(self):
+        created: list = []
+
+        class _CountingTracker(wine_semantic.SemanticTracker):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                created.append(self)
+
+        svc, envs, calls = self._make("shadow")
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        inner = svc._env._inner
+        inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        # Unspecified fake object-on-rack predicates must stay false (not flip
+        # true after the default three steps), keeping the production occupancy
+        # gate from spuriously satisfying the goal before the budget is spent.
+        inner.default_truth_at = 10 ** 9
+        sample = _wine_sample(standard_predicate=False, candidate=True)
+        with mock.patch.object(wine_semantic, "SemanticTracker", _CountingTracker), \
+             mock.patch.object(wine_semantic, "read_wine_semantic", lambda env: sample):
+            first = self._submit(svc, sid, "req-1", ["wine_to_rack"], budget=4)
+            self.assertTrue(first["ok"], first)
+            plan1 = self._wait(svc, "req-1")
+            job1 = svc.job(plan1["job_ids"][0])
+            second = self._submit(svc, sid, "req-2", ["wine_to_rack"], budget=4)
+            self.assertTrue(second["ok"], second)
+            plan2 = self._wait(svc, "req-2")
+            job2 = svc.job(plan2["job_ids"][0])
+        # One fresh tracker per wine job, and the streak never carries over.
+        self.assertEqual(len(created), 2)
+        # Both jobs must run their full four-step budget: the false unspecified
+        # occupancy predicate never terminates either job early.
+        self.assertEqual(job1["steps"], 4)
+        self.assertEqual(job2["steps"], 4)
+        self.assertEqual(job1["semantic_candidate_streak"], 4)
+        self.assertEqual(job2["semantic_candidate_streak"], 4)
+        self.assertEqual(job2["semantic_observation_samples"], 4)
+
+    def test_wine_observer_does_not_change_cancellation(self):
+        gate = threading.Event()
+        gate.set()
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        calls = {"n": 0}
+
+        def _factory(**kwargs):  # noqa: ARG001
+            return _FakeEnv(gate=gate)
+
+        def _action(batch):  # noqa: ARG001
+            calls["n"] += 1
+            gate.wait(timeout=15.0)
+            return np.zeros(7)
+
+        svc = service.SceneService(
+            run_root=tmp.name,
+            env_factory=_factory,
+            policy_loader=lambda s: setattr(s._v1, "_n_action_steps", 10),
+            action_function=_action,
+            batch_builder=lambda obs, instruction: {},
+            grasp_guard_mode="shadow",
+        )
+        svc.start()
+        self.addCleanup(gate.set)
+        self.addCleanup(svc.stop)
+        deadline = time.time() + 20.0
+        while time.time() < deadline and not svc.health()["ready"]:
+            time.sleep(0.05)
+        session = svc.create_session("goal_table", seed=0, init_state_index=0)
+        sid = session["session_id"]
+        svc._env._inner.truth_after["on|wine_bottle_1|wine_rack_1_top_region"] = 10 ** 9
+        sample = _wine_sample(candidate=True)
+        gate.clear()
+        with mock.patch.object(wine_semantic, "read_wine_semantic", lambda env: sample):
+            submitted = self._submit(svc, sid, "req-cancel", ["wine_to_rack"], budget=50)
+            self.assertTrue(submitted["ok"], submitted)
+            deadline = time.time() + 10.0
+            while time.time() < deadline and calls["n"] == 0:
+                time.sleep(0.02)
+            self.assertGreaterEqual(calls["n"], 1)
+            ack = svc.cancel_request("req-cancel", sid)
+            self.assertTrue(ack["ok"], ack)
+            self.assertEqual(ack["state"], "cancelling")
+            gate.set()
+            plan = self._wait(svc, "req-cancel")
+        self.assertEqual(plan["state"], "cancelled", plan)
+        job = svc.job(plan["job_ids"][0])
+        self.assertEqual(job["state"], "cancelled")
+        self.assertEqual(job["ended_reason"], "cancelled")
+        # The sampled action was never stepped and the observer never fabricated.
+        self.assertEqual(svc._env._inner.steps, 0)
+        self.assertIsNone(job["semantic_state"])
+        self.assertEqual(job["semantic_observation_samples"], 0)
+
+
+class GraspGuardCliTests(unittest.TestCase):
+    """``--grasp-guard-mode`` parsing, with a fake service constructor only."""
+
+    def _run_main(self, argv):
+        seen: dict = {}
+
+        class _FakeService:
+            def __init__(self, model, run_root, **kwargs):
+                seen["model"] = model
+                seen["run_root"] = run_root
+                seen["kwargs"] = kwargs
+
+            def start(self):
+                seen["started"] = True
+
+            def stop(self):
+                seen["stopped"] = True
+
+        class _FakeServer:
+            def __init__(self, address, handler):  # noqa: ARG002
+                seen["address"] = address
+
+            def serve_forever(self, poll_interval=0.5):  # noqa: ARG002
+                seen["served"] = True
+
+            def server_close(self):
+                seen["closed"] = True
+
+            def shutdown(self):
+                pass
+
+        with mock.patch.object(service, "SceneService", _FakeService), \
+             mock.patch.object(service, "_Server", _FakeServer), \
+             mock.patch.object(service.signal, "signal", lambda *a, **k: None):
+            rc = service.main(argv)
+        return rc, seen
+
+    def test_default_guard_mode_is_shadow(self):
+        rc, seen = self._run_main([])
+        self.assertEqual(rc, 0)
+        self.assertEqual(seen["kwargs"]["grasp_guard_mode"], "shadow")
+        self.assertTrue(seen["started"])
+        self.assertTrue(seen["served"])
+        self.assertTrue(seen["closed"])
+
+    def test_all_guard_mode_choices_are_accepted(self):
+        for mode in ("off", "shadow", "enforce"):
+            rc, seen = self._run_main(["--grasp-guard-mode", mode])
+            self.assertEqual(rc, 0)
+            self.assertEqual(seen["kwargs"]["grasp_guard_mode"], mode)
+
+    def test_unknown_guard_mode_is_rejected(self):
+        with self.assertRaises(SystemExit):
+            self._run_main(["--grasp-guard-mode", "loud"])
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)

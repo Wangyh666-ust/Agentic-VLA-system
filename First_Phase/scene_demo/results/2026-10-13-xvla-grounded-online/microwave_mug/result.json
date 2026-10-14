@@ -1,0 +1,1298 @@
+{
+  "complete": false,
+  "agent_result": {
+    "request_id": "xvla-microwave_mug",
+    "session_id": "83806dba5f1446b59bb13e131463345e",
+    "request": "先把黄白杯放进微波炉，再关闭微波炉门。",
+    "run_ok": true,
+    "chain_ok": false,
+    "plan_success": null,
+    "task_success": null,
+    "decision": "execute",
+    "plan": {
+      "ok": true,
+      "request_id": "xvla-microwave_mug",
+      "session_id": "83806dba5f1446b59bb13e131463345e",
+      "state": "blocked",
+      "decision": "execute",
+      "capability_ids": [
+        "xvla_microwave_place_close"
+      ],
+      "original_capability_ids": [
+        "xvla_microwave_place_close"
+      ],
+      "rationale": "用户请求'先把黄白杯放进微波炉，再关闭微波炉门'，与能力xvla_microwave_place_close的目标完全匹配：将黄白杯放入微波炉并关闭它。",
+      "target_bindings": {
+        "microwave_1": "obj_3",
+        "microwave_1_heating_region": "obj_3",
+        "white_yellow_mug_1": "obj_1"
+      },
+      "job_ids": [
+        "a177a34b246d4115b1caf8e4bd050fb5"
+      ],
+      "completed_capability_ids": [],
+      "pending_capability_ids": [],
+      "plan_success": null,
+      "regressions": [],
+      "error": "retreat plan blocked",
+      "repair_history": [],
+      "scene_version": 1,
+      "native_skill_route": {
+        "requested_capability_ids": [
+          "xvla_microwave_place_close"
+        ],
+        "executed_capability_ids": [
+          "xvla_microwave_place_close"
+        ],
+        "replacements": []
+      }
+    },
+    "jobs": [
+      {
+        "job_id": "a177a34b246d4115b1caf8e4bd050fb5",
+        "request_id": "xvla-microwave_mug",
+        "session_id": "83806dba5f1446b59bb13e131463345e",
+        "capability_id": "xvla_microwave_place_close",
+        "state": "completed",
+        "steps": 150,
+        "total_steps": 163,
+        "success": false,
+        "ended_reason": "retreat plan blocked",
+        "error": null,
+        "instruction": "put the yellow and white mug in the microwave and close it",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "a65c520dda99aed635e861a5e7fde855fedd2cffa117031dbdf3f0a5a3a0078f",
+        "state_after_sha": "ee5a80ac5e045395f43b83304aba0ed38125925663332e613b73688f2c66d90f",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "goal_still_held",
+        "held_objects": [
+          "white_yellow_mug_1"
+        ],
+        "grasp_observation_complete": true,
+        "completion_ready": false,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": {
+          "phase": "blocked",
+          "calls": 1,
+          "prechecks": 1,
+          "helper_counts": {
+            "release": 8,
+            "movement": 0,
+            "confirm": 0,
+            "home": 0
+          },
+          "last_decision": {
+            "state": "needs_release",
+            "reason": "purpose achieved; open fingers",
+            "allow_release": true,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "retreat plan blocked",
+            "checks": 1
+          },
+          "independent_streak": 0,
+          "current_view_calls": 1,
+          "release_evidence_calls": 0,
+          "release_events": 1,
+          "process_evidence": [],
+          "actual_visual_requests": 1
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/cap_01_xvla_microwave_place_close_a177a34b",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/cap_01_xvla_microwave_place_close_a177a34b/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/cap_01_xvla_microwave_place_close_a177a34b/rollout.mp4",
+        "wall_s": 71.743
+      }
+    ],
+    "evaluation": null,
+    "hermes_invocations": 1,
+    "usage": [
+      {
+        "available": false,
+        "reason": "installed Hermes chat native-image path did not export usage",
+        "api_calls": null,
+        "input_tokens": null,
+        "output_tokens": null
+      }
+    ],
+    "execution_timeout": false,
+    "cancelled_by_user": false,
+    "cancellation_pending": false,
+    "wall_s": 136.431,
+    "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+    "hermes_output": "计划已提交。\n\nsession_id: 20261013_234019_981125\n"
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-microwave_mug",
+    "session_id": "83806dba5f1446b59bb13e131463345e",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_microwave_place_close"
+    ],
+    "original_capability_ids": [
+      "xvla_microwave_place_close"
+    ],
+    "rationale": "用户请求'先把黄白杯放进微波炉，再关闭微波炉门'，与能力xvla_microwave_place_close的目标完全匹配：将黄白杯放入微波炉并关闭它。",
+    "target_bindings": {
+      "microwave_1": "obj_3",
+      "microwave_1_heating_region": "obj_3",
+      "white_yellow_mug_1": "obj_1"
+    },
+    "job_ids": [
+      "a177a34b246d4115b1caf8e4bd050fb5"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "retreat plan blocked",
+    "repair_history": [],
+    "scene_version": 1,
+    "native_skill_route": {
+      "requested_capability_ids": [
+        "xvla_microwave_place_close"
+      ],
+      "executed_capability_ids": [
+        "xvla_microwave_place_close"
+      ],
+      "replacements": []
+    }
+  },
+  "jobs": [
+    {
+      "capability": "xvla_microwave_place_close",
+      "outcome": {
+        "ok": false,
+        "cancelled": false,
+        "reason": "retreat plan blocked",
+        "detail": ""
+      },
+      "job": {
+        "job_id": "a177a34b246d4115b1caf8e4bd050fb5",
+        "request_id": "xvla-microwave_mug",
+        "session_id": "83806dba5f1446b59bb13e131463345e",
+        "capability_id": "xvla_microwave_place_close",
+        "state": "completed",
+        "steps": 150,
+        "total_steps": 163,
+        "success": false,
+        "ended_reason": "retreat plan blocked",
+        "error": null,
+        "instruction": "put the yellow and white mug in the microwave and close it",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "a65c520dda99aed635e861a5e7fde855fedd2cffa117031dbdf3f0a5a3a0078f",
+        "state_after_sha": "ee5a80ac5e045395f43b83304aba0ed38125925663332e613b73688f2c66d90f",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "goal_still_held",
+        "held_objects": [
+          "white_yellow_mug_1"
+        ],
+        "grasp_observation_complete": true,
+        "completion_ready": false,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": {
+          "phase": "blocked",
+          "calls": 1,
+          "prechecks": 1,
+          "helper_counts": {
+            "release": 8,
+            "movement": 0,
+            "confirm": 0,
+            "home": 0
+          },
+          "last_decision": {
+            "state": "needs_release",
+            "reason": "purpose achieved; open fingers",
+            "allow_release": true,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "retreat plan blocked",
+            "checks": 1
+          },
+          "independent_streak": 0,
+          "current_view_calls": 1,
+          "release_evidence_calls": 0,
+          "release_events": 1,
+          "process_evidence": [],
+          "actual_visual_requests": 1
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/cap_01_xvla_microwave_place_close_a177a34b",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/cap_01_xvla_microwave_place_close_a177a34b/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/cap_01_xvla_microwave_place_close_a177a34b/rollout.mp4",
+        "wall_s": 71.743
+      },
+      "source_counts": {
+        "settling": 0,
+        "vla": 150,
+        "finish": 8,
+        "prepare": 5
+      },
+      "vla_calls": 5,
+      "handoff_reference": {
+        "schema_version": 1,
+        "origin_sha256": "411deed952a749ec736be5f6ed37ff6f6b887b445f1955dc8a78cf75ac461f2b",
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7"
+        ],
+        "joint_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "qpos_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "qvel_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "joint_limits_low": [
+          -2.8973,
+          -1.7628,
+          -2.8973,
+          -3.0718,
+          -2.8973,
+          -0.0175,
+          -2.8973
+        ],
+        "joint_limits_high": [
+          2.8973,
+          1.7628,
+          2.8973,
+          -0.0698,
+          2.8973,
+          3.7525,
+          2.8973
+        ],
+        "homeq": [
+          -0.018888473678846465,
+          -0.14977609714419957,
+          0.0035023118667714464,
+          -2.4621613844379713,
+          -0.0003552927760492725,
+          2.255105491176026,
+          0.7710319269332364
+        ],
+        "home_joint_speed": [
+          0.02489137746955003,
+          -0.017829912666069845,
+          -0.0239286338488991,
+          -0.03327823507396041,
+          -0.002635209793834768,
+          0.038456595730713514,
+          -2.409968003230119e-05
+        ],
+        "finger_qpos_indexes": [
+          7,
+          8
+        ],
+        "finger_qvel_indexes": [
+          7,
+          8
+        ],
+        "finger_home": [
+          0.03872905725468913,
+          -0.03872928166924487
+        ],
+        "finger_speed": [
+          0.003186105483204755,
+          -0.003190072716011123
+        ],
+        "eef_pose": {
+          "position": [
+            -0.21053964219388294,
+            -0.007012751380522305,
+            1.1630264887402895
+          ],
+          "orientation_matrix": [
+            [
+              0.0003508959789753178,
+              0.9983595349364969,
+              -0.05725483275142948
+            ],
+            [
+              0.9999999362497969,
+              -0.0003465344346750173,
+              8.610626085258158e-05
+            ],
+            [
+              6.612423543997381e-05,
+              -0.05725485931576295,
+              -0.9983595928884131
+            ]
+          ]
+        },
+        "reference_kind": "global_home"
+      },
+      "actual_final_metrics": {
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7"
+        ],
+        "joint_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "arm_error_rad": [
+          0.11182056306375485,
+          0.8402659936900426,
+          0.3300261280049539,
+          0.6509855633517556,
+          1.31923136764972,
+          0.49000578693748276,
+          0.7444301957424093
+        ],
+        "arm_speed_rad_s": [
+          0.0027979050114022054,
+          0.012063443549025209,
+          0.0036096017673461897,
+          0.020640895047923682,
+          5.210497537812303e-05,
+          0.018291822593969213,
+          0.003371899825996078
+        ],
+        "max_joint_error_rad": 1.31923136764972,
+        "max_joint_speed_rad_s": 0.020640895047923682,
+        "finger_error_m": [
+          0.0011192634837242782,
+          0.0014937187946804376
+        ],
+        "finger_speed_m_s": [
+          0.004570850367033542,
+          0.004669143205595772
+        ],
+        "max_finger_error_m": 0.0014937187946804376,
+        "max_finger_speed_m_s": 0.004669143205595772,
+        "ready": false,
+        "eef_position_error_m": 0.3755384295538419,
+        "eef_orientation_error_rad": 1.7595161546394174
+      },
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 1,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 8,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "last_decision": {
+          "state": "needs_release",
+          "reason": "purpose achieved; open fingers",
+          "allow_release": true,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "retreat plan blocked",
+          "checks": 1
+        },
+        "independent_streak": 0,
+        "current_view_calls": 1,
+        "release_evidence_calls": 0,
+        "release_events": 1,
+        "process_evidence": [],
+        "actual_visual_requests": 1
+      },
+      "finish": {
+        "ready": false,
+        "ok": false,
+        "reason": "retreat plan blocked",
+        "counts": {
+          "release": 8,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "release_settle_actions": 0,
+        "release_open_actions": 8,
+        "plan": {
+          "ok": false,
+          "reason": "no sensor-safe route",
+          "waypoints": [],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "endpoint_hand_clear_fail"
+            },
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.06,
+              "reason": "path_margin_violation"
+            }
+          ],
+          "sensor_screen": null
+        },
+        "checks": [],
+        "restored": true,
+        "limitation": "visible geometry only",
+        "opening_confirmed": true,
+        "object_release_not_yet_confirmed": true,
+        "handoff_mode": "visual_goal_encoder_v5",
+        "handoff_goal_latched": true,
+        "_release_path": true,
+        "active_retreat_plan": {
+          "ok": false,
+          "reason": "no sensor-safe route",
+          "waypoints": [],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "endpoint_hand_clear_fail"
+            },
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.06,
+              "reason": "path_margin_violation"
+            }
+          ],
+          "sensor_screen": null
+        }
+      },
+      "before": {
+        "gripper_current_action": [
+          0.9364528656005859,
+          -0.9364640712738037
+        ],
+        "gripper_hold_from_measurement": [
+          0.9364528656005859,
+          -0.9364640712738037
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 0.5000000000000003,
+        "robot": {
+          "robot_name": "MountedPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            -0.018888473678846465,
+            -0.14977609714419957,
+            0.0035023118667714464,
+            -2.4621613844379713,
+            -0.0003552927760492725,
+            2.255105491176026,
+            0.7710319269332364
+          ],
+          "arm_qvel": [
+            0.02489137746955003,
+            -0.017829912666069845,
+            -0.0239286338488991,
+            -0.03327823507396041,
+            -0.002635209793834768,
+            0.038456595730713514,
+            -2.409968003230119e-05
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.03872905725468913,
+            -0.03872928166924487
+          ],
+          "finger_qvel": [
+            0.003186105483204755,
+            -0.003190072716011123
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.21053964219388294,
+            -0.007012751380522305,
+            1.1630264887402895
+          ],
+          "orientation_matrix": [
+            [
+              0.0003508959789753178,
+              0.9983595349364969,
+              -0.05725483275142948
+            ],
+            [
+              0.9999999362497969,
+              -0.0003465344346750173,
+              8.610626085258158e-05
+            ],
+            [
+              6.612423543997381e-05,
+              -0.05725485931576295,
+              -0.9983595928884131
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "after": {
+        "gripper_current_action": [
+          0.880489706993103,
+          -0.8617781400680542
+        ],
+        "gripper_hold_from_measurement": [
+          0.880489706993103,
+          -0.8617781400680542
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 8.649999999999558,
+        "robot": {
+          "robot_name": "MountedPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            0.09293208938490838,
+            0.690489896545843,
+            0.33352843987172537,
+            -1.8111758210862157,
+            1.3188760748736708,
+            2.7451112781135087,
+            1.5154621226756457
+          ],
+          "arm_qvel": [
+            -0.0027979050114022054,
+            -0.012063443549025209,
+            0.0036096017673461897,
+            -0.020640895047923682,
+            5.210497537812303e-05,
+            -0.018291822593969213,
+            0.003371899825996078
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.03760979377096485,
+            -0.037235562874564435
+          ],
+          "finger_qvel": [
+            0.004570850367033542,
+            -0.004669143205595772
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.019088883984986538,
+            0.28441586208692415,
+            1.0235808631170873
+          ],
+          "orientation_matrix": [
+            [
+              0.9575765735386059,
+              0.062441356243417435,
+              0.2813328683971092
+            ],
+            [
+              -0.14876892228597663,
+              -0.7289882905162859,
+              0.6681645606076487
+            ],
+            [
+              0.24680946815698052,
+              -0.6816723181416611,
+              -0.688772776107943
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "cache_reset": [
+        {
+          "gripper_current_action": [
+            0.9376831650733948,
+            -0.9376788139343262
+          ],
+          "gripper_hold_from_measurement": [
+            0.9376831650733948,
+            -0.9376788139343262
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 0.7500000000000006,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.01742300767061629,
+              -0.1514220428052225,
+              0.003928274553400102,
+              -2.4603759571666646,
+              -0.00036767182064613804,
+              2.2526561268436165,
+              0.7717477375435654
+            ],
+            "arm_qvel": [
+              -8.247295358251177e-05,
+              -0.0015501820216977152,
+              0.006927096006172434,
+              0.015413447718225705,
+              5.674131772041981e-05,
+              -0.018597393588175668,
+              0.0028724170499980694
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03875366375648479,
+              -0.038753575926586806
+            ],
+            "finger_qvel": [
+              -2.2435717326518783e-05,
+              2.048961294896487e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.21017826354149932,
+              -0.0061763295264837285,
+              1.1643215490412333
+            ],
+            "orientation_matrix": [
+              [
+                -0.0008283754941302767,
+                0.9984149130733825,
+                -0.056275884237484114
+              ],
+              [
+                0.9999996545408917,
+                0.0008231996673088238,
+                -0.0001151538313440767
+              ],
+              [
+                -6.864501332965942e-05,
+                -0.05627596018707927,
+                -0.9984152500802882
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        },
+        {
+          "gripper_current_action": [
+            0.9376831650733948,
+            -0.9376788139343262
+          ],
+          "gripper_hold_from_measurement": [
+            0.9376831650733948,
+            -0.9376788139343262
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 0.7500000000000006,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.01742300767061629,
+              -0.1514220428052225,
+              0.003928274553400102,
+              -2.4603759571666646,
+              -0.00036767182064613804,
+              2.2526561268436165,
+              0.7717477375435654
+            ],
+            "arm_qvel": [
+              -8.247295358251177e-05,
+              -0.0015501820216977152,
+              0.006927096006172434,
+              0.015413447718225705,
+              5.674131772041981e-05,
+              -0.018597393588175668,
+              0.0028724170499980694
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03875366375648479,
+              -0.038753575926586806
+            ],
+            "finger_qvel": [
+              -2.2435717326518783e-05,
+              2.048961294896487e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.21017826354149932,
+              -0.0061763295264837285,
+              1.1643215490412333
+            ],
+            "orientation_matrix": [
+              [
+                -0.0008283754941302767,
+                0.9984149130733825,
+                -0.056275884237484114
+              ],
+              [
+                0.9999996545408917,
+                0.0008231996673088238,
+                -0.0001151538313440767
+              ],
+              [
+                -6.864501332965942e-05,
+                -0.05627596018707927,
+                -0.9984152500802882
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        },
+        {
+          "gripper_current_action": [
+            0.880489706993103,
+            -0.8617781400680542
+          ],
+          "gripper_hold_from_measurement": [
+            0.880489706993103,
+            -0.8617781400680542
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 8.649999999999558,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              0.09293208938490838,
+              0.690489896545843,
+              0.33352843987172537,
+              -1.8111758210862157,
+              1.3188760748736708,
+              2.7451112781135087,
+              1.5154621226756457
+            ],
+            "arm_qvel": [
+              -0.0027979050114022054,
+              -0.012063443549025209,
+              0.0036096017673461897,
+              -0.020640895047923682,
+              5.210497537812303e-05,
+              -0.018291822593969213,
+              0.003371899825996078
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03760979377096485,
+              -0.037235562874564435
+            ],
+            "finger_qvel": [
+              0.004570850367033542,
+              -0.004669143205595772
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.019088883984986538,
+              0.28441586208692415,
+              1.0235808631170873
+            ],
+            "orientation_matrix": [
+              [
+                0.9575765735386059,
+                0.062441356243417435,
+                0.2813328683971092
+              ],
+              [
+                -0.14876892228597663,
+                -0.7289882905162859,
+                0.6681645606076487
+              ],
+              [
+                0.24680946815698052,
+                -0.6816723181416611,
+                -0.688772776107943
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "expected_capabilities": [
+      "xvla_microwave_place_close"
+    ],
+    "hermes_plan_matches": true,
+    "requested_plan": [
+      "xvla_microwave_place_close"
+    ],
+    "executed_plan": [
+      "xvla_microwave_place_close"
+    ],
+    "native_routing_replacements": [],
+    "effective_plan_matches": true,
+    "model_usage": "See original xvla_calls and Hermes usage logs; unavailable usage remains unknown."
+  }
+}

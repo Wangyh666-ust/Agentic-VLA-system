@@ -1,0 +1,24 @@
+{
+  "request_id": "console-797184d825c414e2889d2952",
+  "session_id": "cdfcb45d8044439c8ec00f6d61636e92",
+  "scene_version": 0,
+  "decision": "execute",
+  "capability_ids": [
+    "xvla_book_caddy"
+  ],
+  "rationale": "用户动作词为「整理」（收纳意图），公开 storage_policy 指定 black_book_1 归位到 desk_caddy_1_back_contain_region（收纳盒后格）。三视角图核对：obj_1 为竖立未收纳的黑封面书本（白色页边清晰），obj_2 为桌面红棕色多格收纳盒（非背景白格架 obj_8、非平放垫板 obj_4/obj_5）。原生长期技能 xvla_book_caddy 的动作（拿起书放入 caddy 后格）、对象、目的地与本次可执行范围完全一致，故优先调用；其 Hermes 复合集成尚未物理验证，不声称可靠保证。",
+  "request_scope": {
+    "coverage": "full",
+    "executable_outcomes": [
+      "将黑色书本(obj_1)放入收纳盒(obj_2)后格 desk_caddy_1_back_contain_region，即完成「书本整理好」"
+    ],
+    "unmet_outcomes": [],
+    "reason": "请求仅含书本收纳一个目标，公开 storage_policy 目的地与原生技能 xvla_book_caddy 的目标完全对应，无能力缺口；注意 native 技能的 Hermes 集成未经物理验证，执行结果以 host 回报为准。"
+  },
+  "target_bindings": {
+    "black_book_1": "obj_1",
+    "desk_caddy_1_back_contain_region": "obj_2"
+  },
+  "audit": false,
+  "budget_per_subgoal": 900
+}

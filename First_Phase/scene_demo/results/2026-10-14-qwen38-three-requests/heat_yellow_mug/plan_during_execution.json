@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "request_id": "qwen38-heat_yellow_mug",
+  "session_id": "a19ae68c9f0640b28dd98eb72bdaaa6d",
+  "state": "running",
+  "decision": "execute",
+  "capability_ids": [
+    "xvla_microwave_place_close"
+  ],
+  "original_capability_ids": [
+    "xvla_microwave_place_close"
+  ],
+  "rationale": "用户动作词为「加热」：场景中唯一加热装置是微波炉（公开 storage_policy 亦将 white_yellow_mug_1 指向 microwave_1_heating_region），故意图为把黄杯子放入微波炉加热并关门（开门无法加热）。该意图与已训练原生长程能力 xvla_microwave_place_close（LIBERO-10 task9：put the yellow and white mug in the microwave and close it）的对象、目的地与顺序完全匹配，故优先单次调用而非拆分为原子能力。目标绑定依据三视角真实画面：黄杯=obj_1（黄色外壁与把手，与灰白斑点杯 obj_2 区分），微波炉=obj_3（门开启）。注：该 native 复合能力的 Hermes 集成尚未物理验证，evidence 为 candidate/native benchmark，不声称可靠。",
+  "target_bindings": {
+    "microwave_1": "obj_3",
+    "microwave_1_heating_region": "obj_3",
+    "white_yellow_mug_1": "obj_1"
+  },
+  "job_ids": [
+    "f479dff188ca423aa6573047a9b92af4"
+  ],
+  "completed_capability_ids": [],
+  "pending_capability_ids": [
+    "xvla_microwave_place_close"
+  ],
+  "plan_success": null,
+  "regressions": [],
+  "error": null,
+  "repair_history": [],
+  "scene_version": 0,
+  "native_skill_route": {
+    "requested_capability_ids": [
+      "xvla_microwave_place_close"
+    ],
+    "executed_capability_ids": [
+      "xvla_microwave_place_close"
+    ],
+    "replacements": []
+  }
+}

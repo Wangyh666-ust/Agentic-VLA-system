@@ -1,0 +1,250 @@
+........................................................................ [ 49%]
+....................................................................F [ 96%]
+.F...                                                                 [100%]
+=================================== FAILURES ===================================
+____ GroundingTests.test_no_frame_metadata_compatible_and_schema_unchanged _____
+
+self = <test_grounding.GroundingTests testMethod=test_no_frame_metadata_compatible_and_schema_unchanged>
+
+    def test_no_frame_metadata_compatible_and_schema_unchanged(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory, "image.png")
+            path.write_bytes(b"\x89PNG\r\n\x1a\n")
+            with mock.patch.dict(os.environ, {"DASHSCOPE_API_KEY": "test-key"}), mock.patch("scene_demo.finish_v1.vision.urllib.request.urlopen", return_value=MockResp()) as opener:
+>               metadata = vision.QwenClient(env_path=Path(directory, "absent.env")).analyze(ctx(), [str(path)])
+
+First_Phase/scene_demo/finish_v1/tests/test_grounding.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/finish_v1/vision.py:762: in analyze
+    return self._request(context, image_paths, build_prompt(context))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.finish_v1.vision.QwenClient object at 0x77a56e671ba0>
+context = {'user_request': 'Place the bowl on the plate.', 'current_subtask': {'operation': 'place', 'target': 'akita_black_bowl_1', 'destination': 'plate_1', 'phase': 'confirm'}, 'criteria': {'required': ['bowl on plate']}}
+image_paths = ['/tmp/tmpwi9c5sdr/image.png']
+prompt = 'You are an independent vision inspector for this task; the whitelisted user_request, current_subtask, criteria and op...ration": "place", "phase": "confirm", "target": "akita_black_bowl_1"}, "user_request": "Place the bowl on the plate."}'
+
+    def _request(self, context, image_paths, prompt):
+        if self._calls >= self.max_calls:
+            raise RuntimeError("Qwen call budget exhausted")
+        key = self._resolve_key()
+        if not key:
+            raise RuntimeError("Qwen API key unavailable")
+        data_urls = self._load_images(image_paths)
+    
+        frames = _validate_frames(context.get("sensor_frames")) if isinstance(context, dict) else []
+        if context.get("sensor_frames") is not None and len(frames) != len(data_urls):
+            raise ValueError("sensor_frames length must match image_paths length")
+        for index, frame in enumerate(frames):
+            if frame["frame"] != index:
+                raise ValueError("sensor_frames frame indices must be 0..n-1 in order")
+    
+        content = [{"type": "text", "text": prompt}]
+        if frames:
+            for index, url in enumerate(data_urls):
+                frame = frames[index]
+                content.append({"type": "text", "text": f"Image frame={frame['frame']}; view={frame['view']}; timestamp={frame['timestamp']}"})
+                content.append({"type": "image_url", "image_url": {"url": url}})
+        else:
+            for index, url in enumerate(data_urls):
+                content.append({"type": "text", "text": f"Image frame={index}; view=unspecified; timestamp=unspecified"})
+                content.append({"type": "image_url", "image_url": {"url": url}})
+        body = {
+            "model": self.model,
+            "temperature": 0,
+            "max_tokens": 1600,
+            "messages": [{"role": "user", "content": content}],
+        }
+        body.update(getattr(self, 'request_options', {}))
+        if body['model'] != 'qwen3.8-max':
+            raise ValueError('VLM request model must be qwen3.8-max')
+        request_bytes = json.dumps(body).encode("utf-8")
+        endpoint = self.base_url.rstrip("/") + "/chat/completions"
+        request = urllib.request.Request(
+            endpoint,
+            data=request_bytes,
+            method="POST",
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + key,
+            },
+        )
+    
+        self._calls += 1
+        call_index = self._calls
+        if hasattr(self, 'record_request'):
+            self.record_request(context, image_paths, prompt, request_bytes, call_index)
+        started = time.monotonic()
+        def transport_error(exc, stage):
+            reason = getattr(exc, 'reason', exc)
+            error = {'stage': stage, 'error_type': type(exc).__name__,
+                     'reason_type': type(reason).__name__, 'errno': getattr(reason, 'errno', None),
+                     'http_status': _safe_status(getattr(exc, 'code', None)),
+                     'timeout_seconds': self.request_timeout,
+                     'elapsed_seconds': round(time.monotonic() - started, 3)}
+            if hasattr(self, 'record_transport_error'):
+                self.record_transport_error(call_index, error)
+            if isinstance(reason, TimeoutError):
+                return f'Qwen request timed out after {self.request_timeout:g}s ({stage})'
+            return f'Qwen network failure ({type(reason).__name__}; {stage})'
+        try:
+            response = urllib.request.urlopen(request, timeout=self.request_timeout)
+        except urllib.error.HTTPError as exc:
+            transport_error(exc, 'http_response')
+            raise RuntimeError(f"Qwen HTTP status {_safe_status(getattr(exc, 'code', None))}") from None
+        except Exception as exc:
+            raise RuntimeError(transport_error(exc, 'awaiting_response')) from None
+    
+        try:
+            try:
+                status = response.getcode()
+            except Exception:
+                status = getattr(response, "status", None)
+            raw = response.read()
+        except Exception as exc:
+            raise RuntimeError(transport_error(exc, 'reading_response')) from None
+        finally:
+            if hasattr(response, 'close'):
+                response.close()
+    
+        if hasattr(self, 'record_response'):
+            self.record_response(context, image_paths, prompt, request_bytes, raw, call_index, status)
+        try:
+            payload = json.loads(raw.decode("utf-8"))
+        except Exception:
+            raise RuntimeError("Qwen response parse failure") from None
+    
+        if not isinstance(payload, dict):
+            raise RuntimeError('Qwen response parse failure')
+        if payload.get('model') and payload['model'] != 'qwen3.8-max':
+>           raise RuntimeError('Qwen returned an unexpected model: ' + str(payload['model']))
+E           RuntimeError: Qwen returned an unexpected model: m
+
+First_Phase/scene_demo/finish_v1/vision.py:860: RuntimeError
+_______ GroundingTests.test_real_client_labels_interleave_matching_urls ________
+
+self = <test_grounding.GroundingTests testMethod=test_real_client_labels_interleave_matching_urls>
+
+    def test_real_client_labels_interleave_matching_urls(self):
+        with tempfile.TemporaryDirectory() as directory:
+            data = [b"\x89PNG\r\n\x1a\nfirst", b"\x89PNG\r\n\x1a\nsecond"]
+            paths = [Path(directory, f"{index}.png") for index in range(2)]
+            for path, raw in zip(paths, data):
+                path.write_bytes(raw)
+            frames = [{"frame": 0, "view": "agentview", "timestamp": 1.0}, {"frame": 1, "view": "wrist", "timestamp": 2.0}]
+            with mock.patch.dict(os.environ, {"DASHSCOPE_API_KEY": "test-key"}), mock.patch("scene_demo.finish_v1.vision.urllib.request.urlopen", return_value=MockResp()) as opener:
+                client = vision.QwenClient(env_path=Path(directory, "absent.env"))
+>               metadata = client.analyze(ctx(sensor_frames=frames), [str(path) for path in paths])
+
+First_Phase/scene_demo/finish_v1/tests/test_grounding.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/finish_v1/vision.py:762: in analyze
+    return self._request(context, image_paths, build_prompt(context))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.finish_v1.vision.QwenClient object at 0x77a526d5bdf0>
+context = {'user_request': 'Place the bowl on the plate.', 'current_subtask': {'operation': 'place', 'target': 'akita_black_bowl...sensor_frames': [{'frame': 0, 'view': 'agentview', 'timestamp': 1.0}, {'frame': 1, 'view': 'wrist', 'timestamp': 2.0}]}
+image_paths = ['/tmp/tmp8sxd9u5k/0.png', '/tmp/tmp8sxd9u5k/1.png']
+prompt = 'You are an independent vision inspector for this task; the whitelisted user_request, current_subtask, criteria and op...frame/view/timestamp entries listed above:\n- frame=0 view=agentview timestamp=1.0\n- frame=1 view=wrist timestamp=2.0'
+
+    def _request(self, context, image_paths, prompt):
+        if self._calls >= self.max_calls:
+            raise RuntimeError("Qwen call budget exhausted")
+        key = self._resolve_key()
+        if not key:
+            raise RuntimeError("Qwen API key unavailable")
+        data_urls = self._load_images(image_paths)
+    
+        frames = _validate_frames(context.get("sensor_frames")) if isinstance(context, dict) else []
+        if context.get("sensor_frames") is not None and len(frames) != len(data_urls):
+            raise ValueError("sensor_frames length must match image_paths length")
+        for index, frame in enumerate(frames):
+            if frame["frame"] != index:
+                raise ValueError("sensor_frames frame indices must be 0..n-1 in order")
+    
+        content = [{"type": "text", "text": prompt}]
+        if frames:
+            for index, url in enumerate(data_urls):
+                frame = frames[index]
+                content.append({"type": "text", "text": f"Image frame={frame['frame']}; view={frame['view']}; timestamp={frame['timestamp']}"})
+                content.append({"type": "image_url", "image_url": {"url": url}})
+        else:
+            for index, url in enumerate(data_urls):
+                content.append({"type": "text", "text": f"Image frame={index}; view=unspecified; timestamp=unspecified"})
+                content.append({"type": "image_url", "image_url": {"url": url}})
+        body = {
+            "model": self.model,
+            "temperature": 0,
+            "max_tokens": 1600,
+            "messages": [{"role": "user", "content": content}],
+        }
+        body.update(getattr(self, 'request_options', {}))
+        if body['model'] != 'qwen3.8-max':
+            raise ValueError('VLM request model must be qwen3.8-max')
+        request_bytes = json.dumps(body).encode("utf-8")
+        endpoint = self.base_url.rstrip("/") + "/chat/completions"
+        request = urllib.request.Request(
+            endpoint,
+            data=request_bytes,
+            method="POST",
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + key,
+            },
+        )
+    
+        self._calls += 1
+        call_index = self._calls
+        if hasattr(self, 'record_request'):
+            self.record_request(context, image_paths, prompt, request_bytes, call_index)
+        started = time.monotonic()
+        def transport_error(exc, stage):
+            reason = getattr(exc, 'reason', exc)
+            error = {'stage': stage, 'error_type': type(exc).__name__,
+                     'reason_type': type(reason).__name__, 'errno': getattr(reason, 'errno', None),
+                     'http_status': _safe_status(getattr(exc, 'code', None)),
+                     'timeout_seconds': self.request_timeout,
+                     'elapsed_seconds': round(time.monotonic() - started, 3)}
+            if hasattr(self, 'record_transport_error'):
+                self.record_transport_error(call_index, error)
+            if isinstance(reason, TimeoutError):
+                return f'Qwen request timed out after {self.request_timeout:g}s ({stage})'
+            return f'Qwen network failure ({type(reason).__name__}; {stage})'
+        try:
+            response = urllib.request.urlopen(request, timeout=self.request_timeout)
+        except urllib.error.HTTPError as exc:
+            transport_error(exc, 'http_response')
+            raise RuntimeError(f"Qwen HTTP status {_safe_status(getattr(exc, 'code', None))}") from None
+        except Exception as exc:
+            raise RuntimeError(transport_error(exc, 'awaiting_response')) from None
+    
+        try:
+            try:
+                status = response.getcode()
+            except Exception:
+                status = getattr(response, "status", None)
+            raw = response.read()
+        except Exception as exc:
+            raise RuntimeError(transport_error(exc, 'reading_response')) from None
+        finally:
+            if hasattr(response, 'close'):
+                response.close()
+    
+        if hasattr(self, 'record_response'):
+            self.record_response(context, image_paths, prompt, request_bytes, raw, call_index, status)
+        try:
+            payload = json.loads(raw.decode("utf-8"))
+        except Exception:
+            raise RuntimeError("Qwen response parse failure") from None
+    
+        if not isinstance(payload, dict):
+            raise RuntimeError('Qwen response parse failure')
+        if payload.get('model') and payload['model'] != 'qwen3.8-max':
+>           raise RuntimeError('Qwen returned an unexpected model: ' + str(payload['model']))
+E           RuntimeError: Qwen returned an unexpected model: m
+
+First_Phase/scene_demo/finish_v1/vision.py:860: RuntimeError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/finish_v1/tests/test_grounding.py::GroundingTests::test_no_frame_metadata_compatible_and_schema_unchanged
+FAILED First_Phase/scene_demo/finish_v1/tests/test_grounding.py::GroundingTests::test_real_client_labels_interleave_matching_urls
+2 failed, 144 passed, 6 subtests passed in 2.93s

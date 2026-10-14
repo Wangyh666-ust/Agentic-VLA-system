@@ -409,6 +409,47 @@ def screen_shapes(points, starts, path, margin=0.01, require_endpoint_clear=True
         },
     }
 
+def sensed_exit_directions(points, shapes):
+    """Bounded translation candidates from CURRENT geometry, not semantic boxes.
+
+    A nearby surface supplies the preferred horizontal exit. Other horizontal
+    and rising directions cover corners/occlusion; none is accepted without the
+    existing whole-arm path and endpoint screens. No task or object IDs needed.
+    """
+    up = np.array([0., 0., 1.])
+    nearest = []
+    for shape in shapes:
+        if shape['hand'] and len(points):
+            distances = shape_distance(points, shape)
+            index = int(np.argmin(distances))
+            nearest.append((float(distances[index]), shape, points[index]))
+    candidates = []
+    if nearest:
+        _, shape, point = min(nearest, key=lambda row: row[0])
+        rotation = np.asarray(shape['rotation'])
+        local = (point - np.asarray(shape['center'])) @ rotation
+        half = np.asarray(shape['half_extents'])
+        normal = local - np.clip(local, -half, half)
+        if np.linalg.norm(normal) < 1e-9:
+            axis = int(np.argmax(np.abs(local) - half))
+            normal[axis] = 1. if local[axis] >= 0 else -1.
+        away = -(rotation @ normal)
+        away[2] = 0.
+        if np.linalg.norm(away) > 1e-9:
+            away /= np.linalg.norm(away)
+            candidates.extend([away, (away + up) / np.sqrt(2)])
+    for x, y in ((1, 0), (-1, 0), (0, 1), (0, -1),
+                 (1, 1), (1, -1), (-1, 1), (-1, -1)):
+        horizontal = np.array([x, y, 0.], dtype=float)
+        horizontal /= np.linalg.norm(horizontal)
+        candidates.extend([horizontal, (horizontal + up) / np.sqrt(2)])
+    unique = []
+    for direction in candidates:
+        if not any(float(np.dot(direction, old)) > .98 for old in unique):
+            unique.append(direction)
+    return unique
+
+
 def plan_retreat(port, observation, verdict, directions_override=None, endpoint_eligible=None):
     q0 = np.asarray(observation['robot']['arm_qpos'], float)
     eef = np.asarray(observation['eef_position'], float)
@@ -419,7 +460,10 @@ def plan_retreat(port, observation, verdict, directions_override=None, endpoint_
         return {'ok': False, 'reason': 'non-finite input', 'waypoints': [], 'candidate_reports': [], 'sensor_screen': None}
     points = port.obstacle_cloud(observation['frames'])
     reports = []
-    fail = {'ok': False, 'reason': 'no sensor-safe route', 'waypoints': [], 'candidate_reports': reports, 'sensor_screen': None}
+    provenance = {'observation_timestamp': observation.get('timestamp'),
+                  'geometry_frames': observation['frames'],
+                  'candidate_policy': 'legacy_first_then_current_geometry_v1'}
+    fail = {'ok': False, 'reason': 'no sensor-safe route', 'waypoints': [], 'candidate_reports': reports, 'sensor_screen': None, **provenance}
     if len(points) == 0:
         return fail
     target = None
@@ -466,36 +510,46 @@ def plan_retreat(port, observation, verdict, directions_override=None, endpoint_
     if directions_override is not None:
         directions = [np.asarray(direction, float) for direction in directions_override]
     start = port.robot_shapes(q0)
-    for dist in (0.04, 0.06):
-        for direction in directions:
-            qs = [q0]
-            valid_candidate = True
-            steps = np.linspace(0, dist, int(np.ceil(dist / 0.002)) + 1)[1:]
-            for alpha in steps:
-                pos = eef + direction * alpha
-                q = port.ik(pos, R, qs[-1])
-                if q is None or np.asarray(q).shape != (7,) or not np.all(np.isfinite(q)):
-                    valid_candidate = False
-                    break
-                qs.append(q)
-            if not valid_candidate:
-                continue
-            poses = []
-            for i in range(len(qs) - 1):
-                qa, qb = qs[i], qs[i + 1]
-                n = max(1, int(np.ceil(np.max(np.abs(np.asarray(qb) - np.asarray(qa))) / 0.003)))
-                for a in np.linspace(0, 1, n + 1)[1:]:
-                    q_interp = np.asarray(qa) + (np.asarray(qb) - np.asarray(qa)) * a
-                    poses.append(port.robot_shapes(q_interp))
-            scr = screen_shapes(points, start, poses)
-            report = {'direction': direction.tolist(), 'distance': dist, 'reason': scr['reason']}
-            reports.append(report)
-            if scr['ok']:
-                if endpoint_eligible is not None:
-                    eligibility = endpoint_eligible(qs[-1])
-                    report['home_screen'] = eligibility
-                    if eligibility.get('ok') is not True:
-                        report['reason'] = 'home_path_blocked'
-                        continue
-                return {'ok': True, 'reason': 'ok', 'waypoints': [q.tolist() for q in qs], 'candidate_reports': reports, 'sensor_screen': scr}
+    # Preserve both original distances and their order. Only after those fail
+    # expand using current calibrated RGBD + measured robot shapes. Explicit
+    # overrides (the existing feedback controller) retain their exact contract.
+    candidates = [(dist, direction, 'override' if directions_override is not None else 'legacy')
+                  for dist in (0.04, 0.06) for direction in directions]
+    if directions_override is None:
+        alternatives = [d for d in sensed_exit_directions(points, start)
+                        if not any(float(np.dot(d, old)) > .98 for old in directions)]
+        candidates.extend((dist, d, 'current_geometry')
+                          for dist in (0.04, 0.06) for d in alternatives)
+    for dist, direction, source in candidates:
+        qs = [q0]
+        valid_candidate = True
+        steps = np.linspace(0, dist, int(np.ceil(dist / 0.002)) + 1)[1:]
+        for alpha in steps:
+            pos = eef + direction * alpha
+            q = port.ik(pos, R, qs[-1])
+            if q is None or np.asarray(q).shape != (7,) or not np.all(np.isfinite(q)):
+                valid_candidate = False
+                break
+            qs.append(q)
+        if not valid_candidate:
+            continue
+        poses = []
+        for i in range(len(qs) - 1):
+            qa, qb = qs[i], qs[i + 1]
+            n = max(1, int(np.ceil(np.max(np.abs(np.asarray(qb) - np.asarray(qa))) / 0.003)))
+            for a in np.linspace(0, 1, n + 1)[1:]:
+                q_interp = np.asarray(qa) + (np.asarray(qb) - np.asarray(qa)) * a
+                poses.append(port.robot_shapes(q_interp))
+        scr = screen_shapes(points, start, poses)
+        report = {'direction': direction.tolist(), 'distance': dist, 'reason': scr['reason'],
+                  'direction_source': source, 'sensor_screen': scr}
+        reports.append(report)
+        if scr['ok']:
+            if endpoint_eligible is not None:
+                eligibility = endpoint_eligible(qs[-1])
+                report['home_screen'] = eligibility
+                if eligibility.get('ok') is not True:
+                    report['reason'] = 'home_path_blocked'
+                    continue
+            return {'ok': True, 'reason': 'ok', 'waypoints': [q.tolist() for q in qs], 'candidate_reports': reports, 'sensor_screen': scr, **provenance}
     return fail

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "20261013-xvla-event-offline-state-split",
+  "intent": "analyze_existing",
+  "question_key": "xvla-process-evidence",
+  "purpose": "以逐事件事实和逐目标时间汇总修复所有十个native长程检查；保留原收尾/退离/复位，先离线正负例通过才可独立启动两项仿真。",
+  "prior_evidence": [
+    "20261013-xvla-process-evidence-software",
+    "20261013-xvla-release-trial",
+    "20261013-xvla-timeline-software",
+    "20261013-xvla-timeline-trial",
+    "20261012-xvla-checker-grounding",
+    "20261012-xvla-input-audit",
+    "20261012-xvla-persistent-pilot"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261013-xvla-process-evidence-software",
+      "disposition": "reuse",
+      "reason": "复用既有协议、实测采图、原生输入或下游资格记录；旧结果不能证明新事实汇总效果。"
+    },
+    {
+      "experiment_id": "20261013-xvla-release-trial",
+      "disposition": "reuse",
+      "reason": "复用既有协议、实测采图、原生输入或下游资格记录；旧结果不能证明新事实汇总效果。"
+    },
+    {
+      "experiment_id": "20261013-xvla-timeline-software",
+      "disposition": "reuse",
+      "reason": "复用既有协议、实测采图、原生输入或下游资格记录；旧结果不能证明新事实汇总效果。"
+    },
+    {
+      "experiment_id": "20261013-xvla-timeline-trial",
+      "disposition": "reuse",
+      "reason": "复用原始两项失败请求、三视图和检查状态；新增事实协议不修改旧记录。"
+    },
+    {
+      "experiment_id": "20261012-xvla-checker-grounding",
+      "disposition": "reuse",
+      "reason": "复用既有协议、实测采图、原生输入或下游资格记录；旧结果不能证明新事实汇总效果。"
+    },
+    {
+      "experiment_id": "20261012-xvla-input-audit",
+      "disposition": "reuse",
+      "reason": "复用既有协议、实测采图、原生输入或下游资格记录；旧结果不能证明新事实汇总效果。"
+    },
+    {
+      "experiment_id": "20261012-xvla-persistent-pilot",
+      "disposition": "reuse",
+      "reason": "复用既有协议、实测采图、原生输入或下游资格记录；旧结果不能证明新事实汇总效果。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "软件验证全部十技能：逐事件完整输出、身份/同物计数、撤销、当前状态、SHA/时刻；原finish/control及home文件哈希保持。",
+    "真实qwen3-vl-plus只重读旧照片，输入初始三图身份参考（旧时刻未知标-1，只用于身份，不填假编码器）、实测release及已记录当前捕获，原先检查状态压缩入请求。",
+    "正例各一：微波炉末态必须入炉历史引用且门当前True；双罐末态须两不同目标同时True且至少一项历史复用。负例各一：未关闭门及仅第一罐入篮不得整体True。无历史的遮挡当前不得凭空通过。",
+    "通过后另冻结两项独立仿真方案并check，各一次900VLA步，无辅助器，无子agent，保留原下游。",
+    "前两版10次请求全部保留；第三版最后最多8次（放置时间线与最新装置状态分开），总离线最多18次，不增加环境动作。依据是已观察到历史门状态污染、相同帧重复编号，以及未解决身份矛盾必须阻断。",
+    "第三版若任一正例/负例/协议不通过则不启动新仿真，报告具体剩余失败，不再本轮盲试。"
+  ],
+  "scope_notes": {
+    "max_offline_calls": 18,
+    "root_model": "unknown",
+    "root_effort": "unknown",
+    "subagents_used": 0,
+    "offline_gate": "micro final history true + latest close true; basket distinct both true + history reference; negative cases never full true; strict source/protocol validation",
+    "last_revision_max_calls": 8
+  }
+}

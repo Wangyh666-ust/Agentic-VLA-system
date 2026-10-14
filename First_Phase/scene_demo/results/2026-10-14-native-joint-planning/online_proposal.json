@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "id": "20261014-native-joint-planning-online",
+  "intent": "new_experiment",
+  "question_key": "xvla-interactive-latency",
+  "purpose": "用正常交互界面在线测试收拾桌面将碗和瓶子归位：完整原生入抽屉关抽屉是否被选中并真正执行，并保留原收尾、退离、home和5/5验收；将规划耗时与执行耗时分别报告。",
+  "prior_evidence": [
+    "20261014-latency-optimization",
+    "20261014-book-latency-diagnosis",
+    "20261012-xvla-native-benchmark",
+    "20261014-occluded-support-handoff"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261014-latency-optimization",
+      "disposition": "reuse",
+      "reason": "复用相关耗时和原生库、视觉约束证据；旧半段技能及多轮规划不能证明新两请求流程有效。"
+    },
+    {
+      "experiment_id": "20261014-book-latency-diagnosis",
+      "disposition": "reuse",
+      "reason": "复用相关耗时和原生库、视觉约束证据；旧半段技能及多轮规划不能证明新两请求流程有效。"
+    },
+    {
+      "experiment_id": "20261012-xvla-native-benchmark",
+      "disposition": "reuse",
+      "reason": "复用相关耗时和原生库、视觉约束证据；旧半段技能及多轮规划不能证明新两请求流程有效。"
+    },
+    {
+      "experiment_id": "20261014-occluded-support-handoff",
+      "disposition": "reuse",
+      "reason": "复用相关耗时和原生库、视觉约束证据；旧半段技能及多轮规划不能证明新两请求流程有效。"
+    }
+  ],
+  "new_physical_actions": 8000,
+  "hypothesis": "原生目录限制与两轮联合规划能避免只执行入抽屉半段；JSON输出约束及逐回答修复能减少格式导致的未知，不改变视觉判断标准。",
+  "information_gain": "旧190606运行只执行未训练半段、归位后格式失败；新试验验证完整技能实际执行及全AND目标，不以规划通过或home代替任务效果。多项变化同时应用，不分开归因。",
+  "success_criteria": "先离线确认正确选择xvla_bowl_drawer_close且瓶子归位partial；在线同样确认计划才执行。实际VLA使用完整原生指令且步数>0；独立记录in碗和close抽屉同时为真、原生check_success、视觉全目标通过、松手退离归位动作及5/5。规划到草稿目标60秒，超时如实记录。",
+  "failure_criteria": "应选完整技能却未选、只有半段或VLA零动作属于触发链路失败，停止后续执行验收；执行后任一原生目标或最终视觉/复位验收失败分别记录，不用下游成功替代。",
+  "unknown_criteria": "网络/协议/身份不确定或缺少终态证据则未知；不自动重试、不降标准。",
+  "changed_factors": [
+    {
+      "name": "planning",
+      "before": "候选拆分技能，识别2轮+Hermes工具多轮+执行前复核",
+      "after": "原生技能目录+真实Hermes单轮识别规划+一次独立三视图审核复用",
+      "reason": "避免强拆动作并减少重复调用"
+    },
+    {
+      "name": "format",
+      "before": "自由JSON且整段仅一次修复，丢失坏JSON原文",
+      "after": "JSON输出模式、每条回答最多一次修复并保留原文，总预算不变",
+      "reason": "防止格式失败阻断已完成任务"
+    }
+  ],
+  "fixed_factors": {
+    "scene": "bowl_drawer",
+    "seed": 142,
+    "init_state_index": 0,
+    "model": "qwen3.8-max",
+    "auxiliary_grasp_helpers": 0,
+    "finish_reset": "原实现和配置，5/5不变",
+    "camera": "已有腕部+两外部视角",
+    "VLA": "已有X-VLA权重与服务启动配置"
+  },
+  "scope": {
+    "max_cases": 1,
+    "max_vla_actions_per_case": 900,
+    "max_helper_actions_per_case": 7100,
+    "stop_rule": "总会话8000动作硬上限；helper预算只为原收尾/复位/初态settle保留，不添加抓取辅助器。离线或在线计划未命中完整技能即停止。一次在线测试，终态失败或取消后不自动重试。"
+  },
+  "configuration": {
+    "scene": "bowl_drawer",
+    "seed": 142,
+    "init_state_index": 0,
+    "native_capability": "xvla_bowl_drawer_close",
+    "request": "收拾桌面，将碗和瓶子归位",
+    "entry": "xvla_console.py normal load/plan/execute APIs",
+    "vlm_model": "qwen3.8-max",
+    "planner": "Hermes installed SDK one turn + independent Qwen review",
+    "planner_thinking": false,
+    "checker_thinking_budget": 1024,
+    "vla_budget": 900,
+    "session_action_limit": 8000,
+    "helpers": false,
+    "finish_success_streak": 5,
+    "policy_launch_reference": "First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/ready.json future_server",
+    "controls_hashes": "protected_controls.json",
+    "instructions": "original complete skill instruction, all original goals"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": true,
+    "reason": "同一旧场景测试改后的完整原生选择和联合规划/JSON链路，非重复基线成功率测量。"
+  }
+}

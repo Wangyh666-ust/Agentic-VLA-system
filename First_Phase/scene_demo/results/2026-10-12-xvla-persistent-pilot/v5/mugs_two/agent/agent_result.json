@@ -1,0 +1,113 @@
+{
+  "request_id": "xvla-mugs_two",
+  "session_id": "56230ab5f61e4f8eb779f7aee337da99",
+  "request": "先把白杯放到左边盘子，再把黄白杯放到右边盘子。",
+  "run_ok": true,
+  "chain_ok": false,
+  "plan_success": null,
+  "task_success": null,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-mugs_two",
+    "session_id": "56230ab5f61e4f8eb779f7aee337da99",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "white_mug_left",
+      "yellow_mug_right"
+    ],
+    "original_capability_ids": [
+      "white_mug_left",
+      "yellow_mug_right"
+    ],
+    "rationale": "用户明确要求‘先把白杯放到左边盘子，再把黄白杯放到右边盘子’，对应 capability white_mug_left 和 yellow_mug_right，顺序执行。",
+    "job_ids": [
+      "d507c75aec3a40669f728f9e68a4544e"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [
+      "yellow_mug_right"
+    ],
+    "plan_success": null,
+    "regressions": [],
+    "error": "budget_exhausted",
+    "repair_history": [],
+    "scene_version": 1
+  },
+  "jobs": [
+    {
+      "job_id": "d507c75aec3a40669f728f9e68a4544e",
+      "request_id": "xvla-mugs_two",
+      "session_id": "56230ab5f61e4f8eb779f7aee337da99",
+      "capability_id": "white_mug_left",
+      "state": "completed",
+      "steps": 800,
+      "total_steps": 805,
+      "success": false,
+      "ended_reason": "budget_exhausted",
+      "error": null,
+      "instruction": "put the white mug on the left plate",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "87d7f87e25d870bb6c9bcbf1633e9a11130cc02971f4578b2afcfdcb71a4a568",
+      "state_after_sha": "af2a399b0683596c848d28e5e9a6245293f387ce8704066677814b98945b99a7",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "observing",
+        "calls": 5,
+        "prechecks": 5,
+        "helper_counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "last_decision": {
+          "state": "incomplete",
+          "reason": "subtask purpose not achieved",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": null,
+        "independent_streak": 0
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/rollout.mp4",
+      "wall_s": 212.585
+    }
+  ],
+  "evaluation": null,
+  "hermes_invocations": 1,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "cancelled_by_user": false,
+  "cancellation_pending": false,
+  "wall_s": 233.345,
+  "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+  "hermes_output": "计划已提交。\n\nsession_id: 20261012_222348_a185f3\n"
+}

@@ -1,0 +1,153 @@
+{
+  "passed": true,
+  "response": {
+    "checks": [
+      {
+        "target_id": "black_book_1",
+        "matches_request": true,
+        "features": "黑色封面书本,竖立在桌面上,顶边露白色书页,非平铺黑垫",
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              255,
+              320,
+              535
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              565,
+              393,
+              602,
+              502
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              568,
+              494,
+              669,
+              606
+            ]
+          }
+        ],
+        "reason": "三帧中均为马克杯旁竖立黑书:腕视左侧斜立板状物侧边见页层;agentview杯后竖立薄板;sideview杯右黑书顶面白纸清晰,与平贴桌面黑垫不同"
+      },
+      {
+        "target_id": "desk_caddy_1_back_contain_region",
+        "matches_request": true,
+        "features": "棕色长方形收纳盒,顶部三个敞口隔间,隔板可见",
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              318,
+              600,
+              1000,
+              840
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              148,
+              350,
+              488,
+              602
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              378,
+              300,
+              665,
+              508
+            ]
+          }
+        ],
+        "reason": "三帧同一棕色三隔间盒:腕视下方见顶隔间与侧壁(前景夹爪部分遮挡);agentview与sideview整体及隔板清晰,与竖立黑书非同一实物"
+      }
+    ],
+    "regions": [
+      {
+        "destination_id": "desk_caddy_1_back_contain_region",
+        "confirmed": true,
+        "description": "收纳盒顶部靠机器人/墙壁一侧的敞口隔间(后隔间),非整个盒体",
+        "boundary": "盒体后内壁与内侧隔板围成的敞口,sideview中为左起第一个深隔间,agentview中为靠机械臂一侧隔间",
+        "anchors": [
+          {
+            "frame": 2,
+            "box": [
+              390,
+              300,
+              500,
+              400
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              350,
+              352,
+              480,
+              440
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "verdict": {
+      "target_visible": null,
+      "destination_visible": null,
+      "at_destination": null,
+      "supported": null,
+      "released": null,
+      "stable": null,
+      "operation_achieved": null,
+      "clear_of_target": null,
+      "boxes": {},
+      "evidence": [
+        "scene identity only"
+      ],
+      "unknown_reasons": []
+    },
+    "usage": {
+      "completion_tokens": 2499,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2048,
+        "text_tokens": 450
+      },
+      "prompt_tokens": 2304,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "image_tokens": 582,
+        "text_tokens": 1722
+      },
+      "total_tokens": 4803
+    },
+    "model": "qwen3.8-max",
+    "http_status": 200,
+    "request_sha256": "6c8ba9ba677f557da9be657c0ac351fcc645350909b18f909f26cae7b7743a80",
+    "response_sha256": "27fb7c6bdc0e29687c8ffc0fd59212026b8f05747ada55c120a5f773b626706d",
+    "call_index": 1
+  },
+  "selection": {
+    "black_book_1": "obj_1",
+    "desk_caddy_1_back_contain_region": "obj_2"
+  },
+  "image_sha256": [
+    "403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201",
+    "f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32",
+    "285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45"
+  ],
+  "goal_keys": [
+    "[\"black_book_1\", \"in\", \"desk_caddy_1_back_contain_region\", false]"
+  ]
+}

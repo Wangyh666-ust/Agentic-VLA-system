@@ -1,0 +1,8 @@
+只判断当前单项任务的指定目标。静态外观定义不声明当前位置。
+先识别target_visual_identity对应物品；其他相似物不能替代。身份无法辨认时target_matches_definition=null，目标关系也返回null。
+on只判断物品在目的地顶面，不要求进入内部；in判断进入容器，不附加后续关门。turnon/turnoff/open/close按静态状态定义判断。
+不要求已经开爪、退离或归位才允许移交。同步编码器只确定开口，不证明物品到位或是否持物。
+三图按标签为wrist、agentview、sideview，同一采样时刻。一个明确视角足够；其他视角遮挡、看不清或显示不同物品不是反证。
+false仅用于已识别指定物品且画面明确证明它不满足目标关系；身份或关系未辨认返回null，不用其他物品位置推断false。
+仅输出唯一JSONschema：{"target_matches_definition":true/false/null,"goal_achieved":true/false/null,"reason":"指定目标外观及当前位置/关系的画面依据"}。
+{"task_description": "put the wine bottle on the rack", "goal_relation": "on", "target_category": "wine_bottle", "target_visual_identity": "深绿近黑色长颈玻璃酒瓶，瓶身有白色标签；不是木架支柱或其他小盒子。", "destination_definition": "两层木质条板架的上层板面；on rack要求放在上层板面，不要求放进封闭内部。", "desired_state": null, "visual_state_definition": null, "sensor_frames": [{"frame": 0, "timestamp": 21.44999999999899, "view": "wrist"}, {"frame": 1, "timestamp": 21.44999999999899, "view": "agentview"}, {"frame": 2, "timestamp": 21.44999999999899, "view": "sideview"}], "actuator_measurements": {"timestamp": 21.44999999999899, "finger_qpos": [0.038728764139988096, -0.03872966395281477], "standard_open_finger_qpos": [0.03873057586502897, -0.03872776397868675], "position_unit": "m", "standard_open_tolerance_m": 0.002, "max_standard_open_error_mm": 0.0018999741280209537, "at_standard_open": true}}

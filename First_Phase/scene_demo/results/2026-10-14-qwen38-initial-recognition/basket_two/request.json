@@ -1,0 +1,47 @@
+{
+  "prompt": "根据同步三视图建立现场物体清单，供规划和后续检查共用。用户任务：先把字母汤罐放进篮子，再把番茄酱罐放进篮子。\n先辨认桌面可见物品、容器和装置，包括目标和易混淆物。外观只写实际可见颜色、形状、把手、包装；看不清文字不要猜品牌。同一实物跨视角只分配一个object_id；不同实物不能合并。识别门/抽屉时可用装置整体加可见活动部件描述。每个物体必须逐一检查frame 0/1/2；遮挡视角如实记录，不要求三张都看得见。至少一个清晰参照且其他视角无身份冲突才confirmed=true。框采用每幅原图0..1000的[x1,y1,x2,y2]，包住真实物体，不按期望位置猜框。输出JSON：{\"objects\":[{\"object_id\":\"obj_1\",\"description\":\"可见特征及初始相对位置\",\"confirmed\":true,\"anchors\":[{\"frame\":1,\"box\":[100,200,300,400]}],\"view_observations\":[{\"frame\":0,\"visibility\":\"occluded\",\"reason\":\"遮挡情况\"},{\"frame\":1,\"visibility\":\"visible\",\"reason\":\"辨认依据\"},{\"frame\":2,\"visibility\":\"partial\",\"reason\":\"对应依据\"}],\"confusable_with\":[],\"role\":\"target/destination/distractor/uncertain\"}],\"coverage\":{\"targets_identifiable\":true,\"destination_visible\":true,\"state_change_visible\":true,\"reason\":\"画面覆盖依据\"}}。",
+  "context": {
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": 0.5000000000000003
+      }
+    ]
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 2048,
+    "max_tokens": 6500
+  },
+  "request_sha256": "4fa45b408ff26d0f29a497fd162eea63e88cbafded2a9f4b78dc4d3e0617b4e0",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/basket_renderfix/basket_two/runs/20261013T155633Z_basket_two_594bcb3b/planning_grounding/cap000002_wrist.png",
+      "sha256": "ca7b899be7cedc565e8da41e91474ddb8772bbe8c82dc19101d8d235ad683ca7"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/basket_renderfix/basket_two/runs/20261013T155633Z_basket_two_594bcb3b/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "sha256": "d4c27f4c369475ab415ee4bc45626f635d78feec890c188c12696de0461ca171"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/basket_renderfix/basket_two/runs/20261013T155633Z_basket_two_594bcb3b/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "sha256": "3d5a600f361d316456a44a8df537683b58a779e009e1713c78a8cf9154eb59d5"
+    }
+  ],
+  "model": "qwen3.8-max",
+  "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+  "source_request": "First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/basket_renderfix/basket_two/runs/20261013T155633Z_basket_two_594bcb3b/planning_grounding/model_requests/call_01_request.json",
+  "source_request_sha256": "ebb8f27c1f4f16dbeb540ae36b99a2b05d80b6144b71878af2fb12c276613ba2"
+}

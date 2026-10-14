@@ -1,0 +1,360 @@
+{
+  "objects": [
+    {
+      "object_id": "obj_1",
+      "description": "黄白杯：杯身外侧黄色、内壁白色，带黄色环形把手的圆柱形马克杯。初始位于桌面中部偏右，靠近微波炉门一侧，是待抓取的目标杯。",
+      "confirmed": true,
+      "anchors": [
+        {
+          "frame": 0,
+          "box": [
+            345,
+            0,
+            690,
+            270
+          ]
+        },
+        {
+          "frame": 1,
+          "box": [
+            432,
+            468,
+            532,
+            562
+          ]
+        },
+        {
+          "frame": 2,
+          "box": [
+            455,
+            465,
+            550,
+            562
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "visible",
+          "reason": "手腕视角正下方俯视，清楚看到黄色外壁、白色内壁和右侧黄色把手"
+        },
+        {
+          "frame": 1,
+          "visibility": "visible",
+          "reason": "agentview桌面中部可见黄色把手、黄白杯身的马克杯"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "sideview桌面中部同一黄白杯，把手朝左，颜色形状一致"
+        }
+      ],
+      "confusable_with": [
+        "obj_2"
+      ],
+      "role": "target"
+    },
+    {
+      "object_id": "obj_2",
+      "description": "灰白斑点杯：杯身灰白色带细密斑点纹理，带同色把手的圆柱形马克杯。初始位于桌面左侧，离微波炉较远，为易混淆物。",
+      "confirmed": true,
+      "anchors": [
+        {
+          "frame": 1,
+          "box": [
+            245,
+            500,
+            350,
+            605
+          ]
+        },
+        {
+          "frame": 2,
+          "box": [
+            385,
+            380,
+            465,
+            465
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "occluded",
+          "reason": "手腕视角朝向目标杯与微波炉方向，灰斑杯位于视野外/被遮挡，未见"
+        },
+        {
+          "frame": 1,
+          "visibility": "visible",
+          "reason": "agentview桌面左侧清楚看到灰白斑点杯及把手"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "sideview桌面左后侧同一灰白斑点杯，纹理与把手吻合"
+        }
+      ],
+      "confusable_with": [
+        "obj_1"
+      ],
+      "role": "distractor"
+    },
+    {
+      "object_id": "obj_3",
+      "description": "微波炉主体：黑色长方体箱体，顶面平整深灰黑色，正面有敞开的矩形炉腔开口（内壁浅灰），固定放在桌面右侧，为放置目标杯的容器。",
+      "confirmed": true,
+      "anchors": [
+        {
+          "frame": 1,
+          "box": [
+            560,
+            290,
+            835,
+            535
+          ]
+        },
+        {
+          "frame": 2,
+          "box": [
+            565,
+            450,
+            910,
+            795
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "occluded",
+          "reason": "手腕视角范围有限，炉体位于视野外，仅右缘见门部件，未见炉体全貌"
+        },
+        {
+          "frame": 1,
+          "visibility": "visible",
+          "reason": "agentview桌面右侧黑色箱体，开口朝左敞开，内部浅灰可见"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "sideview右前侧同一黑色箱体顶面与侧面，位置与frame 1一致"
+        }
+      ],
+      "confusable_with": [],
+      "role": "destination"
+    },
+    {
+      "object_id": "obj_4",
+      "description": "微波炉门（活动部件）：黑色矩形门框，中间嵌浅灰半透明观察窗，当前处于打开状态，竖立/斜立在炉体开口旁，与炉体以铰链相连，是需要关闭的活动部件。",
+      "confirmed": true,
+      "anchors": [
+        {
+          "frame": 0,
+          "box": [
+            840,
+            290,
+            1000,
+            480
+          ]
+        },
+        {
+          "frame": 1,
+          "box": [
+            405,
+            325,
+            565,
+            485
+          ]
+        },
+        {
+          "frame": 2,
+          "box": [
+            570,
+            375,
+            720,
+            520
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "partial",
+          "reason": "手腕视角右缘只看到门框黑色边与窗板局部，其余出画"
+        },
+        {
+          "frame": 1,
+          "visibility": "visible",
+          "reason": "agentview清楚看到打开竖立的黑色门框与灰窗，位于炉体开口左侧"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "sideview看到同一开门门框立于炉体后左侧，窗板半透明特征一致"
+        }
+      ],
+      "confusable_with": [
+        "obj_3"
+      ],
+      "role": "destination"
+    },
+    {
+      "object_id": "obj_5",
+      "description": "机械臂及夹爪：白色多关节机械臂，末端带灰白色平行夹爪执行器，位于桌后上方，当前悬停在桌面上空，未接触任何杯子。",
+      "confirmed": true,
+      "anchors": [
+        {
+          "frame": 0,
+          "box": [
+            0,
+            760,
+            1000,
+            1000
+          ]
+        },
+        {
+          "frame": 1,
+          "box": [
+            150,
+            0,
+            465,
+            400
+          ]
+        },
+        {
+          "frame": 2,
+          "box": [
+            520,
+            0,
+            850,
+            340
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "partial",
+          "reason": "手腕视角底部仅见夹爪两个黑色指块与白色指垫局部"
+        },
+        {
+          "frame": 1,
+          "visibility": "visible",
+          "reason": "agentview清楚看到白色臂身、关节和末端灰白夹爪"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "sideview看到同一白色机械臂自上方伸向桌面，夹爪朝向桌面"
+        }
+      ],
+      "confusable_with": [],
+      "role": "uncertain"
+    },
+    {
+      "object_id": "obj_6",
+      "description": "浅色木纹餐桌：大块浅米色木纹桌面，带圆柱形桌腿，承载所有杯子与微波炉；frame 0中可见其边缘与一条桌腿。",
+      "confirmed": true,
+      "anchors": [
+        {
+          "frame": 0,
+          "box": [
+            0,
+            490,
+            480,
+            760
+          ]
+        },
+        {
+          "frame": 1,
+          "box": [
+            0,
+            250,
+            1000,
+            1000
+          ]
+        },
+        {
+          "frame": 2,
+          "box": [
+            0,
+            315,
+            1000,
+            1000
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "partial",
+          "reason": "手腕视角主要看到桌面木纹，左中见桌边厚度与下垂桌腿局部"
+        },
+        {
+          "frame": 1,
+          "visibility": "visible",
+          "reason": "agentview整块木纹桌面及右前桌腿清楚可见"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "sideview同一木纹桌面及左前桌腿，纹理颜色一致"
+        }
+      ],
+      "confusable_with": [],
+      "role": "uncertain"
+    },
+    {
+      "object_id": "obj_7",
+      "description": "背景厨房柜体与灶台装置：深灰绿色橱柜带抽屉面板和黑色台面，台面上嵌黑色灶具，位于桌后背景处，仅作环境参照。",
+      "confirmed": true,
+      "anchors": [
+        {
+          "frame": 1,
+          "box": [
+            0,
+            130,
+            660,
+            520
+          ]
+        },
+        {
+          "frame": 2,
+          "box": [
+            335,
+            90,
+            1000,
+            480
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "occluded",
+          "reason": "手腕视角朝桌面俯视，背景柜体不在视野内"
+        },
+        {
+          "frame": 1,
+          "visibility": "visible",
+          "reason": "agentview左后与正后方见深色橱柜、抽屉缝和黑色灶台"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "sideview后方见同排橱柜抽屉与黑色台面灶具，特征一致"
+        }
+      ],
+      "confusable_with": [],
+      "role": "uncertain"
+    }
+  ],
+  "coverage": {
+    "targets_identifiable": true,
+    "destination_visible": true,
+    "state_change_visible": true,
+    "reason": "黄白目标杯在frame 0/1/2均清晰可见且特征唯一（黄色外壁把手+白内壁），与灰斑杯可区分；微波炉主体与打开的门在frame 1/2清晰可见，frame 0亦见门局部，门的当前开启状态明确，后续关门动作的状态变化可被agentview与sideview覆盖记录。"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "prompt": "你审核同一个机器人任务段的初态、过程和当前照片。按task和goals指定的实物判断，不能把同类干扰物替代目标。\n每张图有frame、capture_id、view、captured_at。三视图是同一时刻；wrist会随手臂移动，不能用画面位置变化直接推断物体移动。初始图时间null仅表示绝对时间未知，顺序在动作之前。\n先用初始/清晰图定位各指定目标，bindings给出外观、图内框和易混淆物。框为0到1000归一化[x1,y1,x2,y2]，须包围实际物体。按照goals中外观定义辨认，不能用同类或相似颜色的另一物体替代。已绑定目标需用相同参照物核对，目标名称相同不证明是同一实物。\n比较初态、各次松手和当前：逐个核对什么物体从哪里去了哪里。目标只露局部时可结合初态与过程核对身份，不要求每张都看清标签；不能把看不到标签说成容器空置。仅从源位置消失不能证明到达目的地，还需目的地/过程对应。\ncurrent只描述当前图可见事实。history单独重审review_requests指定的旧capture，即使旧回答Unknown/False也可纠正。历史图里的放置不能填成当前看得到。历史结论必须引用该旧capture的图；identity_refs可以引用初始、过程或当前，用comparison说明为什么是同一目标。\n放置state=at_destination/outside/unknown；supported表示视觉上在目的地受支撑。编码器仅证明对应时刻开口，不能证明位置。当前仍夹持不妨碍到位判断，收尾另行执行。门/抽屉/开关state=open/closed/on/off/unknown，仅用当前图；侧面可辨门板相对机身即可，不要求正面。\n已有放置证据遇遮挡时current可unknown；若称同一目标outside，必须核对身份和原图。change=removed/moved/dropped需要当前明确同物移出证据，否则none。不要把桌上另一个目标/瓶/盒当成已放入目标的反证。每件目标分别定位，不能把同一件实物计两次。\n只输出JSON。bindings可为空（沿用已有绑定）；首次或之前身份未知时应补充。所有matched=true必须有features和anchors。current按goals顺序；history按review_requests逐条，不能漏项。看不清填unknown和same_target=null，说明缺失信息，不抄模板。\nsame_target是身份判断：true=图中证据确为指定目标；false=确定是别的物体；null=身份无法确认。它不是固定默认值。state是指定目标的状态，只有same_target=true时才可填写明确状态；false/null时state必须unknown。不要一边写“确认为同一目标”一边填写null。\n结构：{\"bindings\":[{\"target_id\":\"目标ID\",\"matched\":true,\"anchors\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}],\"features\":\"实际可见特征\",\"distractors\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2],\"features\":\"不同物体的可见差异\"}]}],\"current\":[{\"id\":\"goal_0\",\"state\":\"unknown\",\"same_target\":null,\"evidence\":[],\"identity_refs\":[],\"supported\":null,\"change\":\"none\",\"comparison\":\"初态与当前实际对比\"}],\"history\":[{\"id\":\"goal_0\",\"capture_id\":\"指定旧capture_id\",\"state\":\"unknown\",\"same_target\":null,\"evidence\":[],\"identity_refs\":[],\"supported\":null,\"change\":\"none\",\"comparison\":\"初态、旧过程图与后来图的身份和位置对应\"}]}。evidence与identity_refs均为[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}]；明确事实必须填写evidence，明确目标身份必须引用bindings参照图的identity_refs。\nmode=initial时只输出bindings，必须逐一包含所有goals的target_id（含门/装置），看不清可matched=false，不能漏目标；current=[]、history=[]。从实际最清楚的视角定位，遮挡图里不能按物体清单猜位置或抄外观定义。mode=history_page时current=[]，仅审核该页history。旧判断是可修订意见，不是真值。\n若旧bindings认错实物，可输出同target_id的新bindings并加corrects_previous=true、correction_reason说明新旧图的具体区别；旧身份所建放置证据必须重新确认，不能凭改名称直接继承。\n若bindings来自规划初态清单，features是从原始三视图生成并复核的外观描述；仍须对照附带初始原图，不能盲信。目标名称及资产外观提示不能覆盖图中实际物体。初始相对位置只用于初态定位，不要求后续仍在原位。可补充新视角参照或纠正目标/目的地绑定，但必须说明视觉依据并重新审核受影响的历史关系。\n{\"protocol\":\"xvla_subtask_review_v7_1\",\"scope\":{\"session_id\":\"274c55f358ff4a91a887359c392d7ad4\",\"logical_subtask_id\":\"console-fb54c5c61bcc7a69ca3a3a05/xvla_book_caddy\",\"attempt_id\":\"0\"},\"task\":\"pick up the book and place it in the back compartment of the caddy\",\"goals\":[{\"id\":\"goal_0\",\"description\":\"put the book in the back compartment of the caddy\",\"relation\":\"in\",\"target_id\":\"black_book_1\",\"destination_id\":\"desk_caddy_1_back_contain_region\",\"target_visual_identity\":\"扁平书本，不是杯子或食品盒。\"}],\"mode\":\"current\",\"reviewed_at\":8.249999999999424,\"initial_capture_id\":\"eefb0099632f104c/capture_000001\",\"current_capture_id\":\"eefb0099632f104c/capture_000032\",\"observations\":[{\"capture_id\":\"eefb0099632f104c/capture_000001\",\"captured_at\":0.5000000000000003,\"sequence_index\":0,\"role\":\"initial\",\"frames\":[0,1,2],\"encoder\":{\"timestamp\":0.5000000000000003,\"finger_qpos\":[0.03873169905567224,-0.038726646754486296],\"standard_open_finger_qpos\":[0.03873169905567224,-0.038726646754486296],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":0.0,\"at_standard_open\":true}},{\"capture_id\":\"eefb0099632f104c/capture_000032\",\"captured_at\":8.249999999999424,\"sequence_index\":31,\"role\":\"current\",\"frames\":[3,4,5],\"encoder\":{\"timestamp\":8.249999999999424,\"finger_qpos\":[0.014313755496686677,-0.015048582803265043],\"standard_open_finger_qpos\":[0.03873169905567224,-0.038726646754486296],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":24.417943558985563,\"at_standard_open\":false}}],\"bindings\":[{\"target_id\":\"black_book_1\",\"anchors\":[{\"frame\":0,\"box\":[0,255,320,540]},{\"frame\":1,\"box\":[565,393,602,502]},{\"frame\":2,\"box\":[568,495,668,605]}],\"features\":\"黑色封面书本，顶缘/侧缘可见白色书页线，呈立放状态；初始位于杯子旁（杯子的左后方/右侧随视角变化）\",\"distractors\":[]},{\"target_id\":\"desk_caddy_1_back_contain_region\",\"anchors\":[{\"frame\":0,\"box\":[320,600,1000,840]},{\"frame\":1,\"box\":[150,350,485,602]},{\"frame\":2,\"box\":[378,300,665,508]}],\"features\":\"红棕色长方形收纳盒（桌面容器），顶部开放并带多个可见隔间（约三格），无文字标识；初始位于桌面靠机器人一侧\",\"distractors\":[]}],\"review_requests\":[],\"previous_reviews\":[],\"coverage\":{\"page\":1,\"pages\":1,\"all_event_ids\":[],\"included_event_ids\":[]}}",
+  "context": {
+    "user_request": "请帮我把书和杯子整理一下，放好",
+    "current_subtask": {
+      "operation": "place",
+      "target": "black_book_1",
+      "destination": "desk_caddy_1_back_contain_region",
+      "phase": "executing"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+      "task_description": "put the book in the back compartment of the caddy",
+      "skill_description": "pick up the book and place it in the back compartment of the caddy",
+      "success_checks": [
+        {
+          "id": "goal_0",
+          "description": "put the book in the back compartment of the caddy",
+          "relation": "in",
+          "target_id": "black_book_1",
+          "destination_id": "desk_caddy_1_back_contain_region",
+          "target_visual_identity": "扁平书本，不是杯子或食品盒。"
+        }
+      ]
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 3,
+        "view": "wrist",
+        "timestamp": 8.249999999999424
+      },
+      {
+        "frame": 4,
+        "view": "agentview",
+        "timestamp": 8.249999999999424
+      },
+      {
+        "frame": 5,
+        "view": "sideview",
+        "timestamp": 8.249999999999424
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 8.249999999999424,
+      "finger_qpos": [
+        0.014313755496686677,
+        -0.015048582803265043
+      ],
+      "standard_open_finger_qpos": [
+        0.03873169905567224,
+        -0.038726646754486296
+      ],
+      "max_abs_arm_qvel": 0.41531612846412513
+    }
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 1024,
+    "max_tokens": 4096
+  },
+  "request_sha256": "b6a37b4fc028182df457e1b8477857c584d3ff457cf643e0f034427ef16f6a71",
+  "requested_model": "qwen3.8-max",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/planning_grounding/cap000002_wrist.png",
+      "sha256": "403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "sha256": "f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "sha256": "285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000095_wrist.png",
+      "sha256": "8de7fc61bc79e1938898a6e1f844ebb4335235bb52bbd220418ca195cac29b57"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000095_wrist_checker_agentview.png",
+      "sha256": "064f56fb87854ff0a611c128eb851b54886fad6e7283158678253726fc26a382"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000095_wrist_checker_sideview.png",
+      "sha256": "3b621783becd0b26f2b48bfef763eccc9ffa12ce80a4fe01ebeb782a0fa60092"
+    }
+  ]
+}

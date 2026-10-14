@@ -1,0 +1,121 @@
+{
+  "prompt": "观察机器人照片中的实际事实，程序负责判定完整任务。每项goal输出一条observation，顺序与goals一致。\n先独立看当前照片 [3, 4, 5] 中各物体的可见形状和位置，再用reference/memory核对身份。旧图中的桌面位置和previous_checks里的False/True不能当作当前位置或当前装置状态。历史记录仅由程序维护，不替程序推导仍然成功。\n图片按frame/view/time标注：wrist腕部，agentview和sideview两个外部视角。reference仅用于辨认身份；time=-1表示旧参考图时间未知。release_history包含所有已发生松手事件原图，包括漏判、未知和未分类事件；这些旧判断可错，不是事实。memory是已确认放置的原图与记录，可能来自松手检查或后续明确确认，不是本次待重新评分的目标。\n先辨认指定目标和干扰物：用reference和memory对照当前。黄色把手、标签配色、形状可识别即可，不要求每帧读出标签字样。不能把仍在桌上的其他杯或包装盒当成目标。两件同类目标必须对应两件不同实物，object_key要稳定沿用memory里的标识。\n颜色相似不足以匹配：先区分罐/瓶/盒、杯/碗等形状，再核对配色和参照图。不要用桌上瓶子证明目标罐在桌上。先逐视角找目标，外部视角遮挡时检查wrist；看到两个物体应分别描述，不能只凭最显眼的一件判断全部目标。\nrole=release_review时，仅检查这一次release/current所见的目标关系；空手开爪、操作容器后的开爪可能与某放置目标无关，无关或遮挡返回unknown，不能否定之前的放置。before/after严格限相邻1秒，缺失就是缺失，不能臆造动作连续性。\n放置项relation只填at_destination、outside、unknown。at_destination指确见指定目标满足所要求in/on/right_of关系；outside指明确同一目标不在目的地；unknown指遮挡/无法辨认/本次无关。on盘是盘面，不额外要求入盘内部。current仍夹持不否定到位，松手/退离/归位由后续流程执行。\nrelease_review或后续current_review都可确认放置：当前确见指定目标at_destination且supported=true，程序再核对同步实测开口。即使早先松手漏判，后续当前图明确也应如实输出；程序按实际确认时间补建证据，不倒填旧松手时间。supported表示看见物体在目的地得到支撑，不是正在掉落或容器入口外；实测开口只证明张开，不能证明成功放置。\n已有memory时，当前看不清、同一目标暂时辨认不出、后续无关开爪都不撤销。不要输出broken之类推断标签。只有明确看到同一个目标离开原目的地，才填change.kind=removed/moved/dropped；必须确认same_object=true、引用当前反证frame并说明目标和位置如何变化。其他情况kind=none。\n装置状态项先报告实际看到的observed_state=open/closed/on/off/unknown，由程序比较目标。只看current图判断状态，不能用memory里的旧门状态。辨认出打开的门也是identity=matched。侧面/斜视只要门板相对机身的位置可辨即可，不要求正面；黑色机身/背板不是门，不能因看不到炉腔就推断关门。\n放置项只填relation和supported；装置状态项只填observed_state，不填relation或supported。reason只说明本目标的图像依据，不猜测其他检查项。状态只能有一个事实，不得同时解释为开和关。\n当前看不见的放置目标即使memory已确认，也必须输出relation=unknown、supported=null；程序会保留既有证据。不得把历史确认改写成当前可见。门状态的reason须说明可见门板相对机身的位置，不能仅写入口看不见。\nframes只列release/current对应本项关系或状态的图；identity_frames可引用本次参考/记忆/当前图。明确判断需引用照片，看不清允许空数组。change.frames只允许current图。identity=matched必须有明确object_key和identity_frames；uncertain/distractor不算明确目标反证。\n按下列逐项目标模板输出JSON，枚举选一，数组填实际整数frame，supported填true/false/null；不要输出整体完成判断：{\"observations\": [{\"id\": \"goal_0\", \"identity\": \"matched|uncertain|distractor\", \"object_key\": \"same physical object identifier or null\", \"frames\": [], \"identity_frames\": [], \"change\": {\"kind\": \"none|removed|moved|dropped\", \"same_object\": null, \"frames\": [], \"reason\": \"\"}, \"reason\": \"current visible features and position; unknown when not visible\", \"relation\": \"at_destination|outside|unknown\", \"supported\": null}, {\"id\": \"goal_1\", \"identity\": \"matched|uncertain|distractor\", \"object_key\": \"same physical object identifier or null\", \"frames\": [], \"identity_frames\": [], \"change\": {\"kind\": \"none|removed|moved|dropped\", \"same_object\": null, \"frames\": [], \"reason\": \"\"}, \"reason\": \"current visible features and position; unknown when not visible\", \"observed_state\": \"open|closed|unknown\"}], \"reason\": \"brief current visual facts\"}\n{\"protocol\":\"xvla_evidence_memory_v6\",\"role\":\"current_review\",\"event_id\":null,\"goals\":[{\"description\":\"put the yellow and white mug in the microwave\",\"destination_id\":\"microwave_1_heating_region\",\"id\":\"goal_0\",\"relation\":\"in\",\"target_id\":\"white_yellow_mug_1\",\"target_visual_identity\":\"浅色杯身与黄色区域/黄色把手。\"},{\"description\":\"close the microwave\",\"destination_id\":null,\"id\":\"goal_1\",\"relation\":\"close\",\"target_id\":\"microwave_1\",\"visual_state_definition\":{\"closed\":\"微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。\",\"open\":\"微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。\"}}],\"groups\":[{\"kind\":\"reference\",\"event_id\":null,\"time\":-1,\"frames\":[0,1,2],\"time_known\":false},{\"kind\":\"current\",\"event_id\":null,\"time\":45.75000000000995,\"frames\":[3,4,5],\"encoder\":{\"timestamp\":45.75000000000995,\"finger_qpos\":[0.03329571623791428,-0.03998572633061355],\"standard_open_finger_qpos\":[0.03872905725468913,-0.03872928166924487],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":5.433341016774847,\"at_standard_open\":false}}],\"memory\":[],\"release_history\":[],\"previous_checks\":[],\"current_frames\":[3,4,5],\"relation_frames\":[3,4,5],\"sensor_frames\":[{\"frame\":0,\"view\":\"wrist\",\"timestamp\":-1},{\"frame\":1,\"view\":\"agentview\",\"timestamp\":-1},{\"frame\":2,\"view\":\"sideview\",\"timestamp\":-1},{\"frame\":3,\"timestamp\":45.75000000000995,\"view\":\"wrist\"},{\"frame\":4,\"timestamp\":45.75000000000995,\"view\":\"agentview\"},{\"frame\":5,\"timestamp\":45.75000000000995,\"view\":\"sideview\"}]}",
+  "context": {
+    "actuator_measurements": {
+      "finger_qpos": [
+        0.03329571623791428,
+        -0.03998572633061355
+      ],
+      "max_abs_arm_qvel": 0.1851405210706259,
+      "stage": "executing",
+      "standard_open_finger_qpos": [
+        0.03872905725468913,
+        -0.03872928166924487
+      ],
+      "timestamp": 45.75000000000995
+    },
+    "criteria": {
+      "desired_state": "closed",
+      "must_clear": true,
+      "must_preserve_target": true,
+      "must_release": true,
+      "must_stabilize": true,
+      "operation_semantics": "move the articulated door to its requested open or closed state; then release contact and retreat without changing that state",
+      "skill_description": "put the yellow and white mug in the microwave and close it",
+      "success_checks": [
+        {
+          "description": "put the yellow and white mug in the microwave",
+          "destination_id": "microwave_1_heating_region",
+          "id": "goal_0",
+          "relation": "in",
+          "target_id": "white_yellow_mug_1",
+          "target_visual_identity": "浅色杯身与黄色区域/黄色把手。"
+        },
+        {
+          "description": "close the microwave",
+          "destination_id": null,
+          "id": "goal_1",
+          "relation": "close",
+          "target_id": "microwave_1",
+          "visual_state_definition": {
+            "closed": "微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。",
+            "open": "微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。"
+          }
+        }
+      ],
+      "task_description": "close the microwave"
+    },
+    "current_subtask": {
+      "destination": null,
+      "operation": "articulate",
+      "phase": "executing",
+      "target": "microwave_1"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": -1
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": -1
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": -1
+      },
+      {
+        "frame": 3,
+        "timestamp": 45.75000000000995,
+        "view": "wrist"
+      },
+      {
+        "frame": 4,
+        "timestamp": 45.75000000000995,
+        "view": "agentview"
+      },
+      {
+        "frame": 5,
+        "timestamp": 45.75000000000995,
+        "view": "sideview"
+      }
+    ],
+    "user_request": "先把黄白杯放进微波炉，再关闭微波炉门。"
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 1024,
+    "max_tokens": 3072
+  },
+  "request_sha256": "75327b5aad580b70d48119a92d3f929b0cf18949a5c07a765d486c0b69c0c2ee",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000002_wrist.png",
+      "sha256": "a564ae2c7af3324024f4fb9ccf601e80750fc05fec0abba00709b92f0caedea6"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000001_agentview.png",
+      "sha256": "68dee8bf539e871280abef68b7885104715177bf691aa35d45bb65ff4858718e"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000003_sideview.png",
+      "sha256": "1cfd9507d6fe8c2981bd78699ffe153a4a09aa6abb49adbca720aa3b3a5fa307"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000563_wrist.png",
+      "sha256": "a11d12491acef974324598aaee2dd09646a8bae781a1376395c01e76132015be"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000562_agentview.png",
+      "sha256": "507df753556d340ecc722121ed705a3512bac5a94aa4588e1a57cf10c5045d40"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000564_sideview.png",
+      "sha256": "1d2a7b5ba9e192d2e2307a0fce72e0904a583abf8652f63f224a4479d8752ccd"
+    }
+  ]
+}

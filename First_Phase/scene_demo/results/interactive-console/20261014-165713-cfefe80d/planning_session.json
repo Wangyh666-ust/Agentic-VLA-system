@@ -1,0 +1,545 @@
+{
+  "ok": true,
+  "session_id": "cdfcb45d8044439c8ec00f6d61636e92",
+  "scene_id": "book_caddy",
+  "capability_backend": "xvla",
+  "state": "ready",
+  "scene_version": 0,
+  "env_instance_id": 1,
+  "episode_resets": 1,
+  "policy_resets": 0,
+  "total_steps": 0,
+  "seed": 142,
+  "init_state_index": 0,
+  "description": "pick up the book and place it in the back compartment of the caddy",
+  "storage_policy": {
+    "black_book_1": "desk_caddy_1_back_contain_region"
+  },
+  "capabilities": [
+    {
+      "instruction": "put the book in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "atomic_candidate",
+      "audit_only": false,
+      "exclusive_target": true,
+      "object_id": "black_book_1",
+      "target_id": "desk_caddy_1_back_contain_region",
+      "evidence": "Candidate atomic prompt; untested integration, not evidence of native single-task training",
+      "capability_id": "xvla_t05_book_to_caddy"
+    },
+    {
+      "instruction": "pick up the book and place it in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 5
+      },
+      "component_capability_ids": [
+        "xvla_t05_book_to_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_book_caddy"
+    }
+  ],
+  "images": [
+    {
+      "view": "agentview",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/agentview.png",
+      "sha256": "a21bf0e81933ae9bbf604d5583ac8a91c1a77704e8f221d2ad3eb186fbe242bf",
+      "kind": "vla_observation"
+    },
+    {
+      "view": "wrist",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/wrist.png",
+      "sha256": "014d57a0d6d27a2653374844adeda83dbe562d25ea2a284482559ff2aed32829",
+      "kind": "vla_observation"
+    }
+  ],
+  "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/latest.png",
+  "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d",
+  "active_request_id": null,
+  "error": null,
+  "finish_mode": "visual",
+  "scene_inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "书本：黑色硬封面长方体，顶/侧边露出白色书页边缘；初始竖立微倾，位于马克杯后侧（sideview中在杯右侧），未收纳状态",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              258,
+              318,
+              540
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              566,
+              392,
+              602,
+              508
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              566,
+              492,
+              668,
+              606
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视左侧黑色长方体，侧边可见白色书页层叠，呈倾斜姿态"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "杯后方竖立的黑色薄长方体，顶缘见白色书页，与腕视同一本书"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "杯右侧黑色封面块体，顶面白色页边清晰，尺寸姿态与另两视角一致"
+          }
+        ],
+        "confusable_with": [
+          "obj_4",
+          "obj_5"
+        ],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "多格收纳盒：红棕色长方体敞口容器，内部隔板分成多个方格（可见三格），置于桌面靠机器人基座处，可作为书本归位处",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              316,
+              598,
+              1000,
+              840
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              148,
+              348,
+              488,
+              602
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              378,
+              300,
+              664,
+              508
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视下缘见盒顶面与格口开口，盒身被画面下边裁切"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "红棕色多隔间敞口盒整体清晰，隔板结构明确"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "同一红棕色多格盒，隔间布局与frame1互为镜像对应，无身份冲突"
+          }
+        ],
+        "confusable_with": [
+          "obj_8"
+        ],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "马克杯：白色杯身、金黄色把手的圆筒杯，敞口，初始立于桌面中部、收纳盒前方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              362,
+              32,
+              676,
+              296
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              498,
+              486,
+              598,
+              584
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              414,
+              498,
+              512,
+              598
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视俯视杯口，白内壁与金黄色把手清晰"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "白杯身加黄色把手，形状颜色与frame0一致"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "同一白杯黄把手，位于书左侧，对应关系无冲突"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "黑色长方形扁平垫板：贴桌面平放的黑色矩形薄板；agentview中位于桌面右侧，sideview中位于右下前景（同一块垫板的两个视角）",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              794,
+              376,
+              998,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              708,
+              796,
+              1000,
+              1000
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视视野仅覆盖杯、书与收纳盒局部，垫板在画面外"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "桌面右侧黑色矩形平板，无厚度感，贴桌平放"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "右下黑色矩形平板；按杯/盒/书建立的视角对应，该前景位置正对应frame1右侧垫板，形状尺寸一致，无身份冲突"
+          }
+        ],
+        "confusable_with": [
+          "obj_1",
+          "obj_5"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_5",
+        "description": "黑色长方形扁平垫板（第二块）：贴桌面平放的黑色矩形薄板，sideview中位于桌面左中部，与obj_4分离独立",
+        "confirmed": false,
+        "anchors": [
+          {
+            "frame": 2,
+            "box": [
+              0,
+              376,
+              206,
+              510
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视视野外"
+          },
+          {
+            "frame": 1,
+            "visibility": "occluded",
+            "reason": "该桌面区域被台灯杆、机械臂底座与收纳盒遮挡或处于画面左缘外，未能单独确认"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "桌面左中黑色矩形平板清晰，与右下垫板明显分离，为独立实物；仅单视角可见故不置confirmed"
+          }
+        ],
+        "confusable_with": [
+          "obj_1",
+          "obj_4"
+        ],
+        "role": "uncertain"
+      },
+      {
+        "object_id": "obj_6",
+        "description": "台灯装置：黑色金属长杆臂加碗形灯罩，杆自画面左下斜跨至右上，灯罩悬于桌面上方；sideview左缘仅见其黑色圆形底座局部",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              0,
+              0,
+              952,
+              995
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              0,
+              480,
+              30,
+              570
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视朝下拍摄桌面，灯臂在视野上方之外"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "黑色长杆自左下斜伸至右上灯罩，结构完整清晰"
+          },
+          {
+            "frame": 2,
+            "visibility": "partial",
+            "reason": "侧视左缘黑色圆形物与台灯底座位置吻合，仅为局部佐证，不与frame1冲突"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_7",
+        "description": "机器人臂装置：白灰色多关节机械臂，带黑色圆形关节盖与黑色底座，固定于桌后；腕视下缘灰色块为其臂端夹爪局部",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              740,
+              1000,
+              1000
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              186,
+              0,
+              536,
+              400
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              486,
+              0,
+              820,
+              402
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视底缘左右灰色块为臂端夹爪局部，臂身不在画面内"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "白灰色臂身、关节与底座清晰"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "同一机械臂自侧向可见，关节与底座对应一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_8",
+        "description": "白色多格置物架：背景靠墙的白色开放式格架，多层空隔间，位于收纳盒后上方",
+        "confirmed": false,
+        "anchors": [
+          {
+            "frame": 2,
+            "box": [
+              362,
+              0,
+              664,
+              330
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视朝下，背景不在视野内"
+          },
+          {
+            "frame": 1,
+            "visibility": "occluded",
+            "reason": "该方向被机械臂与台灯杆遮挡，仅见墙面海报与植物，格架不可辨"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "白色格架层板结构清晰，但仅单视角可见，故不置confirmed"
+          }
+        ],
+        "confusable_with": [
+          "obj_2"
+        ],
+        "role": "uncertain"
+      }
+    ],
+    "coverage": {
+      "targets_identifiable": true,
+      "destination_visible": true,
+      "state_change_visible": true,
+      "reason": "目标书本在frame0/1/2均清晰可见且初始为竖立未收纳状态；归位容器红棕色多格收纳盒在三帧均可见（frame0为局部顶视）；三帧timestamp相同为同步初始状态，书与盒的相对位置关系完整，足以支撑整理前后状态比对与后续检查"
+    },
+    "corrections": [
+      {
+        "object_id": "obj_4",
+        "change": "confirmed: false -> true",
+        "reason": "复核视角几何：以杯/盒/书为参照，frame2右下前景垫板与frame1右侧垫板为同一实物（sideview相机位于agentview左侧，故frame1右侧垫板在sideview中落于近景右下），形状尺寸一致且无第三块垫板冲突，满足至少一个清晰参照加跨视角无冲突的条件；原稿仅因缺第三视角而置false过严"
+      },
+      {
+        "object_id": "obj_6",
+        "change": "anchors增加frame2 [0,480,30,570]",
+        "reason": "原稿称frame2完全遮挡不准确：sideview左缘可见黑色圆形底座局部，补为partial佐证"
+      },
+      {
+        "object_id": "obj_7",
+        "change": "anchors增加frame0 [0,740,1000,1000]",
+        "reason": "腕视底缘灰色夹爪块确属该机械臂臂端，原稿只在观察中提及而未给框，补partial锚框"
+      },
+      {
+        "object_id": "obj_1",
+        "change": "description/框保留",
+        "reason": "逐帧核对框内确为黑色封面加白色页边的书本，三视角姿态一致，初稿正确"
+      },
+      {
+        "object_id": "obj_2",
+        "change": "confusable_with补充obj_8",
+        "reason": "白色格架与红棕收纳盒均为多格容器，需提示混淆风险"
+      },
+      {
+        "object_id": "obj_5",
+        "change": "维持confirmed=false",
+        "reason": "仅frame2单视角可见，frame1对应区域被灯杆/臂座遮挡，无法跨视角确认，保持不确定"
+      }
+    ],
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ],
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist.png",
+        "sha256": "403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45"
+      }
+    ]
+  },
+  "planning_image": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/planning_three_views.png"
+}

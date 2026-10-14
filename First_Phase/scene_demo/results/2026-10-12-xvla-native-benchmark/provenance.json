@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-12T06:26:27.451072+00:00",
+  "status": "stopped_on_compatibility_probe_failure",
+  "scope": "Install setuptools==70.3.0, zero-action software gates and source freeze only; stop on failure.",
+  "executor": {
+    "model": "openai/gpt-6-astra",
+    "reasoning_effort": "not exposed",
+    "execution": "local tools; no subagent or new authoring API request"
+  },
+  "setuptools_change": "install/setuptools_change.json",
+  "gates": {
+    "install_exit_code": 0,
+    "pkg_resources_import": "passed",
+    "torch_version_equality": "failed",
+    "probe_exit_code": 1,
+    "pytest": "not_run_after_failure",
+    "cli_help": "not_run_after_failure",
+    "review_check": "not_run_after_failure"
+  },
+  "source_freeze": {
+    "completed": false,
+    "copied_files": 0,
+    "proposal_copy_created": false,
+    "reason": "Required software gate did not pass; conditional copy and review steps not executed.",
+    "originals_checked": 61,
+    "originals_unchanged": true,
+    "original_sha256": {
+      "First_Phase/libero_demo/xvla_native_benchmark.py": "21ec3aad27d8d0821d18894ab44478c1e9c03a23f8f7fc2d00d517186951daec",
+      "First_Phase/libero_demo/test_xvla_native_benchmark.py": "6c3d5c9d39179eae5ca37f77f9dd97fc3ae1b5bf1dda97d064ad8c5ce2dffdbb",
+      "First_Phase/scene_demo/plans/20261012-xvla-native-benchmark.json": "4afe1c7ef23fb14008bc46f788a2233dc462a70beba557033e27e769065d5259",
+      "First_Phase/scene_demo/plans/2026-10-12-xvla-native.md": "8487331feb4db895b49746ffbe400e7ed6ff7ce3492f121f7b96f175b9a98a93",
+      "First_Phase/tmp/xvla_20261012_author/apply_proof.json": "6bd9576918eae4ece79537aa079f346ab5f36060bb6ba31de700587e9651353c",
+      "First_Phase/tmp/xvla_20261012_author/bridge.py": "afedf406ecdd6403400e0fdf604add77eac4a8952143a662fda8bbbd94c1620f",
+      "First_Phase/tmp/xvla_20261012_author/green.exitcode.log": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "First_Phase/tmp/xvla_20261012_author/green.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "First_Phase/tmp/xvla_20261012_author/green.stdout.log": "4b49cbe0def93deed02641c28656aac0fe423eb1b2210e47a1921143843fd2e0",
+      "First_Phase/tmp/xvla_20261012_author/help.exitcode.log": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "First_Phase/tmp/xvla_20261012_author/help.stderr.log": "860a21acc2189150ab5d757f2eeb6ea71fc8993a06af39a2b59333d8266aaeef",
+      "First_Phase/tmp/xvla_20261012_author/help.stdout.log": "5b7fe422a7989b2b4c3cc51766f227da7397a6399d758732fadcda65e0c6d014",
+      "First_Phase/tmp/xvla_20261012_author/patch.txt": "4468ff08fc4a72114fb6e98d57ef407caff55200ed9f3096628bf1474b63873d",
+      "First_Phase/tmp/xvla_20261012_author/proof.json": "7ff918162f4ecb4089a365f3a4cedc895c484dae3a66d4bb394b17b1b53959ec",
+      "First_Phase/tmp/xvla_20261012_author/red.exitcode.log": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+      "First_Phase/tmp/xvla_20261012_author/red.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "First_Phase/tmp/xvla_20261012_author/red.stdout.log": "77798cbcf9e7a485d7a643f0b7fa024af5c72e773dcecb20d052cacf3c4f7a39",
+      "First_Phase/tmp/xvla_20261012_author/request.json": "de30dea8a0b6ae655f4909798220385ab1a37b2b3d754feea80ed3277def6909",
+      "First_Phase/tmp/xvla_20261012_author/response.json": "67aa6cfc9e7e54dbc5ddf8d65e8cdc25ce92d547652462259d66fb4256285833",
+      "First_Phase/tmp/xvla_20261012_author_fix/after_sha256.json": "17b9ff19e5b6fc2e7465ea9c8da571d0d8be3be1078cbbd102cc30b4dcce883d",
+      "First_Phase/tmp/xvla_20261012_author_fix/after_test_xvla_native_benchmark.py.txt": "5f7e873c0b99a85e8762734ad9ac408e76dc8d8dc5929c5e59859c99bf60df1a",
+      "First_Phase/tmp/xvla_20261012_author_fix/after_xvla_native_benchmark.py.txt": "bae6d0c080938262590ec5867fd0bdc0de9f0b9731d422fbe5470f5b3116f61b",
+      "First_Phase/tmp/xvla_20261012_author_fix/application_mismatch.json": "cb2ee19b3866d15ab273c25c6eb00a3c3343f1a6de433d621462c10bbcdc1d5b",
+      "First_Phase/tmp/xvla_20261012_author_fix/application_verification.json": "3448380c4ea7dadfc68d6c16e9172eca7d825267e6c4c6932f286fdcf3301112",
+      "First_Phase/tmp/xvla_20261012_author_fix/applied.diff": "ce6624035d2e1d4e143252d723fb1369972eb12623d2d908d5990469cb1f11ba",
+      "First_Phase/tmp/xvla_20261012_author_fix/before_sha256.json": "85edfdf32fe8f25a9ac2d372939b5225348d020c5d3fe855c7b4128585834b8a",
+      "First_Phase/tmp/xvla_20261012_author_fix/before_test_xvla_native_benchmark.py.txt": "bc35968a65e642088d3a41f1dcdad9e7b1551323294a22edbeef05a31cadfa98",
+      "First_Phase/tmp/xvla_20261012_author_fix/before_xvla_native_benchmark.py.txt": "f1cee4939fcddf0bb14f1f7287158ce15410868224ce150e20faa0007bf63924",
+      "First_Phase/tmp/xvla_20261012_author_fix/bridge.py": "1d4fa0ea2b90c76b0a5ebc822c041978f40971f2e9660bb8898e3a666174ac21",
+      "First_Phase/tmp/xvla_20261012_author_fix/candidate_verification.json": "40986acef0d222f4979aa8b853de6fb3c7e8d8f20fb7a73c90be490f3dbc4e16",
+      "First_Phase/tmp/xvla_20261012_author_fix/execution.md": "e9386fbd7c951fdd2731d599a4440619490b48c4ad829b2f75cac16372c3ec87",
+      "First_Phase/tmp/xvla_20261012_author_fix/help.result.json": "ca81bfafed6a69a5cce1f1d695ba25334b55ef882e4a88da89dbd4b9f40c15e1",
+      "First_Phase/tmp/xvla_20261012_author_fix/help.stderr.log": "860a21acc2189150ab5d757f2eeb6ea71fc8993a06af39a2b59333d8266aaeef",
+      "First_Phase/tmp/xvla_20261012_author_fix/help.stdout.log": "5b7fe422a7989b2b4c3cc51766f227da7397a6399d758732fadcda65e0c6d014",
+      "First_Phase/tmp/xvla_20261012_author_fix/patch.txt": "230b92a4d925fed8eb9a6733b3e2269937cb7347e17f8abb2c809cb8cbb7b380",
+      "First_Phase/tmp/xvla_20261012_author_fix/proof.json": "ead37a24958d49241f6280f967b2ff08702d7d813f6e8a853bff48725ed04bf8",
+      "First_Phase/tmp/xvla_20261012_author_fix/pytest.result.json": "1b0acaad7e814cbdc2949d656cae9bf37bbd685ef86d27a84ecc5ee155540175",
+      "First_Phase/tmp/xvla_20261012_author_fix/pytest.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "First_Phase/tmp/xvla_20261012_author_fix/pytest.stdout.log": "1358187d154287604b58c2387f33aaf608fde683fee922cc0f88305cd6cf0ff3",
+      "First_Phase/tmp/xvla_20261012_author_fix/report.md": "85a57179c29e745f4b67636845dd1f09545ef4f8d912ab3523a59b5e5e97b7f8",
+      "First_Phase/tmp/xvla_20261012_author_fix/request.json": "28d27f1b2a0e5756705e81444d8cd25cf60fc154e00d251cd82351fad2f2078f",
+      "First_Phase/tmp/xvla_20261012_author_fix/response.json": "b26d6f2f55cae4fc586906450c2ff67ac88267c844ca2a1c358465ceed6e180c",
+      "First_Phase/tmp/xvla_20261012_author_final/after.json": "d23b6eb80d8995c7b326976c0524cf174e6289e4607e0797c745139cbabbd9a7",
+      "First_Phase/tmp/xvla_20261012_author_final/before.json": "cacce9b43369fc7364625c1a351206f8a18d0e65f81ec8b672d8a76c63fbfc45",
+      "First_Phase/tmp/xvla_20261012_author_final/bridge.py": "57ed8da0ed9d4fcbd8db66d4ce8145ec81edece135a7565a03252ffac65250e8",
+      "First_Phase/tmp/xvla_20261012_author_final/context_repair.patch": "a9adb6c45addbb12a0373c1d0472c4c4e4954f5bd3aa8f9768fdc4ad1b3fd397",
+      "First_Phase/tmp/xvla_20261012_author_final/context_repair_help.exitcode.log": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "First_Phase/tmp/xvla_20261012_author_final/context_repair_help.stderr.log": "860a21acc2189150ab5d757f2eeb6ea71fc8993a06af39a2b59333d8266aaeef",
+      "First_Phase/tmp/xvla_20261012_author_final/context_repair_help.stdout.log": "5b7fe422a7989b2b4c3cc51766f227da7397a6399d758732fadcda65e0c6d014",
+      "First_Phase/tmp/xvla_20261012_author_final/context_repair_proof.json": "b32a4d36e914d7c8d8f9adbba2dde0209868f000eb1a60df7c0374ee5bdf2fb0",
+      "First_Phase/tmp/xvla_20261012_author_final/context_repair_pytest.exitcode.log": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "First_Phase/tmp/xvla_20261012_author_final/context_repair_pytest.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "First_Phase/tmp/xvla_20261012_author_final/context_repair_pytest.stdout.log": "33cda6549be7958dd4297e295c1404b3fd6838205664ad3599978185130a559d",
+      "First_Phase/tmp/xvla_20261012_author_final/evidence_worker.py": "1fb03e1e592260765a169b3708116450f8274d8d8fbd63ddac1d000f2cd308f2",
+      "First_Phase/tmp/xvla_20261012_author_final/patch.txt": "b8ae64cff097c8b8a9cae6aea8c7e470a85421056f02e75268db9820a292bea3",
+      "First_Phase/tmp/xvla_20261012_author_final/patch_validation.json": "9e852013a9f7c0056425091c46d499d544705acd299e357b8d7be743b727692c",
+      "First_Phase/tmp/xvla_20261012_author_final/proof.json": "a8cc7570ccb9954411853bf2b63012e6bae7bbe563c4b7bfd3c109f7ca2e9584",
+      "First_Phase/tmp/xvla_20261012_author_final/request.json": "c3b2ce67682a43d6fbc5ae16b815f440413d42bdc1285d394a3c2f0a0d6c81a4",
+      "First_Phase/tmp/xvla_20261012_author_final/response.json": "cd341b28a02c7ea987c90793dd4082b591ddf76851227bce29c1aef087b9b0d8",
+      "First_Phase/tmp/xvla_20261012_setup/install_verification.json": "993c599b687bdcd2d7df23f6016b858c386d4cf2a6c8a6948a71d04b1e6cfb67",
+      "First_Phase/tmp/xvla_20261012_setup/RESUME.md": "d701f9003441c814cb26230a9d3433c1bd3557bed7fc7091eb83cc7576479c92"
+    }
+  },
+  "deepseek": {
+    "historical_actual_requests": 3,
+    "new_requests_this_task": 0,
+    "requests": [
+      {
+        "phase": "author",
+        "proof": "First_Phase/tmp/xvla_20261012_author/proof.json",
+        "proof_sha256": "7ff918162f4ecb4089a365f3a4cedc895c484dae3a66d4bb394b17b1b53959ec",
+        "call_count": 1,
+        "model": "deepseek-flash",
+        "http_status": 200,
+        "request_sha256": "de30dea8a0b6ae655f4909798220385ab1a37b2b3d754feea80ed3277def6909",
+        "response_sha256": "67aa6cfc9e7e54dbc5ddf8d65e8cdc25ce92d547652462259d66fb4256285833",
+        "usage": {
+          "input_tokens": 7553,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "output_tokens": 9166,
+          "service_tier": "standard"
+        }
+      },
+      {
+        "phase": "author_fix",
+        "proof": "First_Phase/tmp/xvla_20261012_author_fix/proof.json",
+        "proof_sha256": "ead37a24958d49241f6280f967b2ff08702d7d813f6e8a853bff48725ed04bf8",
+        "call_count": 1,
+        "model": "deepseek-flash",
+        "http_status": 200,
+        "request_sha256": "28d27f1b2a0e5756705e81444d8cd25cf60fc154e00d251cd82351fad2f2078f",
+        "response_sha256": "b26d6f2f55cae4fc586906450c2ff67ac88267c844ca2a1c358465ceed6e180c",
+        "usage": {
+          "input_tokens": 10107,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "output_tokens": 7374,
+          "service_tier": "standard"
+        }
+      },
+      {
+        "phase": "author_final",
+        "proof": "First_Phase/tmp/xvla_20261012_author_final/proof.json",
+        "proof_sha256": "a8cc7570ccb9954411853bf2b63012e6bae7bbe563c4b7bfd3c109f7ca2e9584",
+        "call_count": 1,
+        "model": "deepseek-flash",
+        "http_status": 200,
+        "request_sha256": "c3b2ce67682a43d6fbc5ae16b815f440413d42bdc1285d394a3c2f0a0d6c81a4",
+        "response_sha256": "cd341b28a02c7ea987c90793dd4082b591ddf76851227bce29c1aef087b9b0d8",
+        "usage": {
+          "input_tokens": 1369,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "output_tokens": 1304,
+          "service_tier": "standard"
+        }
+      }
+    ],
+    "context_repair_new_calls": 0,
+    "context_repair_executor_model": "openai/gpt-6-astra",
+    "context_repair_proof": "First_Phase/tmp/xvla_20261012_author_final/context_repair_proof.json",
+    "context_repair_proof_sha256": "b32a4d36e914d7c8d8f9adbba2dde0209868f000eb1a60df7c0374ee5bdf2fb0"
+  },
+  "execution_counts": {
+    "new_model_inference_calls": 0,
+    "simulator_environments_constructed": 0,
+    "simulator_actions": 0,
+    "physical_actions": 0,
+    "servers_started": 0,
+    "benchmark_episodes": 0
+  },
+  "warnings": "All raw stderr retained; prior install warnings and evidence unchanged.",
+  "remaining": [
+    "Torch 1.11 still cannot import pkg_resources.packaging with setuptools 70.3.0.",
+    "11 tests, CLI help and review check have not been run in this task.",
+    "Source snapshot and authoring/install copies are incomplete (zero copied files).",
+    "No benchmark or first-example acceptance performed."
+  ],
+  "artifacts": [
+    {
+      "path": "install/setuptools_before.exitcode.log",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "install/setuptools_before.result.json",
+      "bytes": 957,
+      "sha256": "ebdf43a873190e33d45277376ab6f00b53d5d73ec496292d0e63b8ee4aa4141b"
+    },
+    {
+      "path": "install/setuptools_before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "install/setuptools_before.stdout.log",
+      "bytes": 61,
+      "sha256": "79603b97a7425f437f21f8eb5c3254c3388b66224c799f86bce219af4b21d33f"
+    },
+    {
+      "path": "install/setuptools_change.json",
+      "bytes": 738,
+      "sha256": "e9004bf468f3f1fa7d91b87d26b5dd5242e07585926f1d875df984b03ca45b3d"
+    },
+    {
+      "path": "install/setuptools_install.exitcode.log",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "install/setuptools_install.result.json",
+      "bytes": 526,
+      "sha256": "3121b5538528c8fb059b5ed1ea0d25e23d680592082e891c151b0ca963a09790"
+    },
+    {
+      "path": "install/setuptools_install.stderr.log",
+      "bytes": 232,
+      "sha256": "51c182dd80d3c13c3535b8c6b6659976898d4065d9090511e6895c45922dc9b0"
+    },
+    {
+      "path": "install/setuptools_install.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "software/pkg_resources.exitcode.log",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "software/pkg_resources.result.json",
+      "bytes": 1121,
+      "sha256": "6f91025c052480a914a7c109f1d21d0182a56b1b0516cce169e228568a437161"
+    },
+    {
+      "path": "software/pkg_resources.stderr.log",
+      "bytes": 1767,
+      "sha256": "15479f16600673db6c5d413b060bb12d53ca35023e70f91edb405a8a17e20913"
+    },
+    {
+      "path": "software/pkg_resources.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "software/source_before.json",
+      "bytes": 8076,
+      "sha256": "f2d5ff68ad48cd62b02ed65197e5db3c1a74f3cf40ce82308d1c4af6d41d3ade"
+    }
+  ]
+}

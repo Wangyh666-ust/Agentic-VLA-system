@@ -1,0 +1,109 @@
+{
+  "protocol": "xvla_subtask_review_v9.3",
+  "purpose": "旧提前松手负例不得接管；本次已入格受遮挡正例须通过独立复核并允许原收尾。",
+  "core_pair_passed": true,
+  "all_regressions_passed": false,
+  "cases": {
+    "book_before_v93": {
+      "observed_at": 8.249999999999424,
+      "expected": "block",
+      "goal_achieved": null,
+      "handoff_review_triggered": false,
+      "decision": {
+        "state": "unknown",
+        "reason": "subtask purpose unknown",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "released_encoder": false,
+      "passed": true,
+      "actual_model_calls": 2
+    },
+    "book_inside_300_v93": {
+      "observed_at": 15.75000000000193,
+      "expected": "allow",
+      "goal_achieved": true,
+      "handoff_review_triggered": true,
+      "decision": {
+        "state": "needs_release",
+        "reason": "purpose achieved; open fingers",
+        "allow_release": true,
+        "allow_retreat": false
+      },
+      "released_encoder": false,
+      "passed": true,
+      "actual_model_calls": 3
+    },
+    "book_inside_900_v93": {
+      "observed_at": 45.75000000000995,
+      "expected": "allow",
+      "goal_achieved": true,
+      "handoff_review_triggered": true,
+      "decision": {
+        "state": "needs_release",
+        "reason": "purpose achieved; open fingers",
+        "allow_release": true,
+        "allow_retreat": false
+      },
+      "released_encoder": false,
+      "passed": true,
+      "actual_model_calls": 3
+    },
+    "bowl_held_v93": {
+      "observed_at": 8.249999999999424,
+      "expected": "complete",
+      "goal_achieved": true,
+      "handoff_review_triggered": false,
+      "decision": {
+        "state": "complete",
+        "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "released_encoder": true,
+      "passed": true,
+      "actual_model_calls": 2
+    },
+    "microwave_v93": {
+      "observed_at": 63.5500000000317,
+      "expected": "complete",
+      "goal_achieved": false,
+      "handoff_review_triggered": false,
+      "decision": {
+        "state": "incomplete",
+        "reason": "subtask purpose not achieved",
+        "allow_release": false,
+        "allow_retreat": false
+      },
+      "released_encoder": true,
+      "passed": false,
+      "actual_model_calls": 3
+    }
+  },
+  "actual_model_requests_all_revisions": 29,
+  "actual_model_responses_all_revisions": 29,
+  "actual_models": [
+    "qwen3.8-max"
+  ],
+  "new_robot_actions": 0,
+  "new_scene_loads": 0,
+  "subagents": 0,
+  "helpers": false,
+  "protected_controls_unchanged": true,
+  "implementation_executor": "Current agent directly modified code under explicit user no-subagent instruction; no delegated model/reasoning setting claimed.",
+  "ui_refresh": {
+    "before_pid": 6113,
+    "after_pid": 10165,
+    "stage": "idle",
+    "old_record_unchanged": true,
+    "scene_loads": 0,
+    "new_robot_actions": 0
+  },
+  "limits": [
+    "仅旧图离线验证允许接管，未实际松手/退离/归位；两个正例来自同一旧轨迹，不是两次独立实验。",
+    "0.2rad/s用于遮挡推断的额外保守保护，不能单独证明到位，也不是最终静止阈值；未在所有任务上标定。",
+    "Qwen仍可误读几何、边界和透明炉门，不能保证所有任务可靠；入炉回归杯子补证成功但门状态误判。",
+    "v9正例Unknown、v9.1负例误放、v9.2正例独立复核引用格式拒绝均保留；不混算不同版本成功率。",
+    "v9.2 review check在后台执行时误提前启动了首个离线请求；随后check通过。v9.3 check完成后才启动请求，未发生任何物理动作。"
+  ]
+}

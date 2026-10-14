@@ -1,0 +1,61 @@
+{
+  "prompt": "你是机器人子任务的结束状态检查器。\n你的任务目标：根据当前子任务和同步观测，判断任务目标是否达到、是否可以移交收尾。VLA在个别任务末段可能遗漏最后的松手和退离动作；这仅说明检查器的用途，不表示本次目标已经达到，也不表示本次仍在夹持。\n输入包括：当前子任务描述、当前相机图像，以及与图像同步的夹爪编码器数据。\n两张图来自同一采样时刻：wrist是夹爪上的第一人称视角，sideview或agentview是外部第三人称视角，实际视角名称见sensor_frames。视觉只负责判断当前子任务要求的物品位置关系或操作状态。\n先按current_subtask.description辨认指定物品或装置，再检查该物品的目标。夹爪附近或正在操作的其他物品不能替代指定物品；不能因为机械臂在抓某物就把它认作目标。指定物品仍在目的地外时，即使其他物品被抓起或放到目的地，也返回false。\ngoal_achieved：只检查current_subtask.description明确要求的目标，不增加任务未要求的支撑、姿态或更精确的位置条件。不要要求已经松手、解除接触、退离或归位；这些由目标达到后的收尾器执行。是否仍夹持不否定目标已达到。\n严格区分任务明确要求的空间关系：放进容器指物品进入容器内部；容器旁边、入口外或图像中的二维投影重叠不等于进入内部。这不是要求额外支撑或松手条件。\n三值含义：true=指定目标已经达到；false=画面明确显示指定目标未达到（未到目的地或要求的状态尚未出现）；null=指定物品身份或目标关系确实无法辨认。明确看到未进入、仍在入口外或目的地旁，应返回false，不是null。任一视角能明确判断且另一个视角没有相反证据即可；另一视角遮挡或看不清，不应把已确定的false改成null。\n夹持状态由程序根据同步实测编码器决定：at_standard_open=true表示夹爪已达到标准开口，按已松手、未夹持处理。遮挡、二维投影重叠或视觉中的接近不能推翻此读数，也不能另报仍夹持。at_standard_open=false表示需要开爪，不单凭闭合证明夹有物品。编码器开口不能证明物品已到位，也不能证明退离路径安全；不要混入goal_achieved判断。\n只依据当前实际画面判断目标，不接受计划、检查时机或阶段名称作为完成证据。reason只描述指定目标的位置关系或操作状态依据，并与goal_achieved一致；明确写未达目标时返回false，不要同时返回null。身份或位置确实不可辨认时说明缺少什么证据，不猜测。\n如提供visual_state_definition，它只解释该场景资产的视觉标志含义，不声明当前状态；根据实际画面判断是否满足desired_state。\n如提供target_visual_identity，它只解释指定物品的外观，不声明其当前位置；根据当前图像辨认物品。\n只输出JSON：{\"goal_achieved\":true或false或null,\"reason\":\"简短目标画面依据\"}。\n{\"user_request\": \"先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台。\", \"current_subtask\": {\"operation\": \"place\", \"description\": \"put the wine bottle on the rack\"}, \"desired_state\": null, \"sensor_frames\": [{\"timestamp\": 1.500000000000001, \"view\": \"wrist\", \"frame\": 0}, {\"timestamp\": 1.500000000000001, \"view\": \"agentview\", \"frame\": 1}], \"actuator_measurements\": {\"timestamp\": 1.500000000000001, \"finger_qpos\": [0.039044103490947356, -0.03902692813860159], \"standard_open_finger_qpos\": [0.03873057586502897, -0.03872776397868675], \"position_unit\": \"m\", \"standard_open_tolerance_m\": 0.002, \"max_standard_open_error_mm\": 0.3135276259183875, \"at_standard_open\": true}}",
+  "context": {
+    "user_request": "先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台。",
+    "current_subtask": {
+      "operation": "place",
+      "target": "wine_bottle_1",
+      "destination": "wine_rack_1_top_region",
+      "phase": "executing"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+      "task_description": "put the wine bottle on the rack"
+    },
+    "sensor_frames": [
+      {
+        "timestamp": 1.500000000000001,
+        "view": "wrist",
+        "frame": 0
+      },
+      {
+        "timestamp": 1.500000000000001,
+        "view": "agentview",
+        "frame": 1
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 1.500000000000001,
+      "stage": "executing",
+      "finger_qpos": [
+        0.039044103490947356,
+        -0.03902692813860159
+      ],
+      "max_abs_arm_qvel": 0.28265147215649244,
+      "standard_open_finger_qpos": [
+        0.03873057586502897,
+        -0.03872776397868675
+      ]
+    }
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 1024
+  },
+  "request_sha256": "f697fd663f3886e18aa797823863587fac7af323cc6b0f3f5fc74711de22c0b1",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000002_wrist.png",
+      "sha256": "c427acc01165e252ed054b91107daa521a04f3fbe65174394e722db06c88c76a"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000001_agentview.png",
+      "sha256": "9c0956f0543add7224aa698e5b8a1d0fcf6d20d2b6518ef44b1fdddaccac6f47"
+    }
+  ]
+}

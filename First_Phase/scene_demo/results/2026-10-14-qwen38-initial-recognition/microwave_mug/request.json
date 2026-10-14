@@ -1,0 +1,47 @@
+{
+  "prompt": "根据同步三视图建立现场物体清单，供规划和后续检查共用。用户任务：先把黄白杯放进微波炉，再关闭微波炉门。\n先辨认桌面可见物品、容器和装置，包括目标和易混淆物。外观只写实际可见颜色、形状、把手、包装；看不清文字不要猜品牌。同一实物跨视角只分配一个object_id；不同实物不能合并。识别门/抽屉时可用装置整体加可见活动部件描述。每个物体必须逐一检查frame 0/1/2；遮挡视角如实记录，不要求三张都看得见。至少一个清晰参照且其他视角无身份冲突才confirmed=true。框采用每幅原图0..1000的[x1,y1,x2,y2]，包住真实物体，不按期望位置猜框。输出JSON：{\"objects\":[{\"object_id\":\"obj_1\",\"description\":\"可见特征及初始相对位置\",\"confirmed\":true,\"anchors\":[{\"frame\":1,\"box\":[100,200,300,400]}],\"view_observations\":[{\"frame\":0,\"visibility\":\"occluded\",\"reason\":\"遮挡情况\"},{\"frame\":1,\"visibility\":\"visible\",\"reason\":\"辨认依据\"},{\"frame\":2,\"visibility\":\"partial\",\"reason\":\"对应依据\"}],\"confusable_with\":[],\"role\":\"target/destination/distractor/uncertain\"}],\"coverage\":{\"targets_identifiable\":true,\"destination_visible\":true,\"state_change_visible\":true,\"reason\":\"画面覆盖依据\"}}。",
+  "context": {
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": 0.5000000000000003
+      }
+    ]
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 2048,
+    "max_tokens": 6500
+  },
+  "request_sha256": "3d27a222de063a147eaa7c28d87c8b18170562e83859e02e96ed4dea606a42ec",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/planning_grounding/cap000002_wrist.png",
+      "sha256": "3e8fcc815a090cb1da60da16451a4eb9300d67c6603332cfc31f8fc18d50b170"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "sha256": "7bf7950a0c04cde03a8f1e1dfd3ee1cb7209065064d896394020ee3060fbe7e4"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "sha256": "aebe9bee43d0c7746c98c49f30eab687d5b0540c97e61dedf309828749c2fafb"
+    }
+  ],
+  "model": "qwen3.8-max",
+  "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+  "source_request": "First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/planning_grounding/model_requests/call_01_request.json",
+  "source_request_sha256": "e55e513a6324acb1b60cfc82f85888b1844c81087b1ba41e602a96832551302c"
+}

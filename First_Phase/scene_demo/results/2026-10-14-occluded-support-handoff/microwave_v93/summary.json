@@ -1,0 +1,278 @@
+{
+  "request": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/model_requests/call_10_request.json",
+  "request_sha256": "51c81b1612102606fa5f3c55ecf0767a6f5055a267178e74fd420737630ac8d7",
+  "target_time": 63.5500000000317,
+  "new_robot_actions": 0,
+  "old_observations": 186,
+  "saved_releases": 3,
+  "model": "qwen3.8-max",
+  "calls": 3,
+  "goal_achieved": false,
+  "handoff_review_triggered": false,
+  "checks": [
+    {
+      "id": "goal_0",
+      "achieved": true,
+      "target_matches_definition": true,
+      "current_evidence": true,
+      "evidence_event_ids": [
+        "2db59287da8bb8fe/review_00002/goal_0"
+      ],
+      "reason": "初态frame 0/1中黄身白内壁、黄色把手的杯子在桌面中部，灰白杯为干扰物；当前frame 31炉腔开口内可见同一黄色杯身/把手，灰白杯仍在桌面原处，目标已从桌面移入炉腔并留存。",
+      "history_event_id": "2db59287da8bb8fe/review_00002/goal_0",
+      "history_event_ids": [
+        "2db59287da8bb8fe/review_00002/goal_0"
+      ],
+      "history_capture_id": "2db59287da8bb8fe/capture_000035",
+      "history_observed_at": 8.949999999999658,
+      "history_reviewed_at": 63.5500000000317
+    },
+    {
+      "id": "goal_1",
+      "achieved": false,
+      "target_matches_definition": true,
+      "current_evidence": true,
+      "evidence_event_ids": [],
+      "reason": "初态frame 1/2门板（黑框透明窗）向外打开立于机身左前；当前frame 31炉腔入口完全敞开可见内部黄杯，门板未回到机身前面关闭平面，frame 32见铰链侧门边部件仍外伸，门仍开。"
+    }
+  ],
+  "regions": {
+    "microwave_1_heating_region": {
+      "destination_id": "microwave_1_heating_region",
+      "confirmed": true,
+      "description": "微波炉炉腔内部加热区域，即门打开后正对的腔体空间，任务要求杯子放入该腔内",
+      "boundary": "由炉腔矩形入口边沿与腔内壁界定：frame 1 中本体左前面的暗色矩形开口及其内腔，frame 2 中本体朝左前的开口面；打开的门板（黑色边框透明窗）位于入口外侧，不属于腔内",
+      "anchors": [
+        {
+          "capture_id": "2db59287da8bb8fe/capture_000001",
+          "view": "agentview",
+          "box": [
+            568,
+            330,
+            700,
+            470
+          ]
+        },
+        {
+          "capture_id": "2db59287da8bb8fe/capture_000001",
+          "view": "sideview",
+          "box": [
+            600,
+            430,
+            760,
+            560
+          ]
+        }
+      ],
+      "reviewed_at": 0.5000000000000003,
+      "request_sha256": "89b610dc940500075d230bc1df34fb136a8092fca945aa5342bb0b17455d5aa1",
+      "response_sha256": "18c65779c4e1d97d4755b666b00f12c8680e7b7c7dd1e5b1085ac631c6de9451"
+    }
+  },
+  "proofs": [
+    {
+      "proof_id": "2db59287da8bb8fe/review_00002/goal_0",
+      "goal_key": "[\"white_yellow_mug_1\", \"in\", \"microwave_1_heating_region\", false]",
+      "target_id": "white_yellow_mug_1",
+      "destination_id": "microwave_1_heating_region",
+      "capture_id": "2db59287da8bb8fe/capture_000035",
+      "observed_at": 8.949999999999658,
+      "reviewed_at": 63.5500000000317,
+      "review_id": "2db59287da8bb8fe/review_00002",
+      "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/release_0001",
+      "status": "confirmed",
+      "kind": "historical_review",
+      "supersedes_review_id": null,
+      "evidence": [
+        {
+          "capture_id": "2db59287da8bb8fe/capture_000035",
+          "view": "agentview",
+          "box": [
+            636,
+            236,
+            676,
+            268
+          ]
+        }
+      ],
+      "identity_refs": [
+        {
+          "capture_id": "2db59287da8bb8fe/capture_000001",
+          "view": "wrist",
+          "box": [
+            345,
+            0,
+            690,
+            272
+          ]
+        },
+        {
+          "capture_id": "2db59287da8bb8fe/capture_000001",
+          "view": "agentview",
+          "box": [
+            432,
+            468,
+            530,
+            563
+          ]
+        }
+      ],
+      "comparison": "初态桌面黄杯被夹持移送；该旧capture frame 6腕视见夹爪下黄色杯体，frame 7见杯已在炉腔入口内，与初态同一目标；后来frame 10/13杯仍在腔内，身份与位置延续。",
+      "placement": {
+        "region_confirmed": true,
+        "region_description": "微波炉炉腔内部加热区域",
+        "destination_evidence": [
+          {
+            "frame": 7,
+            "box": [
+              565,
+              222,
+              680,
+              272
+            ]
+          }
+        ],
+        "boundary_observation": "frame 7中黄色杯体已越过入口边沿进入腔内开口区，夹爪尚在口部附近但未把杯留在口外",
+        "relation_evidence": [
+          {
+            "frame": 7,
+            "box": [
+              636,
+              236,
+              676,
+              268
+            ]
+          }
+        ],
+        "support_observation": "杯在腔内直立，露出部分为杯身上段，未见卡在口沿",
+        "needs_motion": false,
+        "contradiction": false,
+        "views": [
+          {
+            "frame": 6,
+            "relation": "satisfied",
+            "reason": "wrist见夹爪持黄杯正对腔内下放"
+          },
+          {
+            "frame": 7,
+            "relation": "satisfied",
+            "reason": "agentview见黄杯已在炉腔入口内"
+          },
+          {
+            "frame": 8,
+            "relation": "occluded",
+            "reason": "sideview被机身遮挡，腔内不可见"
+          }
+        ],
+        "support_contact": {
+          "visible": false,
+          "observation": "杯底接触被腔壁遮挡",
+          "evidence": [
+            {
+              "frame": 7,
+              "box": [
+                636,
+                236,
+                676,
+                268
+              ]
+            }
+          ]
+        },
+        "support_inference": {
+          "depth_sufficient": true,
+          "spatial_observation": "frame 7杯体大部分已低于入口上沿，仅上段露出，尺度对比初态全杯说明已进入腔内深度",
+          "temporal_observation": "同capture内frame 6腕视夹爪持杯下放→frame 7杯入腔仅上段露出→frame 8侧视臂仍停在炉口上方未再提升，过程连续无回退",
+          "evidence": [
+            {
+              "frame": 6,
+              "box": [
+                330,
+                140,
+                450,
+                240
+              ]
+            },
+            {
+              "frame": 7,
+              "box": [
+                636,
+                236,
+                676,
+                268
+              ]
+            },
+            {
+              "frame": 8,
+              "box": [
+                580,
+                150,
+                720,
+                240
+              ]
+            }
+          ]
+        },
+        "supplemental_context_evidence": {
+          "destination_evidence": [],
+          "relation_evidence": []
+        },
+        "_geometry_sequence_validated": false,
+        "_inferred_motion_settled": false
+      },
+      "region": {
+        "destination_id": "microwave_1_heating_region",
+        "confirmed": true,
+        "description": "微波炉炉腔内部加热区域，即门打开后正对的腔体空间，任务要求杯子放入该腔内",
+        "boundary": "由炉腔矩形入口边沿与腔内壁界定：frame 1 中本体左前面的暗色矩形开口及其内腔，frame 2 中本体朝左前的开口面；打开的门板（黑色边框透明窗）位于入口外侧，不属于腔内",
+        "anchors": [
+          {
+            "capture_id": "2db59287da8bb8fe/capture_000001",
+            "view": "agentview",
+            "box": [
+              568,
+              330,
+              700,
+              470
+            ]
+          },
+          {
+            "capture_id": "2db59287da8bb8fe/capture_000001",
+            "view": "sideview",
+            "box": [
+              600,
+              430,
+              760,
+              560
+            ]
+          }
+        ],
+        "reviewed_at": 0.5000000000000003,
+        "request_sha256": "89b610dc940500075d230bc1df34fb136a8092fca945aa5342bb0b17455d5aa1",
+        "response_sha256": "18c65779c4e1d97d4755b666b00f12c8680e7b7c7dd1e5b1085ac631c6de9451"
+      },
+      "source_sha256": [
+        "4893a2f23c4830ed18718871d5af3a676c3cebfb44a96f8a02d99f53a7eabd22",
+        "5abb65452c1edd71bc4aa443e912f9dc3b59f557c217fccf77f345587b9b33ed",
+        "f5329bb927dd931d8b423dec5bacf2efb3f1e443d1d850692dcef27416365e2e"
+      ],
+      "encoder": {
+        "timestamp": 8.949999999999658,
+        "finger_qpos": [
+          0.03832337354049193,
+          -0.03777200611119862
+        ],
+        "standard_open_finger_qpos": [
+          0.03872905725468913,
+          -0.03872928166924487
+        ],
+        "position_unit": "m",
+        "standard_open_tolerance_m": 0.002,
+        "max_standard_open_error_mm": 0.9572755580462555,
+        "at_standard_open": true
+      },
+      "request_sha256": "ae7e9fdccefc719a7a9c68a75d3865682a88d2824f2aa7586ce7c5a7a2bea2a6",
+      "response_sha256": "152fd0485fad7932b8166dc14e40c036759c15b649849b45b992845663681e3d"
+    }
+  ]
+}

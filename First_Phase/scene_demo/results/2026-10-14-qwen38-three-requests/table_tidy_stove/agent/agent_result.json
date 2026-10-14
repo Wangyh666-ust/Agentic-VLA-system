@@ -1,0 +1,462 @@
+{
+  "request_id": "qwen38-table_tidy_stove",
+  "session_id": "0a0268d3f0e84e97b7b3bb5519c9acd2",
+  "request": "整理桌面，包括碗、酒瓶，并且打开灶台",
+  "run_ok": true,
+  "chain_ok": true,
+  "plan_success": true,
+  "task_success": null,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "qwen38-table_tidy_stove",
+    "session_id": "0a0268d3f0e84e97b7b3bb5519c9acd2",
+    "state": "completed",
+    "decision": "execute",
+    "capability_ids": [
+      "bowl_to_plate",
+      "wine_to_rack",
+      "stove_on"
+    ],
+    "original_capability_ids": [
+      "bowl_to_plate",
+      "wine_to_rack",
+      "stove_on"
+    ],
+    "rationale": "用户动作词「整理桌面，包括碗、酒瓶」为收纳意图，按公开 storage_policy 执行：碗(akita_black_bowl_1=obj_1)→plate_1(obj_2)，酒瓶(wine_bottle_1=obj_3)→wine_rack_1_top_region(obj_7 木条架整体)；用户并明确点名「打开灶台」，故包含 stove_on(flat_stove_1=obj_4)，非自动开启。顺序按请求先后：先收纳碗、酒瓶，再开灶台。wine_to_rack 与 stove_on 在本场景为 candidate 证据，未声称已可靠验证。",
+    "target_bindings": {
+      "akita_black_bowl_1": "obj_1",
+      "flat_stove_1": "obj_4",
+      "plate_1": "obj_2",
+      "wine_bottle_1": "obj_3",
+      "wine_rack_1_top_region": "obj_7"
+    },
+    "job_ids": [
+      "dc7e0ec6e80b49049e10b2a84ff3040f",
+      "716396121ce14bfd94ebd7b861ea0c8f",
+      "9b327f93c6754a88ac495bd36b520588"
+    ],
+    "completed_capability_ids": [
+      "bowl_to_plate",
+      "wine_to_rack",
+      "stove_on"
+    ],
+    "pending_capability_ids": [],
+    "plan_success": true,
+    "regressions": [],
+    "error": null,
+    "repair_history": [],
+    "scene_version": 3,
+    "native_skill_route": {
+      "requested_capability_ids": [
+        "bowl_to_plate",
+        "wine_to_rack",
+        "stove_on"
+      ],
+      "executed_capability_ids": [
+        "bowl_to_plate",
+        "wine_to_rack",
+        "stove_on"
+      ],
+      "replacements": []
+    }
+  },
+  "jobs": [
+    {
+      "job_id": "dc7e0ec6e80b49049e10b2a84ff3040f",
+      "request_id": "qwen38-table_tidy_stove",
+      "session_id": "0a0268d3f0e84e97b7b3bb5519c9acd2",
+      "capability_id": "bowl_to_plate",
+      "state": "completed",
+      "steps": 150,
+      "total_steps": 372,
+      "success": true,
+      "ended_reason": "complete",
+      "error": null,
+      "instruction": "put the bowl on the plate",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "efe57c829322cd51251e58af4c1ab9555005b187e4e32b4f7a5002deb99a6893",
+      "state_after_sha": "71e06b0bf8d73d9f79100e2aa6c8df88c0ed2b7afbb89da54b0868c77de15ebc",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "done",
+        "calls": 3,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 2,
+          "movement": 85,
+          "confirm": 5,
+          "home": 125
+        },
+        "last_decision": {
+          "state": "complete",
+          "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": true,
+          "reason": "complete",
+          "checks": 2
+        },
+        "independent_streak": 5,
+        "current_view_calls": 2,
+        "release_evidence_calls": 1,
+        "release_events": 1,
+        "process_evidence": [
+          {
+            "proof_id": "f377e8fb44ecbd6c/review_00001/goal_0",
+            "goal_key": "[\"akita_black_bowl_1\", \"on\", \"plate_1\", false]",
+            "target_id": "akita_black_bowl_1",
+            "destination_id": "plate_1",
+            "capture_id": "f377e8fb44ecbd6c/capture_000021",
+            "observed_at": 5.499999999999616,
+            "reviewed_at": 5.749999999999589,
+            "review_id": "f377e8fb44ecbd6c/review_00001",
+            "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_01_bowl_to_plate_dc7e0ec6/release_0001",
+            "status": "confirmed",
+            "kind": "historical_review",
+            "supersedes_review_id": null,
+            "evidence": [
+              {
+                "capture_id": "f377e8fb44ecbd6c/capture_000021",
+                "view": "wrist",
+                "box": [
+                  500,
+                  450,
+                  999,
+                  800
+                ]
+              },
+              {
+                "capture_id": "f377e8fb44ecbd6c/capture_000021",
+                "view": "agentview",
+                "box": [
+                  450,
+                  500,
+                  550,
+                  600
+                ]
+              },
+              {
+                "capture_id": "f377e8fb44ecbd6c/capture_000021",
+                "view": "sideview",
+                "box": [
+                  450,
+                  500,
+                  550,
+                  600
+                ]
+              }
+            ],
+            "identity_refs": [
+              {
+                "capture_id": "f377e8fb44ecbd6c/capture_000001",
+                "view": "wrist",
+                "box": [
+                  405,
+                  235,
+                  635,
+                  465
+                ]
+              },
+              {
+                "capture_id": "f377e8fb44ecbd6c/capture_000001",
+                "view": "agentview",
+                "box": [
+                  432,
+                  472,
+                  492,
+                  522
+                ]
+              },
+              {
+                "capture_id": "f377e8fb44ecbd6c/capture_000001",
+                "view": "sideview",
+                "box": [
+                  497,
+                  472,
+                  576,
+                  532
+                ]
+              }
+            ],
+            "comparison": "capture_000021中碗已叠放在盘子上，与初态位置关系对比确认为同一目标",
+            "source_sha256": [
+              "bfd902a5b8074dbde896ca10166737d6f5a85b83547fe9f10520c7d409b18294",
+              "1ee245141201dffe54303602bf205448baac1cbafa5fd1fdb536aacc085658fa",
+              "7ac9c5d75e884be9c3cf17eab16faa20a822d99d7d61ed458255e024d7a303ef"
+            ],
+            "encoder": {
+              "timestamp": 5.499999999999616,
+              "finger_qpos": [
+                0.03804712414289047,
+                -0.038023061290890066
+              ],
+              "standard_open_finger_qpos": [
+                0.038728069658093986,
+                -0.03873027435945195
+              ],
+              "position_unit": "m",
+              "standard_open_tolerance_m": 0.002,
+              "max_standard_open_error_mm": 0.7072130685618836,
+              "at_standard_open": true
+            },
+            "request_sha256": "58c299c0ecb632a802b563f24dae3ae421e9680389dc9d12ad997202aea6a54e",
+            "response_sha256": "8237ce39e39eaa2b36666daab31d4eb335938e9240a49de79a8bbd5006fea67f"
+          }
+        ],
+        "actual_visual_requests": 3
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_01_bowl_to_plate_dc7e0ec6",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_01_bowl_to_plate_dc7e0ec6/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_01_bowl_to_plate_dc7e0ec6/rollout.mp4",
+      "wall_s": 219.205
+    },
+    {
+      "job_id": "716396121ce14bfd94ebd7b861ea0c8f",
+      "request_id": "qwen38-table_tidy_stove",
+      "session_id": "0a0268d3f0e84e97b7b3bb5519c9acd2",
+      "capability_id": "wine_to_rack",
+      "state": "completed",
+      "steps": 150,
+      "total_steps": 765,
+      "success": true,
+      "ended_reason": "complete",
+      "error": null,
+      "instruction": "put the wine bottle on the rack",
+      "scene_version_before": 1,
+      "scene_version_after": 2,
+      "state_before_sha": "71e06b0bf8d73d9f79100e2aa6c8df88c0ed2b7afbb89da54b0868c77de15ebc",
+      "state_after_sha": "fa72514a5f9be83ab12e00ef26922f46c9588fc52e896acc13baa06a5a7761d9",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": "semantic_wine_rack_v1",
+      "semantic_state": "incomplete",
+      "semantic_candidate_streak": 7,
+      "semantic_success": false,
+      "native_wine_predicate": true,
+      "semantic_observation_samples": 150,
+      "finish_status": {
+        "phase": "done",
+        "calls": 3,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 2,
+          "movement": 28,
+          "confirm": 3,
+          "home": 210
+        },
+        "last_decision": {
+          "state": "complete",
+          "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": true,
+          "reason": "complete",
+          "checks": 2
+        },
+        "independent_streak": 5,
+        "current_view_calls": 2,
+        "release_evidence_calls": 1,
+        "release_events": 1,
+        "process_evidence": [
+          {
+            "proof_id": "059e2e85d7e7ece5/review_00001/goal_0",
+            "goal_key": "[\"wine_bottle_1\", \"on\", \"wine_rack_1_top_region\", false]",
+            "target_id": "wine_bottle_1",
+            "destination_id": "wine_rack_1_top_region",
+            "capture_id": "059e2e85d7e7ece5/capture_000032",
+            "observed_at": 26.49999999999619,
+            "reviewed_at": 26.49999999999619,
+            "review_id": "059e2e85d7e7ece5/review_00001",
+            "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_02_wine_to_rack_71639612/release_0001",
+            "status": "confirmed",
+            "kind": "historical_review",
+            "supersedes_review_id": null,
+            "evidence": [
+              {
+                "capture_id": "059e2e85d7e7ece5/capture_000032",
+                "view": "wrist",
+                "box": [
+                  250,
+                  330,
+                  550,
+                  750
+                ]
+              },
+              {
+                "capture_id": "059e2e85d7e7ece5/capture_000032",
+                "view": "sideview",
+                "box": [
+                  420,
+                  220,
+                  480,
+                  320
+                ]
+              }
+            ],
+            "identity_refs": [
+              {
+                "capture_id": "059e2e85d7e7ece5/capture_000001",
+                "view": "wrist",
+                "box": [
+                  575,
+                  515,
+                  715,
+                  640
+                ]
+              },
+              {
+                "capture_id": "059e2e85d7e7ece5/capture_000001",
+                "view": "sideview",
+                "box": [
+                  540,
+                  390,
+                  570,
+                  476
+                ]
+              }
+            ],
+            "comparison": "初态酒瓶在桌面（frame 0/2），capture_000031中酒瓶被移至酒架（frame 3/5），当前图（capture_000032）确认酒瓶仍在酒架上。标签特征和位置与初态目标一致，无其他干扰物。",
+            "source_sha256": [
+              "d1e825dd8d8bb0d3e5c33ac8503e3915bfa2bd32315d94c7828c05cc75a0a82a",
+              "319590e236f82e68bacdd7993172324334961afeb286dcc40517e6d7e94ae3c4",
+              "4b6f344ede8a9ce753b70ea1feae4004294ec094e51586f14e65aa25439c8729"
+            ],
+            "encoder": {
+              "timestamp": 26.49999999999619,
+              "finger_qpos": [
+                0.03805555552325889,
+                -0.03812002527363015
+              ],
+              "standard_open_finger_qpos": [
+                0.03873000036326686,
+                -0.038728340981491936
+              ],
+              "position_unit": "m",
+              "standard_open_tolerance_m": 0.002,
+              "max_standard_open_error_mm": 0.6744448400079692,
+              "at_standard_open": true
+            },
+            "request_sha256": "c12170205098473673b2fbf6bf291a75c37476ae9310dc2a16d3ebdd55a25039",
+            "response_sha256": "785148576f60e4d3412c0f8b91cd88754e4adc1939d1d6dbc57bd933649ce2f5"
+          }
+        ],
+        "actual_visual_requests": 3
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_02_wine_to_rack_71639612",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_02_wine_to_rack_71639612/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_02_wine_to_rack_71639612/rollout.mp4",
+      "wall_s": 218.786
+    },
+    {
+      "job_id": "9b327f93c6754a88ac495bd36b520588",
+      "request_id": "qwen38-table_tidy_stove",
+      "session_id": "0a0268d3f0e84e97b7b3bb5519c9acd2",
+      "capability_id": "stove_on",
+      "state": "completed",
+      "steps": 150,
+      "total_steps": 1037,
+      "success": true,
+      "ended_reason": "complete",
+      "error": null,
+      "instruction": "turn on the stove",
+      "scene_version_before": 2,
+      "scene_version_after": 3,
+      "state_before_sha": "fa72514a5f9be83ab12e00ef26922f46c9588fc52e896acc13baa06a5a7761d9",
+      "state_after_sha": "c7b4e02c37d5391c4829c8f8f6fdc53a76a82e88a564f29b8183bece71e82c85",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "done",
+        "calls": 3,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 20,
+          "movement": 26,
+          "confirm": 3,
+          "home": 73
+        },
+        "last_decision": {
+          "state": "complete",
+          "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": true,
+          "reason": "complete",
+          "checks": 2
+        },
+        "independent_streak": 5,
+        "current_view_calls": 2,
+        "release_evidence_calls": 1,
+        "release_events": 1,
+        "process_evidence": [],
+        "actual_visual_requests": 3
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_03_stove_on_9b327f93",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_03_stove_on_9b327f93/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_03_stove_on_9b327f93/rollout.mp4",
+      "wall_s": 168.669
+    }
+  ],
+  "evaluation": null,
+  "hermes_invocations": 1,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "cancelled_by_user": false,
+  "cancellation_pending": false,
+  "wall_s": 782.335,
+  "error": null,
+  "hermes_output": "计划已提交（decision=execute，capability_ids 顺序：bowl_to_plate → wine_to_rack → stove_on，state=queued），host 将负责等待执行终态；我不再查询进度。\n\nsession_id: 20261014_011605_af96e9\n"
+}

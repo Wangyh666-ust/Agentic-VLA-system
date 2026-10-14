@@ -1,0 +1,43 @@
+{
+  "prompt": "根据同步三视图建立现场物体清单，供规划和后续检查共用。用户任务：整理桌面，包括碗、酒瓶，并且打开灶台\n先辨认桌面可见物品、容器和装置，包括目标和易混淆物。外观只写实际可见颜色、形状、把手、包装；看不清文字不要猜品牌。同一实物跨视角只分配一个object_id；不同实物不能合并。识别门/抽屉时可用装置整体加可见活动部件描述。每个物体必须逐一检查frame 0/1/2；遮挡视角如实记录，不要求三张都看得见。至少一个清晰参照且其他视角无身份冲突才confirmed=true。框采用每幅原图0..1000的[x1,y1,x2,y2]，包住真实物体，不按期望位置猜框。输出JSON：{\"objects\":[{\"object_id\":\"obj_1\",\"description\":\"可见特征及初始相对位置\",\"confirmed\":true,\"anchors\":[{\"frame\":1,\"box\":[100,200,300,400]}],\"view_observations\":[{\"frame\":0,\"visibility\":\"occluded\",\"reason\":\"遮挡情况\"},{\"frame\":1,\"visibility\":\"visible\",\"reason\":\"辨认依据\"},{\"frame\":2,\"visibility\":\"partial\",\"reason\":\"对应依据\"}],\"confusable_with\":[],\"role\":\"target/destination/distractor/uncertain\"}],\"coverage\":{\"targets_identifiable\":true,\"destination_visible\":true,\"state_change_visible\":true,\"reason\":\"画面覆盖依据\"}}。",
+  "context": {
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": 0.5000000000000003
+      }
+    ]
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 2048,
+    "max_tokens": 6500
+  },
+  "request_sha256": "e5b11739abcfa83cf09f9b50aaa8ccc1663e618b59d04246f87a22b8f054d030",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/planning_grounding/cap000002_wrist.png",
+      "sha256": "d430c88cf5634fed8d13d73c159d97887ac014175255e8a3ec67b662318a4009"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "sha256": "ad600e81bfe02086f5a74d629394daa6cd97dfe8a859e52461c8e548706dec25"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "sha256": "7801683b27d45f5eb09bed2b54d3bda7ee2e7e1a884b96eef4b2e059ebbd3137"
+    }
+  ]
+}

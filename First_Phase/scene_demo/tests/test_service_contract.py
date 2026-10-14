@@ -474,7 +474,12 @@ class PublicSchemaTests(unittest.TestCase):
             self.assertEqual(set(ids), {'goal_table', 'goal_table_shifted', 'basket_two',
                                        'mugs_two', 'mugs_left_occupied', 'mugs_right_occupied',
                                        'mugs_both_occupied', 'microwave_mug'})
-            self.assertEqual(set(ids), set(catalog.SCENES))
+            xvla_only = {'basket_cheese_butter', 'stove_moka', 'bowl_drawer',
+                         'book_caddy', 'mug_pudding', 'basket_soup_cheese', 'moka_two'}
+            self.assertEqual(set(catalog.SCENES) - set(ids), xvla_only)
+            for scene in xvla_only:
+                self.assertEqual(catalog.SCENES[scene]['backends'], ['xvla'])
+            self.assertEqual(payload['n_scenes'], 8)
 
     def test_create_session_rejects_unknown_scene(self):
         with tempfile.TemporaryDirectory() as tmp:

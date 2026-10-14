@@ -1,0 +1,54 @@
+{
+  "original_attempt": "20261014-142953-3e090f52",
+  "cause": "Model weights loaded, then deploy.py exited with code 1 because the reused output directory already contained info.json; old process absent and port free.",
+  "fix": "Unique output and log directories per launch, existing port conflict guard retained, startup error reports exit code and exact log path.",
+  "changed_files": [
+    "xvla_console.py",
+    "tests/test_xvla_console.py",
+    "XVLA_CONSOLE.md"
+  ],
+  "software": "16 passed",
+  "startup_validation": {
+    "ok": true,
+    "real_model_starts": 2,
+    "runs": [
+      {
+        "index": 1,
+        "pid": 4187,
+        "ready": true,
+        "runtime": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-console-startup-fix/zero_action_probe/model-20261014-145004-c326f233",
+        "startup_seconds": 12.89,
+        "scene_count": 0,
+        "plan_count": 0
+      },
+      {
+        "index": 2,
+        "pid": 4279,
+        "ready": true,
+        "runtime": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-console-startup-fix/zero_action_probe/model-20261014-145017-a5517434",
+        "startup_seconds": 6.05,
+        "scene_count": 0,
+        "plan_count": 0
+      }
+    ],
+    "new_vla_inference_requests": 0,
+    "new_vlm_requests": 0,
+    "new_robot_actions": 0,
+    "original_failure_unchanged": true
+  },
+  "ui_ready": {
+    "scene": "book_caddy",
+    "stage": "ready",
+    "frame_count": 3,
+    "new_run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-145058-b33b3f6f"
+  },
+  "original_failure_preserved": true,
+  "new_robot_actions": 0,
+  "new_vla_inference_requests": 0,
+  "new_vlm_requests": 0,
+  "subagents": 0,
+  "limits": [
+    "Only model service lifecycle and preview restored; book task and revised checker not exercised online in this repair.",
+    "Root model/reasoning setting not independently verified by a runtime metadata tool; no executor model was invoked."
+  ]
+}

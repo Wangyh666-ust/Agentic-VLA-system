@@ -1,0 +1,94 @@
+{
+  "prompt": "先报告可见关系，再决定是否到位。严格区分物体身份、目的地区域、允许接管和松手后完成。\n仍被夹持可以已经到位；仅到达上方、入口附近、口沿或仍需继续下降／推进，不能因此判定放置动作结束。容器旁边、入口外、二维投影重叠不等于进入内部；碰到盒壁不证明目的地承接。不能从初始位置消失推断放置成功。\n按任务原有语义检查：in检查指定内部/隔间；on检查指定承载面；right_of检查正确参照物右侧区域且物体已受桌面等支撑。不能把盘面改为盘内，不能要求物体完全低于容器口沿、居中、额外关门。门/开关不适用放置支撑要求。\n每个放置goal在初始模式必须给regions；destination_id是具体任务区域，不等于整个容器身份。description说明是哪一格/面/侧，boundary说明实际可见的边沿、隔板或参照物如何界定它，anchors定位该区域而非只框整个装置。看不清可confirmed=false，不得依据ID猜位置。\nregions结构为[{\"destination_id\":\"goals里的目的地ID\",\"confirmed\":true或false,\"description\":\"具体任务区域\",\"boundary\":\"可见边界与参照\",\"anchors\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}]}]。首次必须逐一提供；后续可省略沿用。纠正旧区域必须加corrects_previous=true和correction_reason，并重新审核旧放置证据。\n所有current/history的at_destination放置回答必须加placement对象：{\"region_confirmed\":true或false或null,\"region_description\":\"任务指定区域\",\"destination_evidence\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}],\"boundary_observation\":\"目标相对入口/边界/承载面的直接可见事实\",\"relation_evidence\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}],\"support_observation\":\"实际承接位置；区分容器/台面与夹爪，不能把贴近当接触\",\"needs_motion\":true或false或null,\"contradiction\":true或false或null,\"views\":[{\"frame\":整数,\"relation\":\"satisfied/violated/occluded/unclear\",\"reason\":\"此视角实际看见什么\"}]}。\nviews必须包含该时刻全部三图；一图明确成立且其余遮挡可接受，任何同刻明确反证都不能忽略。引用必须来自所审核时刻。身份清楚而关系不清时same_target=true、state=unknown；不要混淆身份未知和关系未知。\nsupported只指目的地/台面实际承接，不是夹爪支撑。needs_motion指是否还需继续放置移动，不包含松手、退离和归位。放手前不要求已经松手、退离或证明松手后稳定；这些在后续检验。若只看见靠近、悬空或仍需推进，应outside；无法确定深度/承接应unknown，不猜true。\n若decision_stage=handoff_review，这是独立接管复核：依据原图与最近过程确认是否仍需定位移动，不继承之前的到位结论；不得因将要收尾而认为已经完成。\n你审核同一个机器人任务段的初态、过程和当前照片。按task和goals指定的实物判断，不能把同类干扰物替代目标。\n每张图有frame、capture_id、view、captured_at。三视图是同一时刻；wrist会随手臂移动，不能用画面位置变化直接推断物体移动。初始图时间null仅表示绝对时间未知，顺序在动作之前。\n先用初始/清晰图定位各指定目标，bindings给出外观、图内框和易混淆物。框为0到1000归一化[x1,y1,x2,y2]，须包围实际物体。按照goals中外观定义辨认，不能用同类或相似颜色的另一物体替代。已绑定目标需用相同参照物核对，目标名称相同不证明是同一实物。\n比较初态、各次松手和当前：逐个核对什么物体从哪里去了哪里。目标只露局部时可结合初态与过程核对身份，不要求每张都看清标签；不能把看不到标签说成容器空置。仅从源位置消失不能证明到达目的地，还需目的地/过程对应。\ncurrent只描述当前图可见事实。history单独重审review_requests指定的旧capture，即使旧回答Unknown/False也可纠正。历史图里的放置不能填成当前看得到。历史结论必须引用该旧capture的图；identity_refs可以引用初始、过程或当前，用comparison说明为什么是同一目标。\n放置state=at_destination/outside/unknown；supported表示视觉上在目的地受支撑。编码器仅证明对应时刻开口，不能证明位置。当前仍夹持不妨碍到位判断，收尾另行执行。门/抽屉/开关state=open/closed/on/off/unknown，仅用当前图；侧面可辨门板相对机身即可，不要求正面。\n已有放置证据遇遮挡时current可unknown；若称同一目标outside，必须核对身份和原图。change=removed/moved/dropped需要当前明确同物移出证据，否则none。不要把桌上另一个目标/瓶/盒当成已放入目标的反证。每件目标分别定位，不能把同一件实物计两次。\n只输出JSON。bindings可为空（沿用已有绑定）；首次或之前身份未知时应补充。所有matched=true必须有features和anchors。current按goals顺序；history按review_requests逐条，不能漏项。身份清楚但关系看不清填state=unknown、same_target=true；身份也不清才填same_target=null。说明缺失信息，不抄模板。\nsame_target是身份判断：true=图中证据确为指定目标；false=确定是别的物体；null=身份无法确认。它不是固定默认值。state是指定目标的状态，只有same_target=true时才可填写明确状态；false/null时state必须unknown。不要一边写“确认为同一目标”一边填写null。\n结构：{\"bindings\":[{\"target_id\":\"目标ID\",\"matched\":true,\"anchors\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}],\"features\":\"实际可见特征\",\"distractors\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2],\"features\":\"不同物体的可见差异\"}]}],\"current\":[{\"id\":\"goal_0\",\"state\":\"unknown\",\"same_target\":null,\"evidence\":[],\"identity_refs\":[],\"supported\":null,\"change\":\"none\",\"comparison\":\"初态与当前实际对比\"}],\"history\":[{\"id\":\"goal_0\",\"capture_id\":\"指定旧capture_id\",\"state\":\"unknown\",\"same_target\":null,\"evidence\":[],\"identity_refs\":[],\"supported\":null,\"change\":\"none\",\"comparison\":\"初态、旧过程图与后来图的身份和位置对应\"}]}。evidence与identity_refs均为[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}]；明确事实必须填写evidence，明确目标身份必须引用bindings参照图的identity_refs。\nmode=initial时输出bindings和regions，bindings逐一包含所有goals的target_id和destination_id（含门/装置），看不清可matched=false，不能漏目标；regions逐一确认放置目的地区域。current=[]、history=[]。从实际最清楚的视角定位，遮挡图里不能按物体清单猜位置或抄外观定义。mode=history_page时current=[]，仅审核该页history。旧判断是可修订意见，不是真值。\n若旧bindings认错实物，可输出同target_id的新bindings并加corrects_previous=true、correction_reason说明新旧图的具体区别；旧身份所建放置证据必须重新确认，不能凭改名称直接继承。\n若bindings来自规划初态清单，features是从原始三视图生成并复核的外观描述；仍须对照附带初始原图，不能盲信。目标名称及资产外观提示不能覆盖图中实际物体。初始相对位置只用于初态定位，不要求后续仍在原位。可补充新视角参照或纠正目标/目的地绑定，但必须说明视觉依据并重新审核受影响的历史关系。\n{\"protocol\":\"xvla_subtask_review_v8\",\"scope\":{\"session_id\":\"/tmp/pytest-of-yhwang/pytest-2/test_real_monitor_constructs_w13\",\"logical_subtask_id\":\"/tmp/pytest-of-yhwang/pytest-2/test_real_monitor_constructs_w13/xvla_microwave_place_close\",\"attempt_id\":\"0\"},\"task\":\"put the yellow and white mug in the microwave and close it\",\"goals\":[{\"id\":\"goal_0\",\"description\":\"put the yellow and white mug in the microwave\",\"relation\":\"in\",\"target_id\":\"white_yellow_mug_1\",\"destination_id\":\"microwave_1_heating_region\",\"target_visual_identity\":\"浅色杯身与黄色区域/黄色把手。\"},{\"id\":\"goal_1\",\"description\":\"close the microwave\",\"relation\":\"close\",\"target_id\":\"microwave_1\",\"destination_id\":null,\"visual_state_definition\":{\"closed\":\"微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。\",\"open\":\"微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。\"}}],\"mode\":\"initial\",\"reviewed_at\":1.0,\"initial_capture_id\":\"ca35a188f6781254/capture_000001\",\"current_capture_id\":\"ca35a188f6781254/capture_000001\",\"observations\":[{\"capture_id\":\"ca35a188f6781254/capture_000001\",\"captured_at\":1.0,\"sequence_index\":0,\"role\":\"initial\",\"frames\":[0,1,2],\"encoder\":{\"timestamp\":1.0,\"finger_qpos\":[0.04,-0.04],\"standard_open_finger_qpos\":[0.04,-0.04],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":0.0,\"at_standard_open\":true}}],\"bindings\":[],\"regions\":[],\"review_requests\":[],\"previous_reviews\":[],\"coverage\":{\"page\":1,\"pages\":1,\"all_event_ids\":[],\"included_event_ids\":[]}}",
+  "context": {
+    "user_request": "Explicit full requested skill",
+    "current_subtask": {
+      "operation": "articulate",
+      "target": "microwave_1",
+      "destination": null,
+      "phase": "executing"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "desired_state": "closed",
+      "operation_semantics": "move the articulated door to its requested open or closed state; then release contact and retreat without changing that state",
+      "task_description": "close the microwave",
+      "skill_description": "put the yellow and white mug in the microwave and close it",
+      "success_checks": [
+        {
+          "id": "goal_0",
+          "description": "put the yellow and white mug in the microwave",
+          "relation": "in",
+          "target_id": "white_yellow_mug_1",
+          "destination_id": "microwave_1_heating_region",
+          "target_visual_identity": "浅色杯身与黄色区域/黄色把手。"
+        },
+        {
+          "id": "goal_1",
+          "description": "close the microwave",
+          "relation": "close",
+          "target_id": "microwave_1",
+          "destination_id": null,
+          "visual_state_definition": {
+            "closed": "微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。",
+            "open": "微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。"
+          }
+        }
+      ]
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": 1.0
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": 1.0
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": 1.0
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 1.0,
+      "finger_qpos": [
+        0.04,
+        -0.04
+      ],
+      "standard_open_finger_qpos": [
+        0.04,
+        -0.04
+      ],
+      "max_abs_arm_qvel": 0.0
+    }
+  },
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 1024,
+    "max_tokens": 4096
+  },
+  "images": [
+    {
+      "path": "/tmp/pytest-of-yhwang/pytest-2/test_real_monitor_constructs_w13/identity/wrist.png",
+      "sha256": "09c25866ac0d9328297346e74ef3a73b55ab60394156275205cefc5a893155a4"
+    },
+    {
+      "path": "/tmp/pytest-of-yhwang/pytest-2/test_real_monitor_constructs_w13/identity/agentview.png",
+      "sha256": "09c25866ac0d9328297346e74ef3a73b55ab60394156275205cefc5a893155a4"
+    },
+    {
+      "path": "/tmp/pytest-of-yhwang/pytest-2/test_real_monitor_constructs_w13/identity/sideview.png",
+      "sha256": "09c25866ac0d9328297346e74ef3a73b55ab60394156275205cefc5a893155a4"
+    }
+  ],
+  "call_index": 1,
+  "error_type": "RuntimeError",
+  "error": "Qwen HTTP status 400"
+}

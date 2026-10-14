@@ -1,0 +1,589 @@
+.......................................... [ 23%]
+........................................................................ [ 62%]
+.........FFFFFFFFFFF...............................................      [100%]
+=================================== FAILURES ===================================
+_________ test_real_monitor_constructs_whole_context[xvla_basket_both] _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e542c9790>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w0')
+cid = 'xvla_basket_both'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e542cbf20>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='basket_two')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='xvla_basket_both', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w0'))
+env = <object object at 0x7e6e542ba830>
+capability = {'instruction': 'put both the alphabet soup and the tomato sauce in the basket', 'goals': [['in', 'alphabet_soup_1', '...1', 'basket_1_contain_region']], 'scene_ids': ['basket_two'], 'native_task': {'suite': 'libero_10', 'task_id': 0}, ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+__________ test_real_monitor_constructs_whole_context[xvla_mugs_both] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e542ca840>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w1')
+cid = 'xvla_mugs_both'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e542c9e80>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='mugs_two')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='xvla_mugs_both', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w1'))
+env = <object object at 0x7e6e542b91b0>
+capability = {'instruction': 'put the white mug on the left plate and put the yellow and white mug on the right plate', 'goals': [[...'white_yellow_mug_1', 'plate_2']], 'scene_ids': ['mugs_two'], 'native_task': {'suite': 'libero_10', 'task_id': 4}, ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+____ test_real_monitor_constructs_whole_context[xvla_microwave_place_close] ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e541d5610>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w2')
+cid = 'xvla_microwave_place_close'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e541d48c0>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='microwave_mug')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='xvla_microwave_place_close', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w2'))
+env = <object object at 0x7e6e542baba0>
+capability = {'instruction': 'put the yellow and white mug in the microwave and close it', 'goals': [['in', 'white_yellow_mug_1', '...], ['close', 'microwave_1']], 'scene_ids': ['microwave_mug'], 'native_task': {'suite': 'libero_10', 'task_id': 9}, ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+____ test_real_monitor_constructs_whole_context[xvla_basket_cheese_butter] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e541a6720>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w3')
+cid = 'xvla_basket_cheese_butter'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e541a7590>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='basket_cheese_butter')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='xvla_basket_cheese_butter', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w3'))
+env = <object object at 0x7e6ed0f20910>
+capability = {'instruction': 'put both the cream cheese box and the butter in the basket', 'goals': [['in', 'cream_cheese_1', 'bask...t_1_contain_region']], 'scene_ids': ['basket_cheese_butter'], 'native_task': {'suite': 'libero_10', 'task_id': 1}, ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+_________ test_real_monitor_constructs_whole_context[xvla_stove_moka] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e542ca990>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w4')
+cid = 'xvla_stove_moka'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e542c8a10>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='stove_moka')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='xvla_stove_moka', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w4'))
+env = <object object at 0x7e6e542b9680>
+capability = {'instruction': 'turn on the stove and put the moka pot on it', 'goals': [['turnon', 'flat_stove_1'], ['on', 'moka_pot_1', 'flat_stove_1_cook_region']], 'scene_ids': ['stove_moka'], 'native_task': {'suite': 'libero_10', 'task_id': 2}, ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+______ test_real_monitor_constructs_whole_context[xvla_bowl_drawer_close] ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e542c8b90>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w5')
+cid = 'xvla_bowl_drawer_close'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e542c9100>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='bowl_drawer')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='xvla_bowl_drawer_close', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w5'))
+env = <object object at 0x7e6e542bad40>
+capability = {'instruction': 'put the black bowl in the bottom drawer of the cabinet and close it', 'goals': [['close', 'white_cabi...ite_cabinet_1_bottom_region']], 'scene_ids': ['bowl_drawer'], 'native_task': {'suite': 'libero_10', 'task_id': 3}, ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+_________ test_real_monitor_constructs_whole_context[xvla_book_caddy] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e541f8800>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w6')
+cid = 'xvla_book_caddy'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e541fb740>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='book_caddy')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='xvla_book_caddy', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w6'))
+env = <object object at 0x7e6e542b8b00>
+capability = {'instruction': 'pick up the book and place it in the back compartment of the caddy', 'goals': [['in', 'black_book_1',..._caddy_1_back_contain_region']], 'scene_ids': ['book_caddy'], 'native_task': {'suite': 'libero_10', 'task_id': 5}, ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+_________ test_real_monitor_constructs_whole_context[xvla_mug_pudding] _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e542d4c50>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w7')
+cid = 'xvla_mug_pudding'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e542d5040>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='mug_pudding')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='xvla_mug_pudding', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w7'))
+env = <object object at 0x7e6e542b9700>
+capability = {'instruction': 'put the white mug on the plate and put the chocolate pudding to the right of the plate', 'goals': [['...om_table_plate_right_region']], 'scene_ids': ['mug_pudding'], 'native_task': {'suite': 'libero_10', 'task_id': 6}, ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+_____ test_real_monitor_constructs_whole_context[xvla_basket_soup_cheese] ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e541d4740>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w8')
+cid = 'xvla_basket_soup_cheese'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e541d5d60>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='basket_soup_cheese')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='xvla_basket_soup_cheese', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w8'))
+env = <object object at 0x7e6e542bb020>
+capability = {'instruction': 'put both the alphabet soup and the cream cheese box in the basket', 'goals': [['in', 'alphabet_soup_1...ket_1_contain_region']], 'scene_ids': ['basket_soup_cheese'], 'native_task': {'suite': 'libero_10', 'task_id': 7}, ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+__________ test_real_monitor_constructs_whole_context[xvla_moka_both] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e542db380>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w9')
+cid = 'xvla_moka_both'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e542d8680>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='moka_two')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='xvla_moka_both', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w9'))
+env = <object object at 0x7e6ed0f20850>
+capability = {'instruction': 'put both moka pots on the stove', 'goals': [['on', 'moka_pot_1', 'flat_stove_1_cook_region'], ['on', ...on'], ['turnon', 'flat_stove_1']], 'scene_ids': ['moka_two'], 'native_task': {'suite': 'libero_10', 'task_id': 8}, ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+__________ test_real_monitor_constructs_whole_context[soup_to_basket] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6e541f8a40>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w10')
+cid = 'soup_to_basket'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={'finger_home':[.04,-.04]}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+>       monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7e6e541f8410>
+session = namespace(home_reference={'finger_home': [0.04, -0.04]}, xvla_completed=['wine_to_rack'], scene_id='basket_two')
+plan = namespace(user_request='Explicit full requested skill')
+job = namespace(capability_id='soup_to_basket', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w10'))
+env = <object object at 0x7e6e542b9210>
+capability = {'instruction': 'put the alphabet soup in the basket', 'goals': [['in', 'alphabet_soup_1', 'basket_1_contain_region']], 'object_id': 'alphabet_soup_1', 'target_id': 'basket_1_contain_region', ...}
+budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_event_checker import XvlaEventQwenClient as XvlaQwenClient
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+        bridge_port(monitor.port)
+        monitor.call_client = XvlaQwenClient(max_calls=24)
+        monitor._client_explicit = True
+        cid = job.capability_id
+        monitor.port.feedback_retreat_enabled = cid in ('wine_to_rack', 'stove_on')
+        monitor.port.checker_views = ('wrist', 'agentview', 'sideview')
+>       identity_capture = monitor.port.capture()
+                           ^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'FakePort' object has no attribute 'capture'
+
+First_Phase/scene_demo/xvla_service.py:340: AttributeError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_basket_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_mugs_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_microwave_place_close]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_basket_cheese_butter]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_stove_moka]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_bowl_drawer_close]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_book_caddy]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_mug_pudding]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_basket_soup_cheese]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_moka_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[soup_to_basket]
+11 failed, 170 passed, 30 subtests passed in 3.18s

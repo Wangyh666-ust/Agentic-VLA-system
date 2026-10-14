@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "id": "20261013-xvla-native-three-view-software",
+  "scope": "软件与输入字节资格；物理效果未知",
+  "implementation": [
+    "wrist/agentview/sideview同步3独立相机",
+    "原生三complete技能优先route；未匹配atomic fallback",
+    "requested/executed/replacements审计",
+    "success_checks逐项bool/null完整合取，部分完成与unknown不能结束",
+    "整体完成才运行原收尾，next-reference/cache复位；末尾global_home"
+  ],
+  "native_skills": {
+    "xvla_basket_both": {
+      "instruction": "put both the alphabet soup and the tomato sauce in the basket",
+      "goals": [
+        [
+          "in",
+          "alphabet_soup_1",
+          "basket_1_contain_region"
+        ],
+        [
+          "in",
+          "tomato_sauce_1",
+          "basket_1_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "basket_two"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 0
+      },
+      "component_capability_ids": [
+        "soup_to_basket",
+        "sauce_to_basket"
+      ]
+    },
+    "xvla_mugs_both": {
+      "instruction": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+      "goals": [
+        [
+          "on",
+          "porcelain_mug_1",
+          "plate_1"
+        ],
+        [
+          "on",
+          "white_yellow_mug_1",
+          "plate_2"
+        ]
+      ],
+      "scene_ids": [
+        "mugs_two"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 4
+      },
+      "component_capability_ids": [
+        "white_mug_left",
+        "yellow_mug_right"
+      ]
+    },
+    "xvla_microwave_place_close": {
+      "instruction": "put the yellow and white mug in the microwave and close it",
+      "goals": [
+        [
+          "in",
+          "white_yellow_mug_1",
+          "microwave_1_heating_region"
+        ],
+        [
+          "close",
+          "microwave_1"
+        ]
+      ],
+      "scene_ids": [
+        "microwave_mug"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 9
+      },
+      "component_capability_ids": [
+        "mug_to_microwave",
+        "microwave_close"
+      ]
+    }
+  },
+  "remaining_native_scenes": "另外7原生长程任务没有新增scene接口",
+  "second_phase_actual_policy_verified": false,
+  "real_hermes_planning_verified": false,
+  "experimental_model_calls": {
+    "VLA": 0,
+    "Qwen": 0,
+    "Hermes": 0
+  },
+  "mujoco_actions": 0,
+  "implementation_executor_config": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "evidence": "当前chat中collaboration.spawn_agent显式配置executor_native与executor_finish"
+  },
+  "root_model": "unknown",
+  "root_effort": "unknown",
+  "verification": {
+    "full_suite": {
+      "passed": 1223,
+      "subtests": 76,
+      "exitcode": 0,
+      "stdout": "software/integration/final/regression.stdout.txt"
+    },
+    "sensor_local": {
+      "passed": 6
+    },
+    "targeted_final": {
+      "passed": 107,
+      "subtests": 7
+    },
+    "cli_help": "exit0；原输出见software/integration",
+    "mcp_probe": "真实SDK导入，3native可见，audit/forged拒绝；原输出software/integration/mcp-probe.stdout.txt",
+    "serializer": {
+      "fake_model_response": true,
+      "real_model_calls": 0,
+      "sim_actions": 0,
+      "messages": 1,
+      "images": [
+        {
+          "view": "wrist",
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000464_wrist.png",
+          "sha256": "5c8a7e9758df208a8959efd57c0ce91c233bc5470b929241605838777807123d",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "view": "agentview",
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000463_agentview.png",
+          "sha256": "5a305b2f7da78da1acd93f9b2f9510096ebaa9d835c7e4640867e874c6d8d0e5",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "view": "sideview",
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000465_sideview.png",
+          "sha256": "59dda43cd5597e4b8c11ea92f287c69f7b5fe07a636e2bf4e5358069e942e78c",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ],
+      "labels": [
+        "Image frame=0; view=wrist; timestamp=38.25000000000078",
+        "Image frame=1; view=agentview; timestamp=38.25000000000078",
+        "Image frame=2; view=sideview; timestamp=38.25000000000078"
+      ]
+    },
+    "software_outputs": [
+      "software/finish/exact_prompt.txt",
+      "software/finish/pytest.exitcode",
+      "software/finish/pytest.stderr",
+      "software/finish/pytest.stdout",
+      "software/finish/serializer_summary.json",
+      "software/finish/v2/command.json",
+      "software/finish/v2/exact_prompt.txt",
+      "software/finish/v2/pytest.exitcode",
+      "software/finish/v2/pytest.stderr",
+      "software/finish/v2/pytest.stdout",
+      "software/finish/v2/serializer_summary.json",
+      "software/integration/cli-help.exitcode.txt",
+      "software/integration/cli-help.stderr.txt",
+      "software/integration/cli-help.stdout.txt",
+      "software/integration/final/check_summary.json",
+      "software/integration/final/git-whitespace.argv.json",
+      "software/integration/final/git-whitespace.exitcode.txt",
+      "software/integration/final/git-whitespace.stderr.txt",
+      "software/integration/final/git-whitespace.stdout.txt",
+      "software/integration/final/regression.command.txt",
+      "software/integration/final/regression.exitcode.txt",
+      "software/integration/final/regression.stderr.txt",
+      "software/integration/final/regression.stdout.txt",
+      "software/integration/final/sensors.command.txt",
+      "software/integration/final/sensors.exitcode.txt",
+      "software/integration/final/sensors.stderr.txt",
+      "software/integration/final/sensors.stdout.txt",
+      "software/integration/final/source-whitespace.json",
+      "software/integration/mcp-probe.exitcode.txt",
+      "software/integration/mcp-probe.stderr.txt",
+      "software/integration/mcp-probe.stdout.txt",
+      "software/integration/mcp_probe.py",
+      "software/integration/regression-final.command.txt",
+      "software/integration/regression-final.exitcode.txt",
+      "software/integration/regression-final.stderr.txt",
+      "software/integration/regression-final.stdout.txt",
+      "software/integration/regression.exitcode.txt",
+      "software/integration/regression.stderr.txt",
+      "software/integration/regression.stdout.txt",
+      "software/integration/targeted-final.exitcode.txt",
+      "software/integration/targeted-final.stderr.txt",
+      "software/integration/targeted-final.stdout.txt",
+      "software/integration/targeted.exitcode.txt",
+      "software/integration/targeted.stderr.txt",
+      "software/integration/targeted.stdout.txt",
+      "software/interface/native-delivery.exitcode.txt",
+      "software/interface/native-delivery.stderr.txt",
+      "software/interface/native-delivery.stdout.txt",
+      "software/interface/native-final.exitcode.txt",
+      "software/interface/native-final.stderr.txt",
+      "software/interface/native-final.stdout.txt",
+      "software/interface/native-rerun.exitcode.txt",
+      "software/interface/native-rerun.stderr.txt",
+      "software/interface/native-rerun.stdout.txt",
+      "software/interface/native.exitcode.txt",
+      "software/interface/native.stderr.txt",
+      "software/interface/native.stdout.txt",
+      "software/interface/regression.exitcode.txt",
+      "software/interface/regression.stderr.txt",
+      "software/interface/regression.stdout.txt"
+    ]
+  },
+  "fixture_corrections": [
+    "旧oracle能力数量断言过期，按新增3native更新",
+    "旧sensor fixture缺少新增外部相机，修正fixture；不计为产品故障；首次失败原输出保留"
+  ],
+  "downstream": "原control/sensors/simple_checker/vision/feedback_retreat/joint_home/safe_exit/safe_exit_contacts/placement_completion bytes匹配v5；runtime仅新增opt-in三图与capture通知，文件发生变化",
+  "limits": [
+    "未重跑视觉模型、真实Hermes或机器人链路",
+    "fake_response/mock true不算实际完成，不证明视觉准确率或动作成功",
+    "没有第二阶段实际策略验证",
+    "未启用剩余7场景",
+    "原生实验197/200不能转换为本轮集成成功率",
+    "路由只核对请求连续组件顺序与登记recipe一致；模型内部实际动作顺序尚未实测，组件ID顺序不作为执行顺序证据；原生BDDL AND只定义最终目标，不能证明内部时序遵守"
+  ]
+}

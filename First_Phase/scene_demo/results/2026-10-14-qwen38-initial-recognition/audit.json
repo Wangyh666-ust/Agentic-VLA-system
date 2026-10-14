@@ -1,0 +1,82 @@
+{
+  "cases": {
+    "basket_two": {
+      "http_status": 200,
+      "status": "response_received",
+      "requested_model": "qwen3.8-max",
+      "returned_model": "qwen3.8-max",
+      "usage": {
+        "completion_tokens": 4691,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2048,
+          "text_tokens": 2642
+        },
+        "prompt_tokens": 1003,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "image_tokens": 582,
+          "text_tokens": 421
+        },
+        "total_tokens": 5694
+      },
+      "finish_reason": "stop",
+      "elapsed_seconds": 89.44785332679749,
+      "response_sha256": "e020d8d4ad92c5711f2153a2067535064b1c856198d23c2db4c930644cf53c81",
+      "inventory_parsed": true
+    },
+    "microwave_mug": {
+      "http_status": 200,
+      "status": "response_received",
+      "requested_model": "qwen3.8-max",
+      "returned_model": "qwen3.8-max",
+      "usage": {
+        "completion_tokens": 4250,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2048,
+          "text_tokens": 2201
+        },
+        "prompt_tokens": 1001,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "image_tokens": 582,
+          "text_tokens": 419
+        },
+        "total_tokens": 5251
+      },
+      "finish_reason": "stop",
+      "elapsed_seconds": 85.9439070224762,
+      "response_sha256": "fa94291d9565ebdc3188bed8844c7a7b590d8c1d35ecd8073441ed888aa26fce",
+      "inventory_parsed": true
+    }
+  },
+  "actual_qwen_requests": 2,
+  "actual_hermes_inferences": 0,
+  "actual_physical_actions": 0,
+  "subagents": 0,
+  "total_tokens": 10945,
+  "manual_visual_assessment": {
+    "basket_two": {
+      "external_target_boxes_correct": true,
+      "full_three_view_consistency_passed": false,
+      "issues": [
+        "wrist tomato described at right-bottom instead of left-bottom",
+        "wrist soup described at lower-middle instead of right-bottom",
+        "wrist orange flat pack described as juice carton",
+        "simultaneous Milk carton assigned inconsistent upright/lying pose"
+      ]
+    },
+    "microwave_mug": {
+      "target_mug_three_view_identity_passed": true,
+      "gray_mug_distinguished": true,
+      "online_closing_and_history_tested": false
+    }
+  },
+  "configuration_verified": true,
+  "existing_tests_passed": 15,
+  "limitations": [
+    "one first-recognition response per scene; no repeated measures",
+    "no new inventory review, plan selection or terminal-check model calls",
+    "Hermes configuration changed but Hermes inference not launched",
+    "terminal checker remains qwen3-vl-plus"
+  ]
+}

@@ -1,0 +1,4322 @@
+{
+  "request": "帮我将黄杯子加热一下",
+  "scene": "microwave_mug",
+  "agent_result": {
+    "request_id": "qwen38-heat_yellow_mug",
+    "session_id": "a19ae68c9f0640b28dd98eb72bdaaa6d",
+    "request": "帮我将黄杯子加热一下",
+    "run_ok": true,
+    "chain_ok": false,
+    "plan_success": null,
+    "task_success": null,
+    "decision": "execute",
+    "plan": {
+      "ok": true,
+      "request_id": "qwen38-heat_yellow_mug",
+      "session_id": "a19ae68c9f0640b28dd98eb72bdaaa6d",
+      "state": "blocked",
+      "decision": "execute",
+      "capability_ids": [
+        "xvla_microwave_place_close"
+      ],
+      "original_capability_ids": [
+        "xvla_microwave_place_close"
+      ],
+      "rationale": "用户动作词为「加热」：场景中唯一加热装置是微波炉（公开 storage_policy 亦将 white_yellow_mug_1 指向 microwave_1_heating_region），故意图为把黄杯子放入微波炉加热并关门（开门无法加热）。该意图与已训练原生长程能力 xvla_microwave_place_close（LIBERO-10 task9：put the yellow and white mug in the microwave and close it）的对象、目的地与顺序完全匹配，故优先单次调用而非拆分为原子能力。目标绑定依据三视角真实画面：黄杯=obj_1（黄色外壁与把手，与灰白斑点杯 obj_2 区分），微波炉=obj_3（门开启）。注：该 native 复合能力的 Hermes 集成尚未物理验证，evidence 为 candidate/native benchmark，不声称可靠。",
+      "target_bindings": {
+        "microwave_1": "obj_3",
+        "microwave_1_heating_region": "obj_3",
+        "white_yellow_mug_1": "obj_1"
+      },
+      "job_ids": [
+        "f479dff188ca423aa6573047a9b92af4"
+      ],
+      "completed_capability_ids": [],
+      "pending_capability_ids": [],
+      "plan_success": null,
+      "regressions": [],
+      "error": "independent_finish_failed",
+      "repair_history": [],
+      "scene_version": 1,
+      "native_skill_route": {
+        "requested_capability_ids": [
+          "xvla_microwave_place_close"
+        ],
+        "executed_capability_ids": [
+          "xvla_microwave_place_close"
+        ],
+        "replacements": []
+      }
+    },
+    "jobs": [
+      {
+        "job_id": "f479dff188ca423aa6573047a9b92af4",
+        "request_id": "qwen38-heat_yellow_mug",
+        "session_id": "a19ae68c9f0640b28dd98eb72bdaaa6d",
+        "capability_id": "xvla_microwave_place_close",
+        "state": "completed",
+        "steps": 900,
+        "total_steps": 1261,
+        "success": false,
+        "ended_reason": "independent_finish_failed",
+        "error": null,
+        "instruction": "put the yellow and white mug in the microwave and close it",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "a65c520dda99aed635e861a5e7fde855fedd2cffa117031dbdf3f0a5a3a0078f",
+        "state_after_sha": "2d1454ca7357e5a1c688bd9d5baaecb5327b6c783b4c21df0fbd6362d3624e77",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": {
+          "phase": "blocked",
+          "calls": 10,
+          "prechecks": 6,
+          "helper_counts": {
+            "release": 2,
+            "movement": 188,
+            "confirm": 5,
+            "home": 161
+          },
+          "last_decision": {
+            "state": "complete",
+            "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+            "allow_release": false,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "independent_finish_failed",
+            "checks": 7
+          },
+          "independent_streak": 0,
+          "current_view_calls": 7,
+          "release_evidence_calls": 3,
+          "release_events": 3,
+          "process_evidence": [
+            {
+              "proof_id": "34e53df4d01ee6bf/review_00002/goal_0",
+              "goal_key": "[\"white_yellow_mug_1\", \"in\", \"microwave_1_heating_region\", false]",
+              "target_id": "white_yellow_mug_1",
+              "destination_id": "microwave_1_heating_region",
+              "capture_id": "34e53df4d01ee6bf/capture_000035",
+              "observed_at": 8.949999999999658,
+              "reviewed_at": 9.249999999999758,
+              "review_id": "34e53df4d01ee6bf/review_00002",
+              "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/release_0001",
+              "status": "confirmed",
+              "kind": "historical_review",
+              "supersedes_review_id": null,
+              "evidence": [
+                {
+                  "capture_id": "34e53df4d01ee6bf/capture_000035",
+                  "view": "agentview",
+                  "box": [
+                    585,
+                    385,
+                    645,
+                    445
+                  ]
+                }
+              ],
+              "identity_refs": [
+                {
+                  "capture_id": "34e53df4d01ee6bf/capture_000001",
+                  "view": "agentview",
+                  "box": [
+                    432,
+                    468,
+                    530,
+                    563
+                  ]
+                }
+              ],
+              "comparison": "初态黄色杯在桌面中部（frame 1/2），capture_000035的frame 7显示杯身黄色、内壁灰白、黄色把手特征与初态一致，且位于微波炉加热区域内；frame 7中杯体完全置于炉腔内，受微波炉底板支撑。灰色杯始终在桌面未移动，未混淆目标。",
+              "source_sha256": [
+                "4893a2f23c4830ed18718871d5af3a676c3cebfb44a96f8a02d99f53a7eabd22",
+                "5abb65452c1edd71bc4aa443e912f9dc3b59f557c217fccf77f345587b9b33ed",
+                "f5329bb927dd931d8b423dec5bacf2efb3f1e443d1d850692dcef27416365e2e"
+              ],
+              "encoder": {
+                "timestamp": 8.949999999999658,
+                "finger_qpos": [
+                  0.03832337354049193,
+                  -0.03777200611119862
+                ],
+                "standard_open_finger_qpos": [
+                  0.03872905725468913,
+                  -0.03872928166924487
+                ],
+                "position_unit": "m",
+                "standard_open_tolerance_m": 0.002,
+                "max_standard_open_error_mm": 0.9572755580462555,
+                "at_standard_open": true
+              },
+              "request_sha256": "39165bc9d2944e8bdbe169f024ff925a3e29a0f6fbc61154d7dbd0e03279b161",
+              "response_sha256": "2b23a8004489fa394d1020de0fc50fc1c7efb607efda99199b39dced3443bc9f"
+            }
+          ],
+          "actual_visual_requests": 10
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/rollout.mp4",
+        "wall_s": 900.77
+      }
+    ],
+    "evaluation": null,
+    "hermes_invocations": 1,
+    "usage": [
+      {
+        "available": false,
+        "reason": "installed Hermes chat native-image path did not export usage",
+        "api_calls": null,
+        "input_tokens": null,
+        "output_tokens": null
+      }
+    ],
+    "execution_timeout": false,
+    "cancelled_by_user": false,
+    "cancellation_pending": false,
+    "wall_s": 1194.315,
+    "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+    "hermes_output": "计划已提交（request_id=qwen38-heat_yellow_mug，decision=execute，capability_ids=[xvla_microwave_place_close]，target_bindings: white_yellow_mug_1→obj_1、microwave_1/microwave_1_heating_region→obj_3），host 将负责等待执行终态，我不再轮询。\n\nsession_id: 20261014_013558_eb95b9\n"
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "qwen38-heat_yellow_mug",
+    "session_id": "a19ae68c9f0640b28dd98eb72bdaaa6d",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_microwave_place_close"
+    ],
+    "original_capability_ids": [
+      "xvla_microwave_place_close"
+    ],
+    "rationale": "用户动作词为「加热」：场景中唯一加热装置是微波炉（公开 storage_policy 亦将 white_yellow_mug_1 指向 microwave_1_heating_region），故意图为把黄杯子放入微波炉加热并关门（开门无法加热）。该意图与已训练原生长程能力 xvla_microwave_place_close（LIBERO-10 task9：put the yellow and white mug in the microwave and close it）的对象、目的地与顺序完全匹配，故优先单次调用而非拆分为原子能力。目标绑定依据三视角真实画面：黄杯=obj_1（黄色外壁与把手，与灰白斑点杯 obj_2 区分），微波炉=obj_3（门开启）。注：该 native 复合能力的 Hermes 集成尚未物理验证，evidence 为 candidate/native benchmark，不声称可靠。",
+    "target_bindings": {
+      "microwave_1": "obj_3",
+      "microwave_1_heating_region": "obj_3",
+      "white_yellow_mug_1": "obj_1"
+    },
+    "job_ids": [
+      "f479dff188ca423aa6573047a9b92af4"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "independent_finish_failed",
+    "repair_history": [],
+    "scene_version": 1,
+    "native_skill_route": {
+      "requested_capability_ids": [
+        "xvla_microwave_place_close"
+      ],
+      "executed_capability_ids": [
+        "xvla_microwave_place_close"
+      ],
+      "replacements": []
+    }
+  },
+  "jobs": [
+    {
+      "capability": "xvla_microwave_place_close",
+      "outcome": {
+        "ok": false,
+        "cancelled": false,
+        "reason": "independent_finish_failed",
+        "detail": ""
+      },
+      "job": {
+        "job_id": "f479dff188ca423aa6573047a9b92af4",
+        "request_id": "qwen38-heat_yellow_mug",
+        "session_id": "a19ae68c9f0640b28dd98eb72bdaaa6d",
+        "capability_id": "xvla_microwave_place_close",
+        "state": "completed",
+        "steps": 900,
+        "total_steps": 1261,
+        "success": false,
+        "ended_reason": "independent_finish_failed",
+        "error": null,
+        "instruction": "put the yellow and white mug in the microwave and close it",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "a65c520dda99aed635e861a5e7fde855fedd2cffa117031dbdf3f0a5a3a0078f",
+        "state_after_sha": "2d1454ca7357e5a1c688bd9d5baaecb5327b6c783b4c21df0fbd6362d3624e77",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": {
+          "phase": "blocked",
+          "calls": 10,
+          "prechecks": 6,
+          "helper_counts": {
+            "release": 2,
+            "movement": 188,
+            "confirm": 5,
+            "home": 161
+          },
+          "last_decision": {
+            "state": "complete",
+            "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+            "allow_release": false,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "independent_finish_failed",
+            "checks": 7
+          },
+          "independent_streak": 0,
+          "current_view_calls": 7,
+          "release_evidence_calls": 3,
+          "release_events": 3,
+          "process_evidence": [
+            {
+              "proof_id": "34e53df4d01ee6bf/review_00002/goal_0",
+              "goal_key": "[\"white_yellow_mug_1\", \"in\", \"microwave_1_heating_region\", false]",
+              "target_id": "white_yellow_mug_1",
+              "destination_id": "microwave_1_heating_region",
+              "capture_id": "34e53df4d01ee6bf/capture_000035",
+              "observed_at": 8.949999999999658,
+              "reviewed_at": 9.249999999999758,
+              "review_id": "34e53df4d01ee6bf/review_00002",
+              "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/release_0001",
+              "status": "confirmed",
+              "kind": "historical_review",
+              "supersedes_review_id": null,
+              "evidence": [
+                {
+                  "capture_id": "34e53df4d01ee6bf/capture_000035",
+                  "view": "agentview",
+                  "box": [
+                    585,
+                    385,
+                    645,
+                    445
+                  ]
+                }
+              ],
+              "identity_refs": [
+                {
+                  "capture_id": "34e53df4d01ee6bf/capture_000001",
+                  "view": "agentview",
+                  "box": [
+                    432,
+                    468,
+                    530,
+                    563
+                  ]
+                }
+              ],
+              "comparison": "初态黄色杯在桌面中部（frame 1/2），capture_000035的frame 7显示杯身黄色、内壁灰白、黄色把手特征与初态一致，且位于微波炉加热区域内；frame 7中杯体完全置于炉腔内，受微波炉底板支撑。灰色杯始终在桌面未移动，未混淆目标。",
+              "source_sha256": [
+                "4893a2f23c4830ed18718871d5af3a676c3cebfb44a96f8a02d99f53a7eabd22",
+                "5abb65452c1edd71bc4aa443e912f9dc3b59f557c217fccf77f345587b9b33ed",
+                "f5329bb927dd931d8b423dec5bacf2efb3f1e443d1d850692dcef27416365e2e"
+              ],
+              "encoder": {
+                "timestamp": 8.949999999999658,
+                "finger_qpos": [
+                  0.03832337354049193,
+                  -0.03777200611119862
+                ],
+                "standard_open_finger_qpos": [
+                  0.03872905725468913,
+                  -0.03872928166924487
+                ],
+                "position_unit": "m",
+                "standard_open_tolerance_m": 0.002,
+                "max_standard_open_error_mm": 0.9572755580462555,
+                "at_standard_open": true
+              },
+              "request_sha256": "39165bc9d2944e8bdbe169f024ff925a3e29a0f6fbc61154d7dbd0e03279b161",
+              "response_sha256": "2b23a8004489fa394d1020de0fc50fc1c7efb607efda99199b39dced3443bc9f"
+            }
+          ],
+          "actual_visual_requests": 10
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/rollout.mp4",
+        "wall_s": 900.77
+      },
+      "source_counts": {
+        "settling": 0,
+        "vla": 900,
+        "finish": 356,
+        "prepare": 5
+      },
+      "vla_calls": 30,
+      "handoff_reference": {
+        "schema_version": 1,
+        "origin_sha256": "411deed952a749ec736be5f6ed37ff6f6b887b445f1955dc8a78cf75ac461f2b",
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7"
+        ],
+        "joint_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "qpos_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "qvel_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "joint_limits_low": [
+          -2.8973,
+          -1.7628,
+          -2.8973,
+          -3.0718,
+          -2.8973,
+          -0.0175,
+          -2.8973
+        ],
+        "joint_limits_high": [
+          2.8973,
+          1.7628,
+          2.8973,
+          -0.0698,
+          2.8973,
+          3.7525,
+          2.8973
+        ],
+        "homeq": [
+          -0.018888473678846465,
+          -0.14977609714419957,
+          0.0035023118667714464,
+          -2.4621613844379713,
+          -0.0003552927760492725,
+          2.255105491176026,
+          0.7710319269332364
+        ],
+        "home_joint_speed": [
+          0.02489137746955003,
+          -0.017829912666069845,
+          -0.0239286338488991,
+          -0.03327823507396041,
+          -0.002635209793834768,
+          0.038456595730713514,
+          -2.409968003230119e-05
+        ],
+        "finger_qpos_indexes": [
+          7,
+          8
+        ],
+        "finger_qvel_indexes": [
+          7,
+          8
+        ],
+        "finger_home": [
+          0.03872905725468913,
+          -0.03872928166924487
+        ],
+        "finger_speed": [
+          0.003186105483204755,
+          -0.003190072716011123
+        ],
+        "eef_pose": {
+          "position": [
+            -0.21053964219388294,
+            -0.007012751380522305,
+            1.1630264887402895
+          ],
+          "orientation_matrix": [
+            [
+              0.0003508959789753178,
+              0.9983595349364969,
+              -0.05725483275142948
+            ],
+            [
+              0.9999999362497969,
+              -0.0003465344346750173,
+              8.610626085258158e-05
+            ],
+            [
+              6.612423543997381e-05,
+              -0.05725485931576295,
+              -0.9983595928884131
+            ]
+          ]
+        },
+        "reference_kind": "global_home"
+      },
+      "actual_final_metrics": {
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7"
+        ],
+        "joint_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "arm_error_rad": [
+          0.00017679446341999777,
+          0.000822649312120699,
+          0.0005173606306939351,
+          0.001642193486761645,
+          0.0012558712297730632,
+          0.0020892500946021464,
+          0.003105117488144127
+        ],
+        "arm_speed_rad_s": [
+          0.0004134989778057323,
+          0.001438416085083438,
+          0.001160235826047496,
+          0.0019333895688343227,
+          0.000992559976611757,
+          0.0006905950523935285,
+          0.006437644144152949
+        ],
+        "max_joint_error_rad": 0.003105117488144127,
+        "max_joint_speed_rad_s": 0.006437644144152949,
+        "finger_error_m": [
+          1.0858913079017651e-05,
+          1.0545022334704224e-05
+        ],
+        "finger_speed_m_s": [
+          9.915258073707242e-06,
+          9.64030010741067e-06
+        ],
+        "max_finger_error_m": 1.0858913079017651e-05,
+        "max_finger_speed_m_s": 9.915258073707242e-06,
+        "ready": true,
+        "eef_position_error_m": 0.0002852051162337773,
+        "eef_orientation_error_rad": 0.004876302253530214
+      },
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 10,
+        "prechecks": 6,
+        "helper_counts": {
+          "release": 2,
+          "movement": 188,
+          "confirm": 5,
+          "home": 161
+        },
+        "last_decision": {
+          "state": "complete",
+          "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "independent_finish_failed",
+          "checks": 7
+        },
+        "independent_streak": 0,
+        "current_view_calls": 7,
+        "release_evidence_calls": 3,
+        "release_events": 3,
+        "process_evidence": [
+          {
+            "proof_id": "34e53df4d01ee6bf/review_00002/goal_0",
+            "goal_key": "[\"white_yellow_mug_1\", \"in\", \"microwave_1_heating_region\", false]",
+            "target_id": "white_yellow_mug_1",
+            "destination_id": "microwave_1_heating_region",
+            "capture_id": "34e53df4d01ee6bf/capture_000035",
+            "observed_at": 8.949999999999658,
+            "reviewed_at": 9.249999999999758,
+            "review_id": "34e53df4d01ee6bf/review_00002",
+            "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/release_0001",
+            "status": "confirmed",
+            "kind": "historical_review",
+            "supersedes_review_id": null,
+            "evidence": [
+              {
+                "capture_id": "34e53df4d01ee6bf/capture_000035",
+                "view": "agentview",
+                "box": [
+                  585,
+                  385,
+                  645,
+                  445
+                ]
+              }
+            ],
+            "identity_refs": [
+              {
+                "capture_id": "34e53df4d01ee6bf/capture_000001",
+                "view": "agentview",
+                "box": [
+                  432,
+                  468,
+                  530,
+                  563
+                ]
+              }
+            ],
+            "comparison": "初态黄色杯在桌面中部（frame 1/2），capture_000035的frame 7显示杯身黄色、内壁灰白、黄色把手特征与初态一致，且位于微波炉加热区域内；frame 7中杯体完全置于炉腔内，受微波炉底板支撑。灰色杯始终在桌面未移动，未混淆目标。",
+            "source_sha256": [
+              "4893a2f23c4830ed18718871d5af3a676c3cebfb44a96f8a02d99f53a7eabd22",
+              "5abb65452c1edd71bc4aa443e912f9dc3b59f557c217fccf77f345587b9b33ed",
+              "f5329bb927dd931d8b423dec5bacf2efb3f1e443d1d850692dcef27416365e2e"
+            ],
+            "encoder": {
+              "timestamp": 8.949999999999658,
+              "finger_qpos": [
+                0.03832337354049193,
+                -0.03777200611119862
+              ],
+              "standard_open_finger_qpos": [
+                0.03872905725468913,
+                -0.03872928166924487
+              ],
+              "position_unit": "m",
+              "standard_open_tolerance_m": 0.002,
+              "max_standard_open_error_mm": 0.9572755580462555,
+              "at_standard_open": true
+            },
+            "request_sha256": "39165bc9d2944e8bdbe169f024ff925a3e29a0f6fbc61154d7dbd0e03279b161",
+            "response_sha256": "2b23a8004489fa394d1020de0fc50fc1c7efb607efda99199b39dced3443bc9f"
+          }
+        ],
+        "actual_visual_requests": 10
+      },
+      "finish": {
+        "ready": true,
+        "ok": true,
+        "reason": "complete",
+        "counts": {
+          "release": 2,
+          "movement": 188,
+          "confirm": 5,
+          "home": 161
+        },
+        "release_settle_actions": 0,
+        "release_open_actions": 2,
+        "plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.0923888993707898,
+              0.5820427794263175,
+              0.2614699311117723,
+              -1.6392757689933835,
+              -0.043132237550231316,
+              2.059167247132221,
+              -0.6657608535203865
+            ],
+            [
+              0.09210083258474912,
+              0.5792911900165494,
+              0.2618783908627448,
+              -1.638279152113217,
+              -0.04254836830191733,
+              2.0554741041421214,
+              -0.6657947469931873
+            ],
+            [
+              0.09181795386170459,
+              0.5765679201687319,
+              0.2622822464787813,
+              -1.6372073366844269,
+              -0.041966952864498044,
+              2.051730009622051,
+              -0.6658273917885097
+            ],
+            [
+              0.09153935560713305,
+              0.5738669153254715,
+              0.26268198067111165,
+              -1.6360994621316904,
+              -0.04138845646024038,
+              2.0479722619217906,
+              -0.6658583692791822
+            ],
+            [
+              0.0912648562467444,
+              0.57118740643453,
+              0.2630776850175934,
+              -1.63495708295385,
+              -0.040812801967157815,
+              2.044201730674129,
+              -0.6658877066011984
+            ],
+            [
+              0.09099446561096533,
+              0.5685294616971999,
+              0.2634693610288275,
+              -1.6337802090723335,
+              -0.04024006461715529,
+              2.0404184849800626,
+              -0.6659153526583933
+            ],
+            [
+              0.09072820199840534,
+              0.5658931852494347,
+              0.26385700773831383,
+              -1.632568789635874,
+              -0.03967032590074609,
+              2.036622565816833,
+              -0.6659412527939449
+            ],
+            [
+              0.09046608391282769,
+              0.5632786833065487,
+              0.2642406252171513,
+              -1.6313227696645554,
+              -0.03910366693904593,
+              2.032814011984771,
+              -0.6659653525264781
+            ],
+            [
+              0.09020812976065634,
+              0.5606860628673483,
+              0.264620214693746,
+              -1.6300420921631626,
+              -0.03854016821572928,
+              2.0289928610482653,
+              -0.6659875977060061
+            ],
+            [
+              0.08995435785896685,
+              0.5581154316716046,
+              0.26499577854464834,
+              -1.6287266981655342,
+              -0.037979909557430865,
+              2.025159149347597,
+              -0.6660079345263447
+            ],
+            [
+              0.08970478645577948,
+              0.5555668982060212,
+              0.26536732028006343,
+              -1.6273765266990567,
+              -0.037422970124525126,
+              2.0213129119750337,
+              -0.6660263095316136
+            ],
+            [
+              0.08945943375130215,
+              0.5530405717129073,
+              0.2657348445286979,
+              -1.6259915147447583,
+              -0.03686942840319559,
+              2.017454182748966,
+              -0.6660426696221026
+            ],
+            [
+              0.08921831791967698,
+              0.5505365621998286,
+              0.2660983570221424,
+              -1.6245715971958485,
+              -0.03631936219845004,
+              2.01358299418737,
+              -0.6660569620597142
+            ],
+            [
+              0.08898145713121987,
+              0.548054980450214,
+              0.26645786457881315,
+              -1.62311670681476,
+              -0.03577284862808128,
+              2.009699377480626,
+              -0.6660691344729862
+            ],
+            [
+              0.08874886957513621,
+              0.5455959380349136,
+              0.26681337508747394,
+              -1.6216267741886905,
+              -0.035229964117564294,
+              2.005803362463684,
+              -0.6660791348616953
+            ],
+            [
+              0.08852057348271929,
+              0.5431595473247721,
+              0.26716489749035616,
+              -1.6201017276835552,
+              -0.034690784395907066,
+              2.0018949775875527,
+              -0.6660869116010381
+            ],
+            [
+              0.0882965871510216,
+              0.5407459215042175,
+              0.2675124417658946,
+              -1.6185414933963587,
+              -0.03415538449245462,
+              1.9979742498901139,
+              -0.6660924134453934
+            ],
+            [
+              0.08807692896700119,
+              0.5383551745859115,
+              0.2678560189110985,
+              -1.6169459951059033,
+              -0.03362383873465109,
+              1.9940412049662268,
+              -0.6660955895316611
+            ],
+            [
+              0.08786161743213822,
+              0.5359874214264841,
+              0.2681956409235763,
+              -1.615315154221814,
+              -0.033096220746755715,
+              1.9900958669371172,
+              -0.6660963893821856
+            ],
+            [
+              0.08765067118752037,
+              0.5336427777433899,
+              0.26853132078323266,
+              -1.6136488897318066,
+              -0.032572603449524194,
+              1.9861382584190228,
+              -0.6660947629072598
+            ],
+            [
+              0.08744410903940152,
+              0.5313213601329142,
+              0.26886307243365226,
+              -1.6119471181471745,
+              -0.032053059060855746,
+              1.982168400491088,
+              -0.6660906604072122
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "checks": [
+          {
+            "target_visible": null,
+            "destination_visible": null,
+            "at_destination": true,
+            "supported": null,
+            "released": true,
+            "stable": null,
+            "operation_achieved": true,
+            "clear_of_target": null,
+            "boxes": {},
+            "evidence": [
+              "initial/process/current evidence review",
+              "同步实测编码器已达到标准开口，按已松手、未夹持处理；遮挡或投影重叠不改变此判断。"
+            ],
+            "unknown_reasons": []
+          }
+        ],
+        "restored": true,
+        "limitation": "visible geometry only",
+        "opening_confirmed": true,
+        "object_release_not_yet_confirmed": true,
+        "handoff_mode": "visual_goal_encoder_v5",
+        "handoff_goal_latched": true,
+        "_release_path": true,
+        "active_retreat_plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.08947251023331416,
+              0.5498493969744519,
+              0.26537070085043224,
+              -1.6249588250825775,
+              -0.03742236777135836,
+              2.014109335578373,
+              -0.6658931771066182
+            ],
+            [
+              0.08923287677789472,
+              0.5473512027704993,
+              0.26573133549620975,
+              -1.6235596641650407,
+              -0.036873016153536,
+              2.0102698168710544,
+              -0.6659113806876241
+            ],
+            [
+              0.08900091371187396,
+              0.5448923565365351,
+              0.2660863767820127,
+              -1.6220690152820556,
+              -0.036329283768263845,
+              2.006373163121248,
+              -0.6659263839135915
+            ],
+            [
+              0.08877354519067199,
+              0.542457478191128,
+              0.2664372976721967,
+              -1.62054093865354,
+              -0.035789526142278746,
+              2.0024630035813575,
+              -0.6659390228025089
+            ],
+            [
+              0.08855049836638222,
+              0.5400454278651196,
+              0.26678423223942127,
+              -1.6189775847522003,
+              -0.03525357031304211,
+              1.9985404674332485,
+              -0.6659493827922167
+            ],
+            [
+              0.08833177876567494,
+              0.5376562671871875,
+              0.2671271965607992,
+              -1.6173789645415724,
+              -0.03472147989948219,
+              1.994605619891882,
+              -0.6659574193567555
+            ],
+            [
+              0.08811740423788081,
+              0.5352901089456389,
+              0.2674662029762257,
+              -1.6157450027497067,
+              -0.03419332812664663,
+              1.9906584864888948,
+              -0.6659630823701478
+            ],
+            [
+              0.087907393256772,
+              0.5329470687733214,
+              0.26780126462295645,
+              -1.614075618401737,
+              -0.03366918792165058,
+              1.9866990897738372,
+              -0.6659663218577584
+            ],
+            [
+              0.08770176447999356,
+              0.5306272632584162,
+              0.2681323955934052,
+              -1.6123707279173471,
+              -0.033149131520877034,
+              1.9827274507002974,
+              -0.6659670882306534
+            ],
+            [
+              0.08750053675684746,
+              0.5283308098888564,
+              0.26845961092298537,
+              -1.610630245177875,
+              -0.03263323045618182,
+              1.978743588648493,
+              -0.6659653322964496
+            ],
+            [
+              0.0873037291541284,
+              0.5260578270698621,
+              0.26878292657109065,
+              -1.60885408147282,
+              -0.03212155555695511,
+              1.9747475213937407,
+              -0.6659610052609269
+            ],
+            [
+              0.08711136098312247,
+              0.5238084341455586,
+              0.26910235940156346,
+              -1.6070421454397197,
+              -0.03161417695373577,
+              1.9707392650720026,
+              -0.6659540587288835
+            ],
+            [
+              0.08692345182710622,
+              0.5215827514220035,
+              0.2694179271629127,
+              -1.605194343001812,
+              -0.0311111640828177,
+              1.9667188341445028,
+              -0.6659444447045747
+            ],
+            [
+              0.08674002156932645,
+              0.5193809001915518,
+              0.2697296484683105,
+              -1.6033105773035983,
+              -0.030612585691823756,
+              1.9626862413614545,
+              -0.6659321155917519
+            ],
+            [
+              0.08656109042146497,
+              0.5172030027585967,
+              0.270037542775378,
+              -1.6013907486442498,
+              -0.030118509846249693,
+              1.9586414977248958,
+              -0.665917024193305
+            ],
+            [
+              0.08638667895259103,
+              0.5150491824667266,
+              0.270341630365783,
+              -1.5994347544087792,
+              -0.029629003936969073,
+              1.9545846124505808,
+              -0.6658991237105152
+            ],
+            [
+              0.08621680811861507,
+              0.5129195637273435,
+              0.27064193232465605,
+              -1.5974424889969,
+              -0.02914413468871025,
+              1.950515592928905,
+              -0.6658783677419221
+            ],
+            [
+              0.08605149929224518,
+              0.510814272049783,
+              0.27093847051984626,
+              -1.5954138437495138,
+              -0.02866396816949288,
+              1.9464344446848472,
+              -0.6658547102818105
+            ],
+            [
+              0.08589077429346208,
+              0.5087334340729878,
+              0.27123126758102734,
+              -1.5933487068727141,
+              -0.028188569801032373,
+              1.9423411713368526,
+              -0.6658281057183254
+            ],
+            [
+              0.08573465542051904,
+              0.506677177598777,
+              0.2715203468786651,
+              -1.5912469633592505,
+              -0.027718004370104278,
+              1.9382357745546732,
+              -0.6657985088312148
+            ],
+            [
+              0.08558316548148343,
+              0.5046456316267728,
+              0.27180573250286494,
+              -1.5891084949073344,
+              -0.02725233604087323,
+              1.9341182540160795,
+              -0.665765874789213
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "movement_budget": 430,
+        "movement_progress": {
+          "waypoint": 20,
+          "waypoints": 21,
+          "joint_error": 0.003946871869811686
+        },
+        "movement_screens": [
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000583_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000583_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000584_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000584_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9614157497233334,
+                    0.2172176331135265,
+                    -0.16880834116973537,
+                    -0.036138228790237065
+                  ],
+                  [
+                    0.22878988807358042,
+                    -0.9720757858784342,
+                    0.05219055109981548,
+                    0.259289231044242
+                  ],
+                  [
+                    -0.15275779292461295,
+                    -0.08879845929621359,
+                    -0.9842661684358655,
+                    1.1969493956037267
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000592_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000592_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000593_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000593_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.961397010988449,
+                    0.2173804444518194,
+                    -0.16870545229009487,
+                    -0.03613826846371092
+                  ],
+                  [
+                    0.22893181980908775,
+                    -0.9720469695305042,
+                    0.05210480693239654,
+                    0.2594015421339072
+                  ],
+                  [
+                    -0.15266305755281917,
+                    -0.0887154518474229,
+                    -0.98428835178627,
+                    1.2002951165978228
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000601_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000601_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000602_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000602_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9614052903054978,
+                    0.21732985617922673,
+                    -0.16872344646111892,
+                    -0.036132912085025934
+                  ],
+                  [
+                    0.22887661785435603,
+                    -0.9720619352266681,
+                    0.05206810811750179,
+                    0.25939397757632404
+                  ],
+                  [
+                    -0.15269368543640732,
+                    -0.08867540637911628,
+                    -0.984287209472594,
+                    1.203500618488366
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000610_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000610_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000611_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000611_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9614204959347915,
+                    0.2173091411069148,
+                    -0.16866347318810504,
+                    -0.036124354639926845
+                  ],
+                  [
+                    0.22885587163349874,
+                    -0.9720648637543662,
+                    0.052104612781184556,
+                    0.25941924900913066
+                  ],
+                  [
+                    -0.1526290274337459,
+                    -0.08869406882977374,
+                    -0.9842955562934582,
+                    1.2069692957913007
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000619_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000619_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000620_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000620_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9614304014841396,
+                    0.217246071755573,
+                    -0.16868825510040317,
+                    -0.03611575762450907
+                  ],
+                  [
+                    0.22878923085934014,
+                    -0.9720823233534147,
+                    0.05207153220924999,
+                    0.2593968207817321
+                  ],
+                  [
+                    -0.15266653511768005,
+                    -0.08865721025725892,
+                    -0.9842930600814793,
+                    1.2102871660774956
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000628_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000628_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000629_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000629_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9614362888560541,
+                    0.21719126049096052,
+                    -0.16872527622453456,
+                    -0.036110986018275726
+                  ],
+                  [
+                    0.22873178346606224,
+                    -0.9720977062092677,
+                    0.05203672563790086,
+                    0.2593759934574449
+                  ],
+                  [
+                    -0.1527155319642772,
+                    -0.08862282972816589,
+                    -0.9842885554286609,
+                    1.2134859801098379
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": false,
+            "reason": "endpoint_hand_clear_fail",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": false,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "geom": "gripper0_finger1_collision",
+              "initial_clearance": 0.0022886173399967805,
+              "previous_clearance": 0.005600473163840625,
+              "current_clearance": 0.006513136596110134,
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000637_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000637_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000638_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000638_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9614399751287852,
+                    0.2171635503157833,
+                    -0.16873993788847402,
+                    -0.036109325776320075
+                  ],
+                  [
+                    0.2287041221734548,
+                    -0.9721045519641629,
+                    0.052030419481535584,
+                    0.25937748315172626
+                  ],
+                  [
+                    -0.15273375110050585,
+                    -0.08861564458265453,
+                    -0.9842863754060451,
+                    1.2169111116747295
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000649_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000649_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000650_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000650_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9615698082817897,
+                    0.21747574086186744,
+                    -0.1675941703565615,
+                    -0.036067665885024504
+                  ],
+                  [
+                    0.22879787955321407,
+                    -0.9721230833651814,
+                    0.05126637397481502,
+                    0.25922509563740925
+                  ],
+                  [
+                    -0.1517729689795756,
+                    -0.08764138819732681,
+                    -0.9845221952612192,
+                    1.2208459487146934
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000658_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000658_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000659_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000659_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9615909287914101,
+                    0.21754035290828694,
+                    -0.1673890095633844,
+                    -0.03605529375135171
+                  ],
+                  [
+                    0.22881553515459924,
+                    -0.9721289126442622,
+                    0.051076688156131034,
+                    0.25919331463384926
+                  ],
+                  [
+                    -0.15161245508858165,
+                    -0.08741608580588742,
+                    -0.9845669562830098,
+                    1.2241589066919112
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000667_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000667_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000668_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000668_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9615959569497253,
+                    0.21752785998498952,
+                    -0.16737635946660318,
+                    -0.03605157404607447
+                  ],
+                  [
+                    0.22879959219839774,
+                    -0.9721334080670371,
+                    0.05106254527356567,
+                    0.25919195232970016
+                  ],
+                  [
+                    -0.151604624559377,
+                    -0.08739717987623426,
+                    -0.9845698404693758,
+                    1.2274639488756667
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000676_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000676_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000677_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000677_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9615989782826591,
+                    0.21751521904384533,
+                    -0.16737542964860447,
+                    -0.03604779523348531
+                  ],
+                  [
+                    0.22878648566204537,
+                    -0.9721365758114804,
+                    0.05106096305340471,
+                    0.25919257761461234
+                  ],
+                  [
+                    -0.15160524049041862,
+                    -0.08739340623776168,
+                    -0.9845700805945734,
+                    1.2309023116762832
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000685_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000685_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000686_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000686_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9616004416814214,
+                    0.21750900637196463,
+                    -0.16737509583320914,
+                    -0.03604495680431269
+                  ],
+                  [
+                    0.22878009785065945,
+                    -0.9721381054227842,
+                    0.05106046232108139,
+                    0.25919303426802665
+                  ],
+                  [
+                    -0.1516055981339013,
+                    -0.08739185392289453,
+                    -0.9845701633110673,
+                    1.2341598034744152
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000694_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000694_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000695_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000695_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9616005114041828,
+                    0.21750872652373224,
+                    -0.16737505893423504,
+                    -0.036042542781086415
+                  ],
+                  [
+                    0.22877974833451173,
+                    -0.9721382092652975,
+                    0.05106005129705915,
+                    0.2591932117484036
+                  ],
+                  [
+                    -0.1516056833341411,
+                    -0.08739139530002424,
+                    -0.984570190899716,
+                    1.2374621477118315
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000703_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000703_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000704_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000704_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.961599364141646,
+                    0.21751406934643622,
+                    -0.1673747069265111,
+                    -0.03603993340523378
+                  ],
+                  [
+                    0.22878514230942346,
+                    -0.9721369315981079,
+                    0.05106020839628658,
+                    0.25919322953933793
+                  ],
+                  [
+                    -0.15160482030871772,
+                    -0.08739231006998902,
+                    -0.9845702425930778,
+                    1.2406482872131157
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000712_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000712_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000713_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000713_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.961596890139663,
+                    0.2175249404258078,
+                    -0.16737479250615,
+                    -0.03603793892935925
+                  ],
+                  [
+                    0.22879614305566573,
+                    -0.9721343416141766,
+                    0.0510602269601498,
+                    0.25919294204360266
+                  ],
+                  [
+                    -0.1516039108881408,
+                    -0.08739406242485492,
+                    -0.9845702270819996,
+                    1.2437785671051216
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000721_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000721_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000722_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000722_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.961593113263176,
+                    0.2175416636456122,
+                    -0.16737475646922334,
+                    -0.036035813946407196
+                  ],
+                  [
+                    0.2288131042860915,
+                    -0.9721303297763556,
+                    0.05106060355965303,
+                    0.25919245494759413
+                  ],
+                  [
+                    -0.15160226855754733,
+                    -0.08739706234887515,
+                    -0.9845702136775171,
+                    1.2469786580265463
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000730_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000730_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000731_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000731_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9615884544560669,
+                    0.2175622167248634,
+                    -0.16737480727563595,
+                    -0.03603458101715008
+                  ],
+                  [
+                    0.22883397510283046,
+                    -0.9721253871114119,
+                    0.051061174801652516,
+                    0.25919177489902767
+                  ],
+                  [
+                    -0.15160031693710227,
+                    -0.08740087864118604,
+                    -0.9845701754153022,
+                    1.2499420223521123
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000739_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000739_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000740_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000740_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.961581917348143,
+                    0.21759085551226154,
+                    -0.1673751350305989,
+                    -0.03603260438840878
+                  ],
+                  [
+                    0.2288630312873553,
+                    -0.9721185216562138,
+                    0.0510616564841021,
+                    0.25919076673811325
+                  ],
+                  [
+                    -0.15159791930970598,
+                    -0.08740594631018841,
+                    -0.9845700947167695,
+                    1.2532164181252814
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        ],
+        "retreat_replans": [
+          {
+            "failed_screen": {
+              "ok": false,
+              "reason": "endpoint_hand_clear_fail",
+              "min_distance": -0.011792031461041574,
+              "endpoint_hand_clear": false,
+              "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+              "diagnostic": {
+                "geom": "gripper0_finger1_collision",
+                "initial_clearance": 0.0022886173399967805,
+                "previous_clearance": 0.005600473163840625,
+                "current_clearance": 0.006513136596110134,
+                "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+              },
+              "frames": [
+                {
+                  "view": "agentview",
+                  "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000637_agentview.png",
+                  "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000637_agentview.npy",
+                  "K": [
+                    [
+                      309.01933598375615,
+                      0.0,
+                      128.0
+                    ],
+                    [
+                      0.0,
+                      309.01933598375615,
+                      128.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "T_world_camera": [
+                    [
+                      -7.268184498698815e-08,
+                      0.6282664504107425,
+                      -0.7779982437565529,
+                      0.6586131746834771
+                    ],
+                    [
+                      0.9999999999999858,
+                      -7.268184498698815e-08,
+                      -1.521152659944569e-07,
+                      0.0
+                    ],
+                    [
+                      -1.521152659944569e-07,
+                      -0.7779982437565529,
+                      -0.6282664504107283,
+                      1.6103500240372424
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "pixel_center_offset": 0.5
+                },
+                {
+                  "view": "wrist",
+                  "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000638_wrist.png",
+                  "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000638_wrist.npy",
+                  "K": [
+                    [
+                      166.81284772367434,
+                      0.0,
+                      128.0
+                    ],
+                    [
+                      0.0,
+                      166.81284772367434,
+                      128.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "T_world_camera": [
+                    [
+                      0.9614399751287852,
+                      0.2171635503157833,
+                      -0.16873993788847402,
+                      -0.036109325776320075
+                    ],
+                    [
+                      0.2287041221734548,
+                      -0.9721045519641629,
+                      0.052030419481535584,
+                      0.25937748315172626
+                    ],
+                    [
+                      -0.15273375110050585,
+                      -0.08861564458265453,
+                      -0.9842863754060451,
+                      1.2169111116747295
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "pixel_center_offset": 0.5
+                }
+              ]
+            },
+            "new_plan": {
+              "ok": true,
+              "reason": "ok",
+              "waypoints": [
+                [
+                  0.08947251023331416,
+                  0.5498493969744519,
+                  0.26537070085043224,
+                  -1.6249588250825775,
+                  -0.03742236777135836,
+                  2.014109335578373,
+                  -0.6658931771066182
+                ],
+                [
+                  0.08923287677789472,
+                  0.5473512027704993,
+                  0.26573133549620975,
+                  -1.6235596641650407,
+                  -0.036873016153536,
+                  2.0102698168710544,
+                  -0.6659113806876241
+                ],
+                [
+                  0.08900091371187396,
+                  0.5448923565365351,
+                  0.2660863767820127,
+                  -1.6220690152820556,
+                  -0.036329283768263845,
+                  2.006373163121248,
+                  -0.6659263839135915
+                ],
+                [
+                  0.08877354519067199,
+                  0.542457478191128,
+                  0.2664372976721967,
+                  -1.62054093865354,
+                  -0.035789526142278746,
+                  2.0024630035813575,
+                  -0.6659390228025089
+                ],
+                [
+                  0.08855049836638222,
+                  0.5400454278651196,
+                  0.26678423223942127,
+                  -1.6189775847522003,
+                  -0.03525357031304211,
+                  1.9985404674332485,
+                  -0.6659493827922167
+                ],
+                [
+                  0.08833177876567494,
+                  0.5376562671871875,
+                  0.2671271965607992,
+                  -1.6173789645415724,
+                  -0.03472147989948219,
+                  1.994605619891882,
+                  -0.6659574193567555
+                ],
+                [
+                  0.08811740423788081,
+                  0.5352901089456389,
+                  0.2674662029762257,
+                  -1.6157450027497067,
+                  -0.03419332812664663,
+                  1.9906584864888948,
+                  -0.6659630823701478
+                ],
+                [
+                  0.087907393256772,
+                  0.5329470687733214,
+                  0.26780126462295645,
+                  -1.614075618401737,
+                  -0.03366918792165058,
+                  1.9866990897738372,
+                  -0.6659663218577584
+                ],
+                [
+                  0.08770176447999356,
+                  0.5306272632584162,
+                  0.2681323955934052,
+                  -1.6123707279173471,
+                  -0.033149131520877034,
+                  1.9827274507002974,
+                  -0.6659670882306534
+                ],
+                [
+                  0.08750053675684746,
+                  0.5283308098888564,
+                  0.26845961092298537,
+                  -1.610630245177875,
+                  -0.03263323045618182,
+                  1.978743588648493,
+                  -0.6659653322964496
+                ],
+                [
+                  0.0873037291541284,
+                  0.5260578270698621,
+                  0.26878292657109065,
+                  -1.60885408147282,
+                  -0.03212155555695511,
+                  1.9747475213937407,
+                  -0.6659610052609269
+                ],
+                [
+                  0.08711136098312247,
+                  0.5238084341455586,
+                  0.26910235940156346,
+                  -1.6070421454397197,
+                  -0.03161417695373577,
+                  1.9707392650720026,
+                  -0.6659540587288835
+                ],
+                [
+                  0.08692345182710622,
+                  0.5215827514220035,
+                  0.2694179271629127,
+                  -1.605194343001812,
+                  -0.0311111640828177,
+                  1.9667188341445028,
+                  -0.6659444447045747
+                ],
+                [
+                  0.08674002156932645,
+                  0.5193809001915518,
+                  0.2697296484683105,
+                  -1.6033105773035983,
+                  -0.030612585691823756,
+                  1.9626862413614545,
+                  -0.6659321155917519
+                ],
+                [
+                  0.08656109042146497,
+                  0.5172030027585967,
+                  0.270037542775378,
+                  -1.6013907486442498,
+                  -0.030118509846249693,
+                  1.9586414977248958,
+                  -0.665917024193305
+                ],
+                [
+                  0.08638667895259103,
+                  0.5150491824667266,
+                  0.270341630365783,
+                  -1.5994347544087792,
+                  -0.029629003936969073,
+                  1.9545846124505808,
+                  -0.6658991237105152
+                ],
+                [
+                  0.08621680811861507,
+                  0.5129195637273435,
+                  0.27064193232465605,
+                  -1.5974424889969,
+                  -0.02914413468871025,
+                  1.950515592928905,
+                  -0.6658783677419221
+                ],
+                [
+                  0.08605149929224518,
+                  0.510814272049783,
+                  0.27093847051984626,
+                  -1.5954138437495138,
+                  -0.02866396816949288,
+                  1.9464344446848472,
+                  -0.6658547102818105
+                ],
+                [
+                  0.08589077429346208,
+                  0.5087334340729878,
+                  0.27123126758102734,
+                  -1.5933487068727141,
+                  -0.028188569801032373,
+                  1.9423411713368526,
+                  -0.6658281057183254
+                ],
+                [
+                  0.08573465542051904,
+                  0.506677177598777,
+                  0.2715203468786651,
+                  -1.5912469633592505,
+                  -0.027718004370104278,
+                  1.9382357745546732,
+                  -0.6657985088312148
+                ],
+                [
+                  0.08558316548148343,
+                  0.5046456316267728,
+                  0.27180573250286494,
+                  -1.5891084949073344,
+                  -0.02725233604087323,
+                  1.9341182540160795,
+                  -0.665765874789213
+                ]
+              ],
+              "candidate_reports": [
+                {
+                  "direction": [
+                    0.0,
+                    0.0,
+                    1.0
+                  ],
+                  "distance": 0.04,
+                  "reason": "clear"
+                }
+              ],
+              "sensor_screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011792031461041574,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            }
+          }
+        ],
+        "home_entry": {
+          "visible_semantics": true,
+          "measured_open": true,
+          "settled": true,
+          "task_complete_before_home": false,
+          "label": "safety eligibility under review; task completion pending final verification",
+          "semantic_basis": "initial handoff purpose; final task acceptance pending",
+          "clearance_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011792031461041574,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000751_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000751_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000752_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/sensors/cap000752_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9615753475626319,
+                    0.21762035328422122,
+                    -0.16737452851690157,
+                    -0.03603251427105879
+                  ],
+                  [
+                    0.22889307743429552,
+                    -0.9721113521055886,
+                    0.051063472366285986,
+                    0.2591898251968255
+                  ],
+                  [
+                    -0.15159422832833033,
+                    -0.08741224710471411,
+                    -0.9845701036460752,
+                    1.2561554378542625
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        },
+        "home_screen": {
+          "sample_count": 145,
+          "planned_samples": 145,
+          "collisions": [],
+          "collision_count": 0,
+          "ok": true,
+          "live_unchanged": true
+        },
+        "home_mode": "original_joint_home_streaming",
+        "home_streak": 5
+      },
+      "before": {
+        "gripper_current_action": [
+          0.9364528656005859,
+          -0.9364640712738037
+        ],
+        "gripper_hold_from_measurement": [
+          0.9364528656005859,
+          -0.9364640712738037
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 0.5000000000000003,
+        "robot": {
+          "robot_name": "MountedPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            -0.018888473678846465,
+            -0.14977609714419957,
+            0.0035023118667714464,
+            -2.4621613844379713,
+            -0.0003552927760492725,
+            2.255105491176026,
+            0.7710319269332364
+          ],
+          "arm_qvel": [
+            0.02489137746955003,
+            -0.017829912666069845,
+            -0.0239286338488991,
+            -0.03327823507396041,
+            -0.002635209793834768,
+            0.038456595730713514,
+            -2.409968003230119e-05
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.03872905725468913,
+            -0.03872928166924487
+          ],
+          "finger_qvel": [
+            0.003186105483204755,
+            -0.003190072716011123
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.21053964219388294,
+            -0.007012751380522305,
+            1.1630264887402895
+          ],
+          "orientation_matrix": [
+            [
+              0.0003508959789753178,
+              0.9983595349364969,
+              -0.05725483275142948
+            ],
+            [
+              0.9999999362497969,
+              -0.0003465344346750173,
+              8.610626085258158e-05
+            ],
+            [
+              6.612423543997381e-05,
+              -0.05725485931576295,
+              -0.9983595928884131
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "after": {
+        "gripper_current_action": [
+          0.936995804309845,
+          -0.9359368085861206
+        ],
+        "gripper_hold_from_measurement": [
+          0.936995804309845,
+          -0.9359368085861206
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 63.5500000000317,
+        "robot": {
+          "robot_name": "MountedPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            -0.018711679215426467,
+            -0.14895344783207887,
+            0.0040196724974653816,
+            -2.4605191909512096,
+            -0.0016111640058223357,
+            2.253016241081424,
+            0.7679268094450923
+          ],
+          "arm_qvel": [
+            -0.0004134989778057323,
+            -0.001438416085083438,
+            -0.001160235826047496,
+            -0.0019333895688343227,
+            0.000992559976611757,
+            0.0006905950523935285,
+            0.006437644144152949
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.038739916167768146,
+            -0.03871873664691017
+          ],
+          "finger_qvel": [
+            -9.915258073707242e-06,
+            -9.64030010741067e-06
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.21037151711714921,
+            -0.006840358542592733,
+            1.1631793174886642
+          ],
+          "orientation_matrix": [
+            [
+              -0.004283971198826543,
+              0.9982760235948255,
+              -0.058537409461567026
+            ],
+            [
+              0.9999905543505531,
+              0.004233654805558783,
+              -0.0009835530799803677
+            ],
+            [
+              -0.0007340302728053236,
+              -0.05854107005078487,
+              -0.998284731084708
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "cache_reset": [
+        {
+          "gripper_current_action": [
+            0.9376831650733948,
+            -0.9376788139343262
+          ],
+          "gripper_hold_from_measurement": [
+            0.9376831650733948,
+            -0.9376788139343262
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 0.7500000000000006,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.01742300767061629,
+              -0.1514220428052225,
+              0.003928274553400102,
+              -2.4603759571666646,
+              -0.00036767182064613804,
+              2.2526561268436165,
+              0.7717477375435654
+            ],
+            "arm_qvel": [
+              -8.247295358251177e-05,
+              -0.0015501820216977152,
+              0.006927096006172434,
+              0.015413447718225705,
+              5.674131772041981e-05,
+              -0.018597393588175668,
+              0.0028724170499980694
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03875366375648479,
+              -0.038753575926586806
+            ],
+            "finger_qvel": [
+              -2.2435717326518783e-05,
+              2.048961294896487e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.21017826354149932,
+              -0.0061763295264837285,
+              1.1643215490412333
+            ],
+            "orientation_matrix": [
+              [
+                -0.0008283754941302767,
+                0.9984149130733825,
+                -0.056275884237484114
+              ],
+              [
+                0.9999996545408917,
+                0.0008231996673088238,
+                -0.0001151538313440767
+              ],
+              [
+                -6.864501332965942e-05,
+                -0.05627596018707927,
+                -0.9984152500802882
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        },
+        {
+          "gripper_current_action": [
+            0.9376831650733948,
+            -0.9376788139343262
+          ],
+          "gripper_hold_from_measurement": [
+            0.9376831650733948,
+            -0.9376788139343262
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 0.7500000000000006,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.01742300767061629,
+              -0.1514220428052225,
+              0.003928274553400102,
+              -2.4603759571666646,
+              -0.00036767182064613804,
+              2.2526561268436165,
+              0.7717477375435654
+            ],
+            "arm_qvel": [
+              -8.247295358251177e-05,
+              -0.0015501820216977152,
+              0.006927096006172434,
+              0.015413447718225705,
+              5.674131772041981e-05,
+              -0.018597393588175668,
+              0.0028724170499980694
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03875366375648479,
+              -0.038753575926586806
+            ],
+            "finger_qvel": [
+              -2.2435717326518783e-05,
+              2.048961294896487e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.21017826354149932,
+              -0.0061763295264837285,
+              1.1643215490412333
+            ],
+            "orientation_matrix": [
+              [
+                -0.0008283754941302767,
+                0.9984149130733825,
+                -0.056275884237484114
+              ],
+              [
+                0.9999996545408917,
+                0.0008231996673088238,
+                -0.0001151538313440767
+              ],
+              [
+                -6.864501332965942e-05,
+                -0.05627596018707927,
+                -0.9984152500802882
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        },
+        {
+          "gripper_current_action": [
+            0.936995804309845,
+            -0.9359368085861206
+          ],
+          "gripper_hold_from_measurement": [
+            0.936995804309845,
+            -0.9359368085861206
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 63.5500000000317,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.018711679215426467,
+              -0.14895344783207887,
+              0.0040196724974653816,
+              -2.4605191909512096,
+              -0.0016111640058223357,
+              2.253016241081424,
+              0.7679268094450923
+            ],
+            "arm_qvel": [
+              -0.0004134989778057323,
+              -0.001438416085083438,
+              -0.001160235826047496,
+              -0.0019333895688343227,
+              0.000992559976611757,
+              0.0006905950523935285,
+              0.006437644144152949
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.038739916167768146,
+              -0.03871873664691017
+            ],
+            "finger_qvel": [
+              -9.915258073707242e-06,
+              -9.64030010741067e-06
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.21037151711714921,
+              -0.006840358542592733,
+              1.1631793174886642
+            ],
+            "orientation_matrix": [
+              [
+                -0.004283971198826543,
+                0.9982760235948255,
+                -0.058537409461567026
+              ],
+              [
+                0.9999905543505531,
+                0.004233654805558783,
+                -0.0009835530799803677
+              ],
+              [
+                -0.0007340302728053236,
+                -0.05854107005078487,
+                -0.998284731084708
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        }
+      ]
+    }
+  ],
+  "independent_user_goals": [],
+  "status": "finished",
+  "pipeline_terminal": "blocked",
+  "decision": "execute",
+  "physical_user_goal_success": null
+}

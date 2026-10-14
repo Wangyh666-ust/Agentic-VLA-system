@@ -1,0 +1,452 @@
+{
+  "cases": {
+    "microwave_mug": {
+      "complete": false,
+      "reason": null,
+      "error": null,
+      "plan": {
+        "state": "blocked",
+        "plan_success": null,
+        "target_bindings": {
+          "microwave_1": "obj_3",
+          "microwave_1_heating_region": "obj_3",
+          "white_yellow_mug_1": "obj_1"
+        },
+        "native_skill_route": {
+          "requested_capability_ids": [
+            "xvla_microwave_place_close"
+          ],
+          "executed_capability_ids": [
+            "xvla_microwave_place_close"
+          ],
+          "replacements": []
+        },
+        "capability_ids": [
+          "xvla_microwave_place_close"
+        ],
+        "error": "retreat plan blocked"
+      },
+      "source_counts": {
+        "settling": 10,
+        "prepare": 5,
+        "vla": 150,
+        "finish": 8
+      },
+      "first_native_success_vla_step": null,
+      "native_success_final": false,
+      "inventories": [
+        {
+          "inventory": {
+            "objects": [
+              {
+                "object_id": "obj_1",
+                "description": "黄色把手的白色杯子，杯身可见部分为白色，把手黄色，放置于桌面",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 0,
+                    "box": [
+                      300,
+                      0,
+                      650,
+                      250
+                    ]
+                  },
+                  {
+                    "frame": 1,
+                    "box": [
+                      430,
+                      460,
+                      520,
+                      560
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      450,
+                      470,
+                      540,
+                      560
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "visible",
+                    "reason": "wrist视角中清晰显示黄色把手和白色杯身，杯口朝上"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "agentview中黄色把手杯子位于桌面右侧，与灰色杯子并排"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "sideview中黄色把手杯子位于桌面中间偏右，杯身完整可见"
+                  }
+                ],
+                "confusable_with": [
+                  "obj_2"
+                ],
+                "role": "target"
+              },
+              {
+                "object_id": "obj_2",
+                "description": "灰色带把手的杯子，杯身灰色，把手灰色，放置于桌面",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 1,
+                    "box": [
+                      240,
+                      500,
+                      340,
+                      600
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      370,
+                      380,
+                      450,
+                      460
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "occluded",
+                    "reason": "wrist视角未显示该物体，仅见黄色杯子"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "agentview中灰色杯子位于桌面左侧，与黄色杯子并排"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "sideview中灰色杯子位于桌面左侧，杯身完整可见"
+                  }
+                ],
+                "confusable_with": [
+                  "obj_1"
+                ],
+                "role": "distractor"
+              },
+              {
+                "object_id": "obj_3",
+                "description": "黑色长方体装置，带有可开合的门（门处于打开状态），门为黑色，装置主体黑色",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 0,
+                    "box": [
+                      0,
+                      450,
+                      420,
+                      620
+                    ]
+                  },
+                  {
+                    "frame": 1,
+                    "box": [
+                      410,
+                      300,
+                      600,
+                      480
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      570,
+                      350,
+                      750,
+                      520
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "partial",
+                    "reason": "wrist视角仅显示微波炉下部结构，门缝可见但主体被遮挡"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "agentview中清晰显示打开的门和主体，门与桌面平行"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "sideview中清晰显示打开的门和主体，门向右开启"
+                  }
+                ],
+                "confusable_with": [],
+                "role": "destination"
+              }
+            ],
+            "coverage": {
+              "targets_identifiable": true,
+              "destination_visible": true,
+              "state_change_visible": true,
+              "reason": "黄白杯（obj_1）在三视角均清晰可辨且无遮挡；微波炉（obj_3）在agentview和sideview中完整可见，wrist视角部分可见；微波炉门初始打开状态在agentview和sideview中明确可见，支持后续关闭状态变化观察"
+            },
+            "version": 1,
+            "captured_at": 0.5000000000000003,
+            "reviewed_from_views": [
+              "wrist",
+              "agentview",
+              "sideview"
+            ],
+            "source_images": [
+              {
+                "frame": 0,
+                "view": "wrist",
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/planning_grounding/cap000002_wrist.png",
+                "sha256": "3e8fcc815a090cb1da60da16451a4eb9300d67c6603332cfc31f8fc18d50b170"
+              },
+              {
+                "frame": 1,
+                "view": "agentview",
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/planning_grounding/cap000002_wrist_checker_agentview.png",
+                "sha256": "7bf7950a0c04cde03a8f1e1dfd3ee1cb7209065064d896394020ee3060fbe7e4"
+              },
+              {
+                "frame": 2,
+                "view": "sideview",
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/planning_grounding/cap000002_wrist_checker_sideview.png",
+                "sha256": "aebe9bee43d0c7746c98c49f30eab687d5b0540c97e61dedf309828749c2fafb"
+              }
+            ]
+          },
+          "metadata": {
+            "verdict": {
+              "target_visible": null,
+              "destination_visible": null,
+              "at_destination": null,
+              "supported": null,
+              "released": null,
+              "stable": null,
+              "operation_achieved": null,
+              "clear_of_target": null,
+              "boxes": {},
+              "evidence": [
+                "scene identity only"
+              ],
+              "unknown_reasons": []
+            },
+            "usage": {
+              "prompt_tokens": 1829,
+              "completion_tokens": 2940,
+              "total_tokens": 4769,
+              "completion_tokens_details": {
+                "reasoning_tokens": 2049,
+                "text_tokens": 891
+              },
+              "prompt_tokens_details": {
+                "image_tokens": 582,
+                "text_tokens": 1247,
+                "cached_tokens": 0
+              }
+            },
+            "model": "qwen3-vl-plus",
+            "http_status": 200,
+            "request_sha256": "1b4ca6bc8391d63264e0490d89104e6fb467a98d80121c0ad81e2ee71fa2b56c",
+            "response_sha256": "fca22c640b7bff6531b0702082e352330051187c0702a4b978eee0b4448dcefa",
+            "call_index": 2
+          }
+        }
+      ],
+      "selected_targets_review": [
+        {
+          "passed": true,
+          "response": {
+            "checks": [
+              {
+                "target_id": "microwave_1",
+                "matches_request": true,
+                "reason": "obj_3在三个视角均存在：wrist视角部分可见（底部结构），agentview和sideview完整显示打开的门与主体，符合微波炉描述"
+              },
+              {
+                "target_id": "microwave_1_heating_region",
+                "matches_request": true,
+                "reason": "规则允许目的地部件绑定装置整体；obj_3在agentview/sideview中门打开可见内部空间，wrist视角虽部分遮挡但装置存在，语义符合加热区域归属"
+              },
+              {
+                "target_id": "white_yellow_mug_1",
+                "matches_request": true,
+                "reason": "obj_1在三视角均清晰可见：wrist视角显示黄把手白杯身，agentview/sideview中与灰色杯并排且位置匹配，无遮挡冲突"
+              }
+            ]
+          },
+          "metadata": {
+            "verdict": {
+              "target_visible": null,
+              "destination_visible": null,
+              "at_destination": null,
+              "supported": null,
+              "released": null,
+              "stable": null,
+              "operation_achieved": null,
+              "clear_of_target": null,
+              "boxes": {},
+              "evidence": [
+                "scene identity only"
+              ],
+              "unknown_reasons": []
+            },
+            "usage": {
+              "prompt_tokens": 2281,
+              "completion_tokens": 2227,
+              "total_tokens": 4508,
+              "completion_tokens_details": {
+                "reasoning_tokens": 2049,
+                "text_tokens": 178
+              },
+              "prompt_tokens_details": {
+                "image_tokens": 582,
+                "text_tokens": 1699,
+                "cached_tokens": 0
+              }
+            },
+            "model": "qwen3-vl-plus",
+            "http_status": 200,
+            "request_sha256": "7a5cf5a7af9f26554267e83a057799c2ee6a1aea26e50970511c56a59fb73113",
+            "response_sha256": "af077bfcc4889a03207040e0ff207bfc83f3d32b70bcacb39e7cddd2728855e6",
+            "call_index": 1
+          },
+          "selection": {
+            "microwave_1": "obj_3",
+            "microwave_1_heating_region": "obj_3",
+            "white_yellow_mug_1": "obj_1"
+          }
+        }
+      ],
+      "release_events": 1,
+      "release_images": [
+        [
+          "wrist",
+          "agentview",
+          "sideview"
+        ]
+      ],
+      "qwen_requests": 4,
+      "qwen_responses": 4,
+      "historical_proofs": [],
+      "finish_status": [
+        {
+          "phase": "blocked",
+          "calls": 1,
+          "prechecks": 1,
+          "helper_counts": {
+            "release": 8,
+            "movement": 0,
+            "confirm": 0,
+            "home": 0
+          },
+          "last_decision": {
+            "state": "needs_release",
+            "reason": "purpose achieved; open fingers",
+            "allow_release": true,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "retreat plan blocked",
+            "checks": 1
+          },
+          "independent_streak": 0,
+          "current_view_calls": 1,
+          "release_evidence_calls": 0,
+          "release_events": 1,
+          "process_evidence": [],
+          "actual_visual_requests": 1
+        }
+      ],
+      "handoff_evidence": [
+        null
+      ],
+      "job_reasons": [
+        "retreat plan blocked"
+      ],
+      "checks": [
+        {
+          "step": null,
+          "effective_checks": [
+            {
+              "achieved": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "id": "goal_0",
+              "reason": "初态中黄白杯子在桌面（frame1），当前frame3从微波炉内部视角可见杯子局部，frame4显示杯子完全进入微波炉加热区域，结合黄色把手特征确认为同一目标。微波炉加热区域支撑面可见，状态为at_destination。",
+              "target_matches_definition": true
+            },
+            {
+              "achieved": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "id": "goal_1",
+              "reason": "初态微波炉门打开（frame1门板外露），当前frame5侧面视角显示门板与机身齐平，符合关闭定义。frame4中门仍打开但非当前时刻状态，仅依据当前图判断。",
+              "target_matches_definition": true
+            }
+          ],
+          "process_evidence": [],
+          "actual_Qwen_calls": 1
+        }
+      ],
+      "source_image_hash_errors": []
+    },
+    "basket_two": {
+      "complete": false,
+      "reason": "program_error",
+      "error": "preplanning_grounding_failed: {\"ok\": false, \"reason\": \"internal_error\", \"detail\": \"Traceback (most recent call last):\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/service.py\\\", line 1370, in _worker_loop\\n    work.result = work.fn()\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/xvla_service.py\\\", line 156, in prepare\\n    capture = port.capture()\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/xvla_grounding.py\\\", line 65, in capture\\n    result['checker_frames'] = [copy.deepcopy(wrist)] + render_external(port.env, port.output_dir, stem)\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/xvla_grounding.py\\\", line 55, in render_external\\n    raise RuntimeError('checker rendering changed physical state')\\nRuntimeError: checker rendering changed physical state\\n\"}",
+      "plan": {
+        "state": null,
+        "plan_success": null,
+        "target_bindings": null,
+        "native_skill_route": null,
+        "capability_ids": null,
+        "error": null
+      },
+      "source_counts": {
+        "settling": 10,
+        "prepare": 0,
+        "vla": 0,
+        "finish": 0
+      },
+      "first_native_success_vla_step": null,
+      "native_success_final": false,
+      "inventories": [],
+      "selected_targets_review": [],
+      "release_events": 0,
+      "release_images": [],
+      "qwen_requests": 0,
+      "qwen_responses": 0,
+      "historical_proofs": [],
+      "finish_status": [],
+      "handoff_evidence": [],
+      "job_reasons": [],
+      "checks": [],
+      "source_image_hash_errors": []
+    }
+  },
+  "new_subagents": 0,
+  "new_grasp_transport_helpers": 0,
+  "source_freeze_matches": true,
+  "protected_control_unchanged": {
+    "xvla_monitor.py": true,
+    "joint_home.py": true,
+    "safe_exit.py": true,
+    "safe_exit_contacts.py": true,
+    "placement_completion.py": true,
+    "finish_v1/control.py": true
+  }
+}

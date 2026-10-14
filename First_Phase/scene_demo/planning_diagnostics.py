@@ -65,7 +65,7 @@ ENDPOINT = "http://127.0.0.1:8778"
 SOURCE_HOME = "/home/yhwang/fyp/scene_demo/hermes_home"
 
 HERMES_TOOLS = "scene_tools,vision"
-MODEL_NAME = "qwen3-vl-plus"
+MODEL_NAME = "qwen3.8-max"
 HERMES_TIMEOUT = 180
 
 # The ONLY image the agent may see: the real native agentview capture.
@@ -766,7 +766,7 @@ def patch_config(config_path, mcp_server_path=None, scene_dir=None):
     assert scene_tools["cwd"] == scene_dir
     assert scene_tools["command"] == "/usr/bin/python3"
     model = config.get("model") or {}
-    assert model.get("default") == MODEL_NAME, "model must be qwen3-vl-plus"
+    assert model.get("default") == MODEL_NAME, "model must be qwen3.8-max"
     assert model.get("supports_vision") is True, "native vision must be enabled"
     return config
 

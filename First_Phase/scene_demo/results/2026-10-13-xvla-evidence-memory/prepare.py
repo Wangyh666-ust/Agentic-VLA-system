@@ -1,0 +1,29 @@
+"""Register chronological old-photo replay, without any simulator/model call."""
+import hashlib,json,shutil,subprocess,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[4];OUT=Path(__file__).resolve().parent;SCENE=ROOT/'First_Phase/scene_demo'
+def dump(p,v):p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+reg=json.loads((SCENE/'experiment_registry.json').read_bytes())
+prior=[e['id'] for e in reg['entries'] if 'xvla-process-evidence' in e['question_keys']]
+plan={'schema_version':1,'id':'20261013-xvla-evidence-memory','intent':'analyze_existing',
+ 'question_key':'xvla-process-evidence','purpose':'按用户规则修复已确认放置证据的保存/撤销及真实时间顺序回放，覆盖全部十长程；只旧图真实Qwen，不启动仿真。',
+ 'prior_evidence':prior,'history_review':[{'experiment_id':eid,'disposition':'reuse',
+ 'reason':('复用18次旧图请求中broken误撤销、双请求状态冲突、稀疏前后帧和非顺序回放失败；本轮改变记忆更新和回放过程。' if eid=='20261013-xvla-event-checker' else '复用实测release、源图/同步记录及原下游资格；不重复物理动作，旧成功不能替代新协议验证。')} for eid in prior],
+ 'new_physical_actions':0,'analysis_steps':[
+ '软件覆盖十native：确认放置后unknown/distractor/无关开爪不撤销；只有同一目标且当前图明确removed/moved/dropped才能撤销；当前状态不从历史继承。',
+ '松手前后最多1秒，超过就缺失；无假时间/假编码器；初始身份参考的未知时刻明确标-1。',
+ '两例独立按原时间线记录release并排队，在原检查点先执行新版release分类再执行新版current；所有中间检查状态由本次真实回答产生，禁止灌入旧回答。',
+ '每例最多2次release+6次current请求；另用微波炉末图且无过程记忆检查遮挡负例1次，总计划17次真实请求，同一捕获若复用则请求可更少。当前状态和放置事实只来自同一次观察请求。',
+ '效果验收：两例最终全目标True且引用真实新分类的放置记忆；入炉开门负例及单罐负例不能整体True；无过程遮挡杯不得True；任一错误明确记录，不用mock和原生真值替代视觉效果。',
+ '软件/输入/同步错误停止相依请求并修正；视觉未通过保留失败，不改判据。必要有因修订需新冻结记录，不能从多轮挑最好结果拼成成功。'],
+ 'constraints':{'subagents':0,'new_environment_actions':0,'helpers':0,'default_checker_change':False,
+                'protected':'finish_v1, safe_exit, joint_home, next-task reference/controller/cache reset unchanged',
+                'root_model':'unknown','root_effort':'unknown'}}
+p=SCENE/'plans/20261013-xvla-evidence-memory.json';assert not p.exists()
+dump(p,plan)
+for a,b in [('experiment_registry.json','registry.before.json'),('EXPERIMENT_INDEX.md','index.before.md')]:shutil.copyfile(SCENE/a,OUT/b)
+protected=list((SCENE/'finish_v1').glob('*.py'))+[SCENE/f for f in ('joint_home.py','safe_exit.py','safe_exit_contacts.py','placement_completion.py','xvla_backend.py','xvla_skills.py')]
+dump(OUT/'protected.before.json',{x.relative_to(ROOT).as_posix():hashlib.sha256(x.read_bytes()).hexdigest() for x in protected})
+r=subprocess.run([sys.executable,str(ROOT/'.agents/skills/fyp-experiment-review/scripts/review.py'),'check','--proposal',str(p)],capture_output=True)
+(OUT/'review.stdout').write_bytes(r.stdout);(OUT/'review.stderr').write_bytes(r.stderr)
+print(r.stdout.decode('utf-8'));sys.exit(r.returncode)

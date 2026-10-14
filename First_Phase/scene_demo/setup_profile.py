@@ -5,7 +5,7 @@
 只使用 Python 标准库。产出目录 /home/yhwang/fyp/scene_demo/hermes_home：
 
   .env          现有 /home/yhwang/.hermes/.env 的副本，权限 0600，内容从不回显，原文件不动
-  config.yaml   _config_version: 12 + qwen3-vl-plus + alibaba-cn + 支持视觉，
+  config.yaml   _config_version: 12 + qwen3.8-max + alibaba-cn + 支持视觉，
                 agent.max_turns=12，仅注册 scene_tools 一个 MCP server
   SOUL.md       英文角色说明：场景内规划器（在场景内按请求/真实画面/公开规则选物体与顺序）
 
@@ -18,9 +18,19 @@
 """
 
 from __future__ import annotations
+try:
+    from scene_demo.xvla_skills import NATIVE_SKILL_GUIDANCE
+    from scene_demo.planning_scope import PLANNING_SCOPE_GUIDANCE
+except ModuleNotFoundError:
+    from xvla_skills import NATIVE_SKILL_GUIDANCE
+    from planning_scope import PLANNING_SCOPE_GUIDANCE
 
 import os
 import sys
+
+PLANNER_MODEL = os.environ.get("SCENE_PLANNER_MODEL", "qwen3.8-max")
+if PLANNER_MODEL != 'qwen3.8-max':
+    raise ValueError('All scene VLM roles require qwen3.8-max; remove stale SCENE_PLANNER_MODEL')
 
 SRC_ENV = "/home/yhwang/.hermes/.env"
 HERMES_HOME = "/home/yhwang/fyp/scene_demo/hermes_home"
@@ -39,7 +49,7 @@ CONFIG_YAML = f"""\
 # 不注册任何其它 MCP server，也不启用全局 robot_tools / vla_tools / libero_tools。
 _config_version: 12
 model:
-  default: qwen3-vl-plus
+  default: {PLANNER_MODEL}
   provider: alibaba-cn
   supports_vision: true
 agent:
@@ -97,7 +107,7 @@ Turn the user's natural-language request into a plan for the CURRENT scene:
 2. Choose capability ids and their ORDER from the public capability list, then
    `submit_scene_plan(...)` once. The order of `capability_ids` is the execution
    order.
-3. State plainly that the plan was submitted, then finish. Do not poll
+3. State the submitted execution scope and any unsupported remainder, then finish. Do not poll
    `get_scene_plan` in a loop, do not wait for the robot, do not sleep in
    45-second rounds. The host does the waiting.
 
@@ -119,11 +129,11 @@ their order.
   this ambiguity into a storage plan.
 - Discard intents -- Chinese 丢弃 / 扔掉 / 扔进垃圾桶, and throwing an object
   away generally: UNSUPPORTED whenever the current scene has no trash bin (or no
-  matching capability); use `decision="unsupported"` with an empty capability
-  list.
+  matching capability). If no other clear executable part exists, use
+  `decision="unsupported"` with an empty capability list.
 - Surface-cleaning intents -- Chinese 擦拭 / 清洗: this is cleaning, NOT storage.
-  Use `decision="unsupported"` with an empty capability list when the scene has
-  no cleaning capability.
+  If no cleaning capability or other clear executable part exists, use
+  `decision="unsupported"` with an empty capability list.
 - A request that DOES name its destination, e.g. 清理桌面，把碗放到盘子, may
   execute the capability it names.
 - Ambiguous cleaning requests that name neither a method nor a destination
@@ -149,7 +159,7 @@ their order.
 - Report outcomes exactly as the tools return them. Never present an unverified
   or unknown result as success.
 
-""" + MCP_ROUTING_GUIDANCE + "\n" + IMAGE_EFFICIENCY_GUIDANCE
+""" + MCP_ROUTING_GUIDANCE + "\n" + IMAGE_EFFICIENCY_GUIDANCE + NATIVE_SKILL_GUIDANCE + PLANNING_SCOPE_GUIDANCE
 
 
 def log(msg: str) -> None:

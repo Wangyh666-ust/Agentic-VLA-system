@@ -1,0 +1,3220 @@
+{
+  "complete": false,
+  "agent_result": {
+    "request_id": "xvla-basket_two",
+    "session_id": "b5fdc461ff704bd299f89664bc7aa1bc",
+    "request": "先把字母汤罐放进篮子，再把番茄酱罐放进篮子。",
+    "run_ok": true,
+    "chain_ok": false,
+    "plan_success": null,
+    "task_success": null,
+    "decision": "execute",
+    "plan": {
+      "ok": true,
+      "request_id": "xvla-basket_two",
+      "session_id": "b5fdc461ff704bd299f89664bc7aa1bc",
+      "state": "blocked",
+      "decision": "execute",
+      "capability_ids": [
+        "soup_to_basket",
+        "sauce_to_basket"
+      ],
+      "original_capability_ids": [
+        "soup_to_basket",
+        "sauce_to_basket"
+      ],
+      "rationale": "用户明确要求‘先把字母汤罐放进篮子，再把番茄酱罐放进篮子’，动作词‘放进’+目的地‘篮子’清晰，对应 capability soup_to_basket 和 sauce_to_basket，按顺序执行。",
+      "job_ids": [
+        "c2e42f33bf1b4d2fa04a8dd4ef6d0b6e"
+      ],
+      "completed_capability_ids": [],
+      "pending_capability_ids": [
+        "sauce_to_basket"
+      ],
+      "plan_success": null,
+      "regressions": [],
+      "error": "final visual failed",
+      "repair_history": [],
+      "scene_version": 1
+    },
+    "jobs": [
+      {
+        "job_id": "c2e42f33bf1b4d2fa04a8dd4ef6d0b6e",
+        "request_id": "xvla-basket_two",
+        "session_id": "b5fdc461ff704bd299f89664bc7aa1bc",
+        "capability_id": "soup_to_basket",
+        "state": "completed",
+        "steps": 750,
+        "total_steps": 988,
+        "success": false,
+        "ended_reason": "final visual failed",
+        "error": null,
+        "instruction": "put the alphabet soup in the basket",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "38744d9c93f11fac1452e392ca4a0e1deb22848fc6cdc9512efcedd922258d6a",
+        "state_after_sha": "153bb27843e6aef56bf3c0e5ac6e30a4b84d7fcda6d2af66884238aaf18d16c0",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": {
+          "phase": "blocked",
+          "calls": 6,
+          "prechecks": 5,
+          "helper_counts": {
+            "release": 2,
+            "movement": 135,
+            "confirm": 5,
+            "home": 80
+          },
+          "last_decision": {
+            "state": "incomplete",
+            "reason": "subtask purpose not achieved",
+            "allow_release": false,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "final visual failed",
+            "checks": 6
+          },
+          "independent_streak": 5
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/rollout.mp4",
+        "wall_s": 337.862
+      }
+    ],
+    "evaluation": null,
+    "hermes_invocations": 1,
+    "usage": [
+      {
+        "available": false,
+        "reason": "installed Hermes chat native-image path did not export usage",
+        "api_calls": null,
+        "input_tokens": null,
+        "output_tokens": null
+      }
+    ],
+    "execution_timeout": false,
+    "cancelled_by_user": false,
+    "cancellation_pending": false,
+    "wall_s": 362.14,
+    "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+    "hermes_output": "计划已提交。\n\nsession_id: 20261012_221547_04ced5\n"
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-basket_two",
+    "session_id": "b5fdc461ff704bd299f89664bc7aa1bc",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "soup_to_basket",
+      "sauce_to_basket"
+    ],
+    "original_capability_ids": [
+      "soup_to_basket",
+      "sauce_to_basket"
+    ],
+    "rationale": "用户明确要求‘先把字母汤罐放进篮子，再把番茄酱罐放进篮子’，动作词‘放进’+目的地‘篮子’清晰，对应 capability soup_to_basket 和 sauce_to_basket，按顺序执行。",
+    "job_ids": [
+      "c2e42f33bf1b4d2fa04a8dd4ef6d0b6e"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [
+      "sauce_to_basket"
+    ],
+    "plan_success": null,
+    "regressions": [],
+    "error": "final visual failed",
+    "repair_history": [],
+    "scene_version": 1
+  },
+  "jobs": [
+    {
+      "capability": "soup_to_basket",
+      "outcome": {
+        "ok": false,
+        "cancelled": false,
+        "reason": "final visual failed",
+        "detail": ""
+      },
+      "job": {
+        "job_id": "c2e42f33bf1b4d2fa04a8dd4ef6d0b6e",
+        "request_id": "xvla-basket_two",
+        "session_id": "b5fdc461ff704bd299f89664bc7aa1bc",
+        "capability_id": "soup_to_basket",
+        "state": "completed",
+        "steps": 750,
+        "total_steps": 988,
+        "success": false,
+        "ended_reason": "final visual failed",
+        "error": null,
+        "instruction": "put the alphabet soup in the basket",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "38744d9c93f11fac1452e392ca4a0e1deb22848fc6cdc9512efcedd922258d6a",
+        "state_after_sha": "153bb27843e6aef56bf3c0e5ac6e30a4b84d7fcda6d2af66884238aaf18d16c0",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": {
+          "phase": "blocked",
+          "calls": 6,
+          "prechecks": 5,
+          "helper_counts": {
+            "release": 2,
+            "movement": 135,
+            "confirm": 5,
+            "home": 80
+          },
+          "last_decision": {
+            "state": "incomplete",
+            "reason": "subtask purpose not achieved",
+            "allow_release": false,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "final visual failed",
+            "checks": 6
+          },
+          "independent_streak": 5
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/rollout.mp4",
+        "wall_s": 337.862
+      },
+      "source_counts": {
+        "settling": 0,
+        "vla": 750,
+        "finish": 222,
+        "prepare": 16
+      },
+      "vla_calls": 25,
+      "handoff_reference": {
+        "schema_version": 1,
+        "origin_sha256": "dd05208ff64497ba75e71e1c16f9834ef5dfc5105265b61b098cc428ba05933f",
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7"
+        ],
+        "joint_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "qpos_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "qvel_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "joint_limits_low": [
+          -2.8973,
+          -1.7628,
+          -2.8973,
+          -3.0718,
+          -2.8973,
+          -0.0175,
+          -2.8973
+        ],
+        "joint_limits_high": [
+          2.8973,
+          1.7628,
+          2.8973,
+          -0.0698,
+          2.8973,
+          3.7525,
+          2.8973
+        ],
+        "homeq": [
+          -0.01176666719217005,
+          -0.15722261429150128,
+          0.004053601524006626,
+          -2.381606956618884,
+          0.0005795267091545437,
+          2.170272423062241,
+          0.778660753237379
+        ],
+        "home_joint_speed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "finger_qpos_indexes": [
+          7,
+          8
+        ],
+        "finger_qvel_indexes": [
+          7,
+          8
+        ],
+        "finger_home": [
+          0.03872955881216562,
+          -0.038728775049055544
+        ],
+        "finger_speed": [
+          0.0,
+          0.0
+        ],
+        "eef_pose": {
+          "position": [
+            -0.04612083659888759,
+            -0.0035649243336376654,
+            0.7020680923787268
+          ],
+          "orientation_matrix": [
+            [
+              0.0008959860684676962,
+              0.9985358641463159,
+              -0.05408627573179374
+            ],
+            [
+              0.999999575180012,
+              -0.000882967807591501,
+              0.0002645895816366234
+            ],
+            [
+              0.00021644574623995091,
+              -0.05408648982344173,
+              -0.9985362310751763
+            ]
+          ]
+        },
+        "reference_kind": "next_subtask_native_initial",
+        "capability_id": "sauce_to_basket",
+        "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_00/episode_0/attempt_001/initial_state.npy",
+        "source_sha256": "4a48672f026e480fc2c2c7dc9646f7275a1417c193e31275d2f3640f87829d14",
+        "audit_sha256": "05875655f5c1b922aedbfec16eb39b84b576f6ec4eb0e9f14ee23f1ad94e6e99",
+        "source_robot_model": "OnTheGroundPanda"
+      },
+      "actual_final_metrics": {
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7"
+        ],
+        "joint_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "arm_error_rad": [
+          0.00038798918689051526,
+          0.001106825173261966,
+          0.0010168633657690702,
+          0.0009670429776762468,
+          0.0018410207684937067,
+          0.001950578437849959,
+          0.0034402225202155856
+        ],
+        "arm_speed_rad_s": [
+          0.0013015770048966223,
+          0.0021761560734856037,
+          0.003061990899004714,
+          0.0011045799601676451,
+          0.0027342243465176856,
+          0.0022195098086889653,
+          0.0056082910056190404
+        ],
+        "max_joint_error_rad": 0.0034402225202155856,
+        "max_joint_speed_rad_s": 0.0056082910056190404,
+        "finger_error_m": [
+          5.392722362633495e-05,
+          5.4087760189468204e-05
+        ],
+        "finger_speed_m_s": [
+          4.676086935577834e-05,
+          4.690157089055851e-05
+        ],
+        "max_finger_error_m": 5.4087760189468204e-05,
+        "max_finger_speed_m_s": 4.690157089055851e-05,
+        "ready": true,
+        "eef_position_error_m": 0.0008298941612286785,
+        "eef_orientation_error_rad": 0.0027139868688477024
+      },
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 6,
+        "prechecks": 5,
+        "helper_counts": {
+          "release": 2,
+          "movement": 135,
+          "confirm": 5,
+          "home": 80
+        },
+        "last_decision": {
+          "state": "incomplete",
+          "reason": "subtask purpose not achieved",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "final visual failed",
+          "checks": 6
+        },
+        "independent_streak": 5
+      },
+      "finish": {
+        "ready": false,
+        "ok": false,
+        "reason": "final visual failed",
+        "counts": {
+          "release": 2,
+          "movement": 135,
+          "confirm": 5,
+          "home": 80
+        },
+        "release_settle_actions": 0,
+        "release_open_actions": 2,
+        "plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.1490429397223299,
+              0.17144491110992144,
+              0.336290283623803,
+              -2.2784115212629725,
+              -0.34927573239197707,
+              2.502824873376655,
+              1.4834296482339338
+            ],
+            [
+              0.148428406197348,
+              0.1674095412587529,
+              0.33741909876988835,
+              -2.277759843372126,
+              -0.34543393303568987,
+              2.4987433969227313,
+              1.4802299694755918
+            ],
+            [
+              0.1478182621981676,
+              0.16333375912597436,
+              0.3385233528555113,
+              -2.2770683476196107,
+              -0.3415624044795921,
+              2.4945866324605523,
+              1.4769896930035973
+            ],
+            [
+              0.14723233341161066,
+              0.15927952872614196,
+              0.3395929109407643,
+              -2.276340317631572,
+              -0.33772176352404637,
+              2.490413437299279,
+              1.4737721305841618
+            ],
+            [
+              0.1466705079385702,
+              0.1552480818271193,
+              0.34062814026268823,
+              -2.2755759813103493,
+              -0.33391341369134286,
+              2.4862249055971706,
+              1.4705786083478238
+            ],
+            [
+              0.1461323125827632,
+              0.1512397339460588,
+              0.3416294673081794,
+              -2.274775394095113,
+              -0.3301379961003018,
+              2.4820211498640945,
+              1.467409511327246
+            ],
+            [
+              0.1456172598198172,
+              0.14725478607460976,
+              0.34259733602496145,
+              -2.2739386092322125,
+              -0.32639611151533104,
+              2.477802275398914,
+              1.464265191655455
+            ],
+            [
+              0.14512485337100028,
+              0.14329353515762758,
+              0.3435322067934885,
+              -2.2730656831184324,
+              -0.3226883286643081,
+              2.4735683953270384,
+              1.4611459808301122
+            ],
+            [
+              0.14465458925098407,
+              0.13935627392151198,
+              0.3444345553376377,
+              -2.272156675302502,
+              -0.31901518421061226,
+              2.469319630561793,
+              1.4580521897800696
+            ],
+            [
+              0.14420595676026898,
+              0.1354432906326748,
+              0.34530487161840623,
+              -2.2712116483441323,
+              -0.31537718272701154,
+              2.4650561095262074,
+              1.4549841088437543
+            ],
+            [
+              0.14377843946690283,
+              0.13155486887341955,
+              0.3461436587256393,
+              -2.2702306676668638,
+              -0.31177479674462993,
+              2.46077796785851,
+              1.451942007796415
+            ],
+            [
+              0.1433715161742612,
+              0.12769128733509127,
+              0.3469514317724265,
+              -2.269213801408543,
+              -0.3082084668746872,
+              2.456485348105966,
+              1.448926135925718
+            ],
+            [
+              0.14298466187159684,
+              0.12385281962855152,
+              0.3477287167963246,
+              -2.2681611202700065,
+              -0.30467860200037306,
+              2.4521783994085484,
+              1.4459367221539756
+            ],
+            [
+              0.14261734866428313,
+              0.12003973411198933,
+              0.34847604967135126,
+              -2.267072697362567,
+              -0.3011855795359595,
+              2.4478572771739384,
+              1.4429739752051276
+            ],
+            [
+              0.14226904668093004,
+              0.11625229373601695,
+              0.3491939750344479,
+              -2.265948608054783,
+              -0.29772974575005456,
+              2.443522142745326,
+              1.4400380838144333
+            ],
+            [
+              0.1419392249547884,
+              0.1124907559058428,
+              0.3498830452298946,
+              -2.2647889298190402,
+              -0.2943114161496254,
+              2.4391731630634057,
+              1.4371292169786647
+            ],
+            [
+              0.14162735227710996,
+              0.10875537236030765,
+              0.35054381927489314,
+              -2.2635937420784216,
+              -0.2909308759212842,
+              2.434810510324019,
+              1.4342475242444672
+            ],
+            [
+              0.14133289802040652,
+              0.10504638906744139,
+              0.3511768618492575,
+              -2.262363126054316,
+              -0.2875883804261707,
+              2.430434361632767,
+              1.4313931360324768
+            ],
+            [
+              0.14105533292978348,
+              0.10136404613615693,
+              0.35178274231190515,
+              -2.2610971646151996,
+              -0.2842841557446508,
+              2.4260448986579144,
+              1.4285661639946565
+            ],
+            [
+              0.14079412988080647,
+              0.09770857774363115,
+              0.3523620337465445,
+              -2.25979594212698,
+              -0.2810183992669843,
+              2.421642307282845,
+              1.4257667014023172
+            ],
+            [
+              0.14054876460260365,
+              0.09408021207786188,
+              0.35291531203868315,
+              -2.2584595443052895,
+              -0.27779128032604394,
+              2.417226777259251,
+              1.4229948235621854
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "checks": [
+          {
+            "target_visible": null,
+            "destination_visible": null,
+            "at_destination": false,
+            "supported": null,
+            "released": true,
+            "stable": null,
+            "operation_achieved": false,
+            "clear_of_target": null,
+            "boxes": {},
+            "evidence": [
+              "字母汤罐（橙色罐子）在agentview中位于桌子中央，未进入篮子内部；篮子在右下角，罐子与篮子有明显距离，二维投影未重叠。",
+              "同步实测编码器已达到标准开口，按已松手、未夹持处理；遮挡或投影重叠不改变此判断。"
+            ],
+            "unknown_reasons": []
+          }
+        ],
+        "restored": true,
+        "limitation": "visible geometry only",
+        "opening_confirmed": true,
+        "object_release_not_yet_confirmed": true,
+        "handoff_mode": "visual_goal_encoder_v5",
+        "handoff_goal_latched": true,
+        "_release_path": true,
+        "active_retreat_plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              0.1490429397223299,
+              0.17144491110992144,
+              0.336290283623803,
+              -2.2784115212629725,
+              -0.34927573239197707,
+              2.502824873376655,
+              1.4834296482339338
+            ],
+            [
+              0.148428406197348,
+              0.1674095412587529,
+              0.33741909876988835,
+              -2.277759843372126,
+              -0.34543393303568987,
+              2.4987433969227313,
+              1.4802299694755918
+            ],
+            [
+              0.1478182621981676,
+              0.16333375912597436,
+              0.3385233528555113,
+              -2.2770683476196107,
+              -0.3415624044795921,
+              2.4945866324605523,
+              1.4769896930035973
+            ],
+            [
+              0.14723233341161066,
+              0.15927952872614196,
+              0.3395929109407643,
+              -2.276340317631572,
+              -0.33772176352404637,
+              2.490413437299279,
+              1.4737721305841618
+            ],
+            [
+              0.1466705079385702,
+              0.1552480818271193,
+              0.34062814026268823,
+              -2.2755759813103493,
+              -0.33391341369134286,
+              2.4862249055971706,
+              1.4705786083478238
+            ],
+            [
+              0.1461323125827632,
+              0.1512397339460588,
+              0.3416294673081794,
+              -2.274775394095113,
+              -0.3301379961003018,
+              2.4820211498640945,
+              1.467409511327246
+            ],
+            [
+              0.1456172598198172,
+              0.14725478607460976,
+              0.34259733602496145,
+              -2.2739386092322125,
+              -0.32639611151533104,
+              2.477802275398914,
+              1.464265191655455
+            ],
+            [
+              0.14512485337100028,
+              0.14329353515762758,
+              0.3435322067934885,
+              -2.2730656831184324,
+              -0.3226883286643081,
+              2.4735683953270384,
+              1.4611459808301122
+            ],
+            [
+              0.14465458925098407,
+              0.13935627392151198,
+              0.3444345553376377,
+              -2.272156675302502,
+              -0.31901518421061226,
+              2.469319630561793,
+              1.4580521897800696
+            ],
+            [
+              0.14420595676026898,
+              0.1354432906326748,
+              0.34530487161840623,
+              -2.2712116483441323,
+              -0.31537718272701154,
+              2.4650561095262074,
+              1.4549841088437543
+            ],
+            [
+              0.14377843946690283,
+              0.13155486887341955,
+              0.3461436587256393,
+              -2.2702306676668638,
+              -0.31177479674462993,
+              2.46077796785851,
+              1.451942007796415
+            ],
+            [
+              0.1433715161742612,
+              0.12769128733509127,
+              0.3469514317724265,
+              -2.269213801408543,
+              -0.3082084668746872,
+              2.456485348105966,
+              1.448926135925718
+            ],
+            [
+              0.14298466187159684,
+              0.12385281962855152,
+              0.3477287167963246,
+              -2.2681611202700065,
+              -0.30467860200037306,
+              2.4521783994085484,
+              1.4459367221539756
+            ],
+            [
+              0.14261734866428313,
+              0.12003973411198933,
+              0.34847604967135126,
+              -2.267072697362567,
+              -0.3011855795359595,
+              2.4478572771739384,
+              1.4429739752051276
+            ],
+            [
+              0.14226904668093004,
+              0.11625229373601695,
+              0.3491939750344479,
+              -2.265948608054783,
+              -0.29772974575005456,
+              2.443522142745326,
+              1.4400380838144333
+            ],
+            [
+              0.1419392249547884,
+              0.1124907559058428,
+              0.3498830452298946,
+              -2.2647889298190402,
+              -0.2943114161496254,
+              2.4391731630634057,
+              1.4371292169786647
+            ],
+            [
+              0.14162735227710996,
+              0.10875537236030765,
+              0.35054381927489314,
+              -2.2635937420784216,
+              -0.2909308759212842,
+              2.434810510324019,
+              1.4342475242444672
+            ],
+            [
+              0.14133289802040652,
+              0.10504638906744139,
+              0.3511768618492575,
+              -2.262363126054316,
+              -0.2875883804261707,
+              2.430434361632767,
+              1.4313931360324768
+            ],
+            [
+              0.14105533292978348,
+              0.10136404613615693,
+              0.35178274231190515,
+              -2.2610971646151996,
+              -0.2842841557446508,
+              2.4260448986579144,
+              1.4285661639946565
+            ],
+            [
+              0.14079412988080647,
+              0.09770857774363115,
+              0.3523620337465445,
+              -2.25979594212698,
+              -0.2810183992669843,
+              2.421642307282845,
+              1.4257667014023172
+            ],
+            [
+              0.14054876460260365,
+              0.09408021207786188,
+              0.35291531203868315,
+              -2.2584595443052895,
+              -0.27779128032604394,
+              2.417226777259251,
+              1.4229948235621854
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "clear"
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "movement_budget": 360,
+        "movement_progress": {
+          "waypoint": 20,
+          "waypoints": 21,
+          "joint_error": 0.0036721711461416007
+        },
+        "movement_screens": [
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000475_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000475_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000476_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000476_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.0471931450598026,
+                    -0.9876416027113922,
+                    0.14945524966704077,
+                    0.013475264208489504
+                  ],
+                  [
+                    -0.9940330821523095,
+                    -0.06116566797823658,
+                    -0.09031607081553461,
+                    0.25575055362846544
+                  ],
+                  [
+                    0.09834143910958884,
+                    -0.1443011630391425,
+                    -0.9846350266466284,
+                    0.7207271613548824
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000484_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000484_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000485_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000485_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.046986231519115074,
+                    -0.9876243367377098,
+                    0.14963443297259665,
+                    0.013482766440737065
+                  ],
+                  [
+                    -0.9940427899825202,
+                    -0.06097833296317623,
+                    -0.09033589869370344,
+                    0.2556693193501783
+                  ],
+                  [
+                    0.09834239030753289,
+                    -0.14449848577902275,
+                    -0.9846059932156467,
+                    0.7239020958717898
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000493_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000493_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000494_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000494_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.046968577036214376,
+                    -0.9876230388260647,
+                    0.14964854142677858,
+                    0.013485665598975655
+                  ],
+                  [
+                    -0.9940428046479619,
+                    -0.060963434175783315,
+                    -0.09034579249255703,
+                    0.25566413252011083
+                  ],
+                  [
+                    0.09835067513142166,
+                    -0.14451364251676724,
+                    -0.9846029412040821,
+                    0.7266281065204858
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000502_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000502_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000503_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000503_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.04695885116268139,
+                    -0.9876224583572748,
+                    0.14965542437818316,
+                    0.013490488166011616
+                  ],
+                  [
+                    -0.9940420536241195,
+                    -0.060956260314634414,
+                    -0.0903588952743326,
+                    0.255663149003999
+                  ],
+                  [
+                    0.09836290929117752,
+                    -0.1445206354704666,
+                    -0.9846006926663154,
+                    0.7295846207483848
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000511_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000511_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000512_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000512_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.046951921166665855,
+                    -0.987622022105444,
+                    0.14966047758547724,
+                    0.013493911287958314
+                  ],
+                  [
+                    -0.9940413482237024,
+                    -0.060951412392037885,
+                    -0.09036992502497683,
+                    0.25566258927070323
+                  ],
+                  [
+                    0.09837334557878674,
+                    -0.14452566131926076,
+                    -0.9845989122987426,
+                    0.7324338462207858
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000520_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000520_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000521_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000521_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.04694384049613437,
+                    -0.9876216279941765,
+                    0.14966561314345356,
+                    0.01349780509370347
+                  ],
+                  [
+                    -0.9940407179899495,
+                    -0.060945407633047066,
+                    -0.09038090653709567,
+                    0.25566205348851057
+                  ],
+                  [
+                    0.09838356985543364,
+                    -0.14453088668715114,
+                    -0.9845971236886317,
+                    0.7352310899117733
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000529_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000529_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000530_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000530_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.04693579826008665,
+                    -0.9876211486314328,
+                    0.1496712985766409,
+                    0.013501978828111508
+                  ],
+                  [
+                    -0.9940399313110047,
+                    -0.06093971808685983,
+                    -0.09039339422052672,
+                    0.25566129185828584
+                  ],
+                  [
+                    0.09839535456972523,
+                    -0.14453656124117384,
+                    -0.9845951130610362,
+                    0.7381953864006846
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000538_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000538_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000539_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000539_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.04692897716354416,
+                    -0.9876208574810225,
+                    0.14967535859597575,
+                    0.013504971443319545
+                  ],
+                  [
+                    -0.9940394015987458,
+                    -0.060934620578861454,
+                    -0.09040265529351552,
+                    0.25566091694811505
+                  ],
+                  [
+                    0.09840395912559388,
+                    -0.14454069974702824,
+                    -0.9845936455944901,
+                    0.7408876822676785
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000547_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000547_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000548_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000548_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.04691977217674975,
+                    -0.9876203729418819,
+                    0.14968144149833554,
+                    0.013509790482598136
+                  ],
+                  [
+                    -0.9940385930938173,
+                    -0.06092793426470039,
+                    -0.0904160509328981,
+                    0.25566001882427447
+                  ],
+                  [
+                    0.09841651497053723,
+                    -0.144546829008367,
+                    -0.9845914908248392,
+                    0.7439109040029487
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000556_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000556_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000557_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000557_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.046913395694802795,
+                    -0.9876200992623864,
+                    0.1496852458906235,
+                    0.01351254465429047
+                  ],
+                  [
+                    -0.9940380516219826,
+                    -0.06092323762341578,
+                    -0.09042516820583268,
+                    0.25565961408054394
+                  ],
+                  [
+                    0.09842502340337636,
+                    -0.14455067848486344,
+                    -0.9845900751671276,
+                    0.7466280882332439
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000565_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000565_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000566_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000566_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.04690400360624247,
+                    -0.9876196889352414,
+                    0.1496908964271456,
+                    0.013517276670315131
+                  ],
+                  [
+                    -0.994037332247708,
+                    -0.0609162091529345,
+                    -0.09043781045721716,
+                    0.255658784566317
+                  ],
+                  [
+                    0.09843676418678739,
+                    -0.1445564439583818,
+                    -0.9845880549582866,
+                    0.7495841969629784
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000574_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000574_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000575_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000575_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.04689682799953854,
+                    -0.9876193719397763,
+                    0.14969523603930446,
+                    0.013520609317378605
+                  ],
+                  [
+                    -0.994036698515405,
+                    -0.06091096484676539,
+                    -0.09044830770130255,
+                    0.25565817240641336
+                  ],
+                  [
+                    0.09844658210509438,
+                    -0.14456081948687718,
+                    -0.984586430914578,
+                    0.7524335016985885
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          },
+          {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000583_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000583_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000584_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000584_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.04688857374071265,
+                    -0.9876190840557099,
+                    0.1496997209801092,
+                    0.013524427903005606
+                  ],
+                  [
+                    -0.9940361341299203,
+                    -0.06090464392200834,
+                    -0.0904587662572095,
+                    0.2556575789017682
+                  ],
+                  [
+                    0.09845621207727234,
+                    -0.1445654493912504,
+                    -0.9845847881953597,
+                    0.755230814591698
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        ],
+        "home_entry": {
+          "visible_semantics": true,
+          "measured_open": true,
+          "settled": true,
+          "task_complete_before_home": false,
+          "label": "safety eligibility under review; task completion pending final verification",
+          "semantic_basis": "initial handoff purpose; final task acceptance pending",
+          "clearance_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.018036725284792027,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000592_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000592_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -1.7233905013069872e-06,
+                    0.5287697435529835,
+                    -0.8487653140297038,
+                    0.6065773716836134
+                  ],
+                  [
+                    0.9999999999985034,
+                    7.823149652530503e-07,
+                    -1.5430955956352577e-06,
+                    0.0
+                  ],
+                  [
+                    -1.5194045527300304e-07,
+                    -0.848765314031093,
+                    -0.5287697435535403,
+                    0.96
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000593_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000593_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.04688492933862265,
+                    -0.9876191921059502,
+                    0.1497001495820959,
+                    0.013524814588386766
+                  ],
+                  [
+                    -0.9940361703897275,
+                    -0.06090129184229931,
+                    -0.09046062463228409,
+                    0.255657978396061
+                  ],
+                  [
+                    0.09845758151527115,
+                    -0.14456612340354372,
+                    -0.9845845522890526,
+                    0.7571338717829256
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        },
+        "home_screen": {
+          "sample_count": 66,
+          "planned_samples": 66,
+          "collisions": [],
+          "collision_count": 0,
+          "ok": true,
+          "live_unchanged": true
+        },
+        "home_mode": "original_joint_home_streaming",
+        "home_streak": 5
+      },
+      "before": {
+        "gripper_current_action": [
+          0.9364939332008362,
+          -0.9364233016967773
+        ],
+        "gripper_hold_from_measurement": [
+          0.9364939332008362,
+          -0.9364233016967773
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 0.5000000000000003,
+        "robot": {
+          "robot_name": "OnTheGroundPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            -0.012460676939869603,
+            -0.15130103327489733,
+            0.002127752032134788,
+            -2.352759726940969,
+            7.234685808919649e-05,
+            2.144854992104478,
+            0.7763290562578979
+          ],
+          "arm_qvel": [
+            0.014984432557082403,
+            0.04546802049835314,
+            -0.012599519441974955,
+            0.08211765765019932,
+            -0.0036863205334247643,
+            -0.08870190577741005,
+            -0.00014709527461996829
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.03872987809408042,
+            -0.03872846551387219
+          ],
+          "finger_qvel": [
+            0.003184713129235097,
+            -0.0031914082832770535
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.040969045501182536,
+            -0.004862964952728365,
+            0.7098650192069945
+          ],
+          "orientation_matrix": [
+            [
+              0.0008534764911489357,
+              0.9983980740453736,
+              -0.05657346834310364
+            ],
+            [
+              0.9999995969594605,
+              -0.0008363440368820251,
+              0.0003265112082042748
+            ],
+            [
+              0.00027867327853088597,
+              -0.05657372421134272,
+              -0.998398385450449
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "after": {
+        "gripper_current_action": [
+          0.9337815642356873,
+          -0.9391431212425232
+        ],
+        "gripper_hold_from_measurement": [
+          0.9337815642356873,
+          -0.9391431212425232
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 49.90000000001502,
+        "robot": {
+          "robot_name": "OnTheGroundPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            -0.011378678005279535,
+            -0.1561157891182393,
+            0.005070464889775696,
+            -2.380639913641208,
+            -0.001261494059339163,
+            2.172223001500091,
+            0.7821009757575946
+          ],
+          "arm_qvel": [
+            -0.0013015770048966223,
+            -0.0021761560734856037,
+            -0.003061990899004714,
+            -0.0011045799601676451,
+            0.0027342243465176856,
+            -0.0022195098086889653,
+            -0.0056082910056190404
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.03867563158853928,
+            -0.03878286280924501
+          ],
+          "finger_qvel": [
+            4.676086935577834e-05,
+            4.690157089055851e-05
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.04540507495693791,
+            -0.0031484218044583543,
+            0.7021222701780747
+          ],
+          "orientation_matrix": [
+            [
+              0.0018180579014810412,
+              0.9986303168307274,
+              -0.05228943461186213
+            ],
+            [
+              0.9999970807017607,
+              -0.0018987936108982855,
+              -0.00149437973081272
+            ],
+            [
+              -0.0015916197484054095,
+              -0.05228656509453031,
+              -0.9986308536477293
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "cache_reset": [
+        {
+          "gripper_current_action": [
+            0.9372407793998718,
+            -0.9371858835220337
+          ],
+          "gripper_hold_from_measurement": [
+            0.9372407793998718,
+            -0.9371858835220337
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 1.300000000000001,
+          "robot": {
+            "robot_name": "OnTheGroundPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.011677301950215612,
+              -0.15633712031810665,
+              0.003194565041873203,
+              -2.3791355580710207,
+              3.854830764101025e-05,
+              2.167293220575605,
+              0.7764171818937929
+            ],
+            "arm_qvel": [
+              1.1920473269437674e-06,
+              -0.0017096127048453454,
+              0.0003283833195675507,
+              -0.006594539215217703,
+              3.1141319340396193e-05,
+              0.00582806908119996,
+              0.00011666274696579461
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.038744815065847316,
+              -0.038743717601303865
+            ],
+            "finger_qvel": [
+              -1.3419324123046248e-05,
+              1.3080698312992495e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.04586022276691102,
+              -0.003975891064331515,
+              0.7024962227004039
+            ],
+            "orientation_matrix": [
+              [
+                -0.0009139282078421394,
+                0.9984594109525005,
+                -0.055479450390365656
+              ],
+              [
+                0.9999995806370703,
+                0.0009157844328069888,
+                8.034700456585608e-06
+              ],
+              [
+                5.88295392932453e-05,
+                -0.055479419781201404,
+                -0.998459829196862
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        },
+        {
+          "gripper_current_action": [
+            0.9372407793998718,
+            -0.9371858835220337
+          ],
+          "gripper_hold_from_measurement": [
+            0.9372407793998718,
+            -0.9371858835220337
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 1.300000000000001,
+          "robot": {
+            "robot_name": "OnTheGroundPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.011677301950215612,
+              -0.15633712031810665,
+              0.003194565041873203,
+              -2.3791355580710207,
+              3.854830764101025e-05,
+              2.167293220575605,
+              0.7764171818937929
+            ],
+            "arm_qvel": [
+              1.1920473269437674e-06,
+              -0.0017096127048453454,
+              0.0003283833195675507,
+              -0.006594539215217703,
+              3.1141319340396193e-05,
+              0.00582806908119996,
+              0.00011666274696579461
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.038744815065847316,
+              -0.038743717601303865
+            ],
+            "finger_qvel": [
+              -1.3419324123046248e-05,
+              1.3080698312992495e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.04586022276691102,
+              -0.003975891064331515,
+              0.7024962227004039
+            ],
+            "orientation_matrix": [
+              [
+                -0.0009139282078421394,
+                0.9984594109525005,
+                -0.055479450390365656
+              ],
+              [
+                0.9999995806370703,
+                0.0009157844328069888,
+                8.034700456585608e-06
+              ],
+              [
+                5.88295392932453e-05,
+                -0.055479419781201404,
+                -0.998459829196862
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        },
+        {
+          "gripper_current_action": [
+            0.9337815642356873,
+            -0.9391431212425232
+          ],
+          "gripper_hold_from_measurement": [
+            0.9337815642356873,
+            -0.9391431212425232
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 49.90000000001502,
+          "robot": {
+            "robot_name": "OnTheGroundPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.011378678005279535,
+              -0.1561157891182393,
+              0.005070464889775696,
+              -2.380639913641208,
+              -0.001261494059339163,
+              2.172223001500091,
+              0.7821009757575946
+            ],
+            "arm_qvel": [
+              -0.0013015770048966223,
+              -0.0021761560734856037,
+              -0.003061990899004714,
+              -0.0011045799601676451,
+              0.0027342243465176856,
+              -0.0022195098086889653,
+              -0.0056082910056190404
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03867563158853928,
+              -0.03878286280924501
+            ],
+            "finger_qvel": [
+              4.676086935577834e-05,
+              4.690157089055851e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.04540507495693791,
+              -0.0031484218044583543,
+              0.7021222701780747
+            ],
+            "orientation_matrix": [
+              [
+                0.0018180579014810412,
+                0.9986303168307274,
+                -0.05228943461186213
+              ],
+              [
+                0.9999970807017607,
+                -0.0018987936108982855,
+                -0.00149437973081272
+              ],
+              [
+                -0.0015916197484054095,
+                -0.05228656509453031,
+                -0.9986308536477293
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "expected_capabilities": [
+      "soup_to_basket",
+      "sauce_to_basket"
+    ],
+    "hermes_plan_matches": true,
+    "model_usage": "See original xvla_calls and Hermes usage logs; unavailable usage remains unknown."
+  }
+}

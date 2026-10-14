@@ -1,0 +1,205 @@
+{
+  "case": "book_before_v92",
+  "expected": "block",
+  "observed_at": 8.249999999999424,
+  "goal_achieved": null,
+  "handoff_review_triggered": false,
+  "decision": {
+    "state": "unknown",
+    "reason": "subtask purpose unknown",
+    "allow_release": false,
+    "allow_retreat": false
+  },
+  "released_encoder": false,
+  "current_rows": [
+    {
+      "id": "goal_0",
+      "state": "unknown",
+      "same_target": true,
+      "evidence": [
+        {
+          "frame": 23,
+          "box": [
+            452,
+            262,
+            545,
+            352
+          ]
+        },
+        {
+          "frame": 21,
+          "box": [
+            215,
+            560,
+            455,
+            830
+          ]
+        },
+        {
+          "frame": 22,
+          "box": [
+            283,
+            240,
+            362,
+            318
+          ]
+        }
+      ],
+      "identity_refs": [
+        {
+          "frame": 2,
+          "box": [
+            568,
+            495,
+            668,
+            605
+          ]
+        },
+        {
+          "frame": 11,
+          "box": [
+            565,
+            480,
+            665,
+            595
+          ]
+        }
+      ],
+      "supported": null,
+      "change": "none",
+      "comparison": "初态frame2中黑色硬封面、顶缘白页的书竖立在杯旁桌面；frame11夹爪在同位置闭合抓住该书；当前frame23中同一本书被夹持插入收纳盒后排隔间内，桌面上原书位已空，身份一致。",
+      "placement": {
+        "region_confirmed": true,
+        "region_description": "收纳盒靠墙/靠机器人一侧的后排隔间内部（frame23中左侧大格与中间窄格所在的后排，由前侧横向隔板与前排右格分隔）",
+        "destination_evidence": [
+          {
+            "frame": 23,
+            "box": [
+              383,
+              300,
+              662,
+              522
+            ]
+          },
+          {
+            "frame": 21,
+            "box": [
+              240,
+              20,
+              680,
+              560
+            ]
+          }
+        ],
+        "boundary_observation": "frame23中书本下半段已进入后排隔间开口平面以下，书身位于后壁与前侧横向隔板之间，被隔间内部边界包围；仅上缘和夹爪仍露在口沿上方，未卡在外沿上",
+        "relation_evidence": [
+          {
+            "frame": 23,
+            "box": [
+              452,
+              262,
+              545,
+              352
+            ]
+          },
+          {
+            "frame": 21,
+            "box": [
+              215,
+              560,
+              455,
+              830
+            ]
+          }
+        ],
+        "support_observation": "当前书仍被夹爪夹持，底部接触处被收纳盒前壁遮挡不可见；可见的是书身已深入后排隔间内部而非停留在口沿或盒外",
+        "needs_motion": null,
+        "contradiction": false,
+        "views": [
+          {
+            "frame": 21,
+            "relation": "satisfied",
+            "reason": "wrist视角见书脊/书页自后排隔间开口向下延伸入暗腔，中部被隔间横档遮挡后仍在腔内继续可见"
+          },
+          {
+            "frame": 22,
+            "relation": "occluded",
+            "reason": "agentview中机械臂与灯杆遮挡盒口，仅见臂端停在盒后上方，无法直接看到书与隔间关系"
+          },
+          {
+            "frame": 23,
+            "relation": "satisfied",
+            "reason": "sideview清晰见黑色书本插入后排隔间，下部没入隔间内、上部露出由夹爪夹持，未搁在前排右格或盒外桌面"
+          }
+        ],
+        "support_contact": {
+          "visible": false,
+          "observation": "书底与隔间底面的接触点被收纳盒前壁和书身自身遮挡，三视角均不可见",
+          "evidence": [
+            {
+              "frame": 23,
+              "box": [
+                455,
+                330,
+                540,
+                352
+              ]
+            }
+          ]
+        },
+        "support_inference": {
+          "depth_sufficient": true,
+          "spatial_observation": "书整体高度约与隔间深度相当（对照初态frame2书高与盒高）；frame23中书露出部分仅为其上端约三分之一至一半，下端已越过后排隔间口沿并深入腔内，主体被后壁与前隔板包围，未见悬空挂沿或需继续下插的间隙",
+          "temporal_observation": "frame14书整体悬在盒口上方→frame17/20书下端刚过口沿→frame21/23书进一步下沉、露出部分持续减少，同一目标相对固定后排隔间保持连续进入过程，当前深度关系自frame20延续至frame23且无移出迹象",
+          "evidence": [
+            {
+              "frame": 23,
+              "box": [
+                452,
+                262,
+                545,
+                352
+              ]
+            },
+            {
+              "frame": 20,
+              "box": [
+                448,
+                232,
+                540,
+                322
+              ]
+            },
+            {
+              "frame": 17,
+              "box": [
+                438,
+                222,
+                532,
+                320
+              ]
+            },
+            {
+              "frame": 14,
+              "box": [
+                420,
+                225,
+                520,
+                335
+              ]
+            }
+          ]
+        }
+      },
+      "capture_id": "0b74cfc39918c1f7/capture_000032",
+      "_provenance": {
+        "request_sha256": "2618d3ea85d69e845528d7ea5bf6552326e3157a0b00b095bfc85ef89b207701",
+        "response_sha256": "083a00732ea464e77cce34a20f6164ef63fbefa4542224a95841cc2866723743"
+      }
+    }
+  ],
+  "actual_model_calls": 3,
+  "new_robot_actions": 0,
+  "historical_proofs": [],
+  "passed": true
+}

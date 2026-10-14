@@ -295,14 +295,30 @@ class FinishMonitor:
         for cap in selected:
             frames = cap.get('verification_frames') or cap.get('frames') or []
             if simple:
-                wrist = next((fr for fr in cap.get('frames', []) if fr['view'] in ('wrist', 'robot0_eye_in_hand')), None)
-                external_view = getattr(self.port, 'checker_external_view', 'sideview')
-                if external_view not in ('sideview', 'agentview'):
-                    raise RuntimeError('unsupported checker external view')
-                side = next((fr for fr in frames + cap.get('frames', []) if fr['view'] == external_view), None)
-                if wrist is None or side is None:
-                    raise RuntimeError('simple checker requires synchronized wrist and %s images' % external_view)
-                frames = [wrist, side]
+                checker_views = getattr(self.port, 'checker_views', None)
+                if checker_views is not None:
+                    if (not isinstance(checker_views, (list, tuple)) or len(checker_views) not in (2, 3)
+                            or len(set(checker_views)) != len(checker_views)
+                            or any(view not in ('wrist', 'agentview', 'sideview') for view in checker_views)):
+                        raise RuntimeError('invalid checker_views')
+                    available = cap.get('checker_frames') or (cap.get('frames', []) + cap.get('verification_frames', []))
+                    frames = []
+                    for view in checker_views:
+                        image = next((fr for fr in available if fr.get('view') == view and fr.get('rgb_path')), None)
+                        if image is None:
+                            raise RuntimeError('missing synchronized checker view: ' + view)
+                        frames.append(image)
+                    if len({str(fr['rgb_path']) for fr in frames}) != len(frames):
+                        raise RuntimeError('checker views must have independent image paths')
+                else:
+                    wrist = next((fr for fr in cap.get('frames', []) if fr['view'] in ('wrist', 'robot0_eye_in_hand')), None)
+                    external_view = getattr(self.port, 'checker_external_view', 'sideview')
+                    if external_view not in ('sideview', 'agentview'):
+                        raise RuntimeError('unsupported checker external view')
+                    side = next((fr for fr in frames + cap.get('frames', []) if fr['view'] == external_view), None)
+                    if wrist is None or side is None:
+                        raise RuntimeError('simple checker requires synchronized wrist and %s images' % external_view)
+                    frames = [wrist, side]
             for fr in frames[:3 if simple else 2]:
                 frame = len(paths)
                 if frame >= 6:
@@ -337,6 +353,8 @@ class FinishMonitor:
         self.calls += 1
         if getattr(self.call_client, 'simple_handoff', False):
             self.call_client.audit_dir = self.output_dir / 'model_requests'
+        if hasattr(self.call_client, 'observe_capture'):
+            self.call_client.observe_capture(selected[-1])
         meta = self.call_client.analyze(ctx, paths)
         self.guarded_step(lambda: None)
         self._phase = 'observing'
@@ -416,7 +434,9 @@ class FinishMonitor:
         if simple:
             # Inspect the client here: the pilot replaces it after construction.
             # Native candidates and force cannot cause an early visual handoff.
-            if step <= 0 or step % _SIMPLE_CHECK_INTERVAL or step > self.budget or step in self._simple_checked_steps:
+            schedule = getattr(self, 'visual_check_due', None)
+            due = schedule(step) if callable(schedule) else step % _SIMPLE_CHECK_INTERVAL == 0
+            if step <= 0 or not due or step > self.budget or step in self._simple_checked_steps:
                 return None
             self._simple_checked_steps.add(step)
         else:

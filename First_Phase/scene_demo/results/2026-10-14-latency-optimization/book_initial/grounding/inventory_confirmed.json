@@ -1,0 +1,274 @@
+{
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "黑色封面的书,竖立/斜立在桌面上,顶边可见白色书页;初始位于马克杯旁(sideview中在杯右侧,agentview中在杯后方)",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              255,
+              320,
+              535
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              565,
+              393,
+              602,
+              502
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              568,
+              494,
+              669,
+              606
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视左侧倾斜黑色板状物,侧边可见页层结构,与竖立书本一致"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "马克杯后方竖立的黑色薄板,顶缘见白色书页边"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "杯右侧竖立黑色书,顶面白色书页清晰,与frame1同一物"
+          }
+        ],
+        "confusable_with": [
+          "obj_3",
+          "obj_4"
+        ],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "棕色长方形收纳盒,顶部三个敞口隔间,置于桌面中部偏左,可作为书本整理归位的目的地",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              318,
+              600,
+              1000,
+              840
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              148,
+              350,
+              488,
+              602
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              378,
+              300,
+              665,
+              508
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视下方仅见收纳盒顶部隔间与侧壁,前景被灰色夹爪部件遮挡"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "棕色三隔间收纳盒整体清晰,隔间挡板可见"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视中同一棕色三隔间盒,位置与frame1一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "桌面右侧平放的黑色扁长方形物体,表面纯黑、无可见书页边,易被误认为平放的书",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              795,
+              378,
+              999,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              0,
+              380,
+              203,
+              512
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视视野朝向杯子与收纳盒,该平放物不在画面内"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "桌面右侧纯黑扁长方形,平贴桌面"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视左缘同一平放黑长方形,方位与frame1对应"
+          }
+        ],
+        "confusable_with": [
+          "obj_1"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "sideview右下角平放黑色扁长方形薄片,无书页特征,易误认为平放的书;仅单视角可见,身份未确认",
+        "confirmed": false,
+        "anchors": [
+          {
+            "frame": 2,
+            "box": [
+              710,
+              795,
+              1000,
+              995
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视视野仅覆盖杯、书与收纳盒区域,该物不在画面内"
+          },
+          {
+            "frame": 1,
+            "visibility": "occluded",
+            "reason": "应处agentview近景左下,该处被黑色灯架前景占据,无法区分确认"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视右下角平放黑色扁长方形,与obj_3的左缘位置不同,为另一候选实物"
+          }
+        ],
+        "confusable_with": [
+          "obj_1",
+          "obj_3"
+        ],
+        "role": "uncertain"
+      }
+    ],
+    "coverage": {
+      "targets_identifiable": true,
+      "destination_visible": true,
+      "state_change_visible": true,
+      "reason": "竖立黑书三帧均清晰且身份一致;棕色三隔间收纳盒三帧可见;书未入盒的初始状态可对照检查"
+    },
+    "corrections": [
+      {
+        "object_id": "obj_4",
+        "reason": "仅frame2单视角可见,frame1对应区域被灯架前景遮挡无法排除混淆,按规则降为confirmed=false并改role=uncertain"
+      }
+    ],
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ],
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist.png",
+        "sha256": "403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45"
+      }
+    ]
+  },
+  "metadata": {
+    "verdict": {
+      "target_visible": null,
+      "destination_visible": null,
+      "at_destination": null,
+      "supported": null,
+      "released": null,
+      "stable": null,
+      "operation_achieved": null,
+      "clear_of_target": null,
+      "boxes": {},
+      "evidence": [
+        "scene identity only"
+      ],
+      "unknown_reasons": []
+    },
+    "usage": {
+      "completion_tokens": 2378,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2048,
+        "text_tokens": 329
+      },
+      "prompt_tokens": 2296,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "image_tokens": 582,
+        "text_tokens": 1714
+      },
+      "total_tokens": 4674
+    },
+    "model": "qwen3.8-max",
+    "http_status": 200,
+    "request_sha256": "10a62993feafb3caa9fce85e53c3296f90cfed29c7c593f61a1ba7648efa0b87",
+    "response_sha256": "533bf1fa6fb13c5f893ef369c2b4c33e29eb68290671ff10304efb4090fd6d40",
+    "call_index": 2
+  }
+}

@@ -5,7 +5,7 @@
 只使用 Python 标准库。产出目录 /home/yhwang/fyp/libero_demo/hermes_home：
 
   .env          现有 /home/yhwang/.hermes/.env 的副本，权限 0600，内容从不回显
-  config.yaml   _config_version: 12 + qwen3-vl-plus + alibaba-cn + 支持视觉，
+  config.yaml   _config_version: 12 + qwen3.8-max + alibaba-cn + 支持视觉，
                 agent.max_turns=24，仅注册 libero_tools 一个 MCP server
   SOUL.md       简短角色说明，用于标准 LIBERO 任务匹配（含正常等待约定）
 
@@ -33,7 +33,7 @@ MCP_PATH = "/usr/bin:/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/y
 CONFIG_YAML = f"""\
 _config_version: 12
 model:
-  default: qwen3-vl-plus
+  default: qwen3.8-max
   provider: alibaba-cn
   supports_vision: true
 agent:

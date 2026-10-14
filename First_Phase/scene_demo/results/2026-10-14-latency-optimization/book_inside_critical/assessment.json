@@ -1,0 +1,232 @@
+{
+  "case": "book_inside_critical",
+  "expected": "allow",
+  "observed_at": 15.75000000000193,
+  "goal_achieved": true,
+  "handoff_review_triggered": true,
+  "decision": {
+    "state": "needs_release",
+    "reason": "purpose achieved; open fingers",
+    "allow_release": true,
+    "allow_retreat": false
+  },
+  "released_encoder": false,
+  "current_rows": [
+    {
+      "id": "goal_0",
+      "state": "at_destination",
+      "same_target": true,
+      "evidence": [
+        {
+          "frame": 24,
+          "box": [
+            190,
+            140,
+            620,
+            246
+          ]
+        },
+        {
+          "frame": 25,
+          "box": [
+            228,
+            168,
+            320,
+            200
+          ]
+        },
+        {
+          "frame": 26,
+          "box": [
+            498,
+            155,
+            572,
+            200
+          ]
+        }
+      ],
+      "identity_refs": [
+        {
+          "frame": 2,
+          "box": [
+            566,
+            490,
+            670,
+            608
+          ]
+        },
+        {
+          "frame": 8,
+          "box": [
+            568,
+            240,
+            666,
+            300
+          ]
+        }
+      ],
+      "supported": true,
+      "change": "none",
+      "comparison": "初态书竖立在杯旁桌面；当前书已由夹爪持握插入收纳盒后格，仅顶部一小段露出格口，桌面原位置已无书",
+      "placement": {
+        "region_confirmed": true,
+        "region_description": "收纳盒三格中靠后/远离相机一侧的格口（frame25左后口、frame26左上口）",
+        "destination_evidence": [
+          {
+            "frame": 25,
+            "box": [
+              150,
+              175,
+              240,
+              240
+            ]
+          },
+          {
+            "frame": 26,
+            "box": [
+              390,
+              150,
+              500,
+              200
+            ]
+          }
+        ],
+        "boundary_observation": "书身跨过该格口沿进入格内，露出部分低于格口上方夹爪，主体被后壁与隔板围住的暗区包围",
+        "relation_evidence": [
+          {
+            "frame": 26,
+            "box": [
+              498,
+              155,
+              572,
+              200
+            ]
+          },
+          {
+            "frame": 25,
+            "box": [
+              228,
+              168,
+              320,
+              200
+            ]
+          }
+        ],
+        "support_observation": "书的下段没入后格内部暗区，由格底/格壁承接；夹爪仍持握书顶但书已达放置深度",
+        "needs_motion": false,
+        "contradiction": false,
+        "views": [
+          {
+            "frame": 24,
+            "relation": "satisfied",
+            "reason": "腕视见书顶白条与黑封面紧贴格内隔板下缘，书身在格内"
+          },
+          {
+            "frame": 25,
+            "relation": "satisfied",
+            "reason": "agentview见夹爪在后格口上方，书仅露口沿一小截"
+          },
+          {
+            "frame": 26,
+            "relation": "satisfied",
+            "reason": "sideview见书竖插于左上后格口内，大部分低于口沿"
+          }
+        ],
+        "support_contact": {
+          "visible": false,
+          "observation": "书底与格底的接触被盒壁和书自身遮挡，不可直接看见",
+          "evidence": [
+            {
+              "frame": 26,
+              "box": [
+                498,
+                155,
+                572,
+                200
+              ]
+            }
+          ]
+        },
+        "support_inference": {
+          "depth_sufficient": true,
+          "spatial_observation": "初态书整体高度约等于杯高 plus 露出量（frame2约118px高），当前frame26露出仅约45px、frame25约32px，主体已跨过后格口沿深入格内，无悬空间隙迹象",
+          "temporal_observation": "frame14书顶已接近口沿，frame17/20/23/26书相对后格口沿位置保持同一深入状态，未见回退或仍需下压",
+          "evidence": [
+            {
+              "frame": 26,
+              "box": [
+                498,
+                155,
+                572,
+                200
+              ]
+            },
+            {
+              "frame": 23,
+              "box": [
+                498,
+                155,
+                572,
+                200
+              ]
+            },
+            {
+              "frame": 20,
+              "box": [
+                497,
+                155,
+                570,
+                198
+              ]
+            }
+          ]
+        },
+        "supplemental_context_evidence": {
+          "destination_evidence": [],
+          "relation_evidence": []
+        },
+        "_geometry_sequence_validated": true,
+        "_inferred_motion_settled": true
+      },
+      "support_inference": {
+        "depth_sufficient": true,
+        "spatial_observation": "书露出格口部分远小于初态整体高度，主体位于后格隔板与后壁之间",
+        "temporal_observation": "自frame14接近口沿到frame26保持深入且静止，未再下降也未移出",
+        "evidence": [
+          {
+            "frame": 26,
+            "box": [
+              498,
+              155,
+              572,
+              200
+            ]
+          },
+          {
+            "frame": 23,
+            "box": [
+              498,
+              155,
+              572,
+              200
+            ]
+          },
+          {
+            "frame": 20,
+            "box": [
+              497,
+              155,
+              570,
+              198
+            ]
+          }
+        ]
+      },
+      "capture_id": "114402e0a6d3ac04/capture_000062"
+    }
+  ],
+  "actual_model_calls": 3,
+  "new_robot_actions": 0,
+  "historical_proofs": [],
+  "passed": true
+}

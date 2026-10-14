@@ -1,0 +1,322 @@
+{
+  "ok": true,
+  "session_id": "382fcdcae66a407f8c04c4518b178f37",
+  "scene_id": "bowl_drawer",
+  "capability_backend": "xvla",
+  "state": "ready",
+  "scene_version": 0,
+  "env_instance_id": 1,
+  "episode_resets": 1,
+  "policy_resets": 0,
+  "total_steps": 0,
+  "seed": 142,
+  "init_state_index": 0,
+  "description": "put the black bowl in the bottom drawer of the cabinet and close it",
+  "storage_policy": {
+    "akita_black_bowl_1": "white_cabinet_1_bottom_region"
+  },
+  "capabilities": [
+    {
+      "instruction": "put the black bowl in the bottom drawer of the cabinet",
+      "goals": [
+        [
+          "in",
+          "akita_black_bowl_1",
+          "white_cabinet_1_bottom_region"
+        ]
+      ],
+      "scene_ids": [
+        "bowl_drawer"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "atomic_candidate",
+      "audit_only": false,
+      "exclusive_target": true,
+      "object_id": "akita_black_bowl_1",
+      "target_id": "white_cabinet_1_bottom_region",
+      "evidence": "Candidate atomic prompt; untested integration, not evidence of native single-task training",
+      "capability_id": "xvla_t03_bowl_to_drawer"
+    },
+    {
+      "instruction": "close the bottom drawer of the cabinet",
+      "goals": [
+        [
+          "close",
+          "white_cabinet_1_bottom_region"
+        ]
+      ],
+      "scene_ids": [
+        "bowl_drawer"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "atomic_candidate",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": "white_cabinet_1_bottom_region",
+      "target_id": null,
+      "evidence": "Candidate atomic prompt; untested integration, not evidence of native single-task training",
+      "capability_id": "xvla_t03_drawer_close"
+    },
+    {
+      "instruction": "put the black bowl in the bottom drawer of the cabinet and close it",
+      "goals": [
+        [
+          "close",
+          "white_cabinet_1_bottom_region"
+        ],
+        [
+          "in",
+          "akita_black_bowl_1",
+          "white_cabinet_1_bottom_region"
+        ]
+      ],
+      "scene_ids": [
+        "bowl_drawer"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 3
+      },
+      "component_capability_ids": [
+        "xvla_t03_bowl_to_drawer",
+        "xvla_t03_drawer_close"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_bowl_drawer_close"
+    }
+  ],
+  "images": [
+    {
+      "view": "agentview",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca/agentview.png",
+      "sha256": "76b02383d132617c14cd65465163e36cfe45c320a483bad511cbbc35af576571",
+      "kind": "vla_observation"
+    },
+    {
+      "view": "wrist",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca/wrist.png",
+      "sha256": "197e89556c8734a8309486d743d4d164345e62eee537f0ee86b68aca19dd3624",
+      "kind": "vla_observation"
+    }
+  ],
+  "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca/latest.png",
+  "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca",
+  "active_request_id": null,
+  "error": null,
+  "finish_mode": "visual",
+  "scene_inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "深色（近黑/深绿）玻璃瓶，直立，瓶颈细、瓶口带橙褐色塞/封帽；初始位于桌面中央，碗与抽屉柜之间",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              220,
+              375,
+              395,
+              480
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              452,
+              400,
+              484,
+              500
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              580,
+              428,
+              615,
+              508
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕部俯视见深色瓶身投影与橙褐色瓶口塞，位置与另两视图桌面中央一致"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview清晰见直立深色细颈瓶、橙褐色瓶口"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview见同一直立深色瓶于碗与抽屉柜之间，形态颜色一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "灰白色圆碗，内壁灰白斑纹/铝箔状纹理，敞口朝上；初始位于桌面中央偏前，瓶子旁、抽屉柜左前方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              462,
+              0,
+              705,
+              130
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              444,
+              536,
+              530,
+              604
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              402,
+              504,
+              484,
+              568
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕部俯视碗贴上边缘被裁切，仅下半入镜，斑纹内壁可辨"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview见灰白斑纹圆碗敞口朝上，位于瓶前"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview见同一斑纹圆碗于桌面中央，大小形态一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "灰色三屉抽屉柜（桌面收纳装置），正面三个抽屉面板带灰色横把手，最下层抽屉拉开露出白色条纹内底；位于桌面右侧，为碗/瓶归位的候选目的地",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              0,
+              370,
+              355
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              494,
+              300,
+              790,
+              568
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              486,
+              436,
+              856,
+              760
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕部俯视仅见柜体局部：白色条纹拉开抽屉内底、深色边框与灰色把手，位于画面左上"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview见灰色柜体、两个关闭抽屉面板与一个拉开抽屉（白色条纹内底）"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview见同一灰色柜体与向左拉开的抽屉，结构一致无冲突"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      }
+    ],
+    "coverage": {
+      "targets_identifiable": true,
+      "destination_visible": true,
+      "state_change_visible": true,
+      "reason": "碗与瓶在三视角均可对应（碗frame0部分入镜），抽屉柜含拉开抽屉三视角可见；当前为初始状态，后续归位动作相对基线可见变化"
+    },
+    "corrections": [
+      {
+        "object_id": "obj_2",
+        "reason": "frame0碗被上边缘裁切， visibility应为partial而非仅下半可见的表述修正，框不变"
+      }
+    ],
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ],
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca/planning_grounding/cap000002_wrist.png",
+        "sha256": "8f901dff03c994dda17eb4012e715f452a5832299d317cb5d36e6e087b409257"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "5cc2b2af91494cb92d9b6f07e8f56b484654ac88e0cd8880398d1dceaecaf0cb"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "44a540009036103c28d36f26f3a08ecb4d0e69e75725f0f853058eb96f9d302b"
+      }
+    ]
+  },
+  "planning_image": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca/planning_grounding/planning_three_views.png"
+}

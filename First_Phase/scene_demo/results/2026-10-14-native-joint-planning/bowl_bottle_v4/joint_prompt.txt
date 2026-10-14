@@ -1,0 +1,21 @@
+根据同步三视图建立现场物体清单，供规划和后续检查共用。用户任务：收拾桌面，将碗和瓶子归位
+清单以用户任务为范围：只列实际要操作的物品、目的地/装置及可能误认成这些目标的必要干扰物。宽泛整理时列其范围内待整理物；不泛列灯、机械臂、墙面、无关背景设施。外观简写实际可见颜色、形状、把手、包装；看不清文字不要猜品牌。同一实物跨视角只分配一个object_id；不同实物不能合并。识别门/抽屉时可用装置整体加可见活动部件描述。每个物体必须逐一检查frame 0/1/2；遮挡视角如实记录，不要求三张都看得见。至少一个清晰参照且其他视角无身份冲突才confirmed=true。框采用每幅原图0..1000的[x1,y1,x2,y2]，包住真实物体，不按期望位置猜框。输出JSON：{"objects":[{"object_id":"obj_1","description":"可见特征及初始相对位置","confirmed":true,"anchors":[{"frame":1,"box":[100,200,300,400]}],"view_observations":[{"frame":0,"visibility":"occluded","reason":"遮挡情况"},{"frame":1,"visibility":"visible","reason":"辨认依据"},{"frame":2,"visibility":"partial","reason":"对应依据"}],"confusable_with":[],"role":"target/destination/distractor/uncertain"}],"coverage":{"targets_identifiable":true,"destination_visible":true,"state_change_visible":true,"reason":"画面覆盖依据"}}。
+将上面的物品JSON放入inventory字段；同一次识别同时选择完整原生技能生成draft。只从本次目录选择已经训练的完整原生技能；一个技能的instruction及全部goals不可拆分、删减、改写。单物体技能也必须确为目录中的独立原生技能。
+“整理/收好/归位”等宽泛需求可匹配完整收纳技能，完整入抽屉并关抽屉属于收纳的自然收尾；必须在executable_outcomes中明确包含关抽屉等完整结果。明确要求保持打开、禁止关门，或原生技能包含无关对象/改变目的地时，不能强行调用，返回澄清或仅选择其他独立原生能力。不能伪造半段技能。
+加热缺少启动加热能力时，可以选择完整入炉关门作为准备，coverage=partial并说明无法启动加热。收纳篮不能无依据当垃圾桶；丢弃目的地不明需要澄清。当前场景没有瓶子归位技能就明确列未支持，但可执行碗的完整收纳。
+只输出必要短句，不能把不存在的能力称作支持。所有实际所选技能的完整goals都会验收，中途子动作不意味着整项结束。
+[request coverage]
+先理解完整用户需求，再按公开动作库区分能执行的部分与未支持的部分。
+若有明确推进原需求的准备步骤或独立子目标，可先执行这些部分，不因缺少后续能力而全部拒绝；必须明确说出未完成步骤。
+部分执行不能改变原意、对象或目的地，不能为了使用现有技能而添加无关动作。例如把物品放进收纳篮不等于丢弃；没有证据表明篮子是垃圾桶时，不得把入篮当成丢弃的准备步骤。
+例如加热所需的入炉和关门可以作为准备步骤；若库中没有启动加热，只提交准备步骤并说明不能启动加热，不能声称完全覆盖或完成加热。
+提交 submit_scene_plan 时填写 request_scope={"coverage":"full|partial|none","executable_outcomes":["所选技能能实现的结果"],"unmet_outcomes":["当前不能实现或待澄清的结果"],"reason":"与原需求的关系及能力缺口"}。
+full：完整需求都有对应能力，unmet_outcomes=[]；partial：能执行有用部分且仍有缺口，两项列表均非空；none：无法确定任何可执行部分，executable_outcomes=[]，说明缺失能力或歧义。
+full/partial 使用 decision="execute" 和非空能力列表；none 使用 unsupported 或 clarify 和空列表。复合请求中某一项不支持，不自动否定其他明确可执行且互不依赖的子目标。
+只有本次明确选择的可执行部分，其动作、对象、目的地与顺序均匹配原生长程技能时才优先调用该技能；不得把“部分匹配”写成完整需求“完全匹配”。
+rationale 和提交后的用户回答都必须用自然语言说明执行范围与剩余限制，不能只输出能力编号或“已提交”。提交不等于执行完成。
+检查器仍按所选技能原有判据验收，不增加库中不存在的动作；plan_success仅代表所选动作目标，不能替代完整用户需求的完成情况。
+修复时保留原request_scope及未支持步骤，只修复已声明的执行部分，不得借修复把partial改成full。
+
+draft格式：{"decision":"execute|clarify|unsupported","capability_ids":["目录中的ID，按顺序"],"target_bindings":{"所选goals每个对象或区域ID":"inventory中的object_id"},"rationale":"简短规划理由", "request_scope":{"coverage":"full|partial|none","executable_outcomes":[],"unmet_outcomes":[],"reason":"范围理由"}}。只输出顶层inventory和draft两个字段。目标区域可绑定其所属真实装置，同一装置不同区域需在描述中区分。不要输出session/request ID、budget或额外控制参数，这些由服务端填写。
+{"scene": "bowl_drawer", "storage_policy": {"akita_black_bowl_1": "white_cabinet_1_bottom_region"}, "native_skills": [{"capability_id": "xvla_bowl_drawer_close", "instruction": "put the black bowl in the bottom drawer of the cabinet and close it", "goals": [["close", "white_cabinet_1_bottom_region"], ["in", "akita_black_bowl_1", "white_cabinet_1_bottom_region"]]}]}

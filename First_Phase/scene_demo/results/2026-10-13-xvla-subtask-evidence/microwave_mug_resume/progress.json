@@ -1,0 +1,107 @@
+[
+  {
+    "kind": "current",
+    "time": 8.249999999999424,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-subtask-evidence/microwave_mug_resume/01_current.json",
+    "goal": null,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "reason": "初态在桌面（frame 1/2），当前在微波炉加热区内部（frame 3），黄色把手特征一致。干扰物（灰色杯）仍在桌面（frame 4），未进入微波炉。"
+      },
+      {
+        "id": "goal_1",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "reason": "初态门打开（frame 1/2可见炉腔），当前frame 3/4仍可见炉腔内部，门板未遮挡入口。frame 5显示关门动作中，但未完成关闭。"
+      }
+    ],
+    "proofs": [],
+    "actual_Qwen_calls": 3,
+    "reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 150,
+      "native_success": false,
+      "predicates": {
+        "in|white_yellow_mug_1|microwave_1_heating_region": true,
+        "close|microwave_1": false
+      }
+    }
+  },
+  {
+    "kind": "release",
+    "time": 8.949999999999658,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-subtask-evidence/microwave_mug_resume/02_release.json",
+    "goal": null,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "reason": "初态在桌面（frame 1/2），当前在微波炉加热区内部（frame 3黄色把手特征可见）。干扰物（灰色杯）仍在桌面（frame 4），未进入微波炉。目标仅露局部但特征与初态一致，确认为同一目标。"
+      },
+      {
+        "id": "goal_1",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "reason": "初态门打开（frame 1/2可见炉腔），当前frame 4/5门板遮挡炉腔入口，符合关闭定义。侧面视图（frame 5）显示门板与机身对齐，无炉腔可见。"
+      }
+    ],
+    "proofs": [],
+    "actual_Qwen_calls": 4,
+    "reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 164,
+      "native_success": false,
+      "predicates": {
+        "in|white_yellow_mug_1|microwave_1_heating_region": true,
+        "close|microwave_1": false
+      }
+    }
+  },
+  {
+    "kind": "current",
+    "time": 15.75000000000193,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-subtask-evidence/microwave_mug_resume/03_current.json",
+    "goal": null,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "reason": "初态在桌面（frame 1/2），当前frame 3显示黄色把手特征在微波炉加热区内部。干扰物（灰色杯）在frame 4桌面，未进入微波炉。目标仅露局部但特征与初态一致，确认为同一目标。"
+      },
+      {
+        "id": "goal_1",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "reason": "当前frame 4/5显示门板遮挡炉腔入口，侧面视图门板与机身对齐，符合关闭定义。"
+      }
+    ],
+    "proofs": [],
+    "actual_Qwen_calls": 5,
+    "reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 300,
+      "native_success": true,
+      "predicates": {
+        "in|white_yellow_mug_1|microwave_1_heating_region": true,
+        "close|microwave_1": true
+      }
+    }
+  }
+]

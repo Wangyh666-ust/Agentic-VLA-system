@@ -128,9 +128,12 @@ def test_capture_writes_files(monkeypatch, tmp_path):
     from sensors import SensorPort
     from scipy.spatial.transform import Rotation as R
 
+    render_calls = []
     def fake_render(width, height, camera_name, depth):
-        return (np.full((height, width, 3), 128, np.uint8),
-                np.full((height, width), 0.5, np.float32))
+        render_calls.append((camera_name, width, height, depth, sim.data.time))
+        rgb = np.full((height, width, 3), 128, np.uint8)
+        depth_map = np.full((height, width), 0.5, np.float32)
+        return (rgb, depth_map) if depth else rgb
 
     class CU:
         @staticmethod
@@ -149,7 +152,8 @@ def test_capture_writes_files(monkeypatch, tmp_path):
                 'site_xmat': np.eye(3).reshape(1, 9),
                 'time': 2.5}
     sim = types.SimpleNamespace(render=fake_render, data=types.SimpleNamespace(**sid_data))
-    sim.model = types.SimpleNamespace(site_name2id=lambda n: 0)
+    sim.model = types.SimpleNamespace(site_name2id=lambda n: 0,
+                                      camera_names=('agentview', 'robot0_eye_in_hand', 'sideview'))
     robot = types.SimpleNamespace(sim=sim, eef_site_id=0)
 
     p = SensorPort.__new__(SensorPort)
@@ -175,6 +179,18 @@ def test_capture_writes_files(monkeypatch, tmp_path):
         assert K.shape == (3, 3)
     assert out['eef_position'] == [0.1, 0.2, 0.3]
     assert out['timestamp'] == 2.5
+    from PIL import Image
+    side = next(f for f in out['verification_frames'] if f['view'] == 'sideview')
+    all_frames = out['frames'] + [side]
+    assert len({f['rgb_path'] for f in all_frames}) == 3
+    for frame in all_frames:
+        assert os.path.exists(frame['rgb_path'])
+        with Image.open(frame['rgb_path']) as image:
+            assert image.mode == 'RGB'
+            assert image.size == ((512, 512) if frame['view'] == 'sideview' else (256, 256))
+    assert render_calls == [('agentview', 256, 256, True, 2.5),
+                            ('robot0_eye_in_hand', 256, 256, True, 2.5),
+                            ('sideview', 512, 512, False, 2.5)]
 
 
 def test_start_failure_preserves(monkeypatch, tmp_path):

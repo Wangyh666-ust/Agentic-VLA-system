@@ -148,7 +148,7 @@ class ParseTests(unittest.TestCase):
 
 class QwenTests(unittest.TestCase):
     def _resp(self, body):
-        return MockResp(json.dumps({"choices": [{"message": {"content": json.dumps(body)}}], "usage": {"t": 1}, "model": "m"}))
+        return MockResp(json.dumps({"choices": [{"message": {"content": json.dumps(body)}}], "usage": {"t": 1}, "model": "qwen3.8-max"}))
 
     def test_success(self):
         with tempfile.TemporaryDirectory() as d:

@@ -28,13 +28,23 @@ def _load():
 
 
 class CatalogTests(unittest.TestCase):
-    def test_scene_and_capability_counts(self):
-        self.assertEqual(len(catalog.SCENES), 7)
-        self.assertEqual(len(catalog.CAPABILITIES), 11)
-        atomic = [c for c in catalog.CAPABILITIES.values() if not c["audit_only"]]
-        composite = [c for c in catalog.CAPABILITIES.values() if c["audit_only"]]
-        self.assertEqual(len(atomic), 8)
-        self.assertEqual(len(composite), 3)
+    def test_backend_capability_visibility_contract(self):
+        from scene_demo.xvla_skills import NATIVE_LONG_SKILLS
+        for capability in catalog.CAPABILITIES.values():
+            self.assertTrue(capability['scene_ids'])
+            self.assertTrue(set(capability['scene_ids']) <= set(catalog.SCENES))
+        audit_ids = {'basket_both', 'mugs_both', 'table_both'}
+        self.assertEqual(audit_ids, {cid for cid, cap in catalog.CAPABILITIES.items() if cap['audit_only']})
+        for scene in catalog.SCENES:
+            smol = {c['capability_id'] for c in catalog.scene_capabilities(scene)}
+            xvla = {c['capability_id']: c for c in catalog.scene_capabilities(scene, backend='xvla')}
+            self.assertFalse(smol & audit_ids)
+            self.assertFalse(smol & set(NATIVE_LONG_SKILLS))
+            for cid, native in NATIVE_LONG_SKILLS.items():
+                self.assertEqual(cid in xvla, scene in native['scene_ids'])
+                if cid in xvla:
+                    for field in ('native_task', 'component_capability_ids', 'goals'):
+                        self.assertEqual(xvla[cid][field], native[field])
 
     def test_scene_fields_and_patches(self):
         shifted = catalog.SCENES["goal_table_shifted"]

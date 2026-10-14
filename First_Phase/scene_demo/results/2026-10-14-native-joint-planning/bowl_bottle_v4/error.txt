@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-native-joint-planning/replay.py", line 30, in <module>
+    result=plan_from_capture(capture,request,session,'offline-'+case,directory,home)
+  File "/mnt/d/FYP/First_Phase/scene_demo/xvla_planning.py", line 104, in plan_from_capture
+    validate_draft({**session,'scene_inventory':inventory},draft,request_id)
+  File "/mnt/d/FYP/First_Phase/scene_demo/xvla_console.py", line 101, in validate_draft
+    raise ValueError(json.dumps(error, ensure_ascii=False))
+ValueError: {"ok": false, "reason": "invalid_budget", "detail": "budget_per_subgoal must be an integer in [1, 600]"}

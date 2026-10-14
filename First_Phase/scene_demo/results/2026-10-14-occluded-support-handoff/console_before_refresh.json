@@ -1,0 +1,661 @@
+{
+  "mode": "live",
+  "stage": "blocked",
+  "request": "帮我整理一下桌子，把书本归位",
+  "scene": "book_caddy",
+  "request_id": "console-fe8a93c751f8656ef4ead0c3",
+  "events": [
+    {
+      "time": "15:20:38",
+      "text": "正在载入场景并拍摄三视图；不启动模型、不执行任务。"
+    },
+    {
+      "time": "15:20:45",
+      "text": "三视图已就绪。请先看看场景，再在下方填写你想做的任务。"
+    },
+    {
+      "time": "15:21:04",
+      "text": "正在准备当前任务。"
+    },
+    {
+      "time": "15:21:05",
+      "text": "正在加载 X-VLA；尚未创建场景。"
+    },
+    {
+      "time": "15:21:22",
+      "text": "任务已提交，开始三视图联合识别与复核；此阶段不执行任务动作。"
+    },
+    {
+      "time": "15:24:27",
+      "text": "Hermes 正在查看三视图与物品记录，选择动作；提交的计划只保存为草稿。"
+    },
+    {
+      "time": "15:27:59",
+      "text": "规划完成，尚未执行。请核对目标与能力范围，再点击执行。"
+    },
+    {
+      "time": "15:33:40",
+      "text": "用户已确认，正在将同一计划交给原 X-VLA 流程。"
+    },
+    {
+      "time": "15:43:12",
+      "text": "流程被检查器或复位验收阻断。"
+    }
+  ],
+  "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-152038-68f76d9d",
+  "message": "流程被检查器或复位验收阻断。",
+  "session_id": "6e418042f11e43318341a5d88b4a88cd",
+  "capabilities": [
+    {
+      "instruction": "put the book in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "atomic_candidate",
+      "audit_only": false,
+      "exclusive_target": true,
+      "object_id": "black_book_1",
+      "target_id": "desk_caddy_1_back_contain_region",
+      "evidence": "Candidate atomic prompt; untested integration, not evidence of native single-task training",
+      "capability_id": "xvla_t05_book_to_caddy"
+    },
+    {
+      "instruction": "pick up the book and place it in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 5
+      },
+      "component_capability_ids": [
+        "xvla_t05_book_to_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_book_caddy"
+    }
+  ],
+  "frames": [
+    {
+      "view": "wrist",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "agentview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "sideview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "timestamp": 0.5000000000000003
+    }
+  ],
+  "preview_only": false,
+  "model_runtime": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-152038-68f76d9d/model-20261014-152106-848ac009",
+  "model_log": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-152038-68f76d9d/model-20261014-152106-848ac009/model.log",
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "书本：黑色封面硬壳书，顶边露出白色书页；竖立微倾放在桌面中部，紧挨杯子（frame1在杯子后侧，frame2在杯子右侧，frame0腕视中位于杯子左侧）",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              258,
+              318,
+              537
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              566,
+              390,
+              604,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              566,
+              490,
+              670,
+              608
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视近距见黑色厚块斜置，边缘有白色书页层状线条，具厚度，与平贴薄板不同"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "杯子后侧黑色薄片竖立，顶部见白色页边，为直立书本的侧视"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "杯子右侧黑色长方体竖立，顶面白色书页清晰，厚度明显，与另两视角位置关系吻合"
+          }
+        ],
+        "confusable_with": [
+          "obj_4",
+          "obj_5"
+        ],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "桌面收纳盒（归位容器）：红棕色长方体敞口盒，内部隔板分成三个格口，无可见文字；位于桌面中后部、机械臂底座前方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              318,
+              600,
+              998,
+              840
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              150,
+              348,
+              486,
+              602
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              380,
+              302,
+              664,
+              508
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视仅见盒顶隔间开口与上缘，下部被画面底边和夹爪遮挡"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "三隔间结构、红棕色外壁完整可见"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "同一三隔间红棕色盒，隔板和开口方向与frame1一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "杯子：白色/浅灰杯身，杯口内侧偏黄，带黄色环形把手；直立放在桌面中部、书本旁",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              362,
+              32,
+              676,
+              295
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              498,
+              486,
+              596,
+              584
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              418,
+              498,
+              512,
+              598
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视见杯口圆形、内侧浅色和右侧黄色把手"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "杯身白色、把手在左呈黄色，与俯视为同一杯"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "杯身与黄色把手位置同frame1镜像一致，无身份冲突"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "桌面黑色薄板一：平贴桌面的黑色矩形平板，无厚度感、无页边；位于桌面远离机械臂的一端（frame1右侧、frame2左中）",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              796,
+              376,
+              998,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              0,
+              378,
+              204,
+              510
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视视野仅覆盖桌面中部，该平板在视野外"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "桌面右侧黑色平行四边形薄板，平贴无书页特征"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "桌面左中黑色薄板；以收纳盒/杯子为参照，该板位于远离机械臂一端，与frame1右侧薄板方位一致，跨视角对应成立"
+          }
+        ],
+        "confusable_with": [
+          "obj_1",
+          "obj_5"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_5",
+        "description": "桌面黑色薄板二：平贴桌面的黑色矩形平板，外观与obj_4同款；位于桌面近侧边缘（frame2右下），在frame1中处于画面外",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 2,
+            "box": [
+              710,
+              750,
+              998,
+              998
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视视野外"
+          },
+          {
+            "frame": 1,
+            "visibility": "occluded",
+            "reason": "该板位于桌面近侧边缘，在agentview取景范围之外，未见对应薄板，属视野外而非遮挡"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview右下黑色平行四边形薄板，与左中薄板分离且方位不同，为独立实物"
+          }
+        ],
+        "confusable_with": [
+          "obj_1",
+          "obj_4"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_6",
+        "description": "黑色台灯装置：黑色长灯臂斜跨画面，右上为黑色灯头罩，左下为黑色矩形底座板；固定于桌边",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              0,
+              0,
+              950,
+              998
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视未拍到灯臂与灯头"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "灯头、灯臂、底座连成一体清晰可见"
+          },
+          {
+            "frame": 2,
+            "visibility": "partial",
+            "reason": "仅左边缘露出黑色圆弧局部，疑为灯头/底座边缘；因frame1已完整确认该装置整体，此处部分可见不影响身份"
+          }
+        ],
+        "confusable_with": [
+          "obj_4",
+          "obj_5"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_7",
+        "description": "机械臂装置：白色多关节机械臂带黑色关节盖，安装于桌面后侧黑色底座上；frame0腕视底部可见其灰黑色夹爪末端",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              755,
+              840,
+              998
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              180,
+              0,
+              535,
+              400
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              484,
+              0,
+              820,
+              402
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视底边仅见灰黑夹爪手指两侧"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "白色臂身与关节清晰，位于收纳盒后方"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "同一白色机械臂与黑色底座，姿态一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      }
+    ],
+    "coverage": {
+      "targets_identifiable": true,
+      "destination_visible": true,
+      "state_change_visible": true,
+      "reason": "书本(target)在frame0/1/2均可辨认且与杯子的相对位置一致；收纳盒(destination)在frame1/2完整可见、frame0部分可见；三帧为同步初始状态，书本尚在桌面未入盒，后续抓取与放入过程可由该三视角覆盖记录"
+    },
+    "corrections": [
+      {
+        "object_id": "obj_4",
+        "change": "confirmed: false -> true",
+        "reason": "复核frame1与frame2：以收纳盒和杯子为共同参照，frame1右侧薄板与frame2左中薄板均位于桌面远离机械臂的一端，方位对应唯一，不存在与obj_5互换的歧义，满足至少一个清晰参照且无身份冲突"
+      },
+      {
+        "object_id": "obj_5",
+        "change": "confirmed: false -> true；frame1观察由'occluded/被台灯杆遮挡'修订为'视野外'",
+        "reason": "frame2右下薄板轮廓完整、与左中薄板明显分离，为独立实物；frame1中该板位于桌面近侧边缘、超出agentview取景范围，属视野外而非被台灯遮挡，原理由表述不实已修订；单视角清晰且其余视角无冲突证据，故可确认"
+      },
+      {
+        "object_id": "obj_6",
+        "change": "frame2观察理由补充说明",
+        "reason": "frame2左边缘黑色圆弧虽证据弱，但frame1已完整呈现灯头-灯臂-底座整体，身份无冲突，维持confirmed=true"
+      },
+      {
+        "object_id": "obj_1",
+        "change": "框微调",
+        "reason": "复核三帧框内均确含黑色书本实体（frame0含白色页边厚块、frame1/2为竖立书本），原框基本准确，仅做边缘收紧"
+      }
+    ],
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ],
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist.png",
+        "sha256": "403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45"
+      }
+    ]
+  },
+  "draft": {
+    "request_id": "console-fe8a93c751f8656ef4ead0c3",
+    "session_id": "6e418042f11e43318341a5d88b4a88cd",
+    "scene_version": 0,
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_book_caddy"
+    ],
+    "rationale": "用户动作词为「整理」「归位」，属收纳意图；公开 storage_policy 唯一目的地为 black_book_1 → desk_caddy_1_back_contain_region，与用户点名的「把书本归位」一致。画面核对：obj_1 为竖立黑书（顶边白色书页、有厚度），与平贴薄板 obj_4/obj_5 可区分；目的地 obj_2 为红棕三隔间收纳盒，后格即 policy 所指区域。所选可执行范围（抓起书本放入收纳盒后格）与原生长期技能 xvla_book_caddy 的动作、对象、目的地、顺序完全匹配，故优先调用该技能（其 Hermes 复合集成尚未物理验证，不声称已可靠验证）。",
+    "request_scope": {
+      "coverage": "full",
+      "executable_outcomes": [
+        "black_book_1（obj_1）被放入 desk_caddy_1_back_contain_region（obj_2 收纳盒后格），完成用户点名的书本归位与按公开 policy 的桌面整理"
+      ],
+      "unmet_outcomes": [],
+      "reason": "用户请求为整理桌面并把书本归位；公开 storage_policy 仅定义书本一个收纳目的地，故按 policy 的整理范围与用户点名子目标完全重合，均由 xvla_book_caddy 一次覆盖，无能力缺口。桌面上杯子与黑色薄板无公开收纳目的地，不在 policy 整理范围内，未额外添加动作。"
+    },
+    "target_bindings": {
+      "black_book_1": "obj_1",
+      "desk_caddy_1_back_contain_region": "obj_2"
+    },
+    "audit": false,
+    "budget_per_subgoal": 900
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "console-fe8a93c751f8656ef4ead0c3",
+    "session_id": "6e418042f11e43318341a5d88b4a88cd",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_book_caddy"
+    ],
+    "original_capability_ids": [
+      "xvla_book_caddy"
+    ],
+    "rationale": "用户动作词为「整理」「归位」，属收纳意图；公开 storage_policy 唯一目的地为 black_book_1 → desk_caddy_1_back_contain_region，与用户点名的「把书本归位」一致。画面核对：obj_1 为竖立黑书（顶边白色书页、有厚度），与平贴薄板 obj_4/obj_5 可区分；目的地 obj_2 为红棕三隔间收纳盒，后格即 policy 所指区域。所选可执行范围（抓起书本放入收纳盒后格）与原生长期技能 xvla_book_caddy 的动作、对象、目的地、顺序完全匹配，故优先调用该技能（其 Hermes 复合集成尚未物理验证，不声称已可靠验证）。",
+    "request_scope": {
+      "coverage": "full",
+      "executable_outcomes": [
+        "black_book_1（obj_1）被放入 desk_caddy_1_back_contain_region（obj_2 收纳盒后格），完成用户点名的书本归位与按公开 policy 的桌面整理"
+      ],
+      "unmet_outcomes": [],
+      "reason": "用户请求为整理桌面并把书本归位；公开 storage_policy 仅定义书本一个收纳目的地，故按 policy 的整理范围与用户点名子目标完全重合，均由 xvla_book_caddy 一次覆盖，无能力缺口。桌面上杯子与黑色薄板无公开收纳目的地，不在 policy 整理范围内，未额外添加动作。"
+    },
+    "request_fulfilled": null,
+    "target_bindings": {
+      "black_book_1": "obj_1",
+      "desk_caddy_1_back_contain_region": "obj_2"
+    },
+    "job_ids": [
+      "72552d6bb140433bb90b3f2928e5952f"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "visual_unknown",
+    "repair_history": [],
+    "scene_version": 1,
+    "native_skill_route": {
+      "requested_capability_ids": [
+        "xvla_book_caddy"
+      ],
+      "executed_capability_ids": [
+        "xvla_book_caddy"
+      ],
+      "replacements": []
+    }
+  },
+  "jobs": [
+    {
+      "job_id": "72552d6bb140433bb90b3f2928e5952f",
+      "request_id": "console-fe8a93c751f8656ef4ead0c3",
+      "session_id": "6e418042f11e43318341a5d88b4a88cd",
+      "capability_id": "xvla_book_caddy",
+      "state": "completed",
+      "steps": 900,
+      "total_steps": 905,
+      "success": false,
+      "ended_reason": "visual_unknown",
+      "error": null,
+      "instruction": "pick up the book and place it in the back compartment of the caddy",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "69aca49369432d7c4000ef79b8e4336d3b6a1eaf75641b85eb66b9e8a23d1fdb",
+      "state_after_sha": "fa6b1a5318eca4dd4be5a369924a46a5ed87e9f265e19f5472f04f703d18b459",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "goal_still_held",
+      "held_objects": [
+        "black_book_1"
+      ],
+      "grasp_observation_complete": true,
+      "completion_ready": false,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 6,
+        "prechecks": 6,
+        "helper_counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "last_decision": {
+          "state": "unknown",
+          "reason": "subtask purpose unknown",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "visual_unknown",
+          "checks": 6
+        },
+        "independent_streak": 0,
+        "current_view_calls": 6,
+        "release_evidence_calls": 0,
+        "release_events": 0,
+        "process_evidence": [],
+        "actual_visual_requests": 7
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/cap_01_xvla_book_caddy_72552d6b",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/cap_01_xvla_book_caddy_72552d6b/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/cap_01_xvla_book_caddy_72552d6b/rollout.mp4",
+      "wall_s": 517.753
+    }
+  ],
+  "evidence": [],
+  "busy": false
+}

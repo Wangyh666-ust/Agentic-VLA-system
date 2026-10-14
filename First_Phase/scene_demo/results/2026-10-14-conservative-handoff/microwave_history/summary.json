@@ -1,0 +1,257 @@
+{
+  "request": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/model_requests/call_10_request.json",
+  "request_sha256": "51c81b1612102606fa5f3c55ecf0767a6f5055a267178e74fd420737630ac8d7",
+  "target_time": 63.5500000000317,
+  "new_robot_actions": 0,
+  "old_observations": 186,
+  "saved_releases": 3,
+  "model": "qwen3.8-max",
+  "calls": 3,
+  "goal_achieved": false,
+  "handoff_review_triggered": false,
+  "checks": [
+    {
+      "id": "goal_0",
+      "achieved": true,
+      "target_matches_definition": true,
+      "current_evidence": true,
+      "evidence_event_ids": [
+        "16dd546140d5a7b7/review_00002/goal_0"
+      ],
+      "reason": "初态frame 0/1中黄身白内壁、黄色把手的杯子在桌面中部；过程capture（frame 3-18）显示夹爪握该黄杯送入微波炉腔并松手；当前capture frame 31 agentview炉腔入口内仍见黄色杯体/把手直立于腔内，frame 30腕视空夹爪、frame 32侧视桌上仅剩灰白斑点杯（干扰物），无黄杯回到桌面的迹象，故当前腔内黄杯即目标且保持放置。",
+      "history_event_id": "16dd546140d5a7b7/review_00002/goal_0",
+      "history_event_ids": [
+        "16dd546140d5a7b7/review_00002/goal_0"
+      ],
+      "history_capture_id": "16dd546140d5a7b7/capture_000035",
+      "history_observed_at": 8.949999999999658,
+      "history_reviewed_at": 63.5500000000317
+    },
+    {
+      "id": "goal_1",
+      "achieved": false,
+      "target_matches_definition": true,
+      "current_evidence": true,
+      "evidence_event_ids": [],
+      "reason": "初态frame 1/2中微波炉门板（黑框透明窗）向外打开立于机身左前；当前frame 31炉腔入口与腔内黄杯仍直接可见，门板未遮住入口，frame 32侧视亦无门板合拢到机身前面的迹象，故门仍为打开状态，close未完成。"
+    }
+  ],
+  "regions": {
+    "microwave_1_heating_region": {
+      "destination_id": "microwave_1_heating_region",
+      "confirmed": true,
+      "description": "微波炉炉腔内部加热区域，即门打开后入口所对的腔内空间与腔底承载面",
+      "boundary": "由左前矩形入口边框界定进入面，腔内灰白底板与四周内壁界定范围；打开的门板透明窗位于入口左前方，仅作参照不属于区域内部",
+      "anchors": [
+        {
+          "capture_id": "16dd546140d5a7b7/capture_000001",
+          "view": "agentview",
+          "box": [
+            578,
+            318,
+            690,
+            468
+          ]
+        },
+        {
+          "capture_id": "16dd546140d5a7b7/capture_000001",
+          "view": "sideview",
+          "box": [
+            568,
+            430,
+            660,
+            560
+          ]
+        }
+      ],
+      "reviewed_at": 0.5000000000000003,
+      "request_sha256": "245ee83785f94be51cb481b8c8a3792484aaecb52f826561a8a5e89fd01394e9",
+      "response_sha256": "0ccb5777735b65f3d4289b22a2284b98abcd339945765256cabdf887af4cbae3"
+    }
+  },
+  "proofs": [
+    {
+      "proof_id": "16dd546140d5a7b7/review_00002/goal_0",
+      "goal_key": "[\"white_yellow_mug_1\", \"in\", \"microwave_1_heating_region\", false]",
+      "target_id": "white_yellow_mug_1",
+      "destination_id": "microwave_1_heating_region",
+      "capture_id": "16dd546140d5a7b7/capture_000035",
+      "observed_at": 8.949999999999658,
+      "reviewed_at": 63.5500000000317,
+      "review_id": "16dd546140d5a7b7/review_00002",
+      "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/release_0001",
+      "status": "confirmed",
+      "kind": "historical_review",
+      "supersedes_review_id": null,
+      "evidence": [
+        {
+          "capture_id": "16dd546140d5a7b7/capture_000035",
+          "view": "agentview",
+          "box": [
+            636,
+            398,
+            668,
+            442
+          ]
+        },
+        {
+          "capture_id": "16dd546140d5a7b7/capture_000035",
+          "view": "wrist",
+          "box": [
+            380,
+            165,
+            610,
+            272
+          ]
+        }
+      ],
+      "identity_refs": [
+        {
+          "capture_id": "16dd546140d5a7b7/capture_000001",
+          "view": "wrist",
+          "box": [
+            345,
+            0,
+            690,
+            272
+          ]
+        },
+        {
+          "capture_id": "16dd546140d5a7b7/capture_000001",
+          "view": "agentview",
+          "box": [
+            432,
+            468,
+            530,
+            563
+          ]
+        }
+      ],
+      "comparison": "该旧capture中夹爪握持的黄色把手/黄身杯即初态绑定的黄杯（frame 0/1参照）；frame 7 agentview见杯体已在炉腔入口内侧，编码器finger qpos已达标准张开（松手），frame 6腕视见杯在腔内口沿下；虽仍接近入口，杯体已进入腔内且随后frame 9-11保持腔内位置，判定该时刻已到位并受腔底承接。",
+      "placement": {
+        "region_confirmed": true,
+        "region_description": "微波炉炉腔内部加热区域：入口所对腔内空间与腔底承载面",
+        "destination_evidence": [
+          {
+            "frame": 7,
+            "box": [
+              552,
+              332,
+              720,
+              470
+            ]
+          }
+        ],
+        "boundary_observation": "frame 7中黄色杯体位于入口边框内侧的腔内暗空间，非入口外桌面",
+        "relation_evidence": [
+          {
+            "frame": 7,
+            "box": [
+              636,
+              398,
+              668,
+              442
+            ]
+          },
+          {
+            "frame": 6,
+            "box": [
+              380,
+              165,
+              610,
+              272
+            ]
+          }
+        ],
+        "support_observation": "frame 6腕视见杯体下段伸向腔内底板方向且松手后frame 9-11杯位不坠不落，承接为腔底；夹爪此时已张开不再握持",
+        "needs_motion": false,
+        "contradiction": false,
+        "views": [
+          {
+            "frame": 6,
+            "relation": "satisfied",
+            "reason": "腕视见黄色把手/杯顶在腔内口沿之下，夹爪指已张开"
+          },
+          {
+            "frame": 7,
+            "relation": "satisfied",
+            "reason": "agentview见杯在炉腔入口内"
+          },
+          {
+            "frame": 8,
+            "relation": "occluded",
+            "reason": "sideview被机身与手臂遮挡腔内，无反证"
+          }
+        ],
+        "support_contact": {
+          "visible": false,
+          "observation": "杯底与腔底接触被前壁遮挡，靠松手后位置保持与后续frame 18直视底板承接佐证",
+          "evidence": [
+            {
+              "frame": 6,
+              "box": [
+                380,
+                165,
+                610,
+                272
+              ]
+            }
+          ]
+        }
+      },
+      "region": {
+        "destination_id": "microwave_1_heating_region",
+        "confirmed": true,
+        "description": "微波炉炉腔内部加热区域，即门打开后入口所对的腔内空间与腔底承载面",
+        "boundary": "由左前矩形入口边框界定进入面，腔内灰白底板与四周内壁界定范围；打开的门板透明窗位于入口左前方，仅作参照不属于区域内部",
+        "anchors": [
+          {
+            "capture_id": "16dd546140d5a7b7/capture_000001",
+            "view": "agentview",
+            "box": [
+              578,
+              318,
+              690,
+              468
+            ]
+          },
+          {
+            "capture_id": "16dd546140d5a7b7/capture_000001",
+            "view": "sideview",
+            "box": [
+              568,
+              430,
+              660,
+              560
+            ]
+          }
+        ],
+        "reviewed_at": 0.5000000000000003,
+        "request_sha256": "245ee83785f94be51cb481b8c8a3792484aaecb52f826561a8a5e89fd01394e9",
+        "response_sha256": "0ccb5777735b65f3d4289b22a2284b98abcd339945765256cabdf887af4cbae3"
+      },
+      "source_sha256": [
+        "4893a2f23c4830ed18718871d5af3a676c3cebfb44a96f8a02d99f53a7eabd22",
+        "5abb65452c1edd71bc4aa443e912f9dc3b59f557c217fccf77f345587b9b33ed",
+        "f5329bb927dd931d8b423dec5bacf2efb3f1e443d1d850692dcef27416365e2e"
+      ],
+      "encoder": {
+        "timestamp": 8.949999999999658,
+        "finger_qpos": [
+          0.03832337354049193,
+          -0.03777200611119862
+        ],
+        "standard_open_finger_qpos": [
+          0.03872905725468913,
+          -0.03872928166924487
+        ],
+        "position_unit": "m",
+        "standard_open_tolerance_m": 0.002,
+        "max_standard_open_error_mm": 0.9572755580462555,
+        "at_standard_open": true
+      },
+      "request_sha256": "a68586956baf0c9c293ce7d67de4b2c3d260b1b52f86f888214a608a5fbae5f9",
+      "response_sha256": "caf86eea5d0b25f662b4d8d01b091a084a33e952a58604a63e067d58d29bda01"
+    }
+  ]
+}

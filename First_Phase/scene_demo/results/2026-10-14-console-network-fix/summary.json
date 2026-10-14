@@ -1,0 +1,113 @@
+{
+  "question": "消除X-VLA启动前全历史台账等待，并修复三视图初识别阻断；真实接口验证到用户确认边界。",
+  "original_attempt": "20261014-145221-ee32577c",
+  "diagnosis": {
+    "historical_audit_seconds": 248,
+    "historical_failure": "Qwen network failure，底层异常被旧代码丢弃；91秒与90秒超时相符，无法追溯证明原始异常类型。",
+    "confirmed_timeout_problem": "同组旧图复核94.34秒正常返回，超过旧90秒上限。"
+  },
+  "changes": [
+    "交互任务只准备当前配置与源码记录，不读历史台账或启动review.py。",
+    "初识别/复核各180秒，外层390秒；执行中检查器仍90秒。",
+    "发送前保存提示词/图片引用/哈希；失败保存异常类型、阶段、耗时并显示简明错误。"
+  ],
+  "changed_files": [
+    "xvla_console.py",
+    "xvla_console.html",
+    "xvla_grounding.py",
+    "xvla_service.py",
+    "finish_v1/vision.py",
+    "finish_v1/simple_checker.py",
+    "XVLA_CONSOLE.md",
+    "tests/test_xvla_console.py",
+    "tests/test_qwen_transport.py",
+    "finish_v1/tests/test_grounding.py"
+  ],
+  "software": "147 passed, 6 subtests passed",
+  "offline_replay": {
+    "ok": true,
+    "requests": 2,
+    "results": [
+      {
+        "stage": "initial",
+        "seconds": 87.21,
+        "object_count": 8
+      },
+      {
+        "stage": "review",
+        "seconds": 94.34,
+        "object_count": 8
+      }
+    ],
+    "robot_actions": 0
+  },
+  "online_validation": {
+    "ok": true,
+    "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-152038-68f76d9d",
+    "session_run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042",
+    "stage": "draft",
+    "capability_ids": [
+      "xvla_book_caddy"
+    ],
+    "checkpoints": [
+      {
+        "seconds": 0.01,
+        "stage": "ready",
+        "message": "三视图已就绪。请先看看场景，再在下方填写你想做的任务。"
+      },
+      {
+        "seconds": 1.01,
+        "stage": "loading",
+        "message": "正在加载 X-VLA；尚未创建场景。"
+      },
+      {
+        "seconds": 18.67,
+        "stage": "recognizing",
+        "message": "任务已提交，开始三视图联合识别与复核；此阶段不执行任务动作。"
+      },
+      {
+        "seconds": 203.26,
+        "stage": "planning",
+        "message": "Hermes 正在查看三视图与物品记录，选择动作；提交的计划只保存为草稿。"
+      },
+      {
+        "seconds": 414.94,
+        "stage": "draft",
+        "message": "规划完成，尚未执行。请核对目标与能力范围，再点击执行。"
+      }
+    ],
+    "history_scan": false,
+    "settling_actions": 10,
+    "vla_actions": 0,
+    "vla_inference_requests": 0,
+    "execution_submitted": false,
+    "inventory_requests": 2
+  },
+  "elapsed_seconds": {
+    "before_xvla": 1.01,
+    "loading_and_scene_setup": 17.66,
+    "recognition_and_review": 184.59,
+    "hermes_planning": 211.68,
+    "total_to_draft": 414.94
+  },
+  "inventory_calls": {
+    "offline_successful": 2,
+    "online_successful": 2,
+    "model": "qwen3.8-max"
+  },
+  "hermes": {
+    "logged_main_api_calls": 4,
+    "model": "qwen3.8-max",
+    "auxiliary_title_request_started": true,
+    "usage_export_available": false
+  },
+  "old_failure_preserved": true,
+  "subagents": 0,
+  "helpers": false,
+  "limits": [
+    "验证至待确认草稿，未点击执行；不代表书本放置、收尾或完整任务成功。",
+    "剩余识别和规划约6分54秒，整体体验仍慢；消除的是启动前全台账等待。",
+    "旧网络异常具体类型无法恢复；一次新链路成功不证明网络长期稳定。",
+    "主agent模型与推理设置未由独立运行元数据确认；未调用executor。"
+  ]
+}

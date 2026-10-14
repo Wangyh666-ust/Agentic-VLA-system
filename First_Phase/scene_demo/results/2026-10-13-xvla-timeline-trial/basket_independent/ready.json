@@ -1,0 +1,63 @@
+{
+  "future_server": {
+    "argv": [
+      "/home/yhwang/fyp/xvla_native/venv/bin/python",
+      "-u",
+      "-m",
+      "deploy",
+      "--model_path",
+      "/home/yhwang/fyp/xvla_native/model",
+      "--port",
+      "8794",
+      "--host",
+      "127.0.0.1",
+      "--disable_slurm",
+      "--output_dir",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/runtime/server_output"
+    ],
+    "cwd": "/home/yhwang/fyp/xvla_native/upstream",
+    "env": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "/home/yhwang/fyp/xvla_native/upstream",
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1",
+      "HF_HUB_DISABLE_IMPLICIT_TOKEN": "1",
+      "TOKENIZERS_PARALLELISM": "false",
+      "HF_HOME": "/home/yhwang/fyp/xvla_native/cache/huggingface",
+      "XDG_CACHE_HOME": "/home/yhwang/fyp/xvla_native/cache"
+    },
+    "readiness": "GET /openapi.json; schema POST /act; no request performed"
+  },
+  "future_case_argv": {
+    "basket_two": [
+      "wsl.exe",
+      "-d",
+      "Ubuntu",
+      "--cd",
+      "/mnt/d/FYP",
+      "--exec",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "PYTHONPATH=/mnt/d/FYP:/mnt/d/FYP/First_Phase:/mnt/d/FYP/First_Phase/scene_demo/finish_v1:/home/yhwang/fyp/xvla_native/LIBERO:/home/yhwang/fyp/xvla_native/upstream",
+      "LIBERO_CONFIG_PATH=/home/yhwang/fyp/xvla_native/libero_config",
+      "MUJOCO_GL=egl",
+      "PYOPENGL_PLATFORM=egl",
+      "LD_LIBRARY_PATH=/usr/lib/wsl/lib",
+      "HF_HUB_OFFLINE=1",
+      "TRANSFORMERS_OFFLINE=1",
+      "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+      "-u",
+      "-m",
+      "scene_demo.xvla_pilot",
+      "--case",
+      "basket_two",
+      "--output",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent",
+      "--proposal",
+      "/mnt/d/FYP/First_Phase/scene_demo/plans/20261013-xvla-timeline-basket-independent.json"
+    ]
+  },
+  "user_independent_authorization": "用户明确选择：两项独立测试，首项失败也测入篮",
+  "model_calls": 0,
+  "environment_actions": 0
+}

@@ -1,0 +1,241 @@
+{
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "黑色封面的书,竖立/斜立在桌面上,顶边可见白色书页;初始位于马克杯旁(sideview中在杯右侧,agentview中在杯后方)",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              255,
+              320,
+              535
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              565,
+              393,
+              602,
+              502
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              568,
+              494,
+              669,
+              606
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视左侧倾斜黑色板状物,侧边可见页层结构,与竖立书本一致"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "马克杯后方竖立的黑色薄板,顶缘见白色书页边"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "杯右侧竖立黑色书,顶面白色书页清晰,与frame1同一物"
+          }
+        ],
+        "confusable_with": [
+          "obj_3",
+          "obj_4"
+        ],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "棕色长方形收纳盒,顶部三个敞口隔间,置于桌面中部偏左,可作为书本整理归位的目的地",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              318,
+              600,
+              1000,
+              840
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              148,
+              350,
+              488,
+              602
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              378,
+              300,
+              665,
+              508
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视下方仅见收纳盒顶部隔间与侧壁,前景被灰色夹爪部件遮挡"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "棕色三隔间收纳盒整体清晰,隔间挡板可见"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视中同一棕色三隔间盒,位置与frame1一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "桌面右侧平放的黑色扁长方形物体,表面纯黑、无可见书页边,易被误认为平放的书",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              795,
+              378,
+              999,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              0,
+              380,
+              203,
+              512
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视视野朝向杯子与收纳盒,该平放物不在画面内"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "桌面右侧纯黑扁长方形,平贴桌面"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视左缘同一平放黑长方形,方位与frame1对应"
+          }
+        ],
+        "confusable_with": [
+          "obj_1"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "桌面另一处平放的黑色扁长方形物体,纯黑薄片状,无书页特征,易误认为书",
+        "confirmed": false,
+        "anchors": [
+          {
+            "frame": 2,
+            "box": [
+              710,
+              795,
+              1000,
+              995
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视未覆盖该区域"
+          },
+          {
+            "frame": 1,
+            "visibility": "occluded",
+            "reason": "应位于agentview近景画面外或被黑色灯架前景遮挡,无法确认"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视右下角平放黑色扁长方形,与obj_3位置不同,为另一实物"
+          }
+        ],
+        "confusable_with": [
+          "obj_1",
+          "obj_3"
+        ],
+        "role": "distractor"
+      }
+    ],
+    "coverage": {
+      "targets_identifiable": true,
+      "destination_visible": true,
+      "state_change_visible": true,
+      "reason": "竖立黑色书本在frame0/1/2均清晰可见且身份一致;目的地棕色三隔间收纳盒在三帧均可见;初始状态(书竖立在杯旁、未入盒)可由三帧确认,整理后状态变化可对照检查;平放黑色扁物体作为干扰物已分别记录"
+    }
+  },
+  "metadata": {
+    "verdict": {
+      "target_visible": null,
+      "destination_visible": null,
+      "at_destination": null,
+      "supported": null,
+      "released": null,
+      "stable": null,
+      "operation_achieved": null,
+      "clear_of_target": null,
+      "boxes": {},
+      "evidence": [
+        "scene identity only"
+      ],
+      "unknown_reasons": []
+    },
+    "usage": {
+      "completion_tokens": 3269,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2048,
+        "text_tokens": 1220
+      },
+      "prompt_tokens": 1030,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "image_tokens": 582,
+        "text_tokens": 448
+      },
+      "total_tokens": 4299
+    },
+    "model": "qwen3.8-max",
+    "http_status": 200,
+    "request_sha256": "2352778b66c8ea50c05f4b079defa8bffcfec8a8b928488e95f7868a12956ba9",
+    "response_sha256": "33f23a6ea57c230c0801fee9ccfd1247a147eb636d59671c26e7c11311e72fce",
+    "call_index": 1
+  }
+}

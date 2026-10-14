@@ -26,6 +26,10 @@ Run:  /usr/bin/python3 -u mcp_server.py     (stdio)
 """
 
 from __future__ import annotations
+try:
+    from scene_demo.xvla_skills import NATIVE_LONG_SKILLS
+except ModuleNotFoundError:
+    from xvla_skills import NATIVE_LONG_SKILLS
 
 import functools
 import json
@@ -41,6 +45,7 @@ from mcp.server.mcpserver import MCPServer  # noqa: E402
 
 SERVER_NAME = "scene_tools"
 SERVER_VERSION = "0.1.0"
+DEFAULT_BUDGET = int(os.environ.get('SCENE_BUDGET_PER_SUBGOAL', '600'))
 SERVICE_URL = os.environ.get("SCENE_SERVICE_URL", "http://127.0.0.1:8767").rstrip("/")
 
 _OPENER = urllib.request.build_opener(urllib.request.ProxyHandler({}))
@@ -56,7 +61,9 @@ INSTRUCTIONS = (
     "rationale, decision) ONCE and finish. Choose capability ids yourself from "
     "the public capabilities -- nothing here routes on keywords. If the request "
     "is ambiguous use decision='clarify' with an empty capability_ids list; if "
-    "the scene cannot support it use decision='unsupported' with an empty list. "
+    "the scene cannot support any useful part use decision='unsupported' with an empty list. "
+    "For a useful supported subset use execute and declare request_scope coverage=partial, "
+    "executable_outcomes and unmet_outcomes; state the limitation to the user. "
     "After submit_scene_plan returns, state plainly that the plan was submitted "
     "and stop: the host owns waiting, error checking and cancellation. Do NOT "
     "poll get_scene_plan in a loop, do NOT wait in 45-second rounds, and do NOT "
@@ -111,12 +118,11 @@ def _quote(value: Any) -> str:
 
 
 def _atomic_capabilities(capabilities: Any) -> list[dict]:
-    """Keep only atomic capabilities.
+    """Keep public atomic and registered native long-horizon capabilities.
 
-    The service's public capability list already excludes audit-only composites;
-    this filter is a defensive second guard so a composite entry (audit flag set,
-    or no single ``object_id``) can never reach the planner as an executable
-    choice.  Caller data is never mutated.
+    Audit-only entries remain hidden. Entries without a single object may pass
+    only when their native registration and task metadata match the registered
+    X-VLA long-horizon catalog. Caller data is never mutated.
     """
     out: list[dict] = []
     if not isinstance(capabilities, list):
@@ -126,7 +132,11 @@ def _atomic_capabilities(capabilities: Any) -> list[dict]:
             continue
         if capability.get("audit_only") is True:
             continue
-        if capability.get("object_id") in (None, ""):
+        registered = NATIVE_LONG_SKILLS.get(capability.get("capability_id"))
+        native = (registered is not None
+                  and all(capability.get(key) == registered[key] for key in
+                          ("backends", "skill_kind", "native_task", "audit_only", "scene_ids", "goals", "instruction")))
+        if capability.get("object_id") in (None, "") and not native:
             continue
         out.append(capability)
     return out
@@ -143,7 +153,7 @@ async def get_scene_session(session_id: str) -> dict[str, Any]:
     return await _call("GET", "/sessions/" + _quote(session_id), None, 10.0)
 
 
-@mcp.tool(description="List the atomic capabilities usable in this scene together "
+@mcp.tool(description="List the atomic and native long-horizon capabilities usable in this scene together "
                       "with the public storage_policy and the current scene_version. "
                       "Use the returned capability_id values when submitting a plan. "
                       "Every entry also carries an 'evidence' tag: a 'candidate' tag "
@@ -179,7 +189,10 @@ async def observe_scene(session_id: str, extra_views: bool = False) -> dict[str,
                       "capability_ids yourself from list_scene_capabilities; their "
                       "order is the execution order. Use decision='execute' with the "
                       "chosen ids for a normal plan, or decision='clarify' / "
-                      "'unsupported' with an EMPTY capability_ids list. After this "
+                      "'unsupported' with an EMPTY capability_ids list. Include request_scope "
+                      "with coverage full|partial|none, executable_outcomes and unmet_outcomes "
+                      "(lists of strings), and reason. Partial support executes only useful "
+                      "supported steps and explicitly states the remainder. After this "
                       "call returns, say that the plan was submitted and FINISH -- do "
                       "not poll for progress, do not wait for the robot, do not sleep "
                       "in rounds; the host owns waiting and cancellation.")
@@ -190,6 +203,8 @@ async def submit_scene_plan(
     capability_ids: list[str],
     rationale: str,
     decision: str = "execute",
+    target_bindings: dict[str, str] | None = None,
+    request_scope: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     body = {
         "session_id": str(session_id),
@@ -199,8 +214,12 @@ async def submit_scene_plan(
         "rationale": str(rationale),
         "decision": str(decision or "execute"),
         "audit": False,
-        "budget_per_subgoal": 600,
+        "budget_per_subgoal": DEFAULT_BUDGET,
     }
+    if target_bindings is not None:
+        body['target_bindings'] = target_bindings
+    if request_scope is not None:
+        body['request_scope'] = request_scope
     return await _call("POST", "/plans", body, 20.0)
 
 
@@ -233,7 +252,7 @@ async def resume_scene_plan(
         "capability_ids": [str(capability_id) for capability_id in (capability_ids or [])],
         "rationale": str(rationale),
         "audit": False,
-        "budget_per_subgoal": 600,
+        "budget_per_subgoal": DEFAULT_BUDGET,
     }
     path = "/plans/" + _quote(request_id) + "/resume"
     return await _call("POST", path, body, 20.0)

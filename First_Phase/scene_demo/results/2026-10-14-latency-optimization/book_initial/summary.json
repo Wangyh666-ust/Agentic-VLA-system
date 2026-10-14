@@ -1,0 +1,237 @@
+{
+  "object_count": 4,
+  "objects": [
+    {
+      "object_id": "obj_1",
+      "description": "黑色封面的书,竖立/斜立在桌面上,顶边可见白色书页;初始位于马克杯旁(sideview中在杯右侧,agentview中在杯后方)",
+      "confirmed": true,
+      "anchors": [
+        {
+          "frame": 0,
+          "box": [
+            0,
+            255,
+            320,
+            535
+          ]
+        },
+        {
+          "frame": 1,
+          "box": [
+            565,
+            393,
+            602,
+            502
+          ]
+        },
+        {
+          "frame": 2,
+          "box": [
+            568,
+            494,
+            669,
+            606
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "visible",
+          "reason": "腕视左侧倾斜黑色板状物,侧边可见页层结构,与竖立书本一致"
+        },
+        {
+          "frame": 1,
+          "visibility": "visible",
+          "reason": "马克杯后方竖立的黑色薄板,顶缘见白色书页边"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "杯右侧竖立黑色书,顶面白色书页清晰,与frame1同一物"
+        }
+      ],
+      "confusable_with": [
+        "obj_3",
+        "obj_4"
+      ],
+      "role": "target"
+    },
+    {
+      "object_id": "obj_2",
+      "description": "棕色长方形收纳盒,顶部三个敞口隔间,置于桌面中部偏左,可作为书本整理归位的目的地",
+      "confirmed": true,
+      "anchors": [
+        {
+          "frame": 0,
+          "box": [
+            318,
+            600,
+            1000,
+            840
+          ]
+        },
+        {
+          "frame": 1,
+          "box": [
+            148,
+            350,
+            488,
+            602
+          ]
+        },
+        {
+          "frame": 2,
+          "box": [
+            378,
+            300,
+            665,
+            508
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "partial",
+          "reason": "腕视下方仅见收纳盒顶部隔间与侧壁,前景被灰色夹爪部件遮挡"
+        },
+        {
+          "frame": 1,
+          "visibility": "visible",
+          "reason": "棕色三隔间收纳盒整体清晰,隔间挡板可见"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "侧视中同一棕色三隔间盒,位置与frame1一致"
+        }
+      ],
+      "confusable_with": [],
+      "role": "destination"
+    },
+    {
+      "object_id": "obj_3",
+      "description": "桌面右侧平放的黑色扁长方形物体,表面纯黑、无可见书页边,易被误认为平放的书",
+      "confirmed": true,
+      "anchors": [
+        {
+          "frame": 1,
+          "box": [
+            795,
+            378,
+            999,
+            510
+          ]
+        },
+        {
+          "frame": 2,
+          "box": [
+            0,
+            380,
+            203,
+            512
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "occluded",
+          "reason": "腕视视野朝向杯子与收纳盒,该平放物不在画面内"
+        },
+        {
+          "frame": 1,
+          "visibility": "visible",
+          "reason": "桌面右侧纯黑扁长方形,平贴桌面"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "侧视左缘同一平放黑长方形,方位与frame1对应"
+        }
+      ],
+      "confusable_with": [
+        "obj_1"
+      ],
+      "role": "distractor"
+    },
+    {
+      "object_id": "obj_4",
+      "description": "sideview右下角平放黑色扁长方形薄片,无书页特征,易误认为平放的书;仅单视角可见,身份未确认",
+      "confirmed": false,
+      "anchors": [
+        {
+          "frame": 2,
+          "box": [
+            710,
+            795,
+            1000,
+            995
+          ]
+        }
+      ],
+      "view_observations": [
+        {
+          "frame": 0,
+          "visibility": "occluded",
+          "reason": "腕视视野仅覆盖杯、书与收纳盒区域,该物不在画面内"
+        },
+        {
+          "frame": 1,
+          "visibility": "occluded",
+          "reason": "应处agentview近景左下,该处被黑色灯架前景占据,无法区分确认"
+        },
+        {
+          "frame": 2,
+          "visibility": "visible",
+          "reason": "侧视右下角平放黑色扁长方形,与obj_3的左缘位置不同,为另一候选实物"
+        }
+      ],
+      "confusable_with": [
+        "obj_1",
+        "obj_3"
+      ],
+      "role": "uncertain"
+    }
+  ],
+  "inventory_calls": 2,
+  "merged_review_calls": 1,
+  "checker_initial_calls": 0,
+  "regions": {
+    "desk_caddy_1_back_contain_region": {
+      "destination_id": "desk_caddy_1_back_contain_region",
+      "confirmed": true,
+      "description": "收纳盒顶部靠机器人/墙壁一侧的敞口隔间(后隔间),非整个盒体",
+      "boundary": "盒体后内壁与内侧隔板围成的敞口,sideview中为左起第一个深隔间,agentview中为靠机械臂一侧隔间",
+      "anchors": [
+        {
+          "capture_id": "55aed95ab0d3ff7f/capture_000001",
+          "view": "sideview",
+          "box": [
+            390,
+            300,
+            500,
+            400
+          ]
+        },
+        {
+          "capture_id": "55aed95ab0d3ff7f/capture_000001",
+          "view": "agentview",
+          "box": [
+            350,
+            352,
+            480,
+            440
+          ]
+        }
+      ],
+      "reviewed_at": 0.5000000000000003,
+      "request_sha256": "6c8ba9ba677f557da9be657c0ac351fcc645350909b18f909f26cae7b7743a80",
+      "response_sha256": "27fb7c6bdc0e29687c8ffc0fd59212026b8f05747ada55c120a5f773b626706d"
+    }
+  },
+  "new_robot_actions": 0,
+  "source": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/capture.json",
+  "model": "qwen3.8-max"
+}

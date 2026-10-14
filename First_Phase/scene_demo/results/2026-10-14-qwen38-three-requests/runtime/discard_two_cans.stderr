@@ -1,0 +1,40 @@
+[scene-service 2026-10-13T18:00:35Z] worker started (model_path=/home/yhwang/fyp/xvla_native/model, run_root=/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/discard_two_cans/runs)
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[scene-service 2026-10-13T18:00:37Z] policy ready (n_action_steps=None)
+[scene-service 2026-10-13T18:02:20Z] worker task grounding crashed:
+Traceback (most recent call last):
+  File "/mnt/d/FYP/First_Phase/scene_demo/service.py", line 1370, in _worker_loop
+    work.result = work.fn()
+  File "/mnt/d/FYP/First_Phase/scene_demo/xvla_service.py", line 157, in prepare
+    inventory, image = inspect_scene(capture, user_request, directory)
+  File "/mnt/d/FYP/First_Phase/scene_demo/xvla_grounding.py", line 154, in inspect_scene
+    first_meta = client._request(ctx, paths, prompt)
+  File "/mnt/d/FYP/First_Phase/scene_demo/finish_v1/vision.py", line 812, in _request
+    raise RuntimeError("Qwen network failure") from None
+RuntimeError: Qwen network failure
+
+Traceback (most recent call last):
+  File "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/run_case.py", line 115, in <module>
+    raise SystemExit(main())
+  File "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/run_case.py", line 77, in main
+    bound = svc.bind_request_context(request_id, session_id, spec['request'])
+  File "/mnt/d/FYP/First_Phase/scene_demo/xvla_service.py", line 163, in bind_request_context
+    raise RuntimeError('preplanning_grounding_failed: ' + json.dumps(prepared))
+RuntimeError: preplanning_grounding_failed: {"ok": false, "reason": "internal_error", "detail": "Traceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/service.py\", line 1370, in _worker_loop\n    work.result = work.fn()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/xvla_service.py\", line 157, in prepare\n    inventory, image = inspect_scene(capture, user_request, directory)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/xvla_grounding.py\", line 154, in inspect_scene\n    first_meta = client._request(ctx, paths, prompt)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/vision.py\", line 812, in _request\n    raise RuntimeError(\"Qwen network failure\") from None\nRuntimeError: Qwen network failure\n"}
+Exception ignored in: <function MjRenderContext.__del__ at 0x77300cb69990>
+Traceback (most recent call last):
+  File "/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/robosuite/utils/binding_utils.py", line 199, in __del__
+  File "/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/robosuite/renderers/context/egl_context.py", line 150, in free
+  File "/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/OpenGL/error.py", line 230, in glCheckError
+OpenGL.raw.EGL._errors.EGLError: <exception str() failed>
+Exception ignored in: <function EGLGLContext.__del__ at 0x77300cb697e0>
+Traceback (most recent call last):
+  File "/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/robosuite/renderers/context/egl_context.py", line 155, in __del__
+  File "/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/robosuite/renderers/context/egl_context.py", line 150, in free
+  File "/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/OpenGL/error.py", line 230, in glCheckError
+OpenGL.raw.EGL._errors.EGLError: <exception str() failed>

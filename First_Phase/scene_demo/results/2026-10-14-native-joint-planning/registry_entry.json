@@ -1,0 +1,759 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-14",
+  "entries": [
+    {
+      "id": "20261014-native-joint-planning",
+      "title": "完整原生技能目录、两轮联合规划及碗抽屉在线测试",
+      "date": "2026-10-14",
+      "question_keys": [
+        "xvla-interactive-latency",
+        "xvla-native-complete-planning",
+        "xvla-drawer-retreat-block"
+      ],
+      "tags": [
+        "xvla",
+        "hermes",
+        "qwen3.8",
+        "native-only",
+        "latency",
+        "bowl_drawer",
+        "retreat-block"
+      ],
+      "conditions": [
+        "旧碗瓶三视图离线；一例正常交互在线bowl_drawer seed142/state0，完整xvla_bowl_drawer_close，VLA240步。",
+        "真实Hermes SDK单轮识别规划+独立Qwen3.8复核；无子agent/辅助器；原控制、退离、复位及5/5未改。"
+      ],
+      "findings": [
+        "所有目录/提交/恢复/worker限制完整原生技能；1464项软件测试、57子测试通过。",
+        "离线规划56.165秒，在线43.286秒（含加载准备约64.2秒）；已正确选择完整入抽屉关抽屉且报告瓶子不支持。",
+        "第228步原生任务首次成功，至240步及两步开爪确认后入抽屉和关闭同时为真；历史放置证据和当前视觉目的通过。",
+        "整链blocked：退离输入boxes为空，只尝试上抬4/6cm，均endpoint_hand_clear_fail；movement/home为0，未进入最终5/5验收。",
+        "执行377.75秒，4次视觉请求约312.8秒，其中2次证据引用协议修复；4次JSON均语法合法。"
+      ],
+      "limits": [
+        "一例不代表整体可靠性；本体成功不等于整链通过。",
+        "未改退离实现/阈值，未新加抓取辅助器，未自动重跑；需要单独核对审核证据到控制几何的时间/机位/坐标接口。",
+        "离线SDK审计和预算接入失败原始记录均保留；最终有效回放为v5。仅对碗瓶测得一分钟规划，不声称所有任务都低于一分钟。"
+      ],
+      "evidence": [
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/before/catalog.py",
+          "sha256": "418ada0866e7f86e7ef6b0aca6f8e0a78e0a94272e092cc1e52283eee4892d72"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/before/finish_v1/vision.py",
+          "sha256": "b5ac93ec8161190c30fb5046bc7928ad1755a2a71cb0dd20cf9e7cd2aa88c68d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/before/xvla_console.py",
+          "sha256": "9429b94784db96c3e1d7d7ced23361d7305ddd333f39f015129d45d699c556de"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/before/xvla_grounding.py",
+          "sha256": "dd858f13706f6b9f1ea6a3052ba4e6ba53e24925b80701eee07127fad2749edd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/before/xvla_service.py",
+          "sha256": "ae0d37ef2285defea7a3280f2f0a22e2756dd70483d7d20aa636d32baaa91638"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/before/xvla_subtask_review.py",
+          "sha256": "f3984af6b562a258ea06e721eb284f74fc0c6c1af0c57523f19b060d07547454"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle/capture.json",
+          "sha256": "3d693daf4f45d977eb590ceeb7cd049817113ee90942609a5066136340af1961"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle/error.txt",
+          "sha256": "f19ace7121caf48dfcaeb791980a40275b902034a108749f6ca8b0602e1fab25"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle/joint_prompt.txt",
+          "sha256": "74e27884ddb93d1aa405873359c9c9e003a99df66661abc4f38e33afea94d8d4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v2/capture.json",
+          "sha256": "3d693daf4f45d977eb590ceeb7cd049817113ee90942609a5066136340af1961"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v2/error.txt",
+          "sha256": "00cc9428be26f64dba2332736dba6b87e293ed9eafd40cead94d681ecef34daf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v2/hermes_input.json",
+          "sha256": "67d4494d97ae1ef873d5429f3155e583df44862db797ce6d64755c4c33c6d2c3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v2/hermes_result.json",
+          "sha256": "f43c7f6e5e091d1ba733ab2dd2347a1c6a5a5ed5a03b1fdf848ba43dc48abf45"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v2/joint_prompt.txt",
+          "sha256": "74e27884ddb93d1aa405873359c9c9e003a99df66661abc4f38e33afea94d8d4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v3/capture.json",
+          "sha256": "3d693daf4f45d977eb590ceeb7cd049817113ee90942609a5066136340af1961"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v3/error.txt",
+          "sha256": "00cc9428be26f64dba2332736dba6b87e293ed9eafd40cead94d681ecef34daf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v3/hermes_input.json",
+          "sha256": "67d4494d97ae1ef873d5429f3155e583df44862db797ce6d64755c4c33c6d2c3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v3/hermes_request.json",
+          "sha256": "ffb3f5c8abf5d4dd66f5fb04f3c74298a69a5783a9104988f5e068b6b259c89c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v3/hermes_result.json",
+          "sha256": "2cd39ddb4c330adc4790a758e460d472a6a0a2da68b0b6569bcddfdb3fa22ec7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v3/joint_prompt.txt",
+          "sha256": "74e27884ddb93d1aa405873359c9c9e003a99df66661abc4f38e33afea94d8d4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/capture.json",
+          "sha256": "3d693daf4f45d977eb590ceeb7cd049817113ee90942609a5066136340af1961"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/error.txt",
+          "sha256": "8e4fb644257af5f3e0aaf282134636b4ad2eb601fd4d3a93411cb844734b6bc5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/hermes_chunks.jsonl",
+          "sha256": "3d92c2a4a056a10212d9b0d889e2ac787646a1be4cdfd6ee48c72c07c4087cd6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/hermes_input.json",
+          "sha256": "67d4494d97ae1ef873d5429f3155e583df44862db797ce6d64755c4c33c6d2c3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/hermes_request.json",
+          "sha256": "ffb3f5c8abf5d4dd66f5fb04f3c74298a69a5783a9104988f5e068b6b259c89c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/hermes_response.json",
+          "sha256": "10f00797f5a8a472896f081905683ad3a9cb39cf39a7511ef94a1bf738c9c725"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/hermes_result.json",
+          "sha256": "93522455f3f815d38e14d8470b824906ad764807b1cd131ec1025c65bd9d6930"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/inventory_first.json",
+          "sha256": "7618cce72824a826601b7300f40e02837e40384d3f279ed227cb51a99123c9b8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/joint_prompt.txt",
+          "sha256": "74e27884ddb93d1aa405873359c9c9e003a99df66661abc4f38e33afea94d8d4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/selected_targets_review.json",
+          "sha256": "d44e6318344e39b5bd707cbef2ea7bfcd45e70e8baebd307cd87b21f8212f0dd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/selection_requests/call_01_request.json",
+          "sha256": "679080d9ba1b6d6c9d9328239a469a596ab8ea7b98287463711b56e7d112d2dd"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v4/selection_requests/call_01_response.json",
+          "sha256": "8473d910112e1e0bfda42717a767bfc7cfce6fc34b5470c9a33d4225cd2e05d1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/capture.json",
+          "sha256": "3d693daf4f45d977eb590ceeb7cd049817113ee90942609a5066136340af1961"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/hermes_chunks.jsonl",
+          "sha256": "5e963e22f2c8580f75dd661e73ef89afe9ab29e217f4ee32da8e39b0a20ec00e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/hermes_input.json",
+          "sha256": "67d4494d97ae1ef873d5429f3155e583df44862db797ce6d64755c4c33c6d2c3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/hermes_request.json",
+          "sha256": "ffb3f5c8abf5d4dd66f5fb04f3c74298a69a5783a9104988f5e068b6b259c89c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/hermes_response.json",
+          "sha256": "692f325e6315f409a1005a4027a00948dc51ab333243ea77faf2c0e61cea20f6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/hermes_result.json",
+          "sha256": "ee3b313c3a9930c57c347633cf404448e6777a42715d4d3e85f2a1c66e15b2c2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/inventory_confirmed.json",
+          "sha256": "78dfd477acc81bcf050e15d0c88cc2c85baac8b8651f22df05ab5800cf4ae6c0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/inventory_first.json",
+          "sha256": "56d17ebbe6ee6f40b8b87b1f6c545c683d4c2de7120180231790383019635d16"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/joint_draft.json",
+          "sha256": "68ede738a66941a1547a57e4baf2aa7d35d426b1f21bce38180609285967a071"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/joint_planning_timing.json",
+          "sha256": "558f3d7e5c60905827f34b10d21472fdb1c0918d460870915570ce9e2d3fc9a1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/joint_prompt.txt",
+          "sha256": "74e27884ddb93d1aa405873359c9c9e003a99df66661abc4f38e33afea94d8d4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/result.json",
+          "sha256": "a86352084fd71e10290c7dc5b254e57aa2c36344a574f092c890ce91073c0e4f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/selected_targets_review.json",
+          "sha256": "6a221c3b17e04633cfabc657037246e3f278d117a6c264539394a3946a4dcf34"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/selection_requests/call_01_request.json",
+          "sha256": "ce1ef3a90deb59ee74570aa5cebc00d58e8697d1ba27104d8c0722a9e903594a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_bottle_v5/selection_requests/call_01_response.json",
+          "sha256": "60916ea280cf000bb29678cf84c59d05706db16bf15bf382ee7253733da0e47f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_replay.stderr",
+          "sha256": "f19ace7121caf48dfcaeb791980a40275b902034a108749f6ca8b0602e1fab25"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_replay.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_replay_v2.stderr",
+          "sha256": "00cc9428be26f64dba2332736dba6b87e293ed9eafd40cead94d681ecef34daf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_replay_v2.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_replay_v3.stderr",
+          "sha256": "00cc9428be26f64dba2332736dba6b87e293ed9eafd40cead94d681ecef34daf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_replay_v3.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_replay_v4.stderr",
+          "sha256": "8e4fb644257af5f3e0aaf282134636b4ad2eb601fd4d3a93411cb844734b6bc5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_replay_v4.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_replay_v5.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/bowl_replay_v5.stdout",
+          "sha256": "6b00023636966876d356c113c8e24b96c9e17a42e2cbcf9edf20089ab9485c10"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/console_before_refresh.json",
+          "sha256": "08da05bda0e16c10d47c776d85b864743b80b4e5a912e1a7a2528c2887cdda35"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/final_ui/console_before_refresh.json",
+          "sha256": "b8cc9ece270bb8dc11fcfa2257fd8de472a08cbb8e8a7b1dc1b77d0feb7fc6ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/final_ui/ui_launch.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/final_ui/ui_launch.stdout",
+          "sha256": "cee1ec0bf8730cb6d082fbf58651c18bc8b1aa08fe58d7f815e8a6ee4d676626"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/final_ui/ui_refresh.json",
+          "sha256": "485492bb251ec61f7c03fd905b6d99789b9e91bc8e9cd88b30e0f07bf9e8436f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/format_replay/error.txt",
+          "sha256": "14dc83569bfc763ed4f7f8d38ce9c5025e6e32db93f4eb8447acf20e27a5cf14"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/format_replay.stderr",
+          "sha256": "f1abc98a3f010f12abd0306ac9cbf26d4ff9d3b26cd6c7a34be34180b2ba3c58"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/format_replay.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/format_replay_v2/call_01_request.json",
+          "sha256": "d3774c83758e3e1dcd69248bb0e8c628f81a367a6e3e36c2357362011c4b3a9c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/format_replay_v2/call_01_response.json",
+          "sha256": "c2a4a2a879117053e907949ffc0976f1662adea2d5dc9e4ac96deaf9b675fc8b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/format_replay_v2/result.json",
+          "sha256": "c884b0c55ade6a5f6fe860a0e4c875aaec6aa0158a3b48f3098055fdb4bff5e7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/format_replay_v2.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/format_replay_v2.stdout",
+          "sha256": "5692f6723c621173a609baf9b6a70b1b667bd1b9cec13f92294eca4f362eb712"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/offline_proposal.json",
+          "sha256": "4923f35b82c26fa35f4487187c69f5c1c97ae1ba53eb04b4a54da88da6b73832"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/offline_review.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/offline_review.stdout",
+          "sha256": "504f4cb4fc0785697bacadde259097cac6785d085daa982557a7f072027832f9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online.py",
+          "sha256": "0b4654a169a5e655782a1cc1fd62663f713fc0d03fc5ed05d61ebe3d6fc68b63"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_authorization.json",
+          "sha256": "2076085bd760b2edba31776f42f3f1e2dba175555a247fbbe224d271f2fa8430"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_draft_state.json",
+          "sha256": "93e07b0900bab679740cdfa25a276daf68db0d5ad638c76954d0f1bcf1ee886d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_execute.stdout",
+          "sha256": "1888dd3d6319fa60805cd73fd4b52e4c7972ce9f367553d3aacd7e0024ce901f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_final_state.json",
+          "sha256": "b8cc9ece270bb8dc11fcfa2257fd8de472a08cbb8e8a7b1dc1b77d0feb7fc6ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_latest.json",
+          "sha256": "b8cc9ece270bb8dc11fcfa2257fd8de472a08cbb8e8a7b1dc1b77d0feb7fc6ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_plan.stdout",
+          "sha256": "c2d238135b8893a563a010b73df402253c8f7b20a301559c4a4b312ed97b0b5a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_plan_resume.stdout",
+          "sha256": "445d94d30fc18988b50ac738cab5dd76eaacaf6e8e2580293930e91f887e62f6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_preparation_elapsed.json",
+          "sha256": "b8c448ac78399a2c66af548691c846d2b11b5328b025cbf77982b35c2d2cd085"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_proposal.json",
+          "sha256": "1997400ec2e5062da122a4bad5791466e4579e5bdb8e6182cbc9fb02cf1bd7e4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_review.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online_review.stdout",
+          "sha256": "b3178289e3d59e5ef3890a1783904ac2bfd8d5e5ac04463dc473273509eb8d83"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/protected_controls.json",
+          "sha256": "e50cbaefbc88df417a99c3e17c1afd2c72054e5a83965b7da4770febd53348f6"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/refresh.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/refresh.stdout",
+          "sha256": "a8192c9df7369247bf6fb994a9b6c0a36276c9a2c9afef24344214976b727c99"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/refresh_final.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/refresh_final.stdout",
+          "sha256": "bb431adfc26a316d439d54f427af64064bbc5aa3a10aeba97a3f2f4ba39b09ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/refresh_final_ui.py",
+          "sha256": "6f1d66c542ffcbb1576717bf8fb5d4f1503171aa24babab0836163c49e6f62af"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/refresh_idle_ui.py",
+          "sha256": "8784862559dc36e810d9d8870c283ac552fce41e7bd0ba2c65b636da4dc35fca"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/regression.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/regression.stdout",
+          "sha256": "49d885c602d40cb8d97041f758dcf1d330d099d4649e8b13c4218a8dbaf8c0b0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/regression_final.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/regression_final.stdout",
+          "sha256": "e3d676093831c0633c35734d855c2ee92e2f393f1727244917b3c1652667fc49"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/regression_fixed.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/regression_fixed.stdout",
+          "sha256": "9f34a7917b950f88b3faa0b3bff882c68a60e17b546dc6e935dcb32e593f7698"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/replay.py",
+          "sha256": "890a7052f4cf56439f8e9d2383d5d1472720a7f30e0ac5ad0991669e7fff3bf5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/software.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/software.stdout",
+          "sha256": "a82108bd49778942a7574f6776662514f127c8212fecc7f499cfc8b3c6b3acbf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/source_snapshot/catalog.py",
+          "sha256": "54b948db6d7f187c54b5d432a138d58ce9e5e78dba3e7eeeb7c014d0ac4a634d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/source_snapshot/service.py",
+          "sha256": "e55365717b81dae89ad61ed5b26ab5d763a4afa365d6a153ae006fad89c6657c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/source_snapshot/xvla_console.py",
+          "sha256": "2d1655cdfac6f67fd0891dfc4d0dafbbc0366b27c9cd0e69971d4bf8de9b8a9f"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/source_snapshot/xvla_grounding.py",
+          "sha256": "57d3175f448be0562df74cdc7da10b9be6b702ddb4f26e7c553d3d90e4522a9a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/source_snapshot/xvla_hermes_once.py",
+          "sha256": "ee01ef5884633c9089f6e6f07ff114b54cd0c7730959570aa3cbd696af3c7162"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/source_snapshot/xvla_planning.py",
+          "sha256": "f46566c78a2e6dceb8f57be4dd7656f3a041273f8ec8be62062f722a54fa9ac1"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/source_snapshot/xvla_service.py",
+          "sha256": "575236247bfe6e2d18b562eb8e19910ff7a4b888ad72328be8c15bdf7d8cfcf0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/source_snapshot/xvla_subtask_review.py",
+          "sha256": "ea0778afde157ac68507f1f85cfb05f4385ae1d63ea618418b9e73e0b1238cdf"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/summary.json",
+          "sha256": "0b3c786632e892c097a3f8dc2d756dae6c379afac629ac5931a847435728cdc7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/summary.md",
+          "sha256": "2a28e8074a05dcab7f6de78ba9035e665005e49bd8a68595e9b968dcc428180d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/ui_launch.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/ui_launch.stdout",
+          "sha256": "cee1ec0bf8730cb6d082fbf58651c18bc8b1aa08fe58d7f815e8a6ee4d676626"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/2026-10-14-native-joint-planning/ui_refresh.json",
+          "sha256": "dbac8f0ee3d8475d48096fef6065f7b8a82b27ea3e37a82458519ee3c8c8d973"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/20261014-190606-c376fb38/console_state.json",
+          "sha256": "3c7015f8089743940950df3f9cf2af2b9e126c9f6ee05c289765aacf5a1be690"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/20261014-190606-c376fb38/draft.json",
+          "sha256": "ca106575130898d957efb2142a9f548b1390c57728ee3d0832fd103508c1fa24"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/20261014-202034-53dfb001/console_state.json",
+          "sha256": "3129f5c6a8c6cfa7738473daec5f536342f15682d0ac3fe1952fc4069322f655"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/20261014-202034-53dfb001/draft.json",
+          "sha256": "bc0c13381186f1c2679e0e72068e024e2fe2ba234dcdeddd04863c42878cbcea"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/20261014-202034-53dfb001/planning_timing.json",
+          "sha256": "cf151a4bf719b7be95cc960cbeb066f7f427e344108a7bb452f5a2db7ed04fcc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/20261014-202034-53dfb001/run_setup.json",
+          "sha256": "4554b1dedb3ad799bae3994f468e176faa9aeeb9d1bacd232f8140b51156768e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/events.jsonl",
+          "sha256": "08c8bbb30047ca1017eec0da81375a65d2f2bf1919e116add05b55049e1593e9"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/checks.jsonl",
+          "sha256": "44b270858b9df86e9eecc58bdc7b7a7f4a0de2308f19bb05aa31caaf400faeae"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/model_requests/call_01_request.json",
+          "sha256": "7de6dbfa052cd2bc22d259991c5e45a413dfbb686c27446777fa858b5d7f0e4e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/model_requests/call_01_response.json",
+          "sha256": "367779d843f2f3bdd67d702ffc45e6c287c0827c19b8b7438cc40d0eba603380"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/model_requests/call_02_request.json",
+          "sha256": "9548b6d08ac7175ebb4783849c9aff7a116542deb81aff2f0bf1ec63d34568c5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/model_requests/call_02_response.json",
+          "sha256": "98b2d10b9090e263c8cf23f44477e8e884d43a7da8fa8e5361fddc33f4664b4c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/model_requests/call_03_request.json",
+          "sha256": "ed64964b3a86bdc90fefda9574df77a1fb96327253ec7f15dbd5f33c920863a4"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/model_requests/call_03_response.json",
+          "sha256": "3a78f9a6bb7cff4fe4c1fa584850cc815d3b93f86ddd75fcdd736e5f4fdb56e2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/model_requests/call_04_request.json",
+          "sha256": "66e30dcf7ef86ede25639354b2e3715e28e20858344e844da04a34bf01e33a5b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/model_requests/call_04_response.json",
+          "sha256": "1bd8349685f639e8701927af5c07ab36a98a910490143da9e25e661f5ce22b40"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/process_checks.jsonl",
+          "sha256": "2825f7bc0eba1fa36bb7bd70e82d1e0755579e7110a4280c76d4279308fb0e61"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/process_events.jsonl",
+          "sha256": "cc769679c4f5439f70b79055cc9b9a6fa3f9e7f4c71f43a482511cf5a2d53e0e"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000107_wrist.png",
+          "sha256": "b27a909cc3fe29b42171ab88891bf9849e1a8fc7adbf7ca961ad4e722d9c2cdc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000107_wrist_checker_agentview.png",
+          "sha256": "0d81c5c0f186f41e5ef105a7873b119999f4a912c5df99940abeabd92842097d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000107_wrist_checker_sideview.png",
+          "sha256": "a520e430083bdbc976f7cf1a1c32cc6af065b4cc9ca268f72b76b0a91665a856"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist.png",
+          "sha256": "3e97bebcbdb2a360ede0b65c64d01d6bd89fc270bf24867c068dc66b3edc9698"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist_checker_agentview.png",
+          "sha256": "ffeaa0a3181c710351963b397badd1f672e820947a8496b72f2ab35e0ab1f047"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist_checker_sideview.png",
+          "sha256": "05817f0a579dc5d0df03f16b10e8d944e6d869e939a7d76f839ccd9abbc05c85"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000113_wrist.png",
+          "sha256": "6d1900188a396c6267ce99dfbb5ef09e67b41f6c58bd37ac3077342ece78ff27"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000113_wrist_checker_agentview.png",
+          "sha256": "9f8d9f60774a9b109c1ae015f8c1a69d353e941e20b9b90b28f5b0010e9dec66"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000113_wrist_checker_sideview.png",
+          "sha256": "04906c8d5d50b09d98f5c791df1f6626c89f1c7116831e1e7504d02f85f66aeb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000116_wrist.png",
+          "sha256": "8439a88e699cbc63b18e1436c7a550479893c347560000c369d899c03e268ce5"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000116_wrist_checker_agentview.png",
+          "sha256": "c6dcfbb1730af0ce277d2c0bb90ea3674374847bd37ab88be4f9bdad7bc3dc0d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000116_wrist_checker_sideview.png",
+          "sha256": "47dcd39a13467d52590d4136a14d4d6e8cac16a090387da7b928306eed67d88c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000149_wrist.png",
+          "sha256": "3ec46646b5a246a97de0c8b6bcff29896444fbe8ed4d456ea7709f25e6231421"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000149_wrist_checker_agentview.png",
+          "sha256": "043c01ba35775c3aa67f08ca8da987fce0a170e5705dfc12a4e508e769cbddeb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000149_wrist_checker_sideview.png",
+          "sha256": "d48e496ba41c3af6213d768184cd19b793e05e38b7f8b5ed8ad9a125456fde2a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000152_wrist.png",
+          "sha256": "a63832b58806b8fff2f2d97b097d774018f6733b8cb4554619906784fc5d3389"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000152_wrist_checker_agentview.png",
+          "sha256": "77cbb93bc4596bc116a84d980c563d8465579d1227829b8930292d01919270bb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000152_wrist_checker_sideview.png",
+          "sha256": "c7b44356a979949fc012808736d42654f977cbad848c71a426e2907263803d64"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/subtask_evidence/combined_grounding.jsonl",
+          "sha256": "3aa45ce8fdd2555853d02d049b2630987e2107e0a09bb1c59b1c9698a249be55"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/subtask_evidence/events.jsonl",
+          "sha256": "6721cb21f2035bff532d0a9ab7fb02a61c9f811c3c64885b5f0d196ca0743969"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/subtask_evidence/observations.jsonl",
+          "sha256": "16a8a8629d4d433160ceb8929fe6a52fb34d148a0523912826b31b836eaf50ea"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/subtask_evidence/planning_bindings.jsonl",
+          "sha256": "b375fd4ae9e6485d37cb930f712a121996bce14662cf9ba58785d235de61ba8c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/subtask_evidence/reviews.jsonl",
+          "sha256": "30dcac3dbbfc91cf2f9b51dca5001e0b8b209d4fa912caeecd769bb81ff869e8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish_actions.jsonl",
+          "sha256": "d0c1e98d7d9ea69eb8d3dfb0f4d25bce5572446c41aff68b1bf6c005d18cca66"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/independent_finish.jsonl",
+          "sha256": "441950039fa43cbd88cea9b37c70b527eec998175fc92785e77382675b485441"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/last.png",
+          "sha256": "751aac773d09f59c3b4f1716893add9fe6c114a85bc7261967f8bf03e5559aa0"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/pilot_result.json",
+          "sha256": "0e284d2d85ee5374221d29bda6595b04e26fda9c3182ac1625438cdf6c8468e7"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/reused_pre_execution_review.json",
+          "sha256": "7859d6b737ffd5a76f3f08c3b5530c00448209f0ab5ed14f0a414e7653cabe83"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/rollout.mp4",
+          "sha256": "2f41acff432f588fd1c7154d188eb2dcb122dd1dd07e8ad12509b4d08f10b6ad"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000001_agentview.json",
+          "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000002_wrist.json",
+          "sha256": "330c3a80c663f296895c888908f4c7c00f652e3b5e28de7082bdb588c4cda750"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000002_wrist.png",
+          "sha256": "8f901dff03c994dda17eb4012e715f452a5832299d317cb5d36e6e087b409257"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000002_wrist_checker_agentview.png",
+          "sha256": "5cc2b2af91494cb92d9b6f07e8f56b484654ac88e0cd8880398d1dceaecaf0cb"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000002_wrist_checker_sideview.png",
+          "sha256": "44a540009036103c28d36f26f3a08ecb4d0e69e75725f0f853058eb96f9d302b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/capture.json",
+          "sha256": "b24d54a5065f158c6fa5a7a37d613efcc0f95651511e58806723a7deae9cdee2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/hermes_chunks.jsonl",
+          "sha256": "5fa5c3b77bd740cf4f1ed007e6f2d19e6f120a1cfad7cc2ba42924f6c7657680"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/hermes_input.json",
+          "sha256": "67d4494d97ae1ef873d5429f3155e583df44862db797ce6d64755c4c33c6d2c3"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/hermes_request.json",
+          "sha256": "ffb3f5c8abf5d4dd66f5fb04f3c74298a69a5783a9104988f5e068b6b259c89c"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/hermes_response.json",
+          "sha256": "b7a275d442f59a78b369c51fbb820abbd2998bf87b132a0b7bc28bd628b898f8"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/hermes_result.json",
+          "sha256": "426852971382777b361f66709589fa662302b788e0f8b7de8d63eebc6370162d"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/inventory_confirmed.json",
+          "sha256": "3d862e8c1d0897de0285928f911e41961b318a53a7dca9fdb6e72f1f79d8a17b"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/inventory_first.json",
+          "sha256": "de60c898d677ce6e55fef50555f7481124cfc3c6387efec9bdd0c2189525ab19"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/joint_draft.json",
+          "sha256": "bc0c13381186f1c2679e0e72068e024e2fe2ba234dcdeddd04863c42878cbcea"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/joint_planning_timing.json",
+          "sha256": "cf151a4bf719b7be95cc960cbeb066f7f427e344108a7bb452f5a2db7ed04fcc"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/selected_targets_review.json",
+          "sha256": "9421d73f49a1bada70adb83a39ea5c1e1d20a4dc2d287957208101f60d57ddf2"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/selection_requests/call_01_request.json",
+          "sha256": "5067f7a16af9fee4ec7b229e153650ffecb3883eb5a1eded163d53ea25449f1a"
+        },
+        {
+          "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/selection_requests/call_01_response.json",
+          "sha256": "a25e1f2c493c0a08a65ec7d99433f3d89273745517d469cbb75dc9cfb53facf2"
+        }
+      ]
+    }
+  ]
+}

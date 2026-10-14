@@ -1,0 +1,20 @@
+{
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--cd",
+    "/mnt/d/FYP",
+    "--exec",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+    "-"
+  ],
+  "stdin_source": "import json, time, urllib.request\nfrom pathlib import Path\npid = 423\ndeadline = time.monotonic() + 115\nopener = urllib.request.build_opener(urllib.request.ProxyHandler({}))\nwhile time.monotonic() < deadline:\n    assert Path('/proc',str(pid)).exists(), 'server Linux process exited'\n    try:\n        response = opener.open('http://127.0.0.1:8794/openapi.json', timeout=2)\n    except (OSError, urllib.error.URLError) as exc:\n        print(repr(exc), flush=True)\n        time.sleep(0.5)\n        continue\n    body = response.read()\n    Path('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark', 'server_openapi.json').write_bytes(body)\n    schema = json.loads(body)\n    assert 'post' in schema.get('paths', {}).get('/act', {}), 'POST /act absent'\n    print(json.dumps({'ready':True,'method':'GET','url':response.url,'status':response.status,'post_act_present':True,'server_linux_pid':pid,'inference_probe_calls':0}), flush=True)\n    break\nelse:\n    raise TimeoutError('GET /openapi.json not ready within readiness budget')\n",
+  "started_utc": "2026-10-12T06:35:46.124249+00:00",
+  "finished_utc": "2026-10-12T06:35:57.319172+00:00",
+  "exit_code": 0,
+  "stdout": "URLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\nURLError(ConnectionRefusedError(111, 'Connection refused'))\n{\"ready\": true, \"method\": \"GET\", \"url\": \"http://127.0.0.1:8794/openapi.json\", \"status\": 200, \"post_act_present\": true, \"server_linux_pid\": 423, \"inference_probe_calls\": 0}\n",
+  "stderr": ""
+}

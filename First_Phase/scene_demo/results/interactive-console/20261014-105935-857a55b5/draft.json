@@ -1,0 +1,26 @@
+{
+  "request_id": "console-fb54c5c61bcc7a69ca3a3a05",
+  "session_id": "274c55f358ff4a91a887359c392d7ad4",
+  "scene_version": 0,
+  "decision": "execute",
+  "capability_ids": [
+    "xvla_book_caddy"
+  ],
+  "rationale": "用户动作词为「整理一下，放好」，属收纳意图。公开 storage_policy 仅规定 black_book_1 → desk_caddy_1_back_contain_region，故可执行部分为把立放黑书(obj_2)放入红棕收纳盒(obj_3)的后隔间；该范围的动作、物体、目的地与顺序完全匹配原生长程技能 xvla_book_caddy（pick up the book and place it in the back compartment of the caddy），故优先调用该 native 技能而非 atomic candidate。杯子(obj_1)在公开 storage_policy 中无目的地、能力库中也无杯子相关能力，该部分不执行、不臆造目的地。身份核对：obj_2 为带白页边的立放黑书（非平贴黑板 obj_4），obj_3 为三隔间收纳盒。",
+  "request_scope": {
+    "coverage": "partial",
+    "executable_outcomes": [
+      "黑书 obj_2 被拿起并放入收纳盒 obj_3 的后隔间 desk_caddy_1_back_contain_region（对应公开 storage_policy 中 black_book_1 的目的地）"
+    ],
+    "unmet_outcomes": [
+      "杯子 obj_1 的整理/放好：公开 storage_policy 未给杯子指定目的地，能力库也没有任何杯子相关能力，本场景无法执行该部分"
+    ],
+    "reason": "原需求含书与杯子两个收纳子目标；书的目标与公开 storage_policy 及 native 技能 xvla_book_caddy 完全匹配，可执行；杯子缺少公开目的地与对应能力，属能力缺口，故为 partial 而非 full。"
+  },
+  "target_bindings": {
+    "black_book_1": "obj_2",
+    "desk_caddy_1_back_contain_region": "obj_3"
+  },
+  "audit": false,
+  "budget_per_subgoal": 900
+}

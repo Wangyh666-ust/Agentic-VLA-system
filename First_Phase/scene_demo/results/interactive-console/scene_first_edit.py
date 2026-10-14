@@ -1,0 +1,13 @@
+from pathlib import Path
+p=Path('First_Phase/scene_demo/xvla_console.html')
+s=p.read_text(encoding='utf-8')
+s=s.replace("$('request').disabled=$('scene').disabled;$('plan').disabled=busy||!live||data.stage!=='ready';", "$('request').disabled=busy||!live||data.stage!=='ready';$('plan').disabled=busy||!live||data.stage!=='ready'||!$('request').value.trim();")
+s=s.replace("fs.length+' 个实际传入视角'", "fs.length+(data.preview_only?' 个场景预览视角':' 个实际传入视角')")
+s=s.replace("data.request||'看清目标，再开始行动。'", "data.request||(live?'先看场景，再告诉我任务。':'看清目标，再开始行动。')")
+s=s.replace("{scene:$('scene').value,request:$('request').value}", "{scene:$('scene').value}")
+s=s.replace("$('plan').onclick=()=>action('/api/plan');", "$('plan').onclick=()=>action('/api/plan',{request_id:data.request_id,request:$('request').value});$('request').oninput=buttons;")
+s=s.replace("$('scene').onchange=()=>{const e=examples.find(e=>e.scene===$('scene').value);if(e)$('request').value=e.request;};", "$('scene').onchange=()=>{};")
+p.write_text(s,encoding='utf-8')
+p=Path('First_Phase/scene_demo/XVLA_CONSOLE.md')
+s=p.read_text(encoding='utf-8').replace('选择场景、填写任务，点击“载入新场景”。','只选择场景，点击“载入新场景”，无需填写任务。').replace('初态固定 seed 142、state 0。','初态固定 seed 142、state 0。载入完成后立即拍摄并展示当前三视图，此步骤不绑定任务、不调用 Qwen 或 Hermes。').replace('点击“识别三视图并规划”。','看过三视图后，在图片下方填写自己的任务，再点击“识别三视图并规划”。')
+p.write_text(s,encoding='utf-8')

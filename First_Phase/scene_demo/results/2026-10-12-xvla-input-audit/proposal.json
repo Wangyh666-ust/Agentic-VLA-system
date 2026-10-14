@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "20261012-xvla-input-audit",
+  "intent": "analyze_existing",
+  "question_key": "xvla-checker-view",
+  "purpose": "核对已有33请求实际图片/提示词/同步输入，不修复、不试验",
+  "prior_evidence": [
+    "20261012-xvla-persistent-pilot",
+    "20261011-final-input-audit",
+    "20261011-neutral-encoder-checker"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261012-xvla-persistent-pilot",
+      "disposition": "reuse",
+      "reason": "复用保存的原请求输入、同步编码器及历史序列化截获方法，仅核查来源。"
+    },
+    {
+      "experiment_id": "20261011-final-input-audit",
+      "disposition": "reuse",
+      "reason": "复用保存的原请求输入、同步编码器及历史序列化截获方法，仅核查来源。"
+    },
+    {
+      "experiment_id": "20261011-neutral-encoder-checker",
+      "disposition": "reuse",
+      "reason": "复用保存的原请求输入、同步编码器及历史序列化截获方法，仅核查来源。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "真实源序列化mock仅截body，原bodySHA比较。",
+    "PNG实际bytes SHA/labels/time和encoder与native/control记录匹配。",
+    "全部原prompt保存，字段风险按实际JSONpayload判断，未知保留null。"
+  ],
+  "local_evidence": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/summary.json",
+      "sha256": "2d10b9c79dd343125ce93322cbf767b0a4a89929b9c1403c2628a1e2bb3608f3"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/result.json",
+      "sha256": "e51130b85e6a154cef3d074c2469cc53cb56a9b8c33a455bc78c5714e633c83b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/source_manifest.json",
+      "sha256": "96569749ca252044d357e6246d37c74715293d2f45f2aaa44b2b6b21ac74fdc8"
+    }
+  ]
+}

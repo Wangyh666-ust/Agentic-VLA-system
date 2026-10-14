@@ -1,0 +1,189 @@
+{
+  "model": {
+    "path": "/home/yhwang/fyp/xvla_native/model/model.safetensors",
+    "bytes": 3519068172,
+    "sha256": "260cc58869125b826e93bcaa60bca3ea37bcc7aaf893d368a991ca14fde9f0c8"
+  },
+  "python": {
+    "model": "/home/yhwang/fyp/xvla_native/venv/bin/python",
+    "sim": "/home/yhwang/fyp/xvla_native/sim_venv/bin/python"
+  },
+  "credentials_source_exists": true,
+  "git": {
+    "upstream": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/yhwang/fyp/xvla_native/upstream",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "6bc2513f5f1cbec715cc668b414392a6cae5c671\n",
+      "stderr": ""
+    },
+    "LIBERO": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/yhwang/fyp/xvla_native/LIBERO",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "8f1084e3132a39270c3a13ebe37270a43ece2a01\n",
+      "stderr": ""
+    }
+  },
+  "gpu": {
+    "argv": [
+      "nvidia-smi",
+      "--query-gpu=name,memory.total,memory.used,memory.free",
+      "--format=csv,noheader,nounits"
+    ],
+    "returncode": 0,
+    "stdout": "NVIDIA GeForce RTX 5070 Laptop GPU, 8151, 1461, 6431\n",
+    "stderr": ""
+  },
+  "ports": [
+    {
+      "port": 8769,
+      "ss": {
+        "argv": [
+          "ss",
+          "-H",
+          "-ltnp",
+          "sport = :8769"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "listening": false,
+      "processes": []
+    },
+    {
+      "port": 8794,
+      "ss": {
+        "argv": [
+          "ss",
+          "-H",
+          "-ltnp",
+          "sport = :8794"
+        ],
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "listening": false,
+      "processes": []
+    }
+  ],
+  "external_sources": [
+    {
+      "source": "/home/yhwang/fyp/xvla_native/upstream/deploy.py",
+      "snapshot": "First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/source_snapshot/external/deploy.py",
+      "sha256": "e2f40c54dc09d01a5942e43b0680d160861cf40f7d9dfc08e0e2bdad1350cef6",
+      "snapshot_sha256": "e2f40c54dc09d01a5942e43b0680d160861cf40f7d9dfc08e0e2bdad1350cef6"
+    },
+    {
+      "source": "/home/yhwang/fyp/xvla_native/upstream/evaluation/libero/libero_client.py",
+      "snapshot": "First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/source_snapshot/external/libero_client.py",
+      "sha256": "ebfdd89a4afc79b8b01921ded6c95091786b34937e5dbe7601d3a384607d6f24",
+      "snapshot_sha256": "ebfdd89a4afc79b8b01921ded6c95091786b34937e5dbe7601d3a384607d6f24"
+    },
+    {
+      "source": "/home/yhwang/fyp/xvla_native/LIBERO/libero/libero/bddl_files/libero_10/KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it.bddl",
+      "snapshot": "First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/source_snapshot/external/KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it.bddl",
+      "sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+      "snapshot_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420"
+    },
+    {
+      "source": "/home/yhwang/fyp/xvla_native/LIBERO/libero/libero/bddl_files/libero_10/LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket.bddl",
+      "snapshot": "First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/source_snapshot/external/LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket.bddl",
+      "sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+      "snapshot_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618"
+    }
+  ],
+  "repo_sources": [
+    "First_Phase/scene_demo/xvla_service.py",
+    "First_Phase/scene_demo/xvla_backend.py",
+    "First_Phase/scene_demo/xvla_pilot.py",
+    "First_Phase/scene_demo/xvla_skills.py",
+    "First_Phase/scene_demo/xvla_finish.py",
+    "First_Phase/scene_demo/xvla_process_evidence.py",
+    "First_Phase/scene_demo/xvla_monitor.py",
+    "First_Phase/scene_demo/service.py",
+    "First_Phase/scene_demo/run_agent.py",
+    "First_Phase/scene_demo/mcp_server.py",
+    "First_Phase/scene_demo/setup_profile.py",
+    "First_Phase/scene_demo/joint_home.py",
+    "First_Phase/scene_demo/safe_exit.py",
+    "First_Phase/scene_demo/safe_exit_contacts.py",
+    "First_Phase/scene_demo/placement_completion.py",
+    "First_Phase/scene_demo/catalog.py",
+    "First_Phase/scene_demo/finish_v1/__init__.py",
+    "First_Phase/scene_demo/finish_v1/archive_simple_pilot.py",
+    "First_Phase/scene_demo/finish_v1/assisted_combo_pilot.py",
+    "First_Phase/scene_demo/finish_v1/calibrated_grasp.py",
+    "First_Phase/scene_demo/finish_v1/combo_pilot.py",
+    "First_Phase/scene_demo/finish_v1/container_budget_pilot.py",
+    "First_Phase/scene_demo/finish_v1/container_pilot.py",
+    "First_Phase/scene_demo/finish_v1/container_view_pilot.py",
+    "First_Phase/scene_demo/finish_v1/control.py",
+    "First_Phase/scene_demo/finish_v1/feedback_combo_pilot.py",
+    "First_Phase/scene_demo/finish_v1/feedback_retreat.py",
+    "First_Phase/scene_demo/finish_v1/geometry.py",
+    "First_Phase/scene_demo/finish_v1/handoff_pilot.py",
+    "First_Phase/scene_demo/finish_v1/neutral_combo_pilot.py",
+    "First_Phase/scene_demo/finish_v1/online_combo_pilot.py",
+    "First_Phase/scene_demo/finish_v1/pilot.py",
+    "First_Phase/scene_demo/finish_v1/prepare_goal_pilot.py",
+    "First_Phase/scene_demo/finish_v1/prepare_simple_pilot.py",
+    "First_Phase/scene_demo/finish_v1/refresh_simple_pilot.py",
+    "First_Phase/scene_demo/finish_v1/register_goal_pilot.py",
+    "First_Phase/scene_demo/finish_v1/register_simple_pilot.py",
+    "First_Phase/scene_demo/finish_v1/relation_images.py",
+    "First_Phase/scene_demo/finish_v1/report_assisted_combos.py",
+    "First_Phase/scene_demo/finish_v1/report_combos.py",
+    "First_Phase/scene_demo/finish_v1/report_goal_pilot.py",
+    "First_Phase/scene_demo/finish_v1/report_online_combos.py",
+    "First_Phase/scene_demo/finish_v1/report_simple_pilot.py",
+    "First_Phase/scene_demo/finish_v1/run_simple_case.py",
+    "First_Phase/scene_demo/finish_v1/runtime.py",
+    "First_Phase/scene_demo/finish_v1/sensors.py",
+    "First_Phase/scene_demo/finish_v1/simple_checker.py",
+    "First_Phase/scene_demo/finish_v1/stove_candidate_start_pilot.py",
+    "First_Phase/scene_demo/finish_v1/stove_exit_repair_pilot.py",
+    "First_Phase/scene_demo/finish_v1/takeover_repair_pilot.py",
+    "First_Phase/scene_demo/finish_v1/two_view_pilot.py",
+    "First_Phase/scene_demo/finish_v1/verify_home_primary.py",
+    "First_Phase/scene_demo/finish_v1/vision.py",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_09/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_09/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_08/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_08/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_07/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_07/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_00/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_00/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_01/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_01/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_02/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_02/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_03/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_03/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_04/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_04/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_05/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_05/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_06/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_06/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_07/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_07/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_08/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_08/episode_0/attempt_001/initial_audit.json",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_09/episode_0/attempt_001/initial_state.npy",
+    "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_09/episode_0/attempt_001/initial_audit.json"
+  ]
+}

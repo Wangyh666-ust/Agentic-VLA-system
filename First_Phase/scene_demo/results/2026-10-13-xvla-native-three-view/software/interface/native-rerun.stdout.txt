@@ -1,0 +1,120 @@
+...FFFF......................................................            [100%]
+=================================== FAILURES ===================================
+_______________ test_catalog_backend_and_bddl[xvla_basket_both] ________________
+
+identifier = 'xvla_basket_both'
+
+    @pytest.mark.parametrize('identifier', list(NATIVE_LONG_SKILLS))
+    def test_catalog_backend_and_bddl(identifier):
+        skill = NATIVE_LONG_SKILLS[identifier]
+        scene = skill['scene_ids'][0]
+        assert identifier not in [c['capability_id'] for c in catalog.scene_capabilities(scene)]
+        assert identifier in [c['capability_id'] for c in catalog.scene_capabilities(scene, backend='xvla')]
+        assert service.validate_capability_list(scene, [identifier], False)['reason'] == 'unsupported_backend'
+        assert service.validate_capability_list(scene, [identifier], False, backend='xvla') is None
+        assert xvla_backend.REFERENCE_SLOTS[identifier] == ('libero_10', skill['native_task']['task_id'])
+        root = Path('/home/yhwang/fyp/xvla_native/LIBERO/libero/libero/bddl_files/libero_10')
+        files = list(root.glob('*' + skill['instruction'].replace(' ', '_') + '.bddl'))
+        assert len(files) == 1
+        content = files[0].read_text()
+        language = re.search(r'\(:language\s+(.*?)\)', content, re.S).group(1)
+        assert ' '.join(language.split()) == skill['instruction']
+        goal = content.split('(:goal', 1)[1]
+        actual = re.findall(r'\((in|on|close)\s+([^()]+)\)', goal)
+>       assert [[predicate] + args.split() for predicate, args in actual] == skill['goals']
+E       AssertionError: assert [] == [['in', 'alph...tain_region']]
+E         
+E         Right contains 2 more items, first extra item: ['in', 'alphabet_soup_1', 'basket_1_contain_region']
+E         Use -v to get more diff
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:47: AssertionError
+________________ test_catalog_backend_and_bddl[xvla_mugs_both] _________________
+
+identifier = 'xvla_mugs_both'
+
+    @pytest.mark.parametrize('identifier', list(NATIVE_LONG_SKILLS))
+    def test_catalog_backend_and_bddl(identifier):
+        skill = NATIVE_LONG_SKILLS[identifier]
+        scene = skill['scene_ids'][0]
+        assert identifier not in [c['capability_id'] for c in catalog.scene_capabilities(scene)]
+        assert identifier in [c['capability_id'] for c in catalog.scene_capabilities(scene, backend='xvla')]
+        assert service.validate_capability_list(scene, [identifier], False)['reason'] == 'unsupported_backend'
+        assert service.validate_capability_list(scene, [identifier], False, backend='xvla') is None
+        assert xvla_backend.REFERENCE_SLOTS[identifier] == ('libero_10', skill['native_task']['task_id'])
+        root = Path('/home/yhwang/fyp/xvla_native/LIBERO/libero/libero/bddl_files/libero_10')
+        files = list(root.glob('*' + skill['instruction'].replace(' ', '_') + '.bddl'))
+        assert len(files) == 1
+        content = files[0].read_text()
+        language = re.search(r'\(:language\s+(.*?)\)', content, re.S).group(1)
+        assert ' '.join(language.split()) == skill['instruction']
+        goal = content.split('(:goal', 1)[1]
+        actual = re.findall(r'\((in|on|close)\s+([^()]+)\)', goal)
+>       assert [[predicate] + args.split() for predicate, args in actual] == skill['goals']
+E       AssertionError: assert [] == [['on', 'porc...', 'plate_2']]
+E         
+E         Right contains 2 more items, first extra item: ['on', 'porcelain_mug_1', 'plate_1']
+E         Use -v to get more diff
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:47: AssertionError
+__________ test_catalog_backend_and_bddl[xvla_microwave_place_close] ___________
+
+identifier = 'xvla_microwave_place_close'
+
+    @pytest.mark.parametrize('identifier', list(NATIVE_LONG_SKILLS))
+    def test_catalog_backend_and_bddl(identifier):
+        skill = NATIVE_LONG_SKILLS[identifier]
+        scene = skill['scene_ids'][0]
+        assert identifier not in [c['capability_id'] for c in catalog.scene_capabilities(scene)]
+        assert identifier in [c['capability_id'] for c in catalog.scene_capabilities(scene, backend='xvla')]
+        assert service.validate_capability_list(scene, [identifier], False)['reason'] == 'unsupported_backend'
+        assert service.validate_capability_list(scene, [identifier], False, backend='xvla') is None
+        assert xvla_backend.REFERENCE_SLOTS[identifier] == ('libero_10', skill['native_task']['task_id'])
+        root = Path('/home/yhwang/fyp/xvla_native/LIBERO/libero/libero/bddl_files/libero_10')
+        files = list(root.glob('*' + skill['instruction'].replace(' ', '_') + '.bddl'))
+        assert len(files) == 1
+        content = files[0].read_text()
+        language = re.search(r'\(:language\s+(.*?)\)', content, re.S).group(1)
+        assert ' '.join(language.split()) == skill['instruction']
+        goal = content.split('(:goal', 1)[1]
+        actual = re.findall(r'\((in|on|close)\s+([^()]+)\)', goal)
+>       assert [[predicate] + args.split() for predicate, args in actual] == skill['goals']
+E       AssertionError: assert [] == [['in', 'whit...microwave_1']]
+E         
+E         Right contains 2 more items, first extra item: ['in', 'white_yellow_mug_1', 'microwave_1_heating_region']
+E         Use -v to get more diff
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:47: AssertionError
+________________________ test_public_and_route_snapshot ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_public_and_route_snapshot0')
+
+    def test_public_and_route_snapshot(tmp_path):
+        record = service.SessionRecord('s', 'basket_two', catalog.SCENES['basket_two'], 0, 0, tmp_path)
+        assert record.public()['capability_backend'] == 'smolvla'
+        assert 'xvla_basket_both' not in record.capability_ids()
+        record.capability_backend = 'xvla'
+        assert 'xvla_basket_both' in record.capability_ids()
+        route = route_capabilities('basket_two', ['soup_to_basket', 'sauce_to_basket'])
+>       plan = service.PlanRecord('r', 's', {'decision':'execute', 'capability_ids':route['executed_capability_ids'], '_xvla_native_route':route})
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.service.PlanRecord object at 0x7e106965ce50>
+request_id = 'r', session_id = 's'
+payload = {'decision': 'execute', 'capability_ids': ['xvla_basket_both'], '_xvla_native_route': {'requested_capability_ids': ['s...bility_id': 'xvla_basket_both', 'component_capability_ids': ['soup_to_basket', 'sauce_to_basket'], 'start_index': 0}]}}
+
+    def __init__(self, request_id: str, session_id: str, payload: dict[str, Any]) -> None:
+        self.request_id = request_id
+        self.session_id = session_id
+        if "_xvla_native_route" in payload:
+>           self.native_skill_route = copy.deepcopy(payload["_xvla_native_route"])
+E           NameError: name 'copy' is not defined
+
+First_Phase/scene_demo/service.py:982: NameError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_catalog_backend_and_bddl[xvla_basket_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_catalog_backend_and_bddl[xvla_mugs_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_catalog_backend_and_bddl[xvla_microwave_place_close]
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_public_and_route_snapshot
+4 failed, 57 passed in 1.96s

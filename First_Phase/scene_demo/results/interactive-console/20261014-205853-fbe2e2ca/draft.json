@@ -1,0 +1,27 @@
+{
+  "request_id": "console-211cb13f60644bc2dd2e20e0",
+  "session_id": "60008460615c4d21ac51f7e153c3fdea",
+  "scene_version": 0,
+  "decision": "execute",
+  "capability_ids": [
+    "xvla_bowl_drawer_close"
+  ],
+  "rationale": "用户要求收拾桌面并将碗和瓶子归位。当前技能库仅支持将黑碗放入柜子底层抽屉并关闭抽屉（xvla_bowl_drawer_close），不支持瓶子归位操作。因此选择执行碗的完整收纳技能，作为部分推进原需求的准备步骤。",
+  "request_scope": {
+    "coverage": "partial",
+    "executable_outcomes": [
+      "将碗放入柜子底层抽屉",
+      "关闭柜子底层抽屉"
+    ],
+    "unmet_outcomes": [
+      "瓶子归位"
+    ],
+    "reason": "当前场景无瓶子归位技能，仅能执行碗的完整收纳。瓶子仍需留在桌面或等待后续能力支持。"
+  },
+  "target_bindings": {
+    "akita_black_bowl_1": "obj_1",
+    "white_cabinet_1_bottom_region": "obj_3"
+  },
+  "audit": false,
+  "budget_per_subgoal": 900
+}

@@ -1,0 +1,126 @@
+{
+  "request_id": "xvla-microwave_mug",
+  "session_id": "1b637b051d5a40ac882fcafe0dc1804b",
+  "request": "先把黄白杯放进微波炉，再关闭微波炉门。",
+  "run_ok": true,
+  "chain_ok": false,
+  "plan_success": null,
+  "task_success": null,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-microwave_mug",
+    "session_id": "1b637b051d5a40ac882fcafe0dc1804b",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_microwave_place_close"
+    ],
+    "original_capability_ids": [
+      "xvla_microwave_place_close"
+    ],
+    "rationale": "用户要求‘先把黄白杯放进微波炉，再关闭微波炉门’，与 native 能力 xvla_microwave_place_close 的 goals 完全匹配，故直接执行该 long-horizon 能力。",
+    "job_ids": [
+      "b844a1f4a7b04e62944cfd3c4eb303a5"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "visual_unknown",
+    "repair_history": [],
+    "scene_version": 1,
+    "native_skill_route": {
+      "requested_capability_ids": [
+        "xvla_microwave_place_close"
+      ],
+      "executed_capability_ids": [
+        "xvla_microwave_place_close"
+      ],
+      "replacements": []
+    }
+  },
+  "jobs": [
+    {
+      "job_id": "b844a1f4a7b04e62944cfd3c4eb303a5",
+      "request_id": "xvla-microwave_mug",
+      "session_id": "1b637b051d5a40ac882fcafe0dc1804b",
+      "capability_id": "xvla_microwave_place_close",
+      "state": "completed",
+      "steps": 900,
+      "total_steps": 905,
+      "success": false,
+      "ended_reason": "visual_unknown",
+      "error": null,
+      "instruction": "put the yellow and white mug in the microwave and close it",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "a65c520dda99aed635e861a5e7fde855fedd2cffa117031dbdf3f0a5a3a0078f",
+      "state_after_sha": "a79aa5dd85d5264ca7f60933c73428bee9e26bdf9211c571024f2c3780b39090",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 8,
+        "prechecks": 6,
+        "helper_counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "last_decision": {
+          "state": "unknown",
+          "reason": "subtask purpose unknown",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "visual_unknown",
+          "checks": 6
+        },
+        "independent_streak": 0,
+        "current_view_calls": 6,
+        "release_evidence_calls": 2,
+        "release_events": 2,
+        "process_evidence": []
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/rollout.mp4",
+      "wall_s": 323.213
+    }
+  ],
+  "evaluation": null,
+  "hermes_invocations": 1,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "cancelled_by_user": false,
+  "cancellation_pending": false,
+  "wall_s": 346.895,
+  "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+  "hermes_output": "计划已提交。\n\nsession_id: 20261013_151946_987c66\n"
+}

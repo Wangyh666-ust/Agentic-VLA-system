@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "20261014-qwen38-initial-recognition",
+  "intent": "analyze_existing",
+  "question_key": "qwen38-initial-grounding",
+  "purpose": "仅替换模型为qwen3.8-max，用已保存的初始同步三视图测试双罐和黄白杯的首次物体识别是否正确；不启动Hermes动作规划、仿真或VLA。",
+  "prior_evidence": ["20261013-xvla-grounded-online"],
+  "history_review": [{"experiment_id": "20261013-xvla-grounded-online", "disposition": "reuse", "reason": "复用两场景初次识别的原始提示词、图片、时间标签、请求参数与qwen3-vl-plus回答；旧模型把双罐认作包装/纸盒，黄杯初态已正确。"}],
+  "related_search": "已查experiment_registry.json最新三视角在线条目、原始初识别请求及xvla_grounding.py；未找到Qwen3.8初识别对照。",
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "核对官方模型ID、现有Hermes和独立初识别调用配置；使用既有阿里云服务和项目凭据，凭据不输出。",
+    "重建两个历史初识别请求并匹配原请求哈希、原图哈希；除model外不改prompt、图片字节、三视角顺序、时间标签、temperature、thinking_budget或max_tokens。",
+    "通过review.py check后，按双罐、入炉顺序分别调用qwen3.8-max一次，最多两次图像推理，不重试或现场改提示词。",
+    "保存原始响应、实际模型、用量、请求摘要与哈希，人工对照图片检查目标身份、形状与跨视角框；自报confirmed=true不能作为验收。",
+    "接口接受新模型后更新项目Hermes与初识别模型配置；不改变末端检查器、原收尾、退离、复位算法及参数；记录配置是否实际生效。"
+  ],
+  "changed_factors": [{"name": "initial_recognition_model", "before": "qwen3-vl-plus", "after": "qwen3.8-max", "reason": "用户要求测试新模型的初始识别效果。"}],
+  "fixed_factors": {"images": "旧实验三张同步原始PNG字节", "prompt": "各场景初次识别原文", "temperature": 0, "request_options": {"enable_thinking": true, "thinking_budget": 2048, "max_tokens": 6500}, "physical_actions": 0},
+  "scope": {"cases": ["basket_two", "microwave_mug"], "max_qwen_requests": 2, "max_retries": 0, "subagents": 0, "stop_rule": "服务端拒绝模型、认证失败或运输异常时停止后续调用并记录原始错误；正常响应但视觉识别失败时仍独立完成另一场景。"},
+  "success_criteria": "确认真实请求使用qwen3.8-max且返回有效识别；双罐分别指向蓝黄与红绿圆柱罐而非包装/纸盒，三个视角的引用对应同一实物；黄白杯与灰杯区分正确。语义身份与框位置质量分别报告。",
+  "failure_criteria": "目标认错、把不同视角不同实物绑定成同一目标、把同物计两件，或框主要落在其他物体；正常JSON与True不是视觉通过。",
+  "unknown_criteria": "服务不可用、内容截断、图片确实看不清或目标对应不明确；不能据此判模型视觉能力失败。",
+  "limits": "每场景一次首次识别，无同模型重复与旧模型同期补测；不能估计成功率或证明在线长程完成能力。"
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "kind": "no_history",
+    "time": 45.75000000000995,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-subtask-evidence/no_history/01_no_history.json",
+    "goal": null,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "reason": "初态中黄白杯子位于桌面（frame1,2），当前图中桌面仅剩灰色杯子（frame4），但微波炉门关闭（frame3,5）无法确认内部状态。未观察到杯子移入微波炉过程，且目的地不可见，不能推断已到达。"
+      },
+      {
+        "id": "goal_1",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "reason": "初态中微波炉门打开（frame1,2可见炉腔），当前图中门板遮挡炉腔入口（frame3,4,5），符合关闭定义。"
+      }
+    ],
+    "proofs": [],
+    "actual_Qwen_calls": 2,
+    "reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 900,
+      "native_success": true,
+      "predicates": {
+        "in|white_yellow_mug_1|microwave_1_heating_region": true,
+        "close|microwave_1": true
+      }
+    }
+  }
+]

@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "id": "20261013-xvla-subtask-evidence-execution",
+  "intent": "analyze_existing",
+  "question_key": "xvla-process-evidence",
+  "purpose": "为同一逻辑子任务建立持续的原图/同步观测记录，支持初态、过程、末态对比及历史事件重新审核；纠正首次身份漏判而不把旧状态伪装成当前状态，覆盖全部长程技能并保留原收尾和复位。用户已授权实现及旧图Qwen回放；零新增环境动作。",
+  "prior_evidence": [
+    "20261013-xvla-process-evidence-software",
+    "20261013-xvla-release-trial",
+    "20261013-xvla-timeline-software",
+    "20261013-xvla-timeline-trial",
+    "20261013-xvla-event-checker",
+    "20261013-xvla-evidence-memory",
+    "20261013-xvla-evidence-recovery"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261013-xvla-process-evidence-software",
+      "disposition": "reuse",
+      "reason": "复用实测开口触发及同步三视图接口；开口不能单独证明物品入目的地。"
+    },
+    {
+      "experiment_id": "20261013-xvla-release-trial",
+      "disposition": "reuse",
+      "reason": "复用松手原图和三视图采集基础，不重复动作基线。"
+    },
+    {
+      "experiment_id": "20261013-xvla-timeline-software",
+      "disposition": "reuse",
+      "reason": "复用任务内时间线、原图来源哈希及中间状态记录接口。"
+    },
+    {
+      "experiment_id": "20261013-xvla-timeline-trial",
+      "disposition": "reuse",
+      "reason": "两项各两次松手与完整旧轨迹可供重审；本轮不新采集轨迹，仿真谓词只作离线评价。"
+    },
+    {
+      "experiment_id": "20261013-xvla-event-checker",
+      "disposition": "reuse",
+      "reason": "吸取历史broken误撤销和分开请求导致状态冲突；同一时刻使用一个一致的当前状态判断。"
+    },
+    {
+      "experiment_id": "20261013-xvla-evidence-memory",
+      "disposition": "reuse",
+      "reason": "已确认放置在遮挡时保留，明确同物移出才撤销；旧证据保持规则复用，历史结论不能当作不可纠正真值。"
+    },
+    {
+      "experiment_id": "20261013-xvla-evidence-recovery",
+      "disposition": "insufficient",
+      "reason": "原图已全传入且普通当前检查已能补建；但旧事件结果被永久缓存、普通检查只允许引用当前位置图，未实现旧松手重审。另有明确黄杯目标被灰杯替代、frames空数组中止整次检查、初末状态未形成逐目标对应。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "保留批准方案及当前源码、旧台账快照；执行实现、软件回归、实际旧图Qwen和原始证据归档。",
+    "实施第一步：加入显式任务段标识、不可变观测记录和稳定capture_id。保留本任务段所有已经采集的初始、定期、松手前后及结束三视图、拍摄时刻、原文件哈希、对应编码器；不要求增加采样频率。",
+    "实施第二步：任务定义单独列完整指令、操作目标、目的地和末态条件。初始参考与目标对应到明确frame和图内位置/区域；同时记录易混淆物，后续用初末对比和过程连续性核对，不能仅因模型填了同名object_key就认作同一个物体。",
+    "实施第三步：每次检查先对比初态和当前，再用过程图解决目标身份、放入及遮挡问题。新增针对尚未确认或相互矛盾历史事件的重审输出，允许明确引用同任务段旧图建立过去时刻的放置证据；不再只准用当前帧建证据。",
+    "实施第四步：历史照片时间与本次审核时间分开，历史判断追加版本、保留原回答。缓存绑定任务段、输入证据版本、当前capture_id和协议版本；后续新观测或身份修正能触发重审，旧的Unknown/False不永久锁死。",
+    "实施第五步：简化请求中的图片用途说明与返回字段，使用稳定capture_id/view引用并保留请求内frame映射。缺事实引用仅将受影响目标标未知并记录错误；每任务段最多一次针对缺失字段的修复请求，禁止填造引用或覆盖原答。未知不触发收尾。",
+    "实施第六步：软件覆盖全10长程，重点验证首次漏判后通过历史图重审补证、当前已遮挡仍可沿用、两罐不能重复计数、干扰物不能替代目标、不同任务段隔离、未来帧拒绝、同scope更新后缓存失效、单项格式失败不丢其他有效结果。",
+    "实施第七步：先用入篮旧图验证历史重审真实触发：本次审核时间到第300步，只用此前真实图及初始参考，必须实际引用第一次松手图补建汤罐证据；不能用番茄酱新证据替代该指标。若汤罐未补建，停止依赖它的遮挡继承验证并保留失败。",
+    "实施第八步：入炉关门与双罐入篮独立进行旧图Qwen回放，包含初态/过程/当前；不导入旧模型回答或仿真目标真值。门开、仅一罐、无历史且目标被遮挡等负例分别报告；任何一项失败都不能用另一项通过抵销。",
+    "入篮按时间推进到第300步即检查汤罐第一次松手历史证据是否补建；失败则停依赖它的后继检查，入炉独立继续。关键指标要求相应旧capture_id和实际重审记录，不用另罐证据替代。"
+  ],
+  "design": {
+    "scope": {
+      "identity": [
+        "session_id",
+        "logical_subtask_id",
+        "attempt_id"
+      ],
+      "lifetime": "同一长程任务内的抓取、松手、关门及多物放置共用记录，不因检查目标或动作阶段改变而清空。若同一逻辑任务拆成多个技能调用，使用共同logical_subtask_id，保留各调用边界与当前阶段。",
+      "boundary": "进入不同逻辑子任务或环境重置/新尝试时创建新活动记录，以当时实拍图建立新初态；旧记录归档只读，不自动继承完成结论。不会把仅相同的文本或capability_id当作同一次任务。"
+    },
+    "observation_fields": [
+      "scope_id",
+      "capture_id",
+      "captured_at",
+      "sequence_index",
+      "view",
+      "original_path",
+      "sha256",
+      "synchronized_robot_measurements",
+      "sampling_role"
+    ],
+    "observation_rules": [
+      "图片文件保持原字节，原图和同步反馈不可因后续判断变化而改写。",
+      "旧初始图无已核实时间时captured_at=null并标明已知顺序，禁止用审核时间或其他图片时间补造。",
+      "所有旧判断及原响应保留，但请求中的旧True/False/Unknown明确标为可修订意见，不能代替图像事实。",
+      "同段原图库完整保存；请求固定含初始、当前、有关松手及确认/冲突证据。超过单次图像上限时按明确时间段分批重审，记录覆盖清单；不得丢掉事件后仍声称全部已审。"
+    ],
+    "identity_binding": {
+      "fields": [
+        "target_id",
+        "reference_capture_ids",
+        "reference_region",
+        "visible_features",
+        "confusable_objects",
+        "binding_status"
+      ],
+      "rules": "视觉区域/位置只用于锚定和交叉核对，不把粗框位置当作目的地判据。初始遮挡时可由后续清晰图补充身份，并回审更早图；不能以类别名或颜色相似自动替代目标。腕部相机运动时进行语义对象对应，不以像素位置变化推断物体移动。"
+    },
+    "review_output": {
+      "current_observations": "仅报告当前图明确可见的位置和装置状态，当前遮挡可unknown。",
+      "historical_event_reviews": "单独报告目标在所引用旧拍摄时刻的位置/支撑及身份对应；允许纠正过去False/Unknown，但必须给出有效旧图引用和跨时身份依据。",
+      "temporal_comparison": "逐目标说明初始位置、过程中的迁移和末态/遮挡；对双罐分别对应两件实物，不能只凭桌上少了两个或篮子中多了两个就算成功。"
+    },
+    "proof_fields": [
+      "proof_id",
+      "target_id",
+      "destination_id",
+      "evidence_capture_ids",
+      "observed_at",
+      "reviewed_at",
+      "review_id",
+      "supersedes_review_id",
+      "status",
+      "supporting_identity_refs"
+    ],
+    "aggregation_rules": [
+      "过去放置需要对应拍摄时刻的视觉位置/支撑及实测松手反馈。审核时刻的开口不能套到旧图片上。",
+      "历史放入明确、当前因关门等被遮挡且无可信移出反证时允许保留；装置门/抽屉/开关和preserved保持状态仍由当前观测确认。",
+      "初末源位置消失只是辅助证据；必须能对应到目的地或可信放入过程，排除掉出画面、移动相机、拿走或掉落。",
+      "与历史证据冲突时先核对是否同一物体以及各自图像依据；确认是干扰物则不影响目标，确认同一目标已移出才撤销。冲突无法解开则该目标unknown，不凭单个object_key文字覆盖。",
+      "明确当前目标到位仍保持原移交收尾语义，不把已松手/已退离作为放手前移交的额外必要条件。检查器移交就绪与原收尾后独立完成判据分别保留。"
+    ],
+    "intended_source_boundary": {
+      "checker_and_recording": [
+        "First_Phase/scene_demo/xvla_evidence_memory.py",
+        "First_Phase/scene_demo/xvla_monitor.py",
+        "First_Phase/scene_demo/xvla_subtask_evidence.py",
+        "First_Phase/scene_demo/xvla_subtask_review.py"
+      ],
+      "minimal_metadata_wiring_if_required": [
+        "First_Phase/scene_demo/xvla_finish.py",
+        "First_Phase/scene_demo/xvla_service.py",
+        "First_Phase/scene_demo/xvla_pilot.py"
+      ],
+      "protected": "finish_v1实际收尾/退离循环、控制命令、next-task起始参考与姿态/夹爪/控制器/策略缓存等复位实现和参数；本方案不以换循环方式声称保留原流程。"
+    }
+  },
+  "success_criteria": {
+    "mechanism": "真实旧图Qwen必须在汤罐当前不易辨认时重新引用第一次松手原图，纠正该事件的未确认状态；记录observed_at为旧拍摄时间、reviewed_at为本次审核时间；无未来帧或伪造同步反馈。另核对初末逐目标对比和后续遮挡保持实际发生。",
+    "visual_effect": "两项分别完整回放且最终全部所需目标明确通过，开门/单罐负例不得整体通过，无历史遮挡目标不得臆造成功；中间错误和初次失败全部保留，不能只选末帧或最好回答。",
+    "compatibility": "全部10长程使用共同记录与审核机制；原收尾/退离/复位保护哈希与配置不变，检查器未证实完成不得触发这些动作。"
+  },
+  "failure_criteria": "汤罐历史重审目标未触发、重审仅重复旧Unknown、引用非对应图片、用未来帧或当前开口补旧图、把干扰物当目标、漏目标或重复计同物、缺引用被自动猜填，均不能记机制/视觉通过。",
+  "unknown_criteria": "初始身份或全过程始终看不清、容器状态不可辨、可用旧图/同步反馈不足、身份冲突未解时按目标unknown并列缺失证据，不用仿真真值补进提示。",
+  "scope": {
+    "current_turn": "implementation_and_offline_validation",
+    "future_offline_cases": [
+      "microwave_mug",
+      "basket_two"
+    ],
+    "max_Qwen_requests_per_case": 12,
+    "budget_breakdown_per_case": "初始身份检查1 + 原时间线最多2次事件/6次当前检查 + 历史或冲突重审最多2 + 缺字段修复最多1；同捕获可复用减少请求。",
+    "max_Qwen_negative_requests": 2,
+    "max_Qwen_requests_total": 26,
+    "new_environment_actions": 0,
+    "helpers": 0,
+    "subagents": 0,
+    "stop_rule": "实现和软件验证后重新review.py check再启动未来回放；首个汤罐历史补证未触发时停止其依赖遮挡验证，定位缺口，不把其他罐补证或归位替代该指标。两任务独立，另一项可继续。协议修复每任务段最多一次；仍非法或预算不足则记录unknown/失败并停止相依验证，不能反复采样挑通过。",
+    "execution_allocation": {
+      "probe": 4,
+      "microwave_mug": 10,
+      "basket_two": 10,
+      "no_history": 2,
+      "total": 26
+    },
+    "probe_control": "先在未分类事件对照中回审第300步之前两次松手，要求旧第一次事件汤罐补证；通过后才用末帧验证遮挡继承。随后两任务独立按原时序回放，入篮第300步仍必须有第一次事件汤罐证明，否则停止依赖它的后继。无历史末帧负例最多2请求含初态身份。"
+  },
+  "constraints": {
+    "default_checker_change": false,
+    "physical_trial_planned_now": false,
+    "implementation_started": true,
+    "root_model": "unknown",
+    "root_effort": "unknown"
+  }
+}

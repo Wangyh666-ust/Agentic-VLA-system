@@ -1,0 +1,20 @@
+{
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--cd",
+    "/mnt/d/FYP",
+    "--exec",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+    "-"
+  ],
+  "stdin_source": "import json, os, time\nfrom pathlib import Path\nexpected = ['/home/yhwang/fyp/xvla_native/sim_venv/bin/python', '-u', '/mnt/d/FYP/First_Phase/libero_demo/xvla_native_benchmark.py', '--max-new-episodes', '1']\nfound = []\ndeadline = time.monotonic() + 4\nwhile time.monotonic() < deadline:\n    found = []\n    for p in Path('/proc').iterdir():\n        if not p.name.isdigit(): continue\n        try:\n            argv = p.joinpath('cmdline').read_bytes().decode().rstrip('\\0').split('\\0')\n            if argv == expected:\n                found.append({'pid': int(p.name), 'argv': argv, 'cwd': os.readlink(p/'cwd'), 'stat': (p/'stat').read_text()})\n        except (OSError, UnicodeError): pass\n    if found: break\n    time.sleep(0.1)\nprint(json.dumps(found))\n",
+  "started_utc": "2026-10-12T06:35:57.333773+00:00",
+  "finished_utc": "2026-10-12T06:35:57.419666+00:00",
+  "exit_code": 0,
+  "stdout": "[{\"pid\": 506, \"argv\": [\"/home/yhwang/fyp/xvla_native/sim_venv/bin/python\", \"-u\", \"/mnt/d/FYP/First_Phase/libero_demo/xvla_native_benchmark.py\", \"--max-new-episodes\", \"1\"], \"cwd\": \"/mnt/d/FYP\", \"stat\": \"506 (python) R 505 506 506 34819 506 4194560 882 0 0 0 0 0 0 0 20 0 1 0 1624 25862144 2303 18446744073709551615 110219867672576 110219877668153 140721350129968 0 0 0 0 0 0 0 0 0 17 4 0 0 0 0 0 110219911483392 110219911537072 110220879585280 140721350137380 140721350137513 140721350137513 140721350139847 0\\n\"}]\n",
+  "stderr": ""
+}

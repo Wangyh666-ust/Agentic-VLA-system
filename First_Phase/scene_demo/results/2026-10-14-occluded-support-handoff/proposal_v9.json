@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "20261014-occluded-support-handoff",
+  "intent": "analyze_existing",
+  "question_key": "xvla-book-handoff-visibility",
+  "purpose": "通用解除直接可见接触硬门槛；旧提前松手负例不得接管，本次已入格受遮挡正例应真实触发并通过独立接管复核，且保留原收尾复位。",
+  "prior_evidence": [
+    "20261014-book-held-support-gate",
+    "20261014-conservative-handoff-offline",
+    "20261014-all-vlm-qwen38-book"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261014-book-held-support-gate",
+      "disposition": "reuse",
+      "reason": "复用第300与900步原图和同步编码器，已入格但接触被遮挡；不再运行机器人。"
+    },
+    {
+      "experiment_id": "20261014-conservative-handoff-offline",
+      "disposition": "reuse",
+      "reason": "保留入口外/投影重叠/需继续推进限制和独立复核，修正直接可见接触的唯一入口。"
+    },
+    {
+      "experiment_id": "20261014-all-vlm-qwen38-book",
+      "disposition": "reuse",
+      "reason": "复用旧第150步提前松手原图负例及初态/过程，不能让放宽规则重新放行。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "全10原生技能软件测试直接接触和几何过程接管，以及入口/需移动/同刻反证/缺时序引用/错误身份负例；网络调用全部mock。",
+    "真实旧图首先验证旧提前松手负例，若最终允许接管则保存失败并停止依赖验证，定位修改，不在线执行。",
+    "负例通过后用本次第300步与末次第900步原图独立回放；每例最多4次Qwen3.8请求（初态、当前、独立复核及至多一次协议修复），不得用全Unknown宣称修复成功。",
+    "输入包含原始初态及截至所审核时刻的原过程图和同步反馈；不输入仿真谓词、接触列表、期望标签或后来帧。正例必须初判及独立复核均通过；零新仿真动作/辅助器/子agent。",
+    "若核心配对成功，再复用已有碗放盘和黄杯入炉关门回放作为通用回归，每例最多4次；固定控制文件哈希不变。"
+  ]
+}

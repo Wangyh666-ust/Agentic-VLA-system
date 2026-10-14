@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-latency-optimization/replay.py", line 67, in <module>
+    if __name__=='__main__':main()
+  File "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-latency-optimization/replay.py", line 55, in main
+    result=client._inspect(target['context'],target['paths'])
+  File "/mnt/d/FYP/First_Phase/scene_demo/xvla_subtask_review.py", line 439, in _inspect
+    page=self._call_page(packet,ctx,images);pages.append(page)
+  File "/mnt/d/FYP/First_Phase/scene_demo/xvla_subtask_review.py", line 367, in _call_page
+    meta=self._request(context,paths,prompt);review=copy.deepcopy(self.last_review)
+  File "/mnt/d/FYP/First_Phase/scene_demo/xvla_subtask_review.py", line 31, in _request
+    try:return super()._request(context,image_paths,prompt)
+  File "/mnt/d/FYP/First_Phase/scene_demo/finish_v1/vision.py", line 836, in _request
+    raise RuntimeError(transport_error(exc, 'awaiting_response')) from None
+RuntimeError: Qwen request timed out after 90s (awaiting_response)

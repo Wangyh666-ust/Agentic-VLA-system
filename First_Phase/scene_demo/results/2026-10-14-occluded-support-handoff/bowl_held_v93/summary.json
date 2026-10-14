@@ -1,0 +1,337 @@
+{
+  "request": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_01_bowl_to_plate_dc7e0ec6/finish/model_requests/call_02_request.json",
+  "request_sha256": "fb74e6c3ccddaaf7b8ca3d5bb3021680a74cf4a744f57b9ac81fbb5200026165",
+  "target_time": 8.249999999999424,
+  "new_robot_actions": 0,
+  "old_observations": 32,
+  "saved_releases": 1,
+  "model": "qwen3.8-max",
+  "calls": 2,
+  "goal_achieved": true,
+  "handoff_review_triggered": false,
+  "checks": [
+    {
+      "id": "goal_0",
+      "achieved": true,
+      "target_matches_definition": true,
+      "current_evidence": true,
+      "evidence_event_ids": [
+        "8e809c6089648fd4/review_00002/goal_0"
+      ],
+      "reason": "初态frame0/2中银灰皱褶内壁碗在桌面中部、盘子旁边；当前frame13/14中同一银灰碗坐在白底红粉环纹盘中央，腕视frame12的皱褶内壁与初态frame0一致；夹爪已张开并抬离碗上方，碗未回落到桌面",
+      "history_event_id": "8e809c6089648fd4/review_00002/goal_0",
+      "history_event_ids": [
+        "8e809c6089648fd4/review_00002/goal_0"
+      ],
+      "history_capture_id": "8e809c6089648fd4/capture_000021",
+      "history_observed_at": 5.499999999999616,
+      "history_reviewed_at": 8.249999999999424
+    }
+  ],
+  "regions": {
+    "plate_1": {
+      "destination_id": "plate_1",
+      "confirmed": true,
+      "description": "plate_1的上承载面（盘面），即白底红粉环纹圆盘中央的平坦白色区域，任务要求碗落在此面上",
+      "boundary": "以盘沿红粉色环纹内缘为界，环纹以内的平坦白面即为承载面；盘整体平放于桌面，碗只需置于盘面上方接触即可，不要求进入任何凹槽",
+      "anchors": [
+        {
+          "capture_id": "8e809c6089648fd4/capture_000001",
+          "view": "wrist",
+          "box": [
+            398,
+            0,
+            642,
+            178
+          ]
+        },
+        {
+          "capture_id": "8e809c6089648fd4/capture_000001",
+          "view": "agentview",
+          "box": [
+            482,
+            545,
+            571,
+            603
+          ]
+        },
+        {
+          "capture_id": "8e809c6089648fd4/capture_000001",
+          "view": "sideview",
+          "box": [
+            420,
+            542,
+            511,
+            596
+          ]
+        }
+      ],
+      "reviewed_at": 0.5000000000000003,
+      "request_sha256": "d932a1be89c1a71db08fb61d35f5074d655f3bbe46f27fa7414c483df3993aa7",
+      "response_sha256": "a0a351eb90f5587627f99cf9f91085f987dd296e7a7ddbca5e5784753193cd78"
+    }
+  },
+  "proofs": [
+    {
+      "proof_id": "8e809c6089648fd4/review_00002/goal_0",
+      "goal_key": "[\"akita_black_bowl_1\", \"on\", \"plate_1\", false]",
+      "target_id": "akita_black_bowl_1",
+      "destination_id": "plate_1",
+      "capture_id": "8e809c6089648fd4/capture_000021",
+      "observed_at": 5.499999999999616,
+      "reviewed_at": 8.249999999999424,
+      "review_id": "8e809c6089648fd4/review_00002",
+      "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/table_tidy_stove/runs/20261013T171256Z_goal_table_0a0268d3/cap_01_bowl_to_plate_dc7e0ec6/release_0001",
+      "status": "confirmed",
+      "kind": "historical_review",
+      "supersedes_review_id": null,
+      "evidence": [
+        {
+          "capture_id": "8e809c6089648fd4/capture_000021",
+          "view": "agentview",
+          "box": [
+            478,
+            268,
+            532,
+            302
+          ]
+        },
+        {
+          "capture_id": "8e809c6089648fd4/capture_000021",
+          "view": "sideview",
+          "box": [
+            413,
+            255,
+            462,
+            290
+          ]
+        },
+        {
+          "capture_id": "8e809c6089648fd4/capture_000021",
+          "view": "wrist",
+          "box": [
+            520,
+            115,
+            1000,
+            240
+          ]
+        }
+      ],
+      "identity_refs": [
+        {
+          "capture_id": "8e809c6089648fd4/capture_000001",
+          "view": "wrist",
+          "box": [
+            405,
+            235,
+            635,
+            465
+          ]
+        },
+        {
+          "capture_id": "8e809c6089648fd4/capture_000032",
+          "view": "agentview",
+          "box": [
+            478,
+            262,
+            532,
+            300
+          ]
+        }
+      ],
+      "comparison": "初态frame0/2的银灰皱褶碗在盘旁桌面；旧capture帧6/7/8中同一碗已坐落盘中央且编码器手指张开（release_0001对应松手）；其后frame10/11与frame13/14中碗保持同位置坐落，确认该次松手时碗已在盘面上",
+      "placement": {
+        "region_confirmed": true,
+        "region_description": "plate_1的上承载面：白底红粉环纹圆盘环纹内缘以内的平坦白面",
+        "destination_evidence": [
+          {
+            "frame": 7,
+            "box": [
+              480,
+              276,
+              534,
+              306
+            ]
+          },
+          {
+            "frame": 8,
+            "box": [
+              415,
+              272,
+              468,
+              300
+            ]
+          }
+        ],
+        "boundary_observation": "frame7/8中盘沿红粉环纹环绕碗底一周，碗底落在环纹以内白面，未压沿未越界",
+        "relation_evidence": [
+          {
+            "frame": 7,
+            "box": [
+              478,
+              268,
+              532,
+              302
+            ]
+          },
+          {
+            "frame": 8,
+            "box": [
+              413,
+              255,
+              462,
+              290
+            ]
+          }
+        ],
+        "support_observation": "frame8侧视碗底与盘面白区贴合、碗高与盘沿齐平；夹爪已张开脱离碗体，承接方为盘面而非夹爪",
+        "needs_motion": false,
+        "contradiction": false,
+        "views": [
+          {
+            "frame": 6,
+            "relation": "satisfied",
+            "reason": "腕视见碗与红粉环纹盘相邻、碗在盘区上，夹爪指端在画面下缘未夹碗"
+          },
+          {
+            "frame": 7,
+            "relation": "satisfied",
+            "reason": "agentview见碗坐落盘中央、环纹绕碗底，夹爪张开上抬"
+          },
+          {
+            "frame": 8,
+            "relation": "satisfied",
+            "reason": "sideview见碗底贴合盘面、无悬空，夹爪与碗分离"
+          }
+        ],
+        "support_contact": {
+          "visible": true,
+          "observation": "frame8中碗底边缘与盘面接触线直接可见，未被遮挡",
+          "evidence": [
+            {
+              "frame": 8,
+              "box": [
+                415,
+                278,
+                465,
+                298
+              ]
+            }
+          ]
+        },
+        "support_inference": {
+          "depth_sufficient": true,
+          "spatial_observation": "对照初态碗整体尺度，frame7/8中碗 entirety 在环纹内缘内、碗底与盘面共面，无悬空间隙或卡沿迹象",
+          "temporal_observation": "frame4/5（5.25s，夹持下降接近盘）到frame7/8（5.5s，松手时刻）碗由夹持降至坐落盘面，且随后frame10/11、frame13/14延续同一坐落关系，未再需下降或推进",
+          "evidence": [
+            {
+              "frame": 7,
+              "box": [
+                478,
+                268,
+                532,
+                302
+              ]
+            },
+            {
+              "frame": 8,
+              "box": [
+                413,
+                255,
+                462,
+                290
+              ]
+            },
+            {
+              "frame": 4,
+              "box": [
+                480,
+                262,
+                532,
+                300
+              ]
+            },
+            {
+              "frame": 5,
+              "box": [
+                413,
+                252,
+                462,
+                292
+              ]
+            }
+          ]
+        },
+        "supplemental_context_evidence": {
+          "destination_evidence": [],
+          "relation_evidence": []
+        },
+        "_geometry_sequence_validated": true,
+        "_inferred_motion_settled": true
+      },
+      "region": {
+        "destination_id": "plate_1",
+        "confirmed": true,
+        "description": "plate_1的上承载面（盘面），即白底红粉环纹圆盘中央的平坦白色区域，任务要求碗落在此面上",
+        "boundary": "以盘沿红粉色环纹内缘为界，环纹以内的平坦白面即为承载面；盘整体平放于桌面，碗只需置于盘面上方接触即可，不要求进入任何凹槽",
+        "anchors": [
+          {
+            "capture_id": "8e809c6089648fd4/capture_000001",
+            "view": "wrist",
+            "box": [
+              398,
+              0,
+              642,
+              178
+            ]
+          },
+          {
+            "capture_id": "8e809c6089648fd4/capture_000001",
+            "view": "agentview",
+            "box": [
+              482,
+              545,
+              571,
+              603
+            ]
+          },
+          {
+            "capture_id": "8e809c6089648fd4/capture_000001",
+            "view": "sideview",
+            "box": [
+              420,
+              542,
+              511,
+              596
+            ]
+          }
+        ],
+        "reviewed_at": 0.5000000000000003,
+        "request_sha256": "d932a1be89c1a71db08fb61d35f5074d655f3bbe46f27fa7414c483df3993aa7",
+        "response_sha256": "a0a351eb90f5587627f99cf9f91085f987dd296e7a7ddbca5e5784753193cd78"
+      },
+      "source_sha256": [
+        "bfd902a5b8074dbde896ca10166737d6f5a85b83547fe9f10520c7d409b18294",
+        "1ee245141201dffe54303602bf205448baac1cbafa5fd1fdb536aacc085658fa",
+        "7ac9c5d75e884be9c3cf17eab16faa20a822d99d7d61ed458255e024d7a303ef"
+      ],
+      "encoder": {
+        "timestamp": 5.499999999999616,
+        "finger_qpos": [
+          0.03804712414289047,
+          -0.038023061290890066
+        ],
+        "standard_open_finger_qpos": [
+          0.038728069658093986,
+          -0.03873027435945195
+        ],
+        "position_unit": "m",
+        "standard_open_tolerance_m": 0.002,
+        "max_standard_open_error_mm": 0.7072130685618836,
+        "at_standard_open": true
+      },
+      "request_sha256": "230443c9384b53145fa7aa0d0ccd50232f5da31eeaf8ed50a3f6447719eb2803",
+      "response_sha256": "e29db0326e93274b3cd27c2e709175aa74041c1b982cb02a07a43cb7fb8d721b"
+    }
+  ]
+}

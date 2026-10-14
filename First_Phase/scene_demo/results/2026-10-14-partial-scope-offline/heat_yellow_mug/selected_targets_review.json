@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "response": {
+    "checks": [
+      {
+        "target_id": "white_yellow_mug_1",
+        "matches_request": true,
+        "reason": "frame0腕视俯视框内杯口内壁浅色、外壁与把手黄色；frame1 agentview中桌面中部黄身黄把手杯位于灰斑杯(obj_2)右侧；frame2 sideview同一黄杯位置与特征一致，三视角均非空框且与灰杯区分明确，确为用户所指黄杯"
+      },
+      {
+        "target_id": "microwave_1_heating_region",
+        "matches_request": true,
+        "reason": "frame1/2中黑色箱体腔口朝向桌面杯子方向、炉门打开露出腔体，加热区域即该装置(obj_3)内腔；frame0腕视右缘亦见门框/箱体局部；将黄杯放入该腔体是加热的必需准备步骤，目的地绑定装置整体合规"
+      },
+      {
+        "target_id": "microwave_1",
+        "matches_request": true,
+        "reason": "frame1框[408,292,836,535]与frame2框[565,375,912,800]均罩住同一黑色微波炉及其向左立起的带浅色玻璃窗炉门，门为obj_3的活动部件而非独立物体；关门是入炉后加热的必需准备步骤，与原需求一致，未改变原意"
+      }
+    ]
+  },
+  "metadata": {
+    "model": "qwen3.8-max",
+    "usage": {
+      "completion_tokens": 1939,
+      "completion_tokens_details": {
+        "reasoning_tokens": 1652,
+        "text_tokens": 286
+      },
+      "prompt_tokens": 2777,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "image_tokens": 582,
+        "text_tokens": 2195
+      },
+      "total_tokens": 4716
+    },
+    "wall_s": 40.21422708199998,
+    "http_status": 200,
+    "request_sha256": "e55b2d8eb4c9dbd10cf0f3817eee6db3821c585eefb72ecf02f6135b50e660db",
+    "response_sha256": "1f0501249e1c163695437a957b20a1e73333fb3cf7bd1569a3fc78a5fac27754"
+  },
+  "selection": {
+    "white_yellow_mug_1": "obj_1",
+    "microwave_1_heating_region": "obj_3",
+    "microwave_1": "obj_3"
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "passed": false,
+  "complete": true,
+  "results": [
+    {
+      "case": "microwave_mug",
+      "mode": "positive",
+      "passed": true,
+      "goal": true,
+      "reuse": [
+        "goal_0"
+      ],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": false,
+          "evidence_event_ids": [
+            "release_0001"
+          ],
+          "object_key": "yellow_handle_mug",
+          "reason": "wrist视角(21)显示微波炉门关闭导致内部腔体不可见；agentview(22)和sideview(23)中机械臂未操作门，但历史连续帧证明杯体已稳定放置。门关闭不破坏历史放置证据，符合occluded定义。；原图事件确认 release_0001",
+          "history_event_id": "release_0001",
+          "history_event_ids": [
+            "release_0001"
+          ]
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "wrist视角(21)显示门板完全遮挡炉腔入口；agentview(22)和sideview(23)中门板与机身形成闭合平面，符合'门回到机身前面的关闭位置'定义。"
+        }
+      ],
+      "image_count": 24,
+      "event_count": 2,
+      "usage": {
+        "prompt_tokens": 7396,
+        "completion_tokens": 1917,
+        "total_tokens": 9313,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 892
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 3120,
+          "text_tokens": 4276,
+          "cached_tokens": 0
+        }
+      }
+    },
+    {
+      "case": "microwave_mug",
+      "mode": "negative",
+      "passed": true,
+      "goal": false,
+      "reuse": [],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "yellow_handle_mug",
+          "reason": "current帧9-11中微波炉内部持续可见黄色杯身与黄色把手，与历史身份连续；杯体位于加热区域内部且无移位证据"
+        },
+        {
+          "id": "goal_1",
+          "achieved": false,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "current帧9-11中微波炉门板仍明显向外打开，炉腔入口可见；门体身份通过全序列帧连续对应"
+        }
+      ],
+      "image_count": 12,
+      "event_count": 1,
+      "usage": {
+        "prompt_tokens": 3908,
+        "completion_tokens": 1531,
+        "total_tokens": 5439,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 506
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 1560,
+          "text_tokens": 2348,
+          "cached_tokens": 0
+        }
+      }
+    },
+    {
+      "case": "basket_two",
+      "mode": "positive",
+      "passed": false,
+      "error": "RuntimeError: Qwen response parse failure"
+    },
+    {
+      "case": "basket_two",
+      "mode": "negative",
+      "passed": true,
+      "goal": false,
+      "reuse": [],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "alphabet_soup_can",
+          "reason": "current frame 7 agentview篮内罐子与reference及release中目标外观一致，保持篮内支撑状态"
+        },
+        {
+          "id": "goal_1",
+          "achieved": false,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "tomato_sauce_can",
+          "reason": "current frame 7 agentview中Tomato Sauce罐仍在桌面原位，未进入篮子区域"
+        }
+      ],
+      "image_count": 9,
+      "event_count": 1,
+      "usage": {
+        "prompt_tokens": 3048,
+        "completion_tokens": 1401,
+        "total_tokens": 4449,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 376
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 1170,
+          "text_tokens": 1878,
+          "cached_tokens": 0
+        }
+      }
+    },
+    {
+      "case": "microwave_mug",
+      "mode": "no_history",
+      "passed": true,
+      "goal": null,
+      "reuse": [],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": null,
+          "target_matches_definition": false,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "object_key": "yellow_handle_mug",
+          "reason": "current frames 3/4/5中微波炉门关闭且无内部视角，无法确认目标杯是否在炉内；frame 4显示桌上灰色杯无黄色把手特征，但桌上其他杯不能作为反证，目标杯身份对应证据不足"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "frame 3/4/5均显示门板遮住炉腔入口且与机身齐平，符合关闭定义；门状态仅由当前图判断，无需额外支撑条件"
+        }
+      ],
+      "image_count": 6,
+      "event_count": 0,
+      "usage": {
+        "prompt_tokens": 2587,
+        "completion_tokens": 1264,
+        "total_tokens": 3851,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 239
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 780,
+          "text_tokens": 1807,
+          "cached_tokens": 0
+        }
+      }
+    }
+  ],
+  "environment_actions": 0
+}

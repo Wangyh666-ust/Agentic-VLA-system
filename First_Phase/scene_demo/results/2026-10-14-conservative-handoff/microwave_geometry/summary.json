@@ -1,0 +1,247 @@
+{
+  "request": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/model_requests/call_10_request.json",
+  "request_sha256": "51c81b1612102606fa5f3c55ecf0767a6f5055a267178e74fd420737630ac8d7",
+  "target_time": 63.5500000000317,
+  "new_robot_actions": 0,
+  "old_observations": 186,
+  "saved_releases": 3,
+  "model": "qwen3.8-max",
+  "calls": 3,
+  "goal_achieved": true,
+  "handoff_review_triggered": false,
+  "checks": [
+    {
+      "id": "goal_0",
+      "achieved": true,
+      "target_matches_definition": true,
+      "current_evidence": true,
+      "evidence_event_ids": [
+        "dd54b5b048ecbaba/review_00002/goal_0"
+      ],
+      "reason": "初态frame1/2中黄身白内壁、黄色把手的马克杯在桌面中部；当前frame31/32该黄杯不在桌面，黄色杯身边缘出现在agentview开口以内的腔体区域、sideview机身顶缝处见黄色把手局部，桌上仅剩灰色干扰杯；过程帧已见其在腔内被松手且位置延续",
+      "history_event_id": "dd54b5b048ecbaba/review_00002/goal_0",
+      "history_event_ids": [
+        "dd54b5b048ecbaba/review_00002/goal_0"
+      ],
+      "history_capture_id": "dd54b5b048ecbaba/capture_000035",
+      "history_observed_at": 8.949999999999658,
+      "history_reviewed_at": 63.5500000000317
+    },
+    {
+      "id": "goal_1",
+      "achieved": true,
+      "target_matches_definition": true,
+      "current_evidence": true,
+      "evidence_event_ids": [],
+      "reason": "初态frame1/2门板（黑框透明窗）向外敞 opening 立在机身左前；当前frame31门板回到机身前面、透明窗与机身前框齐平，frame32侧面只见平整机身与门前竖把手，无向外转出的门板，判定关闭"
+    }
+  ],
+  "regions": {
+    "microwave_1_heating_region": {
+      "destination_id": "microwave_1_heating_region",
+      "confirmed": true,
+      "description": "微波炉炉腔内部空间（加热区），即门打开后开口所对的空腔，任务要求马克杯最终置于其内腔底面上",
+      "boundary": "由机身左前开口的黑色边框界定入口，腔内可见灰黑内壁与腔底；打开的门板（黑色边框带透明窗）位于入口外左前侧，门板与桌面不属于该区域",
+      "anchors": [
+        {
+          "capture_id": "dd54b5b048ecbaba/capture_000001",
+          "view": "agentview",
+          "box": [
+            565,
+            330,
+            690,
+            460
+          ]
+        },
+        {
+          "capture_id": "dd54b5b048ecbaba/capture_000001",
+          "view": "sideview",
+          "box": [
+            575,
+            455,
+            700,
+            560
+          ]
+        }
+      ],
+      "reviewed_at": 0.5000000000000003,
+      "request_sha256": "9a25bbcf36f231e702092d736c50610dadae01539f40a4451254d9737107e4df",
+      "response_sha256": "ea381e0bbd2a60ab395021335935f9634889f7375853977b84f41079ded56b0f"
+    }
+  },
+  "proofs": [
+    {
+      "proof_id": "dd54b5b048ecbaba/review_00002/goal_0",
+      "goal_key": "[\"white_yellow_mug_1\", \"in\", \"microwave_1_heating_region\", false]",
+      "target_id": "white_yellow_mug_1",
+      "destination_id": "microwave_1_heating_region",
+      "capture_id": "dd54b5b048ecbaba/capture_000035",
+      "observed_at": 8.949999999999658,
+      "reviewed_at": 63.5500000000317,
+      "review_id": "dd54b5b048ecbaba/review_00002",
+      "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/release_0001",
+      "status": "confirmed",
+      "kind": "historical_review",
+      "supersedes_review_id": null,
+      "evidence": [
+        {
+          "capture_id": "dd54b5b048ecbaba/capture_000035",
+          "view": "agentview",
+          "box": [
+            640,
+            390,
+            680,
+            450
+          ]
+        },
+        {
+          "capture_id": "dd54b5b048ecbaba/capture_000035",
+          "view": "wrist",
+          "box": [
+            380,
+            560,
+            620,
+            860
+          ]
+        }
+      ],
+      "identity_refs": [
+        {
+          "capture_id": "dd54b5b048ecbaba/capture_000001",
+          "view": "agentview",
+          "box": [
+            432,
+            468,
+            530,
+            563
+          ]
+        }
+      ],
+      "comparison": "该旧capture中腕视frame6见黄色把手与杯顶贴近夹爪，agentview frame7见黄杯已越过入口黑框进入腔内且杯底坐落腔底；编码器此刻手指为标准张开，属松手放置时刻，与初态同一黄杯（黄身、黄把手、白内壁）",
+      "placement": {
+        "region_confirmed": true,
+        "region_description": "微波炉炉腔内部加热区，即门打开后开口所对的空腔底面",
+        "destination_evidence": [
+          {
+            "frame": 7,
+            "box": [
+              575,
+              362,
+              668,
+              455
+            ]
+          }
+        ],
+        "boundary_observation": "frame7中黄杯整体已越过入口黑框进入腔内，杯顶低于开口上沿，未停留在入口外或门板上",
+        "relation_evidence": [
+          {
+            "frame": 7,
+            "box": [
+              640,
+              390,
+              680,
+              450
+            ]
+          },
+          {
+            "frame": 6,
+            "box": [
+              380,
+              560,
+              620,
+              860
+            ]
+          }
+        ],
+        "support_observation": "frame7 agentview可见杯底落在腔底灰黑底面上，夹爪手指标准张开已不握持",
+        "needs_motion": false,
+        "contradiction": false,
+        "views": [
+          {
+            "frame": 6,
+            "relation": "satisfied",
+            "reason": "腕视见黄色把手与杯顶就在夹爪下方，杯已入腔"
+          },
+          {
+            "frame": 7,
+            "relation": "satisfied",
+            "reason": "agentview见黄杯在腔内且杯底接触腔底"
+          },
+          {
+            "frame": 8,
+            "relation": "occluded",
+            "reason": "sideview被机身与手臂遮挡，看不到腔内杯"
+          }
+        ],
+        "support_contact": {
+          "visible": true,
+          "observation": "frame7中杯底与腔底灰黑底面的接触线直接可见",
+          "evidence": [
+            {
+              "frame": 7,
+              "box": [
+                640,
+                430,
+                680,
+                450
+              ]
+            }
+          ]
+        }
+      },
+      "region": {
+        "destination_id": "microwave_1_heating_region",
+        "confirmed": true,
+        "description": "微波炉炉腔内部空间（加热区），即门打开后开口所对的空腔，任务要求马克杯最终置于其内腔底面上",
+        "boundary": "由机身左前开口的黑色边框界定入口，腔内可见灰黑内壁与腔底；打开的门板（黑色边框带透明窗）位于入口外左前侧，门板与桌面不属于该区域",
+        "anchors": [
+          {
+            "capture_id": "dd54b5b048ecbaba/capture_000001",
+            "view": "agentview",
+            "box": [
+              565,
+              330,
+              690,
+              460
+            ]
+          },
+          {
+            "capture_id": "dd54b5b048ecbaba/capture_000001",
+            "view": "sideview",
+            "box": [
+              575,
+              455,
+              700,
+              560
+            ]
+          }
+        ],
+        "reviewed_at": 0.5000000000000003,
+        "request_sha256": "9a25bbcf36f231e702092d736c50610dadae01539f40a4451254d9737107e4df",
+        "response_sha256": "ea381e0bbd2a60ab395021335935f9634889f7375853977b84f41079ded56b0f"
+      },
+      "source_sha256": [
+        "4893a2f23c4830ed18718871d5af3a676c3cebfb44a96f8a02d99f53a7eabd22",
+        "5abb65452c1edd71bc4aa443e912f9dc3b59f557c217fccf77f345587b9b33ed",
+        "f5329bb927dd931d8b423dec5bacf2efb3f1e443d1d850692dcef27416365e2e"
+      ],
+      "encoder": {
+        "timestamp": 8.949999999999658,
+        "finger_qpos": [
+          0.03832337354049193,
+          -0.03777200611119862
+        ],
+        "standard_open_finger_qpos": [
+          0.03872905725468913,
+          -0.03872928166924487
+        ],
+        "position_unit": "m",
+        "standard_open_tolerance_m": 0.002,
+        "max_standard_open_error_mm": 0.9572755580462555,
+        "at_standard_open": true
+      },
+      "request_sha256": "525a6a97811d2ac251b1d69fe43010e4f29934d7d515993334e54e2fe38e589a",
+      "response_sha256": "7041af2c3367726f040c8f6d22c0e76feed62d4138585b1183c706f82268b1b1"
+    }
+  ]
+}

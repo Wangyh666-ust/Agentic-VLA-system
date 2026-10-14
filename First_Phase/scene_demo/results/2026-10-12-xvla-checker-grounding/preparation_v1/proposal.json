@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "20261012-xvla-checker-grounding",
+  "intent": "analyze_existing",
+  "question_key": "xvla-checker-view",
+  "purpose": "验证静态物品定义/三同步视角/单任务on-in语义是否消除保存样例的身份与额外条件误判，零新动作",
+  "prior_evidence": [
+    "20261012-xvla-persistent-pilot",
+    "20261011-final-input-audit",
+    "20261011-neutral-encoder-checker",
+    "20261011-takeover-stove-cue"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261012-xvla-persistent-pilot",
+      "disposition": "reuse",
+      "reason": "复用目标与终态视觉冲突、保存画面和两次offline失败。"
+    },
+    {
+      "experiment_id": "20261011-final-input-audit",
+      "disposition": "reuse",
+      "reason": "复用原输入审计与同步证据。"
+    },
+    {
+      "experiment_id": "20261011-neutral-encoder-checker",
+      "disposition": "reuse",
+      "reason": "复用编码器融合定义，开口不替代目标。"
+    },
+    {
+      "experiment_id": "20261011-takeover-stove-cue",
+      "disposition": "reuse",
+      "reason": "复用灶台静态定义与既有收尾，候选不改在线。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "只读九个固定保存case，原SHA和同采样三图核验。",
+    "真实Qwen上限9，一case一次，无重试，transport/parse失败停止。",
+    "soup/micro遮挡正例允许null，其他样例按预登记allowed判据。",
+    "静态外观、三视角、单任务关系三因素共同变化，不能分离归因；随机流未配对。",
+    "仅离线检查器效果，不以offline结果宣称online持久链成功。"
+  ],
+  "local_evidence": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/summary.json",
+      "sha256": "2d10b9c79dd343125ce93322cbf767b0a4a89929b9c1403c2628a1e2bb3608f3"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_agentview/result.json",
+      "sha256": "35c3d2b2c81684d87f797d406e7b3bbfb1e6f7dfe04e4509045ac487962655dc"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_rack_description/result.json",
+      "sha256": "68b6b3bad7df3ea3c5b7ffbfecc643965dae28fed477904bf2f2bd0e85e3a109"
+    },
+    {
+      "path": "First_Phase/scene_demo/xvla_checker.py",
+      "sha256": "8249d6cdd10dd57ed2441687acae3e4639ae9446ffb11b31847b0ad82f5ff6f2"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/source_manifest.json",
+      "sha256": "d77891fe56fcf0565f1b76ee4d340cd54bbf4a4dd9b25aeb279af219bcf76aaa"
+    }
+  ]
+}

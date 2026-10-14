@@ -1,0 +1,375 @@
+[
+  {
+    "kind": "release",
+    "time": 8.799999999999608,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_02/basket_two/01_release.json",
+    "goal": false,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": false,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "alphabet_soup_1",
+        "reason": "橙色标签小盒在桌面右侧，未见于篮子内"
+      },
+      {
+        "id": "goal_1",
+        "achieved": false,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "tomato_sauce_1",
+        "reason": "红绿标签罐在桌面中央偏左，未见于篮子内"
+      }
+    ],
+    "memory": [],
+    "call_index": 1,
+    "actual_Qwen_calls": 1,
+    "same_capture_reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 150,
+      "native_success": false,
+      "predicates": {
+        "in|alphabet_soup_1|basket_1_contain_region": true,
+        "in|tomato_sauce_1|basket_1_contain_region": false
+      }
+    }
+  },
+  {
+    "kind": "current",
+    "time": 8.799999999999608,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_02/basket_two/02_current.json",
+    "goal": false,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": false,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "alphabet_soup_1",
+        "reason": "橙色标签小盒在桌面右侧，未见于篮子内"
+      },
+      {
+        "id": "goal_1",
+        "achieved": false,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "tomato_sauce_1",
+        "reason": "红绿标签罐在桌面中央偏左，未见于篮子内"
+      }
+    ],
+    "memory": [],
+    "call_index": 1,
+    "actual_Qwen_calls": 1,
+    "same_capture_reused": true,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 150,
+      "native_success": false,
+      "predicates": {
+        "in|alphabet_soup_1|basket_1_contain_region": true,
+        "in|tomato_sauce_1|basket_1_contain_region": false
+      }
+    }
+  },
+  {
+    "kind": "release",
+    "time": 14.200000000001411,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_02/basket_two/03_release.json",
+    "goal": null,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "object_key": null,
+        "reason": "current view shows no visible alphabet soup container; wrist view (frame 3) shows basket interior but no cylindrical can with silver lid/blue-orange label; agentview (frame 4) and sideview (frame 5) show only milk box and juice carton on table, no target container identifiable"
+      },
+      {
+        "id": "goal_1",
+        "achieved": true,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [
+          "release_0002"
+        ],
+        "object_key": "tomato_sauce_1",
+        "reason": "agentview (frame 4) shows red-green labeled cylindrical can inside basket; matches reference frame 1's tomato sauce can visual identity; wrist view (frame 3) shows basket interior but cannot confirm label details；保留已确认放置证据 release_0002",
+        "history_event_id": "release_0002",
+        "history_event_ids": [
+          "release_0002"
+        ],
+        "history_mode": "confirmed_memory"
+      }
+    ],
+    "memory": [
+      {
+        "id": "goal_1",
+        "event_id": "release_0002",
+        "timestamp": 14.200000000001411,
+        "status": "confirmed",
+        "object_key": "tomato_sauce_1"
+      }
+    ],
+    "call_index": 2,
+    "actual_Qwen_calls": 2,
+    "same_capture_reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 258,
+      "native_success": true,
+      "predicates": {
+        "in|alphabet_soup_1|basket_1_contain_region": true,
+        "in|tomato_sauce_1|basket_1_contain_region": true
+      }
+    }
+  },
+  {
+    "kind": "current",
+    "time": 16.300000000001845,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_02/basket_two/04_current.json",
+    "goal": true,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": true,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "alphabet_soup_1",
+        "reason": "wrist view shows cylindrical can with blue/orange label inside basket; agentview confirms basket contains one can matching description"
+      },
+      {
+        "id": "goal_1",
+        "achieved": true,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [
+          "release_0002"
+        ],
+        "object_key": "tomato_sauce_1",
+        "reason": "wrist view shows red/green labeled can inside basket; agentview shows same can in basket distinct from table items；保留已确认放置证据 release_0002",
+        "history_event_id": "release_0002",
+        "history_event_ids": [
+          "release_0002"
+        ],
+        "history_mode": "confirmed_memory"
+      }
+    ],
+    "memory": [
+      {
+        "id": "goal_1",
+        "event_id": "release_0002",
+        "timestamp": 14.200000000001411,
+        "status": "confirmed",
+        "object_key": "tomato_sauce_1"
+      }
+    ],
+    "call_index": 3,
+    "actual_Qwen_calls": 3,
+    "same_capture_reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 300,
+      "native_success": true,
+      "predicates": {
+        "in|alphabet_soup_1|basket_1_contain_region": true,
+        "in|tomato_sauce_1|basket_1_contain_region": true
+      }
+    }
+  },
+  {
+    "kind": "current",
+    "time": 23.799999999997688,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_02/basket_two/05_current.json",
+    "goal": null,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": true,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "alphabet_soup_1",
+        "reason": "wrist view (frame 6) shows blue/orange labeled cylindrical can inside basket"
+      },
+      {
+        "id": "goal_1",
+        "achieved": null,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "tomato_sauce_1",
+        "reason": "agentview (frame 7) shows red/green labeled cylindrical can on table, not in basket"
+      }
+    ],
+    "memory": [
+      {
+        "id": "goal_1",
+        "event_id": "release_0002",
+        "timestamp": 14.200000000001411,
+        "status": "confirmed",
+        "object_key": "tomato_sauce_1"
+      }
+    ],
+    "call_index": 4,
+    "actual_Qwen_calls": 4,
+    "same_capture_reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 450,
+      "native_success": true,
+      "predicates": {
+        "in|alphabet_soup_1|basket_1_contain_region": true,
+        "in|tomato_sauce_1|basket_1_contain_region": true
+      }
+    }
+  },
+  {
+    "kind": "current",
+    "time": 31.29999999999353,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_02/basket_two/06_current.json",
+    "goal": null,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "object_key": "alphabet_soup_1",
+        "reason": "wrist view (frame6) shows a can inside basket with partial blue/orange label visible; agentview (frame7) shows basket containing items but specific label not clearly distinguishable from other cans on table. Cannot confirm exact identity due to partial visibility and similar cylindrical cans present."
+      },
+      {
+        "id": "goal_1",
+        "achieved": null,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "tomato_sauce_1",
+        "reason": "agentview (frame7) clearly shows red/green labeled tomato sauce can on table, distinct from basket contents. Memory confirms previous placement (release_0002), but current frame shows it outside basket. Sideview (frame8) does not show can, wrist (frame6) shows basket interior without this can."
+      }
+    ],
+    "memory": [
+      {
+        "id": "goal_1",
+        "event_id": "release_0002",
+        "timestamp": 14.200000000001411,
+        "status": "confirmed",
+        "object_key": "tomato_sauce_1"
+      }
+    ],
+    "call_index": 5,
+    "actual_Qwen_calls": 5,
+    "same_capture_reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 600,
+      "native_success": true,
+      "predicates": {
+        "in|alphabet_soup_1|basket_1_contain_region": true,
+        "in|tomato_sauce_1|basket_1_contain_region": true
+      }
+    }
+  },
+  {
+    "kind": "current",
+    "time": 38.800000000001454,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_02/basket_two/07_current.json",
+    "goal": null,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": null,
+        "target_matches_definition": null,
+        "current_evidence": false,
+        "evidence_event_ids": [],
+        "object_key": "alphabet_soup_1",
+        "reason": "wrist view shows a cylindrical container in basket but label color unclear; agentview shows basket with container but cannot confirm blue/orange label distinct from other items"
+      },
+      {
+        "id": "goal_1",
+        "achieved": null,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "tomato_sauce_1",
+        "reason": "agentview shows red/green labeled cylindrical can on table, distinct from basket contents; sideview shows no can in basket"
+      }
+    ],
+    "memory": [
+      {
+        "id": "goal_1",
+        "event_id": "release_0002",
+        "timestamp": 14.200000000001411,
+        "status": "confirmed",
+        "object_key": "tomato_sauce_1"
+      }
+    ],
+    "call_index": 6,
+    "actual_Qwen_calls": 6,
+    "same_capture_reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 750,
+      "native_success": true,
+      "predicates": {
+        "in|alphabet_soup_1|basket_1_contain_region": true,
+        "in|tomato_sauce_1|basket_1_contain_region": true
+      }
+    }
+  },
+  {
+    "kind": "current",
+    "time": 46.30000000001062,
+    "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_02/basket_two/08_current.json",
+    "goal": true,
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": true,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "alphabet_soup_1",
+        "reason": "wrist view (frame 6) shows cylindrical can with silver lid and blue/orange label inside basket; matches target visual identity"
+      },
+      {
+        "id": "goal_1",
+        "achieved": true,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [
+          "release_0002"
+        ],
+        "object_key": "tomato_sauce_1",
+        "reason": "wrist view (frame 6) shows cylindrical can with red/green label inside basket; matches target visual identity；保留已确认放置证据 release_0002",
+        "history_event_id": "release_0002",
+        "history_event_ids": [
+          "release_0002"
+        ],
+        "history_mode": "confirmed_memory"
+      }
+    ],
+    "memory": [
+      {
+        "id": "goal_1",
+        "event_id": "release_0002",
+        "timestamp": 14.200000000001411,
+        "status": "confirmed",
+        "object_key": "tomato_sauce_1"
+      }
+    ],
+    "call_index": 7,
+    "actual_Qwen_calls": 7,
+    "same_capture_reused": false,
+    "evaluation_only_truth_not_sent": {
+      "vla_step": 900,
+      "native_success": true,
+      "predicates": {
+        "in|alphabet_soup_1|basket_1_contain_region": true,
+        "in|tomato_sauce_1|basket_1_contain_region": true
+      }
+    }
+  }
+]

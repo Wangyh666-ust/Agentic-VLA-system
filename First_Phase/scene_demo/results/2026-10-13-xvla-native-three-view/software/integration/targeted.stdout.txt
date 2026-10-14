@@ -1,0 +1,169 @@
+FFFF.................................................................... [ 71%]
+.............................                                     [100%]
+=================================== FAILURES ===================================
+_________ test_real_monitor_constructs_whole_context[xvla_basket_both] _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x780b4fc622f0>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w0')
+cid = 'xvla_basket_both'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+        monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+        assert isinstance(monitor.call_client, xvla_finish.XvlaQwenClient)
+        assert monitor.port.checker_views == ('wrist', 'agentview', 'sideview')
+        context = monitor.context
+        assert context['criteria']['skill_description'] == catalog.CAPABILITIES[cid]['instruction']
+        assert len(context['criteria']['success_checks']) == len(catalog.CAPABILITIES[cid]['goals'])
+        last_goal = catalog.CAPABILITIES[cid]['goals'][-1]
+        assert context['current_subtask']['target'] == last_goal[1]
+        assert monitor.independent_ready() is True
+        for key in list(states):
+            states[key] = False
+            assert monitor.independent_ready() is False
+            states[key] = True
+>       monitor.port.step.assert_not_called()
+E       AttributeError: 'function' object has no attribute 'assert_not_called'
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:46: AttributeError
+__________ test_real_monitor_constructs_whole_context[xvla_mugs_both] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x780b45dbc2e0>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w1')
+cid = 'xvla_mugs_both'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+        monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+        assert isinstance(monitor.call_client, xvla_finish.XvlaQwenClient)
+        assert monitor.port.checker_views == ('wrist', 'agentview', 'sideview')
+        context = monitor.context
+        assert context['criteria']['skill_description'] == catalog.CAPABILITIES[cid]['instruction']
+        assert len(context['criteria']['success_checks']) == len(catalog.CAPABILITIES[cid]['goals'])
+        last_goal = catalog.CAPABILITIES[cid]['goals'][-1]
+        assert context['current_subtask']['target'] == last_goal[1]
+        assert monitor.independent_ready() is True
+        for key in list(states):
+            states[key] = False
+            assert monitor.independent_ready() is False
+            states[key] = True
+>       monitor.port.step.assert_not_called()
+E       AttributeError: 'function' object has no attribute 'assert_not_called'
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:46: AttributeError
+____ test_real_monitor_constructs_whole_context[xvla_microwave_place_close] ____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x780b487595a0>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w2')
+cid = 'xvla_microwave_place_close'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+        monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+        assert isinstance(monitor.call_client, xvla_finish.XvlaQwenClient)
+        assert monitor.port.checker_views == ('wrist', 'agentview', 'sideview')
+        context = monitor.context
+        assert context['criteria']['skill_description'] == catalog.CAPABILITIES[cid]['instruction']
+        assert len(context['criteria']['success_checks']) == len(catalog.CAPABILITIES[cid]['goals'])
+        last_goal = catalog.CAPABILITIES[cid]['goals'][-1]
+        assert context['current_subtask']['target'] == last_goal[1]
+        assert monitor.independent_ready() is True
+        for key in list(states):
+            states[key] = False
+            assert monitor.independent_ready() is False
+            states[key] = True
+>       monitor.port.step.assert_not_called()
+E       AttributeError: 'function' object has no attribute 'assert_not_called'
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:46: AttributeError
+__________ test_real_monitor_constructs_whole_context[soup_to_basket] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x780b45dbce80>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_real_monitor_constructs_w3')
+cid = 'soup_to_basket'
+
+    @pytest.mark.parametrize('cid', list(NATIVE_LONG_SKILLS) + ['soup_to_basket'])
+    def test_real_monitor_constructs_whole_context(monkeypatch, tmp_path, cid):
+        from scene_demo.finish_v1 import sensors, vision
+        from scene_demo import safe_exit_contacts
+        monkeypatch.setattr(sensors, 'SensorPort', FakePort)
+        monkeypatch.setattr(vision, 'QwenClient', lambda **kw: SimpleNamespace())
+        monkeypatch.setattr(x, 'reference_metrics', lambda *a: {'ready': True})
+        monkeypatch.setattr(safe_exit_contacts, 'contacts', lambda env: [])
+        states = {catalog.goal_key(g): True for g in catalog.CAPABILITIES[cid]['goals']}
+        states['on|wine_bottle_1|wine_rack_1_top_region'] = True
+        monkeypatch.setattr(service, 'eval_goal_predicate', lambda env, goal: states[catalog.goal_key(goal)])
+        svc = object.__new__(x.XvlaSceneService)
+        svc._actual_state = lambda: {'mock': True}
+        svc._completion_ready = lambda env, goals, predicates: all(predicates.values())
+        session = SimpleNamespace(home_reference={}, xvla_completed=['wine_to_rack'], scene_id=catalog.CAPABILITIES[cid]['scene_ids'][0])
+        plan = SimpleNamespace(user_request='Explicit full requested skill')
+        job = SimpleNamespace(capability_id=cid, run_dir=tmp_path)
+        monitor = svc._make_finish_monitor(session, plan, job, object(), catalog.CAPABILITIES[cid], 800, [], None)
+        assert isinstance(monitor.call_client, xvla_finish.XvlaQwenClient)
+        assert monitor.port.checker_views == ('wrist', 'agentview', 'sideview')
+        context = monitor.context
+        assert context['criteria']['skill_description'] == catalog.CAPABILITIES[cid]['instruction']
+        assert len(context['criteria']['success_checks']) == len(catalog.CAPABILITIES[cid]['goals'])
+        last_goal = catalog.CAPABILITIES[cid]['goals'][-1]
+        assert context['current_subtask']['target'] == last_goal[1]
+        assert monitor.independent_ready() is True
+        for key in list(states):
+            states[key] = False
+            assert monitor.independent_ready() is False
+            states[key] = True
+>       monitor.port.step.assert_not_called()
+E       AttributeError: 'function' object has no attribute 'assert_not_called'
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:46: AttributeError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_basket_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_mugs_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[xvla_microwave_place_close]
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_real_monitor_constructs_whole_context[soup_to_basket]
+4 failed, 97 passed, 7 subtests passed in 2.59s

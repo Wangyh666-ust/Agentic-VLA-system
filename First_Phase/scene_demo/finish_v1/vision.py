@@ -3,6 +3,7 @@ import json
 import math
 import mimetypes
 import os
+import time
 import urllib.request
 from pathlib import Path
 
@@ -709,8 +710,9 @@ class QwenClient:
         self,
         env_path="/home/yhwang/fyp/scene_demo/hermes_home/.env",
         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-        model="qwen3-vl-plus",
+        model="qwen3.8-max",
         max_calls=18,
+        request_timeout=90,
     ):
         if not isinstance(env_path, (str, os.PathLike)):
             raise TypeError("env_path must be path-like")
@@ -718,15 +720,20 @@ class QwenClient:
             raise ValueError("base_url must be a nonempty string")
         if not isinstance(model, str) or not model.strip():
             raise ValueError("model must be a nonempty string")
+        if model != "qwen3.8-max":
+            raise ValueError("All scene VLM clients require qwen3.8-max")
         if isinstance(max_calls, bool) or not isinstance(max_calls, int):
             raise TypeError("max_calls must be an int")
         if max_calls < 0:
             raise ValueError("max_calls must be nonnegative")
+        if isinstance(request_timeout, bool) or not isinstance(request_timeout, (int, float)) or not math.isfinite(request_timeout) or request_timeout <= 0:
+            raise ValueError('request_timeout must be finite and positive')
         self.env_path = env_path
         self.base_url = base_url
         self.model = model
         self.max_calls = max_calls
         self._calls = 0
+        self.request_timeout = request_timeout
 
     def _resolve_key(self):
         key = os.environ.get("DASHSCOPE_API_KEY")
@@ -789,6 +796,8 @@ class QwenClient:
             "messages": [{"role": "user", "content": content}],
         }
         body.update(getattr(self, 'request_options', {}))
+        if body['model'] != 'qwen3.8-max':
+            raise ValueError('VLM request model must be qwen3.8-max')
         request_bytes = json.dumps(body).encode("utf-8")
         endpoint = self.base_url.rstrip("/") + "/chat/completions"
         request = urllib.request.Request(
@@ -803,13 +812,28 @@ class QwenClient:
 
         self._calls += 1
         call_index = self._calls
-
+        if hasattr(self, 'record_request'):
+            self.record_request(context, image_paths, prompt, request_bytes, call_index)
+        started = time.monotonic()
+        def transport_error(exc, stage):
+            reason = getattr(exc, 'reason', exc)
+            error = {'stage': stage, 'error_type': type(exc).__name__,
+                     'reason_type': type(reason).__name__, 'errno': getattr(reason, 'errno', None),
+                     'http_status': _safe_status(getattr(exc, 'code', None)),
+                     'timeout_seconds': self.request_timeout,
+                     'elapsed_seconds': round(time.monotonic() - started, 3)}
+            if hasattr(self, 'record_transport_error'):
+                self.record_transport_error(call_index, error)
+            if isinstance(reason, TimeoutError):
+                return f'Qwen request timed out after {self.request_timeout:g}s ({stage})'
+            return f'Qwen network failure ({type(reason).__name__}; {stage})'
         try:
-            response = urllib.request.urlopen(request, timeout=90)
+            response = urllib.request.urlopen(request, timeout=self.request_timeout)
         except urllib.error.HTTPError as exc:
+            transport_error(exc, 'http_response')
             raise RuntimeError(f"Qwen HTTP status {_safe_status(getattr(exc, 'code', None))}") from None
-        except Exception:
-            raise RuntimeError("Qwen network failure") from None
+        except Exception as exc:
+            raise RuntimeError(transport_error(exc, 'awaiting_response')) from None
 
         try:
             try:
@@ -817,8 +841,11 @@ class QwenClient:
             except Exception:
                 status = getattr(response, "status", None)
             raw = response.read()
-        except Exception:
-            raise RuntimeError("Qwen response read failure") from None
+        except Exception as exc:
+            raise RuntimeError(transport_error(exc, 'reading_response')) from None
+        finally:
+            if hasattr(response, 'close'):
+                response.close()
 
         if hasattr(self, 'record_response'):
             self.record_response(context, image_paths, prompt, request_bytes, raw, call_index, status)
@@ -826,6 +853,11 @@ class QwenClient:
             payload = json.loads(raw.decode("utf-8"))
         except Exception:
             raise RuntimeError("Qwen response parse failure") from None
+
+        if not isinstance(payload, dict):
+            raise RuntimeError('Qwen response parse failure')
+        if payload.get('model') and payload['model'] != 'qwen3.8-max':
+            raise RuntimeError('Qwen returned an unexpected model: ' + str(payload['model']))
 
         try:
             response_content = _extract_content(payload)

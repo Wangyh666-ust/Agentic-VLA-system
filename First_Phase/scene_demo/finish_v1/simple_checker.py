@@ -78,15 +78,34 @@ class SimpleQwenClient(vision.QwenClient):
     simple_handoff = True
     request_options = {'enable_thinking': True, 'thinking_budget': 1024}
 
-    def record_response(self, context, image_paths, prompt, request_bytes, raw, index, status):
+    def record_request(self, context, image_paths, prompt, request_bytes, index):
+        if getattr(self, 'audit_dir', None) is None:
+            return
         directory = Path(self.audit_dir)
         directory.mkdir(parents=True, exist_ok=True)
-        (directory / f'call_{index:02d}_response.json').write_bytes(raw)
-        record = {'prompt': prompt, 'context': context, 'http_status': status,
+        record = {'prompt': prompt, 'context': context, 'http_status': None,
                   'request_options': self.request_options,
+                  'timeout_seconds': self.request_timeout,
                   'request_sha256': hashlib.sha256(request_bytes).hexdigest(),
+                  'requested_model': json.loads(request_bytes)['model'],
                   'images': [{'path': str(path), 'sha256': hashlib.sha256(Path(path).read_bytes()).hexdigest()} for path in image_paths]}
         (directory / f'call_{index:02d}_request.json').write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+    def record_transport_error(self, index, error):
+        if getattr(self, 'audit_dir', None) is not None:
+            path = Path(self.audit_dir) / f'call_{index:02d}_transport_error.json'
+            path.write_text(json.dumps(error, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+    def record_response(self, context, image_paths, prompt, request_bytes, raw, index, status):
+        if getattr(self, 'audit_dir', None) is None:
+            return
+        directory = Path(self.audit_dir)
+        self.record_request(context, image_paths, prompt, request_bytes, index)
+        (directory / f'call_{index:02d}_response.json').write_bytes(raw)
+        path = directory / f'call_{index:02d}_request.json'
+        record = json.loads(path.read_text(encoding='utf-8'))
+        record['http_status'] = status
+        path.write_text(json.dumps(record, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
     def parse_verdict(self, content):
         raw = vision._parse_verdict_content(content)

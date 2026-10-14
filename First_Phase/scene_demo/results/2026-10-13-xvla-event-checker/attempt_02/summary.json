@@ -1,0 +1,211 @@
+{
+  "passed": false,
+  "complete": true,
+  "results": [
+    {
+      "case": "microwave_mug",
+      "mode": "positive",
+      "passed": false,
+      "goal": null,
+      "reuse": [
+        "goal_0"
+      ],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": false,
+          "evidence_event_ids": [
+            "release_0001"
+          ],
+          "object_key": "yellow_handle_mug",
+          "reason": "wrist视角(frame21)显示微波炉门关闭遮挡内部，无法确认杯体位置。但参考图(0,1,2)和历史帧(3,6,9)确认黄色把手杯身份，且无取出证据，身份连续性保持。；原图事件确认 release_0001",
+          "history_event_id": "release_0001",
+          "history_event_ids": [
+            "release_0001"
+          ],
+          "history_mode": "occlusion_support"
+        },
+        {
+          "id": "goal_1",
+          "achieved": null,
+          "target_matches_definition": true,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "object_key": "black_microwave",
+          "reason": "agentview(frame22)显示微波炉门关闭（门板遮挡炉腔入口），但wrist视角(frame21)显示门缝，需综合判断。门状态在当前帧无法完全确认，但微波炉身份通过参考图和连续视角确认。"
+        }
+      ],
+      "image_count": 24,
+      "event_count": 2,
+      "usage": {
+        "prompt_tokens": 7478,
+        "completion_tokens": 2087,
+        "total_tokens": 9565,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 1062
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 3120,
+          "text_tokens": 4358,
+          "cached_tokens": 0
+        }
+      }
+    },
+    {
+      "case": "microwave_mug",
+      "mode": "negative",
+      "passed": false,
+      "error": "RuntimeError: Qwen response parse failure"
+    },
+    {
+      "case": "basket_two",
+      "mode": "positive",
+      "passed": true,
+      "goal": true,
+      "reuse": [
+        "goal_0",
+        "goal_1"
+      ],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "release_0002"
+          ],
+          "object_key": "alphabet_soup_1",
+          "reason": "wrist视角(frame 18)显示篮子内有橙色标签罐子，与参考图中alphabet soup特征匹配。agentview(frame 19)确认篮子内有该罐子，且篮子在桌面上稳定放置。sideview(frame 20)显示机械臂已离开，罐子稳定在篮子内。；原图事件确认 release_0002",
+          "history_event_id": "release_0002",
+          "history_event_ids": [
+            "release_0002"
+          ],
+          "history_mode": "corroborating"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "release_0002"
+          ],
+          "object_key": "tomato_sauce_1",
+          "reason": "wrist视角(frame 18)显示篮子内有红色标签罐子，与参考图中tomato sauce特征匹配。agentview(frame 19)确认篮子内有该罐子，且篮子在桌面上稳定放置。sideview(frame 20)显示机械臂已离开，罐子稳定在篮子内。；原图事件确认 release_0002",
+          "history_event_id": "release_0002",
+          "history_event_ids": [
+            "release_0002"
+          ],
+          "history_mode": "corroborating"
+        }
+      ],
+      "image_count": 21,
+      "event_count": 2,
+      "usage": {
+        "prompt_tokens": 6681,
+        "completion_tokens": 2301,
+        "total_tokens": 8982,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 1276
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 2730,
+          "text_tokens": 3951,
+          "cached_tokens": 0
+        }
+      }
+    },
+    {
+      "case": "basket_two",
+      "mode": "negative",
+      "passed": true,
+      "goal": false,
+      "reuse": [],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": null,
+          "target_matches_definition": false,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "object_key": "orange_label_can",
+          "reason": "current frame 7显示篮子空，无目标物体；reference中橙色标签罐身份未在current帧中确认，无法判断是否放入"
+        },
+        {
+          "id": "goal_1",
+          "achieved": false,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "red_label_can",
+          "reason": "current frame 7中红色标签罐仍在桌面原位，篮子空置；与release帧一致，目标未满足in关系"
+        }
+      ],
+      "image_count": 9,
+      "event_count": 1,
+      "usage": {
+        "prompt_tokens": 3130,
+        "completion_tokens": 1448,
+        "total_tokens": 4578,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 423
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 1170,
+          "text_tokens": 1960,
+          "cached_tokens": 0
+        }
+      }
+    },
+    {
+      "case": "microwave_mug",
+      "mode": "no_history",
+      "passed": true,
+      "goal": null,
+      "reuse": [],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": null,
+          "target_matches_definition": false,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "object_key": "yellow_handle_mug",
+          "reason": "current frames 3/4/5中未见黄色把手杯子，微波炉门关闭无法确认内部；reference frames 0/1/2确认目标为黄色把手杯，但当前无连续视觉对应证据"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "frame 3/4/5显示微波炉门板遮住炉腔入口（门关闭位置），符合closed定义；门状态与reference中微波炉机身连续对应"
+        }
+      ],
+      "image_count": 6,
+      "event_count": 0,
+      "usage": {
+        "prompt_tokens": 2669,
+        "completion_tokens": 1259,
+        "total_tokens": 3928,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 234
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 780,
+          "text_tokens": 1889,
+          "cached_tokens": 0
+        }
+      }
+    }
+  ],
+  "environment_actions": 0
+}

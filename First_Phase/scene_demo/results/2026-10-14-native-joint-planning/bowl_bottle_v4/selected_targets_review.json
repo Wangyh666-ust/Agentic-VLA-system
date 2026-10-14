@@ -1,0 +1,408 @@
+{
+  "passed": true,
+  "response": {
+    "checks": [
+      {
+        "target_id": "akita_black_bowl_1",
+        "matches_request": true,
+        "features": "银灰色带斑点纹理圆形碗",
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              430,
+              0,
+              620,
+              110
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              435,
+              535,
+              535,
+              615
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              375,
+              505,
+              485,
+              575
+            ]
+          }
+        ],
+        "reason": "三视图均清晰可见银灰斑点碗，与请求目标一致"
+      },
+      {
+        "target_id": "white_cabinet_1_bottom_region",
+        "matches_request": true,
+        "features": "浅灰色双层抽屉柜，下层抽屉拉开",
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              0,
+              280,
+              320
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              495,
+              325,
+              765,
+              585
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              485,
+              455,
+              845,
+              765
+            ]
+          }
+        ],
+        "reason": "三视图确认柜体及下层开启状态，作为放置目的地有效"
+      }
+    ],
+    "regions": [
+      {
+        "destination_id": "white_cabinet_1_bottom_region",
+        "confirmed": true,
+        "description": "浅灰色柜子下层抽屉内部空间",
+        "boundary": "下层抽屉拉出后的底板及四周内壁",
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              515,
+              465,
+              745,
+              565
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              505,
+              585,
+              725,
+              685
+            ]
+          }
+        ]
+      }
+    ],
+    "plan_approved": true,
+    "plan_reason": "所选技能完整覆盖碗的收纳与关抽屉动作，瓶子归位因缺技能列为未支持，符合部分执行范围",
+    "reviewed_views": [
+      0,
+      1,
+      2
+    ],
+    "inventory_review": {
+      "reviewed_ids": [
+        "obj_1",
+        "obj_2",
+        "obj_3",
+        "obj_4"
+      ],
+      "removed_ids": [],
+      "updates": [],
+      "coverage": "碗与柜子身份确认无误，瓶子与置物架识别正确但未纳入本次执行技能",
+      "corrections": "无",
+      "reviewed_views": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  "metadata": {
+    "verdict": {
+      "target_visible": null,
+      "destination_visible": null,
+      "at_destination": null,
+      "supported": null,
+      "released": null,
+      "stable": null,
+      "operation_achieved": null,
+      "clear_of_target": null,
+      "boxes": {},
+      "evidence": [
+        "scene identity only"
+      ],
+      "unknown_reasons": []
+    },
+    "usage": {
+      "completion_tokens": 794,
+      "completion_tokens_details": {
+        "text_tokens": 794
+      },
+      "prompt_tokens": 4412,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "image_tokens": 582,
+        "text_tokens": 3830
+      },
+      "total_tokens": 5206
+    },
+    "model": "qwen3.8-max",
+    "http_status": 200,
+    "request_sha256": "ad5f3489d1f2282de4b6d6d9b37b72952c7f374472b0efe40d27f222fe13caac",
+    "response_sha256": "8473d910112e1e0bfda42717a767bfc7cfce6fc34b5470c9a33d4225cd2e05d1",
+    "call_index": 1
+  },
+  "selection": {
+    "akita_black_bowl_1": "obj_1",
+    "white_cabinet_1_bottom_region": "obj_3"
+  },
+  "image_sha256": [
+    "8f901dff03c994dda17eb4012e715f452a5832299d317cb5d36e6e087b409257",
+    "5cc2b2af91494cb92d9b6f07e8f56b484654ac88e0cd8880398d1dceaecaf0cb",
+    "44a540009036103c28d36f26f3a08ecb4d0e69e75725f0f853058eb96f9d302b"
+  ],
+  "goal_keys": [
+    "[\"white_cabinet_1_bottom_region\", \"close\", null, false]",
+    "[\"akita_black_bowl_1\", \"in\", \"white_cabinet_1_bottom_region\", false]"
+  ],
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "银灰色带斑点纹理的圆形碗，位于桌面中央偏左",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              430,
+              0,
+              620,
+              110
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              435,
+              535,
+              535,
+              615
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              375,
+              505,
+              485,
+              575
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕部视角顶部边缘可见碗口及内部斑点纹理"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "正面清晰可见完整碗身及银灰斑点外观"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视角度确认碗的形状与位置一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "深绿色或黑色细长瓶子，带有浅色瓶盖，位于碗后方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              230,
+              390,
+              330,
+              490
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              455,
+              415,
+              485,
+              515
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              575,
+              435,
+              605,
+              525
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视可见瓶身主体及浅色瓶盖"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "正面清晰可见瓶颈、瓶身及瓶盖细节"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视确认瓶子直立状态及相对位置"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "浅灰色双层抽屉柜，下层抽屉处于拉开状态，位于桌面右侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              0,
+              280,
+              320
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              495,
+              325,
+              765,
+              585
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              485,
+              455,
+              845,
+              765
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕部视角左侧可见柜体顶部及部分侧面结构"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "正面清晰可见上下两层抽屉，下层拉出露出内部空间"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视确认柜体立体结构及下层抽屉开启状态"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "木质折叠式置物架，带有红棕色底座，位于桌面左侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              125,
+              395,
+              425,
+              645
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              275,
+              295,
+              525,
+              525
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕部视角未覆盖该区域或被遮挡"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "正面清晰可见木板层叠结构及红色底座"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视确认置物架形态，非操作目标但为显著干扰物"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      }
+    ],
+    "coverage": "碗与柜子身份确认无误，瓶子与置物架识别正确但未纳入本次执行技能",
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca/planning_grounding/cap000002_wrist.png",
+        "sha256": "8f901dff03c994dda17eb4012e715f452a5832299d317cb5d36e6e087b409257"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "5cc2b2af91494cb92d9b6f07e8f56b484654ac88e0cd8880398d1dceaecaf0cb"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T110703Z_bowl_drawer_382fcdca/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "44a540009036103c28d36f26f3a08ecb4d0e69e75725f0f853058eb96f9d302b"
+      }
+    ],
+    "corrections": "无"
+  }
+}

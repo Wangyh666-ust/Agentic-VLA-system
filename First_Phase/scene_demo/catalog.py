@@ -9,6 +9,10 @@ evidence tag captured from an earlier run or the plain ``candidate`` marker.
 from __future__ import annotations
 
 import copy
+try:
+    from scene_demo.xvla_skills import NATIVE_LONG_SKILLS, NATIVE_SCENES, NATIVE_ATOMIC_CAPABILITIES
+except ModuleNotFoundError:
+    from xvla_skills import NATIVE_LONG_SKILLS, NATIVE_SCENES, NATIVE_ATOMIC_CAPABILITIES
 
 SCENES: dict[str, dict] = {
     "goal_table": {
@@ -312,7 +316,15 @@ CAPABILITIES: dict[str, dict] = {
 }
 
 
-def scene_capabilities(scene_id: str, include_audit: bool = False) -> list[dict]:
+SCENES.update(copy.deepcopy(NATIVE_SCENES))
+CAPABILITIES.update(copy.deepcopy(NATIVE_ATOMIC_CAPABILITIES))
+CAPABILITIES.update(copy.deepcopy(NATIVE_LONG_SKILLS))
+
+# These three are independently trained LIBERO Goal tasks. Split candidates
+# remain in the historical catalog but are never executable X-VLA capabilities.
+XVLA_NATIVE_IDS = frozenset(NATIVE_LONG_SKILLS) | {'wine_to_rack', 'bowl_to_plate', 'stove_on'}
+
+def scene_capabilities(scene_id: str, include_audit: bool = False, *, backend: str = "smolvla") -> list[dict]:
     """Return deep copies of the capabilities usable in ``scene_id``.
 
     Audit-only composite capabilities are excluded unless ``include_audit`` is
@@ -324,8 +336,14 @@ def scene_capabilities(scene_id: str, include_audit: bool = False) -> list[dict]
     if scene_id not in SCENES:
         raise ValueError("unknown scene_id: %r" % (scene_id,))
 
+    if "backends" in SCENES[scene_id] and backend not in SCENES[scene_id]["backends"]:
+        return []
     result: list[dict] = []
     for capability_id, capability in CAPABILITIES.items():
+        if backend == 'xvla' and capability_id not in XVLA_NATIVE_IDS:
+            continue
+        if "backends" in capability and backend not in capability["backends"]:
+            continue
         if scene_id not in capability["scene_ids"]:
             continue
         if capability["audit_only"] and not include_audit:

@@ -1,0 +1,18 @@
+{
+  "status": "stopped_without_launch_or_retry",
+  "failure_evidence": "launch_first.json",
+  "failed_operation": "Windows socket.bind(('127.0.0.1', 8794))",
+  "error": "WinError 10048",
+  "wsl_preflight": "Both clone HEADs matched and were clean; WSL bind to 127.0.0.1:8794 succeeded and socket was closed.",
+  "read_only_followup_command": "Get-NetTCPConnection -LocalPort 8794 -ErrorAction SilentlyContinue | Format-List LocalAddress,LocalPort,State,OwningProcess",
+  "followup_tool_output": "(no output)",
+  "interpretation": "No persistent existing service or owner PID has been established. The launcher added a Windows bind check after the successful WSL bind; that additional check caused the stop. A transient WSL localhost forwarding interaction is possible but unverified. Do not report this as confirmed occupation by another service.",
+  "server_started": false,
+  "client_started": false,
+  "server_pid": null,
+  "client_pid": null,
+  "get_openapi_performed": false,
+  "synthetic_inference_requests": 0,
+  "services_terminated": 0,
+  "repairs_or_retries_after_failure": 0
+}

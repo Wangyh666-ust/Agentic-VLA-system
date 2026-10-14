@@ -39,7 +39,7 @@ def prepare():
         'model_path': '/home/yhwang/fyp/libero_demo/models/smolvla_libero',
         'model_revision': '6721902bc4d61e50a3bfdb11dfb4cb626f05d102',
         'source_sha256': {s: pilot.sha(ROOT / s) for s in SOURCES},
-        'checker': CHECKER_NAME, 'qwen_model': 'qwen3-vl-plus', 'thinking_budget': 1024,
+        'checker': CHECKER_NAME, 'qwen_model': 'qwen3.8-max', 'thinking_budget': 1024,
         'check_schedule': [150, 300], 'qwen_max_per_subgoal': 6,
         'vla_budget_per_subgoal': 300, 'grasp_helper': 'none',
         'completion_mode': 'release_verified', 'grasp_guard_mode': 'shadow', 'finish_mode': 'visual',

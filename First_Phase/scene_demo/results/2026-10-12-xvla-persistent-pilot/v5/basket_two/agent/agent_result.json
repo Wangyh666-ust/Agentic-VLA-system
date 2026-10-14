@@ -1,0 +1,117 @@
+{
+  "request_id": "xvla-basket_two",
+  "session_id": "b5fdc461ff704bd299f89664bc7aa1bc",
+  "request": "先把字母汤罐放进篮子，再把番茄酱罐放进篮子。",
+  "run_ok": true,
+  "chain_ok": false,
+  "plan_success": null,
+  "task_success": null,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-basket_two",
+    "session_id": "b5fdc461ff704bd299f89664bc7aa1bc",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "soup_to_basket",
+      "sauce_to_basket"
+    ],
+    "original_capability_ids": [
+      "soup_to_basket",
+      "sauce_to_basket"
+    ],
+    "rationale": "用户明确要求‘先把字母汤罐放进篮子，再把番茄酱罐放进篮子’，动作词‘放进’+目的地‘篮子’清晰，对应 capability soup_to_basket 和 sauce_to_basket，按顺序执行。",
+    "job_ids": [
+      "c2e42f33bf1b4d2fa04a8dd4ef6d0b6e"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [
+      "sauce_to_basket"
+    ],
+    "plan_success": null,
+    "regressions": [],
+    "error": "final visual failed",
+    "repair_history": [],
+    "scene_version": 1
+  },
+  "jobs": [
+    {
+      "job_id": "c2e42f33bf1b4d2fa04a8dd4ef6d0b6e",
+      "request_id": "xvla-basket_two",
+      "session_id": "b5fdc461ff704bd299f89664bc7aa1bc",
+      "capability_id": "soup_to_basket",
+      "state": "completed",
+      "steps": 750,
+      "total_steps": 988,
+      "success": false,
+      "ended_reason": "final visual failed",
+      "error": null,
+      "instruction": "put the alphabet soup in the basket",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "38744d9c93f11fac1452e392ca4a0e1deb22848fc6cdc9512efcedd922258d6a",
+      "state_after_sha": "153bb27843e6aef56bf3c0e5ac6e30a4b84d7fcda6d2af66884238aaf18d16c0",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 6,
+        "prechecks": 5,
+        "helper_counts": {
+          "release": 2,
+          "movement": 135,
+          "confirm": 5,
+          "home": 80
+        },
+        "last_decision": {
+          "state": "incomplete",
+          "reason": "subtask purpose not achieved",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "final visual failed",
+          "checks": 6
+        },
+        "independent_streak": 5
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/rollout.mp4",
+      "wall_s": 337.862
+    }
+  ],
+  "evaluation": null,
+  "hermes_invocations": 1,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "cancelled_by_user": false,
+  "cancellation_pending": false,
+  "wall_s": 362.14,
+  "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+  "hermes_output": "计划已提交。\n\nsession_id: 20261012_221547_04ced5\n"
+}

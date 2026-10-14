@@ -1,0 +1,107 @@
+........................................................................ [  5%]
+........................................................................ [ 11%]
+............................................................. [ 16%]
+......................................................................................................................................... [ 27%]
+........................................................................ [ 33%]
+........................................................................ [ 39%]
+........................................................................ [ 45%]
+........................................................................ [ 51%]
+........................................................................ [ 57%]
+............................................................... [ 62%]
+........................................................................ [ 68%]
+...................................................................... [ 74%]
+.......................................................... [ 78%]
+................................................................ [ 84%]
+.................................................................... [ 89%]
+.......................................................F........ [ 94%]
+........................................................... [ 99%]
+...                                                                      [100%]
+=================================== FAILURES ===================================
+__________________________ test_capture_writes_files ___________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5e6e51fa90>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-0/test_capture_writes_files0')
+
+    def test_capture_writes_files(monkeypatch, tmp_path):
+        from sensors import SensorPort
+        from scipy.spatial.transform import Rotation as R
+    
+        def fake_render(width, height, camera_name, depth):
+            return (np.full((height, width, 3), 128, np.uint8),
+                    np.full((height, width), 0.5, np.float32))
+    
+        class CU:
+            @staticmethod
+            def get_real_depth_map(sim, d):
+                return np.asarray(d)
+            @staticmethod
+            def get_camera_intrinsic_matrix(sim, name, w, h):
+                return np.eye(3)
+            @staticmethod
+            def get_camera_extrinsic_matrix(sim, name):
+                return np.eye(4)
+    
+        monkeypatch.setattr('sensors._cu', lambda: CU)
+    
+        sid_data = {'site_xpos': np.array([[0.1, 0.2, 0.3]]),
+                    'site_xmat': np.eye(3).reshape(1, 9),
+                    'time': 2.5}
+        sim = types.SimpleNamespace(render=fake_render, data=types.SimpleNamespace(**sid_data))
+        sim.model = types.SimpleNamespace(site_name2id=lambda n: 0)
+        robot = types.SimpleNamespace(sim=sim, eef_site_id=0)
+    
+        p = SensorPort.__new__(SensorPort)
+        p._robot = robot
+        p.env = types.SimpleNamespace()
+        p.output_dir = str(tmp_path)
+        p._count = 0
+        p.reference = {}
+    
+        import scene_demo.joint_home as jh
+        monkeypatch.setattr(jh, 'read_robot_state', lambda env: {'eef_position': [0.1, 0.2, 0.3],
+                                                                 'eef_rotation': np.eye(3).tolist()})
+>       out = SensorPort.capture(p)
+
+First_Phase/scene_demo/finish_v1/tests/test_sensors.py:165: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sensors.SensorPort object at 0x7f5e6e51fe20>
+
+    def capture(self):
+        import PIL.Image as Image
+        robot = self._robot_()
+        sim = robot.sim
+        cu = _cu()
+        out = {'timestamp': float(sim.data.time), 'frames': []}
+        for view, out_view in (('agentview', 'agentview'), ('robot0_eye_in_hand', 'wrist')):
+            res = sim.render(width=256, height=256, camera_name=view, depth=True)
+            if not (isinstance(res, tuple) and len(res) == 2):
+                raise RuntimeError('sim.render must return (rgb,depth) tuple')
+            rgb, depth = res[0], res[1]
+            rgb = np.asarray(rgb)[::-1]
+            dmap = cu.get_real_depth_map(sim, depth)[::-1]
+            K = cu.get_camera_intrinsic_matrix(sim, view, 256, 256)
+            T = cu.get_camera_extrinsic_matrix(sim, view)
+            K = np.asarray(K, float)
+            T = np.asarray(T, float)
+            if K.shape != (3, 3) or T.shape != (4, 4):
+                raise RuntimeError('bad K/T shapes')
+            self._count += 1
+            base = os.path.join(self.output_dir, 'cap%06d_%s' % (self._count, out_view))
+            rp = base + '.png'
+            dp = base + '.npy'
+            cp = base + '.json'
+            Image.fromarray(rgb.astype(np.uint8)).save(rp)
+            np.save(dp, dmap.astype(np.float32))
+            with open(cp, 'w') as f:
+                json.dump({'K': K.tolist(), 'T': T.tolist(), 'view': out_view, 'pixel_center_offset': 0.5}, f)
+            out['frames'].append({'view': out_view, 'rgb_path': rp, 'depth_path': dp,
+                                  'K': K.tolist(), 'T_world_camera': T.tolist(),
+                                  'pixel_center_offset': 0.5})
+>       if 'sideview' not in sim.model.camera_names:
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'camera_names'
+
+First_Phase/scene_demo/finish_v1/sensors.py:158: AttributeError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/finish_v1/tests/test_sensors.py::test_capture_writes_files
+1 failed, 1222 passed, 76 subtests passed in 72.29s (0:01:12)

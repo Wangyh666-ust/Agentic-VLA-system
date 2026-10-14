@@ -1,0 +1,68 @@
+First_Phase/scene_demo/service.py:33: trailing whitespace.
++import copy
+First_Phase/scene_demo/service.py:333: trailing whitespace.
++def validate_capability_list(scene_id: str, capability_ids: Any, audit: bool, *, backend: str = "smolvla") -> dict[str, Any] | None:
+First_Phase/scene_demo/service.py:353: trailing whitespace.
++        if "backends" in capability and backend not in capability["backends"]:
+First_Phase/scene_demo/service.py:354: trailing whitespace.
++            return _err("unsupported_backend", "capability %r is not supported by backend %r" % (capability_id, backend))
+First_Phase/scene_demo/service.py:426: trailing whitespace.
++    return validate_capability_list(session.get("scene_id"), capability_ids, audit, backend=session.get("capability_backend", "smolvla"))
+First_Phase/scene_demo/service.py:475: trailing whitespace.
++    error = validate_capability_list(session.get("scene_id"), capability_ids, audit, backend=session.get("capability_backend", "smolvla"))
+First_Phase/scene_demo/service.py:916: trailing whitespace.
++        self.capability_backend = "smolvla"
+First_Phase/scene_demo/service.py:942: trailing whitespace.
++        return [c["capability_id"] for c in catalog.scene_capabilities(self.scene_id, backend=self.capability_backend)]
+First_Phase/scene_demo/service.py:949: trailing whitespace.
++            "capability_backend": self.capability_backend,
+First_Phase/scene_demo/service.py:966: trailing whitespace.
++            "capabilities": catalog.scene_capabilities(self.scene_id, backend=self.capability_backend),
+First_Phase/scene_demo/service.py:982: trailing whitespace.
++        if "_xvla_native_route" in payload:
+First_Phase/scene_demo/service.py:983: trailing whitespace.
++            self.native_skill_route = copy.deepcopy(payload["_xvla_native_route"])
+First_Phase/scene_demo/service.py:1008: trailing whitespace.
++        result = {
+First_Phase/scene_demo/service.py:1026: trailing whitespace.
++        if hasattr(self, "native_skill_route"):
+First_Phase/scene_demo/service.py:1027: trailing whitespace.
++            result["native_skill_route"] = copy.deepcopy(self.native_skill_route)
+First_Phase/scene_demo/service.py:1028: trailing whitespace.
++        return result
+First_Phase/scene_demo/service.py:1280: trailing whitespace.
++            if "backends" in scene and getattr(self, "capability_backend", "smolvla") not in scene["backends"]:
+First_Phase/scene_demo/service.py:1281: trailing whitespace.
++                continue
+First_Phase/scene_demo/service.py:1291: trailing whitespace.
++                    "capabilities": [c["capability_id"] for c in catalog.scene_capabilities(scene_id, backend=getattr(self, "capability_backend", "smolvla"))],
+First_Phase/scene_demo/service.py:1921: trailing whitespace.
++        scene_backends = catalog.SCENES[scene_id].get("backends")
+First_Phase/scene_demo/service.py:1922: trailing whitespace.
++        if scene_backends is not None and getattr(self, "capability_backend", "smolvla") not in scene_backends:
+First_Phase/scene_demo/service.py:1923: trailing whitespace.
++            return _err("unsupported_backend", "scene is not supported by this backend")
+First_Phase/scene_demo/service.py:1937: trailing whitespace.
++            record.capability_backend = getattr(self, "capability_backend", "smolvla")
+First_Phase/scene_demo/service.py:2374: trailing whitespace.
++                    worker_error = validate_capability_list(record.scene_id, plan.capability_ids, plan.audit, backend=record.capability_backend)
+First_Phase/scene_demo/service.py:2544: trailing whitespace.
++    def _build_finish_context(self, capability: dict, user_request: str) -> dict:
+First_Phase/scene_demo/service.py:2545: trailing whitespace.
++        from scene_demo.finish_v1.runtime import build_context
+First_Phase/scene_demo/service.py:2546: trailing whitespace.
++        return build_context(capability, user_request)
+First_Phase/scene_demo/service.py:2547: trailing whitespace.
++
+First_Phase/scene_demo/service.py:2548: trailing whitespace.
++    def _finish_monitor_class(self):
+First_Phase/scene_demo/service.py:2549: trailing whitespace.
++        from scene_demo.finish_v1.runtime import FinishMonitor
+First_Phase/scene_demo/service.py:2550: trailing whitespace.
++        return FinishMonitor
+First_Phase/scene_demo/service.py:2551: trailing whitespace.
++
+First_Phase/scene_demo/service.py:2559: trailing whitespace.
++        context = self._build_finish_context(capability, plan.user_request)
+First_Phase/scene_demo/service.py:2608: trailing whitespace.
++        monitor = self._finish_monitor_class()(

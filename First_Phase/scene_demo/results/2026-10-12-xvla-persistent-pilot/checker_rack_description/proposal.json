@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "id": "20261012-xvla-rack-description",
+  "intent": "analyze_existing",
+  "question_key": "xvla-rack-identity",
+  "purpose": "在既有正面同采样画面澄清酒瓶任务on木架上层板，检验负例拒绝及到位/归位后正例，零物理",
+  "prior_evidence": [
+    "20261011-final-input-audit",
+    "20261011-neutral-encoder-checker",
+    "20261011-takeover-stove-cue"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261011-final-input-audit",
+      "disposition": "reuse",
+      "reason": "复用输入审计与同采样context核对，本轮只改外部图像视角，不修改动作。"
+    },
+    {
+      "experiment_id": "20261011-neutral-encoder-checker",
+      "disposition": "reuse",
+      "reason": "复用中性提示和同步encoder输入，本轮仍用原build_prompt。"
+    },
+    {
+      "experiment_id": "20261011-takeover-stove-cue",
+      "disposition": "reuse",
+      "reason": "复用成功下游实现条件；本轮离线检查不修改或执行动作。"
+    }
+  ],
+  "related_search": "主Agent读取v4实际原图、prompt和独立5连，agentview比sideview少遮挡；v4结果未注册，列local_evidence原结果SHA。",
+  "local_evidence": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/pilot_result.json",
+      "sha256": "0ec825a89cd9cd0f073cdb91f52621471d41a66562e6b93f2ff97a8f436472a7"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/checks.jsonl",
+      "sha256": "ef304c28e099bc62d6e90ff3ecfcfb0ddba0db68e155623fb2c0b3fa32d1f81b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/independent_finish.jsonl",
+      "sha256": "d47fc00041711da2f14618e227d7ab5d455dcb5a2c93acec7fe946f70d6f0089"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/result.json",
+      "sha256": "9447b8c55e03d9fcd7413ff3cad042f6be76b98e939ecb462ff480841513823c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_agentview/result.json",
+      "sha256": "35c3d2b2c81684d87f797d406e7b3bbfb1e6f7dfe04e4509045ac487962655dc"
+    },
+    {
+      "path": "First_Phase/scene_demo/catalog.py",
+      "sha256": "f4bb264148442c213418b8ace29d47cafcb8db5df3f6a551b845c7be13552338"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/result.json",
+      "sha256": "9447b8c55e03d9fcd7413ff3cad042f6be76b98e939ecb462ff480841513823c"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "三个固定cases一次，无重试，期望false/true/true；图片与同期encoder原样复用。",
+    "每case context仅task_description不同，image paths与SHA相同。",
+    "澄清静态架子身份/关系，不输入仿真当前目标真值、接触或阶段标签。",
+    "模型随机流非配对；离线不证明在线成功。",
+    "最多3次Qwen，新物理动作0，X-VLA调用0，网络/解析异常停止。"
+  ],
+  "changed_input": {
+    "field": "criteria.task_description",
+    "before": "put the wine bottle on the rack",
+    "after": "把酒瓶放在两层木质条板架的上层板上。此任务是放在板面上，不是放进架子内部。"
+  },
+  "catalog_goal": [
+    "on",
+    "wine_bottle_1",
+    "wine_rack_1_top_region"
+  ]
+}

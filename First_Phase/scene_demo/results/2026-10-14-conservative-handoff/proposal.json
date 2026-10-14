@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "20261014-conservative-handoff-offline",
+  "intent": "analyze_existing",
+  "question_key": "book-caddy-checker-model",
+  "purpose": "验证具体目的地区域和保守接管判断能否阻止书的提前松手误判，同时保持真正到位与长程历史证据的可接受性。",
+  "prior_evidence": ["20261014-book-caddy-old-checker", "20261014-all-vlm-qwen38-book", "20261014-qwen38-three-requests"],
+  "history_review": [
+    {"experiment_id":"20261014-book-caddy-old-checker","disposition":"reuse","reason":"复用旧模型提前放行失败定位；不重复在线动作。"},
+    {"experiment_id":"20261014-all-vlm-qwen38-book","disposition":"reuse","reason":"复用Qwen3.8实际初态、松手前和松手后的三图及完整请求；修正模型不够，改区域和接管证据。"},
+    {"experiment_id":"20261014-qwen38-three-requests","disposition":"reuse","reason":"复用碗放盘真实达标与黄杯入炉关门历史证据，防止只让所有结果变未知。"}
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "软件检查全部10原生长任务的到位/需继续移动/同刻反证/缺支撑/未确认区域分支，以及区域纠正撤销历史证据。",
+    "用书松手前原图首先调用当前Qwen3.8检查链；不得放行。若仍错误放行，停止依赖验证并诊断，不启动在线任务。",
+    "独立回放书松手后负例、碗放盘真到位、黄杯关门后历史证据；最多4案例每例8次Qwen请求，保留全部请求响应，不把全unknown作为修好。",
+    "保留相机与原收尾/退离/复位实现，记录哈希；本次不启动仿真，不调用Hermes或子agent。"
+  ]
+}

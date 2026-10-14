@@ -1,0 +1,108 @@
+*** Begin Patch
+*** Update File: First_Phase/libero_demo/xvla_native_benchmark.py
+@@
+-    if weight.get("sha256") != config.get("weight_sha256") or weight.get("revision") != config.get("weight_revision"):
++    if weight.get("sha256") != config.get("model_sha256") or weight.get("revision") != config.get("model_revision"):
+         raise ContractError("install_verification weight mismatch with config")
+-    model_file = Path(install.get("model_path", ""))
+-    if not model_file.exists():
++    model_file = Path(weight["path"])
++    if not model_file.is_file():
+         raise ContractError(f"model.safetensors missing: {model_file}")
+@@
+-        "controller_name": getattr(ctx.get("env").env.robots[0].controller, "name", None) if ctx.get("env") else None,
+-        "controller_use_delta": getattr(ctx.get("env").env.robots[0].controller, "use_delta", None) if ctx.get("env") else None,
+-        "controller_control_dim": getattr(ctx.get("env").env.robots[0].controller, "control_dim", None) if ctx.get("env") else None,
++        "controller_name": ctx["initial_audit"]["controller_name"],
++        "controller_use_delta": ctx["initial_audit"]["controller_use_delta"],
++        "controller_control_dim": ctx["initial_audit"]["controller_control_dim"],
+@@
+ def _read_slot_result(slot: Path) -> dict | None:
+     result = slot / "result.json"
+     if not result.exists():
+         return None
+-    try:
+-        return json.loads(result.read_text(encoding="utf-8"))
+-    except Exception:
+-        return None
++    return json.loads(result.read_text(encoding="utf-8"))
+@@
+     success = row.get("success")
+     end_reason = row.get("end_reason")
++    author_score = row.get("author_score")
++    if type(author_score) is not int:
++        return False
++    if not all(type(row.get(k)) is int for k in ("policy_actions", "setup_actions", "model_calls", "horizon")):
++        return False
+     try:
+         policy_actions = int(row.get("policy_actions"))
+         setup_actions = int(row.get("setup_actions"))
+         model_calls = int(row.get("model_calls"))
+         horizon = int(row.get("horizon"))
+-        author_score = int(row.get("author_score"))
+     except (TypeError, ValueError):
+         return False
+@@
+         if done >= args.max_new_episodes:
++            _write_progress_file(out, index, {}, "paused_after_limit")
+             summarize(out, index)
+             return
+*** Update File: First_Phase/libero_demo/test_xvla_native_benchmark.py
+@@
+ def test_summarize_excludes_unknown_and_keeps_attempts_separate(tmp_path):
+@@
+-        row = {"end_reason": "budget_exhausted", "success": True, "score": 1.0, "actions": 10}
+-        (attempt / "result.json").write_text(json.dumps(dict(row, status="unknown", valid=False, success=None)))
++        row = {"end_reason": "native_success", "success": True, "score": 1.0, "actions": 10}
++        (attempt / "result.json").write_text(json.dumps(row))
+@@
+ def test_audited_env_tracks_action_obs_and_double_close():
+@@
+     def step(self, action):
+-        actions_seen.append(np.array(action, copy=True))
++        actions_seen.append(action)
+         obs = {"agentview_image": np.zeros((2, 2, 3), dtype=np.uint8)}
+-        return obs, 0.0, done_flag["value"], {}
++        return obs, 0.0, False, {}
+@@
+     assert len(actions_seen) == 1
++    assert actions_seen[0] is action
+@@
+ def test_freeze_metadata_real_installed_contract(tmp_path):
++    mod = _load_runner()
++    config = mod.load_config()
++    metadata = mod.freeze_metadata(
++        tmp_path,
++        config,
++        mod.sha256_file(MODULE_PATH),
++        mod.sha256_file(Path(mod.author.__file__)),
++    )
++    assert metadata["git_heads"]["libero"] == config["source_libero"]
++    assert metadata["git_heads"]["upstream"] == config["source_xvla"]
++    assert metadata["weight_verification"]["sha256"] == config["model_sha256"]
++    again = mod.freeze_metadata(
++        tmp_path,
++        config,
++        mod.sha256_file(MODULE_PATH),
++        mod.sha256_file(Path(mod.author.__file__)),
++    )
++    assert metadata["fingerprint"] == again["fingerprint"]
++
++
++def test_validate_rejects_noninteger_counts():
++    mod = _load_runner()
++    row = {
++        "end_reason": "native_success",
++        "success": True,
++        "policy_actions": 10,
++        "setup_actions": 1,
++        "model_calls": 10,
++        "horizon": 300,
++        "author_score": 1,
++    }
++    assert mod.validate_episode(row) is True
++    for key, value in (("policy_actions", "10"), ("policy_actions", 10.9), ("author_score", True)):
++        bad = dict(row)
++        bad[key] = value
++        assert mod.validate_episode(bad) is False
+*** End Patch

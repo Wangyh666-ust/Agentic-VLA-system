@@ -1,0 +1,24 @@
+{
+  "request_id": "console-fe8a93c751f8656ef4ead0c3",
+  "session_id": "6e418042f11e43318341a5d88b4a88cd",
+  "scene_version": 0,
+  "decision": "execute",
+  "capability_ids": [
+    "xvla_book_caddy"
+  ],
+  "rationale": "用户动作词为「整理」「归位」，属收纳意图；公开 storage_policy 唯一目的地为 black_book_1 → desk_caddy_1_back_contain_region，与用户点名的「把书本归位」一致。画面核对：obj_1 为竖立黑书（顶边白色书页、有厚度），与平贴薄板 obj_4/obj_5 可区分；目的地 obj_2 为红棕三隔间收纳盒，后格即 policy 所指区域。所选可执行范围（抓起书本放入收纳盒后格）与原生长期技能 xvla_book_caddy 的动作、对象、目的地、顺序完全匹配，故优先调用该技能（其 Hermes 复合集成尚未物理验证，不声称已可靠验证）。",
+  "request_scope": {
+    "coverage": "full",
+    "executable_outcomes": [
+      "black_book_1（obj_1）被放入 desk_caddy_1_back_contain_region（obj_2 收纳盒后格），完成用户点名的书本归位与按公开 policy 的桌面整理"
+    ],
+    "unmet_outcomes": [],
+    "reason": "用户请求为整理桌面并把书本归位；公开 storage_policy 仅定义书本一个收纳目的地，故按 policy 的整理范围与用户点名子目标完全重合，均由 xvla_book_caddy 一次覆盖，无能力缺口。桌面上杯子与黑色薄板无公开收纳目的地，不在 policy 整理范围内，未额外添加动作。"
+  },
+  "target_bindings": {
+    "black_book_1": "obj_1",
+    "desk_caddy_1_back_contain_region": "obj_2"
+  },
+  "audit": false,
+  "budget_per_subgoal": 900
+}

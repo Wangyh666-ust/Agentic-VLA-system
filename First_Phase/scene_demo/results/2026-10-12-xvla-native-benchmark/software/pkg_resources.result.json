@@ -1,0 +1,24 @@
+{
+  "name": "pkg_resources",
+  "argv": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu",
+    "--exec",
+    "env",
+    "PYTHONPATH=/mnt/d/FYP/First_Phase/libero_demo:/home/yhwang/fyp/xvla_native/LIBERO:/home/yhwang/fyp/xvla_native/upstream",
+    "LIBERO_CONFIG_PATH=/home/yhwang/fyp/xvla_native/libero_config",
+    "MUJOCO_GL=egl",
+    "PYOPENGL_PLATFORM=egl",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+    "-c",
+    "import pkg_resources, importlib.metadata as m, torch, json, sys; version=m.version('setuptools'); equal=torch.__version__ == str(torch.__version__); assert version == '70.3.0'; assert equal; print(json.dumps({'setuptools':version,'pkg_resources_import':True,'pkg_resources_file':pkg_resources.__file__,'python':sys.executable,'torch':str(torch.__version__),'torch_version_equality':equal}))"
+  ],
+  "cwd": "D:\\FYP\\First_Phase\\libero_demo",
+  "started_utc": "2026-10-12T06:25:10.321274+00:00",
+  "finished_utc": "2026-10-12T06:25:11.818236+00:00",
+  "exit_code": 1,
+  "stdout": "software/pkg_resources.stdout.log",
+  "stderr": "software/pkg_resources.stderr.log"
+}

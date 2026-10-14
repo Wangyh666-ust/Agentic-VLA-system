@@ -1,0 +1,120 @@
+{
+  "request_id": "xvla-wine_bowl_stove",
+  "session_id": "4359e1a2a3c74475a53bae3551d7518b",
+  "request": "先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台。",
+  "run_ok": true,
+  "chain_ok": false,
+  "plan_success": null,
+  "task_success": null,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-wine_bowl_stove",
+    "session_id": "4359e1a2a3c74475a53bae3551d7518b",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "original_capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "rationale": "User explicitly requested: '先把酒瓶放到架子上' (use wine_to_rack), '再把碗放到盘子上' (use bowl_to_plate), '最后打开灶台' (use stove_on). All three capabilities exist in the scene.",
+    "job_ids": [
+      "c51276c4793d4476ac8748b4a3399c12"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "plan_success": null,
+    "regressions": [],
+    "error": "final visual failed",
+    "repair_history": [],
+    "scene_version": 1
+  },
+  "jobs": [
+    {
+      "job_id": "c51276c4793d4476ac8748b4a3399c12",
+      "request_id": "xvla-wine_bowl_stove",
+      "session_id": "4359e1a2a3c74475a53bae3551d7518b",
+      "capability_id": "wine_to_rack",
+      "state": "completed",
+      "steps": 150,
+      "total_steps": 419,
+      "success": false,
+      "ended_reason": "final visual failed",
+      "error": null,
+      "instruction": "put the wine bottle on the rack",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "00dcd896e3b64dd8e462745548085b85a97bb8a1d1956cb9f3aa1ec25457175b",
+      "state_after_sha": "31d204943bc05e5ba63f4773b37121c84edca4422e16da58d8ac4db5fd5f8d6f",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": "semantic_wine_rack_v1",
+      "semantic_state": "incomplete",
+      "semantic_candidate_streak": 1,
+      "semantic_success": false,
+      "native_wine_predicate": true,
+      "semantic_observation_samples": 150,
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 2,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 7,
+          "movement": 26,
+          "confirm": 3,
+          "home": 218
+        },
+        "last_decision": {
+          "state": "incomplete",
+          "reason": "subtask purpose not achieved",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "final visual failed",
+          "checks": 2
+        },
+        "independent_streak": 5
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/rollout.mp4",
+      "wall_s": 143.928
+    }
+  ],
+  "evaluation": null,
+  "hermes_invocations": 1,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "cancelled_by_user": false,
+  "cancellation_pending": false,
+  "wall_s": 165.618,
+  "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+  "hermes_output": "Plan已提交。\n\nsession_id: 20261012_215137_566d31\n"
+}

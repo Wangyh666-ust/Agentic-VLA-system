@@ -1,0 +1,823 @@
+{
+  "verdict": {
+    "target_visible": null,
+    "destination_visible": null,
+    "at_destination": null,
+    "supported": null,
+    "released": null,
+    "stable": null,
+    "operation_achieved": null,
+    "clear_of_target": null,
+    "boxes": {},
+    "evidence": [
+      "wrist view (frame 6) shows alphabet soup in basket; agentview (frame 7) shows tomato sauce on table"
+    ],
+    "unknown_reasons": []
+  },
+  "usage": {
+    "prompt_tokens": 3668,
+    "completion_tokens": 1258,
+    "total_tokens": 4926,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1025,
+      "text_tokens": 233
+    },
+    "prompt_tokens_details": {
+      "image_tokens": 1170,
+      "text_tokens": 2498,
+      "cached_tokens": 0
+    }
+  },
+  "model": "qwen3-vl-plus",
+  "http_status": 200,
+  "request_sha256": "2f25d5d01d27d2e7d7b8381a26f91e95f27555e88524fec5538e38bd8c2b8adf",
+  "response_sha256": "f36efdf4e48d2f384b68d633e317919ef84230271476110204756c83e523179b",
+  "call_index": 4,
+  "checker": "xvla_evidence_memory_v5",
+  "prompt_text": "观察机器人照片中的实际事实，程序负责判定完整任务。每项goal输出一条observation，顺序与goals一致。\n先独立看当前照片 [6, 7, 8] 中各物体的可见形状和位置，再用reference/memory核对身份。旧图中的桌面位置和previous_checks里的False/True不能当作当前位置或当前装置状态。历史记录仅由程序维护，不替程序推导仍然成功。\n图片按frame/view/time标注：wrist腕部，agentview和sideview两个外部视角。reference仅用于辨认身份；time=-1表示旧参考图时间未知。memory为此前一次真实松手检查确认的放置记录及原图，不是本次待重新评分的目标。\n先辨认指定目标和干扰物：用reference和memory对照当前。黄色把手、标签配色、形状可识别即可，不要求每帧读出标签字样。不能把仍在桌上的其他杯或包装盒当成目标。两件同类目标必须对应两件不同实物，object_key要稳定沿用memory里的标识。\n颜色相似不足以匹配：先区分罐/瓶/盒、杯/碗等形状，再核对配色和参照图。不要用桌上瓶子证明目标罐在桌上。先逐视角找目标，外部视角遮挡时检查wrist；看到两个物体应分别描述，不能只凭最显眼的一件判断全部目标。\nrole=release_review时，仅检查这一次release/current所见的目标关系；空手开爪、操作容器后的开爪可能与某放置目标无关，无关或遮挡返回unknown，不能否定之前的放置。before/after严格限相邻1秒，缺失就是缺失，不能臆造动作连续性。\n放置项relation只填at_destination、outside、unknown。at_destination指确见指定目标满足所要求in/on/right_of关系；outside指明确同一目标不在目的地；unknown指遮挡/无法辨认/本次无关。on盘是盘面，不额外要求入盘内部。current仍夹持不否定到位，松手/退离/归位由后续流程执行。\n只有release_review的at_destination并且supported=true才会存为放置证据。supported表示看见物体在目的地得到支撑，不是正在掉落或容器入口外；实测开口只证明张开，不能证明成功放置。\n已有memory时，当前看不清、同一目标暂时辨认不出、后续无关开爪都不撤销。不要输出broken之类推断标签。只有明确看到同一个目标离开原目的地，才填change.kind=removed/moved/dropped；必须确认same_object=true、引用当前反证frame并说明目标和位置如何变化。其他情况kind=none。\n装置状态项先报告实际看到的observed_state=open/closed/on/off/unknown，由程序比较目标。只看current图判断状态，不能用memory里的旧门状态。辨认出打开的门也是identity=matched。侧面/斜视只要门板相对机身的位置可辨即可，不要求正面；黑色机身/背板不是门，不能因看不到炉腔就推断关门。\n放置项只填relation和supported；装置状态项只填observed_state，不填relation或supported。reason只说明本目标的图像依据，不猜测其他检查项。状态只能有一个事实，不得同时解释为开和关。\n当前看不见的放置目标即使memory已确认，也必须输出relation=unknown、supported=null；程序会保留既有证据。不得把历史确认改写成当前可见。门状态的reason须说明可见门板相对机身的位置，不能仅写入口看不见。\nframes只列release/current对应本项关系或状态的图；identity_frames可引用本次参考/记忆/当前图。明确判断需引用照片，看不清允许空数组。change.frames只允许current图。identity=matched必须有明确object_key和identity_frames；uncertain/distractor不算明确目标反证。\n按下列逐项目标模板输出JSON，枚举选一，数组填实际整数frame，supported填true/false/null；不要输出整体完成判断：{\"observations\": [{\"id\": \"goal_0\", \"identity\": \"matched|uncertain|distractor\", \"object_key\": \"same physical object identifier or null\", \"frames\": [], \"identity_frames\": [], \"change\": {\"kind\": \"none|removed|moved|dropped\", \"same_object\": null, \"frames\": [], \"reason\": \"\"}, \"reason\": \"current visible features and position; unknown when not visible\", \"relation\": \"at_destination|outside|unknown\", \"supported\": null}, {\"id\": \"goal_1\", \"identity\": \"matched|uncertain|distractor\", \"object_key\": \"same physical object identifier or null\", \"frames\": [], \"identity_frames\": [], \"change\": {\"kind\": \"none|removed|moved|dropped\", \"same_object\": null, \"frames\": [], \"reason\": \"\"}, \"reason\": \"current visible features and position; unknown when not visible\", \"relation\": \"at_destination|outside|unknown\", \"supported\": null}], \"reason\": \"brief current visual facts\"}\n{\"protocol\":\"xvla_evidence_memory_v5\",\"role\":\"current_review\",\"event_id\":null,\"goals\":[{\"description\":\"put the alphabet soup in the basket\",\"destination_id\":\"basket_1_contain_region\",\"id\":\"goal_0\",\"relation\":\"in\",\"target_id\":\"alphabet_soup_1\",\"target_visual_identity\":\"圆柱罐、银盖、蓝色/橙色标签；与Milk盒及Tomato Sauce罐区分。\"},{\"description\":\"put the tomato sauce in the basket\",\"destination_id\":\"basket_1_contain_region\",\"id\":\"goal_1\",\"relation\":\"in\",\"target_id\":\"tomato_sauce_1\",\"target_visual_identity\":\"圆柱形罐头，红绿标签及Tomato Sauce文字；不同于Milk纸盒，也不同于Tomato Ketchup挤压瓶。\"}],\"groups\":[{\"kind\":\"reference\",\"event_id\":null,\"time\":-1,\"frames\":[0,1,2],\"time_known\":false},{\"kind\":\"memory\",\"event_id\":\"release_0002\",\"time\":14.200000000001411,\"frames\":[3,4,5],\"encoder\":{\"timestamp\":14.200000000001411,\"finger_qpos\":[0.037911917350109,-0.038129255555980325],\"standard_open_finger_qpos\":[0.03872987809408042,-0.03872846551387219],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":0.8179607439714187,\"at_standard_open\":true}},{\"kind\":\"current\",\"event_id\":null,\"time\":23.799999999997688,\"frames\":[6,7,8],\"encoder\":{\"timestamp\":23.799999999997688,\"finger_qpos\":[0.03997674132704478,-0.04000084354278527],\"standard_open_finger_qpos\":[0.03872987809408042,-0.03872846551387219],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":1.272378028913078,\"at_standard_open\":true}}],\"memory\":[{\"id\":\"goal_1\",\"target_id\":\"tomato_sauce_1\",\"object_key\":\"tomato_sauce_1\",\"event_id\":\"release_0002\",\"timestamp\":14.200000000001411,\"status\":\"confirmed\",\"evidence_frames\":[3,4,5]}],\"previous_checks\":[{\"time\":8.799999999999608,\"role\":\"release_review\",\"event_id\":\"release_0001\",\"goals\":[{\"id\":\"goal_0\",\"achieved\":false,\"object_key\":\"alphabet_soup_1\",\"evidence_event_ids\":[]},{\"id\":\"goal_1\",\"achieved\":false,\"object_key\":\"tomato_sauce_1\",\"evidence_event_ids\":[]}]},{\"time\":14.200000000001411,\"role\":\"release_review\",\"event_id\":\"release_0002\",\"goals\":[{\"id\":\"goal_0\",\"achieved\":null,\"object_key\":null,\"evidence_event_ids\":[]},{\"id\":\"goal_1\",\"achieved\":true,\"object_key\":\"tomato_sauce_1\",\"evidence_event_ids\":[\"release_0002\"]}]},{\"time\":16.300000000001845,\"role\":\"current_review\",\"event_id\":null,\"goals\":[{\"id\":\"goal_0\",\"achieved\":true,\"object_key\":\"alphabet_soup_1\",\"evidence_event_ids\":[]},{\"id\":\"goal_1\",\"achieved\":true,\"object_key\":\"tomato_sauce_1\",\"evidence_event_ids\":[\"release_0002\"]}]}],\"current_frames\":[6,7,8],\"relation_frames\":[6,7,8],\"sensor_frames\":[{\"frame\":0,\"view\":\"wrist\",\"timestamp\":-1},{\"frame\":1,\"view\":\"agentview\",\"timestamp\":-1},{\"frame\":2,\"view\":\"sideview\",\"timestamp\":-1},{\"frame\":3,\"view\":\"wrist\",\"timestamp\":14.200000000001411},{\"frame\":4,\"view\":\"agentview\",\"timestamp\":14.200000000001411},{\"frame\":5,\"view\":\"sideview\",\"timestamp\":14.200000000001411},{\"frame\":6,\"timestamp\":23.799999999997688,\"view\":\"wrist\"},{\"frame\":7,\"timestamp\":23.799999999997688,\"view\":\"agentview\"},{\"frame\":8,\"timestamp\":23.799999999997688,\"view\":\"sideview\"}]}",
+  "input_context": {
+    "actuator_measurements": {
+      "finger_qpos": [
+        0.03997674132704478,
+        -0.04000084354278527
+      ],
+      "max_abs_arm_qvel": 0.08455521862556706,
+      "stage": "executing",
+      "standard_open_finger_qpos": [
+        0.03872987809408042,
+        -0.03872846551387219
+      ],
+      "timestamp": 23.799999999997688
+    },
+    "criteria": {
+      "must_clear": true,
+      "must_preserve_target": true,
+      "must_release": true,
+      "must_stabilize": true,
+      "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+      "skill_description": "put both the alphabet soup and the tomato sauce in the basket",
+      "success_checks": [
+        {
+          "description": "put the alphabet soup in the basket",
+          "destination_id": "basket_1_contain_region",
+          "id": "goal_0",
+          "relation": "in",
+          "target_id": "alphabet_soup_1",
+          "target_visual_identity": "圆柱罐、银盖、蓝色/橙色标签；与Milk盒及Tomato Sauce罐区分。"
+        },
+        {
+          "description": "put the tomato sauce in the basket",
+          "destination_id": "basket_1_contain_region",
+          "id": "goal_1",
+          "relation": "in",
+          "target_id": "tomato_sauce_1",
+          "target_visual_identity": "圆柱形罐头，红绿标签及Tomato Sauce文字；不同于Milk纸盒，也不同于Tomato Ketchup挤压瓶。"
+        }
+      ],
+      "task_description": "put the tomato sauce in the basket"
+    },
+    "current_subtask": {
+      "destination": "basket_1_contain_region",
+      "operation": "place",
+      "phase": "executing",
+      "target": "tomato_sauce_1"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": -1
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": -1
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": -1
+      },
+      {
+        "frame": 3,
+        "view": "wrist",
+        "timestamp": 14.200000000001411
+      },
+      {
+        "frame": 4,
+        "view": "agentview",
+        "timestamp": 14.200000000001411
+      },
+      {
+        "frame": 5,
+        "view": "sideview",
+        "timestamp": 14.200000000001411
+      },
+      {
+        "frame": 6,
+        "timestamp": 23.799999999997688,
+        "view": "wrist"
+      },
+      {
+        "frame": 7,
+        "timestamp": 23.799999999997688,
+        "view": "agentview"
+      },
+      {
+        "frame": 8,
+        "timestamp": 23.799999999997688,
+        "view": "sideview"
+      }
+    ],
+    "user_request": "先把字母汤罐放进篮子，再把番茄酱罐放进篮子。"
+  },
+  "request_image_paths": [
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000002_wrist.png",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000001_agentview.png",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000003_sideview.png",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000161_wrist.png",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000160_agentview.png",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000162_sideview.png",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000284_wrist.png",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000283_agentview.png",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000285_sideview.png"
+  ],
+  "event_packet": {
+    "protocol": "xvla_evidence_memory_v5",
+    "role": "current_review",
+    "event_id": null,
+    "goals": [
+      {
+        "description": "put the alphabet soup in the basket",
+        "destination_id": "basket_1_contain_region",
+        "id": "goal_0",
+        "relation": "in",
+        "target_id": "alphabet_soup_1",
+        "target_visual_identity": "圆柱罐、银盖、蓝色/橙色标签；与Milk盒及Tomato Sauce罐区分。"
+      },
+      {
+        "description": "put the tomato sauce in the basket",
+        "destination_id": "basket_1_contain_region",
+        "id": "goal_1",
+        "relation": "in",
+        "target_id": "tomato_sauce_1",
+        "target_visual_identity": "圆柱形罐头，红绿标签及Tomato Sauce文字；不同于Milk纸盒，也不同于Tomato Ketchup挤压瓶。"
+      }
+    ],
+    "groups": [
+      {
+        "kind": "reference",
+        "event_id": null,
+        "time": -1,
+        "frames": [
+          0,
+          1,
+          2
+        ],
+        "time_known": false
+      },
+      {
+        "kind": "memory",
+        "event_id": "release_0002",
+        "time": 14.200000000001411,
+        "frames": [
+          3,
+          4,
+          5
+        ],
+        "encoder": {
+          "timestamp": 14.200000000001411,
+          "finger_qpos": [
+            0.037911917350109,
+            -0.038129255555980325
+          ],
+          "standard_open_finger_qpos": [
+            0.03872987809408042,
+            -0.03872846551387219
+          ],
+          "position_unit": "m",
+          "standard_open_tolerance_m": 0.002,
+          "max_standard_open_error_mm": 0.8179607439714187,
+          "at_standard_open": true
+        }
+      },
+      {
+        "kind": "current",
+        "event_id": null,
+        "time": 23.799999999997688,
+        "frames": [
+          6,
+          7,
+          8
+        ],
+        "encoder": {
+          "timestamp": 23.799999999997688,
+          "finger_qpos": [
+            0.03997674132704478,
+            -0.04000084354278527
+          ],
+          "standard_open_finger_qpos": [
+            0.03872987809408042,
+            -0.03872846551387219
+          ],
+          "position_unit": "m",
+          "standard_open_tolerance_m": 0.002,
+          "max_standard_open_error_mm": 1.272378028913078,
+          "at_standard_open": true
+        }
+      }
+    ],
+    "memory": [
+      {
+        "id": "goal_1",
+        "target_id": "tomato_sauce_1",
+        "object_key": "tomato_sauce_1",
+        "event_id": "release_0002",
+        "timestamp": 14.200000000001411,
+        "status": "confirmed",
+        "evidence_frames": [
+          3,
+          4,
+          5
+        ]
+      }
+    ],
+    "previous_checks": [
+      {
+        "time": 8.799999999999608,
+        "role": "release_review",
+        "event_id": "release_0001",
+        "goals": [
+          {
+            "id": "goal_0",
+            "achieved": false,
+            "object_key": "alphabet_soup_1",
+            "evidence_event_ids": []
+          },
+          {
+            "id": "goal_1",
+            "achieved": false,
+            "object_key": "tomato_sauce_1",
+            "evidence_event_ids": []
+          }
+        ]
+      },
+      {
+        "time": 14.200000000001411,
+        "role": "release_review",
+        "event_id": "release_0002",
+        "goals": [
+          {
+            "id": "goal_0",
+            "achieved": null,
+            "object_key": null,
+            "evidence_event_ids": []
+          },
+          {
+            "id": "goal_1",
+            "achieved": true,
+            "object_key": "tomato_sauce_1",
+            "evidence_event_ids": [
+              "release_0002"
+            ]
+          }
+        ]
+      },
+      {
+        "time": 16.300000000001845,
+        "role": "current_review",
+        "event_id": null,
+        "goals": [
+          {
+            "id": "goal_0",
+            "achieved": true,
+            "object_key": "alphabet_soup_1",
+            "evidence_event_ids": []
+          },
+          {
+            "id": "goal_1",
+            "achieved": true,
+            "object_key": "tomato_sauce_1",
+            "evidence_event_ids": [
+              "release_0002"
+            ]
+          }
+        ]
+      }
+    ],
+    "current_frames": [
+      6,
+      7,
+      8
+    ],
+    "relation_frames": [
+      6,
+      7,
+      8
+    ],
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": -1
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": -1
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": -1
+      },
+      {
+        "frame": 3,
+        "view": "wrist",
+        "timestamp": 14.200000000001411
+      },
+      {
+        "frame": 4,
+        "view": "agentview",
+        "timestamp": 14.200000000001411
+      },
+      {
+        "frame": 5,
+        "view": "sideview",
+        "timestamp": 14.200000000001411
+      },
+      {
+        "frame": 6,
+        "timestamp": 23.799999999997688,
+        "view": "wrist"
+      },
+      {
+        "frame": 7,
+        "timestamp": 23.799999999997688,
+        "view": "agentview"
+      },
+      {
+        "frame": 8,
+        "timestamp": 23.799999999997688,
+        "view": "sideview"
+      }
+    ]
+  },
+  "event_observations": {
+    "observations": [
+      {
+        "id": "goal_0",
+        "identity": "matched",
+        "object_key": "alphabet_soup_1",
+        "frames": [
+          6
+        ],
+        "identity_frames": [
+          6
+        ],
+        "change": {
+          "kind": "none",
+          "same_object": null,
+          "frames": [],
+          "reason": ""
+        },
+        "reason": "wrist view (frame 6) shows blue/orange labeled cylindrical can inside basket",
+        "relation": "at_destination",
+        "supported": true,
+        "observed_state": "unknown"
+      },
+      {
+        "id": "goal_1",
+        "identity": "matched",
+        "object_key": "tomato_sauce_1",
+        "frames": [
+          7
+        ],
+        "identity_frames": [
+          7
+        ],
+        "change": {
+          "kind": "none",
+          "same_object": null,
+          "frames": [],
+          "reason": ""
+        },
+        "reason": "agentview (frame 7) shows red/green labeled cylindrical can on table, not in basket",
+        "relation": "outside",
+        "supported": null,
+        "observed_state": "unknown"
+      }
+    ],
+    "reason": "wrist view (frame 6) shows alphabet soup in basket; agentview (frame 7) shows tomato sauce on table"
+  },
+  "raw_event_observations": {
+    "observations": [
+      {
+        "id": "goal_0",
+        "identity": "matched",
+        "object_key": "alphabet_soup_1",
+        "frames": [
+          6
+        ],
+        "identity_frames": [
+          6
+        ],
+        "change": {
+          "kind": "none",
+          "same_object": null,
+          "frames": [],
+          "reason": ""
+        },
+        "reason": "wrist view (frame 6) shows blue/orange labeled cylindrical can inside basket",
+        "relation": "at_destination",
+        "supported": true
+      },
+      {
+        "id": "goal_1",
+        "identity": "matched",
+        "object_key": "tomato_sauce_1",
+        "frames": [
+          7
+        ],
+        "identity_frames": [
+          7
+        ],
+        "change": {
+          "kind": "none",
+          "same_object": null,
+          "frames": [],
+          "reason": ""
+        },
+        "reason": "agentview (frame 7) shows red/green labeled cylindrical can on table, not in basket",
+        "relation": "outside",
+        "supported": null
+      }
+    ],
+    "reason": "wrist view (frame 6) shows alphabet soup in basket; agentview (frame 7) shows tomato sauce on table"
+  },
+  "effective_checks": [
+    {
+      "id": "goal_0",
+      "achieved": true,
+      "target_matches_definition": true,
+      "current_evidence": true,
+      "evidence_event_ids": [],
+      "object_key": "alphabet_soup_1",
+      "reason": "wrist view (frame 6) shows blue/orange labeled cylindrical can inside basket"
+    },
+    {
+      "id": "goal_1",
+      "achieved": null,
+      "target_matches_definition": true,
+      "current_evidence": true,
+      "evidence_event_ids": [],
+      "object_key": "tomato_sauce_1",
+      "reason": "agentview (frame 7) shows red/green labeled cylindrical can on table, not in basket"
+    }
+  ],
+  "process_evidence": [
+    {
+      "id": "goal_1",
+      "target_id": "tomato_sauce_1",
+      "destination_id": "basket_1_contain_region",
+      "object_key": "tomato_sauce_1",
+      "event_id": "release_0002",
+      "timestamp": 14.200000000001411,
+      "status": "confirmed",
+      "observation": {
+        "id": "goal_1",
+        "identity": "matched",
+        "object_key": "tomato_sauce_1",
+        "frames": [
+          4
+        ],
+        "identity_frames": [
+          1,
+          4
+        ],
+        "change": {
+          "kind": "none",
+          "same_object": true,
+          "frames": [
+            4
+          ],
+          "reason": "red-green labeled cylindrical can visible in basket at frame 4, matching reference frame 1's tomato sauce can position and appearance"
+        },
+        "reason": "agentview (frame 4) shows red-green labeled cylindrical can inside basket; matches reference frame 1's tomato sauce can visual identity; wrist view (frame 3) shows basket interior but cannot confirm label details",
+        "relation": "at_destination",
+        "supported": true,
+        "observed_state": "unknown"
+      },
+      "provenance": {
+        "sources": [
+          {
+            "context": {
+              "user_request": "先把字母汤罐放进篮子，再把番茄酱罐放进篮子。",
+              "current_subtask": {
+                "operation": "place",
+                "target": "tomato_sauce_1",
+                "destination": "basket_1_contain_region",
+                "phase": "executing"
+              },
+              "criteria": {
+                "must_release": true,
+                "must_stabilize": true,
+                "must_clear": true,
+                "must_preserve_target": true,
+                "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+                "task_description": "put the tomato sauce in the basket",
+                "skill_description": "put both the alphabet soup and the tomato sauce in the basket",
+                "success_checks": [
+                  {
+                    "id": "goal_0",
+                    "description": "put the alphabet soup in the basket",
+                    "relation": "in",
+                    "target_id": "alphabet_soup_1",
+                    "destination_id": "basket_1_contain_region",
+                    "target_visual_identity": "圆柱罐、银盖、蓝色/橙色标签；与Milk盒及Tomato Sauce罐区分。"
+                  },
+                  {
+                    "id": "goal_1",
+                    "description": "put the tomato sauce in the basket",
+                    "relation": "in",
+                    "target_id": "tomato_sauce_1",
+                    "destination_id": "basket_1_contain_region",
+                    "target_visual_identity": "圆柱形罐头，红绿标签及Tomato Sauce文字；不同于Milk纸盒，也不同于Tomato Ketchup挤压瓶。"
+                  }
+                ]
+              },
+              "sensor_frames": [
+                {
+                  "frame": 0,
+                  "view": "wrist",
+                  "timestamp": 14.200000000001411
+                },
+                {
+                  "frame": 1,
+                  "view": "agentview",
+                  "timestamp": 14.200000000001411
+                },
+                {
+                  "frame": 2,
+                  "view": "sideview",
+                  "timestamp": 14.200000000001411
+                }
+              ],
+              "actuator_measurements": {
+                "timestamp": 14.200000000001411,
+                "finger_qpos": [
+                  0.037911917350109,
+                  -0.038129255555980325
+                ],
+                "standard_open_finger_qpos": [
+                  0.03872987809408042,
+                  -0.03872846551387219
+                ],
+                "max_abs_arm_qvel": 0.15050538886906384
+              }
+            },
+            "paths": [
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000161_wrist.png",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000160_agentview.png",
+              "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000162_sideview.png"
+            ],
+            "sha256": [
+              "748c6261e23c872a09c9d2045d2f33fd800f7c2f9c39bc57113ec2cf21a535b9",
+              "c1273ff074db36af4577fdb79bf23d719d21b7ab222dea6ab3ca781a7f3d31c7",
+              "07bb5637e955c9a04644d8c47608fec52b09ebab6a2d740332484ccca08d8f81"
+            ]
+          }
+        ],
+        "request_sha256": "e2ce495590d84359cd85ade28c7980b445d4509ba4e1a1d574c06c04ae36ed29",
+        "response_sha256": "e5ee6d51819988648d45484e4a616ce6373227972ded54b251729cee751db512",
+        "call_index": 2,
+        "packet": {
+          "protocol": "xvla_evidence_memory_v5",
+          "role": "release_review",
+          "event_id": "release_0002",
+          "goals": [
+            {
+              "id": "goal_0",
+              "description": "put the alphabet soup in the basket",
+              "relation": "in",
+              "target_id": "alphabet_soup_1",
+              "destination_id": "basket_1_contain_region",
+              "target_visual_identity": "圆柱罐、银盖、蓝色/橙色标签；与Milk盒及Tomato Sauce罐区分。"
+            },
+            {
+              "id": "goal_1",
+              "description": "put the tomato sauce in the basket",
+              "relation": "in",
+              "target_id": "tomato_sauce_1",
+              "destination_id": "basket_1_contain_region",
+              "target_visual_identity": "圆柱形罐头，红绿标签及Tomato Sauce文字；不同于Milk纸盒，也不同于Tomato Ketchup挤压瓶。"
+            }
+          ],
+          "groups": [
+            {
+              "kind": "reference",
+              "event_id": null,
+              "time": -1,
+              "frames": [
+                0,
+                1,
+                2
+              ],
+              "time_known": false
+            },
+            {
+              "kind": "release",
+              "event_id": "release_0002",
+              "time": 14.200000000001411,
+              "frames": [
+                3,
+                4,
+                5
+              ],
+              "encoder": {
+                "timestamp": 14.200000000001411,
+                "finger_qpos": [
+                  0.037911917350109,
+                  -0.038129255555980325
+                ],
+                "standard_open_finger_qpos": [
+                  0.03872987809408042,
+                  -0.03872846551387219
+                ],
+                "position_unit": "m",
+                "standard_open_tolerance_m": 0.002,
+                "max_standard_open_error_mm": 0.8179607439714187,
+                "at_standard_open": true
+              }
+            },
+            {
+              "kind": "current",
+              "event_id": null,
+              "time": 14.200000000001411,
+              "frames": [
+                3,
+                4,
+                5
+              ],
+              "encoder": {
+                "timestamp": 14.200000000001411,
+                "finger_qpos": [
+                  0.037911917350109,
+                  -0.038129255555980325
+                ],
+                "standard_open_finger_qpos": [
+                  0.03872987809408042,
+                  -0.03872846551387219
+                ],
+                "position_unit": "m",
+                "standard_open_tolerance_m": 0.002,
+                "max_standard_open_error_mm": 0.8179607439714187,
+                "at_standard_open": true
+              }
+            }
+          ],
+          "memory": [],
+          "previous_checks": [
+            {
+              "time": 8.799999999999608,
+              "role": "release_review",
+              "event_id": "release_0001",
+              "goals": [
+                {
+                  "id": "goal_0",
+                  "achieved": false,
+                  "object_key": "alphabet_soup_1",
+                  "evidence_event_ids": []
+                },
+                {
+                  "id": "goal_1",
+                  "achieved": false,
+                  "object_key": "tomato_sauce_1",
+                  "evidence_event_ids": []
+                }
+              ]
+            }
+          ],
+          "window": {
+            "max_gap_seconds": 1.0,
+            "before_available": false,
+            "after_available": false
+          },
+          "current_frames": [
+            3,
+            4,
+            5
+          ],
+          "relation_frames": [
+            3,
+            4,
+            5
+          ],
+          "sensor_frames": [
+            {
+              "frame": 0,
+              "view": "wrist",
+              "timestamp": -1
+            },
+            {
+              "frame": 1,
+              "view": "agentview",
+              "timestamp": -1
+            },
+            {
+              "frame": 2,
+              "view": "sideview",
+              "timestamp": -1
+            },
+            {
+              "frame": 3,
+              "view": "wrist",
+              "timestamp": 14.200000000001411
+            },
+            {
+              "frame": 4,
+              "view": "agentview",
+              "timestamp": 14.200000000001411
+            },
+            {
+              "frame": 5,
+              "view": "sideview",
+              "timestamp": 14.200000000001411
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "raw_visual_goal_verdict": {
+    "observations": [
+      {
+        "id": "goal_0",
+        "identity": "matched",
+        "object_key": "alphabet_soup_1",
+        "frames": [
+          6
+        ],
+        "identity_frames": [
+          6
+        ],
+        "change": {
+          "kind": "none",
+          "same_object": null,
+          "frames": [],
+          "reason": ""
+        },
+        "reason": "wrist view (frame 6) shows blue/orange labeled cylindrical can inside basket",
+        "relation": "at_destination",
+        "supported": true,
+        "observed_state": "unknown"
+      },
+      {
+        "id": "goal_1",
+        "identity": "matched",
+        "object_key": "tomato_sauce_1",
+        "frames": [
+          7
+        ],
+        "identity_frames": [
+          7
+        ],
+        "change": {
+          "kind": "none",
+          "same_object": null,
+          "frames": [],
+          "reason": ""
+        },
+        "reason": "agentview (frame 7) shows red/green labeled cylindrical can on table, not in basket",
+        "relation": "outside",
+        "supported": null,
+        "observed_state": "unknown"
+      }
+    ],
+    "reason": "wrist view (frame 6) shows alphabet soup in basket; agentview (frame 7) shows tomato sauce on table"
+  },
+  "visual_goal_verdict": {
+    "checks": [
+      {
+        "id": "goal_0",
+        "achieved": true,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "alphabet_soup_1",
+        "reason": "wrist view (frame 6) shows blue/orange labeled cylindrical can inside basket"
+      },
+      {
+        "id": "goal_1",
+        "achieved": null,
+        "target_matches_definition": true,
+        "current_evidence": true,
+        "evidence_event_ids": [],
+        "object_key": "tomato_sauce_1",
+        "reason": "agentview (frame 7) shows red/green labeled cylindrical can on table, not in basket"
+      }
+    ],
+    "goal_achieved": null,
+    "reason": "wrist view (frame 6) shows alphabet soup in basket; agentview (frame 7) shows tomato sauce on table"
+  }
+}

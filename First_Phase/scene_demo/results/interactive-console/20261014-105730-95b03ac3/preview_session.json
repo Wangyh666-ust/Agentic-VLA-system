@@ -1,0 +1,74 @@
+{
+  "ok": true,
+  "session_id": "preview-ab88c50ac7d78cf298985ca1",
+  "scene_id": "goal_table_shifted",
+  "state": "ready",
+  "scene_version": 0,
+  "capability_backend": "xvla",
+  "capabilities": [
+    {
+      "instruction": "put the bowl on the plate",
+      "goals": [
+        [
+          "on",
+          "akita_black_bowl_1",
+          "plate_1"
+        ]
+      ],
+      "object_id": "akita_black_bowl_1",
+      "target_id": "plate_1",
+      "scene_ids": [
+        "goal_table",
+        "goal_table_shifted"
+      ],
+      "evidence": "v0.1.0 single-task success in libero_goal/8; sequence and shifted-layout reliability unverified",
+      "audit_only": false,
+      "exclusive_target": true,
+      "capability_id": "bowl_to_plate"
+    },
+    {
+      "instruction": "put the wine bottle on the rack",
+      "goals": [
+        [
+          "on",
+          "wine_bottle_1",
+          "wine_rack_1_top_region"
+        ]
+      ],
+      "object_id": "wine_bottle_1",
+      "target_id": "wine_rack_1_top_region",
+      "scene_ids": [
+        "goal_table",
+        "goal_table_shifted"
+      ],
+      "evidence": "candidate here; v0.1.0 single-task wine success used libero_goal/9, a different task initialization",
+      "audit_only": false,
+      "exclusive_target": true,
+      "capability_id": "wine_to_rack"
+    },
+    {
+      "instruction": "turn on the stove",
+      "goals": [
+        [
+          "turnon",
+          "flat_stove_1"
+        ]
+      ],
+      "object_id": "flat_stove_1",
+      "target_id": null,
+      "scene_ids": [
+        "goal_table",
+        "goal_table_shifted"
+      ],
+      "evidence": "candidate here; v0.1.0 single-task stove success used libero_goal/7, a different task initialization",
+      "audit_only": false,
+      "exclusive_target": false,
+      "capability_id": "stove_on"
+    }
+  ],
+  "storage_policy": {
+    "akita_black_bowl_1": "plate_1",
+    "wine_bottle_1": "wine_rack_1_top_region"
+  },
+  "preview_only": true
+}

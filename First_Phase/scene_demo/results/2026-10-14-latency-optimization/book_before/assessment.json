@@ -1,0 +1,200 @@
+{
+  "case": "book_before",
+  "expected": "block",
+  "observed_at": 8.249999999999424,
+  "goal_achieved": null,
+  "handoff_review_triggered": false,
+  "decision": {
+    "state": "unknown",
+    "reason": "subtask purpose unknown",
+    "allow_release": false,
+    "allow_retreat": false
+  },
+  "released_encoder": false,
+  "current_rows": [
+    {
+      "id": "goal_0",
+      "state": "at_destination",
+      "same_target": true,
+      "evidence": [
+        {
+          "frame": 8,
+          "box": [
+            448,
+            258,
+            545,
+            398
+          ]
+        },
+        {
+          "frame": 6,
+          "box": [
+            100,
+            150,
+            260,
+            245
+          ]
+        }
+      ],
+      "identity_refs": [
+        {
+          "frame": 2,
+          "box": [
+            568,
+            495,
+            668,
+            605
+          ]
+        },
+        {
+          "frame": 0,
+          "box": [
+            0,
+            256,
+            320,
+            540
+          ]
+        }
+      ],
+      "supported": null,
+      "change": "none",
+      "comparison": "初态书竖立在杯旁桌面；当前该黑色硬封面书已不在桌面，其上部斜露于收纳盒后隔间口沿之上，与初态同一本书",
+      "placement": {
+        "region_confirmed": true,
+        "region_description": "收纳盒靠墙一侧的后隔间内部",
+        "destination_evidence": [
+          {
+            "frame": 8,
+            "box": [
+              383,
+              300,
+              500,
+              400
+            ]
+          },
+          {
+            "frame": 6,
+            "box": [
+              70,
+              20,
+              250,
+              245
+            ]
+          }
+        ],
+        "boundary_observation": "书的下段越过该格棕色口沿进入格内，两侧被后壁与中间隔板夹持定位，仅上段露出",
+        "relation_evidence": [
+          {
+            "frame": 8,
+            "box": [
+              448,
+              258,
+              545,
+              398
+            ]
+          }
+        ],
+        "support_observation": "书由后隔间内部边界围持保持竖立倾斜姿态；夹爪仍闭合贴近书上端，接触点被书体与夹爪遮挡",
+        "needs_motion": false,
+        "contradiction": false,
+        "views": [
+          {
+            "frame": 6,
+            "relation": "satisfied",
+            "reason": "腕视见书竖立于格内隔板之间，下段被格壁包围"
+          },
+          {
+            "frame": 7,
+            "relation": "occluded",
+            "reason": "agentview中书被机械臂与夹爪遮挡，仅见臂停于后隔间上方"
+          },
+          {
+            "frame": 8,
+            "relation": "satisfied",
+            "reason": "侧视见书斜插于后隔间，下部在口沿以下格内"
+          }
+        ],
+        "support_contact": {
+          "visible": false,
+          "observation": "书与格底/格壁的接触处被盒壁和书自身遮挡，无法直接看见",
+          "evidence": [
+            {
+              "frame": 8,
+              "box": [
+                448,
+                330,
+                545,
+                398
+              ]
+            }
+          ]
+        },
+        "support_inference": {
+          "depth_sufficient": true,
+          "spatial_observation": "书整体高度约与盒高相当，当前露出部分仅为上段，主体已低于后隔间口沿并被隔板与后壁包围，无悬空于口沿外的间隙",
+          "temporal_observation": "t=8.0到t=8.25书相对后隔间保持同一插入深度与倾角，此前书已从桌面消失并经由格口进入，未见回移或仍需下压的迹象",
+          "evidence": [
+            {
+              "frame": 8,
+              "box": [
+                448,
+                258,
+                545,
+                398
+              ]
+            },
+            {
+              "frame": 6,
+              "box": [
+                100,
+                150,
+                260,
+                245
+              ]
+            },
+            {
+              "frame": 5,
+              "box": [
+                442,
+                240,
+                540,
+                330
+              ]
+            },
+            {
+              "frame": 3,
+              "box": [
+                100,
+                140,
+                260,
+                245
+              ]
+            }
+          ]
+        },
+        "supplemental_context_evidence": {
+          "destination_evidence": [],
+          "relation_evidence": [
+            {
+              "frame": 5,
+              "box": [
+                442,
+                240,
+                540,
+                330
+              ]
+            }
+          ]
+        },
+        "_geometry_sequence_validated": true,
+        "_inferred_motion_settled": false
+      },
+      "motion_note": "当前max_abs_arm_qvel=0.42 rad/s、近邻t=8.0为0.44 rad/s，均高于0.2，速度路径不接管；但多视角几何与时序已独立确认深度到位",
+      "capture_id": "bacd556bedcb93b8/capture_000032"
+    }
+  ],
+  "actual_model_calls": 2,
+  "new_robot_actions": 0,
+  "historical_proofs": [],
+  "passed": true
+}

@@ -1,0 +1,121 @@
+{
+  "ok": true,
+  "session_id": "preview-cb8a24bec323202a194ef193",
+  "scene_id": "moka_two",
+  "state": "ready",
+  "scene_version": 0,
+  "capability_backend": "xvla",
+  "capabilities": [
+    {
+      "instruction": "put one moka pot on the stove",
+      "goals": [
+        [
+          "on",
+          "moka_pot_1",
+          "flat_stove_1_cook_region"
+        ]
+      ],
+      "scene_ids": [
+        "moka_two"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "atomic_candidate",
+      "audit_only": false,
+      "exclusive_target": true,
+      "object_id": "moka_pot_1",
+      "target_id": "flat_stove_1_cook_region",
+      "evidence": "Candidate atomic prompt; untested integration, not evidence of native single-task training",
+      "capability_id": "xvla_t08_moka1_to_stove"
+    },
+    {
+      "instruction": "put the other moka pot on the stove",
+      "goals": [
+        [
+          "on",
+          "moka_pot_2",
+          "flat_stove_1_cook_region"
+        ]
+      ],
+      "scene_ids": [
+        "moka_two"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "atomic_candidate",
+      "audit_only": false,
+      "exclusive_target": true,
+      "object_id": "moka_pot_2",
+      "target_id": "flat_stove_1_cook_region",
+      "evidence": "Candidate atomic prompt; untested integration, not evidence of native single-task training",
+      "capability_id": "xvla_t08_moka2_to_stove"
+    },
+    {
+      "instruction": "put both moka pots on the stove",
+      "goals": [
+        [
+          "on",
+          "moka_pot_1",
+          "flat_stove_1_cook_region"
+        ],
+        [
+          "on",
+          "moka_pot_2",
+          "flat_stove_1_cook_region"
+        ],
+        [
+          "turnon",
+          "flat_stove_1"
+        ]
+      ],
+      "scene_ids": [
+        "moka_two"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 8
+      },
+      "component_capability_ids": [
+        "xvla_t08_moka1_to_stove",
+        "xvla_t08_moka2_to_stove"
+      ],
+      "preserved_checks": [
+        {
+          "instruction": "keep the stove on",
+          "goals": [
+            [
+              "turnon",
+              "flat_stove_1"
+            ]
+          ],
+          "object_id": "flat_stove_1",
+          "target_id": null
+        }
+      ],
+      "required_initial_goals": [
+        [
+          "turnon",
+          "flat_stove_1"
+        ]
+      ],
+      "precondition_description": "原生双壶任务要求灶台已经开启并保持开启；此技能不提供自动点火。",
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_moka_both"
+    }
+  ],
+  "storage_policy": {
+    "moka_pot_1": "flat_stove_1_cook_region",
+    "moka_pot_2": "flat_stove_1_cook_region"
+  },
+  "preview_only": true
+}

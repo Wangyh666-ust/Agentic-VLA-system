@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "id": "20261014-qwen38-three-requests",
+  "intent": "new_experiment",
+  "question_key": "qwen38-three-user-requests",
+  "purpose": "使用当前Qwen3.8初识别/Hermes与X-VLA流水线，独立测试用户三条原文的意图理解、能力匹配和可执行部分完整流程。明确无法加热/丢弃时正确拒绝或澄清也属于规划效果，不能以入炉关门或入篮代替用户目标。",
+  "prior_evidence": [
+    "20261014-qwen38-initial-recognition",
+    "20261013-xvla-grounded-online",
+    "20261012-xvla-persistent-pilot",
+    "20261008-skill-context"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261014-qwen38-initial-recognition",
+      "disposition": "reuse",
+      "reason": "复用新模型配置、15项软件验证和初识别图片结果；尚无本轮三条原文的真实Hermes规划或动作证据。"
+    },
+    {
+      "experiment_id": "20261013-xvla-grounded-online",
+      "disposition": "reuse",
+      "reason": "复用原生长程、三视图、完整原图与收尾实现，并保留已知末端视觉误判风险。"
+    },
+    {
+      "experiment_id": "20261012-xvla-persistent-pilot",
+      "disposition": "reuse",
+      "reason": "复用X-VLA持久场景、多子任务与下一参考复位记录；整体整链未通过，不重做纯基线。"
+    },
+    {
+      "experiment_id": "20261008-skill-context",
+      "disposition": "reuse",
+      "reason": "复用收纳与丢弃意图的旧Hermes规划记录；无垃圾桶旧例正确unsupported，旧模型/旧请求不能回答本轮新模型三条原文。"
+    }
+  ],
+  "related_search": "已检索catalog.py公开storage_policy、全部动作、run_agent提示词、XvlaSceneService.submit_plan、真实旧规划结果及最新台账。当前没有微波炉启动加热能力、垃圾桶或丢弃能力。",
+  "hypothesis": "当前流程应对明确整理与打开灶台选择可用动作，对缺少加热/丢弃能力的请求如实说明限制，而非选择近似收纳动作冒充完成。",
+  "information_gain": "测试用户新原文而非预先点名动作任务；此前仅首次识别/旧具体任务，不能证明模型能识别高层意图及缺失能力。",
+  "changed_factors": [
+    {
+      "name": "user_requests",
+      "before": "显式入炉关门、双罐入篮或酒瓶先碗后灶的指令",
+      "after": "整理含碗酒瓶并开灶；加热黄杯；扔掉两罐三条原文",
+      "reason": "用户明确要求三个不同任务，必须保留原意。"
+    },
+    {
+      "name": "pilot_plan_constraint",
+      "before": "预先固定capability_ids顺序",
+      "after": "不强制能力列表或顺序；Hermes自行选择，离线按用户目标评分",
+      "reason": "测试自然指令理解，不能把答案先强加给模型；生产控制与提示词不改。"
+    }
+  ],
+  "fixed_factors": {
+    "weights": "260cc58869125b826e93bcaa60bca3ea37bcc7aaf893d368a991ca14fde9f0c8",
+    "seed": 142,
+    "init_state_index": 0,
+    "policy_images": "native agentview/wrist unchanged",
+    "VLA_instruction": "original registered skill",
+    "finish_retreat_reset": "original algorithms/parameters unchanged; only runtime checker image selection prefers checker_frames",
+    "native_priority": true,
+    "assistant": false,
+    "max_repairs": 0,
+    "terminal_checker": "qwen3-vl-plus",
+    "camera_update": "mj_camlight",
+    "check_interval": 150,
+    "controller_and_reset_sources": "frozen hashes; original finish/retreat/home and queue/state reset unchanged",
+    "software_validation": "previous 15 grounding tests passed; no runtime code changes this turn",
+    "current_runtime_models": "Hermes/初识别/选择复核=qwen3.8-max；末端=qwen3-vl-plus",
+    "negative_cases": "缺少加热与丢弃能力时预测零VLA，不强制运动。"
+  },
+  "success_criteria": "触发：每项真实初识别/复核和Hermes实际提交发生。规划：整理目标覆盖碗、酒瓶、开灶，顺序不强加；加热/丢弃缺能力时明确unsupported或clarify，不能声称完成。执行：可执行项记录真实动作、松手三图、末端证据、收尾与下一子任务reference复位；各用户目标独立判据达标并保持前序成果。负例正确零VLA作为正确能力边界，不算VLA失败。",
+  "failure_criteria": "没提交计划或接口错误为流程未触发；把收纳替代丢弃、把关门替代加热为意图失败；规划正确但动作/检查/收尾失败分别记录；下游未触发记未验证。",
+  "unknown_criteria": "模型传输失败、看不清目标、未取得完整当前/历史证据为未知；每项n=1不估计成功率。",
+  "scope": {
+    "max_cases": 3,
+    "max_vla_actions_per_case": 2400,
+    "max_helper_actions_per_case": 3000,
+    "stop_rule": "三个独立场景各一次，无自动重跑、修复或现场改词；首项失败仍完成后两项的独立规划。单项已有1800秒期限与原保护保持；错误意图不得被重新解释为用户目标成功。助手0、子agent0。"
+  },
+  "new_physical_actions": 16200,
+  "configuration": {
+    "cases": {
+      "table_tidy_stove": {
+        "scene": "goal_table",
+        "request": "整理桌面，包括碗、酒瓶，并且打开灶台",
+        "budget_per_subgoal": 800,
+        "intent_goals": [
+          [
+            "on",
+            "akita_black_bowl_1",
+            "plate_1"
+          ],
+          [
+            "on",
+            "wine_bottle_1",
+            "wine_rack_1_top_region"
+          ],
+          [
+            "turnon",
+            "flat_stove_1"
+          ]
+        ]
+      },
+      "heat_yellow_mug": {
+        "scene": "microwave_mug",
+        "request": "帮我将黄杯子加热一下",
+        "budget_per_subgoal": 900,
+        "intent_goals": []
+      },
+      "discard_two_cans": {
+        "scene": "basket_two",
+        "request": "帮我扔一下桌面上的两个罐头",
+        "budget_per_subgoal": 900,
+        "intent_goals": []
+      }
+    },
+    "workflow": "persistent_scene_xvla_v3",
+    "model_revision": "129e71460678b7236cee6fc9707f09d9fa0c3590",
+    "weights_sha256": "260cc58869125b826e93bcaa60bca3ea37bcc7aaf893d368a991ca14fde9f0c8",
+    "weights_bytes": 3519068172,
+    "source_xvla": "6bc2513f5f1cbec715cc668b414392a6cae5c671",
+    "source_libero": "8f1084e3132a39270c3a13ebe37270a43ece2a01",
+    "dtype": "float32",
+    "chunk": 30,
+    "denoise": 10,
+    "domain": 3,
+    "control": "absolute",
+    "seed": 142,
+    "init_state_index": 0,
+    "model_rng": "unknown/unfixed; not a paired stochastic comparison",
+    "vla_budget_per_subgoal": 900,
+    "session_limit": 8000,
+    "helper_limit_including_native_settle": 3000,
+    "settle_steps_included": 10,
+    "wall_deadline_s": 1800,
+    "independent_streak": 5,
+    "grasp_guard": "off",
+    "max_repairs": 0,
+    "transport_or_grasp_assistance": false,
+    "replay": false,
+    "training": false,
+    "external_source_sha256": [
+      {
+        "source": "/home/yhwang/fyp/xvla_native/upstream/deploy.py",
+        "snapshot": "First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/source_snapshot/external/deploy.py",
+        "sha256": "e2f40c54dc09d01a5942e43b0680d160861cf40f7d9dfc08e0e2bdad1350cef6",
+        "snapshot_sha256": "e2f40c54dc09d01a5942e43b0680d160861cf40f7d9dfc08e0e2bdad1350cef6"
+      },
+      {
+        "source": "/home/yhwang/fyp/xvla_native/upstream/evaluation/libero/libero_client.py",
+        "snapshot": "First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/source_snapshot/external/libero_client.py",
+        "sha256": "ebfdd89a4afc79b8b01921ded6c95091786b34937e5dbe7601d3a384607d6f24",
+        "snapshot_sha256": "ebfdd89a4afc79b8b01921ded6c95091786b34937e5dbe7601d3a384607d6f24"
+      },
+      {
+        "source": "/home/yhwang/fyp/xvla_native/LIBERO/libero/libero/bddl_files/libero_10/KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it.bddl",
+        "snapshot": "First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/source_snapshot/external/KITCHEN_SCENE6_put_the_yellow_and_white_mug_in_the_microwave_and_close_it.bddl",
+        "sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420",
+        "snapshot_sha256": "456d145f92be049f445fc77673dc583d9d17ea7afe92f6ffcb2fd1fa5565d420"
+      },
+      {
+        "source": "/home/yhwang/fyp/xvla_native/LIBERO/libero/libero/bddl_files/libero_10/LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket.bddl",
+        "snapshot": "First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/source_snapshot/external/LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket.bddl",
+        "sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618",
+        "snapshot_sha256": "2e661058917f683a25bce480015197f0a2c1911bcbc2b9dd9d947199069c9618"
+      }
+    ],
+    "environment_probe": "First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/preflight/environment.json",
+    "root_model": "unknown",
+    "root_effort": "unknown",
+    "subagents_used": 0,
+    "source_sha256": {
+      "First_Phase/scene_demo/xvla_service.py": "c8bbe16f40f148a8409b4d3c698c9c9670c03791662bedb326072cd568229d7b",
+      "First_Phase/scene_demo/xvla_backend.py": "ce86494c3273909dadd408bf96b0b94f223b5f5ec9c26912878fe6ca8f336fd1",
+      "First_Phase/scene_demo/xvla_pilot.py": "d37132916c11abbd573530bf8dc8a0e66fc41ee912c8dfc43840c667ee6521cc",
+      "First_Phase/scene_demo/xvla_skills.py": "8d14219879c122d92f7d27f21ed90e0f4661a7ef25025c723eb26ea3df6915ff",
+      "First_Phase/scene_demo/xvla_finish.py": "6db33c370a29447c3e6f9f48149b2da5a475ddcd04e09aac9f24f8177a9a41f9",
+      "First_Phase/scene_demo/xvla_process_evidence.py": "62877929d8e40a8c7ad3627a73d39c35384e497d6cc6789f23f0183c8284018f",
+      "First_Phase/scene_demo/xvla_timeline.py": "2eaac0cb3d15752177e30f693c163c53d0720dc256a180fdc5e5ad1475edff9f",
+      "First_Phase/scene_demo/xvla_trial_evidence.py": "78a0459a34080b497df80c4126acda19d2495c68145b8cdb3084f17ba6d9ccd2",
+      "First_Phase/scene_demo/xvla_monitor.py": "d2e73d3632b8bce4381c76437128376c23eaaa0e0f6c89f225f3500cd55b371e",
+      "First_Phase/scene_demo/service.py": "d9f70e306384adb36e18d4c39dd044e4341ff71ead8ae7d41a49094391066c3c",
+      "First_Phase/scene_demo/run_agent.py": "2c7d8d8cd46a5242ccc2bf0a7f93851a25d6b91470eb9e0d90623b89d8fe1c30",
+      "First_Phase/scene_demo/mcp_server.py": "76b4f110ac886a4574ec1327a271cc41aa324d970fb5707b0c4a2a1f6135bfa8",
+      "First_Phase/scene_demo/setup_profile.py": "b8e4c3754a0304ace90ec14adf852586741052a55b83de7882cafa4db1cf7ff6",
+      "First_Phase/scene_demo/joint_home.py": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+      "First_Phase/scene_demo/safe_exit.py": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+      "First_Phase/scene_demo/safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+      "First_Phase/scene_demo/placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+      "First_Phase/scene_demo/catalog.py": "418ada0866e7f86e7ef6b0aca6f8e0a78e0a94272e092cc1e52283eee4892d72",
+      "First_Phase/scene_demo/finish_v1/__init__.py": "58bc8bac669516085a3d42cb2dd90b27a052ba863c358bb3bb367afd02421cb8",
+      "First_Phase/scene_demo/finish_v1/archive_simple_pilot.py": "c13177040158cb29819b664818f9cbae8f45caf1d58708d23cc2cecc99ea817e",
+      "First_Phase/scene_demo/finish_v1/assisted_combo_pilot.py": "f0cb90be7bf4fd9e9df5a5df4eba2eba466ff431f0515919e22f81248e416597",
+      "First_Phase/scene_demo/finish_v1/calibrated_grasp.py": "76831690b0791222374b303c2bb77a035ab256c8f7b13d9eac2fac1af3717644",
+      "First_Phase/scene_demo/finish_v1/combo_pilot.py": "1c5a8a02101af2675ede64bf7036fcc42b7e87d7088360880b51db9f2506ce3f",
+      "First_Phase/scene_demo/finish_v1/container_budget_pilot.py": "14b7807ec174392086cb75a0b7c9cc1011ec153b2e0ed0aaed370158e3659372",
+      "First_Phase/scene_demo/finish_v1/container_pilot.py": "d323f71e2fa7c8e2bdb75074b001a20643fca37dcee75f0e1c17dc37857b1007",
+      "First_Phase/scene_demo/finish_v1/container_view_pilot.py": "be741e6f6055ec011631510f8a2efd7fd1057c01c684a9591098b4bd8be4ad88",
+      "First_Phase/scene_demo/finish_v1/control.py": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+      "First_Phase/scene_demo/finish_v1/feedback_combo_pilot.py": "8fe2d32bc3ba96ff3ca730ff3b1381ce3692d2caaa43b44f50371183e78057b2",
+      "First_Phase/scene_demo/finish_v1/feedback_retreat.py": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+      "First_Phase/scene_demo/finish_v1/geometry.py": "d4a5bb664760e3ee39027caac9a51b23a13eaee4b9ef8c55854dfd9f935f61b9",
+      "First_Phase/scene_demo/finish_v1/handoff_pilot.py": "be01997b0bfd8e1107635f541769a907d5da05558d0f5d29e2fce04e14869924",
+      "First_Phase/scene_demo/finish_v1/neutral_combo_pilot.py": "10f6d25548360db16241ba107c8b578fa8f4f822ee9a26ff5d67be4dc2f90bbc",
+      "First_Phase/scene_demo/finish_v1/online_combo_pilot.py": "2ed506a61656975be330cdc893f7e00b0b49b8e2150c570914040f0e8910d52a",
+      "First_Phase/scene_demo/finish_v1/pilot.py": "3a5b9319df692f308b2813441bdb5c24c5dfb6959eb51a7c94d77e56ce5d30cc",
+      "First_Phase/scene_demo/finish_v1/prepare_goal_pilot.py": "a193d159aa1d41ba7e2a964ce38609f7c82787c730de57376ccf6f1efa1985ab",
+      "First_Phase/scene_demo/finish_v1/prepare_simple_pilot.py": "950e15a7668fb845e72f743f475f4d7eb36a729e895c58d8a604ac1ab2d3e7ad",
+      "First_Phase/scene_demo/finish_v1/refresh_simple_pilot.py": "6bbaa5c6acb749893b7264b5b5ef7b5d3236cc20e76854274849a5e1ff91c3c1",
+      "First_Phase/scene_demo/finish_v1/register_goal_pilot.py": "8306eee418f61901f3905e74a71fb617fb7ccbdaaeb60fdacf6ceb6dab1925d7",
+      "First_Phase/scene_demo/finish_v1/register_simple_pilot.py": "dfb33fbce113899664439dd77e2b29c4389292b89953259da3f4fdfe47c2d636",
+      "First_Phase/scene_demo/finish_v1/relation_images.py": "cb4c1187f28b9ee61b1688d8961e37dfab4a6c9bd73eb33559b88e4ac24173b6",
+      "First_Phase/scene_demo/finish_v1/report_assisted_combos.py": "dc458f716745786ff5d0a0d81c4b5577e48454207612bca1868ace7de401c0f9",
+      "First_Phase/scene_demo/finish_v1/report_combos.py": "f3eb2cde1885cb23f0299b32d95c3488a098810a733f33d0b6962f22046fa0c9",
+      "First_Phase/scene_demo/finish_v1/report_goal_pilot.py": "51c73e9de374698ac7f17c53ece1c6a7e2de872361c49cc69be6fcaa2a45bbc8",
+      "First_Phase/scene_demo/finish_v1/report_online_combos.py": "02b59d1e2095483dc2f544760b0e2e6e52b33159804fa5e1c3f4e936ad3eadee",
+      "First_Phase/scene_demo/finish_v1/report_simple_pilot.py": "68ac5a7a4b5969f78c3270ed5b1f675d11725a7156b0a388d515361c20b645c2",
+      "First_Phase/scene_demo/finish_v1/run_simple_case.py": "70a7d8c8505d4a48cfb15906d1ccc93af9ecc7a4f24db6211f2ba486aea1ea1f",
+      "First_Phase/scene_demo/finish_v1/runtime.py": "d669b47799c004ac189a2ba03a7e6be08fbcb2c6175b2c40086a1b2cdaa3bd63",
+      "First_Phase/scene_demo/finish_v1/sensors.py": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+      "First_Phase/scene_demo/finish_v1/simple_checker.py": "6150701b4e7e4e2b5142b082327f1cdea099be335b9d3d0d33094454514e3f11",
+      "First_Phase/scene_demo/finish_v1/stove_candidate_start_pilot.py": "126c8d17db8610f1ef92096be67c7f8d5783dc1ddba9807f8c628fef3612b85d",
+      "First_Phase/scene_demo/finish_v1/stove_exit_repair_pilot.py": "6c9bf3e09c170d90cfdc0476af6ca52ff932b9de5d81a4961ce29a17259fabff",
+      "First_Phase/scene_demo/finish_v1/takeover_repair_pilot.py": "e55a85af3aed1e75543a8eb10af45de02f9160a2e0113dacd1f8bee6d435f61b",
+      "First_Phase/scene_demo/finish_v1/two_view_pilot.py": "83fd1c1424c2614f407391fee3c3221ad4323ca60c3c6878dfcf514bf9d3b915",
+      "First_Phase/scene_demo/finish_v1/verify_home_primary.py": "c7d9c36c5a98971092380905c9d0d06a5ffdfa4e2e693a4766e44f1ee84b0591",
+      "First_Phase/scene_demo/finish_v1/vision.py": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_09/episode_0/attempt_001/initial_state.npy": "f979d679483d4d0b3f95f600c091dc5837b3809e70597b98729744c19ea5d187",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_09/episode_0/attempt_001/initial_audit.json": "d70fe8a905509935f0393d95028fc18c9782aae9ffdf565e73edcf40b74cad21",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_08/episode_0/attempt_001/initial_state.npy": "3e1ab084bf0d8e7f101a620f29f4c0e2e582546bc47fd9184bb0bea6991c0eb3",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_08/episode_0/attempt_001/initial_audit.json": "39c4ee915238a3c986a28ee37df2f13103c2c8bd43dd9052c1bf70bea73002ed",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_07/episode_0/attempt_001/initial_state.npy": "6305dbbcf68c5eb36e3479c240691179569a6e6e586172888341dac3ed737fbc",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_07/episode_0/attempt_001/initial_audit.json": "c18afb5ca86177b14834228eee0840636203a503e3700418f5df09c358398bf4",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_00/episode_0/attempt_001/initial_state.npy": "4a48672f026e480fc2c2c7dc9646f7275a1417c193e31275d2f3640f87829d14",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_00/episode_0/attempt_001/initial_audit.json": "05875655f5c1b922aedbfec16eb39b84b576f6ec4eb0e9f14ee23f1ad94e6e99",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_01/episode_0/attempt_001/initial_state.npy": "73b5af92bffb541f55d30f64832409b7910b2dc0e5d71214be67c8d886a7447c",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_01/episode_0/attempt_001/initial_audit.json": "b9ba0daaa8c16935371b50ab90a6534dace7bb615cfbe95766c0b72d5e0e4704",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_02/episode_0/attempt_001/initial_state.npy": "afe384ccb75fd44a7403e85eafb49942cb5310aa9e38510dea2115a39f092a2a",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_02/episode_0/attempt_001/initial_audit.json": "d5045be1450d57400cbdf276a8d269017ada985fd3ae805391a4b7326d30bf6a",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_03/episode_0/attempt_001/initial_state.npy": "d0dfdb47cde7cc71e5a720ce2d7a0efc725e3b112b91ea55d491da698c802e43",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_03/episode_0/attempt_001/initial_audit.json": "3d7ad5cbb2d27b08a4e1c37be6a9334ff742ee395a739deafb8c2e57cf4cede5",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_04/episode_0/attempt_001/initial_state.npy": "1526c083cbfbbcadd177e06d37d7a4b8e1c8a4a972369bc2604973d45b8905b8",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_04/episode_0/attempt_001/initial_audit.json": "69bc0c517dcfb902fac18f29710d3d5801a3c2f337a53f0f08a526327561676f",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_05/episode_0/attempt_001/initial_state.npy": "8da82c1e931abec567079e0cdb212048b79a8c5c7acfc95a7cd0b73ab2f438ba",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_05/episode_0/attempt_001/initial_audit.json": "c0eaeea2c6c7372b5b12490a79c334a3ac815c3d661660ce9b59003d18684d66",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_06/episode_0/attempt_001/initial_state.npy": "b2b889731ddf8d4a3d0f468947e7f022213d06523f968d411d22eb525448a026",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_06/episode_0/attempt_001/initial_audit.json": "2c214c7396dc5e09eb9fd899c5ef6e63483ab166bc2d502e0aa8b6e36cfa9e4e",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_07/episode_0/attempt_001/initial_state.npy": "a48d2ed2e369f033cefbc2bf42a8af0c245436a528adc4bfdd181ce4ebda3acf",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_07/episode_0/attempt_001/initial_audit.json": "5131cbc6ec34ad722916e04cda00d17a9da1a98f7619f2bde5eed1db9aa5e5d5",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_08/episode_0/attempt_001/initial_state.npy": "4f7be6325bfe2506758f87ad45eeb323816b401a6fc83152fbf5a17f78d49e71",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_08/episode_0/attempt_001/initial_audit.json": "f2bdce1d85b35a8cafb81f0e7f4ba37375a32f1cbb5872c85a4b28b52ab7a5b4",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_09/episode_0/attempt_001/initial_state.npy": "7e64cf67a7261ce1ebde712b21a7f2ba2789003b50a5fbb4190e7e86b552e939",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_09/episode_0/attempt_001/initial_audit.json": "36b61e02598e94b7f7c72ac247f3d5202ca3d95b08075fcf36cc5384d2980e92",
+      "First_Phase/scene_demo/tests/test_xvla_finish.py": "35c866076fa93fc21d66c89218d00f2d6e5a55d34a0da9596fdc788d4d5ca854",
+      "First_Phase/scene_demo/tests/test_xvla_full_checks.py": "0006c6dd157f93df595c82532272095f98ad8a961ae384fa29f30711e96e6ab1",
+      "First_Phase/scene_demo/tests/test_xvla_process_evidence.py": "f37a24715121edaf670bcd350e5d8d243d028704984137b60715d69634cb1a66",
+      "First_Phase/scene_demo/tests/test_xvla_process_monitor.py": "2cbdeed2d407c487311ff9cabcfde9ff91c9235b81ddc7e66a0c34c367012f91",
+      "First_Phase/scene_demo/tests/test_xvla_timeline.py": "5cd7f7388b7c88132501e4ec57111e2a0a5554a02879cd50579b219aa9bf5521",
+      "First_Phase/scene_demo/tests/test_xvla_trial_evidence.py": "1046c940a166647be76a74b7c9ca3964815f203aff7726e0660ad9a9da3124c8",
+      "First_Phase/scene_demo/tests/test_xvla_integration.py": "6ca72ade16cef1e1f63575b73300ae43af1e8651b981ff24449f82109ed948e2",
+      "First_Phase/scene_demo/xvla_grounding.py": "8512a8635a7bf0e27cb486e301ba772bc564c784fd777d0752c1f2d62fbace6d",
+      "First_Phase/scene_demo/xvla_subtask_review.py": "f15c57fc869e3ff497952be10dd2c83fd017f40add147d77676fff2c287fd4c1",
+      "First_Phase/scene_demo/xvla_subtask_evidence.py": "3d3272f2a6c8cb0749b14f097cfb54b0dbcabe2df104196267ca9fb7451da06c",
+      "First_Phase/scene_demo/xvla_event_checker.py": "7a1393910a152ebe1d2d6102e06f8cda6056633d1c5c08eba095899e88f018d5",
+      "First_Phase/scene_demo/xvla_evidence_memory.py": "9fc27890aa21199d2ae88a1413ac0db2ec9df5f64b9120a14482c9667f7b7cbe",
+      "First_Phase/scene_demo/tests/test_xvla_grounding.py": "86d8c044f8a64dffedd0fce3eae137164d91ba9111ae101acc93615f1a9a02b2",
+      "First_Phase/scene_demo/tests/test_xvla_subtask_review.py": "77ab107ea3edb4ad52254b7ece146297515b77e03c4289544fdaf3e66d52b3ea"
+    },
+    "online_grounding": true,
+    "online_cases": [
+      "table_tidy_stove",
+      "heat_yellow_mug",
+      "discard_two_cans"
+    ],
+    "checker_protocol": "xvla_subtask_review_v7_1_with_planning_inventory",
+    "inventory_calls": 2,
+    "selected_target_review_calls": 1,
+    "checker_max_calls": 24,
+    "checker_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ],
+    "checker_sizes": [
+      [
+        256,
+        256
+      ],
+      [
+        512,
+        512
+      ],
+      [
+        512,
+        512
+      ]
+    ],
+    "camera_rig": {
+      "relative_to": "static arena workspace_offset",
+      "eyes": [
+        [
+          0.8,
+          -0.65,
+          0.85
+        ],
+        [
+          0.8,
+          0.65,
+          0.85
+        ]
+      ],
+      "target": [
+        0,
+        0,
+        0.1
+      ],
+      "fovy": 55
+    },
+    "policy_camera_change": false,
+    "camera_update": "mj_camlight",
+    "camera_read_only_probe": "First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/camera_renderfix_probe/result.json",
+    "planner_model": "qwen3.8-max",
+    "initial_inventory_model": "qwen3.8-max",
+    "selected_target_review_model": "qwen3.8-max",
+    "terminal_checker_model": "qwen3-vl-plus",
+    "current_transport_timeout_s": 90,
+    "max_attempts_per_case": 1,
+    "viewpoint_acceptance": "clear external target evidence may suffice; wrist occlusion or imperfect local wording alone does not trigger manual cancellation",
+    "expected_capabilities_constraint": null,
+    "acceptance": "interpret the literal request; storage cannot silently substitute for discard and placement/door closing cannot constitute heating"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "用户新原文的高层语义/缺能力判断未在新模型测试。"
+  }
+}

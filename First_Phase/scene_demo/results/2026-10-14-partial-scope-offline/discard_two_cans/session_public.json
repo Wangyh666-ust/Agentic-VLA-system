@@ -1,0 +1,620 @@
+{
+  "ok": true,
+  "session_id": "f72d0ae6aded4096ad503f3492643b2d",
+  "scene_id": "basket_two",
+  "state": "ready",
+  "scene_version": 0,
+  "total_steps": 0,
+  "storage_policy": {
+    "alphabet_soup_1": "basket_1_contain_region",
+    "tomato_sauce_1": "basket_1_contain_region"
+  },
+  "description": "Shared original basket scene holding the alphabet soup can and the tomato sauce can.",
+  "capabilities": [
+    {
+      "instruction": "put the alphabet soup in the basket",
+      "goals": [
+        [
+          "in",
+          "alphabet_soup_1",
+          "basket_1_contain_region"
+        ]
+      ],
+      "object_id": "alphabet_soup_1",
+      "target_id": "basket_1_contain_region",
+      "scene_ids": [
+        "basket_two"
+      ],
+      "evidence": "candidate in this scene; previous successful single task is a different scene",
+      "audit_only": false,
+      "exclusive_target": false,
+      "capability_id": "soup_to_basket"
+    },
+    {
+      "instruction": "put the tomato sauce in the basket",
+      "goals": [
+        [
+          "in",
+          "tomato_sauce_1",
+          "basket_1_contain_region"
+        ]
+      ],
+      "object_id": "tomato_sauce_1",
+      "target_id": "basket_1_contain_region",
+      "scene_ids": [
+        "basket_two"
+      ],
+      "evidence": "candidate",
+      "audit_only": false,
+      "exclusive_target": false,
+      "capability_id": "sauce_to_basket"
+    },
+    {
+      "instruction": "put both the alphabet soup and the tomato sauce in the basket",
+      "goals": [
+        [
+          "in",
+          "alphabet_soup_1",
+          "basket_1_contain_region"
+        ],
+        [
+          "in",
+          "tomato_sauce_1",
+          "basket_1_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "basket_two"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 0
+      },
+      "component_capability_ids": [
+        "soup_to_basket",
+        "sauce_to_basket"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_basket_both"
+    }
+  ],
+  "scene_inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "圆柱形金属罐头1，侧壁蓝灰色带金属光泽、顶部银色圆盖；初始位于桌面中部，酱汁瓶右前方、牛奶盒左后方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              285,
+              620,
+              450,
+              810
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              332,
+              490,
+              390,
+              570
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              440,
+              415,
+              485,
+              480
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视下方偏左清楚可见圆柱罐的银色圆顶与蓝灰侧壁，俯视轮廓完整"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview中蓝灰圆柱罐身与金属顶盖清晰，位于酱汁瓶右前"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview中同一蓝灰罐位于果汁盒/牛奶盒右后侧，颜色形状一致"
+          }
+        ],
+        "confusable_with": [
+          "obj_2"
+        ],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "圆柱形金属罐头2，侧壁带红色与绿色标签、顶部银色圆盖；初始位于桌面中部偏右，蓝灰罐右后方、编织篮左侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              700,
+              600,
+              880,
+              780
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              452,
+              432,
+              502,
+              505
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              556,
+              456,
+              606,
+              530
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视右下方可见圆柱罐银色圆顶及暗红侧壁，与红绿标签罐俯视一致"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview清楚看到红绿标签圆柱罐与金属顶"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview中红绿标签罐位于篮子左侧，颜色形状吻合"
+          }
+        ],
+        "confusable_with": [
+          "obj_1"
+        ],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "方形编织篮筐，外壁米白色编织纹、内衬白色布料，开口朝上；位于桌面右侧，可作为投掷目的地",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              300,
+              45,
+              680
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              565,
+              355,
+              725,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              585,
+              485,
+              780,
+              685
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视左缘仅见黑白编织纹外壁局部，篮口在视野外"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview完整看到编织外壁与白色内衬开口"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview完整看到同一编织篮与白色内衬"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "橙色塑料酱汁瓶，瓶身橙色渐窄、顶部灰色细盖；初始立于桌面后部机器人臂前方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              278,
+              400,
+              325,
+              505
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              512,
+              345,
+              552,
+              435
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视视野内未出现该瓶，位于相机后方/被臂体遮挡"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview清楚看到橙色瓶身与灰色瓶盖立于桌面"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview中橙色瓶位于夹爪正下方，瓶形颜色一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_5",
+        "description": "红白配色牛奶纸盒，侧面可见白色'Milk'字样与斜切屋顶形盒顶；初始位于桌面中部偏右",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              660,
+              290,
+              880,
+              450
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              415,
+              510,
+              480,
+              615
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              375,
+              440,
+              435,
+              540
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视右侧清楚看到红色盒身与白色Milk字样"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview看到红白屋顶形纸盒"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview看到同一红白牛奶盒位于果汁盒旁"
+          }
+        ],
+        "confusable_with": [
+          "obj_6"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_6",
+        "description": "橙黄色果汁纸盒，盒身带橙黄绿图案、顶部斜屋顶形；初始位于桌面左前部",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              355,
+              280,
+              430,
+              430
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              300,
+              520,
+              370,
+              650
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              325,
+              395,
+              380,
+              490
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视中部可见直立橙黄纸盒正面图案，屋顶形顶清晰"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview清楚看到橙黄图案屋顶形纸盒"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview看到同一橙黄纸盒位于牛奶盒左后"
+          }
+        ],
+        "confusable_with": [
+          "obj_5"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_7",
+        "description": "蓝白色扁平小长方体盒（似肥皂盒），顶面浅蓝、侧边白色；初始平放于桌面前部牛奶盒左前",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              800,
+              250,
+              900,
+              400
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              382,
+              600,
+              450,
+              660
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              325,
+              485,
+              380,
+              530
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视中牛奶盒右上方露出蓝白扁盒顶面与侧边"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview清楚看到蓝白扁平小盒"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview看到同一蓝白扁盒位于果汁盒前"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_8",
+        "description": "橙红色扁平长条包装（似巧克力棒袋），一面橙红一面带白色端部；初始平放于桌面中部偏右",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              532,
+              522,
+              592,
+              570
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              465,
+              550,
+              525,
+              605
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视俯视范围内未见该扁条，应在视野外"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview看到橙红扁平长条包装"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview看到同一橙红扁条位于篮左前方"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_9",
+        "description": "灰白色机器人臂装置，含多关节臂身与末端双指夹爪；固定于桌面后部，为操作执行装置",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              740,
+              1000,
+              1000
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              185,
+              0,
+              550,
+              420
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              440,
+              0,
+              800,
+              425
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视底部与两角仅见夹爪两指及腕部灰色部件"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview完整看到臂身与夹爪"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview完整看到同一臂身与夹爪"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      }
+    ],
+    "coverage": {
+      "targets_identifiable": true,
+      "destination_visible": true,
+      "state_change_visible": true,
+      "reason": "两个罐头在frame 0/1/2均可辨认且颜色形状互不冲突，可稳定锁定为目标；编织篮在frame 1/2完整可见、frame 0局部可见，作为投掷目的地明确；三帧timestamp相同为初始状态，后续抓取与投入篮中的状态变化可由agentview与sideview持续观察，画面覆盖满足任务规划与检查需求"
+    },
+    "corrections": {
+      "obj_1": "保留ID与角色；补充frame 0锚框[285,620,450,810]（腕视下偏左蓝灰罐），原稿仅记visible却无框",
+      "obj_2": "保留ID与角色；补充frame 0锚框[700,600,880,780]（腕视右下红绿罐），原稿仅记visible却无框",
+      "obj_3": "保留；补充frame 0锚框[0,300,45,680]对应左缘编织纹外壁局部",
+      "obj_4": "保留；frame 0确为遮挡，无锚框合理，描述不变",
+      "obj_5": "保留；补充frame 0锚框[660,290,880,450]（腕视右侧红白Milk盒）",
+      "obj_6": "修订frame 0观察：原稿称'右缘仅露一角'有误，腕视中部直立橙黄盒即果汁盒正面，改为visible并补锚框[355,280,430,430]；原稿所指右缘棕橙块实为牛奶盒侧面/阴影，不另立物体",
+      "obj_7": "修订frame 0观察：原稿称'牛奶盒后方露一角'方位有误，蓝白扁盒实际位于牛奶盒右上方，改为visible并补锚框[800,250,900,400]",
+      "obj_8": "修订frame 0观察：原稿称腕视中部见橙红长条有误，腕视俯视范围内并无该扁条，改为occluded并删除该帧依据，仅保留frame 1/2锚框",
+      "obj_9": "保留；补充frame 0锚框[0,740,1000,1000]覆盖腕视底部夹爪两指与腕部部件"
+    },
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ],
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/discard_two_cans/runs/20261013T180037Z_basket_two_49fd469b/planning_grounding/cap000002_wrist.png",
+        "sha256": "ca7b899be7cedc565e8da41e91474ddb8772bbe8c82dc19101d8d235ad683ca7"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/discard_two_cans/runs/20261013T180037Z_basket_two_49fd469b/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "d4c27f4c369475ab415ee4bc45626f635d78feec890c188c12696de0461ca171"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/discard_two_cans/runs/20261013T180037Z_basket_two_49fd469b/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "3d5a600f361d316456a44a8df537683b58a779e009e1713c78a8cf9154eb59d5"
+      }
+    ]
+  },
+  "planning_image": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-partial-scope-offline/discard_two_cans/grounding/planning_three_views.png",
+  "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-partial-scope-offline/discard_two_cans/grounding/planning_three_views.png",
+  "images": [
+    {
+      "view": "wrist",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/discard_two_cans/runs/20261013T180037Z_basket_two_49fd469b/planning_grounding/cap000002_wrist.png"
+    },
+    {
+      "view": "agentview",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/discard_two_cans/runs/20261013T180037Z_basket_two_49fd469b/planning_grounding/cap000002_wrist_checker_agentview.png"
+    },
+    {
+      "view": "sideview",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/discard_two_cans/runs/20261013T180037Z_basket_two_49fd469b/planning_grounding/cap000002_wrist_checker_sideview.png"
+    }
+  ]
+}

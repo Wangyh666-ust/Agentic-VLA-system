@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "id": "20261013-xvla-timeline-trial",
+  "purpose": "独立实测入炉关门和双罐入篮，核对通用松手三视图/中间状态输入、过程证据使用及原完整收尾效果。",
+  "effective_scope": "两项分别一次；用户明确改为独立测试，首项失败仍测入篮。原条件方案和首项失败结果保持原字节。",
+  "cases": {
+    "microwave_mug": {
+      "complete": false,
+      "ended_reason": "visual_unknown",
+      "source_actions": {
+        "vla": 900,
+        "prepare": 5,
+        "settling": 10,
+        "finish": 0
+      },
+      "vla_calls": 30,
+      "Hermes_invocations": 1,
+      "Hermes_API_usage": [
+        {
+          "available": false,
+          "reason": "installed Hermes chat native-image path did not export usage",
+          "api_calls": null,
+          "input_tokens": null,
+          "output_tokens": null
+        }
+      ],
+      "Qwen_requests": 8,
+      "current_checks": 6,
+      "release_classifications": 2,
+      "predicate_first_true": {
+        "in|white_yellow_mug_1|microwave_1_heating_region": 143,
+        "close|microwave_1": 255
+      },
+      "predicate_true_counts": {
+        "in|white_yellow_mug_1|microwave_1_heating_region": 758,
+        "close|microwave_1": 646
+      },
+      "native_success_first_true": 255,
+      "native_success_true_steps": 646,
+      "last_effective_checks": [
+        {
+          "achieved": null,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "id": "goal_0",
+          "reason": "当前agentview和sideview显示灰色杯子在微波炉外桌面，目标外观（浅色杯身与黄色区域/黄色把手）不匹配；身份不确定无法确认是否为目标杯子，且无内部证据；目标身份或有效时刻证据未确认",
+          "target_matches_definition": null
+        },
+        {
+          "achieved": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "id": "goal_1",
+          "reason": "agentview和sideview均显示微波炉门板遮住炉腔入口，符合关闭状态定义",
+          "target_matches_definition": true
+        }
+      ],
+      "current_history_references": 0,
+      "release_events": [
+        {
+          "event_id": "release_0001",
+          "step": 164,
+          "predicates": {
+            "in|white_yellow_mug_1|microwave_1_heating_region": true,
+            "close|microwave_1": false
+          },
+          "protocol_passed": true
+        },
+        {
+          "event_id": "release_0002",
+          "step": 510,
+          "predicates": {
+            "in|white_yellow_mug_1|microwave_1_heating_region": true,
+            "close|microwave_1": true
+          },
+          "protocol_passed": true
+        }
+      ],
+      "packet_count": 8,
+      "all_packets_body_sha_match": true,
+      "final_packet_image_count": 9,
+      "final_packet_process_groups": 2,
+      "final_packet_previous_state_count": 5,
+      "last_native_success": true,
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 8,
+        "prechecks": 6,
+        "helper_counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "last_decision": {
+          "state": "unknown",
+          "reason": "subtask purpose unknown",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "visual_unknown",
+          "checks": 6
+        },
+        "independent_streak": 0,
+        "current_view_calls": 6,
+        "release_evidence_calls": 2,
+        "release_events": 2,
+        "process_evidence": []
+      },
+      "handoff_evidence": null,
+      "native_skill_route": {
+        "requested_capability_ids": [
+          "xvla_microwave_place_close"
+        ],
+        "executed_capability_ids": [
+          "xvla_microwave_place_close"
+        ],
+        "replacements": []
+      },
+      "planner_rationale": "用户要求‘先把黄白杯放进微波炉，再关闭微波炉门’，与 native 能力 xvla_microwave_place_close 的 goals 完全匹配，故直接执行该 long-horizon 能力。",
+      "independent_streak": 0
+    },
+    "basket_two": {
+      "complete": false,
+      "ended_reason": "visual_unknown",
+      "source_actions": {
+        "vla": 900,
+        "prepare": 16,
+        "settling": 10,
+        "finish": 0
+      },
+      "vla_calls": 30,
+      "Hermes_invocations": 1,
+      "Hermes_API_usage": [
+        {
+          "available": false,
+          "reason": "installed Hermes chat native-image path did not export usage",
+          "api_calls": null,
+          "input_tokens": null,
+          "output_tokens": null
+        }
+      ],
+      "Qwen_requests": 8,
+      "current_checks": 6,
+      "release_classifications": 2,
+      "predicate_first_true": {
+        "in|alphabet_soup_1|basket_1_contain_region": 125,
+        "in|tomato_sauce_1|basket_1_contain_region": 255
+      },
+      "predicate_true_counts": {
+        "in|alphabet_soup_1|basket_1_contain_region": 776,
+        "in|tomato_sauce_1|basket_1_contain_region": 646
+      },
+      "native_success_first_true": 255,
+      "native_success_true_steps": 646,
+      "last_effective_checks": [
+        {
+          "achieved": null,
+          "current_evidence": null,
+          "evidence_event_ids": [],
+          "id": "goal_0",
+          "reason": "当前agentview中篮内物品模糊无法确认蓝色/橙色标签圆柱罐特征；wrist视角夹爪遮挡篮内且无明确目标特征；sideview未显示篮子；无明确证据证明alphabet_soup_1在篮内且符合身份定义；目标身份或有效时刻证据未确认",
+          "target_matches_definition": null
+        },
+        {
+          "achieved": null,
+          "current_evidence": null,
+          "evidence_event_ids": [],
+          "id": "goal_1",
+          "reason": "当前agentview中篮内物品有红绿标签但无法确认为tomato_sauce_1；wrist视角遮挡严重；sideview未显示篮子；无明确证据证明tomato_sauce_1在篮内且符合身份定义；目标身份或有效时刻证据未确认",
+          "target_matches_definition": null
+        }
+      ],
+      "current_history_references": 0,
+      "release_events": [
+        {
+          "event_id": "release_0001",
+          "step": 137,
+          "predicates": {
+            "in|alphabet_soup_1|basket_1_contain_region": true,
+            "in|tomato_sauce_1|basket_1_contain_region": false
+          },
+          "protocol_passed": true
+        },
+        {
+          "event_id": "release_0002",
+          "step": 258,
+          "predicates": {
+            "in|alphabet_soup_1|basket_1_contain_region": true,
+            "in|tomato_sauce_1|basket_1_contain_region": true
+          },
+          "protocol_passed": true
+        }
+      ],
+      "packet_count": 8,
+      "all_packets_body_sha_match": true,
+      "final_packet_image_count": 9,
+      "final_packet_process_groups": 2,
+      "final_packet_previous_state_count": 5,
+      "last_native_success": true,
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 8,
+        "prechecks": 6,
+        "helper_counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "last_decision": {
+          "state": "unknown",
+          "reason": "subtask purpose unknown",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "visual_unknown",
+          "checks": 6
+        },
+        "independent_streak": 0,
+        "current_view_calls": 6,
+        "release_evidence_calls": 2,
+        "release_events": 2,
+        "process_evidence": []
+      },
+      "handoff_evidence": null,
+      "native_skill_route": {
+        "requested_capability_ids": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ],
+        "executed_capability_ids": [
+          "xvla_basket_both"
+        ],
+        "replacements": [
+          {
+            "native_capability_id": "xvla_basket_both",
+            "component_capability_ids": [
+              "soup_to_basket",
+              "sauce_to_basket"
+            ],
+            "start_index": 0
+          }
+        ]
+      },
+      "planner_rationale": "用户要求‘先把字母汤罐放进篮子，再把番茄酱罐放进篮子’，动作词‘放进’+明确目的地‘篮子’，意图是有序收纳；为严格遵守先后顺序,选用两个原子能力按序执行，而非不可控内部顺序的native long-horizon技能。",
+      "independent_streak": 0
+    }
+  },
+  "interpretation": "两项输入链路均已执行，实际模型没有用过程事件确认目标；原生目标达标与完整视觉流程未通过分别记录。",
+  "micro_prompt_observation": "call_04 prompt明确允许历史放置证据、区分目标与干扰物；原回答推理却要求goal_0当前证据。首次松手wrist可见黄色目标部分，外部桌上灰杯仍成为回答焦点。不能据此证明唯一根因。",
+  "micro_door_observation": "最后900步模型门True与原生close一致，但150/300/450/600/750步仍有错误判断，不能称关门识别已修复。",
+  "basket_prompt_observation": "目标定义区分圆柱汤罐/酱罐与纸盒/挤压瓶，prompt说明细标签不必全部清晰；原回答仍多次因颜色/文字及篮内遮挡返回身份未知。部分sideview未显示篮子。",
+  "basket_route_observation": "Hermes提交soup_to_basket、sauce_to_basket两个原子能力，服务按现有规则合并成xvla_basket_both执行。规划原话要求原子顺序，不能把服务合并称Hermes自己选择了原生长程；原生AND达标本身也不证明内部动作顺序。",
+  "downstream": "原收尾、退离、归位和下一参考算法及配置保持；若finish动作0则本轮未验其效果。",
+  "runtime_calls": {
+    "X-VLA": 60,
+    "Qwen": 16,
+    "Hermes_invocations": 2,
+    "Hermes_API_calls": null,
+    "Hermes_tokens": null
+  },
+  "root_model": "unknown",
+  "root_effort": "unknown",
+  "subagents_used": 0,
+  "audit_new_model_calls": 0,
+  "audit_new_actions": 0,
+  "source_snapshot_rows": 176,
+  "source_all_match": true,
+  "cleanup": {
+    "owned_server_terminated": true,
+    "ports_closed": true
+  },
+  "limits": [
+    "每项仅一次真实LIBERO/MuJoCo仿真，非实体机器人；无重试、无抓取或搬运辅助器。",
+    "原生仿真位置/状态谓词与视觉判断分别记录，不把仿真真值传给检查器或用于代替其放行。",
+    "输入链路已执行不等于目标身份识别、过程证据复用或完整任务成功。",
+    "收尾/退离/回初始参考动作未启动时只能记未验证，不能记为模块失败。",
+    "模型RNG未知/未固定，本轮不是严格配对对照，少量样例不证明总体可靠性或唯一根因。",
+    "Hermes invocation可计数，但安装版本未导出该路径的API调用数或token使用量；root实际模型与档位未知。"
+  ]
+}

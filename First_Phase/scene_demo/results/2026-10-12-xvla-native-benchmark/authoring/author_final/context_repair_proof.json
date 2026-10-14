@@ -1,0 +1,89 @@
+{
+  "task": "Mechanical relocation of approved DeepSeek candidate text using the main-agent mapping supplied by the user",
+  "executor_model": "openai/gpt-6-astra",
+  "executor_reasoning_effort": "not exposed",
+  "execution": "inline; no subagent or model-generation request",
+  "new_model_api_calls": 0,
+  "new_external_api_calls": 0,
+  "model_inference_runs": 0,
+  "simulation_runs": 0,
+  "original_candidate": {
+    "path": "patch.txt",
+    "sha256": "b8ae64cff097c8b8a9cae6aea8c7e470a85421056f02e75268db9820a292bea3",
+    "response_path": "response.json",
+    "response_sha256": "cd341b28a02c7ea987c90793dd4082b591ddf76851227bce29c1aef087b9b0d8",
+    "historical_model": "deepseek-flash",
+    "historical_call_evidence": "proof.json",
+    "whole_candidate_applied_verbatim": false
+  },
+  "applied_patch": "context_repair.patch",
+  "applied_patch_sha256": "a9adb6c45addbb12a0373c1d0472c4c4e4954f5bd3aa8f9768fdc4ad1b3fd397",
+  "application_tool": "functions.apply_patch",
+  "original_patch_and_response_hashes_unchanged_after_checks": true,
+  "final_sha256": {
+    "First_Phase/libero_demo/xvla_native_benchmark.py": "21ec3aad27d8d0821d18894ab44478c1e9c03a23f8f7fc2d00d517186951daec",
+    "First_Phase/libero_demo/test_xvla_native_benchmark.py": "6c3d5c9d39179eae5ca37f77f9dd97fc3ae1b5bf1dda97d064ad8c5ce2dffdbb"
+  },
+  "baseline_sha256": {
+    "First_Phase/libero_demo/xvla_native_benchmark.py": "bae6d0c080938262590ec5867fd0bdc0de9f0b9731d422fbe5470f5b3116f61b",
+    "First_Phase/libero_demo/test_xvla_native_benchmark.py": "5f7e873c0b99a85e8762734ad9ac408e76dc8d8dc5929c5e59859c99bf60df1a"
+  },
+  "provenance": [
+    {"candidate_lines": "4-11", "code_author": "original DeepSeek candidate", "context_repair": "exact existing freeze_metadata block"},
+    {"candidate_lines": "16-18", "code_author": "original DeepSeek candidate", "context_repair": "main-agent mapping: existing run_episode row; preserve 12-space indentation"},
+    {"candidate_lines": "20-28", "code_author": "original DeepSeek candidate", "context_repair": "exact existing _read_slot_result block"},
+    {"candidate_lines": "33-36", "code_author": "original DeepSeek candidate", "context_repair": "main-agent mapping: insert after score/success consistency check, before try; no duplicate author_score; all existing checks retained"},
+    {"candidate_lines": "47", "code_author": "original DeepSeek candidate", "context_repair": "main-agent mapping: insert in actual episode-limit branch; retain summarize(out) and return 0"},
+    {"candidate_lines": "56-57", "code_author": "original DeepSeek candidate", "context_repair": "main-agent mapping: change only end_reason scalar in actual multiline row and first attempt write; second unknown path retained"},
+    {"candidate_lines": "63,66,69", "code_author": "original DeepSeek candidate", "context_repair": "main-agent mapping: existing test_audited_env_tracks_action_obs_and_double_close(tmp_path, monkeypatch), existing nested step indentation and first length assertion"},
+    {"candidate_lines": "71-89", "code_author": "original DeepSeek candidate", "context_repair": "main-agent mapping: context-marked declaration becomes new function declaration; original body appended verbatim"}
+  ],
+  "rejected": {
+    "candidate_lines": "92-107",
+    "test": "test_validate_rejects_noninteger_counts",
+    "reason": "Main agent rejected entire test: wrong validate_episode signature and incomplete fixture",
+    "applied": false,
+    "rewritten": false
+  },
+  "expected_test_count": 11,
+  "verification": {
+    "status": "failed; stopped without additional repair",
+    "distribution": "Ubuntu",
+    "python": "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+    "cwd": "/mnt/d/FYP/First_Phase/libero_demo",
+    "environment": {
+      "PYTHONPATH": "/mnt/d/FYP/First_Phase/libero_demo:/home/yhwang/fyp/xvla_native/LIBERO:/home/yhwang/fyp/xvla_native/upstream",
+      "LIBERO_CONFIG_PATH": "/home/yhwang/fyp/xvla_native/libero_config",
+      "MUJOCO_GL": "egl",
+      "PYOPENGL_PLATFORM": "egl",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "commands": [
+      "/home/yhwang/fyp/xvla_native/sim_venv/bin/python -m pytest -q -p no:cacheprovider test_xvla_native_benchmark.py",
+      "/home/yhwang/fyp/xvla_native/sim_venv/bin/python xvla_native_benchmark.py --help"
+    ],
+    "pytest": {
+      "exit_code": 1,
+      "total": 11,
+      "passed": 10,
+      "failed": 1,
+      "warnings": 21,
+      "seconds": 4.53,
+      "failed_test": "test_freeze_metadata_real_installed_contract",
+      "first_metadata_call_and_three_assertions_passed": true,
+      "failure": "Second freeze_metadata call fails comparing existing versions to current versions at xvla_native_benchmark.py:513; torch.torch_version imports pkg_resources.packaging and raises ModuleNotFoundError: No module named 'pkg_resources'",
+      "stdout": "context_repair_pytest.stdout.log",
+      "stderr": "context_repair_pytest.stderr.log",
+      "exitcode_log": "context_repair_pytest.exitcode.log"
+    },
+    "help": {
+      "exit_code": 0,
+      "usage_printed": true,
+      "stdout": "context_repair_help.stdout.log",
+      "stderr": "context_repair_help.stderr.log",
+      "exitcode_log": "context_repair_help.exitcode.log"
+    },
+    "post_failure_product_or_environment_repairs": 0,
+    "review": "Self-review against the user-supplied exact mapping; no additional model reviewer invoked"
+  }
+}

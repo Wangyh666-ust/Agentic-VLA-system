@@ -1,0 +1,191 @@
+{
+  "case": "book_before_v93",
+  "expected": "block",
+  "observed_at": 8.249999999999424,
+  "goal_achieved": null,
+  "handoff_review_triggered": false,
+  "decision": {
+    "state": "unknown",
+    "reason": "subtask purpose unknown",
+    "allow_release": false,
+    "allow_retreat": false
+  },
+  "released_encoder": false,
+  "current_rows": [
+    {
+      "id": "goal_0",
+      "state": "unknown",
+      "same_target": true,
+      "evidence": [
+        {
+          "frame": 23,
+          "box": [
+            452,
+            262,
+            545,
+            383
+          ]
+        },
+        {
+          "frame": 21,
+          "box": [
+            215,
+            500,
+            520,
+            830
+          ]
+        },
+        {
+          "frame": 22,
+          "box": [
+            288,
+            288,
+            352,
+            362
+          ]
+        }
+      ],
+      "identity_refs": [
+        {
+          "frame": 2,
+          "box": [
+            568,
+            495,
+            668,
+            605
+          ]
+        },
+        {
+          "frame": 0,
+          "box": [
+            0,
+            256,
+            320,
+            540
+          ]
+        }
+      ],
+      "supported": null,
+      "change": "none",
+      "comparison": "初态frame0/2中桌面上的黑色硬封面书（顶缘露白页）与当前frame21/23中夹爪所持、伸入收纳盒后排隔间的黑色扁书为同一目标；杯子（黄柄白身）始终在桌面未动，不是目标。当前书仍被夹持并斜插在后隔间口内，主体大部分露在口沿上方，是否已落到承接深度无法确认。",
+      "placement": {
+        "region_confirmed": true,
+        "region_description": "收纳盒靠墙/靠机器人基座一侧的后排隔间（frame23中开口行左端一格，含其中窄分格）",
+        "destination_evidence": [
+          {
+            "frame": 23,
+            "box": [
+              390,
+              302,
+              500,
+              395
+            ]
+          },
+          {
+            "frame": 21,
+            "box": [
+              240,
+              30,
+              690,
+              460
+            ]
+          }
+        ],
+        "boundary_observation": "frame23中书的黑色板面自后排隔间口沿内侧伸出，斜靠在该格后内壁/隔板一侧，未越过到前排隔间或盒外；frame21腕视见书脊白页边位于该格横向隔板下方的暗腔内",
+        "relation_evidence": [
+          {
+            "frame": 23,
+            "box": [
+              452,
+              262,
+              545,
+              383
+            ]
+          },
+          {
+            "frame": 21,
+            "box": [
+              215,
+              500,
+              520,
+              830
+            ]
+          }
+        ],
+        "support_observation": "接触处被隔间内壁与书自身遮挡，无法直接看见书底是否落在隔间底面；当前承重视觉上仍可能部分来自夹爪",
+        "needs_motion": true,
+        "contradiction": null,
+        "support_contact": {
+          "visible": false,
+          "observation": "书底与隔间底面的接触处被棕色盒壁和书自身遮挡，三视角均不可见",
+          "evidence": []
+        },
+        "support_inference": {
+          "depth_sufficient": false,
+          "spatial_observation": "对照初态frame2书整体尺度（约整块黑色封面高度），当前frame23中书露出口沿以上的部分仍占其主体大半，仅下端斜入隔间口内并倚靠内壁，未见主体被后排隔间四壁包围，存在继续下降/推进的明显空间",
+          "temporal_observation": "frame14(6.5s)书悬于隔间口上方→frame17(7.75s)下端刚入口→frame20(8.0s)与frame23(8.25s)保持斜插口内姿态，插入深度在近邻过程内几乎未增加，且夹爪仍闭合持书，过程显示放置推进尚未完成而非已到位延续",
+          "evidence": [
+            {
+              "frame": 23,
+              "box": [
+                452,
+                262,
+                545,
+                383
+              ]
+            },
+            {
+              "frame": 20,
+              "box": [
+                448,
+                232,
+                540,
+                330
+              ]
+            },
+            {
+              "frame": 17,
+              "box": [
+                438,
+                222,
+                532,
+                325
+              ]
+            },
+            {
+              "frame": 14,
+              "box": [
+                418,
+                228,
+                512,
+                345
+              ]
+            }
+          ]
+        },
+        "views": [
+          {
+            "frame": 21,
+            "relation": "unclear",
+            "reason": "腕视见书脊白页边在后排隔间暗腔内、横向隔板之下，但腔底与书底接触不可见，无法判断深度"
+          },
+          {
+            "frame": 22,
+            "relation": "occluded",
+            "reason": "agentview中机械臂与黑色灯杆遮挡caddy后隔间及书，仅见臂端停在盒后上方"
+          },
+          {
+            "frame": 23,
+            "relation": "violated",
+            "reason": "sideview清楚见书仍被夹爪夹持、斜插在后隔间口内，主体大半露在口沿上方，未见到承接深度"
+          }
+        ]
+      },
+      "capture_id": "9fb682a3c4396c67/capture_000032"
+    }
+  ],
+  "actual_model_calls": 2,
+  "new_robot_actions": 0,
+  "historical_proofs": [],
+  "passed": true
+}

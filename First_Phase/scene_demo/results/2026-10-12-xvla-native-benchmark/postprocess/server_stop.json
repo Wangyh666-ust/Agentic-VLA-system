@@ -1,0 +1,82 @@
+{
+  "utc": "2026-10-12T08:33:19.912620+00:00",
+  "unique_completed_slots": 200,
+  "client_before": {
+    "exists": false
+  },
+  "server_before": {
+    "exists": true,
+    "argv": [
+      "/home/yhwang/fyp/xvla_native/venv/bin/python",
+      "-u",
+      "-m",
+      "deploy",
+      "--model_path",
+      "/home/yhwang/fyp/xvla_native/model",
+      "--port",
+      "8794",
+      "--host",
+      "127.0.0.1",
+      "--disable_slurm",
+      "--output_dir",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/server_runtime"
+    ],
+    "start_ticks": "491",
+    "state": "S",
+    "stat": "423 (python) S 421 423 423 34816 423 4194560 398716 0 1184 0 77076 2105 0 0 20 0 73 0 491 58256814080 444457 18446744073709551615 4325376 7352253 140723680198832 0 0 0 0 16781312 16386 0 0 0 17 20 0 0 0 0 0 10653128 12216448 73736192 140723680204398 140723680204652 140723680204652 140723680206795 0\n"
+  },
+  "new_model_calls": 0,
+  "new_physical_actions": 0,
+  "signals": [
+    {
+      "pid": 423,
+      "signal": "SIGTERM",
+      "utc": "2026-10-12T08:33:20.035773+00:00"
+    }
+  ],
+  "full_argv_and_starttime_match": true,
+  "server_after": {
+    "exists": false
+  },
+  "client_after": {
+    "exists": false
+  },
+  "gpu_after": {
+    "measurement": "current snapshot, NOT peak memory",
+    "commands": [
+      {
+        "utc": "2026-10-12T08:33:20.703830+00:00",
+        "command": [
+          "/usr/lib/wsl/lib/nvidia-smi"
+        ],
+        "returncode": 0,
+        "stdout": "Mon Oct 12 16:33:20 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 610.57.01              KMD Version: 610.88        CUDA UMD Version: 13.3     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA GeForce RTX 5070 ...    On  |   00000000:02:00.0  On |                  N/A |\n| N/A   53C    P4             13W /  115W |    1307MiB /   8151MiB |     27%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|  No running processes found                                                             |\n+-----------------------------------------------------------------------------------------+\n",
+        "stderr": ""
+      },
+      {
+        "utc": "2026-10-12T08:33:20.755974+00:00",
+        "command": [
+          "/usr/lib/wsl/lib/nvidia-smi",
+          "--query-gpu=name,memory.total,memory.used,utilization.gpu",
+          "--format=csv"
+        ],
+        "returncode": 0,
+        "stdout": "name, memory.total [MiB], memory.used [MiB], utilization.gpu [%]\nNVIDIA GeForce RTX 5070 Laptop GPU, 8151 MiB, 1307 MiB, 0 %\n",
+        "stderr": ""
+      },
+      {
+        "utc": "2026-10-12T08:33:20.829577+00:00",
+        "command": [
+          "/usr/lib/wsl/lib/nvidia-smi",
+          "--query-compute-apps=pid,process_name,used_memory",
+          "--format=csv"
+        ],
+        "returncode": 0,
+        "stdout": "pid, process_name, used_gpu_memory [MiB]\n",
+        "stderr": ""
+      }
+    ]
+  },
+  "ok": true,
+  "finished_utc": "2026-10-12T08:33:20.829593+00:00"
+}

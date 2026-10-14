@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "id": "20261014-partial-scope-offline",
+  "intent": "analyze_existing",
+  "question_key": "partial-scope-offline-planning",
+  "purpose": "验证通用部分执行与能力边界：三条旧原文+原始初态照片，经当前识别、Hermes真实规划与选择复核；不启动仿真，线上须用户另行批准。",
+  "prior_evidence": [
+    "20261014-qwen38-three-requests",
+    "20261014-qwen38-initial-recognition",
+    "20261008-skill-context"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261014-qwen38-three-requests",
+      "disposition": "reuse",
+      "reason": "复用三条原文及各自初始三视图；整理通过、黄杯准备选择合理但缺能力说明、双罐网络失败未规划。本轮不复用旧规划作为答案。"
+    },
+    {
+      "experiment_id": "20261014-qwen38-initial-recognition",
+      "disposition": "reuse",
+      "reason": "复用Qwen3.8原生视觉接口与离线180秒传输设置；不能代替这三条原文的规划验证。"
+    },
+    {
+      "experiment_id": "20261008-skill-context",
+      "disposition": "reuse",
+      "reason": "复用只收集计划且不执行的真实Hermes工具链；保留丢弃与收纳语义边界。"
+    }
+  ],
+  "related_search": "核对当前公开catalog、初识别inspect_scene、run_agent/SOUL/MCP提示、原始plan_during_execution和capture照片；无垃圾桶/加热启动能力。",
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "固定原始图片哈希与原文，公开能力由当前catalog生成，隐藏预期答案不进入模型。",
+    "每项两次Qwen3.8初识别复核、一次真实Hermes CLI规划；capture-only服务只记录，无VLA/环境/动作入口。",
+    "execute时复用validate_selection与verify_plan，检查实际目标绑定和部分执行范围。",
+    "人工核对整理三目标、黄杯partial及缺启动说明、丢弃不偷偷入收纳篮；通过后仅请求在线许可。"
+  ],
+  "success_criteria": "三个实际提交均符合各自原意；黄杯partial分支真实触发且保留未支持加热；execute目标身份复核通过；未启动仿真。",
+  "failure_criteria": "不提交、图片识别/选择失败、漏报能力缺口、擅自替代意图均不通过；不以零动作评判VLA。",
+  "scope": {
+    "max_cases": 3,
+    "max_attempts_per_case": 1,
+    "inventory_calls_per_case": 2,
+    "selection_calls_per_case": 1,
+    "hermes_turns_per_case": 12,
+    "stop_rule": "每项独立一次；保存错误，不自动重试。任一不通过不申请在线启动。"
+  },
+  "configuration": {
+    "model": "qwen3.8-max",
+    "inventory_timeout_s": 180,
+    "production_inventory_timeout_s": 90,
+    "transport_note": "仅离线传输等待180秒，沿用旧离线比较；生产90秒未改，不据此证明线上网络可靠。",
+    "hermes_timeout_s": 900,
+    "sources": {
+      "planning_scope.py": "fd64b2224ecd27d57f3e77468d183cd7fd28f4072868afb2cfd83011417987fc",
+      "run_agent.py": "8db0eb79a857edcb45320dc07aed35b0f071fed7768f0562cf77f144a2c6c848",
+      "setup_profile.py": "62fecf6a2a16b96d500f6eb0e01be90be4f173542b36aa86c7890a021e5f9422",
+      "mcp_server.py": "e2999a5bb3d29375ed5ab3aec75bf0ef035ad6012c8debba4fcdc1c3c5c36153",
+      "service.py": "0c9b46245c92b524e8a643813a5470eddb093b978e2160fe124ca2141c849e29",
+      "xvla_service.py": "bbb837126e2a1b546cb2dad182565e0f2eb9a201c99d0ddabbfebe86ebac6ffd",
+      "xvla_skills.py": "06ea326a2cf60ea7e602eac8d97914f74d2a15cae4afdae3107945b9d1417e3b",
+      "xvla_grounding.py": "9dc1371bc2d2cf31b0f529c5dbad4cfa2ef1ec1cea6b2633f1860a9b83cce6f9",
+      "catalog.py": "418ada0866e7f86e7ef6b0aca6f8e0a78e0a94272e092cc1e52283eee4892d72",
+      "planning_diagnostics.py": "13e48f7e507f8493a98e36d8a415d988c87fea4eae25d7d253c882dcac8d5cf8",
+      "tests/test_planning_scope.py": "0e6978c8f1c8f4e1bb70a4ddef926c361688402965e4d8e6965e0567b8858181",
+      "joint_home.py": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+      "safe_exit.py": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+      "safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+      "xvla_finish.py": "6db33c370a29447c3e6f9f48149b2da5a475ddcd04e09aac9f24f8177a9a41f9",
+      "xvla_backend.py": "ce86494c3273909dadd408bf96b0b94f223b5f5ec9c26912878fe6ca8f336fd1",
+      "finish_v1/runtime.py": "d669b47799c004ac189a2ba03a7e6be08fbcb2c6175b2c40086a1b2cdaa3bd63",
+      "finish_v1/control.py": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+      "finish_v1/vision.py": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534",
+      "xvla_subtask_review.py": "f15c57fc869e3ff497952be10dd2c83fd017f40add147d77676fff2c287fd4c1"
+    },
+    "helper_actions": 0,
+    "simulation_actions": 0,
+    "model_authoring": "root actual model/reasoning unavailable; no subagents",
+    "cases": [
+      "table_tidy_stove",
+      "heat_yellow_mug",
+      "discard_two_cans"
+    ]
+  }
+}

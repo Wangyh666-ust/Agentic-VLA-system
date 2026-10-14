@@ -1,0 +1,111 @@
+{
+  "mode": "live",
+  "stage": "error",
+  "request": "帮我整理一下桌子，把书本归位",
+  "scene": "book_caddy",
+  "request_id": "console-8837e5036e56d7b3cb4b81b2",
+  "events": [
+    {
+      "time": "14:52:21",
+      "text": "正在载入场景并拍摄三视图；不启动模型、不执行任务。"
+    },
+    {
+      "time": "14:52:30",
+      "text": "三视图已就绪。请先看看场景，再在下方填写你想做的任务。"
+    },
+    {
+      "time": "14:52:47",
+      "text": "核对实验历史与本次范围（首次读取证据可能需要数分钟）。"
+    },
+    {
+      "time": "14:56:55",
+      "text": "正在加载 X-VLA；尚未创建场景。"
+    },
+    {
+      "time": "14:57:13",
+      "text": "任务已提交，开始三视图联合识别与复核；此阶段不执行任务动作。"
+    },
+    {
+      "time": "14:58:44",
+      "text": "preplanning_grounding_failed: {\"ok\": false, \"reason\": \"internal_error\", \"detail\": \"Traceback (most recent call last):\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/service.py\\\", line 1380, in _worker_loop\\n    work.result = work.fn()\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/xvla_service.py\\\", line 157, in prepare\\n    inventory, image = inspect_scene(capture, user_request, directory)\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/xvla_grounding.py\\\", line 154, in inspect_scene\\n    first_meta = client._request(ctx, paths, prompt)\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/vision.py\\\", line 816, in _request\\n    raise RuntimeError(\\\"Qwen network failure\\\") from None\\nRuntimeError: Qwen network failure\\n\"}"
+    }
+  ],
+  "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-145221-ee32577c",
+  "message": "preplanning_grounding_failed: {\"ok\": false, \"reason\": \"internal_error\", \"detail\": \"Traceback (most recent call last):\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/service.py\\\", line 1380, in _worker_loop\\n    work.result = work.fn()\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/xvla_service.py\\\", line 157, in prepare\\n    inventory, image = inspect_scene(capture, user_request, directory)\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/xvla_grounding.py\\\", line 154, in inspect_scene\\n    first_meta = client._request(ctx, paths, prompt)\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/vision.py\\\", line 816, in _request\\n    raise RuntimeError(\\\"Qwen network failure\\\") from None\\nRuntimeError: Qwen network failure\\n\"}",
+  "session_id": "c4025ecb375244c0ba20472b7996619f",
+  "capabilities": [
+    {
+      "instruction": "put the book in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "atomic_candidate",
+      "audit_only": false,
+      "exclusive_target": true,
+      "object_id": "black_book_1",
+      "target_id": "desk_caddy_1_back_contain_region",
+      "evidence": "Candidate atomic prompt; untested integration, not evidence of native single-task training",
+      "capability_id": "xvla_t05_book_to_caddy"
+    },
+    {
+      "instruction": "pick up the book and place it in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 5
+      },
+      "component_capability_ids": [
+        "xvla_t05_book_to_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_book_caddy"
+    }
+  ],
+  "frames": [
+    {
+      "view": "wrist",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-145221-ee32577c/scene_preview/cap000002_wrist.png",
+      "timestamp": 0.0
+    },
+    {
+      "view": "agentview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-145221-ee32577c/scene_preview/cap000002_wrist_checker_agentview.png",
+      "timestamp": 0.0
+    },
+    {
+      "view": "sideview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-145221-ee32577c/scene_preview/cap000002_wrist_checker_sideview.png",
+      "timestamp": 0.0
+    }
+  ],
+  "preview_only": true,
+  "model_runtime": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-145221-ee32577c/model-20261014-145656-d3393bb1",
+  "model_log": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-145221-ee32577c/model-20261014-145656-d3393bb1/model.log"
+}

@@ -1,0 +1,371 @@
+"""Fixed persistent-scene capability catalog (standard library only).
+
+The catalog describes the seven fixed scenes and the SmolVLA-backed
+capabilities that may run inside them. It deliberately carries no hidden case
+expectations and no success rates: every ``evidence`` string is a known
+evidence tag captured from an earlier run or the plain ``candidate`` marker.
+"""
+
+from __future__ import annotations
+
+import copy
+try:
+    from scene_demo.xvla_skills import NATIVE_LONG_SKILLS
+except ModuleNotFoundError:
+    from xvla_skills import NATIVE_LONG_SKILLS
+
+SCENES: dict[str, dict] = {
+    "goal_table": {
+        "label": "Original goal table",
+        "suite": "libero_goal",
+        "task_id": 8,
+        "variant": "original",
+        "patches": [],
+        "storage_policy": {
+            "akita_black_bowl_1": "plate_1",
+            "wine_bottle_1": "wine_rack_1_top_region",
+        },
+        "description": (
+            "Shared original bowl, wine and stove scene; no trash bin exists "
+            "here."
+        ),
+    },
+    "goal_table_shifted": {
+        "label": "Shifted goal table",
+        "suite": "libero_goal",
+        "task_id": 8,
+        "variant": "layout_shift",
+        "patches": [
+            {"kind": "offset", "object_id": "akita_black_bowl_1", "xyz": [0.06, 0, 0]},
+            {"kind": "offset", "object_id": "wine_bottle_1", "xyz": [-0.06, 0, 0]},
+        ],
+        "storage_policy": {
+            "akita_black_bowl_1": "plate_1",
+            "wine_bottle_1": "wine_rack_1_top_region",
+        },
+        "description": (
+            "Experimental copy of the goal table whose bowl and wine bottle "
+            "layout is deliberately changed along x."
+        ),
+    },
+    "basket_two": {
+        "label": "Two cans in basket",
+        "suite": "libero_10",
+        "task_id": 0,
+        "variant": "original",
+        "patches": [],
+        "storage_policy": {
+            "alphabet_soup_1": "basket_1_contain_region",
+            "tomato_sauce_1": "basket_1_contain_region",
+        },
+        "description": (
+            "Shared original basket scene holding the alphabet soup can and "
+            "the tomato sauce can."
+        ),
+    },
+    "microwave_mug": {
+        "label": "Mug into microwave, then close door",
+        "suite": "libero_10",
+        "task_id": 9,
+        "variant": "original",
+        "patches": [],
+        "storage_policy": {"white_yellow_mug_1": "microwave_1_heating_region"},
+        "description": "Original kitchen scene with an initially open microwave and a yellow and white mug.",
+    },
+    "mugs_two": {
+        "label": "Two mugs, two plates",
+        "suite": "libero_10",
+        "task_id": 4,
+        "variant": "original",
+        "patches": [],
+        "storage_policy": {
+            "porcelain_mug_1": "plate_1",
+            "white_yellow_mug_1": "plate_2",
+        },
+        "description": (
+            "Shared original two-mug scene where both plates start empty."
+        ),
+    },
+    "mugs_left_occupied": {
+        "label": "Left plate occupied",
+        "suite": "libero_10",
+        "task_id": 4,
+        "variant": "occupied",
+        "patches": [
+            {"kind": "place_on", "object_id": "red_coffee_mug_1", "target_id": "plate_1"},
+        ],
+        "storage_policy": {},
+        "description": (
+            "Two-mug scene pre-populated with the red coffee mug already on "
+            "the left plate."
+        ),
+    },
+    "mugs_right_occupied": {
+        "label": "Right plate occupied",
+        "suite": "libero_10",
+        "task_id": 4,
+        "variant": "occupied",
+        "patches": [
+            {"kind": "place_on", "object_id": "white_yellow_mug_1", "target_id": "plate_2"},
+        ],
+        "storage_policy": {},
+        "description": (
+            "Two-mug scene pre-populated with the yellow and white mug already "
+            "on the right plate."
+        ),
+    },
+    "mugs_both_occupied": {
+        "label": "Both plates occupied",
+        "suite": "libero_10",
+        "task_id": 4,
+        "variant": "occupied",
+        "patches": [
+            {"kind": "place_on", "object_id": "red_coffee_mug_1", "target_id": "plate_1"},
+            {"kind": "place_on", "object_id": "white_yellow_mug_1", "target_id": "plate_2"},
+        ],
+        "storage_policy": {},
+        "description": (
+            "Two-mug scene pre-populated with both plates already occupied."
+        ),
+    },
+}
+
+# Static appearance meanings for this LIBERO asset, never its current state.
+# Static native asset appearance, not current location or simulator truth.
+# Verified against stable_hope_objects/{tomato_sauce,milk,ketchup}/texture_map.png.
+OBJECT_VISUAL_IDENTITY_DEFINITIONS = {
+    "tomato_sauce": "圆柱形罐头，红绿标签及Tomato Sauce文字；不同于Milk纸盒，也不同于Tomato Ketchup挤压瓶。",
+    "milk": "牛奶纸盒，红白绿包装及Milk文字。",
+    "ketchup": "橙色挤压瓶，标签Tomato Ketchup；与tomato sauce罐头为不同物品。",
+}
+
+OBJECT_VISUAL_STATE_DEFINITIONS = {
+    "microwave": {
+        "closed": "微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。",
+        "open": "微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。",
+    },
+    "flat_stove": {
+        "on": "灶台炉面出现亮起的红色加热圈表示灶台开启。任一视角清楚显示此标志即可，不要求另一视角也看到，不要求旋钮已松开，也不要求提供此前的扭转过程。",
+        "off": "炉面清晰可见且红色加热圈熄灭表示灶台关闭。炉面被遮挡或无法辨认时不能仅凭看不到红圈判断关闭。",
+    },
+}
+
+CAPABILITIES: dict[str, dict] = {
+    "mug_to_microwave": {
+        "instruction": "put the yellow and white mug in the microwave",
+        "goals": [["in", "white_yellow_mug_1", "microwave_1_heating_region"]],
+        "object_id": "white_yellow_mug_1",
+        "target_id": "microwave_1_heating_region",
+        "scene_ids": ["microwave_mug"],
+        "evidence": "candidate atomic instruction in native LIBERO-10 task9; execution unverified",
+        "audit_only": False,
+        "exclusive_target": True,
+    },
+    "microwave_close": {
+        "instruction": "close the microwave",
+        "goals": [["close", "microwave_1"]],
+        "object_id": "microwave_1",
+        "target_id": None,
+        "scene_ids": ["microwave_mug"],
+        "evidence": "candidate; native close instruction exists in LIBERO-90; execution here unverified",
+        "audit_only": False,
+        "exclusive_target": False,
+    },
+    "bowl_to_plate": {
+        "instruction": "put the bowl on the plate",
+        "goals": [["on", "akita_black_bowl_1", "plate_1"]],
+        "object_id": "akita_black_bowl_1",
+        "target_id": "plate_1",
+        "scene_ids": ["goal_table", "goal_table_shifted"],
+        "evidence": 'v0.1.0 single-task success in libero_goal/8; sequence and shifted-layout reliability unverified',
+        "audit_only": False,
+        "exclusive_target": True,
+    },
+    "wine_to_rack": {
+        "instruction": "put the wine bottle on the rack",
+        "goals": [["on", "wine_bottle_1", "wine_rack_1_top_region"]],
+        "object_id": "wine_bottle_1",
+        "target_id": "wine_rack_1_top_region",
+        "scene_ids": ["goal_table", "goal_table_shifted"],
+        "evidence": 'candidate here; v0.1.0 single-task wine success used libero_goal/9, a different task initialization',
+        "audit_only": False,
+        "exclusive_target": True,
+    },
+    "stove_on": {
+        "instruction": "turn on the stove",
+        "goals": [["turnon", "flat_stove_1"]],
+        "object_id": "flat_stove_1",
+        "target_id": None,
+        "scene_ids": ["goal_table", "goal_table_shifted"],
+        "evidence": 'candidate here; v0.1.0 single-task stove success used libero_goal/7, a different task initialization',
+        "audit_only": False,
+        "exclusive_target": False,
+    },
+    "soup_to_basket": {
+        "instruction": "put the alphabet soup in the basket",
+        "goals": [["in", "alphabet_soup_1", "basket_1_contain_region"]],
+        "object_id": "alphabet_soup_1",
+        "target_id": "basket_1_contain_region",
+        "scene_ids": ["basket_two"],
+        "evidence": (
+            "candidate in this scene; previous successful single task is a "
+            "different scene"
+        ),
+        "audit_only": False,
+        "exclusive_target": False,
+    },
+    "sauce_to_basket": {
+        "instruction": "put the tomato sauce in the basket",
+        "goals": [["in", "tomato_sauce_1", "basket_1_contain_region"]],
+        "object_id": "tomato_sauce_1",
+        "target_id": "basket_1_contain_region",
+        "scene_ids": ["basket_two"],
+        "evidence": "candidate",
+        "audit_only": False,
+        "exclusive_target": False,
+    },
+    "white_mug_left": {
+        "instruction": "put the white mug on the left plate",
+        "goals": [["on", "porcelain_mug_1", "plate_1"]],
+        "object_id": "porcelain_mug_1",
+        "target_id": "plate_1",
+        "scene_ids": [
+            "mugs_two",
+            "mugs_left_occupied",
+            "mugs_right_occupied",
+            "mugs_both_occupied",
+        ],
+        "evidence": "candidate",
+        "audit_only": False,
+        "exclusive_target": True,
+    },
+    "white_mug_right": {
+        "instruction": "put the white mug on the right plate",
+        "goals": [["on", "porcelain_mug_1", "plate_2"]],
+        "object_id": "porcelain_mug_1",
+        "target_id": "plate_2",
+        "scene_ids": [
+            "mugs_two",
+            "mugs_left_occupied",
+            "mugs_right_occupied",
+            "mugs_both_occupied",
+        ],
+        "evidence": "unverified alternate destination; candidate",
+        "audit_only": False,
+        "exclusive_target": True,
+    },
+    "yellow_mug_right": {
+        "instruction": "put the yellow and white mug on the right plate",
+        "goals": [["on", "white_yellow_mug_1", "plate_2"]],
+        "object_id": "white_yellow_mug_1",
+        "target_id": "plate_2",
+        "scene_ids": [
+            "mugs_two",
+            "mugs_left_occupied",
+            "mugs_right_occupied",
+            "mugs_both_occupied",
+        ],
+        "evidence": "candidate",
+        "audit_only": False,
+        "exclusive_target": True,
+    },
+    "table_both": {
+        "instruction": (
+            "put the bowl on the plate and put the wine bottle on the rack"
+        ),
+        "goals": [
+            ["on", "akita_black_bowl_1", "plate_1"],
+            ["on", "wine_bottle_1", "wine_rack_1_top_region"],
+        ],
+        "object_id": None,
+        "target_id": None,
+        "scene_ids": ["goal_table", "goal_table_shifted"],
+        "evidence": "candidate composite",
+        "audit_only": True,
+        "exclusive_target": False,
+    },
+    "basket_both": {
+        "instruction": "put both the alphabet soup and the tomato sauce in the basket",
+        "goals": [
+            ["in", "alphabet_soup_1", "basket_1_contain_region"],
+            ["in", "tomato_sauce_1", "basket_1_contain_region"],
+        ],
+        "object_id": None,
+        "target_id": None,
+        "scene_ids": ["basket_two"],
+        "evidence": "candidate composite",
+        "audit_only": True,
+        "exclusive_target": False,
+    },
+    "mugs_both": {
+        "instruction": (
+            "put the white mug on the left plate and put the yellow and white "
+            "mug on the right plate"
+        ),
+        "goals": [
+            ["on", "porcelain_mug_1", "plate_1"],
+            ["on", "white_yellow_mug_1", "plate_2"],
+        ],
+        "object_id": None,
+        "target_id": None,
+        "scene_ids": ["mugs_two"],
+        "evidence": "candidate composite",
+        "audit_only": True,
+        "exclusive_target": False,
+    },
+}
+
+
+CAPABILITIES.update(copy.deepcopy(NATIVE_LONG_SKILLS))
+
+def scene_capabilities(scene_id: str, include_audit: bool = False, *, backend: str = "smolvla") -> list[dict]:
+    """Return deep copies of the capabilities usable in ``scene_id``.
+
+    Audit-only composite capabilities are excluded unless ``include_audit`` is
+    true. Unknown scenes raise ``ValueError``. Every returned dict gains a
+    ``capability_id`` field and is a deep copy, so caller mutations can never
+    reach the catalog itself.
+    """
+
+    if scene_id not in SCENES:
+        raise ValueError("unknown scene_id: %r" % (scene_id,))
+
+    result: list[dict] = []
+    for capability_id, capability in CAPABILITIES.items():
+        if "backends" in capability and backend not in capability["backends"]:
+            continue
+        if scene_id not in capability["scene_ids"]:
+            continue
+        if capability["audit_only"] and not include_audit:
+            continue
+        entry = copy.deepcopy(capability)
+        entry["capability_id"] = capability_id
+        result.append(entry)
+    return result
+
+
+def deduplicate_goals(capability_ids: list[str]) -> list[list[str]]:
+    """Union the goals of ``capability_ids`` with first occurrence winning.
+
+    Repeated goal predicates collapse to their first occurrence. Unknown
+    capability ids raise ``ValueError``.
+    """
+
+    seen: set[str] = set()
+    merged: list[list[str]] = []
+    for capability_id in capability_ids:
+        if capability_id not in CAPABILITIES:
+            raise ValueError("unknown capability_id: %r" % (capability_id,))
+        for goal in CAPABILITIES[capability_id]["goals"]:
+            key = goal_key(goal)
+            if key in seen:
+                continue
+            seen.add(key)
+            merged.append(list(goal))
+    return merged
+
+
+def goal_key(goal: list[str]) -> str:
+    """Canonical string key for a single goal predicate."""
+
+    return "|".join(goal)

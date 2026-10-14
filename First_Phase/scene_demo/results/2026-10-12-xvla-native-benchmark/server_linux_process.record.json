@@ -1,0 +1,20 @@
+{
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--cd",
+    "/mnt/d/FYP",
+    "--exec",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+    "-"
+  ],
+  "stdin_source": "import json, os, time\nfrom pathlib import Path\nexpected = ['/home/yhwang/fyp/xvla_native/venv/bin/python', '-u', '-m', 'deploy', '--model_path', '/home/yhwang/fyp/xvla_native/model', '--port', '8794', '--host', '127.0.0.1', '--disable_slurm', '--output_dir', '/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/server_runtime']\nfound = []\ndeadline = time.monotonic() + 4\nwhile time.monotonic() < deadline:\n    found = []\n    for p in Path('/proc').iterdir():\n        if not p.name.isdigit(): continue\n        try:\n            argv = p.joinpath('cmdline').read_bytes().decode().rstrip('\\0').split('\\0')\n            if argv == expected:\n                found.append({'pid': int(p.name), 'argv': argv, 'cwd': os.readlink(p/'cwd'), 'stat': (p/'stat').read_text()})\n        except (OSError, UnicodeError): pass\n    if found: break\n    time.sleep(0.1)\nprint(json.dumps(found))\n",
+  "started_utc": "2026-10-12T06:35:46.021205+00:00",
+  "finished_utc": "2026-10-12T06:35:46.123034+00:00",
+  "exit_code": 0,
+  "stdout": "[{\"pid\": 423, \"argv\": [\"/home/yhwang/fyp/xvla_native/venv/bin/python\", \"-u\", \"-m\", \"deploy\", \"--model_path\", \"/home/yhwang/fyp/xvla_native/model\", \"--port\", \"8794\", \"--host\", \"127.0.0.1\", \"--disable_slurm\", \"--output_dir\", \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/server_runtime\"], \"cwd\": \"/home/yhwang/fyp/xvla_native/upstream\", \"stat\": \"423 (python) R 421 423 423 34816 423 4194560 2250 0 0 0 2 0 0 0 20 0 1 0 491 22536192 3604 18446744073709551615 4325376 7352253 140723680198832 0 0 0 0 16781312 2 0 0 0 17 14 0 0 0 0 0 10653128 12216448 73736192 140723680204398 140723680204652 140723680204652 140723680206795 0\\n\"}]\n",
+  "stderr": ""
+}

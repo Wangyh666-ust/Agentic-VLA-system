@@ -1,0 +1,66 @@
+{
+  "request": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/cap_01_xvla_book_caddy_131dff1d/finish/model_requests/call_04_request.json",
+  "request_sha256": "2d954fbb83e58e06a51e287802c9d701bbb3da11701e8819977ed9a7a3ae8249",
+  "target_time": 22.799999999998242,
+  "new_robot_actions": 0,
+  "old_observations": 34,
+  "saved_releases": 1,
+  "model": "qwen3.8-max",
+  "calls": 3,
+  "goal_achieved": false,
+  "handoff_review_triggered": false,
+  "checks": [
+    {
+      "id": "goal_0",
+      "achieved": false,
+      "target_matches_definition": true,
+      "current_evidence": true,
+      "evidence_event_ids": [],
+      "reason": "初态frame2中黑书竖立在杯子旁桌面；当前frame10/11中同一本黑封面白页边的书斜搭在收纳盒中格前口沿上，大部分书身悬在盒外朝杯子一侧，未进入后排隔间；桌面原位置已空，确为同一目标被移动过但未放入目的地。"
+    }
+  ],
+  "regions": {
+    "desk_caddy_1_back_contain_region": {
+      "destination_id": "desk_caddy_1_back_contain_region",
+      "confirmed": true,
+      "description": "收纳盒靠墙/靠机器人基座一侧的后排隔间：sideview中最左的大开口格（agentview中对应靠近机械臂一侧的格），即背向杯子与书本那一侧的容纳空间",
+      "boundary": "由收纳盒后侧外壁、左右两端壁以及与前排格之间的可见隔板/台阶围成；sideview中该格开口呈完整矩形且内部可见底面，与右侧较浅的前排格由隔板分开",
+      "anchors": [
+        {
+          "capture_id": "7127e89b01f0a294/capture_000001",
+          "view": "sideview",
+          "box": [
+            390,
+            302,
+            500,
+            400
+          ]
+        },
+        {
+          "capture_id": "7127e89b01f0a294/capture_000001",
+          "view": "agentview",
+          "box": [
+            160,
+            355,
+            300,
+            470
+          ]
+        },
+        {
+          "capture_id": "7127e89b01f0a294/capture_000001",
+          "view": "wrist",
+          "box": [
+            330,
+            605,
+            700,
+            760
+          ]
+        }
+      ],
+      "reviewed_at": 0.5000000000000003,
+      "request_sha256": "c343a3e6f585010ad8b2c589e8993f256db3bd68d8f20cab87f43cf77c06f16a",
+      "response_sha256": "3618969612499f0e3b938d46d655787835f8751214007452f4bd80770243d082"
+    }
+  },
+  "proofs": []
+}

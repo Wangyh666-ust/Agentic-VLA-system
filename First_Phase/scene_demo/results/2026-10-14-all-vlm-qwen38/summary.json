@@ -1,0 +1,106 @@
+{
+  "purpose": "全部VLM改为Qwen3.8后复测书收纳；检查到位放行、实际松手和独立入格效果",
+  "run_dir": "First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0",
+  "attempt_dir": "First_Phase/scene_demo/results/interactive-console/20261014-130348-6b2083a7",
+  "models": [
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/cap_01_xvla_book_caddy_131dff1d/finish/model_requests/call_01_response.json",
+      "returned_model": "qwen3.8-max",
+      "requested_model": "qwen3.8-max"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/cap_01_xvla_book_caddy_131dff1d/finish/model_requests/call_02_response.json",
+      "returned_model": "qwen3.8-max",
+      "requested_model": "qwen3.8-max"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/cap_01_xvla_book_caddy_131dff1d/finish/model_requests/call_03_response.json",
+      "returned_model": "qwen3.8-max",
+      "requested_model": "qwen3.8-max"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/cap_01_xvla_book_caddy_131dff1d/finish/model_requests/call_04_response.json",
+      "returned_model": "qwen3.8-max",
+      "requested_model": "qwen3.8-max"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/planning_grounding/model_requests/call_01_response.json",
+      "returned_model": "qwen3.8-max",
+      "requested_model": "qwen3.8-max"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/planning_grounding/model_requests/call_02_response.json",
+      "returned_model": "qwen3.8-max",
+      "requested_model": "qwen3.8-max"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/planning_grounding/selection_requests/call_01_response.json",
+      "returned_model": "qwen3.8-max",
+      "requested_model": "qwen3.8-max"
+    }
+  ],
+  "all_recorded_vlm_requests_and_responses_qwen38": true,
+  "source_counts": {
+    "settling": 0,
+    "vla": 150,
+    "finish": 291,
+    "prepare": 5
+  },
+  "outcome": {
+    "ok": false,
+    "cancelled": false,
+    "reason": "final visual failed",
+    "detail": ""
+  },
+  "finish": {
+    "phase": "blocked",
+    "calls": 3,
+    "prechecks": 1,
+    "helper_counts": {
+      "release": 10,
+      "movement": 135,
+      "confirm": 5,
+      "home": 141
+    },
+    "last_decision": {
+      "state": "incomplete",
+      "reason": "subtask purpose not achieved",
+      "allow_release": false,
+      "allow_retreat": false
+    },
+    "terminal": {
+      "ok": false,
+      "reason": "final visual failed",
+      "checks": 2
+    },
+    "independent_streak": 0,
+    "current_view_calls": 2,
+    "release_evidence_calls": 1,
+    "release_events": 1,
+    "process_evidence": [],
+    "actual_visual_requests": 4
+  },
+  "home_ready": true,
+  "vla_goal_true_samples": 0,
+  "vla_samples": 150,
+  "independent_samples": 291,
+  "independent_goal_true_samples": 0,
+  "old_handoff_same_images_prompt_probe": {
+    "model": "qwen3.8-max",
+    "actions": 0,
+    "calls": 1,
+    "answer": "at_destination, supported=true; same false positive"
+  },
+  "findings": [
+    "模型迁移真实触发；150步Qwen3.8仍误判入格并触发收尾开爪10动作。",
+    "1次松手三图已存；松手后outside被识别，一次多余JSON括号经原有一次协议修复后生效；最终也判outside。",
+    "原图单次对照也误判到位；不能将旧失败仅归因于模型接入错误。",
+    "归位实测通过，但书未入目标后格，最终visual failed，完整流程失败。"
+  ],
+  "limits": [
+    "在线n=1；初始三图哈希与旧运行一致，但执行轨迹非完全相同；不估计成功率。",
+    "Hermes使用本次独立profile的qwen3.8-max；上述原始请求/返回审计计数仅覆盖保存的视觉客户端。",
+    "首次启动因上次info.json遗留失败，零新任务动作，保留后恢复；仅1次在线动作尝试。",
+    "未修改检查提示词、相机、动作/收尾/退离/复位；未加辅助器、未调用子agent。"
+  ]
+}

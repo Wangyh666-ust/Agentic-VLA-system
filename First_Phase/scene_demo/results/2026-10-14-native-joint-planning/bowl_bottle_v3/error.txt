@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-native-joint-planning/replay.py", line 30, in <module>
+    result=plan_from_capture(capture,request,session,'offline-'+case,directory,home)
+  File "/mnt/d/FYP/First_Phase/scene_demo/xvla_planning.py", line 82, in plan_from_capture
+    first, meta = (planner or hermes_once)(prompt,frames,home,directory,cancel_check)
+  File "/mnt/d/FYP/First_Phase/scene_demo/xvla_planning.py", line 69, in hermes_once
+    raise RuntimeError('Hermes joint planning failed: '+str(result.get('error') or 'see hermes.log'))
+RuntimeError: Hermes joint planning failed: see hermes.log

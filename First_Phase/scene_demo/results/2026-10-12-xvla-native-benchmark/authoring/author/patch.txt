@@ -1,0 +1,828 @@
+*** Begin Patch
+*** Add File: First_Phase/libero_demo/test_xvla_native_benchmark.py
++"""Tests for the audited native X-VLA LIBERO benchmark wrapper.
++
++These tests lazy-load the runner module inside each test so that a tests-only
++run fails explicitly when the runner is absent. HTTP and physical step
++endpoints are faked; no model or simulator is constructed.
++"""
++
++from __future__ import annotations
++
++import importlib.util
++import json
++import sys
++import tempfile
++from pathlib import Path
++
++import numpy as np
++import pytest
++
++MODULE_PATH = Path(__file__).resolve().parent / "xvla_native_benchmark.py"
++
++
++def _load_runner():
++    assert MODULE_PATH.exists(), "runner module xvla_native_benchmark.py is absent"
++    spec = importlib.util.spec_from_file_location("xvla_native_benchmark", MODULE_PATH)
++    assert spec is not None and spec.loader is not None
++    module = importlib.util.module_from_spec(spec)
++    sys.modules["xvla_native_benchmark"] = module
++    spec.loader.exec_module(module)
++    return module
++
++
++def _fake_response(action, status=200):
++    class _Resp:
++        def __init__(self):
++            self.status_code = status
++            self.content = json.dumps({"action": action}).encode()
++
++        def raise_for_status(self):
++            if self.status_code >= 400:
++                raise RuntimeError("http error")
++
++        def json(self):
++            return json.loads(self.content.decode())
++
++    return _Resp()
++
++
++def _identity_action(grip_values):
++    rows = []
++    for g in grip_values:
++        row = [0.4, -0.1, 1.15, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0] + [0.0] * 10
++        row[9] = g
++        rows.append(row)
++    return rows
++
++
++def _obs():
++    return {
++        "agentview_image": np.zeros((256, 256, 3), dtype=np.uint8),
++        "robot0_eye_in_hand_image": np.ones((256, 256, 3), dtype=np.uint8),
++        "robo_pos": np.array([0.0, 0.0, 1.0]),
++        "robo_ori": np.array([1.0, 0.0, 0.0, 0.0, 1.0, 0.0]),
++    }
++
++
++def test_episode_slots_exact_order():
++    mod = _load_runner()
++    slots = mod.episode_slots()
++    assert len(slots) == 200
++    assert len(set(slots)) == 200
++    assert slots[0] == ("libero_10", 0, 0)
++    assert slots[-1] == ("libero_object", 9, 4)
++    assert slots[:5] == [("libero_10", 0, e) for e in range(5)]
++    assert slots[5:10] == [("libero_10", 1, e) for e in range(5)]
++    assert slots[45] == ("libero_spatial", 0, 0)
++
++
++def test_step_uses_one_post_then_two_and_double_flip():
++    mod = _load_runner()
++    posted = []
++
++    def fake_post(url, json=None, timeout=None):
++        posted.append(json)
++        grip = 0.4 if len(posted) == 1 else 0.6
++        return _fake_response(_identity_action([grip] * 30))
++
++    mod.requests.post = fake_post
++    with tempfile.TemporaryDirectory() as tmp:
++        counters = {}
++        client = mod.AuditedClient("127.0.0.1", 8794, Path(tmp), counters)
++        out = client.step(_obs(), "do something")
++        assert out.shape == (7,)
++        assert abs(out[2] - 1.15) < 1e-6
++        assert out[-1] == -1.0
++        assert len(posted) == 1
++        assert counters["model_requests"] == 1
++        assert counters["model_calls"] == 1
++        query0 = np.array(json.loads(posted[0]["image0"]))
++        query1 = np.array(json.loads(posted[0]["image1"]))
++        assert query0.shape == (256, 256, 3)
++        assert query1.shape == (256, 256, 3)
++        assert posted[0]["domain_id"] == 3
++        assert posted[0]["steps"] == 10
++        for _ in range(29):
++            client.step(_obs(), "do something")
++        assert len(posted) == 1
++        out2 = client.step(_obs(), "do something")
++        assert len(posted) == 2
++        assert out2[-1] == -1.0
++        assert abs(out2[2] - 1.15) < 1e-6
++        proprio = np.array(json.loads(posted[1]["proprio"]))
++        assert np.allclose(proprio[:9], np.array(_identity_action([0.4] * 30)[-1][:9], dtype=float))
++
++
++def test_reset_clears_queue_and_proprio():
++    mod = _load_runner()
++    calls = []
++
++    def fake_post(url, json=None, timeout=None):
++        calls.append(json)
++        return _fake_response(_identity_action([0.4] * 30))
++
++    mod.requests.post = fake_post
++    with tempfile.TemporaryDirectory() as tmp:
++        counters = {}
++        client = mod.AuditedClient("127.0.0.1", 8794, Path(tmp), counters)
++        client.step(_obs(), "goal")
++        assert len(client.action_plan) == 29
++        client.reset()
++        assert len(client.action_plan) == 0
++        assert client.proprio is None
++
++
++def test_reject_malformed_and_nan():
++    mod = _load_runner()
++
++    def bad_shape(url, json=None, timeout=None):
++        return _fake_response([[0.0] * 9])
++
++    mod.requests.post = bad_shape
++    with tempfile.TemporaryDirectory() as tmp:
++        client = mod.AuditedClient("127.0.0.1", 8794, Path(tmp), {})
++        with pytest.raises(Exception):
++            client.step(_obs(), "goal")
++
++    def nan_action(url, json=None, timeout=None):
++        rows = _identity_action([0.4] * 30)
++        rows[0][0] = float("nan")
++        return _fake_response(rows)
++
++    mod.requests.post = nan_action
++    with tempfile.TemporaryDirectory() as tmp:
++        client = mod.AuditedClient("127.0.0.1", 8794, Path(tmp), {})
++        with pytest.raises(Exception):
++            client.step(_obs(), "goal")
++
++
++def test_validate_episode_rejects_bad_rows():
++    mod = _load_runner()
++    base = {
++        "status": "completed",
++        "valid": True,
++        "success": True,
++        "author_score": 1,
++        "independent_success": True,
++        "policy_actions": 20,
++        "setup_actions": 10,
++        "model_calls": 1,
++        "horizon": 900,
++    }
++    assert mod.validate_episode(dict(base), 900)
++    early = dict(base, policy_actions=5, end_reason="budget_exhausted", success=False, author_score=0,
++                 independent_success=False)
++    assert not mod.validate_episode(early, 900)
++    disagree = dict(base, author_score=0)
++    assert not mod.validate_episode(disagree, 900)
++    zero_calls = dict(base, model_calls=0)
++    assert not mod.validate_episode(zero_calls, 900)
++    missing = {}
++    assert not mod.validate_episode(missing, 900)
++
++
++def test_summarize_excludes_unknown_and_keeps_attempts_separate():
++    mod = _load_runner()
++    with tempfile.TemporaryDirectory() as tmp:
++        out = Path(tmp)
++        suite = out / "libero_10" / "task_00"
++        slot = suite / "episode_0"
++        slot.mkdir(parents=True)
++        row = {
++            "status": "completed",
++            "valid": True,
++            "success": True,
++            "author_score": 1,
++            "independent_success": True,
++            "policy_actions": 10,
++            "setup_actions": 10,
++            "model_calls": 1,
++            "horizon": 900,
++            "suite": "libero_10",
++            "task_id": 0,
++            "episode": 0,
++        }
++        (slot / "result.json").write_text(json.dumps(row))
++        attempt = slot / "attempt_001"
++        attempt.mkdir()
++        (attempt / "result.json").write_text(json.dumps(row))
++        unknown = out / "libero_10" / "task_00" / "episode_1" / "attempt_001"
++        unknown.mkdir(parents=True)
++        (unknown / "result.json").write_text(json.dumps(dict(row, status="unknown", valid=False, success=None)))
++        summary = mod.summarize(out)
++        assert summary["valid_episodes"] == 1
++        assert summary["successes"] == 1
++        assert summary["planned"] == 200
++        assert len(summary["unknown_paths"]) == 1
++        csv_rows = (out / "tasks.csv").read_text().strip().splitlines()
++        assert len(csv_rows) == 41
+*** Add File: First_Phase/libero_demo/xvla_native_benchmark.py
++"""Audited/resumable wrapper around the original X-VLA LIBERO evaluation.
++
++This runner measures 40 native LIBERO tasks x 5 episodes without altering
++inference, control or scoring. It inherits the pinned author ClientModel and
++LIBEROEval behaviors, adding only observation, persistence and audit records.
++"""
++
++from __future__ import annotations
++
++import argparse
++import collections
++import csv
++import gzip
++import hashlib
++import json
++import os
++import subprocess
++import sys
++import time
++import traceback
++from datetime import datetime, timezone
++from pathlib import Path
++
++import numpy as np
++import requests
++from PIL import Image
++
++try:
++    import evaluation.libero.libero_client as author
++except Exception:  # pragma: no cover - import surface asserted at runtime
++    author = None
++
++SUITES = ["libero_10", "libero_spatial", "libero_goal", "libero_object"]
++LIMITS = {"libero_10": 900, "libero_spatial": 800, "libero_goal": 800, "libero_object": 800}
++HOST = "127.0.0.1"
++PORT = 8794
++
++ROOT = Path(__file__).resolve().parents[2]
++PROPOSAL = ROOT / "First_Phase/scene_demo/plans/20261012-xvla-native-benchmark.json"
++OUT_DEFAULT = ROOT / "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark"
++
++
++class StopRequested(Exception):
++    pass
++
++
++class ContractError(Exception):
++    pass
++
++
++def utc_now() -> str:
++    return datetime.now(timezone.utc).isoformat()
++
++
++def atomic_write_json(path: Path, payload: dict) -> None:
++    path.parent.mkdir(parents=True, exist_ok=True)
++    tmp = path.with_suffix(path.suffix + ".tmp")
++    tmp.write_text(json.dumps(payload, indent=2), encoding="utf-8")
++    os.replace(tmp, path)
++
++
++def sha256_bytes(data: bytes) -> str:
++    return hashlib.sha256(data).hexdigest()
++
++
++def sha256_file(path: Path) -> str:
++    h = hashlib.sha256()
++    with open(path, "rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    return h.hexdigest()
++
++
++def load_config() -> dict:
++    return json.loads(PROPOSAL.read_text(encoding="utf-8"))["configuration"]
++
++
++def episode_slots() -> list[tuple[str, int, int]]:
++    slots = []
++    for suite in SUITES:
++        for task_id in range(10):
++            for episode in range(5):
++                slots.append((suite, task_id, episode))
++    return slots
++
++
++def validate_episode(row: dict, horizon: int) -> bool:
++    if not isinstance(row, dict):
++        return False
++    if row.get("status") != "completed" or row.get("valid") is not True:
++        return False
++    success = row.get("success")
++    author_score = row.get("author_score")
++    independent = row.get("independent_success")
++    if not isinstance(success, bool) or author_score not in (0, 1) or not isinstance(independent, bool):
++        return False
++    if bool(author_score) != bool(success) or bool(independent) != bool(success):
++        return False
++    try:
++        policy_actions = int(row.get("policy_actions"))
++        setup_actions = int(row.get("setup_actions"))
++        model_calls = int(row.get("model_calls"))
++        row_horizon = int(row.get("horizon"))
++    except (TypeError, ValueError):
++        return False
++    if model_calls <= 0 or policy_actions <= 0 or policy_actions > horizon:
++        return False
++    if setup_actions != 10:
++        return False
++    if row_horizon != horizon:
++        return False
++    if success:
++        return row.get("end_reason") == "native_success"
++    return row.get("end_reason") == "budget_exhausted" and policy_actions == horizon
++
++
++def _slot_dir(out: Path, suite: str, task_id: int, episode: int) -> Path:
++    return out / suite / f"task_{task_id:02d}" / f"episode_{episode}"
++
++
++def _slot_result_config(out: Path) -> dict:
++    meta = out / "metadata.json"
++    if not meta.exists():
++        raise ContractError(f"missing metadata: {meta}")
++    return json.loads(meta.read_text(encoding="utf-8")).get("fingerprint", "")
++
++
++def _next_attempt(slot: Path) -> Path:
++    index = 1
++    while True:
++        candidate = slot / f"attempt_{index:03d}"
++        if not candidate.exists():
++            return candidate
++        index += 1
++
++
++def _read_slot_result(slot: Path) -> dict | None:
++    result = slot / "result.json"
++    if not result.exists():
++        return None
++    try:
++        return json.loads(result.read_text(encoding="utf-8"))
++    except Exception:
++        return None
++
++
++def summarize(out: Path) -> dict:
++    suites: dict[str, dict[str, int]] = {s: {"valid": 0, "success": 0} for s in SUITES}
++    tasks: dict[tuple[str, int], dict[str, int]] = {(s, t): {"valid": 0, "success": 0} for s in SUITES for t in range(10)}
++    valid_episodes = 0
++    successes = 0
++    policy_total = 0
++    setup_total = 0
++    completed_slots: set[tuple[str, int, int]] = set()
++    unknown_paths: list[str] = []
++
++    for suite, task_id, episode in episode_slots():
++        slot = _slot_dir(out, suite, task_id, episode)
++        row = _read_slot_result(slot)
++        if row is None:
++            continue
++        horizon = LIMITS[suite]
++        if row.get("fingerprint") != _slot_result_config(out):
++            continue
++        if validate_episode(row, horizon):
++            valid_episodes += 1
++            suites[suite]["valid"] += 1
++            tasks[(suite, task_id)]["valid"] += 1
++            policy_total += int(row["policy_actions"])
++            setup_total += int(row["setup_actions"])
++            if row["success"]:
++                successes += 1
++                suites[suite]["success"] += 1
++                tasks[(suite, task_id)]["success"] += 1
++            completed_slots.add((suite, task_id, episode))
++        elif row.get("status") in ("unknown", "interrupted"):
++            unknown_paths.append(str(slot / "result.json"))
++        elif row.get("status") == "completed":
++            unknown_paths.append(str(slot / "result.json"))
++
++    completed_tasks = []
++    for suite, task_id, episode in episode_slots():
++        if (suite, task_id, episode) in completed_slots and episode == 4:
++            if all((suite, task_id, e) in completed_slots for e in range(5)):
++                completed_tasks.append(f"{suite}/task_{task_id:02d}")
++
++    row_list = []
++    for suite in SUITES:
++        for task_id in range(10):
++            entry = tasks[(suite, task_id)]
++            rate = (entry["success"] / entry["valid"]) if entry["valid"] else None
++            row_list.append({
++                "suite": suite,
++                "task_id": task_id,
++                "valid_episodes": entry["valid"],
++                "successes": entry["success"],
++                "rate": rate,
++            })
++
++    summary = {
++        "planned": 200,
++        "valid_episodes": valid_episodes,
++        "successes": successes,
++        "rate": (successes / valid_episodes) if valid_episodes else None,
++        "per_suite": {s: {"valid_episodes": suites[s]["valid"], "successes": suites[s]["success"],
++                          "rate": (suites[s]["success"] / suites[s]["valid"]) if suites[s]["valid"] else None}
++                      for s in SUITES},
++        "completed_tasks": completed_tasks,
++        "policy_actions_total": policy_total,
++        "setup_actions_total": setup_total,
++        "complete": valid_episodes == 200,
++        "unknown_paths": unknown_paths,
++        "invocation_utc": utc_now(),
++    }
++    atomic_write_json(out / "summary.json", summary)
++    csv_path = out / "tasks.csv"
++    with open(csv_path, "w", newline="", encoding="utf-8") as f:
++        writer = csv.DictWriter(f, fieldnames=["suite", "task_id", "valid_episodes", "successes", "rate"])
++        writer.writeheader()
++        for row in row_list:
++            writer.writerow(row)
++    return summary
++
++
++class AuditedClient(author.ClientModel):
++    def __init__(self, host: str, port: int, directory: Path, counters: dict):
++        super().__init__(host, port)
++        self.directory = Path(directory)
++        self.directory.mkdir(parents=True, exist_ok=True)
++        self.counters = counters
++        for key, default in (
++            ("model_requests", 0),
++            ("model_calls", 0),
++            ("policy_actions", 0),
++            ("setup_actions", 0),
++            ("last_native_success", False),
++        ):
++            counters.setdefault(key, default)
++        self._request_index = 0
++
++    def _post(self, payload: dict) -> np.ndarray:
++        self.counters["model_requests"] += 1
++        self._request_index += 1
++        index = self._request_index
++        (self.directory / f"request_{index:03d}.json.gz").write_bytes(
++            gzip.compress(json.dumps(payload).encode("utf-8"))
++        )
++        start = time.time()
++        resp = requests.post(self.url, json=payload, timeout=(10, 180))
++        (self.directory / f"response_{index:03d}.json").write_bytes(resp.content)
++        resp.raise_for_status()
++        data = resp.json()
++        action = np.array(data["action"], dtype=np.float64)
++        if action.shape != (30, 20) or not np.all(np.isfinite(action)):
++            raise ContractError(f"malformed policy action shape={action.shape}")
++        self.counters["model_calls"] += 1
++        with open(self.directory / "calls.jsonl", "a", encoding="utf-8") as f:
++            f.write(json.dumps({"call": index, "shape": list(action.shape),
++                                "seconds": time.time() - start}) + "\n")
++        return action
++
++
++class _AuditedEnv:
++    def __init__(self, original, ctx):
++        self._original = original
++        self._ctx = ctx
++        self.env = original.env
++        self.check_success = original.check_success
++
++    def __getattr__(self, name):
++        return getattr(self._original, name)
++
++    def step(self, action):
++        ctx = self._ctx
++        if (ctx["out"] / "STOP").exists():
++            raise StopRequested("STOP file present")
++        arr = np.asarray(action, dtype=np.float64)
++        if arr.shape != (7,) or not np.all(np.isfinite(arr)):
++            raise ContractError(f"invalid action shape/value: {arr.shape}")
++        if ctx["phase"] == "policy":
++            controller = ctx["env"].env.robots[0].controller
++            if controller.use_delta is not False:
++                raise ContractError("controller.use_delta must be False during policy phase")
++        ee_before = np.asarray(ctx["env"].env.robots[0].controller.ee_pos, dtype=np.float64).copy()
++        sim_before = float(ctx["env"].env.sim.data.time)
++        obs, reward, done, info = self._original.step(action)
++        ee_after = np.asarray(ctx["env"].env.robots[0].controller.ee_pos, dtype=np.float64).copy()
++        sim_after = float(ctx["env"].env.sim.data.time)
++        if ctx["phase"] == "settling":
++            ctx["counters"]["setup_actions"] += 1
++            record = {"phase": "settling", "action": arr.tolist(), "done": bool(done),
++                      "independent_success": None, "ee_pos_before": ee_before.tolist(),
++                      "ee_pos_after": ee_after.tolist(), "sim_time": sim_after}
++        else:
++            independent = bool(ctx["env"].check_success())
++            if independent != bool(done):
++                ctx["disagreement"] = True
++            ctx["counters"]["policy_actions"] += 1
++            ctx["counters"]["last_native_success"] = bool(done)
++            record = {"phase": "policy", "action": arr.tolist(), "done": bool(done),
++                      "independent_success": independent, "ee_pos_before": ee_before.tolist(),
++                      "ee_pos_after": ee_after.tolist(), "sim_time": sim_after,
++                      "sim_time_before": sim_before}
++            if ctx["counters"]["policy_actions"] % 10 == 0:
++                _write_progress(ctx)
++        with open(ctx["episode_dir"] / "steps.jsonl", "a", encoding="utf-8") as f:
++            f.write(json.dumps(record) + "\n")
++            f.flush()
++        if ctx["disagreement"]:
++            raise ContractError("independent success disagrees with native done")
++        return obs, reward, done, info
++
++    def close(self):
++        return self._original.close()
++
++
++def _write_progress(ctx: dict) -> None:
++    _write_progress_file(ctx["out"], ctx.get("slot_index", 0), ctx["counters"], ctx.get("status", "running"))
++
++
++def _write_progress_file(out: Path, slot_index: int, counters: dict, status: str) -> None:
++    completed = sum(1 for s in SUITES for t in range(10) for e in range(5)
++                    if (_read_slot_result(_slot_dir(out, s, t, e)) or {}).get("status") == "completed")
++    atomic_write_json(out / "progress.json", {
++        "slot_index": slot_index,
++        "counters": {k: counters.get(k) for k in ("model_requests", "model_calls", "policy_actions",
++                                                   "setup_actions", "last_native_success")},
++        "status": status,
++        "completed": completed,
++        "invocation_utc": utc_now(),
++    })
++
++
++class AuditedEval(author.LIBEROEval):
++    def _init_env(self, task_suite, task_id: int = 0, ep: int = 0):
++        env, task_description, obs = super()._init_env(task_suite, task_id, ep)
++        if not isinstance(env, _AuditedEnv):
++            raise ContractError("environment was not wrapped by audit factory")
++        ctx = env._ctx
++        controller = env.env.robots[0].controller
++        if controller.type != "OSC" or controller.use_delta is not False:
++            raise ContractError("unexpected controller type or delta mode")
++        task = task_suite.get_task(task_id)
++        init_states = task_suite.get_task_init_states(task_id)
++        init_state_id = ep % init_states.shape[0]
++        ctx["init_index"] = int(init_state_id)
++        ctx["seed"] = 142 + ep
++        ctx["robot_model"] = type(env.env.robots[0].robot_model).__name__
++        ctx["gripper"] = type(env.env.robots[0].gripper).__name__
++        ctx["control_freq"] = float(env.env.control_freq)
++        bddl = Path(env.env.bddl_file_name)
++        ctx["bddl_path"] = str(bddl)
++        ctx["bddl_sha"] = sha256_file(bddl) if bddl.exists() else None
++        _save_png(ctx["episode_dir"] / "initial_agentview.png", obs["agentview_image"])
++        _save_png(ctx["episode_dir"] / "initial_wrist.png", obs["robot0_eye_in_hand_image"])
++        np.save(ctx["episode_dir"] / "initial_state.npy", env.env.sim.get_state().flatten())
++        ctx["phase"] = "policy"
++        return env, task_description, obs
++
++    def _log_results(self, metrics: dict) -> None:
++        ctx = getattr(self, "_ctx", None)
++        if ctx is not None:
++            for value in metrics.values():
++                if isinstance(value, (int, float)) and not isinstance(value, bool) and 0 <= float(value) <= 1:
++                    ctx["author_score"] = int(float(value) > 0.5)
++        super()._log_results(metrics)
++
++
++def _save_png(path: Path, image: np.ndarray) -> None:
++    Image.fromarray(np.asarray(image, dtype=np.uint8)).save(path)
++
++
++def _git_head(path: Path) -> str:
++    try:
++        return subprocess.check_output(["git", "-C", str(path), "rev-parse", "HEAD"],
++                                       stderr=subprocess.DEVNULL).decode().strip()
++    except Exception:
++        return "unknown"
++
++
++def freeze_metadata(out: Path, config: dict, runner_sha: str, author_sha: str) -> dict:
++    versions = {"python": sys.version, "numpy": np.__version__}
++    for name in ("torch", "mujoco", "robosuite", "gym"):
++        try:
++            module = __import__(name)
++            versions[name] = getattr(module, "__version__", "unknown")
++        except Exception:
++            versions[name] = "unavailable"
++    fingerprint = sha256_bytes(
++        json.dumps({
++            "config": config,
++            "runner": runner_sha,
++            "author": author_sha,
++        }, sort_keys=True).encode()
++    )
++    meta = {
++        "configuration": config,
++        "fingerprint": fingerprint,
++        "versions": versions,
++        "git_heads": {
++            "libero": _git_head(Path(os.environ.get("LIBERO_CONFIG_PATH", ""))),
++            "upstream": _git_head(Path(__file__).resolve().parents[2]),
++        },
++        "runner_sha": runner_sha,
++        "author_sha": author_sha,
++        "server_url": f"http://{HOST}:{PORT}/act",
++        "started_utc": utc_now(),
++    }
++    path = out / "metadata.json"
++    if path.exists():
++        existing = json.loads(path.read_text(encoding="utf-8"))
++        if existing.get("fingerprint") != fingerprint or existing.get("versions") != versions:
++            raise ContractError("existing metadata does not match fingerprint/versions")
++    else:
++        atomic_write_json(path, meta)
++    return meta
++
++
++def run_episode(out: Path, suite: str, task_id: int, episode: int, meta: dict,
++                max_new_episodes: int, slots_done: int, fp: str) -> tuple[str, dict]:
++    slot = _slot_dir(out, suite, task_id, episode)
++    existing = _read_slot_result(slot)
++    if existing is not None and validate_episode(existing, LIMITS[suite]) and existing.get("fingerprint") == fp:
++        return "reused", existing
++    attempt = _next_attempt(slot)
++    attempt.mkdir(parents=True)
++    counters: dict = {}
++    ctx = {
++        "out": out,
++        "episode_dir": attempt,
++        "counters": counters,
++        "phase": "settling",
++        "horizon": LIMITS[suite],
++        "env": None,
++        "slot_index": slots_done,
++        "status": "running",
++        "disagreement": False,
++    }
++    start = time.time()
++    row: dict
++    try:
++        original_class = author.OffScreenRenderEnv
++
++        def factory(**kwargs):
++            env = original_class(**kwargs)
++            wrapped = _AuditedEnv(env, ctx)
++            ctx["env"] = wrapped
++            return wrapped
++
++        author.OffScreenRenderEnv = factory
++        client = AuditedClient(HOST, PORT, attempt, counters)
++        evaluator = AuditedEval(task_suite_name=suite, eval_horizon=LIMITS[suite],
++                                act_type="abs", num_episodes=5, init_seed=42)
++        evaluator.base_dir = attempt
++        evaluator._ctx = ctx
++        score = evaluator._rollout(evaluator.task_suite_list[0], client, task_id, episode)
++        ctx["author_score"] = int(float(score) > 0.5)
++        final_obs = None
++        if ctx.get("env") is not None:
++            raw_obs = getattr(ctx["env"], "_last_obs", None)
++            final_obs = raw_obs
++        if final_obs is not None:
++            _save_png(attempt / "final_agentview.png", final_obs["agentview_image"])
++            _save_png(attempt / "final_wrist.png", final_obs["robot0_eye_in_hand_image"])
++        ctx["phase"] = "done"
++        success = bool(ctx["counters"].get("last_native_success", False))
++        author_score = int(ctx.get("author_score", 0))
++        independent = success
++        policy_actions = int(counters.get("policy_actions", 0))
++        setup_actions = int(counters.get("setup_actions", 0))
++        model_calls = int(counters.get("model_calls", 0))
++        end_reason = "native_success" if success else "budget_exhausted"
++        row = {
++            "status": "completed",
++            "valid": True,
++            "suite": suite,
++            "task_id": task_id,
++            "episode": episode,
++            "success": success,
++            "author_score": author_score,
++            "independent_success": independent,
++            "policy_actions": policy_actions,
++            "setup_actions": setup_actions,
++            "model_requests": int(counters.get("model_requests", 0)),
++            "model_calls": model_calls,
++            "horizon": LIMITS[suite],
++            "end_reason": end_reason,
++            "fingerprint": fp,
++            "attempt_dir": str(attempt),
++            "wall_seconds": time.time() - start,
++            "invocation_utc": utc_now(),
++            "reset_internal_physics_steps": "not separately observed",
++            "init_index": ctx.get("init_index"),
++            "seed": ctx.get("seed"),
++        }
++        if not validate_episode(row, LIMITS[suite]):
++            row["status"] = "unknown"
++            row["valid"] = False
++            row["success"] = None
++            row["error"] = "contract validation failed after rollout"
++            atomic_write_json(attempt / "result.json", row)
++            return "unknown", row
++        atomic_write_json(attempt / "result.json", row)
++        atomic_write_json(slot / "result.json", row)
++        return "completed", row
++    except StopRequested as exc:
++        row = _error_row(suite, task_id, episode, counters, attempt, fp, "interrupted", exc)
++        atomic_write_json(attempt / "result.json", row)
++        return "interrupted", row
++    except Exception as exc:
++        row = _error_row(suite, task_id, episode, counters, attempt, fp, "unknown", exc)
++        atomic_write_json(attempt / "result.json", row)
++        return "unknown", row
++    finally:
++        ctx["phase"] = "done"
++        try:
++            if ctx.get("env") is not None:
++                ctx["env"].close()
++        except Exception:
++            pass
++        try:
++            author.OffScreenRenderEnv = original_class
++        except Exception:
++            pass
++
++
++def _error_row(suite, task_id, episode, counters, attempt, fp, status, exc) -> dict:
++    return {
++        "status": status,
++        "valid": False,
++        "suite": suite,
++        "task_id": task_id,
++        "episode": episode,
++        "success": None,
++        "error": str(exc),
++        "traceback": traceback.format_exc(),
++        "policy_actions": int(counters.get("policy_actions", 0)),
++        "setup_actions": int(counters.get("setup_actions", 0)),
++        "model_requests": int(counters.get("model_requests", 0)),
++        "model_calls": int(counters.get("model_calls", 0)),
++        "fingerprint": fp,
++        "attempt_dir": str(attempt),
++        "invocation_utc": utc_now(),
++    }
++
++
++def main(argv=None) -> int:
++    parser = argparse.ArgumentParser("xvla-native-benchmark")
++    parser.add_argument("--out", type=Path, default=OUT_DEFAULT)
++    parser.add_argument("--max-new-episodes", type=int, default=200)
++    parser.add_argument("--report-only", action="store_true")
++    args = parser.parse_args(argv)
++    if args.max_new_episodes <= 0 or args.max_new_episodes > 200:
++        parser.error("--max-new-episodes must be positive and <= 200")
++    out = args.out
++    if args.report_only:
++        summarize(out)
++        return 0
++    if author is None:
++        return 2
++    config = load_config()
++    runner_sha = sha256_file(Path(__file__))
++    author_sha = sha256_file(Path(author.__file__))
++    out.mkdir(parents=True, exist_ok=True)
++    meta = freeze_metadata(out, config, runner_sha, author_sha)
++    fp = meta["fingerprint"]
++    done = 0
++    slots = episode_slots()
++    for index, (suite, task_id, episode) in enumerate(slots):
++        if (out / "STOP").exists():
++            summarize(out)
++            return 130
++        if done >= args.max_new_episodes:
++            summarize(out)
++            return 0
++        slot = _slot_dir(out, suite, task_id, episode)
++        existing = _read_slot_result(slot)
++        if existing is not None and validate_episode(existing, LIMITS[suite]) and existing.get("fingerprint") == fp:
++            continue
++        if existing is not None and existing.get("status") in ("unknown", "interrupted"):
++            summarize(out)
++            return 2
++        attempts = sorted(slot.glob("attempt_*")) if slot.exists() else []
++        if attempts and existing is None:
++            summarize(out)
++            return 2
++        status, row = run_episode(out, suite, task_id, episode, meta, args.max_new_episodes, index, fp)
++        _write_progress_file(out, index, {"model_requests": row.get("model_requests", 0),
++                                          "model_calls": row.get("model_calls", 0),
++                                          "policy_actions": row.get("policy_actions", 0),
++                                          "setup_actions": row.get("setup_actions", 0),
++                                          "last_native_success": bool(row.get("independent_success"))},
++                             status)
++        if status == "interrupted":
++            summarize(out)
++            return 130
++        if status == "unknown":
++            summarize(out)
++            return 2
++        if status == "completed":
++            done += 1
++    summarize(out)
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+*** End Patch

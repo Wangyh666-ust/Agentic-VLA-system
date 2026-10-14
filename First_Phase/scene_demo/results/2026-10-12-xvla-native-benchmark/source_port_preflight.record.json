@@ -1,0 +1,20 @@
+{
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--cd",
+    "/mnt/d/FYP",
+    "--exec",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+    "-"
+  ],
+  "stdin_source": "import json, subprocess, socket\nfrom pathlib import Path\nbase = Path('/home/yhwang/fyp/xvla_native')\nexpected = {'upstream': '6bc2513f5f1cbec715cc668b414392a6cae5c671', 'LIBERO': '8f1084e3132a39270c3a13ebe37270a43ece2a01'}\nrows = {}\nfor name, sha in expected.items():\n    head = subprocess.check_output(['git','-C',str(base/name),'rev-parse','HEAD']).decode().strip()\n    status = subprocess.check_output(['git','-C',str(base/name),'status','--porcelain','--untracked-files=all']).decode()\n    rows[name] = {'head':head,'status':status,'expected':sha}\nprint(json.dumps(rows), flush=True)\nassert all(r['head']==r['expected'] and not r['status'] for r in rows.values()), 'source SHA/clean mismatch'\ns = socket.socket()\ns.bind(('127.0.0.1',8794))\ns.close()\nprint('WSL 127.0.0.1:8794 bind available', flush=True)\n",
+  "started_utc": "2026-10-12T06:32:48.311591+00:00",
+  "finished_utc": "2026-10-12T06:32:48.522140+00:00",
+  "exit_code": 0,
+  "stdout": "{\"upstream\": {\"head\": \"6bc2513f5f1cbec715cc668b414392a6cae5c671\", \"status\": \"\", \"expected\": \"6bc2513f5f1cbec715cc668b414392a6cae5c671\"}, \"LIBERO\": {\"head\": \"8f1084e3132a39270c3a13ebe37270a43ece2a01\", \"status\": \"\", \"expected\": \"8f1084e3132a39270c3a13ebe37270a43ece2a01\"}}\nWSL 127.0.0.1:8794 bind available\n",
+  "stderr": ""
+}

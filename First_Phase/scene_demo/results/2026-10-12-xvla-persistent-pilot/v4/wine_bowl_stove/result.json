@@ -1,0 +1,3229 @@
+{
+  "complete": false,
+  "agent_result": {
+    "request_id": "xvla-wine_bowl_stove",
+    "session_id": "4359e1a2a3c74475a53bae3551d7518b",
+    "request": "先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台。",
+    "run_ok": true,
+    "chain_ok": false,
+    "plan_success": null,
+    "task_success": null,
+    "decision": "execute",
+    "plan": {
+      "ok": true,
+      "request_id": "xvla-wine_bowl_stove",
+      "session_id": "4359e1a2a3c74475a53bae3551d7518b",
+      "state": "blocked",
+      "decision": "execute",
+      "capability_ids": [
+        "wine_to_rack",
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "original_capability_ids": [
+        "wine_to_rack",
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "rationale": "User explicitly requested: '先把酒瓶放到架子上' (use wine_to_rack), '再把碗放到盘子上' (use bowl_to_plate), '最后打开灶台' (use stove_on). All three capabilities exist in the scene.",
+      "job_ids": [
+        "c51276c4793d4476ac8748b4a3399c12"
+      ],
+      "completed_capability_ids": [],
+      "pending_capability_ids": [
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "plan_success": null,
+      "regressions": [],
+      "error": "final visual failed",
+      "repair_history": [],
+      "scene_version": 1
+    },
+    "jobs": [
+      {
+        "job_id": "c51276c4793d4476ac8748b4a3399c12",
+        "request_id": "xvla-wine_bowl_stove",
+        "session_id": "4359e1a2a3c74475a53bae3551d7518b",
+        "capability_id": "wine_to_rack",
+        "state": "completed",
+        "steps": 150,
+        "total_steps": 419,
+        "success": false,
+        "ended_reason": "final visual failed",
+        "error": null,
+        "instruction": "put the wine bottle on the rack",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "00dcd896e3b64dd8e462745548085b85a97bb8a1d1956cb9f3aa1ec25457175b",
+        "state_after_sha": "31d204943bc05e5ba63f4773b37121c84edca4422e16da58d8ac4db5fd5f8d6f",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": "semantic_wine_rack_v1",
+        "semantic_state": "incomplete",
+        "semantic_candidate_streak": 1,
+        "semantic_success": false,
+        "native_wine_predicate": true,
+        "semantic_observation_samples": 150,
+        "finish_status": {
+          "phase": "blocked",
+          "calls": 2,
+          "prechecks": 1,
+          "helper_counts": {
+            "release": 7,
+            "movement": 26,
+            "confirm": 3,
+            "home": 218
+          },
+          "last_decision": {
+            "state": "incomplete",
+            "reason": "subtask purpose not achieved",
+            "allow_release": false,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "final visual failed",
+            "checks": 2
+          },
+          "independent_streak": 5
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/rollout.mp4",
+        "wall_s": 143.928
+      }
+    ],
+    "evaluation": null,
+    "hermes_invocations": 1,
+    "usage": [
+      {
+        "available": false,
+        "reason": "installed Hermes chat native-image path did not export usage",
+        "api_calls": null,
+        "input_tokens": null,
+        "output_tokens": null
+      }
+    ],
+    "execution_timeout": false,
+    "cancelled_by_user": false,
+    "cancellation_pending": false,
+    "wall_s": 165.618,
+    "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+    "hermes_output": "Plan已提交。\n\nsession_id: 20261012_215137_566d31\n"
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-wine_bowl_stove",
+    "session_id": "4359e1a2a3c74475a53bae3551d7518b",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "original_capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "rationale": "User explicitly requested: '先把酒瓶放到架子上' (use wine_to_rack), '再把碗放到盘子上' (use bowl_to_plate), '最后打开灶台' (use stove_on). All three capabilities exist in the scene.",
+    "job_ids": [
+      "c51276c4793d4476ac8748b4a3399c12"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "plan_success": null,
+    "regressions": [],
+    "error": "final visual failed",
+    "repair_history": [],
+    "scene_version": 1
+  },
+  "jobs": [
+    {
+      "capability": "wine_to_rack",
+      "outcome": {
+        "ok": false,
+        "cancelled": false,
+        "reason": "final visual failed",
+        "detail": ""
+      },
+      "job": {
+        "job_id": "c51276c4793d4476ac8748b4a3399c12",
+        "request_id": "xvla-wine_bowl_stove",
+        "session_id": "4359e1a2a3c74475a53bae3551d7518b",
+        "capability_id": "wine_to_rack",
+        "state": "completed",
+        "steps": 150,
+        "total_steps": 419,
+        "success": false,
+        "ended_reason": "final visual failed",
+        "error": null,
+        "instruction": "put the wine bottle on the rack",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "00dcd896e3b64dd8e462745548085b85a97bb8a1d1956cb9f3aa1ec25457175b",
+        "state_after_sha": "31d204943bc05e5ba63f4773b37121c84edca4422e16da58d8ac4db5fd5f8d6f",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": true,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": "semantic_wine_rack_v1",
+        "semantic_state": "incomplete",
+        "semantic_candidate_streak": 1,
+        "semantic_success": false,
+        "native_wine_predicate": true,
+        "semantic_observation_samples": 150,
+        "finish_status": {
+          "phase": "blocked",
+          "calls": 2,
+          "prechecks": 1,
+          "helper_counts": {
+            "release": 7,
+            "movement": 26,
+            "confirm": 3,
+            "home": 218
+          },
+          "last_decision": {
+            "state": "incomplete",
+            "reason": "subtask purpose not achieved",
+            "allow_release": false,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "final visual failed",
+            "checks": 2
+          },
+          "independent_streak": 5
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/rollout.mp4",
+        "wall_s": 143.928
+      },
+      "source_counts": {
+        "settling": 0,
+        "vla": 150,
+        "finish": 254,
+        "prepare": 15
+      },
+      "vla_calls": 5,
+      "handoff_reference": {
+        "schema_version": 1,
+        "origin_sha256": "0867c77ba465f78a58e3801b490118578cb82defed3f449f52a597527c0d076b",
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7"
+        ],
+        "joint_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "qpos_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "qvel_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "joint_limits_low": [
+          -2.8973,
+          -1.7628,
+          -2.8973,
+          -3.0718,
+          -2.8973,
+          -0.0175,
+          -2.8973
+        ],
+        "joint_limits_high": [
+          2.8973,
+          1.7628,
+          2.8973,
+          -0.0698,
+          2.8973,
+          3.7525,
+          2.8973
+        ],
+        "homeq": [
+          0.009995471028135715,
+          -0.16617776933557873,
+          -0.00603269043946493,
+          -2.4349747540466535,
+          -0.00027576663453315626,
+          2.213306385605272,
+          0.79107092309252
+        ],
+        "home_joint_speed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "finger_qpos_indexes": [
+          7,
+          8
+        ],
+        "finger_qvel_indexes": [
+          7,
+          8
+        ],
+        "finger_home": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ],
+        "finger_speed": [
+          0.0,
+          0.0
+        ],
+        "eef_pose": {
+          "position": [
+            -0.2071182569725557,
+            0.0018681514295333772,
+            1.1786384539512926
+          ],
+          "orientation_matrix": [
+            [
+              0.0009490455140580243,
+              0.9984600280358953,
+              -0.05546775394020989
+            ],
+            [
+              0.9999994250117958,
+              -0.0009198899001555996,
+              0.000551161182796106
+            ],
+            [
+              0.0004992881833929819,
+              -0.055468245123953715,
+              -0.99846032695054
+            ]
+          ]
+        },
+        "reference_kind": "next_subtask_native_initial",
+        "capability_id": "bowl_to_plate",
+        "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_08/episode_0/attempt_001/initial_state.npy",
+        "source_sha256": "3e1ab084bf0d8e7f101a620f29f4c0e2e582546bc47fd9184bb0bea6991c0eb3",
+        "audit_sha256": "39c4ee915238a3c986a28ee37df2f13103c2c8bd43dd9052c1bf70bea73002ed",
+        "source_robot_model": "MountedPanda"
+      },
+      "actual_final_metrics": {
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7"
+        ],
+        "joint_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "arm_error_rad": [
+          0.00023611869902565204,
+          0.0007648249755455305,
+          0.0008233135059703724,
+          0.0009627843919304269,
+          0.0015156312355020997,
+          0.0009663506183046344,
+          0.003223464419963906
+        ],
+        "arm_speed_rad_s": [
+          0.00011679140866616683,
+          0.00029445509057754405,
+          0.0004666452725704926,
+          0.0005656963528487636,
+          0.0007807532876746339,
+          5.8033054944523986e-05,
+          0.005807712812297226
+        ],
+        "max_joint_error_rad": 0.003223464419963906,
+        "max_joint_speed_rad_s": 0.005807712812297226,
+        "finger_error_m": [
+          1.8117250408719587e-06,
+          1.8999741280209537e-06
+        ],
+        "finger_speed_m_s": [
+          1.0338387739488352e-06,
+          1.1109189870434826e-06
+        ],
+        "max_finger_error_m": 1.8999741280209537e-06,
+        "max_finger_speed_m_s": 1.1109189870434826e-06,
+        "ready": true,
+        "eef_position_error_m": 0.0008352575699345317,
+        "eef_orientation_error_rad": 0.003458935744354717
+      },
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 2,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 7,
+          "movement": 26,
+          "confirm": 3,
+          "home": 218
+        },
+        "last_decision": {
+          "state": "incomplete",
+          "reason": "subtask purpose not achieved",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "final visual failed",
+          "checks": 2
+        },
+        "independent_streak": 5
+      },
+      "finish": {
+        "ready": false,
+        "ok": false,
+        "reason": "final visual failed",
+        "counts": {
+          "release": 7,
+          "movement": 26,
+          "confirm": 3,
+          "home": 218
+        },
+        "release_settle_actions": 0,
+        "release_open_actions": 7,
+        "plan": {
+          "ok": true,
+          "reason": "ok",
+          "waypoints": [
+            [
+              -0.09681606224718656,
+              0.015119540422278628,
+              -0.3645767146059895,
+              -2.2031194165757273,
+              -0.15339326960157243,
+              2.2892846856254896,
+              -1.2236582006689245
+            ],
+            [
+              -0.09664262858691311,
+              0.012340444029839501,
+              -0.3644478421804159,
+              -2.200784851594621,
+              -0.15406746419161363,
+              2.284290672464411,
+              -1.2235729928069004
+            ],
+            [
+              -0.09646682224364349,
+              0.009588066516803521,
+              -0.3643079244381137,
+              -2.198376905321362,
+              -0.15472127087933696,
+              2.279241914706115,
+              -1.2234998710935556
+            ],
+            [
+              -0.09629308154150837,
+              0.006867296318156966,
+              -0.3641616363828103,
+              -2.1959376945057913,
+              -0.1553582223782322,
+              2.274192053682891,
+              -1.223437595375503
+            ],
+            [
+              -0.09612132278700375,
+              0.004177659739732349,
+              -0.3640092399250298,
+              -2.1934682617085612,
+              -0.15597881820839724,
+              2.269141778765846,
+              -1.2233858471928813
+            ],
+            [
+              -0.09595143942357885,
+              0.0015191970787307575,
+              -0.36385095522591765,
+              -2.190968653178055,
+              -0.1565832514953987,
+              2.264091187371189,
+              -1.2233445186707614
+            ],
+            [
+              -0.09578332992614672,
+              -0.0011080360799002546,
+              -0.36368699885063627,
+              -2.1884388909473858,
+              -0.15717170685956616,
+              2.2590403663422345,
+              -1.2233135097389185
+            ],
+            [
+              -0.09561689686954523,
+              -0.0037039861813107718,
+              -0.3635175832870743,
+              -2.1858789955777533,
+              -0.15774436884666998,
+              2.2539893992928977,
+              -1.223292721019894
+            ],
+            [
+              -0.09545204679827646,
+              -0.006268602084769354,
+              -0.36334291698649485,
+              -2.183288986660335,
+              -0.15830142196960093,
+              2.248938366734715,
+              -1.2232820537316014
+            ],
+            [
+              -0.0952886901306615,
+              -0.008801835005025167,
+              -0.3631632044338285,
+              -2.180668882803244,
+              -0.15884305055092116,
+              2.243887346095436,
+              -1.2232814097748888
+            ],
+            [
+              -0.09512674106466998,
+              -0.011303638443303763,
+              -0.3629786462200385,
+              -2.1780187016061103,
+              -0.15936943856917968,
+              2.2388364117361155,
+              -1.2232906918201312
+            ],
+            [
+              -0.09496611748469108,
+              -0.013773968118382905,
+              -0.3627894391155093,
+              -2.1753384596338603,
+              -0.15988076951346122,
+              2.233785634968585,
+              -1.2233098033885224
+            ],
+            [
+              -0.09480674086937173,
+              -0.01621278189799781,
+              -0.36259577614421884,
+              -2.1726281723899534,
+              -0.16037722624594594,
+              2.228735084073273,
+              -1.2233386489281965
+            ],
+            [
+              -0.0946485362006518,
+              -0.018620039730580774,
+              -0.36239784665848873,
+              -2.1698878542890827,
+              -0.16085899087214506,
+              2.223684824317344,
+              -1.2233771338854165
+            ],
+            [
+              -0.09449143187411971,
+              -0.020995703577356223,
+              -0.36219583641412695,
+              -2.16711751862931,
+              -0.16132624461851097,
+              2.2186349179730556,
+              -1.2234251647710441
+            ],
+            [
+              -0.09433535961078929,
+              -0.023339737344770566,
+              -0.36198992764579013,
+              -2.16431717756366,
+              -0.16177916771708586,
+              2.2135854243363418,
+              -1.2234826492225381
+            ],
+            [
+              -0.09418025437039493,
+              -0.025652106817268892,
+              -0.36178029914241316,
+              -2.1614868420711355,
+              -0.16221793929689374,
+              2.208536399745521,
+              -1.2235494960616704
+            ],
+            [
+              -0.09402605426628716,
+              -0.027932779590420672,
+              -0.36156712632256255,
+              -2.1586265219271668,
+              -0.1626427372817756,
+              2.2034878976001067,
+              -1.2236256153481908
+            ],
+            [
+              -0.0938727004820007,
+              -0.03018172500436961,
+              -0.3613505813095858,
+              -2.155736225673477,
+              -0.16305373829436978,
+              2.19843996837968,
+              -1.22371091842964
+            ],
+            [
+              -0.09372013718955646,
+              -0.03239891407762838,
+              -0.3611308330064409,
+              -2.1528159605873567,
+              -0.16345111756596084,
+              2.193392659662759,
+              -1.2238053179875024
+            ],
+            [
+              -0.09356831146955352,
+              -0.03458431944118399,
+              -0.3609080471701054,
+              -2.149865732650353,
+              -0.16383504885191275,
+              2.188346016145656,
+              -1.2239087280799015
+            ]
+          ],
+          "candidate_reports": [
+            {
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "distance": 0.04,
+              "reason": "clear",
+              "home_screen": {
+                "sample_count": 203,
+                "planned_samples": 203,
+                "collisions": [],
+                "collision_count": 0,
+                "ok": true,
+                "live_unchanged": true
+              }
+            }
+          ],
+          "sensor_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011790329006576866,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          }
+        },
+        "checks": [
+          {
+            "target_visible": null,
+            "destination_visible": null,
+            "at_destination": false,
+            "supported": null,
+            "released": true,
+            "stable": null,
+            "operation_achieved": false,
+            "clear_of_target": null,
+            "boxes": {},
+            "evidence": [
+              "sideview显示酒瓶未在架子上，架子空置且酒瓶不在目的地内",
+              "同步实测编码器已达到标准开口，按已松手、未夹持处理；遮挡或投影重叠不改变此判断。"
+            ],
+            "unknown_reasons": []
+          }
+        ],
+        "restored": true,
+        "limitation": "visible geometry only",
+        "opening_confirmed": true,
+        "object_release_not_yet_confirmed": true,
+        "handoff_mode": "visual_goal_encoder_v5",
+        "handoff_goal_latched": true,
+        "_release_path": true,
+        "feedback_retreat": {
+          "ok": true,
+          "reason": "retreated and settled",
+          "mode": "measured_pose_feedback",
+          "screens": [],
+          "replans": [],
+          "home_candidates": [
+            {
+              "actions": 26,
+              "actual_q": [
+                -0.09474691869984392,
+                -0.024491430340676596,
+                -0.363604307977399,
+                -2.1648538796800234,
+                -0.15763846627543732,
+                2.217112014327201,
+                -1.2241794419348673
+              ],
+              "frames": [
+                {
+                  "view": "agentview",
+                  "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000121_agentview.png",
+                  "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000121_agentview.npy",
+                  "K": [
+                    [
+                      309.01933598375615,
+                      0.0,
+                      128.0
+                    ],
+                    [
+                      0.0,
+                      309.01933598375615,
+                      128.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "T_world_camera": [
+                    [
+                      -7.268184498698815e-08,
+                      0.6282664504107425,
+                      -0.7779982437565529,
+                      0.6586131746834771
+                    ],
+                    [
+                      0.9999999999999858,
+                      -7.268184498698815e-08,
+                      -1.521152659944569e-07,
+                      0.0
+                    ],
+                    [
+                      -1.521152659944569e-07,
+                      -0.7779982437565529,
+                      -0.6282664504107283,
+                      1.6103500240372424
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "pixel_center_offset": 0.5
+                },
+                {
+                  "view": "wrist",
+                  "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000122_wrist.png",
+                  "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000122_wrist.npy",
+                  "K": [
+                    [
+                      166.81284772367434,
+                      0.0,
+                      128.0
+                    ],
+                    [
+                      0.0,
+                      166.81284772367434,
+                      128.0
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "T_world_camera": [
+                    [
+                      0.9973721502496052,
+                      0.06948695286295656,
+                      0.020502616620803948,
+                      -0.18274666609891732
+                    ],
+                    [
+                      0.07168342601541808,
+                      -0.9875183798817223,
+                      -0.14024598329531707,
+                      -0.194139530385876
+                    ],
+                    [
+                      0.010501444718251696,
+                      0.14134713572478053,
+                      -0.9899043927982286,
+                      1.3182419074202607
+                    ],
+                    [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0
+                    ]
+                  ],
+                  "pixel_center_offset": 0.5
+                }
+              ],
+              "home_screen": {
+                "sample_count": 203,
+                "planned_samples": 203,
+                "collisions": [],
+                "collision_count": 0,
+                "ok": true,
+                "live_unchanged": true
+              }
+            }
+          ],
+          "trace": [
+            {
+              "actions": 10,
+              "travel_m": 0.010920143394575574,
+              "progress_m": 0.01091599798815146,
+              "lateral_m": 0.0003008648878912118
+            },
+            {
+              "actions": 20,
+              "travel_m": 0.02322896607308847,
+              "progress_m": 0.012306387306014965,
+              "lateral_m": 0.0005528888441432989
+            }
+          ],
+          "trace_actions": [
+            {
+              "actual_q": [
+                -0.09681606224718656,
+                0.015119540422278628,
+                -0.3645767146059895,
+                -2.2031194165757273,
+                -0.15339326960157243,
+                2.2892846856254896,
+                -1.2236582006689245
+              ],
+              "target_q": [
+                -0.09611595534406737,
+                0.004161762024996809,
+                -0.3640215816188032,
+                -2.1935123357348654,
+                -0.15599030922989243,
+                2.2691748954944115,
+                -1.2233787398602436
+              ],
+              "from_xyz": [
+                -0.17744064703099463,
+                -0.25643322987354555,
+                1.1986861726416855
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision",
+                  "initial_clearance": 0.0038575412313894457,
+                  "previous_clearance": 0.007266073266706782,
+                  "current_clearance": 0.008031023289987909,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09679762963660551,
+                0.014441559457447729,
+                -0.36462967713818584,
+                -2.202671003115066,
+                -0.1536479854017107,
+                2.2883882577849244,
+                -1.224120478674517
+              ],
+              "target_q": [
+                -0.09609933206713317,
+                0.0035100259243942313,
+                -0.364068169894393,
+                -2.193037470164284,
+                -0.1562302792331076,
+                2.2682772425037845,
+                -1.2238511694933611
+              ],
+              "from_xyz": [
+                -0.1774507752492103,
+                -0.2564936013189323,
+                1.199147874196941
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision",
+                  "initial_clearance": 0.004167103016773297,
+                  "previous_clearance": 0.0075573833135502005,
+                  "current_clearance": 0.008360883146134413,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09674081608357563,
+                0.013189946060691153,
+                -0.3646197329625342,
+                -2.201688534658826,
+                -0.15389040128482534,
+                2.2863804236704066,
+                -1.224164210607915
+              ],
+              "target_q": [
+                -0.0960463375227294,
+                0.0023113004456867285,
+                -0.3640470113985427,
+                -2.1920028941392964,
+                -0.15644599946304125,
+                2.2662680699311286,
+                -1.2239111560176634
+              ],
+              "from_xyz": [
+                -0.177446088317771,
+                -0.256525457905582,
+                1.2000329641377354
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision",
+                  "initial_clearance": 0.004909054641126529,
+                  "previous_clearance": 0.008170281080641958,
+                  "current_clearance": 0.009030861096054069,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09666442963477546,
+                0.011684528793306673,
+                -0.3646037657121469,
+                -2.2004613431657933,
+                -0.1541168052099321,
+                2.2838731574182174,
+                -1.224164500666067
+              ],
+              "target_q": [
+                -0.09597457586241503,
+                0.000870724648744511,
+                -0.3640178235701556,
+                -2.19071203539538,
+                -0.1566409262492504,
+                2.2637594375785057,
+                -1.2239299670365453
+              ],
+              "from_xyz": [
+                -0.17744032927258202,
+                -0.2565535994192264,
+                1.2011088163024308
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "screened_exit",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": false,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "geom": "gripper0_finger1_collision",
+                  "initial_clearance": 0.005501889069067165,
+                  "previous_clearance": 0.008975828234621556,
+                  "current_clearance": 0.009889034864882934,
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09657987024299348,
+                0.010070352664358155,
+                -0.36458475057871276,
+                -2.1991189061938234,
+                -0.1543320305933932,
+                2.2811410441180855,
+                -1.2241646000469284
+              ],
+              "target_q": [
+                -0.09589491848853135,
+                -0.0006731887315004261,
+                -0.36398486109431955,
+                -2.189300747923576,
+                -0.15682266838133227,
+                2.261026011003155,
+                -1.2239495121732331
+              ],
+              "from_xyz": [
+                -0.1774348048894105,
+                -0.25658028137118455,
+                1.202270443479005
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09649207439644365,
+                0.008413352118633593,
+                -0.36456310016983245,
+                -2.1977188062598083,
+                -0.15453943777474302,
+                2.278307630658201,
+                -1.2241647483904106
+              ],
+              "target_q": [
+                -0.09581206471062413,
+                -0.0022574409044577425,
+                -0.36394910856815577,
+                -2.187829488350366,
+                -0.15699579843752853,
+                2.2581913787548777,
+                -1.223969468390006
+              ],
+              "from_xyz": [
+                -0.17742958530598874,
+                -0.25660619226011067,
+                1.203470579266698
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.0964032746764394,
+                0.006743499830860033,
+                -0.3645389578593543,
+                -2.196286570682738,
+                -0.15474042838360513,
+                2.2754285113036126,
+                -1.2241649476919434
+              ],
+              "target_q": [
+                -0.09572814295360071,
+                -0.0038533786409365696,
+                -0.36391096454320776,
+                -2.186325076918728,
+                -0.15716226247625636,
+                2.2553111552198803,
+                -1.2239895857738072
+              ],
+              "from_xyz": [
+                -0.17742452563933434,
+                -0.25663167881655746,
+                1.2046879719037613
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09631447321486608,
+                0.005074423437297234,
+                -0.3645123842973131,
+                -2.194833510889456,
+                -0.15493558653204098,
+                2.272528712578202,
+                -1.2241651982354338
+              ],
+              "target_q": [
+                -0.09564411068469197,
+                -0.0054479679836996,
+                -0.36387060247554753,
+                -2.18479940635459,
+                -0.15732288943291828,
+                2.2524103757365235,
+                -1.2240097516796526
+              ],
+              "from_xyz": [
+                -0.17741947594961321,
+                -0.2566569150656021,
+                1.2059130688356499
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09622611257015284,
+                0.0034123222802563747,
+                -0.36448342025513536,
+                -2.1933646397541526,
+                -0.15512516264938353,
+                2.2696195068555522,
+                -1.2241655000085314
+              ],
+              "target_q": [
+                -0.09556039230767151,
+                -0.007035277436972385,
+                -0.36382811209017785,
+                -2.1832577506425905,
+                -0.15747804013501945,
+                2.2495003156771105,
+                -1.2240299153809526
+              ],
+              "from_xyz": [
+                -0.17741433007297702,
+                -0.25668198788601715,
+                1.2071415767152724
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09613838104376758,
+                0.001760020232091417,
+                -0.3644521052173775,
+                -2.1918821803169055,
+                -0.155309272496569,
+                2.266705977679188,
+                -1.2241658528702501
+              ],
+              "target_q": [
+                -0.09547716975582836,
+                -0.008612604685066721,
+                -0.36378355321922506,
+                -2.1817024498725615,
+                -0.15762788041261638,
+                2.246586058647582,
+                -1.2240500538836983
+              ],
+              "from_xyz": [
+                -0.17740902280711932,
+                -0.25670694057796406,
+                1.2083715662238692
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09605135158726082,
+                0.00011880743283343216,
+                -0.36441848138246385,
+                -2.19038712019269,
+                -0.15548797823579893,
+                2.2637904237669573,
+                -1.2241662566222355
+              ],
+              "target_q": [
+                -0.09539451483935685,
+                -0.01017871545417895,
+                -0.3637369756027647,
+                -2.1801345438912594,
+                -0.15777249539490237,
+                2.243669901967845,
+                -1.2240701566290855
+              ],
+              "from_xyz": [
+                -0.17740351704127352,
+                -0.25673179484910214,
+                1.209602170629837
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09596504498173722,
+                -0.0015107228913711014,
+                -0.364382593506664,
+                -2.188879900007382,
+                -0.15566132109482186,
+                2.2608738906118564,
+                -1.2241667110402719
+              ],
+              "target_q": [
+                -0.09531244950503281,
+                -0.01173304287578605,
+                -0.3636884258116551,
+                -2.1785544963890193,
+                -0.1579119370729322,
+                2.2407528890164516,
+                -1.2240902186502602
+              ],
+              "from_xyz": [
+                -0.1773977926652082,
+                -0.25675656179653616,
+                1.2108330007965262
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09587945856523895,
+                -0.003128294258784513,
+                -0.36434448795832175,
+                -2.187360718224081,
+                -0.1558293343507744,
+                2.257956859601876,
+                -1.2241672158883277
+              ],
+              "target_q": [
+                -0.09523097326448339,
+                -0.013275323559402709,
+                -0.36363794947281214,
+                -2.176962515764343,
+                -0.1580462439640493,
+                2.2378354987204965,
+                -1.2241102375108432
+              ],
+              "from_xyz": [
+                -0.17739183918126106,
+                -0.2567812473399383,
+                1.2120638822415866
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.0957945792902052,
+                -0.004733774240016313,
+                -0.3643042119009222,
+                -2.18582966608085,
+                -0.15599204840071043,
+                2.2550395580747455,
+                -1.2241677709248755
+              ],
+              "target_q": [
+                -0.09515007567371464,
+                -0.014805432191675587,
+                -0.3635855918729369,
+                -2.1753586972765278,
+                -0.15817544917871895,
+                2.2349179557926138,
+                -1.2241302119349657
+              ],
+              "from_xyz": [
+                -0.17738565130018624,
+                -0.25680585488696156,
+                1.2132947369552447
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09571038965549009,
+                -0.006327096020403273,
+                -0.3642618127509931,
+                -2.184286787308403,
+                -0.15614949269349443,
+                2.252122098818955,
+                -1.224168375905777
+              ],
+              "target_q": [
+                -0.09506974200801262,
+                -0.0163233063717549,
+                -0.36353139805313217,
+                -2.1737430860088685,
+                -0.15829958369701425,
+                2.232000370321025,
+                -1.2241501411937903
+              ],
+              "from_xyz": [
+                -0.17737922647398902,
+                -0.2568303866313778,
+                1.214525530283831
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.0956268703990592,
+                -0.00790822277567965,
+                -0.36421733785680344,
+                -2.1827321045512997,
+                -0.15630169643842393,
+                2.249204542838169,
+                -1.2241690305856416
+              ],
+              "target_q": [
+                -0.09498995584022898,
+                -0.017828912456186882,
+                -0.3634754127732067,
+                -2.1721157047496944,
+                -0.15841867768133602,
+                2.2290828005771743,
+                -1.2241700248303842
+              ],
+              "from_xyz": [
+                -0.1773725635677249,
+                -0.25685484418133875,
+                1.2157562470574204
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09554400171838265,
+                -0.009477131492433333,
+                -0.3641708343199371,
+                -2.181165631053885,
+                -0.1564486888480904,
+                2.2462869275902633,
+                -1.2241697347185039
+              ],
+              "target_q": [
+                -0.09491070021023448,
+                -0.019322230038882466,
+                -0.3634176804615909,
+                -2.1704765663349037,
+                -0.15853276099140756,
+                2.2261652812756827,
+                -1.2241898625359025
+              ],
+              "from_xyz": [
+                -0.17736566216393754,
+                -0.25687922886175246,
+                1.216986880861066
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09546176382179565,
+                -0.011033805618892521,
+                -0.36412234890068307,
+                -2.179587375826795,
+                -0.15659049920964557,
+                2.2433692796929168,
+                -1.2241704880581952
+              ],
+              "target_q": [
+                -0.09483195815359369,
+                -0.020803244897934198,
+                -0.36335824517859466,
+                -2.168825679109716,
+                -0.15864186337879027,
+                2.2232478362900374,
+                -1.224209654093474
+              ],
+              "from_xyz": [
+                -0.17735852220569798,
+                -0.25690354185909003,
+                1.218217429213183
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09538013717590621,
+                -0.01257823172531324,
+                -0.36407192796991894,
+                -2.1779973459297595,
+                -0.1567271568959506,
+                2.2404516206405525,
+                -1.224171290358577
+              ],
+              "target_q": [
+                -0.09475371293885423,
+                -0.02227194578888311,
+                -0.3632971505945905,
+                -2.1671630493441882,
+                -0.15874601455455475,
+                2.2203304843744247,
+                -1.2242293993523574
+              ],
+              "from_xyz": [
+                -0.177351143816235,
+                -0.25692778429040586,
+                1.2194478913987061
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.0952991026149384,
+                -0.01411039798480834,
+                -0.36401961748588224,
+                -2.1763955474791987,
+                -0.15685869135742397,
+                2.2375339693770973,
+                -1.2241721413737108
+              ],
+              "target_q": [
+                -0.09467594817238648,
+                -0.02372832298518009,
+                -0.3632344399789008,
+                -2.1654886823004227,
+                -0.15884524420767465,
+                2.217413241738896,
+                -1.2242490982156697
+              ],
+              "from_xyz": [
+                -0.1773435272088861,
+                -0.2569519572360709,
+                1.2206782674953203
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09521864138737467,
+                -0.015630293480603515,
+                -0.3639654629839528,
+                -2.1747819860920528,
+                -0.15698513210877255,
+                2.234616343454177,
+                -1.2241730408579967
+              ],
+              "target_q": [
+                -0.09459864784302996,
+                -0.025172367612210738,
+                -0.36317015619533366,
+                -2.163802582703109,
+                -0.15893958200487207,
+                2.2144961232087583,
+                -1.2242687506341785
+              ],
+              "from_xyz": [
+                -0.17733567264257624,
+                -0.2569760617552127,
+                1.221908557935852
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09513873517412934,
+                -0.01713790788842655,
+                -0.36390950957312973,
+                -2.173156667080439,
+                -0.15710650871511575,
+                2.231698759552932,
+                -1.2241739885662983
+              ],
+              "target_q": [
+                -0.09452179633940526,
+                -0.02660407134168269,
+                -0.36310434170153333,
+                -2.1621047549461125,
+                -0.159029057583781,
+                2.211579142747029,
+                -1.224288356602845
+              ],
+              "from_xyz": [
+                -0.17732758039997149,
+                -0.25700009889293357,
+                1.2231387633115953
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09505936609380063,
+                -0.018633231329158968,
+                -0.36385180193593303,
+                -2.1715195955361892,
+                -0.15722285077869277,
+                2.2287812337195354,
+                -1.2241749842540592
+              ],
+              "target_q": [
+                -0.09444537845481894,
+                -0.028023426249676034,
+                -0.3630370385504497,
+                -2.160395203182288,
+                -0.1591137005439701,
+                2.2086623136903025,
+                -1.2243079161585941
+              ],
+              "from_xyz": [
+                -0.17731925077681862,
+                -0.25702406968364533,
+                1.2243688842839169
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09498051670212218,
+                -0.02011625429884003,
+                -0.36379238433025035,
+                -2.1698707763670355,
+                -0.15733418792646153,
+                2.225863781471554,
+                -1.2241760276774112
+              ],
+              "target_q": [
+                -0.09436937938662202,
+                -0.029430424749065816,
+                -0.36296828839313877,
+                -2.1586739313619487,
+                -0.15919354043760306,
+                2.205745648855331,
+                -1.2243274293786537
+              ],
+              "from_xyz": [
+                -0.17731068407699072,
+                -0.2570479751526413,
+                1.225598921544375
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.094902169988896,
+                -0.021586967633924724,
+                -0.3637313005925364,
+                -2.1682102143119355,
+                -0.1574405497986766,
+                2.2229464178455594,
+                -1.2241771185932824
+              ],
+              "target_q": [
+                -0.09429378473316151,
+                -0.03082505955588885,
+                -0.36289813248263025,
+                -2.156940943249138,
+                -0.1592686067604906,
+                2.20282916058678,
+                -1.2243468963791686
+              ],
+              "from_xyz": [
+                -0.17730188061069624,
+                -0.2570718163169757,
+                1.2268288757964168
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            },
+            {
+              "actual_q": [
+                -0.09482430937351821,
+                -0.023045362492192807,
+                -0.36366859414079356,
+                -2.1665379139459087,
+                -0.1575419660374548,
+                2.2200291574200057,
+                -1.224178256759497
+              ],
+              "target_q": [
+                -0.09421858048940299,
+                -0.032207323670740126,
+                -0.3628266116774215,
+                -2.1551962424267916,
+                -0.159338928942846,
+                2.1999128607802203,
+                -1.2243663173139439
+              ],
+              "from_xyz": [
+                -0.17729284069318052,
+                -0.2570955941856754,
+                1.2280587477473606
+              ],
+              "direction": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "screen": {
+                "ok": true,
+                "reason": "clear",
+                "min_distance": -0.011790329006576866,
+                "endpoint_hand_clear": true,
+                "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+                "diagnostic": {
+                  "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+                }
+              }
+            }
+          ],
+          "plan": {
+            "ok": true,
+            "reason": "ok",
+            "waypoints": [
+              [
+                -0.09681606224718656,
+                0.015119540422278628,
+                -0.3645767146059895,
+                -2.2031194165757273,
+                -0.15339326960157243,
+                2.2892846856254896,
+                -1.2236582006689245
+              ],
+              [
+                -0.09664262858691311,
+                0.012340444029839501,
+                -0.3644478421804159,
+                -2.200784851594621,
+                -0.15406746419161363,
+                2.284290672464411,
+                -1.2235729928069004
+              ],
+              [
+                -0.09646682224364349,
+                0.009588066516803521,
+                -0.3643079244381137,
+                -2.198376905321362,
+                -0.15472127087933696,
+                2.279241914706115,
+                -1.2234998710935556
+              ],
+              [
+                -0.09629308154150837,
+                0.006867296318156966,
+                -0.3641616363828103,
+                -2.1959376945057913,
+                -0.1553582223782322,
+                2.274192053682891,
+                -1.223437595375503
+              ],
+              [
+                -0.09612132278700375,
+                0.004177659739732349,
+                -0.3640092399250298,
+                -2.1934682617085612,
+                -0.15597881820839724,
+                2.269141778765846,
+                -1.2233858471928813
+              ],
+              [
+                -0.09595143942357885,
+                0.0015191970787307575,
+                -0.36385095522591765,
+                -2.190968653178055,
+                -0.1565832514953987,
+                2.264091187371189,
+                -1.2233445186707614
+              ],
+              [
+                -0.09578332992614672,
+                -0.0011080360799002546,
+                -0.36368699885063627,
+                -2.1884388909473858,
+                -0.15717170685956616,
+                2.2590403663422345,
+                -1.2233135097389185
+              ],
+              [
+                -0.09561689686954523,
+                -0.0037039861813107718,
+                -0.3635175832870743,
+                -2.1858789955777533,
+                -0.15774436884666998,
+                2.2539893992928977,
+                -1.223292721019894
+              ],
+              [
+                -0.09545204679827646,
+                -0.006268602084769354,
+                -0.36334291698649485,
+                -2.183288986660335,
+                -0.15830142196960093,
+                2.248938366734715,
+                -1.2232820537316014
+              ],
+              [
+                -0.0952886901306615,
+                -0.008801835005025167,
+                -0.3631632044338285,
+                -2.180668882803244,
+                -0.15884305055092116,
+                2.243887346095436,
+                -1.2232814097748888
+              ],
+              [
+                -0.09512674106466998,
+                -0.011303638443303763,
+                -0.3629786462200385,
+                -2.1780187016061103,
+                -0.15936943856917968,
+                2.2388364117361155,
+                -1.2232906918201312
+              ],
+              [
+                -0.09496611748469108,
+                -0.013773968118382905,
+                -0.3627894391155093,
+                -2.1753384596338603,
+                -0.15988076951346122,
+                2.233785634968585,
+                -1.2233098033885224
+              ],
+              [
+                -0.09480674086937173,
+                -0.01621278189799781,
+                -0.36259577614421884,
+                -2.1726281723899534,
+                -0.16037722624594594,
+                2.228735084073273,
+                -1.2233386489281965
+              ],
+              [
+                -0.0946485362006518,
+                -0.018620039730580774,
+                -0.36239784665848873,
+                -2.1698878542890827,
+                -0.16085899087214506,
+                2.223684824317344,
+                -1.2233771338854165
+              ],
+              [
+                -0.09449143187411971,
+                -0.020995703577356223,
+                -0.36219583641412695,
+                -2.16711751862931,
+                -0.16132624461851097,
+                2.2186349179730556,
+                -1.2234251647710441
+              ],
+              [
+                -0.09433535961078929,
+                -0.023339737344770566,
+                -0.36198992764579013,
+                -2.16431717756366,
+                -0.16177916771708586,
+                2.2135854243363418,
+                -1.2234826492225381
+              ],
+              [
+                -0.09418025437039493,
+                -0.025652106817268892,
+                -0.36178029914241316,
+                -2.1614868420711355,
+                -0.16221793929689374,
+                2.208536399745521,
+                -1.2235494960616704
+              ],
+              [
+                -0.09402605426628716,
+                -0.027932779590420672,
+                -0.36156712632256255,
+                -2.1586265219271668,
+                -0.1626427372817756,
+                2.2034878976001067,
+                -1.2236256153481908
+              ],
+              [
+                -0.0938727004820007,
+                -0.03018172500436961,
+                -0.3613505813095858,
+                -2.155736225673477,
+                -0.16305373829436978,
+                2.19843996837968,
+                -1.22371091842964
+              ],
+              [
+                -0.09372013718955646,
+                -0.03239891407762838,
+                -0.3611308330064409,
+                -2.1528159605873567,
+                -0.16345111756596084,
+                2.193392659662759,
+                -1.2238053179875024
+              ],
+              [
+                -0.09356831146955352,
+                -0.03458431944118399,
+                -0.3609080471701054,
+                -2.149865732650353,
+                -0.16383504885191275,
+                2.188346016145656,
+                -1.2239087280799015
+              ]
+            ],
+            "candidate_reports": [
+              {
+                "direction": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "distance": 0.04,
+                "reason": "clear",
+                "home_screen": {
+                  "sample_count": 203,
+                  "planned_samples": 203,
+                  "collisions": [],
+                  "collision_count": 0,
+                  "ok": true,
+                  "live_unchanged": true
+                }
+              }
+            ],
+            "sensor_screen": {
+              "ok": true,
+              "reason": "clear",
+              "min_distance": -0.011790329006576866,
+              "endpoint_hand_clear": true,
+              "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+              "diagnostic": {
+                "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+              }
+            }
+          },
+          "removed_gate": "per-waypoint joint_error<=0.004",
+          "retained_guards": "CAD path, current endpoint clearance, joint limits, opening and home readiness",
+          "initial_frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000097_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000097_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000098_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000098_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  0.9971844576986513,
+                  0.07333855571292996,
+                  0.01564012692366111,
+                  -0.18262466712823627
+                ],
+                [
+                  0.07482022580165995,
+                  -0.9870079309057604,
+                  -0.14218747532788492,
+                  -0.19329064822145264
+                ],
+                [
+                  0.005009105233011287,
+                  0.1429573383043722,
+                  -0.9897161756229378,
+                  1.2875407747618919
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            }
+          ],
+          "endpoint_frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000121_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000121_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000122_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000122_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  0.9973721502496052,
+                  0.06948695286295656,
+                  0.020502616620803948,
+                  -0.18274666609891732
+                ],
+                [
+                  0.07168342601541808,
+                  -0.9875183798817223,
+                  -0.14024598329531707,
+                  -0.194139530385876
+                ],
+                [
+                  0.010501444718251696,
+                  0.14134713572478053,
+                  -0.9899043927982286,
+                  1.3182419074202607
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            }
+          ],
+          "endpoint_clearance": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011790329006576866,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            }
+          },
+          "travel_m": 0.030610458220045184,
+          "hold_q": [
+            -0.09474691869984392,
+            -0.024491430340676596,
+            -0.363604307977399,
+            -2.1648538796800234,
+            -0.15763846627543732,
+            2.217112014327201,
+            -1.2241794419348673
+          ]
+        },
+        "movement_budget": 480,
+        "home_entry": {
+          "visible_semantics": true,
+          "measured_open": true,
+          "settled": true,
+          "task_complete_before_home": false,
+          "label": "safety eligibility under review; task completion pending final verification",
+          "semantic_basis": "initial handoff purpose; final task acceptance pending",
+          "clearance_screen": {
+            "ok": true,
+            "reason": "clear",
+            "min_distance": -0.011790329006576866,
+            "endpoint_hand_clear": true,
+            "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+            "diagnostic": {
+              "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+            },
+            "frames": [
+              {
+                "view": "agentview",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000127_agentview.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000127_agentview.npy",
+                "K": [
+                  [
+                    309.01933598375615,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    309.01933598375615,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    -7.268184498698815e-08,
+                    0.6282664504107425,
+                    -0.7779982437565529,
+                    0.6586131746834771
+                  ],
+                  [
+                    0.9999999999999858,
+                    -7.268184498698815e-08,
+                    -1.521152659944569e-07,
+                    0.0
+                  ],
+                  [
+                    -1.521152659944569e-07,
+                    -0.7779982437565529,
+                    -0.6282664504107283,
+                    1.6103500240372424
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              },
+              {
+                "view": "wrist",
+                "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000128_wrist.png",
+                "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000128_wrist.npy",
+                "K": [
+                  [
+                    166.81284772367434,
+                    0.0,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    166.81284772367434,
+                    128.0
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "T_world_camera": [
+                  [
+                    0.9973843202699602,
+                    0.06920039235745823,
+                    0.02087638324048666,
+                    -0.18275118268808543
+                  ],
+                  [
+                    0.07145169185633168,
+                    -0.9875461359657436,
+                    -0.14016877351962997,
+                    -0.1941927380829827
+                  ],
+                  [
+                    0.010916657478260514,
+                    0.14129378980232404,
+                    -0.989907516666481,
+                    1.319380726317283
+                  ],
+                  [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                ],
+                "pixel_center_offset": 0.5
+              }
+            ]
+          }
+        },
+        "home_screen": {
+          "sample_count": 203,
+          "planned_samples": 203,
+          "collisions": [],
+          "collision_count": 0,
+          "ok": true,
+          "live_unchanged": true
+        },
+        "home_mode": "original_joint_home_streaming",
+        "home_streak": 5
+      },
+      "before": {
+        "gripper_current_action": [
+          0.9365209937095642,
+          -0.9363961815834045
+        ],
+        "gripper_hold_from_measurement": [
+          0.9365209937095642,
+          -0.9363961815834045
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 0.5000000000000003,
+        "robot": {
+          "robot_name": "MountedPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            0.010262668834930606,
+            -0.16741270601901184,
+            -0.00501342677407528,
+            -2.4310604716117648,
+            -9.411916579481773e-06,
+            2.207957695262411,
+            0.7921850037340668
+          ],
+          "arm_qvel": [
+            -0.012181034569148689,
+            0.0017811980769381524,
+            0.013849205523064968,
+            0.0015265167616677607,
+            -0.00039327691735674967,
+            -0.00437401166007857,
+            -0.002355711117628579
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.03873041931744383,
+            -0.03872792364003397
+          ],
+          "finger_qvel": [
+            0.0031769323331838346,
+            -0.0031992224910286867
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.2066235651284524,
+            0.0024645617556077314,
+            1.1804495991023416
+          ],
+          "orientation_matrix": [
+            [
+              0.000959113309898518,
+              0.998448931959476,
+              -0.05566695941615826
+            ],
+            [
+              0.9999994259138458,
+              -0.0009310294120110532,
+              0.0005304302147856182
+            ],
+            [
+              0.0004777799049380631,
+              -0.05566743620120659,
+              -0.9984492517264696
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "after": {
+        "gripper_current_action": [
+          0.9364382028579712,
+          -0.9364832043647766
+        ],
+        "gripper_hold_from_measurement": [
+          0.9364382028579712,
+          -0.9364832043647766
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 21.44999999999899,
+        "robot": {
+          "robot_name": "MountedPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            0.009759352329110063,
+            -0.1654129443600332,
+            -0.006856003945435302,
+            -2.434011969654723,
+            -0.001791397870035256,
+            2.2142727362235766,
+            0.7878474586725561
+          ],
+          "arm_qvel": [
+            0.00011679140866616683,
+            -0.00029445509057754405,
+            0.0004666452725704926,
+            -0.0005656963528487636,
+            0.0007807532876746339,
+            -5.8033054944523986e-05,
+            0.005807712812297226
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.038728764139988096,
+            -0.03872966395281477
+          ],
+          "finger_qvel": [
+            1.0338387739488352e-06,
+            1.1109189870434826e-06
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.2065886971035432,
+            0.0012365445540668033,
+            1.178773710404476
+          ],
+          "orientation_matrix": [
+            [
+              -0.002194182775131805,
+              0.9985221799808353,
+              -0.054301396374957
+            ],
+            [
+              0.9999975315213168,
+              0.0021719387018421005,
+              -0.0004686507749176172
+            ],
+            [
+              -0.0003500188890696136,
+              -0.054302290638575446,
+              -0.9985244807806074
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "cache_reset": [
+        {
+          "gripper_current_action": [
+            0.9372515678405762,
+            -0.9372429847717285
+          ],
+          "gripper_hold_from_measurement": [
+            0.9372515678405762,
+            -0.9372429847717285
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 1.2500000000000009,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.00393022938286609,
+              -0.1636641196880749,
+              0.0018437109600304182,
+              -2.4514838192631827,
+              -3.075047061692706e-05,
+              2.2291189755780585,
+              0.7843235024146016
+            ],
+            "arm_qvel": [
+              -0.003567056541689673,
+              0.0009782487717315727,
+              0.0015892566542390406,
+              -0.005605177878891437,
+              -2.469426658385321e-05,
+              0.005894931316285519,
+              -0.002195862800635361
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03874503152845085,
+              -0.03874485934447139
+            ],
+            "finger_qvel": [
+              -1.4586894610888372e-05,
+              1.3096458948618279e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.21052093996270607,
+              -0.0009742211216201158,
+              1.1717494050736796
+            ],
+            "orientation_matrix": [
+              [
+                0.0005263626461737939,
+                0.9982774198434914,
+                -0.058667844454917434
+              ],
+              [
+                0.9999998346440757,
+                -0.000539045458558863,
+                -0.00020035422335771755
+              ],
+              [
+                -0.00023163373226514627,
+                -0.05866772929486261,
+                -0.9982775385057999
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        },
+        {
+          "gripper_current_action": [
+            0.9372515678405762,
+            -0.9372429847717285
+          ],
+          "gripper_hold_from_measurement": [
+            0.9372515678405762,
+            -0.9372429847717285
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 1.2500000000000009,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.00393022938286609,
+              -0.1636641196880749,
+              0.0018437109600304182,
+              -2.4514838192631827,
+              -3.075047061692706e-05,
+              2.2291189755780585,
+              0.7843235024146016
+            ],
+            "arm_qvel": [
+              -0.003567056541689673,
+              0.0009782487717315727,
+              0.0015892566542390406,
+              -0.005605177878891437,
+              -2.469426658385321e-05,
+              0.005894931316285519,
+              -0.002195862800635361
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03874503152845085,
+              -0.03874485934447139
+            ],
+            "finger_qvel": [
+              -1.4586894610888372e-05,
+              1.3096458948618279e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.21052093996270607,
+              -0.0009742211216201158,
+              1.1717494050736796
+            ],
+            "orientation_matrix": [
+              [
+                0.0005263626461737939,
+                0.9982774198434914,
+                -0.058667844454917434
+              ],
+              [
+                0.9999998346440757,
+                -0.000539045458558863,
+                -0.00020035422335771755
+              ],
+              [
+                -0.00023163373226514627,
+                -0.05866772929486261,
+                -0.9982775385057999
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        },
+        {
+          "gripper_current_action": [
+            0.9364382028579712,
+            -0.9364832043647766
+          ],
+          "gripper_hold_from_measurement": [
+            0.9364382028579712,
+            -0.9364832043647766
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 21.44999999999899,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              0.009759352329110063,
+              -0.1654129443600332,
+              -0.006856003945435302,
+              -2.434011969654723,
+              -0.001791397870035256,
+              2.2142727362235766,
+              0.7878474586725561
+            ],
+            "arm_qvel": [
+              0.00011679140866616683,
+              -0.00029445509057754405,
+              0.0004666452725704926,
+              -0.0005656963528487636,
+              0.0007807532876746339,
+              -5.8033054944523986e-05,
+              0.005807712812297226
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.038728764139988096,
+              -0.03872966395281477
+            ],
+            "finger_qvel": [
+              1.0338387739488352e-06,
+              1.1109189870434826e-06
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.2065886971035432,
+              0.0012365445540668033,
+              1.178773710404476
+            ],
+            "orientation_matrix": [
+              [
+                -0.002194182775131805,
+                0.9985221799808353,
+                -0.054301396374957
+              ],
+              [
+                0.9999975315213168,
+                0.0021719387018421005,
+                -0.0004686507749176172
+              ],
+              [
+                -0.0003500188890696136,
+                -0.054302290638575446,
+                -0.9985244807806074
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "expected_capabilities": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "hermes_plan_matches": true,
+    "model_usage": "See original xvla_calls and Hermes usage logs; unavailable usage remains unknown."
+  }
+}

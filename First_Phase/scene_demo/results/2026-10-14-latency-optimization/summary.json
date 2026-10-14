@@ -1,0 +1,66 @@
+{
+  "purpose": "按原生时间基线降低视觉请求/准备开销，保持旧提前松手拒绝和已入格独立接管可达，原收尾复位与图像存储保留。",
+  "native_profiles": 40,
+  "core_offline_passed": true,
+  "negative_allow_release": false,
+  "positive_allow_release": true,
+  "positive_independent_review_triggered": true,
+  "routine_positive_images": 9,
+  "window_core_images": 6,
+  "occluded_independent_review_images": 27,
+  "initial_objects": 4,
+  "initial_inventory_calls": 2,
+  "merged_audit_calls": 1,
+  "checker_initial_calls": 0,
+  "runtime": {
+    "home": "/home/yhwang/fyp/xvla_native/console_profiles/20261014-165713-cfefe80d",
+    "reused_initialized_home": true,
+    "help_wall_seconds": 0.5840451610019954,
+    "new_model_calls": 0,
+    "new_robot_actions": 0,
+    "help_command_only": true
+  },
+  "additional_history_replay": {
+    "request": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/cap_01_xvla_microwave_place_close_f479dff1/finish/model_requests/call_10_request.json",
+    "request_sha256": "51c81b1612102606fa5f3c55ecf0767a6f5055a267178e74fd420737630ac8d7",
+    "target_time": 63.5500000000317,
+    "new_robot_actions": 0,
+    "old_observations": 186,
+    "saved_releases": 3,
+    "model": "qwen3.8-max",
+    "calls": 2,
+    "error_type": "RuntimeError",
+    "error": "Qwen request timed out after 90s (awaiting_response)"
+  },
+  "recorded_requests_all_revisions": 15,
+  "recorded_responses_all_revisions": 14,
+  "new_robot_actions": 0,
+  "online_pipeline_trials": 0,
+  "helpers": false,
+  "subagents": 0,
+  "protected_controls_unchanged": true,
+  "downstream_finish_branch_identical": true,
+  "runtime_change": "opt-in visual_check_due callback; original default interval and downstream finish execution retained",
+  "software": [
+    "full suite:1795 passed,106 subtests;6 legacy sensors import failures resolved by separate path-corrected run 6 passed",
+    "final affected-window/schedule/history regression349 passed",
+    "final merged interfaces123 passed;console/runtime33 passed;relevance16 passed"
+  ],
+  "ui_refresh": {
+    "before_pid": 10165,
+    "after_pid": 16480,
+    "stage": "idle",
+    "old_record_unchanged": true,
+    "scene_loads": 0,
+    "new_robot_actions": 0
+  },
+  "implementation": "Current agent directly implemented under explicit no-subagent preference; agent model/reasoning setting not independently exposed in tool metadata.",
+  "limits": [
+    "只有软件与旧图，未测在线全链耗时或物理成功；不能承诺某分钟内结束。",
+    "首次检查点基于每项5个原生样本，原生达标可能仍夹持；不是松手/完成判据。未匹配拆分技能默认150步。",
+    "第一版小图包独立复核书正例失败，保留原结果；最终遮挡独立复核补充接近历史后通过。",
+    "额外入炉历史回放第二次Qwen请求90秒超时，无判定，未重试或当作视觉通过。",
+    "此前在线书松手后原生位置False、最终JSON格式错误仍是独立未解问题，本轮不通过减少检查或修改收尾绕过。",
+    "共享环境帮助命令0.58秒不等于完整Hermes规划耗时；oneshot未传resume，实际源码无resume返回空历史。"
+  ]
+}

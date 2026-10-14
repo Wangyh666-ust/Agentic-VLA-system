@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "id": "20261014-latency-optimization",
+  "intent": "analyze_existing",
+  "question_key": "xvla-interactive-latency",
+  "purpose": "降低启动/识别/重复视觉请求成本，保持提前松手负例拒绝、已入格正例触发独立接管，保留原收尾复位；本轮不执行在线任务。",
+  "prior_evidence": [
+    "20261014-book-latency-diagnosis",
+    "20261012-xvla-native-benchmark",
+    "20261014-occluded-support-handoff"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261014-book-latency-diagnosis",
+      "disposition": "reuse",
+      "reason": "复用原生完成步数、耗时诊断及提前松手/遮挡到位旧图；零新动作。"
+    },
+    {
+      "experiment_id": "20261012-xvla-native-benchmark",
+      "disposition": "reuse",
+      "reason": "复用原生完成步数、耗时诊断及提前松手/遮挡到位旧图；零新动作。"
+    },
+    {
+      "experiment_id": "20261014-occluded-support-handoff",
+      "disposition": "reuse",
+      "reason": "复用原生完成步数、耗时诊断及提前松手/遮挡到位旧图；零新动作。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "从200个原生episode冻结40个任务的成功样本最早完成步数及30步对齐首次检查点；未知拆分技能默认150，不按原生谓词直接完成。",
+    "软件验证任务目录匹配、下限前不检查、下限后可触发、预算末次检查不被跳过；复用环境同时保持request/scene版本与执行确认隔离。",
+    "识别仅任务目标/目的地/必要干扰物，独立三视图复核返回差异后合成完整清单；执行前审核同时核对身份与目的地区域，按图像哈希/selection/技能goal核验复用到检查器。",
+    "常规当前+最近近邻六图为核心，必要原始身份/区域与松手证据补充；未知可一次扩展，历史照片/纠正/同刻反证/独立接管保留。仅缩短重复说明，不更改底层图像存储、深度、安全控制。 第一版常规与独立复核均小包，旧书正例初判通过、独立复核误读深度而拒绝；失败保留。接触遮挡/几何推断的独立接管恢复必要接近历史，常规窗口保持小包，重新从负例开始配对验证。",
+    "先软件回归，再按旧提前松手负例、已入格300步正例顺序真实Qwen3.8离线回放；每例最多6次（含一次必要扩展/独立复核），负例误放或正例不触发时停止依赖验证并保留失败。",
+    "复用双罐/入炉原图核验历史可回看，不以此前未通过的视觉结果宣称全任务成功；当前线上书松手后原生位置False为独立未解问题，不以优化忽略。"
+  ]
+}

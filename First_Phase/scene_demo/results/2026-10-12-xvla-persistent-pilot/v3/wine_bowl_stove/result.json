@@ -1,0 +1,1165 @@
+{
+  "complete": false,
+  "agent_result": {
+    "request_id": "xvla-wine_bowl_stove",
+    "session_id": "4d9462a82b504d1182eacf67174a5f2b",
+    "request": "先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台。",
+    "run_ok": true,
+    "chain_ok": false,
+    "plan_success": null,
+    "task_success": null,
+    "decision": "execute",
+    "plan": {
+      "ok": true,
+      "request_id": "xvla-wine_bowl_stove",
+      "session_id": "4d9462a82b504d1182eacf67174a5f2b",
+      "state": "blocked",
+      "decision": "execute",
+      "capability_ids": [
+        "wine_to_rack",
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "original_capability_ids": [
+        "wine_to_rack",
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "rationale": "User explicitly requested: '先把酒瓶放到架子上' (first put wine bottle on rack), '再把碗放到盘子上' (then put bowl on plate), '最后打开灶台' (finally turn on stove). All destinations/actions are explicitly specified, matching available capabilities.",
+      "job_ids": [
+        "197381cc0b43481e8c16640afc0b495b"
+      ],
+      "completed_capability_ids": [],
+      "pending_capability_ids": [
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "plan_success": null,
+      "regressions": [],
+      "error": "Traceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/service.py\", line 2839, in _run_capability\n    finish_monitor.record(step)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/runtime.py\", line 279, in record\n    obs = self.port.capture()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/sensors.py\", line 131, in capture\n    cu = _cu()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/sensors.py\", line 9, in _cu\n    from robosuite.utils import camera_utils as cu\n  File \"/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/robosuite/utils/camera_utils.py\", line 12, in <module>\n    import h5py\nModuleNotFoundError: No module named 'h5py'\n",
+      "repair_history": [],
+      "scene_version": 1
+    },
+    "jobs": [
+      {
+        "job_id": "197381cc0b43481e8c16640afc0b495b",
+        "request_id": "xvla-wine_bowl_stove",
+        "session_id": "4d9462a82b504d1182eacf67174a5f2b",
+        "capability_id": "wine_to_rack",
+        "state": "error",
+        "steps": 5,
+        "total_steps": 20,
+        "success": false,
+        "ended_reason": "error",
+        "error": "Traceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/service.py\", line 2839, in _run_capability\n    finish_monitor.record(step)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/runtime.py\", line 279, in record\n    obs = self.port.capture()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/sensors.py\", line 131, in capture\n    cu = _cu()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/sensors.py\", line 9, in _cu\n    from robosuite.utils import camera_utils as cu\n  File \"/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/robosuite/utils/camera_utils.py\", line 12, in <module>\n    import h5py\nModuleNotFoundError: No module named 'h5py'\n",
+        "instruction": "put the wine bottle on the rack",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "00dcd896e3b64dd8e462745548085b85a97bb8a1d1956cb9f3aa1ec25457175b",
+        "state_after_sha": "6d8060e80d701df8525ab5a0032638f690ab1a5369f3fb20cbc6be4691d993fb",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": false,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": "semantic_wine_rack_v1",
+        "semantic_state": "incomplete",
+        "semantic_candidate_streak": 0,
+        "semantic_success": false,
+        "native_wine_predicate": false,
+        "semantic_observation_samples": 5,
+        "finish_status": {
+          "phase": "observing",
+          "calls": 0,
+          "prechecks": 0,
+          "helper_counts": {
+            "release": 0,
+            "movement": 0,
+            "confirm": 0,
+            "home": 0
+          },
+          "last_decision": null,
+          "terminal": null,
+          "independent_streak": 0
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v3/wine_bowl_stove/runs/20261012T134308Z_goal_table_4d9462a8/cap_01_wine_to_rack_197381cc",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v3/wine_bowl_stove/runs/20261012T134308Z_goal_table_4d9462a8/cap_01_wine_to_rack_197381cc/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v3/wine_bowl_stove/runs/20261012T134308Z_goal_table_4d9462a8/cap_01_wine_to_rack_197381cc/rollout.mp4",
+        "wall_s": 3.155
+      }
+    ],
+    "evaluation": null,
+    "hermes_invocations": 1,
+    "usage": [
+      {
+        "available": false,
+        "reason": "installed Hermes chat native-image path did not export usage",
+        "api_calls": null,
+        "input_tokens": null,
+        "output_tokens": null
+      }
+    ],
+    "execution_timeout": false,
+    "cancelled_by_user": false,
+    "cancellation_pending": false,
+    "wall_s": 28.0,
+    "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+    "hermes_output": "Plan已提交。\n\nsession_id: 20261012_214316_f76935\n"
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-wine_bowl_stove",
+    "session_id": "4d9462a82b504d1182eacf67174a5f2b",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "original_capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "rationale": "User explicitly requested: '先把酒瓶放到架子上' (first put wine bottle on rack), '再把碗放到盘子上' (then put bowl on plate), '最后打开灶台' (finally turn on stove). All destinations/actions are explicitly specified, matching available capabilities.",
+    "job_ids": [
+      "197381cc0b43481e8c16640afc0b495b"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "plan_success": null,
+    "regressions": [],
+    "error": "Traceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/service.py\", line 2839, in _run_capability\n    finish_monitor.record(step)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/runtime.py\", line 279, in record\n    obs = self.port.capture()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/sensors.py\", line 131, in capture\n    cu = _cu()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/sensors.py\", line 9, in _cu\n    from robosuite.utils import camera_utils as cu\n  File \"/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/robosuite/utils/camera_utils.py\", line 12, in <module>\n    import h5py\nModuleNotFoundError: No module named 'h5py'\n",
+    "repair_history": [],
+    "scene_version": 1
+  },
+  "jobs": [
+    {
+      "capability": "wine_to_rack",
+      "outcome": {
+        "ok": false,
+        "cancelled": false,
+        "reason": "error",
+        "detail": "Traceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/service.py\", line 2839, in _run_capability\n    finish_monitor.record(step)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/runtime.py\", line 279, in record\n    obs = self.port.capture()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/sensors.py\", line 131, in capture\n    cu = _cu()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/sensors.py\", line 9, in _cu\n    from robosuite.utils import camera_utils as cu\n  File \"/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/robosuite/utils/camera_utils.py\", line 12, in <module>\n    import h5py\nModuleNotFoundError: No module named 'h5py'\n"
+      },
+      "job": {
+        "job_id": "197381cc0b43481e8c16640afc0b495b",
+        "request_id": "xvla-wine_bowl_stove",
+        "session_id": "4d9462a82b504d1182eacf67174a5f2b",
+        "capability_id": "wine_to_rack",
+        "state": "error",
+        "steps": 5,
+        "total_steps": 20,
+        "success": false,
+        "ended_reason": "error",
+        "error": "Traceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/service.py\", line 2839, in _run_capability\n    finish_monitor.record(step)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/runtime.py\", line 279, in record\n    obs = self.port.capture()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/sensors.py\", line 131, in capture\n    cu = _cu()\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/sensors.py\", line 9, in _cu\n    from robosuite.utils import camera_utils as cu\n  File \"/home/yhwang/fyp/xvla_native/sim_venv/lib/python3.10/site-packages/robosuite/utils/camera_utils.py\", line 12, in <module>\n    import h5py\nModuleNotFoundError: No module named 'h5py'\n",
+        "instruction": "put the wine bottle on the rack",
+        "scene_version_before": 0,
+        "scene_version_after": 1,
+        "state_before_sha": "00dcd896e3b64dd8e462745548085b85a97bb8a1d1956cb9f3aa1ec25457175b",
+        "state_after_sha": "6d8060e80d701df8525ab5a0032638f690ab1a5369f3fb20cbc6be4691d993fb",
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": "not_holding",
+        "held_objects": [],
+        "grasp_observation_complete": true,
+        "completion_ready": false,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": "semantic_wine_rack_v1",
+        "semantic_state": "incomplete",
+        "semantic_candidate_streak": 0,
+        "semantic_success": false,
+        "native_wine_predicate": false,
+        "semantic_observation_samples": 5,
+        "finish_status": {
+          "phase": "observing",
+          "calls": 0,
+          "prechecks": 0,
+          "helper_counts": {
+            "release": 0,
+            "movement": 0,
+            "confirm": 0,
+            "home": 0
+          },
+          "last_decision": null,
+          "terminal": null,
+          "independent_streak": 0
+        },
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v3/wine_bowl_stove/runs/20261012T134308Z_goal_table_4d9462a8/cap_01_wine_to_rack_197381cc",
+        "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v3/wine_bowl_stove/runs/20261012T134308Z_goal_table_4d9462a8/cap_01_wine_to_rack_197381cc/latest.png",
+        "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v3/wine_bowl_stove/runs/20261012T134308Z_goal_table_4d9462a8/cap_01_wine_to_rack_197381cc/rollout.mp4",
+        "wall_s": 3.155
+      },
+      "source_counts": {
+        "settling": 0,
+        "vla": 5,
+        "finish": 0,
+        "prepare": 15
+      },
+      "vla_calls": 1,
+      "handoff_reference": {
+        "schema_version": 1,
+        "origin_sha256": "0867c77ba465f78a58e3801b490118578cb82defed3f449f52a597527c0d076b",
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7"
+        ],
+        "joint_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "qpos_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "qvel_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "joint_limits_low": [
+          -2.8973,
+          -1.7628,
+          -2.8973,
+          -3.0718,
+          -2.8973,
+          -0.0175,
+          -2.8973
+        ],
+        "joint_limits_high": [
+          2.8973,
+          1.7628,
+          2.8973,
+          -0.0698,
+          2.8973,
+          3.7525,
+          2.8973
+        ],
+        "homeq": [
+          0.009995471028135715,
+          -0.16617776933557873,
+          -0.00603269043946493,
+          -2.4349747540466535,
+          -0.00027576663453315626,
+          2.213306385605272,
+          0.79107092309252
+        ],
+        "home_joint_speed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "finger_qpos_indexes": [
+          7,
+          8
+        ],
+        "finger_qvel_indexes": [
+          7,
+          8
+        ],
+        "finger_home": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ],
+        "finger_speed": [
+          0.0,
+          0.0
+        ],
+        "eef_pose": {
+          "position": [
+            -0.2071182569725557,
+            0.0018681514295333772,
+            1.1786384539512926
+          ],
+          "orientation_matrix": [
+            [
+              0.0009490455140580243,
+              0.9984600280358953,
+              -0.05546775394020989
+            ],
+            [
+              0.9999994250117958,
+              -0.0009198899001555996,
+              0.000551161182796106
+            ],
+            [
+              0.0004992881833929819,
+              -0.055468245123953715,
+              -0.99846032695054
+            ]
+          ]
+        },
+        "reference_kind": "next_subtask_native_initial",
+        "capability_id": "bowl_to_plate",
+        "source_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_08/episode_0/attempt_001/initial_state.npy",
+        "source_sha256": "3e1ab084bf0d8e7f101a620f29f4c0e2e582546bc47fd9184bb0bea6991c0eb3",
+        "audit_sha256": "39c4ee915238a3c986a28ee37df2f13103c2c8bd43dd9052c1bf70bea73002ed",
+        "source_robot_model": "MountedPanda"
+      },
+      "actual_final_metrics": {
+        "joint_names": [
+          "robot0_joint1",
+          "robot0_joint2",
+          "robot0_joint3",
+          "robot0_joint4",
+          "robot0_joint5",
+          "robot0_joint6",
+          "robot0_joint7"
+        ],
+        "joint_indexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "arm_error_rad": [
+          0.010808337490686094,
+          0.04227409316677566,
+          0.021822500654973438,
+          0.013457941640377946,
+          0.02581779674939228,
+          0.037926684990593706,
+          0.005827518179012059
+        ],
+        "arm_speed_rad_s": [
+          0.01684145727167985,
+          0.28069598092181686,
+          0.07738050313099815,
+          0.24472436614301682,
+          0.23329363409875858,
+          0.007112640275635973,
+          0.07652530724562265
+        ],
+        "max_joint_error_rad": 0.04227409316677566,
+        "max_joint_speed_rad_s": 0.28069598092181686,
+        "finger_error_m": [
+          0.00031365789116818976,
+          0.00029906404074364623
+        ],
+        "finger_speed_m_s": [
+          0.0008208571608107965,
+          0.0008721004929127051
+        ],
+        "max_finger_error_m": 0.00031365789116818976,
+        "max_finger_speed_m_s": 0.0008721004929127051,
+        "ready": false,
+        "eef_position_error_m": 0.014951890802889282,
+        "eef_orientation_error_rad": 0.03290636322131571
+      },
+      "finish_status": {
+        "phase": "observing",
+        "calls": 0,
+        "prechecks": 0,
+        "helper_counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "last_decision": null,
+        "terminal": null,
+        "independent_streak": 0
+      },
+      "finish": null,
+      "before": {
+        "gripper_current_action": [
+          0.9365209937095642,
+          -0.9363961815834045
+        ],
+        "gripper_hold_from_measurement": [
+          0.9365209937095642,
+          -0.9363961815834045
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 0.5000000000000003,
+        "robot": {
+          "robot_name": "MountedPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            0.010262668834930606,
+            -0.16741270601901184,
+            -0.00501342677407528,
+            -2.4310604716117648,
+            -9.411916579481773e-06,
+            2.207957695262411,
+            0.7921850037340668
+          ],
+          "arm_qvel": [
+            -0.012181034569148689,
+            0.0017811980769381524,
+            0.013849205523064968,
+            0.0015265167616677607,
+            -0.00039327691735674967,
+            -0.00437401166007857,
+            -0.002355711117628579
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.03873041931744383,
+            -0.03872792364003397
+          ],
+          "finger_qvel": [
+            0.0031769323331838346,
+            -0.0031992224910286867
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.2066235651284524,
+            0.0024645617556077314,
+            1.1804495991023416
+          ],
+          "orientation_matrix": [
+            [
+              0.000959113309898518,
+              0.998448931959476,
+              -0.05566695941615826
+            ],
+            [
+              0.9999994259138458,
+              -0.0009310294120110532,
+              0.0005304302147856182
+            ],
+            [
+              0.0004777799049380631,
+              -0.05566743620120659,
+              -0.9984492517264696
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "after": {
+        "gripper_current_action": [
+          0.9522116780281067,
+          -0.9513413906097412
+        ],
+        "gripper_hold_from_measurement": [
+          0.9522116780281067,
+          -0.9513413906097412
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 1.500000000000001,
+        "robot": {
+          "robot_name": "MountedPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            -0.0008128664625503791,
+            -0.12390367616880307,
+            0.015789810215508508,
+            -2.4215168124062756,
+            -0.026093563383925437,
+            2.2512330705958656,
+            0.7968984412715321
+          ],
+          "arm_qvel": [
+            0.01684145727167985,
+            0.28069598092181686,
+            0.07738050313099815,
+            0.24472436614301682,
+            -0.23329363409875858,
+            0.007112640275635973,
+            0.07652530724562265
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.03904423375619716,
+            -0.039026828019430394
+          ],
+          "finger_qvel": [
+            0.0008208571608107965,
+            -0.0008721004929127051
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.19692101230353865,
+            0.004046702670418368,
+            1.1679226173422095
+          ],
+          "orientation_matrix": [
+            [
+              -0.02119307042636974,
+              0.9987226945779726,
+              -0.045867560441092525
+            ],
+            [
+              0.9995342190120757,
+              0.020157988648944927,
+              -0.022912889768634512
+            ],
+            [
+              -0.021959025247572372,
+              -0.046331790690014904,
+              -0.9986847182077203
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "cache_reset": [
+        {
+          "gripper_current_action": [
+            0.9372515678405762,
+            -0.9372429847717285
+          ],
+          "gripper_hold_from_measurement": [
+            0.9372515678405762,
+            -0.9372429847717285
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 1.2500000000000009,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.00393022938286609,
+              -0.1636641196880749,
+              0.0018437109600304182,
+              -2.4514838192631827,
+              -3.075047061692706e-05,
+              2.2291189755780585,
+              0.7843235024146016
+            ],
+            "arm_qvel": [
+              -0.003567056541689673,
+              0.0009782487717315727,
+              0.0015892566542390406,
+              -0.005605177878891437,
+              -2.469426658385321e-05,
+              0.005894931316285519,
+              -0.002195862800635361
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03874503152845085,
+              -0.03874485934447139
+            ],
+            "finger_qvel": [
+              -1.4586894610888372e-05,
+              1.3096458948618279e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.21052093996270607,
+              -0.0009742211216201158,
+              1.1717494050736796
+            ],
+            "orientation_matrix": [
+              [
+                0.0005263626461737939,
+                0.9982774198434914,
+                -0.058667844454917434
+              ],
+              [
+                0.9999998346440757,
+                -0.000539045458558863,
+                -0.00020035422335771755
+              ],
+              [
+                -0.00023163373226514627,
+                -0.05866772929486261,
+                -0.9982775385057999
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        },
+        {
+          "gripper_current_action": [
+            0.9372515678405762,
+            -0.9372429847717285
+          ],
+          "gripper_hold_from_measurement": [
+            0.9372515678405762,
+            -0.9372429847717285
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 1.2500000000000009,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.00393022938286609,
+              -0.1636641196880749,
+              0.0018437109600304182,
+              -2.4514838192631827,
+              -3.075047061692706e-05,
+              2.2291189755780585,
+              0.7843235024146016
+            ],
+            "arm_qvel": [
+              -0.003567056541689673,
+              0.0009782487717315727,
+              0.0015892566542390406,
+              -0.005605177878891437,
+              -2.469426658385321e-05,
+              0.005894931316285519,
+              -0.002195862800635361
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03874503152845085,
+              -0.03874485934447139
+            ],
+            "finger_qvel": [
+              -1.4586894610888372e-05,
+              1.3096458948618279e-05
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.21052093996270607,
+              -0.0009742211216201158,
+              1.1717494050736796
+            ],
+            "orientation_matrix": [
+              [
+                0.0005263626461737939,
+                0.9982774198434914,
+                -0.058667844454917434
+              ],
+              [
+                0.9999998346440757,
+                -0.000539045458558863,
+                -0.00020035422335771755
+              ],
+              [
+                -0.00023163373226514627,
+                -0.05866772929486261,
+                -0.9982775385057999
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        },
+        {
+          "gripper_current_action": [
+            0.9522116780281067,
+            -0.9513413906097412
+          ],
+          "gripper_hold_from_measurement": [
+            0.9522116780281067,
+            -0.9513413906097412
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 1.500000000000001,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.0008128664625503791,
+              -0.12390367616880307,
+              0.015789810215508508,
+              -2.4215168124062756,
+              -0.026093563383925437,
+              2.2512330705958656,
+              0.7968984412715321
+            ],
+            "arm_qvel": [
+              0.01684145727167985,
+              0.28069598092181686,
+              0.07738050313099815,
+              0.24472436614301682,
+              -0.23329363409875858,
+              0.007112640275635973,
+              0.07652530724562265
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03904423375619716,
+              -0.039026828019430394
+            ],
+            "finger_qvel": [
+              0.0008208571608107965,
+              -0.0008721004929127051
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.19692101230353865,
+              0.004046702670418368,
+              1.1679226173422095
+            ],
+            "orientation_matrix": [
+              [
+                -0.02119307042636974,
+                0.9987226945779726,
+                -0.045867560441092525
+              ],
+              [
+                0.9995342190120757,
+                0.020157988648944927,
+                -0.022912889768634512
+              ],
+              [
+                -0.021959025247572372,
+                -0.046331790690014904,
+                -0.9986847182077203
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "expected_capabilities": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "hermes_plan_matches": true,
+    "model_usage": "See original xvla_calls and Hermes usage logs; unavailable usage remains unknown."
+  }
+}

@@ -1,0 +1,45 @@
+........................................................................ [  5%]
+........................................................................ [ 11%]
+............................................................. [ 16%]
+......................................................................................................................................... [ 26%]
+........................................................................ [ 32%]
+........................................................................ [ 38%]
+................................F....................................... [ 43%]
+........................................................................ [ 49%]
+........................................................................ [ 54%]
+............................................................... [ 59%]
+.................................................................................................................. [ 68%]
+........................................................................ [ 74%]
+............................................................ [ 79%]
+............................................................ [ 83%]
+.................................................................... [ 89%]
+................................................................ [ 94%]
+........................................................... [ 98%]
+...............                                                          [100%]
+=================================== FAILURES ===================================
+_ PublicSchemaTests.test_scenes_includes_original_scenes_and_native_microwave __
+
+self = <test_service_contract.PublicSchemaTests testMethod=test_scenes_includes_original_scenes_and_native_microwave>
+
+    def test_scenes_includes_original_scenes_and_native_microwave(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            svc = service.SceneService(run_root=tmp)
+            payload = svc.scenes()
+            ids = [entry["scene_id"] for entry in payload["scenes"]]
+            self.assertEqual(set(ids), {'goal_table', 'goal_table_shifted', 'basket_two',
+                                       'mugs_two', 'mugs_left_occupied', 'mugs_right_occupied',
+                                       'mugs_both_occupied', 'microwave_mug'})
+>           self.assertEqual(set(ids), set(catalog.SCENES))
+E           AssertionError: Items in the second set but not the first:
+E           'book_caddy'
+E           'basket_soup_cheese'
+E           'stove_moka'
+E           'moka_two'
+E           'mug_pudding'
+E           'bowl_drawer'
+E           'basket_cheese_butter'
+
+First_Phase/scene_demo/tests/test_service_contract.py:477: AssertionError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/tests/test_service_contract.py::PublicSchemaTests::test_scenes_includes_original_scenes_and_native_microwave
+1 failed, 1276 passed, 106 subtests passed in 75.06s (0:01:15)

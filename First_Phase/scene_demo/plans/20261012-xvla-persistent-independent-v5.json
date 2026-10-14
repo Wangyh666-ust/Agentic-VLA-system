@@ -1,0 +1,299 @@
+{
+  "schema_version": 1,
+  "id": "20261012-xvla-persistent-independent-v5",
+  "intent": "new_experiment",
+  "question_key": "xvla-persistent-handoff",
+  "purpose": "酒瓶→碗→灶台首轮因最终视觉否决已停止；不重跑该链，独立各一次验证无抓辅X-VLA/Hermes在入篮、双杯、入炉关门中，经当前检查与原收尾退离，恢复下一子任务完整起始状态并保留前序成果，末尾回globalhome。",
+  "prior_evidence": [
+    "20261012-xvla-native-benchmark",
+    "20261011-native-benchmark",
+    "20261011-takeover-stove-cue",
+    "20261011-container-budget",
+    "20261009-joint-home",
+    "20261009-joint-home-12",
+    "20261008-skill-context"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261012-xvla-native-benchmark",
+      "disposition": "reuse",
+      "reason": "复用X-VLA原生输入、初态和无辅助动作证据；本轮增加持久场景Hermes与交接。"
+    },
+    {
+      "experiment_id": "20261011-native-benchmark",
+      "disposition": "reuse",
+      "reason": "复用旧模型原生对照；本轮改X-VLA绝对动作与下一任务起始参考。"
+    },
+    {
+      "experiment_id": "20261011-takeover-stove-cue",
+      "disposition": "reuse",
+      "reason": "复用灶台收尾视觉编码器证据和参数；本轮保持实现但更换策略与归位参考。"
+    },
+    {
+      "experiment_id": "20261011-container-budget",
+      "disposition": "reuse",
+      "reason": "复用容器多步失败及预算证据；本轮策略和交接不同。"
+    },
+    {
+      "experiment_id": "20261009-joint-home",
+      "disposition": "reuse",
+      "reason": "复用关节归位保护及独立测量；本轮目标为下一原生任务参考。"
+    },
+    {
+      "experiment_id": "20261009-joint-home-12",
+      "disposition": "reuse",
+      "reason": "复用扩展关节归位证据；本轮加末端姿态判据。"
+    },
+    {
+      "experiment_id": "20261008-skill-context",
+      "disposition": "reuse",
+      "reason": "复用真实Hermes规划与工具上下文；本轮用户顺序与新服务身份。"
+    }
+  ],
+  "related_search": "主Agent已rg X-VLA、service、finish_v1、原生任务与指令检查；当前没有此接入的历史实验。",
+  "hypothesis": "多因素集成试点可实现原生下一子任务起始状态交接，同时保留前序成果；不作单因素因果或可靠性统计。",
+  "information_gain": "原生基线不能回答真实Hermes持久多步执行与下一起始参考交接。",
+  "changed_factors": [
+    {
+      "name": "policy",
+      "before": "SmolVLA BF16 relative旧栈",
+      "after": "X-VLA FP32 absolute原生栈",
+      "reason": "本轮集成条件变化，不能分开归因。"
+    },
+    {
+      "name": "grasp",
+      "before": "抓辅",
+      "after": "无抓辅",
+      "reason": "本轮集成条件变化，不能分开归因。"
+    },
+    {
+      "name": "home",
+      "before": "固定全局home",
+      "after": "下一原生reference，末尾globalhome",
+      "reason": "本轮集成条件变化，不能分开归因。"
+    },
+    {
+      "name": "planner",
+      "before": "旧固定手工顺序",
+      "after": "真实Hermes提交用户顺序",
+      "reason": "本轮集成条件变化，不能分开归因。"
+    },
+    {
+      "name": "independent_session_scope",
+      "before": "first complete before subsequent cases",
+      "after": "14 verified nonterminal action/cache checks permit independent cases; terminal remains false",
+      "reason": "用户要求小范围其他任务，它们不依赖酒瓶末次视觉通过，不把v4标成功"
+    }
+  ],
+  "fixed_factors": {
+    "source_sha256": {
+      "First_Phase/scene_demo/joint_home.py": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+      "First_Phase/scene_demo/safe_exit.py": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+      "First_Phase/scene_demo/safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+      "First_Phase/scene_demo/finish_v1/__init__.py": "58bc8bac669516085a3d42cb2dd90b27a052ba863c358bb3bb367afd02421cb8",
+      "First_Phase/scene_demo/finish_v1/archive_simple_pilot.py": "c13177040158cb29819b664818f9cbae8f45caf1d58708d23cc2cecc99ea817e",
+      "First_Phase/scene_demo/finish_v1/assisted_combo_pilot.py": "f0cb90be7bf4fd9e9df5a5df4eba2eba466ff431f0515919e22f81248e416597",
+      "First_Phase/scene_demo/finish_v1/calibrated_grasp.py": "76831690b0791222374b303c2bb77a035ab256c8f7b13d9eac2fac1af3717644",
+      "First_Phase/scene_demo/finish_v1/combo_pilot.py": "1c5a8a02101af2675ede64bf7036fcc42b7e87d7088360880b51db9f2506ce3f",
+      "First_Phase/scene_demo/finish_v1/container_budget_pilot.py": "14b7807ec174392086cb75a0b7c9cc1011ec153b2e0ed0aaed370158e3659372",
+      "First_Phase/scene_demo/finish_v1/container_pilot.py": "d323f71e2fa7c8e2bdb75074b001a20643fca37dcee75f0e1c17dc37857b1007",
+      "First_Phase/scene_demo/finish_v1/container_view_pilot.py": "be741e6f6055ec011631510f8a2efd7fd1057c01c684a9591098b4bd8be4ad88",
+      "First_Phase/scene_demo/finish_v1/control.py": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+      "First_Phase/scene_demo/finish_v1/feedback_combo_pilot.py": "8fe2d32bc3ba96ff3ca730ff3b1381ce3692d2caaa43b44f50371183e78057b2",
+      "First_Phase/scene_demo/finish_v1/feedback_retreat.py": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+      "First_Phase/scene_demo/finish_v1/geometry.py": "d4a5bb664760e3ee39027caac9a51b23a13eaee4b9ef8c55854dfd9f935f61b9",
+      "First_Phase/scene_demo/finish_v1/handoff_pilot.py": "be01997b0bfd8e1107635f541769a907d5da05558d0f5d29e2fce04e14869924",
+      "First_Phase/scene_demo/finish_v1/neutral_combo_pilot.py": "10f6d25548360db16241ba107c8b578fa8f4f822ee9a26ff5d67be4dc2f90bbc",
+      "First_Phase/scene_demo/finish_v1/online_combo_pilot.py": "2ed506a61656975be330cdc893f7e00b0b49b8e2150c570914040f0e8910d52a",
+      "First_Phase/scene_demo/finish_v1/pilot.py": "3a5b9319df692f308b2813441bdb5c24c5dfb6959eb51a7c94d77e56ce5d30cc",
+      "First_Phase/scene_demo/finish_v1/prepare_goal_pilot.py": "a193d159aa1d41ba7e2a964ce38609f7c82787c730de57376ccf6f1efa1985ab",
+      "First_Phase/scene_demo/finish_v1/prepare_simple_pilot.py": "950e15a7668fb845e72f743f475f4d7eb36a729e895c58d8a604ac1ab2d3e7ad",
+      "First_Phase/scene_demo/finish_v1/refresh_simple_pilot.py": "6bbaa5c6acb749893b7264b5b5ef7b5d3236cc20e76854274849a5e1ff91c3c1",
+      "First_Phase/scene_demo/finish_v1/register_goal_pilot.py": "8306eee418f61901f3905e74a71fb617fb7ccbdaaeb60fdacf6ceb6dab1925d7",
+      "First_Phase/scene_demo/finish_v1/register_simple_pilot.py": "dfb33fbce113899664439dd77e2b29c4389292b89953259da3f4fdfe47c2d636",
+      "First_Phase/scene_demo/finish_v1/relation_images.py": "cb4c1187f28b9ee61b1688d8961e37dfab4a6c9bd73eb33559b88e4ac24173b6",
+      "First_Phase/scene_demo/finish_v1/report_assisted_combos.py": "dc458f716745786ff5d0a0d81c4b5577e48454207612bca1868ace7de401c0f9",
+      "First_Phase/scene_demo/finish_v1/report_combos.py": "f3eb2cde1885cb23f0299b32d95c3488a098810a733f33d0b6962f22046fa0c9",
+      "First_Phase/scene_demo/finish_v1/report_goal_pilot.py": "51c73e9de374698ac7f17c53ece1c6a7e2de872361c49cc69be6fcaa2a45bbc8",
+      "First_Phase/scene_demo/finish_v1/report_online_combos.py": "02b59d1e2095483dc2f544760b0e2e6e52b33159804fa5e1c3f4e936ad3eadee",
+      "First_Phase/scene_demo/finish_v1/report_simple_pilot.py": "68ac5a7a4b5969f78c3270ed5b1f675d11725a7156b0a388d515361c20b645c2",
+      "First_Phase/scene_demo/finish_v1/run_simple_case.py": "70a7d8c8505d4a48cfb15906d1ccc93af9ecc7a4f24db6211f2ba486aea1ea1f",
+      "First_Phase/scene_demo/finish_v1/runtime.py": "e3f4dbfdeb4eb0704d4c0f102ff46ca147110eb35b7464846b02a42cc8960183",
+      "First_Phase/scene_demo/finish_v1/sensors.py": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+      "First_Phase/scene_demo/finish_v1/simple_checker.py": "6150701b4e7e4e2b5142b082327f1cdea099be335b9d3d0d33094454514e3f11",
+      "First_Phase/scene_demo/finish_v1/stove_candidate_start_pilot.py": "126c8d17db8610f1ef92096be67c7f8d5783dc1ddba9807f8c628fef3612b85d",
+      "First_Phase/scene_demo/finish_v1/stove_exit_repair_pilot.py": "6c9bf3e09c170d90cfdc0476af6ca52ff932b9de5d81a4961ce29a17259fabff",
+      "First_Phase/scene_demo/finish_v1/takeover_repair_pilot.py": "e55a85af3aed1e75543a8eb10af45de02f9160a2e0113dacd1f8bee6d435f61b",
+      "First_Phase/scene_demo/finish_v1/two_view_pilot.py": "83fd1c1424c2614f407391fee3c3221ad4323ca60c3c6878dfcf514bf9d3b915",
+      "First_Phase/scene_demo/finish_v1/verify_home_primary.py": "c7d9c36c5a98971092380905c9d0d06a5ffdfa4e2e693a4766e44f1ee84b0591",
+      "First_Phase/scene_demo/finish_v1/vision.py": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534"
+    },
+    "joint_step_rad": 0.01,
+    "prepare_limit": 360,
+    "checker_interval": 150,
+    "independent_streak": 5,
+    "feedback_retreat": [
+      "wine_to_rack",
+      "stove_on"
+    ],
+    "single_session_preserves_objects": true
+  },
+  "success_criteria": "真实Hermes提交恰为固定用户请求能力顺序，host不替换计划；max_repairs=0。; 目标true时150动作视觉/同步编码器检查分支实际触发，并记录触发事件；预算尾部不以未经检查成功。; 记录真实finger_target开口、编码器开口、退离与归位动作数及前后状态；下游零动作不替代验证。; 中间归位reference准确来自下一原生初态，关节/开口/速度及末端5mm/0.05rad到位，策略队列清空、实测proprio重建并刷新图像。; 所有当前及前序goals原completion gate保留、无持物手接触、独立效果5连通过；末任务回全局home。",
+  "failure_criteria": "应触发未触发：触发链路失败、目标效果未验证。; 已触发但动作未执行：执行失败。; 执行后独立判据不通过：效果失败。; 未启动：不计VLA效果分母。",
+  "unknown_criteria": "模型用量不可用时如实标unknown；同步或证据不足不宣称成功。",
+  "scope": {
+    "max_cases": 3,
+    "max_vla_actions_per_case": 2400,
+    "max_helper_actions_per_case": 3000,
+    "stop_rule": "每case任何子任务失败或应触发未触发，停止该case后续依赖任务；不以归位代替目标，不修词、不加辅助、不重试。三个case是独立session，可依固定顺序继续；程序异常、模型transport/同步/缓存/控制模式故障则停止剩余case。"
+  },
+  "new_physical_actions": 16200,
+  "configuration": {
+    "cases": {
+      "basket_two": {
+        "scene": "basket_two",
+        "request": "先把字母汤罐放进篮子，再把番茄酱罐放进篮子。",
+        "capabilities": [
+          "soup_to_basket",
+          "sauce_to_basket"
+        ]
+      },
+      "mugs_two": {
+        "scene": "mugs_two",
+        "request": "先把白杯放到左边盘子，再把黄白杯放到右边盘子。",
+        "capabilities": [
+          "white_mug_left",
+          "yellow_mug_right"
+        ]
+      },
+      "microwave_mug": {
+        "scene": "microwave_mug",
+        "request": "先把黄白杯放进微波炉，再关闭微波炉门。",
+        "capabilities": [
+          "mug_to_microwave",
+          "microwave_close"
+        ]
+      }
+    },
+    "model_revision": "129e71460678b7236cee6fc9707f09d9fa0c3590",
+    "weights_sha256": "260cc58869125b826e93bcaa60bca3ea37bcc7aaf893d368a991ca14fde9f0c8",
+    "source_xvla": "6bc2513f5f1cbec715cc668b414392a6cae5c671",
+    "source_libero": "8f1084e3132a39270c3a13ebe37270a43ece2a01",
+    "dtype": "float32",
+    "chunk": 30,
+    "denoise": 10,
+    "domain": 3,
+    "control": "absolute",
+    "seed": 142,
+    "init_state_index": 0,
+    "vla_budget_per_subgoal": 800,
+    "session_limit": 8000,
+    "wall_deadline_s": 1800,
+    "checker_interval": 150,
+    "independent_streak": 5,
+    "source_sha256": {
+      "First_Phase/scene_demo/xvla_service.py": "1664620efb0143870e6a51a1cf18080529e642020d0f4d5691704f8b9304c392",
+      "First_Phase/scene_demo/xvla_backend.py": "43f05c8496128ecaede6c2f3251e57252ffb3951750a0324e820b14f3b87d5e9",
+      "First_Phase/scene_demo/xvla_pilot.py": "f12e044da23da1b142783e4e56a42f33247d94be96f9d005d0f68c6b0ab3e2a7",
+      "First_Phase/scene_demo/service.py": "b24490dd5f1654740f53c9031d5d9468b6792303b899b026dd3f0e90ee09255d",
+      "First_Phase/scene_demo/run_agent.py": "a71dbcda182099cd4793fd099fceb82c87220d08f0adbb9177aede0701c2512f",
+      "First_Phase/scene_demo/mcp_server.py": "0295ba5e345642834eb7fe6c3cf3b4adbe97b1bcfa6396eb53c3949a72ee816b",
+      "First_Phase/scene_demo/setup_profile.py": "c26606d648adc34f83f5161142a29f00c739999097cc335a4937b3e52881ad20",
+      "First_Phase/scene_demo/joint_home.py": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+      "First_Phase/scene_demo/safe_exit.py": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+      "First_Phase/scene_demo/safe_exit_contacts.py": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+      "First_Phase/scene_demo/placement_completion.py": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+      "First_Phase/scene_demo/catalog.py": "f4bb264148442c213418b8ace29d47cafcb8db5df3f6a551b845c7be13552338",
+      "First_Phase/scene_demo/finish_v1/__init__.py": "58bc8bac669516085a3d42cb2dd90b27a052ba863c358bb3bb367afd02421cb8",
+      "First_Phase/scene_demo/finish_v1/archive_simple_pilot.py": "c13177040158cb29819b664818f9cbae8f45caf1d58708d23cc2cecc99ea817e",
+      "First_Phase/scene_demo/finish_v1/assisted_combo_pilot.py": "f0cb90be7bf4fd9e9df5a5df4eba2eba466ff431f0515919e22f81248e416597",
+      "First_Phase/scene_demo/finish_v1/calibrated_grasp.py": "76831690b0791222374b303c2bb77a035ab256c8f7b13d9eac2fac1af3717644",
+      "First_Phase/scene_demo/finish_v1/combo_pilot.py": "1c5a8a02101af2675ede64bf7036fcc42b7e87d7088360880b51db9f2506ce3f",
+      "First_Phase/scene_demo/finish_v1/container_budget_pilot.py": "14b7807ec174392086cb75a0b7c9cc1011ec153b2e0ed0aaed370158e3659372",
+      "First_Phase/scene_demo/finish_v1/container_pilot.py": "d323f71e2fa7c8e2bdb75074b001a20643fca37dcee75f0e1c17dc37857b1007",
+      "First_Phase/scene_demo/finish_v1/container_view_pilot.py": "be741e6f6055ec011631510f8a2efd7fd1057c01c684a9591098b4bd8be4ad88",
+      "First_Phase/scene_demo/finish_v1/control.py": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+      "First_Phase/scene_demo/finish_v1/feedback_combo_pilot.py": "8fe2d32bc3ba96ff3ca730ff3b1381ce3692d2caaa43b44f50371183e78057b2",
+      "First_Phase/scene_demo/finish_v1/feedback_retreat.py": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+      "First_Phase/scene_demo/finish_v1/geometry.py": "d4a5bb664760e3ee39027caac9a51b23a13eaee4b9ef8c55854dfd9f935f61b9",
+      "First_Phase/scene_demo/finish_v1/handoff_pilot.py": "be01997b0bfd8e1107635f541769a907d5da05558d0f5d29e2fce04e14869924",
+      "First_Phase/scene_demo/finish_v1/neutral_combo_pilot.py": "10f6d25548360db16241ba107c8b578fa8f4f822ee9a26ff5d67be4dc2f90bbc",
+      "First_Phase/scene_demo/finish_v1/online_combo_pilot.py": "2ed506a61656975be330cdc893f7e00b0b49b8e2150c570914040f0e8910d52a",
+      "First_Phase/scene_demo/finish_v1/pilot.py": "3a5b9319df692f308b2813441bdb5c24c5dfb6959eb51a7c94d77e56ce5d30cc",
+      "First_Phase/scene_demo/finish_v1/prepare_goal_pilot.py": "a193d159aa1d41ba7e2a964ce38609f7c82787c730de57376ccf6f1efa1985ab",
+      "First_Phase/scene_demo/finish_v1/prepare_simple_pilot.py": "950e15a7668fb845e72f743f475f4d7eb36a729e895c58d8a604ac1ab2d3e7ad",
+      "First_Phase/scene_demo/finish_v1/refresh_simple_pilot.py": "6bbaa5c6acb749893b7264b5b5ef7b5d3236cc20e76854274849a5e1ff91c3c1",
+      "First_Phase/scene_demo/finish_v1/register_goal_pilot.py": "8306eee418f61901f3905e74a71fb617fb7ccbdaaeb60fdacf6ceb6dab1925d7",
+      "First_Phase/scene_demo/finish_v1/register_simple_pilot.py": "dfb33fbce113899664439dd77e2b29c4389292b89953259da3f4fdfe47c2d636",
+      "First_Phase/scene_demo/finish_v1/relation_images.py": "cb4c1187f28b9ee61b1688d8961e37dfab4a6c9bd73eb33559b88e4ac24173b6",
+      "First_Phase/scene_demo/finish_v1/report_assisted_combos.py": "dc458f716745786ff5d0a0d81c4b5577e48454207612bca1868ace7de401c0f9",
+      "First_Phase/scene_demo/finish_v1/report_combos.py": "f3eb2cde1885cb23f0299b32d95c3488a098810a733f33d0b6962f22046fa0c9",
+      "First_Phase/scene_demo/finish_v1/report_goal_pilot.py": "51c73e9de374698ac7f17c53ece1c6a7e2de872361c49cc69be6fcaa2a45bbc8",
+      "First_Phase/scene_demo/finish_v1/report_online_combos.py": "02b59d1e2095483dc2f544760b0e2e6e52b33159804fa5e1c3f4e936ad3eadee",
+      "First_Phase/scene_demo/finish_v1/report_simple_pilot.py": "68ac5a7a4b5969f78c3270ed5b1f675d11725a7156b0a388d515361c20b645c2",
+      "First_Phase/scene_demo/finish_v1/run_simple_case.py": "70a7d8c8505d4a48cfb15906d1ccc93af9ecc7a4f24db6211f2ba486aea1ea1f",
+      "First_Phase/scene_demo/finish_v1/runtime.py": "e3f4dbfdeb4eb0704d4c0f102ff46ca147110eb35b7464846b02a42cc8960183",
+      "First_Phase/scene_demo/finish_v1/sensors.py": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+      "First_Phase/scene_demo/finish_v1/simple_checker.py": "6150701b4e7e4e2b5142b082327f1cdea099be335b9d3d0d33094454514e3f11",
+      "First_Phase/scene_demo/finish_v1/stove_candidate_start_pilot.py": "126c8d17db8610f1ef92096be67c7f8d5783dc1ddba9807f8c628fef3612b85d",
+      "First_Phase/scene_demo/finish_v1/stove_exit_repair_pilot.py": "6c9bf3e09c170d90cfdc0476af6ca52ff932b9de5d81a4961ce29a17259fabff",
+      "First_Phase/scene_demo/finish_v1/takeover_repair_pilot.py": "e55a85af3aed1e75543a8eb10af45de02f9160a2e0113dacd1f8bee6d435f61b",
+      "First_Phase/scene_demo/finish_v1/two_view_pilot.py": "83fd1c1424c2614f407391fee3c3221ad4323ca60c3c6878dfcf514bf9d3b915",
+      "First_Phase/scene_demo/finish_v1/verify_home_primary.py": "c7d9c36c5a98971092380905c9d0d06a5ffdfa4e2e693a4766e44f1ee84b0591",
+      "First_Phase/scene_demo/finish_v1/vision.py": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_09/episode_0/attempt_001/initial_state.npy": "f979d679483d4d0b3f95f600c091dc5837b3809e70597b98729744c19ea5d187",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_09/episode_0/attempt_001/initial_audit.json": "d70fe8a905509935f0393d95028fc18c9782aae9ffdf565e73edcf40b74cad21",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_08/episode_0/attempt_001/initial_state.npy": "3e1ab084bf0d8e7f101a620f29f4c0e2e582546bc47fd9184bb0bea6991c0eb3",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_08/episode_0/attempt_001/initial_audit.json": "39c4ee915238a3c986a28ee37df2f13103c2c8bd43dd9052c1bf70bea73002ed",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_07/episode_0/attempt_001/initial_state.npy": "6305dbbcf68c5eb36e3479c240691179569a6e6e586172888341dac3ed737fbc",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_goal/task_07/episode_0/attempt_001/initial_audit.json": "c18afb5ca86177b14834228eee0840636203a503e3700418f5df09c358398bf4",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_00/episode_0/attempt_001/initial_state.npy": "4a48672f026e480fc2c2c7dc9646f7275a1417c193e31275d2f3640f87829d14",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_00/episode_0/attempt_001/initial_audit.json": "05875655f5c1b922aedbfec16eb39b84b576f6ec4eb0e9f14ee23f1ad94e6e99",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_04/episode_0/attempt_001/initial_state.npy": "1526c083cbfbbcadd177e06d37d7a4b8e1c8a4a972369bc2604973d45b8905b8",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_04/episode_0/attempt_001/initial_audit.json": "69bc0c517dcfb902fac18f29710d3d5801a3c2f337a53f0f08a526327561676f",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_09/episode_0/attempt_001/initial_state.npy": "7e64cf67a7261ce1ebde712b21a7f2ba2789003b50a5fbb4190e7e86b552e939",
+      "First_Phase/scene_demo/results/2026-10-12-xvla-native-benchmark/libero_10/task_09/episode_0/attempt_001/initial_audit.json": "36b61e02598e94b7f7c72ac247f3d5202ca3d95b08075fcf36cc5384d2980e92"
+    },
+    "criteria": [
+      "真实Hermes提交恰为固定用户请求能力顺序，host不替换计划；max_repairs=0。",
+      "目标true时150动作视觉/同步编码器检查分支实际触发，并记录触发事件；预算尾部不以未经检查成功。",
+      "记录真实finger_target开口、编码器开口、退离与归位动作数及前后状态；下游零动作不替代验证。",
+      "中间归位reference准确来自下一原生初态，关节/开口/速度及末端5mm/0.05rad到位，策略队列清空、实测proprio重建并刷新图像。",
+      "所有当前及前序goals原completion gate保留、无持物手接触、独立效果5连通过；末任务回全局home。"
+    ],
+    "stop_rule": "每case任何子任务失败或应触发未触发，停止该case后续依赖任务；不以归位代替目标，不修词、不加辅助、不重试。三个case是独立session，可依固定顺序继续；程序异常、模型transport/同步/缓存/控制模式故障则停止剩余case。",
+    "independent_case_prerequisite": {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/pilot_result.json",
+      "sha256": "0ec825a89cd9cd0f073cdb91f52621471d41a66562e6b93f2ff97a8f436472a7"
+    },
+    "integration_revision": "v5 independent cases after documented v4 final visual veto; completion gate unchanged",
+    "sim_extra_dependencies": {
+      "h5py": "3.10.0",
+      "all_previous_package_versions_preserved": true
+    },
+    "model_rng": "author default unfixed; reused owned server, not paired random streams"
+  },
+  "configuration_complete": true,
+  "repeat": {
+    "needed": false,
+    "reason": "已有原生和收尾实验不包含本轮持久X-VLA/Hermes/下一参考多因素集成条件。"
+  },
+  "local_evidence": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/result.json",
+      "sha256": "9447b8c55e03d9fcd7413ff3cad042f6be76b98e939ecb462ff480841513823c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/pilot_result.json",
+      "sha256": "0ec825a89cd9cd0f073cdb91f52621471d41a66562e6b93f2ff97a8f436472a7"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_agentview/result.json",
+      "sha256": "35c3d2b2c81684d87f797d406e7b3bbfb1e6f7dfe04e4509045ac487962655dc"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_rack_description/result.json",
+      "sha256": "68b6b3bad7df3ea3c5b7ffbfecc643965dae28fed477904bf2f2bd0e85e3a109"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+........................................................................ [ 14%]
+........................................................................ [ 29%]
+........................................................................ [ 44%]
+........................................................................ [ 59%]
+........................................................................ [ 74%]
+........................................................................ [ 89%]
+.............F.....................................                      [100%]
+=================================== FAILURES ===================================
+____________________ test_independent_preserves_prior_goals ____________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b478a16eb90>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-17/test_independent_preserves_pri0')
+
+    def test_independent_preserves_prior_goals(monkeypatch,tmp_path):
+        from scene_demo import safe_exit_contacts
+        from scene_demo import xvla_finish as simple_checker
+        svc=object.__new__(x.XvlaSceneService)
+        monitor=SimpleNamespace(port=SimpleNamespace(start=Mock(),close=Mock()))
+        monkeypatch.setattr(x.service.SceneService,'_make_finish_monitor',lambda *a:monitor)
+        monkeypatch.setattr(simple_checker,'XvlaQwenClient',lambda **kw:SimpleNamespace())
+        monkeypatch.setattr(safe_exit_contacts,'contacts',lambda env:[])
+        monkeypatch.setattr(x,'reference_metrics',lambda *a:{'ready':True})
+        monkeypatch.setattr(x.service,'eval_goal_predicate',lambda env,g:g[1]!='wine_bottle_1')
+        svc._actual_state=lambda:{}
+        svc._completion_ready=lambda env,g,p:all(p.values())
+        session=SimpleNamespace(home_reference={},xvla_completed=['wine_to_rack'],scene_id='goal_table')
+        job=SimpleNamespace(capability_id='bowl_to_plate',run_dir=tmp_path)
+>       result=svc._make_finish_monitor(session,None,job,None,{},800,[],None)
+
+scene_demo/tests/test_xvla_pipeline.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <scene_demo.xvla_service.XvlaSceneService object at 0x7b4781d662c0>
+session = namespace(home_reference={}, xvla_completed=['wine_to_rack'], scene_id='goal_table')
+plan = None
+job = namespace(capability_id='bowl_to_plate', run_dir=PosixPath('/tmp/pytest-of-yhwang/pytest-17/test_independent_preserves_pri0'))
+env = None, capability = {}, budget = 800, frames = [], latest_png = None
+
+    def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+        from scene_demo.xvla_finish import XvlaQwenClient
+        from scene_demo.xvla_subtask_review import XvlaSubtaskReviewClient
+        from scene_demo.xvla_subtask_evidence import service_evidence_store
+        from scene_demo import safe_exit_contacts
+        monitor = super()._make_finish_monitor(session, plan, job, env, capability, budget, frames, latest_png)
+>       monitor.configure_checks(capability)
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'configure_checks'
+
+scene_demo/xvla_service.py:388: AttributeError
+=========================== short test summary info ============================
+FAILED scene_demo/tests/test_xvla_pipeline.py::test_independent_preserves_prior_goals
+1 failed, 482 passed in 11.24s

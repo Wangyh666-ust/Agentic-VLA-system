@@ -1,0 +1,89 @@
+{
+  "configuration": {
+    "source_xvla": "6bc2513f5f1cbec715cc668b414392a6cae5c671",
+    "source_libero": "8f1084e3132a39270c3a13ebe37270a43ece2a01",
+    "model_revision": "129e71460678b7236cee6fc9707f09d9fa0c3590",
+    "model_sha256": "260cc58869125b826e93bcaa60bca3ea37bcc7aaf893d368a991ca14fde9f0c8",
+    "model_path": "/home/yhwang/fyp/xvla_native/model",
+    "model_python": "/home/yhwang/fyp/xvla_native/venv/bin/python",
+    "client_python": "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+    "model_stack": "Python3.12.3 torch2.11.0+cu128 transformers4.51.3 numpy1.26.3",
+    "client_stack": "Python3.10.22 torch1.11.0+cpu numpy1.22.4 robosuite1.4.0 mujoco2.3.7 gym0.25.2",
+    "suites": [
+      "libero_10",
+      "libero_spatial",
+      "libero_goal",
+      "libero_object"
+    ],
+    "task_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "episodes_per_task": 5,
+    "initial_state_indices": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "environment_seed": "142+episode_index, per author init_seed42",
+    "policy_rng": "author server default unfixed RNG, no undocumented seed override; independent run ids recorded",
+    "dtype": "float32",
+    "chunk_size": 30,
+    "denoising_steps": 10,
+    "domain_id": 3,
+    "raw_action_shape": [
+      30,
+      20
+    ],
+    "environment_action_dim": 7,
+    "control_mode": "absolute OSC_POSE after 10 native relative settling actions",
+    "control_frequency": 20,
+    "images": "256x256 agentview rotated180; wrist raw as author; original processor224x224, third view masked zero",
+    "proprio": "author initial controller.ee_pos and ee_ori_mat->6D, then previous predicted chunk-end pose; preserve exact upstream behavior",
+    "horizons": {
+      "libero_10": 900,
+      "libero_spatial": 800,
+      "libero_goal": 800,
+      "libero_object": 800
+    },
+    "scoring": "original done / independent native check_success, no added release/home condition",
+    "server": "http://127.0.0.1:8794/act",
+    "enhancements": "none",
+    "implementation_author": "actual deepseek-flash API, thinking disabled; provenance must be saved before claiming implementation",
+    "planner": "openai/gpt-6-astra; no unverified reasoning-effort claim"
+  },
+  "fingerprint": "e0cb4f80464dd8f610cda924e710551603b42b06d851361aa27e802560e4abaa",
+  "versions": {
+    "python": "3.10.22 (main, Oct  9 2026, 15:21:30) [Clang 22.1.3 ]",
+    "numpy": "1.22.4",
+    "torch": "1.11.0+cpu",
+    "mujoco": "2.3.7",
+    "robosuite": "1.4.0",
+    "gym": "0.25.2"
+  },
+  "git_heads": {
+    "libero": "8f1084e3132a39270c3a13ebe37270a43ece2a01",
+    "upstream": "6bc2513f5f1cbec715cc668b414392a6cae5c671"
+  },
+  "weight_verification": {
+    "source": "/mnt/d/FYP/First_Phase/tmp/xvla_20261012_setup/install_verification.json",
+    "bytes": 3519068172,
+    "sha256": "260cc58869125b826e93bcaa60bca3ea37bcc7aaf893d368a991ca14fde9f0c8",
+    "revision": "129e71460678b7236cee6fc9707f09d9fa0c3590",
+    "reused_sha": true
+  },
+  "runner_sha": "21ec3aad27d8d0821d18894ab44478c1e9c03a23f8f7fc2d00d517186951daec",
+  "author_sha": "ebfdd89a4afc79b8b01921ded6c95091786b34937e5dbe7601d3a384607d6f24",
+  "server_url": "http://127.0.0.1:8794/act",
+  "started_utc": "2026-10-12T06:36:03.002437+00:00"
+}

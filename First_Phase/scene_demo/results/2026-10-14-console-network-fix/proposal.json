@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "20261014-console-network-fix",
+  "intent": "analyze_existing",
+  "question_key": "xvla-console-network-and-setup",
+  "purpose": "修复交互入口重复全台账校验及初识别请求故障；复用本次失败三视图验证Qwen3.8初识别与复核，不执行机器人任务。",
+  "prior_evidence": ["20261014-console-startup-fix", "20261014-conservative-handoff-offline", "20261014-qwen38-three-requests"],
+  "history_review": [
+    {"experiment_id": "20261014-console-startup-fix", "disposition": "reuse", "reason": "复用已通过的独立模型目录与重启验证；本次X-VLA已启动，故障位于后续初识别请求。"},
+    {"experiment_id": "20261014-conservative-handoff-offline", "disposition": "reuse", "reason": "保留通用检查及原收尾复位，不重复验证视觉接管效果。"},
+    {"experiment_id": "20261014-qwen38-three-requests", "disposition": "insufficient", "reason": "历史初识别也曾出现网络失败，但旧客户端抹去了底层类型，不能仅据通用错误断言具体网络原因。"}
+  ],
+  "related_search": "审阅20261014-145221-ee32577c原始console_error.log、源快照及实际Qwen请求实现：识别开始至失败约91秒，urlopen固定90秒；模型列表探针代理与直连均200且列出qwen3.8-max。",
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "交互入口改为本次配置与场景检查、来源留档；按用户偏好取消每次全量历史审计，不伪造历史校验通过。",
+    "请求发送前保存三视图路径、哈希和完整prompt；网络失败保留异常种类、阶段、耗时与HTTP状态，不保存凭证。",
+    "初识别与清单复核的单次等待上限180秒；执行中的视觉检查保持原90秒，不自动重试或换模型。",
+    "只用本次现存三视图调用初识别和清单复核，最多两次Qwen3.8；未保存原始拍摄时间则以-1标记未知，禁止伪造机器人反馈。",
+    "任一请求失败即保留原错误并停止依赖验证，最多一轮有明确网络条件变化的修正验证；不执行Hermes动作计划或仿真任务。",
+    "软件验证请求预算、失败留档、用户确认边界及准备阶段零历史扫描；更新空闲界面后台。"
+  ]
+}

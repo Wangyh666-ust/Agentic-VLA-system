@@ -1,0 +1,29 @@
+--- frozen_all_native/service.py
++++ current/service.py
+@@ -2545,13 +2545,16 @@
+         from scene_demo.finish_v1.runtime import build_context
+         return build_context(capability, user_request)
+ 
++    def _finish_monitor_class(self):
++        from scene_demo.finish_v1.runtime import FinishMonitor
++        return FinishMonitor
++
+     def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
+         reference = session.home_reference
+         if reference is None:
+             raise SceneError('finish_reference_failed', 'home reference unavailable')
+         if str(_HERE.parent) not in sys.path:
+             sys.path.insert(0, str(_HERE.parent))
+-        from scene_demo.finish_v1.runtime import FinishMonitor
+         from scene_demo import joint_home, safe_exit_contacts
+         context = self._build_finish_context(capability, plan.user_request)
+         outputdir = job.run_dir / 'finish'
+@@ -2602,7 +2605,7 @@
+                 and safe_exit_contacts.contacts(env) == []
+             )
+ 
+-        monitor = FinishMonitor(
++        monitor = self._finish_monitor_class()(
+             env,
+             reference,
+             outputdir,

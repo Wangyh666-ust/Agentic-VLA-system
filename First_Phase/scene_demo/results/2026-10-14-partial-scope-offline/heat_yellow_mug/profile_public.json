@@ -1,0 +1,27 @@
+{
+  "_config_version": 12,
+  "model": {
+    "default": "qwen3.8-max",
+    "provider": "alibaba-cn",
+    "supports_vision": true
+  },
+  "agent": {
+    "max_turns": 12
+  },
+  "mcp_servers": {
+    "scene_tools": {
+      "command": "/usr/bin/python3",
+      "args": [
+        "-u",
+        "/mnt/d/FYP/First_Phase/scene_demo/mcp_server.py"
+      ],
+      "enabled": true,
+      "cwd": "/mnt/d/FYP/First_Phase/scene_demo",
+      "env": {
+        "PATH": "/usr/bin:/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/yhwang/.local/bin",
+        "SCENE_SERVICE_URL": "http://127.0.0.1:8778",
+        "SCENE_BUDGET_PER_SUBGOAL": "900"
+      }
+    }
+  }
+}

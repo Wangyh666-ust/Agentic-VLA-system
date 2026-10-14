@@ -1,0 +1,178 @@
+{
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "黄色马克杯：杯身外侧黄色、内壁白/浅灰，圆柱形，带黄色把手；初始位于桌面中部偏左，灰杯右侧、微波炉门左前方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              345,
+              0,
+              695,
+              275
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              433,
+              468,
+              530,
+              562
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              455,
+              466,
+              548,
+              562
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视俯视清楚看到杯口内壁浅色、外壁与把手为黄色"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview 中桌面中部黄色杯身与黄色把手清晰"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview 中黄色杯身与把手清晰，与frame1为同一实物"
+          }
+        ],
+        "confusable_with": [
+          "obj_2"
+        ],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "灰白色马克杯：杯身灰白斑点质感、内壁白，圆柱形，带灰色把手；初始位于桌面中部，黄杯左侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              244,
+              500,
+              350,
+              605
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              386,
+              382,
+              466,
+              466
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视视野内未出现该杯，仅见黄杯与微波炉局部"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview 中灰白斑点杯身与把手清晰"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview 中同一灰杯位于黄杯左后方，特征一致"
+          }
+        ],
+        "confusable_with": [
+          "obj_1"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "微波炉装置：黑色长方体箱体放在桌面右后侧，炉门为活动部件，当前向左打开立起，门框黑色、中间浅色玻璃窗；腔口朝向桌面杯子方向",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              408,
+              292,
+              836,
+              535
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              565,
+              375,
+              912,
+              800
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视右缘仅见黑色箱体/门框局部带浅色边，无法完整辨认"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview 中黑色箱体与打开的带窗炉门整体清晰"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview 中同一黑色箱体与开门结构一致，无身份冲突"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      }
+    ],
+    "coverage": {
+      "targets_identifiable": true,
+      "destination_visible": true,
+      "state_change_visible": true,
+      "reason": "黄杯(obj_1)在三帧均可辨认且与灰杯(obj_2)颜色把手区分明确；微波炉(obj_3)在frame1/2完整可见、炉门开启状态清楚，frame0仅局部；桌面到炉腔的路径在三视角均无遮挡，放入与加热前后状态变化可被后续帧覆盖检查"
+    }
+  },
+  "metadata": {
+    "model": "qwen3.8-max",
+    "usage": {
+      "completion_tokens": 3025,
+      "completion_tokens_details": {
+        "reasoning_tokens": 2048,
+        "text_tokens": 976
+      },
+      "prompt_tokens": 995,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "image_tokens": 582,
+        "text_tokens": 413
+      },
+      "total_tokens": 4020
+    },
+    "wall_s": 82.64332322500002,
+    "http_status": 200,
+    "request_sha256": "c09772873d5acbfe945fc40182deb5f3328589540fa1c2230e16f08b0952df40",
+    "response_sha256": "1d774ccdade007810e4e68d688ce37a0150f18246f9b64be804a5f457b46fcf4"
+  }
+}

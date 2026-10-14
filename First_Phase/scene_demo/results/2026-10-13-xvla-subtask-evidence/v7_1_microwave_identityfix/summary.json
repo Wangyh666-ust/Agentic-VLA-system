@@ -1,0 +1,110 @@
+{
+  "protocol": "xvla_subtask_review_v7_1",
+  "actual_Qwen_calls": 1,
+  "reused_same_campaign_requests": 2,
+  "error": null,
+  "records": [
+    {
+      "label": "final_comparison",
+      "time": 45.75000000000995,
+      "goal": true,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "fe8b6c17b2d5572f/review_00002/goal_0"
+          ],
+          "reason": "初态中黄色把手杯子在桌面（frame 1），当前wrist view（frame 9）显示炉腔内有黄色把手杯子，与初态特征一致。过程图capture_000002 frame 3显示杯子已放入炉腔，后续无移出证据。",
+          "history_event_id": "fe8b6c17b2d5572f/review_00002/goal_0",
+          "history_event_ids": [
+            "fe8b6c17b2d5572f/review_00002/goal_0"
+          ],
+          "history_capture_id": "fe8b6c17b2d5572f/capture_000002",
+          "history_observed_at": 8.949999999999658,
+          "history_reviewed_at": 45.75000000000995
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "reason": "初态门板向外打开（frame 1），当前wrist view（frame 9）和sideview（frame 11）均显示门板紧贴机身，炉腔入口被遮挡，符合关闭状态定义。"
+        }
+      ],
+      "proofs": [
+        {
+          "proof_id": "fe8b6c17b2d5572f/review_00002/goal_0",
+          "goal_key": "[\"white_yellow_mug_1\", \"in\", \"microwave_1_heating_region\", false]",
+          "target_id": "white_yellow_mug_1",
+          "destination_id": "microwave_1_heating_region",
+          "capture_id": "fe8b6c17b2d5572f/capture_000002",
+          "observed_at": 8.949999999999658,
+          "reviewed_at": 45.75000000000995,
+          "review_id": "fe8b6c17b2d5572f/review_00002",
+          "event_id": "release_0001",
+          "status": "confirmed",
+          "kind": "historical_review",
+          "supersedes_review_id": null,
+          "evidence": [
+            {
+              "capture_id": "fe8b6c17b2d5572f/capture_000002",
+              "view": "wrist",
+              "box": [
+                0,
+                0,
+                1000,
+                500
+              ]
+            }
+          ],
+          "identity_refs": [
+            {
+              "capture_id": "fe8b6c17b2d5572f/capture_000001",
+              "view": "wrist",
+              "box": [
+                350,
+                50,
+                550,
+                250
+              ]
+            }
+          ],
+          "comparison": "初态杯子在桌面（frame 1），capture_000002 wrist view（frame 3）显示黄色把手杯子位于微波炉加热区域内部，与初态特征一致。agentview（frame 4）显示桌面仅剩灰色杯子，确认目标已移入。",
+          "source_sha256": [
+            "eedfe36bc0db2980340ec4e9db7560692725edf16b95878e52089e0bc4ac0931",
+            "7bea69274cf4bf2ba4ba196cc35b36aa35a7fc86b62f6768adb7a569eaa27553",
+            "bffce3943b07c2a07813bdc6139b3c6d19331f38955ce659d2f836ca24d9225a"
+          ],
+          "encoder": {
+            "timestamp": 8.949999999999658,
+            "finger_qpos": [
+              0.038316846411817,
+              -0.03777253025922477
+            ],
+            "standard_open_finger_qpos": [
+              0.03872905725468913,
+              -0.03872928166924487
+            ],
+            "position_unit": "m",
+            "standard_open_tolerance_m": 0.002,
+            "max_standard_open_error_mm": 0.9567514100201,
+            "at_standard_open": true
+          },
+          "request_sha256": "99887ab82db4dd3f0b2d9ddca1610492956c3b8cdc85985d93ec1fff59c18830",
+          "response_sha256": "3f28fdc65482f84a30df08b75882c9ebf088852b6c6642062ae435c4a6e01bc7"
+        }
+      ],
+      "actual_Qwen_calls": 3
+    }
+  ],
+  "historical_soup_triggered": false,
+  "stopped_by_rule": false,
+  "passed": true,
+  "complete_timeline_replay": false,
+  "new_environment_actions": 0,
+  "old_answers_imported": 0
+}

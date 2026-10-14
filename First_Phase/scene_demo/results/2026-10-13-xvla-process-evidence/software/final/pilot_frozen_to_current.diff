@@ -1,0 +1,78 @@
+--- all-native/xvla_pilot.py
++++ process-evidence/xvla_pilot.py
+@@ -14,10 +14,10 @@
+ 
+ HERE = Path(__file__).resolve().parent
+ ROOT = HERE.parents[1]
+-DEFAULT_OUTPUT = HERE / 'results/2026-10-13-xvla-all-native/pilot'
+-DEFAULT_PROPOSAL = HERE / 'plans/20261013-xvla-all-native.json'
++DEFAULT_OUTPUT = HERE / 'results/2026-10-13-xvla-process-evidence/pilot'
++DEFAULT_PROPOSAL = HERE / 'plans/20261013-xvla-process-evidence.json'
+ REVISION = '129e71460678b7236cee6fc9707f09d9fa0c3590'
+-PURPOSE = '验证全部十个LIBERO-10原生长程技能的真实Hermes公开能力选择与完全匹配原子序列融合，在三同步视图逐项整体检查及已验证收尾下保持目标并集，以完整技能边界交接和复位；软件接线尚不代表物理效果。'
++PURPOSE = '验证所有native通用实测松手三图证据的采集、分类、遮挡复用与后来反证撤销；验证全部十个LIBERO-10原生长程技能的真实Hermes公开能力选择与完全匹配原子序列融合，在三同步视图逐项整体检查及已验证收尾下保持目标并集，以完整技能边界交接和复位；软件接线尚不代表物理效果。'
+ CASES = {
+  'wine_bowl_stove': {'scene': 'goal_table', 'request': '先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台。', 'capabilities': ['wine_to_rack','bowl_to_plate','stove_on']},
+  'basket_two': {'scene': 'basket_two','request': '先把字母汤罐放进篮子，再把番茄酱罐放进篮子。','capabilities':['xvla_basket_both']},
+@@ -36,6 +36,7 @@
+     _case['budget_per_subgoal'] = 800 if _name == 'wine_bowl_stove' else 900
+ 
+ HISTORY = {
++ '20261013-xvla-process-evidence-software':'复用统一实测松手采样及历史融合/撤销软件资格；实际效果未验证。',
+  '20261013-xvla-all-native-software':'复用本轮十技能软件/真实目录资格证据；未新增模型/物理动作，效果待验证。',
+  '20261013-xvla-native-three-view-software':'复用本轮软件/请求字节资格证据；没有新增实际模型/物理动作，物理效果仍待验证。',
+  '20261012-xvla-persistent-pilot':'复用旧持久服务、控制器、下一参考及五连判据；本轮改变技能与检查输入。',
+@@ -57,7 +58,7 @@
+     Path(path).write_text(json.dumps(value, ensure_ascii=False, indent=2),encoding='utf-8')
+ 
+ def frozen_sources():
+-    sources = [HERE / p for p in ('xvla_service.py','xvla_backend.py','xvla_pilot.py','xvla_skills.py','xvla_finish.py','service.py',
++    sources = [HERE / p for p in ('xvla_service.py','xvla_backend.py','xvla_pilot.py','xvla_skills.py','xvla_finish.py','xvla_process_evidence.py','xvla_monitor.py','service.py',
+         'run_agent.py','mcp_server.py','setup_profile.py','joint_home.py','safe_exit.py',
+         'safe_exit_contacts.py','placement_completion.py','catalog.py')]
+     sources += sorted((HERE / 'finish_v1').glob('*.py'))
+@@ -82,26 +83,29 @@
+         hashes[relative] = sha(source)
+     dump(output / 'source_manifest.json',hashes)
+     success = [
++        '记录实测闭→开分支触发次数、实际capture组三图数量、release分类真实请求数、逐goal evidence_id/图片SHA/同步编码器；记录raw当前Null→effectiveTrue的实际复用次数与来源及后来明确False撤销。初始open/抖动等预期负例0采样不强制触发；开口不代表曾持物。',
+         '真实Hermes请求计划留存；直接选原生或服务仅融合连续完全匹配的原子顺序，保持目标并集并审计requested/executed/replacements；无匹配保留原子，max_repairs=0。',
+         '目标true时150动作三同步相机wrist/agentview/sideview与同步编码器逐项完整技能检查分支实际触发，并记录触发事件；预算尾部不以未经检查成功。',
+         '记录真实finger_target开口、编码器开口、退离与归位动作数及前后状态；下游零动作不替代验证。',
+         '仅完整技能结束时归位/reset，不在component中途结束；中间归位reference准确来自下一原生初态，关节/开口/速度及末端5mm/0.05rad到位，策略队列清空、实测proprio重建并刷新图像。',
+         '所有当前及前序goals原completion gate保留、无持物手接触、独立效果5连通过；末任务回全局home。']
+-    stop = '首条链任一目标未达、应触发未触发或下游零动作，停止依赖验证和其余十个native case；不用home替代目标。程序错误、不同步或model transport错误停止，无现场改词、重跑或加辅助。'
++    stop = '应触发未触发或release分类0记触发链路/执行未验证，停止依赖本机制的验证，不能拿归位成功代替；无自然遮挡复用样本记复用效果unverified，不据0复用宣称无效；预期负例0采样不强制触发。首条链任一目标未达、应触发未触发或下游零动作，停止依赖验证和其余十个native case；不用home替代目标。程序错误、不同步或model transport错误停止，无现场改词、重跑或加辅助。'
+     config = {'cases':CASES,'model_revision':REVISION,
+       'weights_sha256':'260cc58869125b826e93bcaa60bca3ea37bcc7aaf893d368a991ca14fde9f0c8',
+       'source_xvla':'6bc2513f5f1cbec715cc668b414392a6cae5c671','source_libero':'8f1084e3132a39270c3a13ebe37270a43ece2a01',
+       'dtype':'float32','chunk':30,'denoise':10,'domain':3,'control':'absolute','seed':142,
+       'init_state_index':0,'vla_budget_per_case':{name:case['budget_per_subgoal'] for name,case in CASES.items()},'session_limit':8000,'wall_deadline_s':1800,
++      'release_sampler':{'arm_error_m':.004,'open_error_m':.002,'consecutive_open':2},'release_check_limit':4,'current_check_limit':10,'total_model_call_limit':14,
+       'checker_views':['wrist','agentview','sideview'],'checker_interval':150,'independent_streak':5,'source_sha256':hashes,'criteria':success,'stop_rule':stop}
+     proposal.parent.mkdir(parents=True,exist_ok=True)
+-    dump(proposal,{'schema_version':1,'id':'20261013-xvla-all-native','intent':'new_experiment',
+-       'question_key':'xvla-all-native','purpose':PURPOSE,'prior_evidence':list(HISTORY),
++    dump(proposal,{'schema_version':1,'id':'20261013-xvla-process-evidence','intent':'new_experiment',
++       'question_key':'xvla-process-evidence','purpose':PURPOSE,'prior_evidence':list(HISTORY),
+        'history_review':[{'experiment_id':k,'disposition':'reuse','reason':v} for k,v in HISTORY.items()],
+        'related_search':'主Agent已rg X-VLA、service、finish_v1、原生任务与指令检查；已审查旧持久试点、输入审计及grounding证据，本轮变化仅待实测。',
+        'hypothesis':'多因素集成试点可实现原生下一子任务起始状态交接，同时保留前序成果；不作单因素因果或可靠性统计。',
+-       'information_gain':'旧原子试点不能回答原生长程融合与三同步视图逐项检查的集成效果。',
++       'information_gain':'旧当前同期检查不能回答遮挡时统一松手过程照片经独立验证并与当前反证融合的效果；不把软件mock算真实效果。',
+        'changed_factors':[{'name':n,'before':b,'after':a,'reason':'本轮集成条件变化，不能分开归因。'} for n,b,a in [
++         ('process_evidence','当前同期图检查','统一实测松手三视图独立分类，历史placement与当前unknown融合且反证撤销'),
+          ('native_coverage','3个原生技能','10个原生技能，新增7场景及13候选原子'),
+          ('native_budget','三原生case每技能800步','十原生case每完整技能900步，wine原子仍800步'),
+          ('new_scenes_and_recipes','旧8scene与原13能力','新增7native场景与13task-scoped候选原子，维持目标只检查不自动点火')]],
+@@ -110,8 +114,8 @@
+          'controller_algorithms':'unchanged control.run_finish, retreat/home and protection predicates',
+          'joint_step_rad':.01,'prepare_limit':360,'checker_interval':150,'independent_streak':5,
+          'feedback_retreat':['wine_to_rack','stove_on'],'single_session_preserves_objects':True},
+-       'success_criteria':'; '.join(success),'failure_criteria':'; '.join(['应触发未触发：触发链路失败、目标效果未验证。','已触发但动作未执行：执行失败。','执行后独立判据不通过：效果失败。','未启动：不计VLA效果分母。']),
+-       'unknown_criteria':'模型用量不可用时如实标unknown；同步或证据不足不宣称成功。',
++       'success_criteria':'; '.join(success),'failure_criteria':'; '.join(['应触发未触发或release分类0：触发链路/执行未验证，停止依赖本机制的验证，不能拿归位成功代替。','已触发但动作未执行：执行失败。','执行后独立判据不通过：效果失败。','未启动：不计VLA效果分母。']),
++       'unknown_criteria':'无自然遮挡复用样本则复用效果unverified，不据0复用宣称无效；预期负例0采样不强制触发。模型用量不可用时如实标unknown；同步或证据不足不宣称成功。',
+        'scope':{'max_cases':len(CASES),'max_vla_actions_per_case':2400,'max_helper_actions_per_case':3000,'stop_rule':stop},
+        'new_physical_actions':len(CASES)*(2400+3000),'configuration':config,'configuration_complete':True,
+        'repeat':{'needed':False,'reason':'复用旧原生与收尾；本轮新原生技能/三视图集成条件未实测。'}})

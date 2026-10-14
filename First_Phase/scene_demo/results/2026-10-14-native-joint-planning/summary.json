@@ -1,0 +1,241 @@
+{
+  "purpose": "原生完整技能选择、识别规划合并+独立复核、JSON格式修正、旧图耗时与一例在线测试；保留收尾复位及5/5，无辅助器/子agent。",
+  "implementation": {
+    "subagents": 0,
+    "implementation_agent": "current main Codex agent; exact runtime model/effort not exposed by available tools",
+    "native_long_skills": 10,
+    "native_atomic_skills": 3,
+    "candidate_splits_rejected": true,
+    "normal_planning_requests": 2,
+    "independent_review_reused_online": true,
+    "checker_json_mode": true,
+    "repair_limit": "one per response within unchanged total budget",
+    "protected_controls_unchanged": true,
+    "final_service_common_resume_gate": "software verified and deployed after online run; selected native execution unchanged"
+  },
+  "software": {
+    "tests_passed": 1464,
+    "subtests_passed": 57,
+    "failed": 0
+  },
+  "offline": {
+    "first_call_with_startup_seconds": 39.891467894001835,
+    "independent_review_seconds": 16.27350585399836,
+    "total_seconds": 56.164974977000384,
+    "normal_model_calls": 2,
+    "planner": "installed Hermes SDK",
+    "model": "qwen3.8-max"
+  },
+  "offline_scope": "one accepted complete pipeline replay on original bowl/bottle images; all native catalogs validated in software, not online-tested individually",
+  "offline_setup_failures": [
+    "v1: no model call, missing capture timestamp in replay adapter",
+    "v2: one Hermes response produced; per-client audit wrapper missed transport-created client; not accepted",
+    "v3: one streaming request opened; audit expected non-stream response; blocked with original logs retained",
+    "v4: both real model calls and independent review passed; replay post-validation lacked production 900-step budget; not accepted as completed pipeline"
+  ],
+  "online_planning": {
+    "first_call_with_startup_seconds": 26.688897449999786,
+    "independent_review_seconds": 16.597336526003346,
+    "total_seconds": 43.28623500100002,
+    "normal_model_calls": 2,
+    "planner": "installed Hermes SDK",
+    "model": "qwen3.8-max"
+  },
+  "online_preparation": {
+    "seconds": 65.1478750705719,
+    "includes_model_loading": true
+  },
+  "online": {
+    "cases": 1,
+    "scene": "bowl_drawer",
+    "seed": 142,
+    "init_state_index": 0,
+    "request": "收拾桌面，将碗和瓶子归位",
+    "capability": "xvla_bowl_drawer_close",
+    "instruction": "put the black bowl in the bottom drawer of the cabinet and close it",
+    "request_scope": {
+      "coverage": "partial",
+      "executable_outcomes": [
+        "将银灰色斑点碗放入浅灰色抽屉柜下层",
+        "关闭浅灰色抽屉柜下层抽屉"
+      ],
+      "unmet_outcomes": [
+        "深色细长瓶子的归位操作"
+      ],
+      "reason": "技能库中仅有碗入抽屉并关门的完整能力，可覆盖碗的收纳需求；缺少瓶子归位或通用放置技能，瓶子部分无法执行，需澄清或等待后续能力支持。"
+    },
+    "vla_actions": 240,
+    "source_counts": {
+      "settling": 0,
+      "vla": 240,
+      "finish": 2,
+      "prepare": 11
+    },
+    "first_native_success_step": 228,
+    "final_vla_predicates": {
+      "close|white_cabinet_1_bottom_region": true,
+      "in|akita_black_bowl_1|white_cabinet_1_bottom_region": true
+    },
+    "after_open_confirmation_predicates": {
+      "close|white_cabinet_1_bottom_region": true,
+      "in|akita_black_bowl_1|white_cabinet_1_bottom_region": true
+    },
+    "goal_visual_verdict": {
+      "at_destination": true,
+      "boxes": {},
+      "clear_of_target": null,
+      "destination_visible": null,
+      "evidence": [
+        "initial/process/current evidence review",
+        "同步实测编码器已达到标准开口，按已松手、未夹持处理；遮挡或投影重叠不改变此判断。"
+      ],
+      "operation_achieved": true,
+      "released": true,
+      "stable": null,
+      "supported": null,
+      "target_visible": null,
+      "unknown_reasons": []
+    },
+    "release_evidence_confirmed": true,
+    "whole_pipeline_passed": false,
+    "plan_state": "blocked",
+    "plan_success": null,
+    "block_reason": "retreat plan blocked",
+    "retreat_plan": {
+      "ok": false,
+      "reason": "no sensor-safe route",
+      "waypoints": [],
+      "candidate_reports": [
+        {
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "distance": 0.04,
+          "reason": "endpoint_hand_clear_fail"
+        },
+        {
+          "direction": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "distance": 0.06,
+          "reason": "endpoint_hand_clear_fail"
+        }
+      ],
+      "sensor_screen": null
+    },
+    "finish_actions": {
+      "release": 2,
+      "movement": 0,
+      "confirm": 0,
+      "home": 0
+    },
+    "final_streak": 0,
+    "current_contact_screen": [],
+    "home_ready": false,
+    "execution_wall_seconds": 377.75,
+    "console_execution_poll_seconds": 381.7,
+    "model_requests": [
+      {
+        "name": "call_01_request.json",
+        "model": "qwen3.8-max",
+        "image_count": 15,
+        "json_valid": true,
+        "repair": false,
+        "finish_reason": "stop",
+        "seconds_from_original_file_creation": 86.59463477134705,
+        "reviewed_at": 10.050000000000026,
+        "current_states": [
+          {
+            "id": "goal_0",
+            "state": "at_destination",
+            "same_target": true
+          },
+          {
+            "id": "goal_1",
+            "state": "open",
+            "same_target": true
+          }
+        ]
+      },
+      {
+        "name": "call_02_request.json",
+        "model": "qwen3.8-max",
+        "image_count": 15,
+        "json_valid": true,
+        "repair": true,
+        "finish_reason": "stop",
+        "seconds_from_original_file_creation": 74.39271521568298,
+        "reviewed_at": 10.050000000000026,
+        "current_states": [
+          {
+            "id": "goal_0",
+            "state": "at_destination",
+            "same_target": true
+          },
+          {
+            "id": "goal_1",
+            "state": "open",
+            "same_target": true
+          }
+        ]
+      },
+      {
+        "name": "call_03_request.json",
+        "model": "qwen3.8-max",
+        "image_count": 18,
+        "json_valid": true,
+        "repair": false,
+        "finish_reason": "stop",
+        "seconds_from_original_file_creation": 77.55227971076965,
+        "reviewed_at": 13.050000000001027,
+        "current_states": [
+          {
+            "id": "goal_0",
+            "state": "at_destination",
+            "same_target": true
+          },
+          {
+            "id": "goal_1",
+            "state": "closed",
+            "same_target": true
+          }
+        ]
+      },
+      {
+        "name": "call_04_request.json",
+        "model": "qwen3.8-max",
+        "image_count": 18,
+        "json_valid": true,
+        "repair": true,
+        "finish_reason": "stop",
+        "seconds_from_original_file_creation": 74.2816514968872,
+        "reviewed_at": 13.050000000001027,
+        "current_states": [
+          {
+            "id": "goal_0",
+            "state": "at_destination",
+            "same_target": true
+          },
+          {
+            "id": "goal_1",
+            "state": "closed",
+            "same_target": true
+          }
+        ]
+      }
+    ],
+    "vlm_seconds_estimated": 312.8212811946869,
+    "run_path": "D:/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c",
+    "auto_retries": 0
+  },
+  "remaining": [
+    "本体及视觉目的达标，整链退离阻断。旧退离器收到boxes={}，没有目标方向可用，只尝试上抬4/6cm，两者endpoint_hand_clear_fail。当前接触清单为空不证明候选路线可行。",
+    "模型JSON语法本轮4/4通过，但历史帧引用和身份链接各需一次修复，视觉环节仍慢。",
+    "不能直接将审核外部视角的0..1000框写入控制深度图0..1框；后续应单独核对时间、机位标定和几何输入接口，保留原退离筛查。",
+    "本轮未改原收尾/归位、未放宽5/5、未添加辅助器、未自动重跑在线。"
+  ]
+}

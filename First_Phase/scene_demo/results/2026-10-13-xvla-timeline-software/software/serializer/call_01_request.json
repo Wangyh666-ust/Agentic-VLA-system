@@ -1,0 +1,301 @@
+{
+  "prompt": "当前遮挡应返回null；过程照片独立验证，不能凭历史忽略当前取出、移位或掉落的反证。\n你是机器人当前完整skill的结束状态检查器。每组三图来自一个采样时刻：wrist是夹爪第一人称；agentview与sideview是两个不同外部视角。按frame/view/timestamp和visual_timeline区分过程与当前照片。\n时间相同的照片属于同一物理瞬间，不能当成多个时刻或先后动作的证据。每组照片的夹爪反馈只对应该组时刻，不能套用其他时刻的反馈。\n先逐项确认任务指定的target_id、外观和destination_id，再判断关系。同类别的其他对象是潜在干扰物；没有确认是同一个目标，不能用其位置证明目标未到位、被取出或掉落。多目标必须分别跟踪，不能重复用同一实物。身份不确定时target_matches_definition=null且achieved=null。\nprocess_history包含实测过程照片和当时判定，previous_check_states包含先前检查状态；其中True/False/Null都只是可纠正的旧判断，不是真值或计划。必须重新对照原图，可纠正先前误识别；不能仅因旧False否定新证据，也不能仅因旧True宣称完成。没有提供图片的旧判定不能独自证明成功。\n放置关系可结合过程照片确认同一目标曾放入正确位置，并检查当前是否有同一目标被取出、移动或掉落的明确反证；关门、抽屉、开关及preserved状态必须由最新一组照片确认，不能用历史状态替代。侧面、斜视或其他视角只要门板与机身等状态关系可辨即可，不要求正面；看不到状态时返回null，不臆造炉腔或入口。\n逐项检查success_checks明确要求的物品与目标。部分完成不能结束。只检查明确要求的目标，不附加松手、解除接触、退离或归位条件；仍夹持不否定目标到位。\non盘指在盘面；in指进入内部，旁边、入口外或二维投影重叠不算。只有对应检查项含close才要求关门，不添加层板等额外目的地条件。\nright_of指盘子指定右侧的桌面区域，而非盘面或盘内。destination_definition只解释静态目的地，不声明当前状态。preserved保持条件只检查继续满足，不请求额外开关动作。\n两个检查项指定两件同类物品时，必须是两件不同实物，不能用同一只摩卡壶重复满足两个放置检查。容器关着不能证明物品在内部；位置遮挡且证据不足时返回null。\n外观提示只解释资产身份或状态，不声明当前状态；细纹理和标签字样无需全部清晰，不是必须满足的识别条件。指定物品不能被其他物品替代。\n每项achieved三值：true目标达到；false有明确未达证据；null身份或目标关系看不清。一视角能明确判断且无相反证据即可，其他视角遮挡不是反证。\nat_standard_open=true表示同步实测夹爪达到标准开口，按已松手、未夹持处理；遮挡、投影重叠或接近不能推翻。false表示需要开爪，不单凭闭合证明持物。开口不能证明物品位置，也不能证明路径安全。\n不接受计划、检查时机或阶段名称作为完成证据。每项必须输出id、achieved、target_matches_definition、current_evidence、evidence_event_ids和reason。achieved、target_matches_definition、current_evidence都是true/false/null；current_evidence表示当前照片是否有对应同一目标的明确关系或状态证据；evidence_event_ids只列本次process_history提供、实际用作证据的event_id。放置True可引用过程图，False必须有当前同一目标的未达反证；状态类判断必须有当前证据。只输出JSON：{\"checks\":[{\"id\":\"goal_0\",\"achieved\":true或false或null,\"target_matches_definition\":true或false或null,\"current_evidence\":true或false或null,\"evidence_event_ids\":[],\"reason\":\"简短依据\"}],\"reason\":\"简短依据\"}。\n{\"current_skill\": {\"description\": \"put the yellow and white mug in the microwave and close it\"}, \"success_checks\": [{\"id\": \"goal_0\", \"description\": \"put the yellow and white mug in the microwave\", \"relation\": \"in\", \"target_id\": \"white_yellow_mug_1\", \"destination_id\": \"microwave_1_heating_region\", \"target_visual_identity\": \"浅色杯身与黄色区域/黄色把手。\"}, {\"id\": \"goal_1\", \"description\": \"close the microwave\", \"relation\": \"close\", \"target_id\": \"microwave_1\", \"destination_id\": null, \"visual_state_definition\": {\"closed\": \"微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。\", \"open\": \"微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。\"}}], \"sensor_frames\": [{\"frame\": 0, \"view\": \"wrist\", \"timestamp\": 8.949999999999658}, {\"frame\": 1, \"view\": \"agentview\", \"timestamp\": 8.949999999999658}, {\"frame\": 2, \"view\": \"sideview\", \"timestamp\": 8.949999999999658}, {\"frame\": 3, \"view\": \"wrist\", \"timestamp\": 27.449999999995665}, {\"frame\": 4, \"view\": \"agentview\", \"timestamp\": 27.449999999995665}, {\"frame\": 5, \"view\": \"sideview\", \"timestamp\": 27.449999999995665}, {\"frame\": 6, \"timestamp\": 45.75000000000995, \"view\": \"wrist\"}, {\"frame\": 7, \"timestamp\": 45.75000000000995, \"view\": \"agentview\"}, {\"frame\": 8, \"timestamp\": 45.75000000000995, \"view\": \"sideview\"}], \"actuator_measurements\": {\"timestamp\": 45.75000000000995, \"finger_qpos\": [0.040569098118290535, -0.04066785078409026], \"standard_open_finger_qpos\": [0.03872905725468913, -0.03872928166924487], \"position_unit\": \"m\", \"standard_open_tolerance_m\": 0.002, \"max_standard_open_error_mm\": 1.9385691148453912, \"at_standard_open\": true}, \"visual_timeline\": {\"current_frame_indices\": [6, 7, 8], \"process_history\": [{\"event_id\": \"release_0001\", \"timestamp\": 8.949999999999658, \"classification_status\": \"classified\", \"raw_checks\": [{\"id\": \"goal_0\", \"achieved\": false, \"reason\": \"agentview明确显示浅色杯身mug在微波炉外桌面，未进入内部；wrist和sideview无内部证据\"}, {\"id\": \"goal_1\", \"achieved\": false, \"reason\": \"agentview显示微波炉门打开且炉腔入口可见，未关闭\"}], \"effective_checks\": [{\"id\": \"goal_0\", \"achieved\": false, \"reason\": \"agentview明确显示浅色杯身mug在微波炉外桌面，未进入内部；wrist和sideview无内部证据\"}, {\"id\": \"goal_1\", \"achieved\": false, \"reason\": \"agentview显示微波炉门打开且炉腔入口可见，未关闭\"}], \"actuator_measurements\": {\"timestamp\": 8.949999999999658, \"finger_qpos\": [0.03830734471469762, -0.03778193077030776], \"standard_open_finger_qpos\": [0.03872905725468913, -0.03872928166924487], \"position_unit\": \"m\", \"standard_open_tolerance_m\": 0.002, \"max_standard_open_error_mm\": 0.9473508989371118, \"at_standard_open\": true}, \"frame_indices\": [0, 1, 2]}, {\"event_id\": \"release_0002\", \"timestamp\": 27.449999999995665, \"classification_status\": \"classified\", \"raw_checks\": [{\"id\": \"goal_0\", \"achieved\": false, \"reason\": \"所有视角显示杯子在微波炉外部桌面，未进入内部\"}, {\"id\": \"goal_1\", \"achieved\": false, \"reason\": \"agentview和sideview均显示微波炉门打开，未关闭\"}], \"effective_checks\": [{\"id\": \"goal_0\", \"achieved\": false, \"reason\": \"所有视角显示杯子在微波炉外部桌面，未进入内部\"}, {\"id\": \"goal_1\", \"achieved\": false, \"reason\": \"agentview和sideview均显示微波炉门打开，未关闭\"}], \"actuator_measurements\": {\"timestamp\": 27.449999999995665, \"finger_qpos\": [0.04001383792781475, -0.03765122797265728], \"standard_open_finger_qpos\": [0.03872905725468913, -0.03872928166924487], \"position_unit\": \"m\", \"standard_open_tolerance_m\": 0.002, \"max_standard_open_error_mm\": 1.284780673125624, \"at_standard_open\": true}, \"frame_indices\": [3, 4, 5]}], \"previous_check_states\": [{\"timestamp\": 38.25000000000078, \"actuator_measurements\": {\"timestamp\": 38.25000000000078, \"finger_qpos\": [0.040007704311461195, -0.04033673082177328], \"standard_open_finger_qpos\": [0.03872905725468913, -0.03872928166924487], \"position_unit\": \"m\", \"standard_open_tolerance_m\": 0.002, \"max_standard_open_error_mm\": 1.6074491525284105, \"at_standard_open\": true}, \"raw_checks\": [{\"id\": \"goal_0\", \"achieved\": false, \"reason\": \"agentview显示杯子在微波炉外桌面，未进入内部；wrist和sideview无内部证据\"}, {\"id\": \"goal_1\", \"achieved\": false, \"reason\": \"agentview和sideview显示微波炉门打开，炉腔入口可见；wrist视角遮挡但其他视角明确未关闭\"}], \"effective_checks\": [{\"id\": \"goal_0\", \"achieved\": false, \"reason\": \"agentview显示杯子在微波炉外桌面，未进入内部；wrist和sideview无内部证据\"}, {\"id\": \"goal_1\", \"achieved\": false, \"reason\": \"agentview和sideview显示微波炉门打开，炉腔入口可见；wrist视角遮挡但其他视角明确未关闭\"}], \"images_in_request\": false}], \"history_complete\": true, \"omitted_release_event_ids\": []}}",
+  "context": {
+    "user_request": "saved original task",
+    "current_subtask": {
+      "operation": "articulate",
+      "target": "microwave_1",
+      "destination": null,
+      "phase": "executing"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "desired_state": "closed",
+      "operation_semantics": "move the articulated door to its requested open or closed state; then release contact and retreat without changing that state",
+      "task_description": "close the microwave",
+      "skill_description": "put the yellow and white mug in the microwave and close it",
+      "success_checks": [
+        {
+          "id": "goal_0",
+          "description": "put the yellow and white mug in the microwave",
+          "relation": "in",
+          "target_id": "white_yellow_mug_1",
+          "destination_id": "microwave_1_heating_region",
+          "target_visual_identity": "浅色杯身与黄色区域/黄色把手。"
+        },
+        {
+          "id": "goal_1",
+          "description": "close the microwave",
+          "relation": "close",
+          "target_id": "microwave_1",
+          "destination_id": null,
+          "visual_state_definition": {
+            "closed": "微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。",
+            "open": "微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。"
+          }
+        }
+      ]
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": 8.949999999999658
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": 8.949999999999658
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": 8.949999999999658
+      },
+      {
+        "frame": 3,
+        "view": "wrist",
+        "timestamp": 27.449999999995665
+      },
+      {
+        "frame": 4,
+        "view": "agentview",
+        "timestamp": 27.449999999995665
+      },
+      {
+        "frame": 5,
+        "view": "sideview",
+        "timestamp": 27.449999999995665
+      },
+      {
+        "frame": 6,
+        "timestamp": 45.75000000000995,
+        "view": "wrist"
+      },
+      {
+        "frame": 7,
+        "timestamp": 45.75000000000995,
+        "view": "agentview"
+      },
+      {
+        "frame": 8,
+        "timestamp": 45.75000000000995,
+        "view": "sideview"
+      }
+    ],
+    "actuator_measurements": {
+      "finger_qpos": [
+        0.040569098118290535,
+        -0.04066785078409026
+      ],
+      "max_abs_arm_qvel": 0.060578045849806826,
+      "stage": "executing",
+      "standard_open_finger_qpos": [
+        0.03872905725468913,
+        -0.03872928166924487
+      ],
+      "timestamp": 45.75000000000995
+    },
+    "visual_timeline": {
+      "current_frame_indices": [
+        6,
+        7,
+        8
+      ],
+      "process_history": [
+        {
+          "event_id": "release_0001",
+          "timestamp": 8.949999999999658,
+          "classification_status": "classified",
+          "raw_checks": [
+            {
+              "id": "goal_0",
+              "achieved": false,
+              "reason": "agentview明确显示浅色杯身mug在微波炉外桌面，未进入内部；wrist和sideview无内部证据"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "reason": "agentview显示微波炉门打开且炉腔入口可见，未关闭"
+            }
+          ],
+          "effective_checks": [
+            {
+              "id": "goal_0",
+              "achieved": false,
+              "reason": "agentview明确显示浅色杯身mug在微波炉外桌面，未进入内部；wrist和sideview无内部证据"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "reason": "agentview显示微波炉门打开且炉腔入口可见，未关闭"
+            }
+          ],
+          "actuator_measurements": {
+            "timestamp": 8.949999999999658,
+            "finger_qpos": [
+              0.03830734471469762,
+              -0.03778193077030776
+            ],
+            "standard_open_finger_qpos": [
+              0.03872905725468913,
+              -0.03872928166924487
+            ],
+            "position_unit": "m",
+            "standard_open_tolerance_m": 0.002,
+            "max_standard_open_error_mm": 0.9473508989371118,
+            "at_standard_open": true
+          },
+          "frame_indices": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "event_id": "release_0002",
+          "timestamp": 27.449999999995665,
+          "classification_status": "classified",
+          "raw_checks": [
+            {
+              "id": "goal_0",
+              "achieved": false,
+              "reason": "所有视角显示杯子在微波炉外部桌面，未进入内部"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "reason": "agentview和sideview均显示微波炉门打开，未关闭"
+            }
+          ],
+          "effective_checks": [
+            {
+              "id": "goal_0",
+              "achieved": false,
+              "reason": "所有视角显示杯子在微波炉外部桌面，未进入内部"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "reason": "agentview和sideview均显示微波炉门打开，未关闭"
+            }
+          ],
+          "actuator_measurements": {
+            "timestamp": 27.449999999995665,
+            "finger_qpos": [
+              0.04001383792781475,
+              -0.03765122797265728
+            ],
+            "standard_open_finger_qpos": [
+              0.03872905725468913,
+              -0.03872928166924487
+            ],
+            "position_unit": "m",
+            "standard_open_tolerance_m": 0.002,
+            "max_standard_open_error_mm": 1.284780673125624,
+            "at_standard_open": true
+          },
+          "frame_indices": [
+            3,
+            4,
+            5
+          ]
+        }
+      ],
+      "previous_check_states": [
+        {
+          "timestamp": 38.25000000000078,
+          "actuator_measurements": {
+            "timestamp": 38.25000000000078,
+            "finger_qpos": [
+              0.040007704311461195,
+              -0.04033673082177328
+            ],
+            "standard_open_finger_qpos": [
+              0.03872905725468913,
+              -0.03872928166924487
+            ],
+            "position_unit": "m",
+            "standard_open_tolerance_m": 0.002,
+            "max_standard_open_error_mm": 1.6074491525284105,
+            "at_standard_open": true
+          },
+          "raw_checks": [
+            {
+              "id": "goal_0",
+              "achieved": false,
+              "reason": "agentview显示杯子在微波炉外桌面，未进入内部；wrist和sideview无内部证据"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "reason": "agentview和sideview显示微波炉门打开，炉腔入口可见；wrist视角遮挡但其他视角明确未关闭"
+            }
+          ],
+          "effective_checks": [
+            {
+              "id": "goal_0",
+              "achieved": false,
+              "reason": "agentview显示杯子在微波炉外桌面，未进入内部；wrist和sideview无内部证据"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "reason": "agentview和sideview显示微波炉门打开，炉腔入口可见；wrist视角遮挡但其他视角明确未关闭"
+            }
+          ],
+          "images_in_request": false
+        }
+      ],
+      "history_complete": true,
+      "omitted_release_event_ids": []
+    }
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 1024
+  },
+  "request_sha256": "3f6a0f35a82d0fa2668b750d5b74be627edf361cf03f50ec428202243541770a",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/microwave_mug/runs/20261013T051908Z_microwave_mug_88287feb/cap_01_xvla_microwave_place_close_02ebbbf4/finish/sensors/cap000101_wrist.png",
+      "sha256": "0f72b0b322a0c1f76003e12f23fe0b09f22893d554b07851da9790ab5b955a58"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/microwave_mug/runs/20261013T051908Z_microwave_mug_88287feb/cap_01_xvla_microwave_place_close_02ebbbf4/finish/sensors/cap000100_agentview.png",
+      "sha256": "ed5ac9e0291103872f4c694d2357a63f740f7187ef1c31cbc10ce4598ec9ebee"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/microwave_mug/runs/20261013T051908Z_microwave_mug_88287feb/cap_01_xvla_microwave_place_close_02ebbbf4/finish/sensors/cap000102_sideview.png",
+      "sha256": "4aa03273f24cbd21a53be4e82d5601a31af24033f89f2c39dfa48e01b3d88035"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/microwave_mug/runs/20261013T051908Z_microwave_mug_88287feb/cap_01_xvla_microwave_place_close_02ebbbf4/finish/sensors/cap000332_wrist.png",
+      "sha256": "8b4a8076bf4b1980049e92d55a98aa251db888062760d16f2e3669115d0fe4a3"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/microwave_mug/runs/20261013T051908Z_microwave_mug_88287feb/cap_01_xvla_microwave_place_close_02ebbbf4/finish/sensors/cap000331_agentview.png",
+      "sha256": "dbaf94f994b17d282bdd325c8dd20eed2ddaf74485833ca5b2292fbab1a1a5d9"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/microwave_mug/runs/20261013T051908Z_microwave_mug_88287feb/cap_01_xvla_microwave_place_close_02ebbbf4/finish/sensors/cap000333_sideview.png",
+      "sha256": "ef744ab26c255e6280ac6b2a0ef60d09c53314c63f248e8fc15aa6423ceb1890"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/microwave_mug/runs/20261013T051908Z_microwave_mug_88287feb/cap_01_xvla_microwave_place_close_02ebbbf4/finish/sensors/cap000563_wrist.png",
+      "sha256": "48b49a409966e32a0e5b4d854cc90718f567e87ea8c3afdeb49ff761bd0b46cc"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/microwave_mug/runs/20261013T051908Z_microwave_mug_88287feb/cap_01_xvla_microwave_place_close_02ebbbf4/finish/sensors/cap000562_agentview.png",
+      "sha256": "ebe140c80d901a8b36005386d264717c7e5bf727525db7ced92b666c92253150"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-release-trial/microwave_mug/runs/20261013T051908Z_microwave_mug_88287feb/cap_01_xvla_microwave_place_close_02ebbbf4/finish/sensors/cap000564_sideview.png",
+      "sha256": "4dc4e2c85db2678799c693a15a034da009d339dbb1e90866ade9381a4072d316"
+    }
+  ]
+}

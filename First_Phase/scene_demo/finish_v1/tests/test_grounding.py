@@ -23,7 +23,7 @@ def ctx(**kw):
 
 class MockResp:
     def read(self):
-        return json.dumps({"choices": [{"message": {"content": json.dumps(BASE)}}], "usage": {"t": 1}, "model": "m"}).encode("utf-8")
+        return json.dumps({"choices": [{"message": {"content": json.dumps(BASE)}}], "usage": {"t": 1}, "model": "qwen3.8-max"}).encode("utf-8")
     def getcode(self):
         return 200
 

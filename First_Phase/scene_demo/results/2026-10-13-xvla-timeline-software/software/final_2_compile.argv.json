@@ -1,0 +1,13 @@
+[
+  "wsl.exe",
+  "-d",
+  "Ubuntu",
+  "--cd",
+  "/mnt/d/FYP",
+  "--exec",
+  "env",
+  "PYTHONDONTWRITEBYTECODE=1",
+  "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+  "-c",
+  "from pathlib import Path; files=['xvla_finish.py','xvla_monitor.py','xvla_process_evidence.py','xvla_timeline.py','xvla_trial_evidence.py','xvla_pilot.py']; [compile((Path('First_Phase/scene_demo')/p).read_bytes(),p,'exec') for p in files]; print('compiled',len(files),'files')"
+]

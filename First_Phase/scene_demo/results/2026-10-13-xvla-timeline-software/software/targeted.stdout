@@ -1,0 +1,685 @@
+.................................................................................................................. [ 42%]
+...........................................FF........................... [ 68%]
+.....FFFFFFFFFF..............................FF....FF................... [ 95%]
+.............                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_event_between_intervals_and_current_only_handoff _____________
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_event_between_intervals_a0')
+
+    def test_event_between_intervals_and_current_only_handoff(tmp_path):
+        m=monitor(tmp_path);release(m)
+        assert m.release_events==1 and m.port.steps==0 and m.calls==m.release_checks==0
+        before=m.port.capture_count;m.record(3);assert m.port.capture_count==before
+        events=[json.loads(line) for line in (tmp_path/'process_events.jsonl').read_text().splitlines()]
+        assert len(events)==1;assert events[0]['capture']['timestamp']==3.
+        assert [i['view'] for i in events[0]['images']]==list(VIEWS)
+        records=[]
+        def request(ctx,paths,prompt):
+            role=json.loads(prompt.splitlines()[-1]).get('observation_role')
+            records.append((role,copy.deepcopy(ctx),list(paths)))
+            values=[True,False] if role else [True,False]
+            return respond(m.call_client,values,None if role else {0:['release_0001']})(ctx,paths,prompt)
+        with mock.patch.object(m.call_client,'_request',side_effect=request),mock.patch.object(control,'run_finish') as finish:
+>           m.port.timestamp=150.;assert m.poll(150) is None;finish.assert_not_called()
+
+First_Phase/scene_demo/tests/test_xvla_process_monitor.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/finish_v1/runtime.py:447: in poll
+    verdict = self._check(self.context, [])
+First_Phase/scene_demo/xvla_monitor.py:85: in _check
+    return super()._check(context, observations)
+First_Phase/scene_demo/finish_v1/runtime.py:358: in _check
+    meta = self.call_client.analyze(ctx, paths)
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'white_yellow_mug_1', 'destina....0}, {'frame': 4, 'view': 'agentview', 'timestamp': 150.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 150.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+________ test_release_budget_photos_persist_without_extra_current_calls ________
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_release_budget_photos_per0')
+
+    def test_release_budget_photos_persist_without_extra_current_calls(tmp_path):
+        m=monitor(tmp_path)
+        for i in range(5):release(m,10*i+1)
+        assert m.release_events==5
+        with mock.patch.object(m.call_client,'_request',side_effect=respond(m.call_client,[False,False])):
+>           m.port.timestamp=150.;m.poll(150)
+
+First_Phase/scene_demo/tests/test_xvla_process_monitor.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/finish_v1/runtime.py:447: in poll
+    verdict = self._check(self.context, [])
+First_Phase/scene_demo/xvla_monitor.py:85: in _check
+    return super()._check(context, observations)
+First_Phase/scene_demo/finish_v1/runtime.py:358: in _check
+    meta = self.call_client.analyze(ctx, paths)
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'white_yellow_mug_1', 'destina..., {'frame': 4, 'view': 'agentview', 'timestamp': 13.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 13.0}, ...], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_ test_all_skills_receive_failed_process_photos_and_previous_states[xvla_basket_both] _
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_all_skills_receive_failed0')
+cid = 'xvla_basket_both'
+
+    @pytest.mark.parametrize('cid',list(NATIVE_LONG_SKILLS))
+    def test_all_skills_receive_failed_process_photos_and_previous_states(tmp_path,cid):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,cid,1.)
+        client.observe_capture(cap)
+        count=len(ctx['criteria']['success_checks'])
+        with mock.patch.object(client,'_request',side_effect=respond(client,[False]*count)):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,cid,10.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None]*count)):
+>           client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'tomato_sauce_1', 'destination...10.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 10.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 10.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_ test_all_skills_receive_failed_process_photos_and_previous_states[xvla_mugs_both] _
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_all_skills_receive_failed1')
+cid = 'xvla_mugs_both'
+
+    @pytest.mark.parametrize('cid',list(NATIVE_LONG_SKILLS))
+    def test_all_skills_receive_failed_process_photos_and_previous_states(tmp_path,cid):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,cid,1.)
+        client.observe_capture(cap)
+        count=len(ctx['criteria']['success_checks'])
+        with mock.patch.object(client,'_request',side_effect=respond(client,[False]*count)):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,cid,10.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None]*count)):
+>           client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'white_yellow_mug_1', 'destina...10.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 10.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 10.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_ test_all_skills_receive_failed_process_photos_and_previous_states[xvla_microwave_place_close] _
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_all_skills_receive_failed2')
+cid = 'xvla_microwave_place_close'
+
+    @pytest.mark.parametrize('cid',list(NATIVE_LONG_SKILLS))
+    def test_all_skills_receive_failed_process_photos_and_previous_states(tmp_path,cid):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,cid,1.)
+        client.observe_capture(cap)
+        count=len(ctx['criteria']['success_checks'])
+        with mock.patch.object(client,'_request',side_effect=respond(client,[False]*count)):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,cid,10.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None]*count)):
+>           client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'articulate', 'target': 'microwave_1', 'destinati...10.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 10.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 10.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_ test_all_skills_receive_failed_process_photos_and_previous_states[xvla_basket_cheese_butter] _
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_all_skills_receive_failed3')
+cid = 'xvla_basket_cheese_butter'
+
+    @pytest.mark.parametrize('cid',list(NATIVE_LONG_SKILLS))
+    def test_all_skills_receive_failed_process_photos_and_previous_states(tmp_path,cid):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,cid,1.)
+        client.observe_capture(cap)
+        count=len(ctx['criteria']['success_checks'])
+        with mock.patch.object(client,'_request',side_effect=respond(client,[False]*count)):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,cid,10.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None]*count)):
+>           client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'butter_1', 'destination': 'ba...10.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 10.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 10.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_ test_all_skills_receive_failed_process_photos_and_previous_states[xvla_stove_moka] _
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_all_skills_receive_failed4')
+cid = 'xvla_stove_moka'
+
+    @pytest.mark.parametrize('cid',list(NATIVE_LONG_SKILLS))
+    def test_all_skills_receive_failed_process_photos_and_previous_states(tmp_path,cid):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,cid,1.)
+        client.observe_capture(cap)
+        count=len(ctx['criteria']['success_checks'])
+        with mock.patch.object(client,'_request',side_effect=respond(client,[False]*count)):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,cid,10.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None]*count)):
+>           client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'moka_pot_1', 'destination': '...10.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 10.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 10.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_ test_all_skills_receive_failed_process_photos_and_previous_states[xvla_bowl_drawer_close] _
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_all_skills_receive_failed5')
+cid = 'xvla_bowl_drawer_close'
+
+    @pytest.mark.parametrize('cid',list(NATIVE_LONG_SKILLS))
+    def test_all_skills_receive_failed_process_photos_and_previous_states(tmp_path,cid):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,cid,1.)
+        client.observe_capture(cap)
+        count=len(ctx['criteria']['success_checks'])
+        with mock.patch.object(client,'_request',side_effect=respond(client,[False]*count)):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,cid,10.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None]*count)):
+>           client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'articulate', 'target': 'white_cabinet_1_bottom_r...10.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 10.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 10.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_ test_all_skills_receive_failed_process_photos_and_previous_states[xvla_book_caddy] _
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_all_skills_receive_failed6')
+cid = 'xvla_book_caddy'
+
+    @pytest.mark.parametrize('cid',list(NATIVE_LONG_SKILLS))
+    def test_all_skills_receive_failed_process_photos_and_previous_states(tmp_path,cid):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,cid,1.)
+        client.observe_capture(cap)
+        count=len(ctx['criteria']['success_checks'])
+        with mock.patch.object(client,'_request',side_effect=respond(client,[False]*count)):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,cid,10.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None]*count)):
+>           client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'black_book_1', 'destination':...10.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 10.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 10.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_ test_all_skills_receive_failed_process_photos_and_previous_states[xvla_mug_pudding] _
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_all_skills_receive_failed7')
+cid = 'xvla_mug_pudding'
+
+    @pytest.mark.parametrize('cid',list(NATIVE_LONG_SKILLS))
+    def test_all_skills_receive_failed_process_photos_and_previous_states(tmp_path,cid):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,cid,1.)
+        client.observe_capture(cap)
+        count=len(ctx['criteria']['success_checks'])
+        with mock.patch.object(client,'_request',side_effect=respond(client,[False]*count)):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,cid,10.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None]*count)):
+>           client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'chocolate_pudding_1', 'destin...10.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 10.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 10.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_ test_all_skills_receive_failed_process_photos_and_previous_states[xvla_basket_soup_cheese] _
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_all_skills_receive_failed8')
+cid = 'xvla_basket_soup_cheese'
+
+    @pytest.mark.parametrize('cid',list(NATIVE_LONG_SKILLS))
+    def test_all_skills_receive_failed_process_photos_and_previous_states(tmp_path,cid):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,cid,1.)
+        client.observe_capture(cap)
+        count=len(ctx['criteria']['success_checks'])
+        with mock.patch.object(client,'_request',side_effect=respond(client,[False]*count)):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,cid,10.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None]*count)):
+>           client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'cream_cheese_1', 'destination...10.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 10.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 10.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_ test_all_skills_receive_failed_process_photos_and_previous_states[xvla_moka_both] _
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_all_skills_receive_failed9')
+cid = 'xvla_moka_both'
+
+    @pytest.mark.parametrize('cid',list(NATIVE_LONG_SKILLS))
+    def test_all_skills_receive_failed_process_photos_and_previous_states(tmp_path,cid):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,cid,1.)
+        client.observe_capture(cap)
+        count=len(ctx['criteria']['success_checks'])
+        with mock.patch.object(client,'_request',side_effect=respond(client,[False]*count)):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,cid,10.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None]*count)):
+>           client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'moka_pot_2', 'destination': '...10.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 10.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 10.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+____________ test_two_different_placements_keep_both_event_triplets ____________
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_two_different_placements_0')
+
+    def test_two_different_placements_keep_both_event_triplets(tmp_path):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        for time,event_id in [(1.,'release_0001'),(2.,'release_0002')]:
+            cap,ctx,paths=sample(tmp_path,'xvla_basket_both',time);client.observe_capture(cap)
+            with mock.patch.object(client,'_request',side_effect=respond(client,[False,None])):
+                client.analyze_release(ctx,paths,event_id)
+        cap,ctx,paths=sample(tmp_path,'xvla_basket_both',3.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[True,True],{0:['release_0001'],1:['release_0002']})):
+>           result=client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'tomato_sauce_1', 'destination...0}, {'frame': 4, 'view': 'agentview', 'timestamp': 2.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 2.0}, ...], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_______ test_unknown_not_promoted_from_old_boolean_and_history_is_reset ________
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_unknown_not_promoted_from0')
+
+    def test_unknown_not_promoted_from_old_boolean_and_history_is_reset(tmp_path):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        cap,ctx,paths=sample(tmp_path,'xvla_basket_both',1.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[True,True])):
+            client.analyze_release(ctx,paths,'release_0001')
+        cap,ctx,paths=sample(tmp_path,'xvla_basket_both',2.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None,True])):
+>           assert client.analyze(ctx,paths)['verdict']['operation_achieved'] is None
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:104: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'tomato_sauce_1', 'destination...': 2.0}, {'frame': 4, 'view': 'agentview', 'timestamp': 2.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 2.0}], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_____________ test_bounded_history_does_not_silently_hide_overflow _____________
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_bounded_history_does_not_0')
+
+    def test_bounded_history_does_not_silently_hide_overflow(tmp_path):
+        client=XvlaQwenClient(env_path='/nonexistent')
+        for time in range(1,6):
+            cap,ctx,_=sample(tmp_path,'xvla_basket_both',float(time))
+            client.remember_release(cap,ctx,'release_%04d'%time)
+        cap,ctx,paths=sample(tmp_path,'xvla_basket_both',6.);client.observe_capture(cap)
+        with mock.patch.object(client,'_request',side_effect=respond(client,[None,None])):
+>           result=client.analyze(ctx,paths)
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'user_request': 'private request', 'current_subtask': {'operation': 'place', 'target': 'tomato_sauce_1', 'destination...0}, {'frame': 4, 'view': 'agentview', 'timestamp': 2.0}, {'frame': 5, 'view': 'sideview', 'timestamp': 2.0}, ...], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+_____ test_original_failed_trial_images_and_states_enter_actual_serializer _____
+
+tmp_path = PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/software/pytest_tmp/test_original_failed_trial_ima0')
+
+    def test_original_failed_trial_images_and_states_enter_actual_serializer(tmp_path):
+        root=Path(__file__).resolve().parents[1]
+        job=root/'results/2026-10-13-xvla-release-trial/microwave_mug/runs/20261013T051908Z_microwave_mug_88287feb/cap_01_xvla_microwave_place_close_02ebbbf4'
+        process=[json.loads(line) for line in (job/'finish/process_checks.jsonl').read_text().splitlines()]
+        current=[json.loads(line) for line in (job/'finish/checks.jsonl').read_text().splitlines()]
+        client=XvlaQwenClient(env_path='/nonexistent');client.audit_dir=tmp_path/'audit'
+        for row in process:
+            ctx=copy.deepcopy(row['context']);client.remember_release(row['capture'],ctx,row['event_id'])
+            client._timeline.classify_release(row['event_id'],row['metadata']['raw_visual_goal_verdict']['checks'],row['metadata']['effective_checks'] if 'effective_checks' in row['metadata'] else row['metadata']['raw_visual_goal_verdict']['checks'])
+        prior=current[-2]
+        client._timeline.remember_check(prior['ctx'],prior['initial_check']['metadata']['raw_visual_goal_verdict']['checks'],prior['initial_check']['metadata']['effective_checks'])
+        row=current[-1];ctx=copy.deepcopy(row['ctx'])
+        cap={'timestamp':ctx['actuator_measurements']['timestamp'],
+             'robot':row['robot'],'frames':[{'view':v,'rgb_path':p} for v,p in zip(client.required_views,row['image_paths'])]}
+        client.observe_capture(cap)
+        replies=checks(ctx,[True,True]);replies[0].update(current_evidence=False,evidence_event_ids=['release_0001'])
+        response=mock.Mock();response.getcode.return_value=200
+        response.read.return_value=json.dumps({'choices':[{'message':{'content':json.dumps({'checks':replies,'reason':'software fake joint judgement'})}}]}).encode()
+        with mock.patch.object(client,'_resolve_key',return_value='software-test-only'),mock.patch('urllib.request.urlopen',return_value=response) as http:
+>           result=client.analyze(ctx,row['image_paths'])
+
+First_Phase/scene_demo/tests/test_xvla_timeline.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+First_Phase/scene_demo/xvla_finish.py:226: in analyze
+    prompt=build_prompt(request_context)
+First_Phase/scene_demo/xvla_finish.py:94: in build_prompt
+    'actuator_measurements': encoder_observation(context)}
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+context = {'actuator_measurements': {'finger_qpos': [0.040569098118290535, -0.04066785078409026], 'max_abs_arm_qvel': 0.06057804...tview', 'timestamp': 27.449999999995665}, {'frame': 5, 'view': 'sideview', 'timestamp': 27.449999999995665}, ...], ...}
+
+    def encoder_observation(context):
+        """Describe measured opening, never a commanded opening or visual overlap."""
+        measurements = context['actuator_measurements']
+        fingers = vision._finite_pair(measurements['finger_qpos'], 'finger_qpos')
+        reference = vision._finite_pair(measurements['standard_open_finger_qpos'], 'standard_open_finger_qpos')
+        timestamps = [measurements['timestamp']] + [f['timestamp'] for f in context['sensor_frames']]
+        if len(timestamps) < 2 or any(isinstance(t, bool) or not isinstance(t, (int, float))
+                                       or not math.isfinite(t) for t in timestamps):
+            raise ValueError('encoder/image timestamps must be finite numbers')
+        if any(abs(t - timestamps[0]) > 1e-9 for t in timestamps[1:]):
+>           raise ValueError('encoder and image timestamps differ')
+E           ValueError: encoder and image timestamps differ
+
+First_Phase/scene_demo/finish_v1/simple_checker.py:23: ValueError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/tests/test_xvla_process_monitor.py::test_event_between_intervals_and_current_only_handoff
+FAILED First_Phase/scene_demo/tests/test_xvla_process_monitor.py::test_release_budget_photos_persist_without_extra_current_calls
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_all_skills_receive_failed_process_photos_and_previous_states[xvla_basket_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_all_skills_receive_failed_process_photos_and_previous_states[xvla_mugs_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_all_skills_receive_failed_process_photos_and_previous_states[xvla_microwave_place_close]
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_all_skills_receive_failed_process_photos_and_previous_states[xvla_basket_cheese_butter]
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_all_skills_receive_failed_process_photos_and_previous_states[xvla_stove_moka]
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_all_skills_receive_failed_process_photos_and_previous_states[xvla_bowl_drawer_close]
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_all_skills_receive_failed_process_photos_and_previous_states[xvla_book_caddy]
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_all_skills_receive_failed_process_photos_and_previous_states[xvla_mug_pudding]
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_all_skills_receive_failed_process_photos_and_previous_states[xvla_basket_soup_cheese]
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_all_skills_receive_failed_process_photos_and_previous_states[xvla_moka_both]
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_two_different_placements_keep_both_event_triplets
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_unknown_not_promoted_from_old_boolean_and_history_is_reset
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_bounded_history_does_not_silently_hide_overflow
+FAILED First_Phase/scene_demo/tests/test_xvla_timeline.py::test_original_failed_trial_images_and_states_enter_actual_serializer
+16 failed, 255 passed, 34 subtests passed in 20.52s

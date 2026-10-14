@@ -1,0 +1,24 @@
+...............................................................................F.................................. [ 41%]
+........................................................................ [ 67%]
+........................................................................ [ 93%]
+...................                                                  [100%]
+=================================== FAILURES ===================================
+___________________ test_default_context_and_pilot_contract ____________________
+
+    def test_default_context_and_pilot_contract():
+        svc = object.__new__(service.SceneService)
+        assert svc._build_finish_context(catalog.CAPABILITIES['soup_to_basket'], 'Put soup in basket')['current_subtask']['target'] == 'alphabet_soup_1'
+        with pytest.raises(ValueError, match='exactly one goal'):
+            svc._build_finish_context(catalog.CAPABILITIES['xvla_basket_both'], 'Put both in basket')
+        assert xvla_pilot.CASES['wine_bowl_stove']['capabilities'] == ['wine_to_rack','bowl_to_plate','stove_on']
+        for case, cid in [('basket_two','xvla_basket_both'),('mugs_two','xvla_mugs_both'),('microwave_mug','xvla_microwave_place_close')]:
+            assert xvla_pilot.CASES[case]['capabilities'] == [cid]
+>       assert '2026-10-13-xvla-process-evidence/pilot' in str(xvla_pilot.DEFAULT_OUTPUT)
+E       AssertionError: assert '2026-10-13-xvla-process-evidence/pilot' in '/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/pilot'
+E        +  where '/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/pilot' = str(PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/pilot'))
+E        +    where PosixPath('/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-software/pilot') = xvla_pilot.DEFAULT_OUTPUT
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:128: AssertionError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_default_context_and_pilot_contract
+1 failed, 276 passed, 34 subtests passed in 23.34s

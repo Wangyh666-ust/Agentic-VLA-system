@@ -1,0 +1,53 @@
+--- previous/First_Phase/scene_demo/setup_profile.py
++++ current/First_Phase/scene_demo/setup_profile.py
+@@ -5,7 +5,7 @@
+ 只使用 Python 标准库。产出目录 /home/yhwang/fyp/scene_demo/hermes_home：
+ 
+   .env          现有 /home/yhwang/.hermes/.env 的副本，权限 0600，内容从不回显，原文件不动
+-  config.yaml   _config_version: 12 + qwen3-vl-plus + alibaba-cn + 支持视觉，
++  config.yaml   _config_version: 12 + qwen3.8-max + alibaba-cn + 支持视觉，
+                 agent.max_turns=12，仅注册 scene_tools 一个 MCP server
+   SOUL.md       英文角色说明：场景内规划器（在场景内按请求/真实画面/公开规则选物体与顺序）
+ 
+@@ -26,6 +26,8 @@
+ import os
+ import sys
+ 
++PLANNER_MODEL = os.environ.get("SCENE_PLANNER_MODEL", "qwen3.8-max")
++
+ SRC_ENV = "/home/yhwang/.hermes/.env"
+ HERMES_HOME = "/home/yhwang/fyp/scene_demo/hermes_home"
+ DST_ENV = os.path.join(HERMES_HOME, ".env")
+@@ -43,7 +45,7 @@
+ # 不注册任何其它 MCP server，也不启用全局 robot_tools / vla_tools / libero_tools。
+ _config_version: 12
+ model:
+-  default: qwen3-vl-plus
++  default: {PLANNER_MODEL}
+   provider: alibaba-cn
+   supports_vision: true
+ agent:
+--- previous/First_Phase/scene_demo/xvla_grounding.py
++++ current/First_Phase/scene_demo/xvla_grounding.py
+@@ -1,6 +1,7 @@
+ """Three-view scene identities shared by planning and checking; no control actions."""
+ import copy
+ import json
++import os
+ from pathlib import Path
+ 
+ import numpy as np
+@@ -84,6 +85,13 @@
+ 
+ class InventoryClient(SimpleQwenClient):
+     request_options = {'enable_thinking': True, 'thinking_budget': 2048, 'max_tokens': 6500}
++
++    def __init__(self, env_path='/home/yhwang/fyp/scene_demo/hermes_home/.env',
++                 base_url='https://dashscope.aliyuncs.com/compatible-mode/v1',
++                 model=None, max_calls=18):
++        super().__init__(env_path=env_path, base_url=base_url,
++                         model=model if model is not None else os.environ.get('SCENE_PLANNER_MODEL', 'qwen3.8-max'),
++                         max_calls=max_calls)
+ 
+     def parse_verdict(self, content):
+         self.raw_inventory = vision._parse_verdict_content(content)

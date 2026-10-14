@@ -1,0 +1,145 @@
+{
+  "id": "20261013-xvla-evidence-memory",
+  "title": "确认放置证据保存/撤销修复：真实旧图回放仍未完整达标",
+  "status": "通用规则已修、真实遮挡复用已触发；两项末帧True，但开门负例错误与汤罐过程确认缺失，离线资格未通过。",
+  "qualification": false,
+  "default_enabled": false,
+  "software": "319 passed, 30 subtests passed",
+  "actual_calls": {
+    "Qwen": 32,
+    "VLA": 0,
+    "Hermes": 0,
+    "subagents": 0
+  },
+  "environment_actions": 0,
+  "final_cases": {
+    "microwave_mug": {
+      "kind": "current",
+      "time": 45.75000000000995,
+      "goal": true,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": false,
+          "evidence_event_ids": [
+            "release_0001"
+          ],
+          "object_key": "white_yellow_mug_1",
+          "reason": "微波炉门关闭，无法观察内部；桌面上可见灰色杯子但无黄色把手特征，目标杯不可见；保留已确认放置证据 release_0001",
+          "history_event_id": "release_0001",
+          "history_event_ids": [
+            "release_0001"
+          ],
+          "history_mode": "confirmed_memory"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "门板完全遮挡炉腔入口，门板与机身正面齐平"
+        }
+      ],
+      "call_index": 8,
+      "replayed_existing_v5_response": false
+    },
+    "basket_two": {
+      "kind": "current",
+      "time": 46.30000000001062,
+      "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_02/basket_two/08_current.json",
+      "goal": true,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "alphabet_soup_1",
+          "reason": "wrist view (frame 6) shows cylindrical can with silver lid and blue/orange label inside basket; matches target visual identity"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "release_0002"
+          ],
+          "object_key": "tomato_sauce_1",
+          "reason": "wrist view (frame 6) shows cylindrical can with red/green label inside basket; matches target visual identity；保留已确认放置证据 release_0002",
+          "history_event_id": "release_0002",
+          "history_event_ids": [
+            "release_0002"
+          ],
+          "history_mode": "confirmed_memory"
+        }
+      ],
+      "memory": [
+        {
+          "id": "goal_1",
+          "event_id": "release_0002",
+          "timestamp": 14.200000000001411,
+          "status": "confirmed",
+          "object_key": "tomato_sauce_1"
+        }
+      ],
+      "call_index": 7,
+      "actual_Qwen_calls": 7,
+      "same_capture_reused": false,
+      "evaluation_only_truth_not_sent": {
+        "vla_step": 900,
+        "native_success": true,
+        "predicates": {
+          "in|alphabet_soup_1|basket_1_contain_region": true,
+          "in|tomato_sauce_1|basket_1_contain_region": true
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "id": "attempt_01",
+      "requests": 16,
+      "original_complete": false,
+      "original_passed": false
+    },
+    {
+      "id": "attempt_02",
+      "requests": 15,
+      "original_complete": false,
+      "original_passed": false
+    },
+    {
+      "id": "continuation",
+      "requests": 1,
+      "reused_exact_v5_responses": 7,
+      "complete": true,
+      "passed": false
+    }
+  ],
+  "findings": [
+    "已确认放置记录不再因未知、遮挡、干扰物或无关开爪被删除；只有同一目标、明确移出/移动/掉落及当前反证图可撤销。未充分支持的同物outside冲突保留记录、输出Unknown等待核实。",
+    "所有10个原生长程共用关系类型规则；门/抽屉/开关和preserved条件只比较最新视觉事实，不继承历史状态。同期同图不重复请求状态票。",
+    "入炉末帧：当前杯不可见，goal_0仍True且引用release_0001，goal_1按当前门图True，完整目标True；已实际触发并执行记忆复用。",
+    "入炉开门负例：第二轮150步正确False，164步首次松手却把开门判closed，450/750步又把实际已关判open；门状态视觉判断仍不稳定，负例验收失败。松手快照整体True不等于线上已移交，当前轮未运行环境。",
+    "入篮第二轮：首次松手汤罐被描述为桌上橙色小盒，未建立goal_0证据；第二次松手确认goal_1番茄酱罐并保存。最终两目标True，但只有番茄酱引用过程证据；未达到两罐均由松手证据确认的预登记判据。",
+    "入篮中途仍把桌上其他物品当成番茄酱罐：程序保留原证据，对缺明确变化证据的同物outside冲突输出Unknown，未误撤销。",
+    "单罐负例整体False、无历史遮挡杯Unknown；这些负例结果不能抵销门开误报或缺失汤罐过程确认。",
+    "两处协议边界已修：状态项多余relation不覆盖observed_state；identity不确定的无依据outside不能中断整帧或撤销证据。最后补测严格复用了第二轮7条原响应，每条请求body SHA（图片/新中间状态/提示）相同，只新增末帧1次真实请求。",
+    "共32次真实Qwen请求，所有实际发送PNG原字节、帧标签和body SHA匹配；没有将仿真目标真值发给模型。过程信息的传输与保存已验证，但视觉整体效果未通过。"
+  ],
+  "limitations": [
+    "全部10技能仅有软件规则与真实服务接口测试；真实Qwen旧图回放只有两类任务，不能声称10任务实测成功。",
+    "原图256x256；这不是新增降采样。初始参考时刻未知标-1；松手前后仅复用1秒内实际有记录的帧，旧图缺密集窗口，不能补造连续动作。",
+    "32为累计实际请求数，不是独立任务样本数或成功率；7条精确原响应重放不另计请求。两个提示版本有限图片，不把不同版本最好输出拼成通过。",
+    "零新仿真/实体动作、零VLA/Hermes请求、零辅助器/子agent。默认检查器未替换，未启动收尾/退离/复位，不评价这些下游模块的本轮效果。",
+    "主Agent实际型号/推理档位无法从本地调用证据确认，记录unknown；没有冒称按AGENTS默认模型派发。"
+  ],
+  "next_gap": "在同一套已保存照片上诊断目标定位/身份关联与门板位置观察；不能继续放宽完成条件或绕过负例。",
+  "preserved": "finish_v1全py文件、safe_exit/joint_home/placement_completion等哈希与本轮前一致；service仅更换显式候选检查器入口，pilot仅加入源文件冻结/资格校验。"
+}

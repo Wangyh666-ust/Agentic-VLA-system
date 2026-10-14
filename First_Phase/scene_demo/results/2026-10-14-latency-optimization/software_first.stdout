@@ -1,0 +1,85 @@
+........................................................................ [ 19%]
+........F............................................................... [ 39%]
+........................................................................ [ 59%]
+..........................F............................................. [ 79%]
+........................................................................ [ 99%]
+.                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_candidate_recheck_can_veto_and_recent_frames_are_sent __________
+
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-16/test_candidate_recheck_can_vet0')
+
+    def test_candidate_recheck_can_veto_and_recent_frames_are_sent(tmp_path):
+        client=XvlaSubtaskReviewClient(env_path='/none')
+        for stamp in (1.,1.4,1.8,2.):
+            cap,ctx,paths=take(tmp_path,stamp,'xvla_book_caddy',closed=True)
+            client.remember_observation(cap,ctx)
+        client.observe_capture(cap)
+        def policy(p,n):
+            raw=response(p,current_positive=p.get('decision_stage')!='handoff_review')
+            if p.get('decision_stage')=='handoff_review':
+                assert p['previous_reviews']==[]
+                assert [o['captured_at'] for o in p['observations']]==[1.,1.4,1.8,2.]
+            return raw
+>       with install(client,policy):result=client.analyze(ctx,paths)
+
+scene_demo/tests/test_xvla_relation_gate.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scene_demo/xvla_subtask_review.py:479: in analyze
+    return self._inspect(context,image_paths)
+scene_demo/xvla_subtask_review.py:462: in _inspect
+    handoff_review=self._call_page(packet,ctx,images)
+scene_demo/xvla_subtask_review.py:367: in _call_page
+    meta=self._request(context,paths,prompt);review=copy.deepcopy(self.last_review)
+/home/yhwang/fyp/xvla_native/uv_python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/unittest/mock.py:1114: in __call__
+    return self._mock_call(*args, **kwargs)
+/home/yhwang/fyp/xvla_native/uv_python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/unittest/mock.py:1118: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+/home/yhwang/fyp/xvla_native/uv_python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/unittest/mock.py:1179: in _execute_mock_call
+    result = effect(*args, **kwargs)
+scene_demo/tests/test_xvla_subtask_review.py:51: in request
+    raw=policy(client._active_packet,client._calls)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+p = {'protocol': 'xvla_subtask_review_v9.3', 'scope': {'session_id': 'local', 'logical_subtask_id': '1b95282a86d042239177a...ption': 'put the book in the back compartment of the caddy', 'relation': 'in', 'target_id': 'black_book_1', ...}], ...}
+n = 3
+
+    def policy(p,n):
+        raw=response(p,current_positive=p.get('decision_stage')!='handoff_review')
+        if p.get('decision_stage')=='handoff_review':
+            assert p['previous_reviews']==[]
+>           assert [o['captured_at'] for o in p['observations']]==[1.,1.4,1.8,2.]
+E           assert [1.0, 1.8, 2.0] == [1.0, 1.4, 1.8, 2.0]
+E             
+E             At index 1 diff: 1.8 != 1.4
+E             Right contains one more item: 2.0
+E             Use -v to get more diff
+
+scene_demo/tests/test_xvla_relation_gate.py:45: AssertionError
+_______ test_handoff_packet_keeps_approach_and_neighbours_without_future _______
+
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-16/test_handoff_packet_keeps_appr0')
+
+    def test_handoff_packet_keeps_approach_and_neighbours_without_future(tmp_path):
+        client = XvlaSubtaskReviewClient(env_path='/none')
+        observations = []
+        for stamp in (.5, 1., 2., 4., 8., 12., 15.25, 15.5, 15.75, 20.):
+            cap, ctx, paths = take(tmp_path, stamp, 'xvla_book_caddy', closed=True)
+            observations.append(client.remember_observation(cap, ctx))
+        packet, _, _ = client._pages(observations[-2], 'current')[0]
+        times = [o['captured_at'] for o in packet['observations']]
+>       assert {2., 4., 8., 12., 15.25, 15.5, 15.75} <= set(times)
+E       assert {2.0, 4.0, 8....25, 15.5, ...} <= {0.5, 15.5, 15.75}
+E         
+E         Extra items in the left set:
+E         2.0
+E         4.0
+E         8.0
+E         12.0
+E         15.25
+
+scene_demo/tests/test_xvla_relation_gate.py:144: AssertionError
+=========================== short test summary info ============================
+FAILED scene_demo/tests/test_xvla_relation_gate.py::test_candidate_recheck_can_veto_and_recent_frames_are_sent
+FAILED scene_demo/tests/test_xvla_relation_gate.py::test_handoff_packet_keeps_approach_and_neighbours_without_future
+2 failed, 359 passed in 5.72s

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "20261014-native-joint-planning-offline",
+  "intent": "analyze_existing",
+  "question_key": "xvla-interactive-latency",
+  "purpose": "仅用旧图验证完整原生技能规划、一次独立三视图复核、JSON格式及从识别到草稿耗时（目标60秒）；不启动物理动作。",
+  "prior_evidence": [
+    "20261014-latency-optimization",
+    "20261014-book-latency-diagnosis",
+    "20261012-xvla-native-benchmark",
+    "20261014-occluded-support-handoff"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261014-latency-optimization",
+      "disposition": "reuse",
+      "reason": "复用相关耗时和原生库、视觉约束证据；旧半段技能及多轮规划不能证明新两请求流程有效。"
+    },
+    {
+      "experiment_id": "20261014-book-latency-diagnosis",
+      "disposition": "reuse",
+      "reason": "复用相关耗时和原生库、视觉约束证据；旧半段技能及多轮规划不能证明新两请求流程有效。"
+    },
+    {
+      "experiment_id": "20261012-xvla-native-benchmark",
+      "disposition": "reuse",
+      "reason": "复用相关耗时和原生库、视觉约束证据；旧半段技能及多轮规划不能证明新两请求流程有效。"
+    },
+    {
+      "experiment_id": "20261014-occluded-support-handoff",
+      "disposition": "reuse",
+      "reason": "复用相关耗时和原生库、视觉约束证据；旧半段技能及多轮规划不能证明新两请求流程有效。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "软件核验所有原生技能完整goals，服务端拒绝拆分；保护原收尾复位及5/5。",
+    "真实Hermes SDK单轮三视图识别并规划，独立Qwen复核；同一旧碗/瓶场景先验选中完整入抽屉关抽屉、瓶子范围缺口；失败停止依赖在线试验。",
+    "正常2次请求，最多4个旧图案例（碗瓶、桌面、黄杯加热、双罐），一轮明确错误可修正后在新目录复测；保存每次真实请求和响应、模型、用量、端到端耗时。",
+    "沿用旧松手约束，只改JSON输出模式及每条回答最多一次修复，保留失败原文，不将格式失败当视觉通过。"
+  ]
+}

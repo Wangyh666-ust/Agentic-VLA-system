@@ -1,0 +1,982 @@
+{
+  "cases": {
+    "microwave_mug": {
+      "complete": false,
+      "reason": null,
+      "error": null,
+      "plan": {
+        "state": "blocked",
+        "plan_success": null,
+        "target_bindings": {
+          "microwave_1": "obj_3",
+          "microwave_1_heating_region": "obj_3",
+          "white_yellow_mug_1": "obj_1"
+        },
+        "native_skill_route": {
+          "requested_capability_ids": [
+            "xvla_microwave_place_close"
+          ],
+          "executed_capability_ids": [
+            "xvla_microwave_place_close"
+          ],
+          "replacements": []
+        },
+        "capability_ids": [
+          "xvla_microwave_place_close"
+        ],
+        "error": "retreat plan blocked"
+      },
+      "source_counts": {
+        "settling": 10,
+        "prepare": 5,
+        "vla": 150,
+        "finish": 8
+      },
+      "first_native_success_vla_step": null,
+      "native_success_final": false,
+      "inventories": [
+        {
+          "inventory": {
+            "objects": [
+              {
+                "object_id": "obj_1",
+                "description": "黄色把手的白色杯子，杯身可见部分为白色，把手黄色，放置于桌面",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 0,
+                    "box": [
+                      300,
+                      0,
+                      650,
+                      250
+                    ]
+                  },
+                  {
+                    "frame": 1,
+                    "box": [
+                      430,
+                      460,
+                      520,
+                      560
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      450,
+                      470,
+                      540,
+                      560
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "visible",
+                    "reason": "wrist视角中清晰显示黄色把手和白色杯身，杯口朝上"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "agentview中黄色把手杯子位于桌面右侧，与灰色杯子并排"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "sideview中黄色把手杯子位于桌面中间偏右，杯身完整可见"
+                  }
+                ],
+                "confusable_with": [
+                  "obj_2"
+                ],
+                "role": "target"
+              },
+              {
+                "object_id": "obj_2",
+                "description": "灰色带把手的杯子，杯身灰色，把手灰色，放置于桌面",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 1,
+                    "box": [
+                      240,
+                      500,
+                      340,
+                      600
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      370,
+                      380,
+                      450,
+                      460
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "occluded",
+                    "reason": "wrist视角未显示该物体，仅见黄色杯子"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "agentview中灰色杯子位于桌面左侧，与黄色杯子并排"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "sideview中灰色杯子位于桌面左侧，杯身完整可见"
+                  }
+                ],
+                "confusable_with": [
+                  "obj_1"
+                ],
+                "role": "distractor"
+              },
+              {
+                "object_id": "obj_3",
+                "description": "黑色长方体装置，带有可开合的门（门处于打开状态），门为黑色，装置主体黑色",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 0,
+                    "box": [
+                      0,
+                      450,
+                      420,
+                      620
+                    ]
+                  },
+                  {
+                    "frame": 1,
+                    "box": [
+                      410,
+                      300,
+                      600,
+                      480
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      570,
+                      350,
+                      750,
+                      520
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "partial",
+                    "reason": "wrist视角仅显示微波炉下部结构，门缝可见但主体被遮挡"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "agentview中清晰显示打开的门和主体，门与桌面平行"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "sideview中清晰显示打开的门和主体，门向右开启"
+                  }
+                ],
+                "confusable_with": [],
+                "role": "destination"
+              }
+            ],
+            "coverage": {
+              "targets_identifiable": true,
+              "destination_visible": true,
+              "state_change_visible": true,
+              "reason": "黄白杯（obj_1）在三视角均清晰可辨且无遮挡；微波炉（obj_3）在agentview和sideview中完整可见，wrist视角部分可见；微波炉门初始打开状态在agentview和sideview中明确可见，支持后续关闭状态变化观察"
+            },
+            "version": 1,
+            "captured_at": 0.5000000000000003,
+            "reviewed_from_views": [
+              "wrist",
+              "agentview",
+              "sideview"
+            ],
+            "source_images": [
+              {
+                "frame": 0,
+                "view": "wrist",
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/planning_grounding/cap000002_wrist.png",
+                "sha256": "3e8fcc815a090cb1da60da16451a4eb9300d67c6603332cfc31f8fc18d50b170"
+              },
+              {
+                "frame": 1,
+                "view": "agentview",
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/planning_grounding/cap000002_wrist_checker_agentview.png",
+                "sha256": "7bf7950a0c04cde03a8f1e1dfd3ee1cb7209065064d896394020ee3060fbe7e4"
+              },
+              {
+                "frame": 2,
+                "view": "sideview",
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/microwave_mug/runs/20261013T153850Z_microwave_mug_83806dba/planning_grounding/cap000002_wrist_checker_sideview.png",
+                "sha256": "aebe9bee43d0c7746c98c49f30eab687d5b0540c97e61dedf309828749c2fafb"
+              }
+            ]
+          },
+          "metadata": {
+            "verdict": {
+              "target_visible": null,
+              "destination_visible": null,
+              "at_destination": null,
+              "supported": null,
+              "released": null,
+              "stable": null,
+              "operation_achieved": null,
+              "clear_of_target": null,
+              "boxes": {},
+              "evidence": [
+                "scene identity only"
+              ],
+              "unknown_reasons": []
+            },
+            "usage": {
+              "prompt_tokens": 1829,
+              "completion_tokens": 2940,
+              "total_tokens": 4769,
+              "completion_tokens_details": {
+                "reasoning_tokens": 2049,
+                "text_tokens": 891
+              },
+              "prompt_tokens_details": {
+                "image_tokens": 582,
+                "text_tokens": 1247,
+                "cached_tokens": 0
+              }
+            },
+            "model": "qwen3-vl-plus",
+            "http_status": 200,
+            "request_sha256": "1b4ca6bc8391d63264e0490d89104e6fb467a98d80121c0ad81e2ee71fa2b56c",
+            "response_sha256": "fca22c640b7bff6531b0702082e352330051187c0702a4b978eee0b4448dcefa",
+            "call_index": 2
+          }
+        }
+      ],
+      "selected_targets_review": [
+        {
+          "passed": true,
+          "response": {
+            "checks": [
+              {
+                "target_id": "microwave_1",
+                "matches_request": true,
+                "reason": "obj_3在三个视角均存在：wrist视角部分可见（底部结构），agentview和sideview完整显示打开的门与主体，符合微波炉描述"
+              },
+              {
+                "target_id": "microwave_1_heating_region",
+                "matches_request": true,
+                "reason": "规则允许目的地部件绑定装置整体；obj_3在agentview/sideview中门打开可见内部空间，wrist视角虽部分遮挡但装置存在，语义符合加热区域归属"
+              },
+              {
+                "target_id": "white_yellow_mug_1",
+                "matches_request": true,
+                "reason": "obj_1在三视角均清晰可见：wrist视角显示黄把手白杯身，agentview/sideview中与灰色杯并排且位置匹配，无遮挡冲突"
+              }
+            ]
+          },
+          "metadata": {
+            "verdict": {
+              "target_visible": null,
+              "destination_visible": null,
+              "at_destination": null,
+              "supported": null,
+              "released": null,
+              "stable": null,
+              "operation_achieved": null,
+              "clear_of_target": null,
+              "boxes": {},
+              "evidence": [
+                "scene identity only"
+              ],
+              "unknown_reasons": []
+            },
+            "usage": {
+              "prompt_tokens": 2281,
+              "completion_tokens": 2227,
+              "total_tokens": 4508,
+              "completion_tokens_details": {
+                "reasoning_tokens": 2049,
+                "text_tokens": 178
+              },
+              "prompt_tokens_details": {
+                "image_tokens": 582,
+                "text_tokens": 1699,
+                "cached_tokens": 0
+              }
+            },
+            "model": "qwen3-vl-plus",
+            "http_status": 200,
+            "request_sha256": "7a5cf5a7af9f26554267e83a057799c2ee6a1aea26e50970511c56a59fb73113",
+            "response_sha256": "af077bfcc4889a03207040e0ff207bfc83f3d32b70bcacb39e7cddd2728855e6",
+            "call_index": 1
+          },
+          "selection": {
+            "microwave_1": "obj_3",
+            "microwave_1_heating_region": "obj_3",
+            "white_yellow_mug_1": "obj_1"
+          }
+        }
+      ],
+      "release_events": 1,
+      "release_images": [
+        [
+          "wrist",
+          "agentview",
+          "sideview"
+        ]
+      ],
+      "qwen_requests": 4,
+      "qwen_responses": 4,
+      "historical_proofs": [],
+      "finish_status": [
+        {
+          "phase": "blocked",
+          "calls": 1,
+          "prechecks": 1,
+          "helper_counts": {
+            "release": 8,
+            "movement": 0,
+            "confirm": 0,
+            "home": 0
+          },
+          "last_decision": {
+            "state": "needs_release",
+            "reason": "purpose achieved; open fingers",
+            "allow_release": true,
+            "allow_retreat": false
+          },
+          "terminal": {
+            "ok": false,
+            "reason": "retreat plan blocked",
+            "checks": 1
+          },
+          "independent_streak": 0,
+          "current_view_calls": 1,
+          "release_evidence_calls": 0,
+          "release_events": 1,
+          "process_evidence": [],
+          "actual_visual_requests": 1
+        }
+      ],
+      "handoff_evidence": [
+        null
+      ],
+      "job_reasons": [
+        "retreat plan blocked"
+      ],
+      "checks": [
+        {
+          "step": null,
+          "effective_checks": [
+            {
+              "achieved": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "id": "goal_0",
+              "reason": "初态中黄白杯子在桌面（frame1），当前frame3从微波炉内部视角可见杯子局部，frame4显示杯子完全进入微波炉加热区域，结合黄色把手特征确认为同一目标。微波炉加热区域支撑面可见，状态为at_destination。",
+              "target_matches_definition": true
+            },
+            {
+              "achieved": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "id": "goal_1",
+              "reason": "初态微波炉门打开（frame1门板外露），当前frame5侧面视角显示门板与机身齐平，符合关闭定义。frame4中门仍打开但非当前时刻状态，仅依据当前图判断。",
+              "target_matches_definition": true
+            }
+          ],
+          "process_evidence": [],
+          "actual_Qwen_calls": 1
+        }
+      ],
+      "source_image_hash_errors": []
+    },
+    "basket_two_startup": {
+      "complete": false,
+      "reason": "program_error",
+      "error": "preplanning_grounding_failed: {\"ok\": false, \"reason\": \"internal_error\", \"detail\": \"Traceback (most recent call last):\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/service.py\\\", line 1370, in _worker_loop\\n    work.result = work.fn()\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/xvla_service.py\\\", line 156, in prepare\\n    capture = port.capture()\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/xvla_grounding.py\\\", line 65, in capture\\n    result['checker_frames'] = [copy.deepcopy(wrist)] + render_external(port.env, port.output_dir, stem)\\n  File \\\"/mnt/d/FYP/First_Phase/scene_demo/xvla_grounding.py\\\", line 55, in render_external\\n    raise RuntimeError('checker rendering changed physical state')\\nRuntimeError: checker rendering changed physical state\\n\"}",
+      "plan": {
+        "state": null,
+        "plan_success": null,
+        "target_bindings": null,
+        "native_skill_route": null,
+        "capability_ids": null,
+        "error": null
+      },
+      "source_counts": {
+        "settling": 10,
+        "prepare": 0,
+        "vla": 0,
+        "finish": 0
+      },
+      "first_native_success_vla_step": null,
+      "native_success_final": false,
+      "inventories": [],
+      "selected_targets_review": [],
+      "release_events": 0,
+      "release_images": [],
+      "qwen_requests": 0,
+      "qwen_responses": 0,
+      "historical_proofs": [],
+      "finish_status": [],
+      "handoff_evidence": [],
+      "job_reasons": [],
+      "checks": [],
+      "source_image_hash_errors": []
+    },
+    "basket_two": {
+      "complete": false,
+      "reason": null,
+      "error": null,
+      "plan": {
+        "state": "cancelled",
+        "plan_success": null,
+        "target_bindings": {
+          "alphabet_soup_1": "obj_letter_soup",
+          "basket_1_contain_region": "obj_basket",
+          "tomato_sauce_1": "obj_tomato_sauce"
+        },
+        "native_skill_route": {
+          "requested_capability_ids": [
+            "soup_to_basket",
+            "sauce_to_basket"
+          ],
+          "executed_capability_ids": [
+            "xvla_basket_both"
+          ],
+          "replacements": [
+            {
+              "native_capability_id": "xvla_basket_both",
+              "component_capability_ids": [
+                "soup_to_basket",
+                "sauce_to_basket"
+              ],
+              "start_index": 0
+            }
+          ]
+        },
+        "capability_ids": [
+          "xvla_basket_both"
+        ],
+        "error": null
+      },
+      "source_counts": {
+        "settling": 10,
+        "prepare": 16,
+        "vla": 87,
+        "finish": 0
+      },
+      "first_native_success_vla_step": null,
+      "native_success_final": false,
+      "inventories": [
+        {
+          "inventory": {
+            "objects": [
+              {
+                "object_id": "obj_basket",
+                "description": "编织篮子，白色内衬，位于桌面右侧区域",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 1,
+                    "box": [
+                      572,
+                      352,
+                      722,
+                      502
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      585,
+                      485,
+                      775,
+                      685
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "occluded",
+                    "reason": "俯视视角未显示篮子"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "清晰可见编织纹理及白色内衬"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "侧面视角确认相同编织篮子"
+                  }
+                ],
+                "confusable_with": [],
+                "role": "destination"
+              },
+              {
+                "object_id": "obj_letter_soup",
+                "description": "橙色包装小圆柱罐，无明显把手，位于桌面左侧区域",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 0,
+                    "box": [
+                      330,
+                      300,
+                      380,
+                      400
+                    ]
+                  },
+                  {
+                    "frame": 1,
+                    "box": [
+                      310,
+                      530,
+                      370,
+                      640
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      330,
+                      420,
+                      390,
+                      530
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "visible",
+                    "reason": "俯视视角中央橙色小罐"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "左侧橙色包装特征明显"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "侧面视角位置对应"
+                  }
+                ],
+                "confusable_with": [
+                  "obj_tomato_sauce"
+                ],
+                "role": "target"
+              },
+              {
+                "object_id": "obj_tomato_sauce",
+                "description": "红色标签圆柱罐，无明显把手，位于桌面中央偏右",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 1,
+                    "box": [
+                      420,
+                      500,
+                      480,
+                      610
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      440,
+                      450,
+                      500,
+                      560
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "occluded",
+                    "reason": "被Milk盒遮挡且视角未覆盖"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "红色标签特征清晰"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "侧面视角确认相同罐体"
+                  }
+                ],
+                "confusable_with": [
+                  "obj_milk"
+                ],
+                "role": "target"
+              },
+              {
+                "object_id": "obj_milk",
+                "description": "红色标签长方体纸盒，位于frame 0右侧区域",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 0,
+                    "box": [
+                      680,
+                      290,
+                      850,
+                      410
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "visible",
+                    "reason": "俯视视角右侧红色纸盒"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "occluded",
+                    "reason": "未出现在agentview视角"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "occluded",
+                    "reason": "未出现在sideview视角"
+                  }
+                ],
+                "confusable_with": [
+                  "obj_tomato_sauce"
+                ],
+                "role": "distractor"
+              },
+              {
+                "object_id": "obj_brown_bottle",
+                "description": "棕色小瓶，带标签，位于桌面左侧",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 1,
+                    "box": [
+                      280,
+                      400,
+                      320,
+                      500
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      290,
+                      380,
+                      330,
+                      480
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "occluded",
+                    "reason": "俯视视角未显示"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "棕色瓶身特征明显"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "侧面视角位置对应"
+                  }
+                ],
+                "confusable_with": [],
+                "role": "distractor"
+              },
+              {
+                "object_id": "obj_blue_box",
+                "description": "蓝色小长方体盒子，位于桌面中央",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 1,
+                    "box": [
+                      390,
+                      590,
+                      450,
+                      650
+                    ]
+                  },
+                  {
+                    "frame": 2,
+                    "box": [
+                      330,
+                      480,
+                      390,
+                      530
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "occluded",
+                    "reason": "俯视视角未显示"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "visible",
+                    "reason": "蓝色盒体特征清晰"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "visible",
+                    "reason": "侧面视角位置对应"
+                  }
+                ],
+                "confusable_with": [],
+                "role": "distractor"
+              },
+              {
+                "object_id": "obj_black_container",
+                "description": "黑色带孔容器，位于frame 0左侧区域",
+                "confirmed": true,
+                "anchors": [
+                  {
+                    "frame": 0,
+                    "box": [
+                      0,
+                      310,
+                      120,
+                      500
+                    ]
+                  }
+                ],
+                "view_observations": [
+                  {
+                    "frame": 0,
+                    "visibility": "visible",
+                    "reason": "俯视视角左侧带孔结构"
+                  },
+                  {
+                    "frame": 1,
+                    "visibility": "occluded",
+                    "reason": "agentview视角未覆盖"
+                  },
+                  {
+                    "frame": 2,
+                    "visibility": "occluded",
+                    "reason": "sideview视角未覆盖"
+                  }
+                ],
+                "confusable_with": [],
+                "role": "uncertain"
+              }
+            ],
+            "coverage": {
+              "targets_identifiable": true,
+              "destination_visible": true,
+              "state_change_visible": true,
+              "reason": "字母汤罐（橙色小圆柱罐）和番茄酱罐（红色标签圆柱罐）在至少两个视角可见且特征明确，篮子在agentview和sideview清晰可见，状态变化可通过机械臂动作推断"
+            },
+            "version": 1,
+            "captured_at": 0.5000000000000003,
+            "reviewed_from_views": [
+              "wrist",
+              "agentview",
+              "sideview"
+            ],
+            "source_images": [
+              {
+                "frame": 0,
+                "view": "wrist",
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/basket_renderfix/basket_two/runs/20261013T155633Z_basket_two_594bcb3b/planning_grounding/cap000002_wrist.png",
+                "sha256": "ca7b899be7cedc565e8da41e91474ddb8772bbe8c82dc19101d8d235ad683ca7"
+              },
+              {
+                "frame": 1,
+                "view": "agentview",
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/basket_renderfix/basket_two/runs/20261013T155633Z_basket_two_594bcb3b/planning_grounding/cap000002_wrist_checker_agentview.png",
+                "sha256": "d4c27f4c369475ab415ee4bc45626f635d78feec890c188c12696de0461ca171"
+              },
+              {
+                "frame": 2,
+                "view": "sideview",
+                "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-grounded-online/basket_renderfix/basket_two/runs/20261013T155633Z_basket_two_594bcb3b/planning_grounding/cap000002_wrist_checker_sideview.png",
+                "sha256": "3d5a600f361d316456a44a8df537683b58a779e009e1713c78a8cf9154eb59d5"
+              }
+            ]
+          },
+          "metadata": {
+            "verdict": {
+              "target_visible": null,
+              "destination_visible": null,
+              "at_destination": null,
+              "supported": null,
+              "released": null,
+              "stable": null,
+              "operation_achieved": null,
+              "clear_of_target": null,
+              "boxes": {},
+              "evidence": [
+                "scene identity only"
+              ],
+              "unknown_reasons": []
+            },
+            "usage": {
+              "prompt_tokens": 2427,
+              "completion_tokens": 3555,
+              "total_tokens": 5982,
+              "completion_tokens_details": {
+                "reasoning_tokens": 2049,
+                "text_tokens": 1506
+              },
+              "prompt_tokens_details": {
+                "image_tokens": 582,
+                "text_tokens": 1845,
+                "cached_tokens": 0
+              }
+            },
+            "model": "qwen3-vl-plus",
+            "http_status": 200,
+            "request_sha256": "136af2105e2084c83a103fb1ba2ba175e8cbc654db58f5604e640e54c710e0e5",
+            "response_sha256": "528c108d9f727bb793badc35be300862ae97883815d86afe8cc19c12cbb1345c",
+            "call_index": 2
+          }
+        }
+      ],
+      "selected_targets_review": [
+        {
+          "passed": true,
+          "response": {
+            "checks": [
+              {
+                "target_id": "alphabet_soup_1",
+                "matches_request": true,
+                "reason": "wrist view显示中央偏左橙色小圆柱罐（frame0 box[330,300,380,400]），agentview左侧橙色包装特征明显（frame1 box[310,530,370,640]），sideview位置对应（frame2 box[330,420,390,530]），符合字母汤罐描述且与番茄酱罐颜色区分明确"
+              },
+              {
+                "target_id": "basket_1_contain_region",
+                "matches_request": true,
+                "reason": "wrist view未显示（遮挡合理），agentview清晰显示右侧编织篮子及白色内衬（frame1 box[572,352,722,502]），sideview确认相同篮子（frame2 box[585,485,775,685]），符合目的地要求且绑定装置整体"
+              },
+              {
+                "target_id": "tomato_sauce_1",
+                "matches_request": true,
+                "reason": "wrist view被Milk盒遮挡（符合描述），agentview中央偏右红色标签特征清晰（frame1 box[420,500,480,610]），sideview确认相同罐体（frame2 box[440,450,500,560]），符合番茄酱罐描述且与字母汤罐颜色区分明确"
+              }
+            ]
+          },
+          "metadata": {
+            "verdict": {
+              "target_visible": null,
+              "destination_visible": null,
+              "at_destination": null,
+              "supported": null,
+              "released": null,
+              "stable": null,
+              "operation_achieved": null,
+              "clear_of_target": null,
+              "boxes": {},
+              "evidence": [
+                "scene identity only"
+              ],
+              "unknown_reasons": []
+            },
+            "usage": {
+              "prompt_tokens": 2836,
+              "completion_tokens": 2132,
+              "total_tokens": 4968,
+              "completion_tokens_details": {
+                "reasoning_tokens": 1805,
+                "text_tokens": 327
+              },
+              "prompt_tokens_details": {
+                "image_tokens": 582,
+                "text_tokens": 2254,
+                "cached_tokens": 0
+              }
+            },
+            "model": "qwen3-vl-plus",
+            "http_status": 200,
+            "request_sha256": "db02451b7180ad4b8b895ed2489308c29ca656f9b327b957ce974079da66345d",
+            "response_sha256": "6dd3fa82a7fd0f001f631f77e86c24f292ed324bfabfb32263da0039a140c6b7",
+            "call_index": 1
+          },
+          "selection": {
+            "alphabet_soup_1": "obj_letter_soup",
+            "basket_1_contain_region": "obj_basket",
+            "tomato_sauce_1": "obj_tomato_sauce"
+          }
+        }
+      ],
+      "release_events": 0,
+      "release_images": [],
+      "qwen_requests": 3,
+      "qwen_responses": 3,
+      "historical_proofs": [],
+      "finish_status": [
+        {
+          "phase": "observing",
+          "calls": 0,
+          "prechecks": 0,
+          "helper_counts": {
+            "release": 0,
+            "movement": 0,
+            "confirm": 0,
+            "home": 0
+          },
+          "last_decision": null,
+          "terminal": null,
+          "independent_streak": 0,
+          "current_view_calls": 0,
+          "release_evidence_calls": 0,
+          "release_events": 0,
+          "process_evidence": [],
+          "actual_visual_requests": 0
+        }
+      ],
+      "handoff_evidence": [
+        null
+      ],
+      "job_reasons": [
+        "cancelled"
+      ],
+      "checks": [],
+      "source_image_hash_errors": []
+    }
+  },
+  "new_subagents": 0,
+  "new_grasp_transport_helpers": 0,
+  "v1_source_snapshot_matches": true,
+  "current_changes_from_v1": [
+    "First_Phase/scene_demo/xvla_grounding.py"
+  ],
+  "renderfix_source_freeze_matches": true,
+  "protected_control_unchanged": {
+    "xvla_monitor.py": true,
+    "joint_home.py": true,
+    "safe_exit.py": true,
+    "safe_exit_contacts.py": true,
+    "placement_completion.py": true,
+    "finish_v1/control.py": true
+  }
+}

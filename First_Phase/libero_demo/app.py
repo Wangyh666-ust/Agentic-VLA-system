@@ -501,7 +501,7 @@ PAGE = """<!DOCTYPE html>
       <button id="run">执行</button>
       <span id="runmsg" class="hint"></span>
     </div>
-    <p class="hint">由 Hermes（qwen3-vl-plus）先读取任务目录，再选出最匹配的标准 LIBERO 任务并调用工具执行。
+    <p class="hint">由 Hermes（qwen3.8-max）先读取任务目录，再选出最匹配的标准 LIBERO 任务并调用工具执行。
        服务会为每个 benchmark 任务自动创建对应场景；无需手动指定 task_id。</p>
   </section>
 

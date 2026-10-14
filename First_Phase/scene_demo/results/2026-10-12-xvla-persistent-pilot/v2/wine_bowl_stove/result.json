@@ -1,0 +1,652 @@
+{
+  "complete": false,
+  "agent_result": {
+    "request_id": "xvla-wine_bowl_stove",
+    "session_id": "ec481cc8bb7e4062a89dc8af2c0f1f76",
+    "request": "先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台。",
+    "run_ok": true,
+    "chain_ok": false,
+    "plan_success": null,
+    "task_success": null,
+    "decision": "execute",
+    "plan": {
+      "ok": true,
+      "request_id": "xvla-wine_bowl_stove",
+      "session_id": "ec481cc8bb7e4062a89dc8af2c0f1f76",
+      "state": "blocked",
+      "decision": "execute",
+      "capability_ids": [
+        "wine_to_rack",
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "original_capability_ids": [
+        "wine_to_rack",
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "rationale": "用户明确要求‘先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台’，依序选用对应 capability_id：wine_to_rack, bowl_to_plate, stove_on。",
+      "job_ids": [
+        "7194c91b47e547cabb6c34305e40435a"
+      ],
+      "completed_capability_ids": [],
+      "pending_capability_ids": [
+        "bowl_to_plate",
+        "stove_on"
+      ],
+      "plan_success": null,
+      "regressions": [],
+      "error": "original OSC controller mismatch: use_delta is not exactly True: False",
+      "repair_history": [],
+      "scene_version": 0
+    },
+    "jobs": [
+      {
+        "job_id": "7194c91b47e547cabb6c34305e40435a",
+        "request_id": "xvla-wine_bowl_stove",
+        "session_id": "ec481cc8bb7e4062a89dc8af2c0f1f76",
+        "capability_id": "wine_to_rack",
+        "state": "error",
+        "steps": 0,
+        "total_steps": 0,
+        "success": false,
+        "ended_reason": "pilot_precondition_failed",
+        "error": "original OSC controller mismatch: use_delta is not exactly True: False",
+        "instruction": "put the wine bottle on the rack",
+        "scene_version_before": null,
+        "scene_version_after": null,
+        "state_before_sha": null,
+        "state_after_sha": null,
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": null,
+        "held_objects": null,
+        "grasp_observation_complete": null,
+        "completion_ready": null,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": null,
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v2/wine_bowl_stove/runs/20261012T133345Z_goal_table_ec481cc8/cap_01_wine_to_rack_7194c91b",
+        "latest_png": null,
+        "rollout_path": null,
+        "wall_s": null
+      }
+    ],
+    "evaluation": null,
+    "hermes_invocations": 1,
+    "usage": [
+      {
+        "available": false,
+        "reason": "installed Hermes chat native-image path did not export usage",
+        "api_calls": null,
+        "input_tokens": null,
+        "output_tokens": null
+      }
+    ],
+    "execution_timeout": false,
+    "cancelled_by_user": false,
+    "cancellation_pending": false,
+    "wall_s": 72.73,
+    "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+    "hermes_output": "hermes: completing source-update dependencies...\nhermes: preparing dependencies for this update...\nPreparing the isolated Hermes runtime…\n  → Installing Python dependencies…\n  ✓ Installing Python dependencies\n  → Installing Python dependencies…\n  ✓ Installing Python dependencies\n计划已提交。\n\nsession_id: 20261012_213453_dff0a4\n"
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-wine_bowl_stove",
+    "session_id": "ec481cc8bb7e4062a89dc8af2c0f1f76",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "original_capability_ids": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "rationale": "用户明确要求‘先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台’，依序选用对应 capability_id：wine_to_rack, bowl_to_plate, stove_on。",
+    "job_ids": [
+      "7194c91b47e547cabb6c34305e40435a"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "plan_success": null,
+    "regressions": [],
+    "error": "original OSC controller mismatch: use_delta is not exactly True: False",
+    "repair_history": [],
+    "scene_version": 0
+  },
+  "jobs": [
+    {
+      "capability": "wine_to_rack",
+      "outcome": {
+        "ok": false,
+        "reason": "pilot_precondition_failed",
+        "detail": "original OSC controller mismatch: use_delta is not exactly True: False"
+      },
+      "job": {
+        "job_id": "7194c91b47e547cabb6c34305e40435a",
+        "request_id": "xvla-wine_bowl_stove",
+        "session_id": "ec481cc8bb7e4062a89dc8af2c0f1f76",
+        "capability_id": "wine_to_rack",
+        "state": "error",
+        "steps": 0,
+        "total_steps": 0,
+        "success": false,
+        "ended_reason": "pilot_precondition_failed",
+        "error": "original OSC controller mismatch: use_delta is not exactly True: False",
+        "instruction": "put the wine bottle on the rack",
+        "scene_version_before": null,
+        "scene_version_after": null,
+        "state_before_sha": null,
+        "state_after_sha": null,
+        "env_instance_id": 1,
+        "episode_resets": 1,
+        "completion_mode": "release_verified",
+        "phase": null,
+        "held_objects": null,
+        "grasp_observation_complete": null,
+        "completion_ready": null,
+        "grasp_guard_mode": null,
+        "grasp_stage": null,
+        "grasp_guard_status": null,
+        "semantic_spec_id": null,
+        "semantic_state": null,
+        "semantic_candidate_streak": null,
+        "semantic_success": null,
+        "native_wine_predicate": null,
+        "semantic_observation_samples": 0,
+        "finish_status": null,
+        "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v2/wine_bowl_stove/runs/20261012T133345Z_goal_table_ec481cc8/cap_01_wine_to_rack_7194c91b",
+        "latest_png": null,
+        "rollout_path": null,
+        "wall_s": null
+      },
+      "source_counts": {
+        "settling": 0,
+        "vla": 0,
+        "finish": 0,
+        "prepare": 0
+      },
+      "vla_calls": 0,
+      "handoff_reference": null,
+      "actual_final_metrics": null,
+      "finish_status": null,
+      "finish": null,
+      "before": {
+        "gripper_current_action": [
+          0.9365209937095642,
+          -0.9363961815834045
+        ],
+        "gripper_hold_from_measurement": [
+          0.9365209937095642,
+          -0.9363961815834045
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 0.5000000000000003,
+        "robot": {
+          "robot_name": "MountedPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            0.010262668834930606,
+            -0.16741270601901184,
+            -0.00501342677407528,
+            -2.4310604716117648,
+            -9.411916579481773e-06,
+            2.207957695262411,
+            0.7921850037340668
+          ],
+          "arm_qvel": [
+            -0.012181034569148689,
+            0.0017811980769381524,
+            0.013849205523064968,
+            0.0015265167616677607,
+            -0.00039327691735674967,
+            -0.00437401166007857,
+            -0.002355711117628579
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.03873041931744383,
+            -0.03872792364003397
+          ],
+          "finger_qvel": [
+            0.0031769323331838346,
+            -0.0031992224910286867
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.2066235651284524,
+            0.0024645617556077314,
+            1.1804495991023416
+          ],
+          "orientation_matrix": [
+            [
+              0.000959113309898518,
+              0.998448931959476,
+              -0.05566695941615826
+            ],
+            [
+              0.9999994259138458,
+              -0.0009310294120110532,
+              0.0005304302147856182
+            ],
+            [
+              0.0004777799049380631,
+              -0.05566743620120659,
+              -0.9984492517264696
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "after": {
+        "gripper_current_action": [
+          0.9365209937095642,
+          -0.9363961815834045
+        ],
+        "gripper_hold_from_measurement": [
+          0.9365209937095642,
+          -0.9363961815834045
+        ],
+        "gripper_hold_error": 0.0,
+        "timestamp": 0.5000000000000003,
+        "robot": {
+          "robot_name": "MountedPanda",
+          "joint_names": [
+            "robot0_joint1",
+            "robot0_joint2",
+            "robot0_joint3",
+            "robot0_joint4",
+            "robot0_joint5",
+            "robot0_joint6",
+            "robot0_joint7"
+          ],
+          "joint_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qpos_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "qvel_indexes": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "joint_limits_low": [
+            -2.8973,
+            -1.7628,
+            -2.8973,
+            -3.0718,
+            -2.8973,
+            -0.0175,
+            -2.8973
+          ],
+          "joint_limits_high": [
+            2.8973,
+            1.7628,
+            2.8973,
+            -0.0698,
+            2.8973,
+            3.7525,
+            2.8973
+          ],
+          "arm_qpos": [
+            0.010262668834930606,
+            -0.16741270601901184,
+            -0.00501342677407528,
+            -2.4310604716117648,
+            -9.411916579481773e-06,
+            2.207957695262411,
+            0.7921850037340668
+          ],
+          "arm_qvel": [
+            -0.012181034569148689,
+            0.0017811980769381524,
+            0.013849205523064968,
+            0.0015265167616677607,
+            -0.00039327691735674967,
+            -0.00437401166007857,
+            -0.002355711117628579
+          ],
+          "finger_qpos_indexes": [
+            7,
+            8
+          ],
+          "finger_qvel_indexes": [
+            7,
+            8
+          ],
+          "finger_qpos": [
+            0.03873041931744383,
+            -0.03872792364003397
+          ],
+          "finger_qvel": [
+            0.0031769323331838346,
+            -0.0031992224910286867
+          ],
+          "torque_limits_low": [
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -80.0,
+            -12.0,
+            -12.0
+          ],
+          "torque_limits_high": [
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            80.0,
+            12.0,
+            12.0
+          ]
+        },
+        "eef": {
+          "position": [
+            -0.2066235651284524,
+            0.0024645617556077314,
+            1.1804495991023416
+          ],
+          "orientation_matrix": [
+            [
+              0.000959113309898518,
+              0.998448931959476,
+              -0.05566695941615826
+            ],
+            [
+              0.9999994259138458,
+              -0.0009310294120110532,
+              0.0005304302147856182
+            ],
+            [
+              0.0004777799049380631,
+              -0.05566743620120659,
+              -0.9984492517264696
+            ]
+          ]
+        },
+        "queue_size": 0,
+        "proprio_is_none": true,
+        "controller_use_delta": false,
+        "goal_pos_error": 0.0,
+        "goal_ori_error": 0.0
+      },
+      "cache_reset": [
+        {
+          "gripper_current_action": [
+            0.9365209937095642,
+            -0.9363961815834045
+          ],
+          "gripper_hold_from_measurement": [
+            0.9365209937095642,
+            -0.9363961815834045
+          ],
+          "gripper_hold_error": 0.0,
+          "timestamp": 0.5000000000000003,
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              0.010262668834930606,
+              -0.16741270601901184,
+              -0.00501342677407528,
+              -2.4310604716117648,
+              -9.411916579481773e-06,
+              2.207957695262411,
+              0.7921850037340668
+            ],
+            "arm_qvel": [
+              -0.012181034569148689,
+              0.0017811980769381524,
+              0.013849205523064968,
+              0.0015265167616677607,
+              -0.00039327691735674967,
+              -0.00437401166007857,
+              -0.002355711117628579
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03873041931744383,
+              -0.03872792364003397
+            ],
+            "finger_qvel": [
+              0.0031769323331838346,
+              -0.0031992224910286867
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef": {
+            "position": [
+              -0.2066235651284524,
+              0.0024645617556077314,
+              1.1804495991023416
+            ],
+            "orientation_matrix": [
+              [
+                0.000959113309898518,
+                0.998448931959476,
+                -0.05566695941615826
+              ],
+              [
+                0.9999994259138458,
+                -0.0009310294120110532,
+                0.0005304302147856182
+              ],
+              [
+                0.0004777799049380631,
+                -0.05566743620120659,
+                -0.9984492517264696
+              ]
+            ]
+          },
+          "queue_size": 0,
+          "proprio_is_none": true,
+          "controller_use_delta": false,
+          "goal_pos_error": 0.0,
+          "goal_ori_error": 0.0
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "expected_capabilities": [
+      "wine_to_rack",
+      "bowl_to_plate",
+      "stove_on"
+    ],
+    "hermes_plan_matches": true,
+    "model_usage": "See original xvla_calls and Hermes usage logs; unavailable usage remains unknown."
+  }
+}

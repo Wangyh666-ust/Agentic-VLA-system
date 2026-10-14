@@ -26,7 +26,8 @@ class ShapeScreenTests(unittest.TestCase):
         with patch.object(port, 'ik', create=True, side_effect=lambda xyz, rotation, seed: np.full(7, xyz[2])), patch.object(geometry, 'screen_shapes', return_value={'ok': False, 'reason': 'path_margin_violation'}):
             blocked = geometry.plan_retreat(port, observation, {'boxes': {}})
         self.assertFalse(blocked['ok'])
-        self.assertEqual([report['distance'] for report in blocked['candidate_reports']], [.04, .06])
+        self.assertEqual([report['distance'] for report in blocked['candidate_reports'][:2]], [.04, .06])
+        self.assertTrue(all(not report['sensor_screen']['ok'] for report in blocked['candidate_reports']))
 
     def test_triangle_surface_distance(self):
         vertices = np.array([[0., 0., 0.], [1., 0., 0.], [0., 1., 0.]])

@@ -1,0 +1,290 @@
+{
+  "ok": true,
+  "session_id": "48fbebc2b4984c1aa39b44b465541250",
+  "scene_id": "microwave_mug",
+  "state": "ready",
+  "scene_version": 0,
+  "total_steps": 0,
+  "storage_policy": {
+    "white_yellow_mug_1": "microwave_1_heating_region"
+  },
+  "description": "Original kitchen scene with an initially open microwave and a yellow and white mug.",
+  "capabilities": [
+    {
+      "instruction": "put the yellow and white mug in the microwave",
+      "goals": [
+        [
+          "in",
+          "white_yellow_mug_1",
+          "microwave_1_heating_region"
+        ]
+      ],
+      "object_id": "white_yellow_mug_1",
+      "target_id": "microwave_1_heating_region",
+      "scene_ids": [
+        "microwave_mug"
+      ],
+      "evidence": "candidate atomic instruction in native LIBERO-10 task9; execution unverified",
+      "audit_only": false,
+      "exclusive_target": true,
+      "capability_id": "mug_to_microwave"
+    },
+    {
+      "instruction": "close the microwave",
+      "goals": [
+        [
+          "close",
+          "microwave_1"
+        ]
+      ],
+      "object_id": "microwave_1",
+      "target_id": null,
+      "scene_ids": [
+        "microwave_mug"
+      ],
+      "evidence": "candidate; native close instruction exists in LIBERO-90; execution here unverified",
+      "audit_only": false,
+      "exclusive_target": false,
+      "capability_id": "microwave_close"
+    },
+    {
+      "instruction": "put the yellow and white mug in the microwave and close it",
+      "goals": [
+        [
+          "in",
+          "white_yellow_mug_1",
+          "microwave_1_heating_region"
+        ],
+        [
+          "close",
+          "microwave_1"
+        ]
+      ],
+      "scene_ids": [
+        "microwave_mug"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 9
+      },
+      "component_capability_ids": [
+        "mug_to_microwave",
+        "microwave_close"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_microwave_place_close"
+    }
+  ],
+  "scene_inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "黄色马克杯：杯身外侧黄色、内壁白/浅灰，圆柱形，带黄色把手；初始位于桌面中部，灰杯右侧、微波炉门左前方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              345,
+              0,
+              695,
+              275
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              433,
+              468,
+              530,
+              562
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              455,
+              466,
+              548,
+              562
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视俯视清楚看到杯口内壁浅色、外壁与把手为黄色，框内确为杯子而非空桌面"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview 中桌面中部黄色杯身与黄色把手清晰，位于灰杯右侧"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview 中黄色杯身与把手清晰，相对灰杯与微波炉的位置同frame1一致，为同一实物"
+          }
+        ],
+        "confusable_with": [
+          "obj_2"
+        ],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "灰白色马克杯：杯身灰白斑点质感、内壁白，圆柱形，带灰色把手；初始位于桌面中部偏左，黄杯左侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              244,
+              500,
+              350,
+              605
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              386,
+              382,
+              466,
+              466
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视视野内未出现该杯，仅见黄杯、桌面与微波炉门局部"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview 中灰白斑点杯身与灰色把手清晰，框内确有物体"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview 中同一灰杯位于黄杯左后方，斑点质感与把手特征一致"
+          }
+        ],
+        "confusable_with": [
+          "obj_1"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "微波炉装置：黑色长方体箱体放在桌面右后侧，炉门为活动部件，当前向左打开立起，门框黑色、中间浅色玻璃窗；腔口朝向桌面杯子方向",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              408,
+              292,
+              836,
+              535
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              565,
+              375,
+              912,
+              800
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视右缘仅见黑色门框/箱体局部带浅色窗边，无法完整辨认整体"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agentview 中黑色箱体与打开的带窗炉门整体清晰，框覆盖门与箱体"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "sideview 中同一黑色箱体与立起的开门结构一致，无身份冲突"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      }
+    ],
+    "coverage": {
+      "targets_identifiable": true,
+      "destination_visible": true,
+      "state_change_visible": true,
+      "reason": "黄杯(obj_1)在三帧均可辨认且与灰杯(obj_2)颜色、把手区分明确；微波炉(obj_3)在frame1/2完整可见、炉门开启状态清楚，frame0仅局部；桌面到炉腔的路径在三视角均无遮挡，放入与加热前后状态变化可被后续帧覆盖检查"
+    },
+    "corrections": [
+      "复核obj_1 frame0锚框：原框[345,0,695,275]确罩住俯视黄杯（杯口内壁浅色、外壁与把手黄色），未框到空桌面，保留不变",
+      "复核obj_2：frame0腕视中确无灰杯（视野外），维持occluded而非猜测可见；frame1/2锚框内确为灰白斑点杯，与黄杯未合并，保留原ID与框",
+      "复核obj_3：frame1框[408,292,836,535]与frame2框[565,375,912,800]均同时罩住打开的炉门与黑色箱体，属同一装置的活动部件+整体描述，未把门与箱体拆成两物，也未重复计数；frame0仅右缘局部可见，维持partial",
+      "初稿各框经逐帧像素核对均未发现空框、错目标或重复ID，故仅微调描述措辞，未改动物体ID与框坐标"
+    ],
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ],
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/planning_grounding/cap000002_wrist.png",
+        "sha256": "3e8fcc815a090cb1da60da16451a4eb9300d67c6603332cfc31f8fc18d50b170"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "7bf7950a0c04cde03a8f1e1dfd3ee1cb7209065064d896394020ee3060fbe7e4"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "aebe9bee43d0c7746c98c49f30eab687d5b0540c97e61dedf309828749c2fafb"
+      }
+    ]
+  },
+  "planning_image": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-partial-scope-offline/heat_yellow_mug/grounding/planning_three_views.png",
+  "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-partial-scope-offline/heat_yellow_mug/grounding/planning_three_views.png",
+  "images": [
+    {
+      "view": "wrist",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/planning_grounding/cap000002_wrist.png"
+    },
+    {
+      "view": "agentview",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/planning_grounding/cap000002_wrist_checker_agentview.png"
+    },
+    {
+      "view": "sideview",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-qwen38-three-requests/heat_yellow_mug/runs/20261013T173304Z_microwave_mug_a19ae68c/planning_grounding/cap000002_wrist_checker_sideview.png"
+    }
+  ]
+}

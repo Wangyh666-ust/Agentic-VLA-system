@@ -1,0 +1,45 @@
+{
+  "prompt": "一次独立执行前审核：同时核对规划对象身份和任务指定目标区域，供检查器直接复用初始审核。根据原始三视图核对；不能只因为编号合法或描述自洽就通过。request_scope若声明部分执行，核对所选准备步骤或子目标的对象/目的地是否确实推进原需求；未支持的后续步骤不是本次身份检查的额外完成条件。不能接受改变原意的替代操作。逐个核对selection目标是否确为所指实物；两件操作目标不可同一实物。每个放置goal的destination_id必须另给regions，定位指定隔间/层/承载面/相对区域，不能只框整个装置。具体边界不清则confirmed=false，不猜。允许某个视角遮挡，但必须逐一看完三个视角；存在冲突、框到空桌面或语义不符则false，不确定null。框为每幅原图0..1000归一化坐标。描述各写必要短句，只输出JSON：{\"checks\":[{\"target_id\":\"selection中的键\",\"matches_request\":true或false或null,\"features\":\"可见外观\",\"anchors\":[{\"frame\":0,\"box\":[0,0,100,100]}],\"reason\":\"原图短依据\"}],\"regions\":[{\"destination_id\":\"放置goal的目的地ID\",\"confirmed\":true或false,\"description\":\"具体区域\",\"boundary\":\"实际可见边沿/隔板/参照\",\"anchors\":[{\"frame\":1,\"box\":[0,0,100,100]}]}]}。门/开关无需放置区域。\n{\"request\": \"将书本整理好\", \"request_scope\": null, \"selection\": {\"black_book_1\": \"obj_1\", \"desk_caddy_1_back_contain_region\": \"obj_2\"}, \"inventory\": {\"objects\": [{\"object_id\": \"obj_1\", \"description\": \"黑色封面的书,竖立/斜立在桌面上,顶边可见白色书页;初始位于马克杯旁(sideview中在杯右侧,agentview中在杯后方)\", \"confirmed\": true, \"anchors\": [{\"frame\": 0, \"box\": [0, 255, 320, 535]}, {\"frame\": 1, \"box\": [565, 393, 602, 502]}, {\"frame\": 2, \"box\": [568, 494, 669, 606]}], \"view_observations\": [{\"frame\": 0, \"visibility\": \"visible\", \"reason\": \"腕视左侧倾斜黑色板状物,侧边可见页层结构,与竖立书本一致\"}, {\"frame\": 1, \"visibility\": \"visible\", \"reason\": \"马克杯后方竖立的黑色薄板,顶缘见白色书页边\"}, {\"frame\": 2, \"visibility\": \"visible\", \"reason\": \"杯右侧竖立黑色书,顶面白色书页清晰,与frame1同一物\"}], \"confusable_with\": [\"obj_3\", \"obj_4\"], \"role\": \"target\"}, {\"object_id\": \"obj_2\", \"description\": \"棕色长方形收纳盒,顶部三个敞口隔间,置于桌面中部偏左,可作为书本整理归位的目的地\", \"confirmed\": true, \"anchors\": [{\"frame\": 0, \"box\": [318, 600, 1000, 840]}, {\"frame\": 1, \"box\": [148, 350, 488, 602]}, {\"frame\": 2, \"box\": [378, 300, 665, 508]}], \"view_observations\": [{\"frame\": 0, \"visibility\": \"partial\", \"reason\": \"腕视下方仅见收纳盒顶部隔间与侧壁,前景被灰色夹爪部件遮挡\"}, {\"frame\": 1, \"visibility\": \"visible\", \"reason\": \"棕色三隔间收纳盒整体清晰,隔间挡板可见\"}, {\"frame\": 2, \"visibility\": \"visible\", \"reason\": \"侧视中同一棕色三隔间盒,位置与frame1一致\"}], \"confusable_with\": [], \"role\": \"destination\"}], \"coverage\": {\"targets_identifiable\": true, \"destination_visible\": true, \"state_change_visible\": true, \"reason\": \"竖立黑书三帧均清晰且身份一致;棕色三隔间收纳盒三帧可见;书未入盒的初始状态可对照检查\"}, \"corrections\": [{\"object_id\": \"obj_4\", \"reason\": \"仅frame2单视角可见,frame1对应区域被灯架前景遮挡无法排除混淆,按规则降为confirmed=false并改role=uncertain\"}], \"version\": 1, \"captured_at\": 0.5000000000000003, \"reviewed_from_views\": [\"wrist\", \"agentview\", \"sideview\"], \"source_images\": [{\"frame\": 0, \"view\": \"wrist\", \"path\": \"/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist.png\", \"sha256\": \"403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201\"}, {\"frame\": 1, \"view\": \"agentview\", \"path\": \"/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist_checker_agentview.png\", \"sha256\": \"f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32\"}, {\"frame\": 2, \"view\": \"sideview\", \"path\": \"/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist_checker_sideview.png\", \"sha256\": \"285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45\"}]}, \"goals\": [{\"id\": \"goal_0\", \"description\": \"put the book in the back compartment of the caddy\", \"relation\": \"in\", \"target_id\": \"black_book_1\", \"destination_id\": \"desk_caddy_1_back_contain_region\", \"target_visual_identity\": \"扁平书本，不是杯子或食品盒。\"}], \"skills\": [{\"instruction\": \"pick up the book and place it in the back compartment of the caddy\", \"goals\": [[\"in\", \"black_book_1\", \"desk_caddy_1_back_contain_region\"]]}]}",
+  "context": {
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": 0.5000000000000003
+      }
+    ]
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 2048,
+    "max_tokens": 6500
+  },
+  "timeout_seconds": 180,
+  "request_sha256": "6c8ba9ba677f557da9be657c0ac351fcc645350909b18f909f26cae7b7743a80",
+  "requested_model": "qwen3.8-max",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist.png",
+      "sha256": "403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "sha256": "f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T085743Z_book_caddy_cdfcb45d/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "sha256": "285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "request_id": "offline-bowl_bottle",
+  "session_id": "offline-bowl_bottle",
+  "scene_version": 0,
+  "decision": "execute",
+  "capability_ids": [
+    "xvla_bowl_drawer_close"
+  ],
+  "rationale": "用户要求收拾桌面并将碗和瓶子归位。当前技能库仅提供‘将黑碗放入底柜并关闭’的完整收纳能力，匹配碗(obj_1)与目的地(obj_3)。瓶子(obj_2)无对应归位技能，故无法执行其归位。本计划仅执行碗的收纳+关抽屉，属部分覆盖原需求。",
+  "request_scope": {
+    "coverage": "partial",
+    "executable_outcomes": [
+      "将银灰色碗放入浅灰柜下层抽屉",
+      "关闭该抽屉"
+    ],
+    "unmet_outcomes": [
+      "瓶子归位（无对应技能）"
+    ],
+    "reason": "仅碗有完整原生技能支持归位+关门；瓶子无可用技能，不能伪造或替代。执行后桌面仍留瓶子，需人工或新增技能处理。"
+  },
+  "target_bindings": {
+    "akita_black_bowl_1": "obj_1",
+    "white_cabinet_1_bottom_region": "obj_3"
+  },
+  "audit": false,
+  "budget_per_subgoal": 900
+}

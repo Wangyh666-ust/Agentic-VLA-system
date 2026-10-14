@@ -1,0 +1,492 @@
+{
+  "schema_version": 1,
+  "id": "20261013-xvla-process-evidence-software",
+  "scope": "全部10长程统一松手过程证据软件资格；实际效果未验证",
+  "coverage": {
+    "native_count": 10,
+    "monitor": "XvlaFinishMonitor",
+    "task_name_branches": false
+  },
+  "mechanism": [
+    "实测两指相对finger_home最大偏差>=.004m后armed；连续2次<=.002m触发一次wrist/agentview/sideview三同期图",
+    "初始open/jitter/repeat-open不触发；capture只采样，不自动写目标成功；开爪不证明曾持物",
+    "释放照片以独立3图请求逐项分类；只有正确目的地已放下且同步open的placement on/in/right_of才留证",
+    "当前Null可复用指定goal_id/event_id；当前或后来release明确False立即撤销",
+    "open/close/turnon/turnoff/preserved状态仍用当前判断，不历史缓存",
+    "新cap/client/contract不携带旧证据；只有当前完整有效目标开启原收尾，native中途不归位，不插入动作",
+    "原下一reference/cache与末尾global_home机制保持",
+    "原raw与派生effective、current_reason及goal/event来源分开；图片path/SHA/time绑定实测编码器"
+  ],
+  "model_budget": {
+    "current": 10,
+    "release": 4,
+    "total": 14,
+    "overflow": "照片保存，unchecked_due_budget；不伪造分类"
+  },
+  "verification": {
+    "raw_counts": {
+      "full": {
+        "raw_count": "1316 passed, 106 subtests passed in 72.92s (0:01:12)",
+        "stdout": "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/regression.stdout",
+        "exitcode": 0
+      },
+      "targeted": {
+        "raw_count": "129 passed, 30 subtests passed in 2.92s",
+        "stdout": "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt3/stdout",
+        "exitcode": 0
+      },
+      "template": {
+        "raw_count": "10 passed in 1.49s",
+        "stdout": "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/template.stdout",
+        "exitcode": 0
+      }
+    },
+    "qualification": {
+      "qualified": true,
+      "commands": {
+        "template": {
+          "exitcode": 0,
+          "stdout": "template.stdout",
+          "argv": "template.argv.json",
+          "count": "10 passed in 1.49s"
+        },
+        "regression": {
+          "exitcode": 0,
+          "stdout": "regression.stdout",
+          "argv": "regression.argv.json",
+          "count": "1316 passed, 106 subtests passed in 72.92s (0:01:12)"
+        },
+        "help": {
+          "exitcode": 0,
+          "stdout": "help.stdout",
+          "argv": "help.argv.json"
+        },
+        "git_whitespace": {
+          "exitcode": 0,
+          "stdout": "git_whitespace.stdout",
+          "argv": "git_whitespace.argv.json"
+        },
+        "registry_validate": {
+          "exitcode": 0,
+          "stdout": "registry_validate.stdout",
+          "argv": "registry_validate.argv.json"
+        },
+        "compile": {
+          "exitcode": 0,
+          "stdout": "compile.stdout",
+          "argv": "compile.argv.json"
+        }
+      },
+      "compiled_sources": [
+        "xvla_process_evidence.py",
+        "xvla_monitor.py",
+        "xvla_finish.py",
+        "service.py",
+        "xvla_service.py",
+        "xvla_pilot.py",
+        "tests/test_xvla_finish.py",
+        "tests/test_xvla_integration.py",
+        "tests/test_xvla_process_evidence.py",
+        "tests/test_xvla_process_monitor.py"
+      ],
+      "space_tab_trailing_whitespace": [],
+      "protected_sources": [
+        {
+          "file": "finish_v1/control.py",
+          "sha256": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+          "frozen_sha256": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+          "same": true
+        },
+        {
+          "file": "finish_v1/sensors.py",
+          "sha256": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+          "frozen_sha256": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+          "same": true
+        },
+        {
+          "file": "finish_v1/simple_checker.py",
+          "sha256": "6150701b4e7e4e2b5142b082327f1cdea099be335b9d3d0d33094454514e3f11",
+          "frozen_sha256": "6150701b4e7e4e2b5142b082327f1cdea099be335b9d3d0d33094454514e3f11",
+          "same": true
+        },
+        {
+          "file": "finish_v1/vision.py",
+          "sha256": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534",
+          "frozen_sha256": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534",
+          "same": true
+        },
+        {
+          "file": "finish_v1/feedback_retreat.py",
+          "sha256": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+          "frozen_sha256": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+          "same": true
+        },
+        {
+          "file": "joint_home.py",
+          "sha256": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+          "frozen_sha256": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+          "same": true
+        },
+        {
+          "file": "safe_exit.py",
+          "sha256": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+          "frozen_sha256": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+          "same": true
+        },
+        {
+          "file": "safe_exit_contacts.py",
+          "sha256": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+          "frozen_sha256": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+          "same": true
+        },
+        {
+          "file": "placement_completion.py",
+          "sha256": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+          "frozen_sha256": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+          "same": true
+        },
+        {
+          "file": "finish_v1/runtime.py",
+          "sha256": "03674cc9a329d3469e0b2dbc0ea58e64a3d12f6888ddb43817df4cbc64a6c718",
+          "frozen_sha256": "03674cc9a329d3469e0b2dbc0ea58e64a3d12f6888ddb43817df4cbc64a6c718",
+          "same": true
+        },
+        {
+          "file": "mcp_server.py",
+          "sha256": "cbd92be12f0f079ed19da6449c7cc3bb11712578eac7cc87fd34cdd2c47f7a1c",
+          "frozen_sha256": "cbd92be12f0f079ed19da6449c7cc3bb11712578eac7cc87fd34cdd2c47f7a1c",
+          "same": true
+        },
+        {
+          "file": "catalog.py",
+          "sha256": "418ada0866e7f86e7ef6b0aca6f8e0a78e0a94272e092cc1e52283eee4892d72",
+          "frozen_sha256": "418ada0866e7f86e7ef6b0aca6f8e0a78e0a94272e092cc1e52283eee4892d72",
+          "same": true
+        },
+        {
+          "file": "xvla_skills.py",
+          "sha256": "8d14219879c122d92f7d27f21ed90e0f4661a7ef25025c723eb26ea3df6915ff",
+          "frozen_sha256": "8d14219879c122d92f7d27f21ed90e0f4661a7ef25025c723eb26ea3df6915ff",
+          "same": true
+        },
+        {
+          "file": "xvla_backend.py",
+          "sha256": "ce86494c3273909dadd408bf96b0b94f223b5f5ec9c26912878fe6ca8f336fd1",
+          "frozen_sha256": "ce86494c3273909dadd408bf96b0b94f223b5f5ec9c26912878fe6ca8f336fd1",
+          "same": true
+        }
+      ],
+      "registry_entries": 47,
+      "evidence_count": 7608,
+      "old_entries_deep_equal": true,
+      "registry_bytes_unchanged": true,
+      "index_bytes_unchanged": true,
+      "all_old_evidence_sha_match": true,
+      "ten_native_same_monitor_class": true,
+      "no_capability_name_branches_in_monitor": true,
+      "fixtures": "initial open/jitter0; measured close then2open capture1; repeat-open0; rearm second event; all10 placement ledger verified; state never caches; client/contract resets; current/release False retracts",
+      "mock_serializer": "2 independent 3PNG HTTP serialization requests from same saved capture; does not prove true before/after placement or occlusion sequence",
+      "release_budget": 4,
+      "current_budget": 10,
+      "total_budget": 14,
+      "MCP_qualification": "reuse previous actual all10native/13candidate SDK qualification, mcp/catalog/skills/backend SHA unchanged",
+      "experimental_model_calls": {
+        "VLA": 0,
+        "Qwen": 0,
+        "Hermes": 0
+      },
+      "environment_actions": 0,
+      "root_model": "unknown",
+      "root_effort": "unknown",
+      "implementation_executor": {
+        "model": "gpt-6.1-sol",
+        "effort": "low",
+        "configuration_source": "prior explicit spawn for existing executor_finish thread"
+      },
+      "physical_visual_effect": "unverified"
+    },
+    "source_snapshot_count": 35,
+    "downstream_and_runtime_count": 10,
+    "sdk_related_source_count": 4,
+    "source_preservation": [
+      {
+        "file": "finish_v1/control.py",
+        "current_sha256": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+        "frozen_sha256": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d",
+        "equal": true
+      },
+      {
+        "file": "finish_v1/sensors.py",
+        "current_sha256": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+        "frozen_sha256": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b",
+        "equal": true
+      },
+      {
+        "file": "finish_v1/simple_checker.py",
+        "current_sha256": "6150701b4e7e4e2b5142b082327f1cdea099be335b9d3d0d33094454514e3f11",
+        "frozen_sha256": "6150701b4e7e4e2b5142b082327f1cdea099be335b9d3d0d33094454514e3f11",
+        "equal": true
+      },
+      {
+        "file": "finish_v1/vision.py",
+        "current_sha256": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534",
+        "frozen_sha256": "94adbb3a6648192aa17437a667ded3994917a94f8511d79a201d89cb16748534",
+        "equal": true
+      },
+      {
+        "file": "finish_v1/feedback_retreat.py",
+        "current_sha256": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+        "frozen_sha256": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2",
+        "equal": true
+      },
+      {
+        "file": "joint_home.py",
+        "current_sha256": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+        "frozen_sha256": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e",
+        "equal": true
+      },
+      {
+        "file": "safe_exit.py",
+        "current_sha256": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+        "frozen_sha256": "61b346ef29279c3b7252b28b4306634c553372414def30a9360cc0f590dfef10",
+        "equal": true
+      },
+      {
+        "file": "safe_exit_contacts.py",
+        "current_sha256": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+        "frozen_sha256": "a04d063729b571c3aea97e4955824cdf5d78657863bc00c8c2c0f32e38dcef8e",
+        "equal": true
+      },
+      {
+        "file": "placement_completion.py",
+        "current_sha256": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+        "frozen_sha256": "0fc7450ea1f760474e1b168ab5e0111bf1bd3c9ef3c290195f44e09772b370de",
+        "equal": true
+      },
+      {
+        "file": "finish_v1/runtime.py",
+        "current_sha256": "03674cc9a329d3469e0b2dbc0ea58e64a3d12f6888ddb43817df4cbc64a6c718",
+        "frozen_sha256": "03674cc9a329d3469e0b2dbc0ea58e64a3d12f6888ddb43817df4cbc64a6c718",
+        "equal": true
+      },
+      {
+        "file": "mcp_server.py",
+        "current_sha256": "cbd92be12f0f079ed19da6449c7cc3bb11712578eac7cc87fd34cdd2c47f7a1c",
+        "frozen_sha256": "cbd92be12f0f079ed19da6449c7cc3bb11712578eac7cc87fd34cdd2c47f7a1c",
+        "equal": true
+      },
+      {
+        "file": "catalog.py",
+        "current_sha256": "418ada0866e7f86e7ef6b0aca6f8e0a78e0a94272e092cc1e52283eee4892d72",
+        "frozen_sha256": "418ada0866e7f86e7ef6b0aca6f8e0a78e0a94272e092cc1e52283eee4892d72",
+        "equal": true
+      },
+      {
+        "file": "xvla_skills.py",
+        "current_sha256": "8d14219879c122d92f7d27f21ed90e0f4661a7ef25025c723eb26ea3df6915ff",
+        "frozen_sha256": "8d14219879c122d92f7d27f21ed90e0f4661a7ef25025c723eb26ea3df6915ff",
+        "equal": true
+      },
+      {
+        "file": "xvla_backend.py",
+        "current_sha256": "ce86494c3273909dadd408bf96b0b94f223b5f5ec9c26912878fe6ca8f336fd1",
+        "frozen_sha256": "ce86494c3273909dadd408bf96b0b94f223b5f5ec9c26912878fe6ca8f336fd1",
+        "equal": true
+      }
+    ],
+    "serializer": {
+      "fake_response": true,
+      "real_http_calls": 0,
+      "environment_actions": 0,
+      "saved_source_capture_time": 38.25000000000078,
+      "software_event_only": true,
+      "requests": [
+        {
+          "role": "release_snapshot",
+          "images": [
+            {
+              "view": "wrist",
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000464_wrist.png",
+              "sha256": "5c8a7e9758df208a8959efd57c0ce91c233bc5470b929241605838777807123d"
+            },
+            {
+              "view": "agentview",
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000463_agentview.png",
+              "sha256": "5a305b2f7da78da1acd93f9b2f9510096ebaa9d835c7e4640867e874c6d8d0e5"
+            },
+            {
+              "view": "sideview",
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000465_sideview.png",
+              "sha256": "59dda43cd5597e4b8c11ea92f287c69f7b5fe07a636e2bf4e5358069e942e78c"
+            }
+          ],
+          "labels": [
+            "Image frame=0; view=wrist; timestamp=38.25000000000078",
+            "Image frame=1; view=agentview; timestamp=38.25000000000078",
+            "Image frame=2; view=sideview; timestamp=38.25000000000078"
+          ],
+          "encoder": {
+            "timestamp": 38.25000000000078,
+            "finger_qpos": [
+              0.039964305738151774,
+              -0.04000143878054754
+            ],
+            "standard_open_finger_qpos": [
+              0.03873062763389544,
+              -0.03872769533488731
+            ],
+            "position_unit": "m",
+            "standard_open_tolerance_m": 0.002,
+            "max_standard_open_error_mm": 1.2737434456602248,
+            "at_standard_open": true
+          }
+        },
+        {
+          "role": null,
+          "images": [
+            {
+              "view": "wrist",
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000464_wrist.png",
+              "sha256": "5c8a7e9758df208a8959efd57c0ce91c233bc5470b929241605838777807123d"
+            },
+            {
+              "view": "agentview",
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000463_agentview.png",
+              "sha256": "5a305b2f7da78da1acd93f9b2f9510096ebaa9d835c7e4640867e874c6d8d0e5"
+            },
+            {
+              "view": "sideview",
+              "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000465_sideview.png",
+              "sha256": "59dda43cd5597e4b8c11ea92f287c69f7b5fe07a636e2bf4e5358069e942e78c"
+            }
+          ],
+          "labels": [
+            "Image frame=0; view=wrist; timestamp=38.25000000000078",
+            "Image frame=1; view=agentview; timestamp=38.25000000000078",
+            "Image frame=2; view=sideview; timestamp=38.25000000000078"
+          ],
+          "encoder": {
+            "timestamp": 38.25000000000078,
+            "finger_qpos": [
+              0.039964305738151774,
+              -0.04000143878054754
+            ],
+            "standard_open_finger_qpos": [
+              0.03873062763389544,
+              -0.03872769533488731
+            ],
+            "position_unit": "m",
+            "standard_open_tolerance_m": 0.002,
+            "max_standard_open_error_mm": 1.2737434456602248,
+            "at_standard_open": true
+          }
+        }
+      ]
+    },
+    "serializer_scope": "同一保存capture的两独立mock3图请求，只证明body PNGbytes/labels/encoder/role映射；没有真实前后序列",
+    "software_files": [
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/check.command.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/check.exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/check.stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/check.stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/EXPERIMENT_INDEX.md.before",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/experiment_registry.json.before",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/compile.argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/compile.exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/compile.stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/compile.stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/compile_sources.py",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/git_whitespace.argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/git_whitespace.exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/git_whitespace.stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/git_whitespace.stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/help.argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/help.exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/help.stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/help.stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/pilot_frozen_to_current.diff",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/qualification.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/qualify.py",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/registry_validate.argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/registry_validate.exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/registry_validate.stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/registry_validate.stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/regression.argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/regression.exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/regression.stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/regression.stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/template.argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/template.exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/template.stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/template.stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/final/worker.argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/gate.py",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/git_whitespace.argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/git_whitespace.exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/git_whitespace.stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/git_whitespace.stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/git_whitespace_cr_at_eol.argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/git_whitespace_cr_at_eol.exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/git_whitespace_cr_at_eol.stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/git_whitespace_cr_at_eol.stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/qualification.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/serializer/exact_prompt.txt",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/serializer/request_0_prompt.txt",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/serializer/request_1_prompt.txt",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/serializer/serializer_summary.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/serializer/two_request_summary.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/service_frozen_basis.diff",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/service_newline_check.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/source_qualification.argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/source_qualification.exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/source_qualification.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/source_qualification.stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/source_qualification.stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt1/argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt1/exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt1/stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt1/stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt2/argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt2/exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt2/stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt2/stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt3/argv.json",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt3/exitcode",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt3/stderr",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/attempt3/stdout",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/targeted/run.py",
+      "First_Phase/scene_demo/results/2026-10-13-xvla-process-evidence/software/verify.py"
+    ]
+  },
+  "implementation_executor": {
+    "thread": "唯一复用executor_finish",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "low",
+    "evidence": "此前chat显式spawn配置沿用；实现agent调用与实验模型调用分开"
+  },
+  "root_model": "unknown",
+  "root_effort": "unknown",
+  "experimental_model_calls": {
+    "VLA": 0,
+    "Qwen": 0,
+    "Hermes": 0
+  },
+  "environment_actions": 0,
+  "limits": [
+    "尚无真实松手分支、视觉历史判断、遮挡复用或全链实测",
+    "误识别仍会影响cache或反证；事件有照片不是完成",
+    "4次额外分类上限可能留下未验证照片，未分类不伪造通过",
+    "软件测试或模板通过不授权物理动作",
+    "serializer同一保存capture的两个mock请求不证明真实前后放置/遮挡时序或模型准确率"
+  ],
+  "preserved_logs": {
+    "targeted_attempts": [
+      "software/targeted/attempt1/stdout",
+      "software/targeted/attempt2/stdout",
+      "software/targeted/attempt3/stdout"
+    ],
+    "targeted_first_failure": "已有目标运行原输出全部保存；这些attempt均退出0，不虚构目标失败",
+    "format_alert": "裸git diff --check将冻结service CRLF识别为空白，原exit2及原stdout保留；实际space/tab逐行0，CR-at-eol源码检查exit0；原日志不改"
+  },
+  "future_template": "新增事件指标只在未来代码模板；未调用prepare、未新建物理plans"
+}

@@ -1,0 +1,103 @@
+{
+  "owned": true,
+  "before": {
+    "pid": 413,
+    "startticks": "474",
+    "state": "S",
+    "alive": true,
+    "argv": [
+      "/home/yhwang/fyp/xvla_native/venv/bin/python",
+      "-u",
+      "-m",
+      "deploy",
+      "--model_path",
+      "/home/yhwang/fyp/xvla_native/model",
+      "--port",
+      "8794",
+      "--host",
+      "127.0.0.1",
+      "--disable_slurm",
+      "--output_dir",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/runtime/server_output"
+    ],
+    "cwd": "/home/yhwang/fyp/xvla_native/upstream"
+  },
+  "recorded": {
+    "pid": 413,
+    "startticks": "474",
+    "state": "R",
+    "argv": [
+      "/home/yhwang/fyp/xvla_native/venv/bin/python",
+      "-u",
+      "-m",
+      "deploy",
+      "--model_path",
+      "/home/yhwang/fyp/xvla_native/model",
+      "--port",
+      "8794",
+      "--host",
+      "127.0.0.1",
+      "--disable_slurm",
+      "--output_dir",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/runtime/server_output"
+    ],
+    "cwd": "/home/yhwang/fyp/xvla_native/upstream",
+    "alive": true,
+    "owned": true,
+    "reused": false,
+    "stdout": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/runtime/server.stdout",
+    "stderr": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/runtime/server.stderr"
+  },
+  "matched_identity": true,
+  "signals": [
+    "SIGTERM"
+  ],
+  "case_launches": {
+    "microwave_mug": 1,
+    "basket_two": 1
+  },
+  "reason": "matched owned process signalled",
+  "after": {
+    "pid": 413,
+    "alive": false
+  },
+  "terminated": true,
+  "ports": [
+    {
+      "port": 8794,
+      "argv": [
+        "ss",
+        "-H",
+        "-ltnp",
+        "sport = :8794"
+      ],
+      "exitcode": 0,
+      "stdout": "",
+      "stderr": "",
+      "listening": false
+    },
+    {
+      "port": 8769,
+      "argv": [
+        "ss",
+        "-H",
+        "-ltnp",
+        "sport = :8769"
+      ],
+      "exitcode": 0,
+      "stdout": "",
+      "stderr": "",
+      "listening": false
+    }
+  ],
+  "source_checks": {
+    "microwave_mug": {
+      "count": 88,
+      "all_match": true
+    },
+    "basket_two": {
+      "count": 88,
+      "all_match": true
+    }
+  }
+}

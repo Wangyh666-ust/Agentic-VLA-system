@@ -1,0 +1,34 @@
+........................................................................ [ 63%]
+.............F............................                               [100%]
+=================================== FAILURES ===================================
+_______ test_repair_is_local_bounded_and_proofs_point_to_actual_response _______
+
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-25/test_repair_is_local_bounded_a0')
+
+    def test_repair_is_local_bounded_and_proofs_point_to_actual_response(tmp_path):
+        client=XvlaSubtaskReviewClient(env_path='/none')
+        cap,ctx,paths=take(tmp_path,1.);client.remember_release(cap,ctx,'r1');client.observe_capture(cap)
+        def policy(p,n):
+            raw=response(p,positive_history=True)
+            if n==2:
+                raw['history'][0]['evidence']=[]
+            if n==3:
+                # A valid other target from the first answer must survive a bad repair answer.
+                raw['history'][1]['evidence']=[]
+            return raw
+        with install(client,policy):meta=client.analyze(ctx,paths)
+        proofs=meta['process_evidence'];assert len(proofs)==2
+        assert {p['request_sha256'] for p in proofs}=={'request2','request3'}
+        assert client.store.repair_used and client._calls==3
+        cap2,ctx2,paths2=take(tmp_path,2.);client.observe_capture(cap2)
+        def missing(p,n):
+            raw=response(p);raw['current'][0]['evidence']=[];raw['current'][0].update(same_target=True,state='at_destination');return raw
+        with install(client,missing):meta=client.analyze(ctx2,paths2)
+>       assert client._calls==4 and meta['effective_checks'][0]['achieved'] is None
+E       assert (5 == 4)
+E        +  where 5 = <scene_demo.xvla_subtask_review.XvlaSubtaskReviewClient object at 0x7a5fac4f1e10>._calls
+
+First_Phase/scene_demo/tests/test_xvla_subtask_review.py:113: AssertionError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/tests/test_xvla_subtask_review.py::test_repair_is_local_bounded_and_proofs_point_to_actual_response
+1 failed, 113 passed in 1.77s

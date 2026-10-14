@@ -1,0 +1,177 @@
+{
+  "complete": false,
+  "passed": false,
+  "final_goal": true,
+  "false_positives": [],
+  "actual_Qwen_calls": 4,
+  "error": {
+    "type": "RuntimeError",
+    "message": "Qwen response parse failure",
+    "actual_Qwen_calls": 4
+  },
+  "records": [
+    {
+      "kind": "current",
+      "time": 8.249999999999424,
+      "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-recovery/microwave_mug/01_current.json",
+      "goal": false,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": null,
+          "target_matches_definition": null,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "object_key": null,
+          "reason": "current view shows yellow object in wrist frame 3 but cannot confirm if it is the target mug; agentview frame 4 shows only gray mug on table with microwave door open, no yellow mug visible inside; sideview frame 5 shows robot arm near microwave but no clear view of internal contents"
+        },
+        {
+          "id": "goal_1",
+          "achieved": false,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "agentview frame 4 shows microwave door clearly open with cavity visible; wrist frame 3 and sideview frame 5 do not provide clear door position evidence"
+        }
+      ],
+      "memory": [],
+      "current_new_proofs": 0,
+      "all_release_originals_verified": true,
+      "retained_release_events": 0,
+      "request_images": 6,
+      "actual_Qwen_calls": 1,
+      "same_capture_reused": false,
+      "evaluation_only_truth_not_sent": {
+        "vla_step": 150,
+        "native_success": false,
+        "predicates": {
+          "in|white_yellow_mug_1|microwave_1_heating_region": true,
+          "close|microwave_1": false
+        }
+      }
+    },
+    {
+      "kind": "release",
+      "time": 8.949999999999658,
+      "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-recovery/microwave_mug/02_release.json",
+      "goal": false,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "release_0001"
+          ],
+          "object_key": "white_yellow_mug_1",
+          "reason": "wrist view (frame 3) shows yellow handle and light-colored cup body inside microwave cavity; agentview (frame 4) shows no yellow cup on table, confirming it is not outside; sideview (frame 5) partially obscured but consistent with internal placement；保留已确认放置证据 release_0001",
+          "history_event_id": "release_0001",
+          "history_event_ids": [
+            "release_0001"
+          ],
+          "history_mode": "confirmed_memory",
+          "history_evidence_kind": "release",
+          "history_release_event_id": "release_0001"
+        },
+        {
+          "id": "goal_1",
+          "achieved": false,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "agentview (frame 4) shows microwave door open with cavity visible; sideview (frame 5) shows door plate angled away from front panel, not flush with机身; wrist view (frame 3) shows internal cavity view confirming open state"
+        }
+      ],
+      "memory": [
+        {
+          "id": "goal_0",
+          "evidence_id": "release_0001",
+          "event_id": "release_0001",
+          "confirmation_kind": "release",
+          "timestamp": 8.949999999999658,
+          "status": "confirmed",
+          "object_key": "white_yellow_mug_1"
+        }
+      ],
+      "current_new_proofs": 0,
+      "all_release_originals_verified": true,
+      "retained_release_events": 1,
+      "request_images": 9,
+      "actual_Qwen_calls": 2,
+      "same_capture_reused": false,
+      "evaluation_only_truth_not_sent": {
+        "vla_step": 164,
+        "native_success": false,
+        "predicates": {
+          "in|white_yellow_mug_1|microwave_1_heating_region": true,
+          "close|microwave_1": false
+        }
+      }
+    },
+    {
+      "kind": "current",
+      "time": 15.75000000000193,
+      "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-recovery/microwave_mug/03_current.json",
+      "goal": true,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "release_0001"
+          ],
+          "object_key": "white_yellow_mug_1",
+          "reason": "wrist view (frame 9) shows yellow handle inside microwave cavity; agentview (frame 10) shows separate gray cup on table not matching target visual identity；保留已确认放置证据 release_0001",
+          "history_event_id": "release_0001",
+          "history_event_ids": [
+            "release_0001"
+          ],
+          "history_mode": "confirmed_memory",
+          "history_evidence_kind": "release",
+          "history_release_event_id": "release_0001"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "agentview (frame 10) and sideview (frame 11) show door panel fully closed against front face of microwave body, covering cavity entrance"
+        }
+      ],
+      "memory": [
+        {
+          "id": "goal_0",
+          "evidence_id": "release_0001",
+          "event_id": "release_0001",
+          "confirmation_kind": "release",
+          "timestamp": 8.949999999999658,
+          "status": "confirmed",
+          "object_key": "white_yellow_mug_1"
+        }
+      ],
+      "current_new_proofs": 0,
+      "all_release_originals_verified": true,
+      "retained_release_events": 1,
+      "request_images": 12,
+      "actual_Qwen_calls": 3,
+      "same_capture_reused": false,
+      "evaluation_only_truth_not_sent": {
+        "vla_step": 300,
+        "native_success": true,
+        "predicates": {
+          "in|white_yellow_mug_1|microwave_1_heating_region": true,
+          "close|microwave_1": true
+        }
+      }
+    }
+  ],
+  "old_answers_imported": 0,
+  "new_environment_actions": 0
+}

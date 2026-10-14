@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "20261013-xvla-evidence-recovery",
+  "intent": "analyze_existing",
+  "question_key": "xvla-process-evidence",
+  "purpose": "保留全部松手事件原图，并允许后续同步视觉确认补建放置证据；适用全部十长程，保留原收尾与复位；独立旧图验证入炉关门和双罐入篮。",
+  "prior_evidence": [
+    "20261013-xvla-process-evidence-software",
+    "20261013-xvla-release-trial",
+    "20261013-xvla-timeline-software",
+    "20261013-xvla-timeline-trial",
+    "20261013-xvla-event-checker",
+    "20261013-xvla-evidence-memory"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261013-xvla-process-evidence-software",
+      "disposition": "reuse",
+      "reason": "复用已冻结松手/同步三视图和协议诊断，不重跑动作；上一轮漏判原图未再送入及第300步明确到位未存证据是本轮改变条件。"
+    },
+    {
+      "experiment_id": "20261013-xvla-release-trial",
+      "disposition": "reuse",
+      "reason": "复用已冻结松手/同步三视图和协议诊断，不重跑动作；上一轮漏判原图未再送入及第300步明确到位未存证据是本轮改变条件。"
+    },
+    {
+      "experiment_id": "20261013-xvla-timeline-software",
+      "disposition": "reuse",
+      "reason": "复用已冻结松手/同步三视图和协议诊断，不重跑动作；上一轮漏判原图未再送入及第300步明确到位未存证据是本轮改变条件。"
+    },
+    {
+      "experiment_id": "20261013-xvla-timeline-trial",
+      "disposition": "reuse",
+      "reason": "复用已冻结松手/同步三视图和协议诊断，不重跑动作；上一轮漏判原图未再送入及第300步明确到位未存证据是本轮改变条件。"
+    },
+    {
+      "experiment_id": "20261013-xvla-event-checker",
+      "disposition": "reuse",
+      "reason": "复用已冻结松手/同步三视图和协议诊断，不重跑动作；上一轮漏判原图未再送入及第300步明确到位未存证据是本轮改变条件。"
+    },
+    {
+      "experiment_id": "20261013-xvla-evidence-memory",
+      "disposition": "reuse",
+      "reason": "复用已冻结松手/同步三视图和协议诊断，不重跑动作；上一轮漏判原图未再送入及第300步明确到位未存证据是本轮改变条件。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "软件回归覆盖全部十长程：失败及未知事件原图始终保留并入请求；第五次及预算未分类事件不能被截断；未来事件不能泄漏。",
+    "普通检查仅在目标身份匹配、当前位置达到且得到支撑、同步实测标准开口时补建证据；记录实际确认时刻和原图，event_id为空，独立evidence_id；不伪造松手时刻。",
+    "先跑一个实际Qwen漏分类恢复探针：复用入篮两次松手原图但不做事件分类，标记unclassified，在原第300步普通检查；若补建未发生，保存结果停止该探针的遮挡继承验证。该条件是预登记缺失分类对照，不注入旧回答或真值。最多2次请求。",
+    "两例独立按原时间排序：每例2个release和6个current，沿用一秒前后窗；最多16次新Qwen，同一捕获复用可更少。原生谓词仅效果评价，绝不进入模型。此前回答不导入。",
+    "额外入炉末图无过程记忆负例最多1次：不得凭关门推断杯子已入炉。总新Qwen上限19次，不自动重采样挑最好结果。",
+    "冻结代码与原始请求、响应、usage、图片哈希。逐请求核对所有当时已发生松手原图及自身同步反馈；统计真实补建、后续复用、误判、最终判定，不用软件用例代替视觉效果。"
+  ],
+  "success_criteria": "两处机制：所有历史事件原图入后续请求且漏分类探针实发Qwen后补建；照片效果：完整两例末次目标全部True且放置项可用记忆，开门/单罐负例无整体误通过，无历史遮挡杯不通过。分开报告。",
+  "failure_criteria": "接口/来源错误停止依赖请求；探针应补建未补建记目标未验证；错误放置/错误装置状态保留为失败，不能因最终True抹去。",
+  "scope": {
+    "max_Qwen_requests": 19,
+    "stop_rule": "首个漏分类恢复探针未触发或输入错误时停止其后继遮挡验证，保留最小证据；两完整任务为独立对照可继续。解析/HTTP错误停止该case，不自动重试；视觉失败不改判据。"
+  },
+  "constraints": {
+    "subagents": 0,
+    "helpers": 0,
+    "new_environment_actions": 0,
+    "default_checker_change": false,
+    "protected": "原finish_v1、service/monitor、退离/next-task reset实现和配置全部不改",
+    "root_model": "unknown",
+    "root_effort": "unknown"
+  },
+  "limits": "all-events保留不限分类预算；单次输入54张既有上限明确报错不静默丢图。固定旧轨迹回放不等同实际接管后的新轨迹。"
+}

@@ -1,0 +1,137 @@
+{
+  "prompt": "先报告可见关系，再决定是否到位。严格区分物体身份、目的地区域、允许接管和松手后完成。\n仍被夹持可以已经到位；仅到达上方、入口附近、口沿或仍需继续下降／推进，不能因此判定放置动作结束。容器旁边、入口外、二维投影重叠不等于进入内部；碰到盒壁不证明目的地承接。不能从初始位置消失推断放置成功。\n按任务原有语义检查：in检查指定内部/隔间；on检查指定承载面；right_of检查正确参照物右侧区域且物体已受桌面等支撑。不能把盘面改为盘内，不能要求物体完全低于容器口沿、居中、额外关门。门/开关不适用放置支撑要求。\n每个放置goal在初始模式必须给regions；destination_id是具体任务区域，不等于整个容器身份。description说明是哪一格/面/侧，boundary说明实际可见的边沿、隔板或参照物如何界定它，anchors定位该区域而非只框整个装置。看不清可confirmed=false，不得依据ID猜位置。\nregions结构为[{\"destination_id\":\"goals里的目的地ID\",\"confirmed\":true或false,\"description\":\"具体任务区域\",\"boundary\":\"可见边界与参照\",\"anchors\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}]}]。首次必须逐一提供；后续可省略沿用。纠正旧区域必须加corrects_previous=true和correction_reason，并重新审核旧放置证据。\n所有current/history的at_destination放置回答必须加placement对象：{\"region_confirmed\":true或false或null,\"region_description\":\"任务指定区域\",\"destination_evidence\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}],\"boundary_observation\":\"目标相对入口/边界/承载面的直接可见事实\",\"relation_evidence\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}],\"support_observation\":\"实际承接位置；区分容器/台面与夹爪，不能把贴近当接触\",\"needs_motion\":true或false或null,\"contradiction\":true或false或null,\"views\":[{\"frame\":整数,\"relation\":\"satisfied/violated/occluded/unclear\",\"reason\":\"此视角实际看见什么\"}]}。\nviews必须包含该时刻全部三图；一图明确成立且其余遮挡可接受，任何同刻明确反证都不能忽略。引用必须来自所审核时刻。身份清楚而关系不清时same_target=true、state=unknown；不要混淆身份未知和关系未知。\nplacement还必须包含support_contact={\"visible\":true或false或null,\"observation\":\"实际可见接触，或接触处被什么遮挡\",\"evidence\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}]}。visible只记录直接可见性，不等于是否已承接；接触处被容器壁/物体自身遮挡时填false或null，不能因此自动判未到位。夹爪闭合只说明开口状态，不证明物体悬空，也不妨碍目的地已经承接。\n松手前有两条通用证据路径：直接可见承接接触；或指定区域的多视角几何关系结合最近连续过程，足以确认放置深度已到位、无需继续下降或推进。后者须在placement增加support_inference={\"depth_sufficient\":true或false或null,\"spatial_observation\":\"结合物体整体尺度、可见露出部分、入口/边沿/隔板/承载平面说明实际深度及有无悬空间隙\",\"temporal_observation\":\"同一目标相对固定目的地从接近到当前的变化或已到位状态如何延续，不能仅说机械臂停住\",\"evidence\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}]}。引用必须包括被审核时刻以及此前1秒内至少一个非初态的过程时刻，不得用初始桌面位置或后来图片证明当时已到位。全部同步视角共同核对，一图清晰、其他被遮挡可接受；任何明确反证均不能忽略。无法提供足够几何/时序依据时保持unknown。\n几何深度必须先成立，静止不能补足深度证据。仅物体尖端/下端刚越入口、主体仍明显悬在外部、卡在口沿或需要继续降低/推进，均不满足接管；不能把前述情况仅因停住而写成已承接。对in检查实际进入指定内部/隔间的深度，对on/right_of检查相对指定承载平面的高度与间隙，不要求目标完全低于口沿。位置投影重叠、源位置消失和夹爪握持都不能单独证明这些关系。\nsupport_inference可额外引用同任务段更早的接近/进入照片，以比较进入前后物体整体与边界的关系；但仍须引用当前及此前1秒内的近邻图核对现在没有移出或仍需推进。current.evidence、destination_evidence、relation_evidence只能引用当前时刻；更早的过程引用只填support_inference.evidence或identity_refs，不能混填当前事实。\nobservations.motion是与各组三视图同步的实测关节速度。它不能证明物体到位，但能核对“已经停在最终放置深度”的说法：接触遮挡而依赖几何/过程推断时，程序要求当前和至少一个1秒内近邻样本的最大关节速度均不高于0.2 rad/s（缺测则此路径暂不接管）。若连续图仍在下降/推进、速度也未减缓，不得以“正在进入”当作“放置结束”。速度低也不证明到位，仍须独立满足身份、目的地区域和几何深度条件；此规则不是最终静止验收阈值。\n严格分开位置到位和接触已确认：state=at_destination表示已达到任务要求的放置位置/深度，剩余只需松手，不表示已释放或最终完成。supported只描述目的地承接是否能确认；接触处遮挡可填null，同时state仍可at_destination、needs_motion=false，并用充分的support_inference申请接管。不要为了允许接管编造supported=true；也不要把supported=null自动等同于位置未知。明确悬空、挂在外沿或需要继续放置位移时supported=false/needs_motion=true，必须拦截。\n判断放置深度要比较初态中物体整体尺度与当前露出部分、跨越哪条边界、进入前后的相对位置，而不是必须看到落底瞬间或证明零间隙。已明显深入正确区域、主体由内部边界包围且近邻过程保持该关系时，不应仅因想象“也许卡在看不见的边沿”而否认到位；有实际卡沿/间隙/未完成推进的图像依据则须明确引用并拦截。位置或深度本身仍无法判断时保留unknown。\n允许接管不等于最终完成。松手后仍须依据脱手及仍留在目标处的过程确认承接和稳定，不能把松手前的几何接管许可写成松手后历史完成证据。needs_motion不包含松手、退离和归位，不能把这些后续动作变成松手前的前置条件。\n若decision_stage=handoff_review，这是独立接管复核：依据原图与最近过程确认是否仍需定位移动，不继承之前的到位结论；不得因将要收尾而认为已经完成。\n保留全部协议字段与判断约束；各comparison/observation/reason只写必要可见事实，通常一短句。ID、时间与外观定义已有结构化字段，不逐段重复抄写。常规为当前及最近近邻三视图；初始身份、目标区域和松手历史按需另附，不能把未附的图当作本次看过。\n你审核同一个机器人任务段的初态、过程和当前照片。按task和goals指定的实物判断，不能把同类干扰物替代目标。\n每张图有frame、capture_id、view、captured_at。三视图是同一时刻；wrist会随手臂移动，不能用画面位置变化直接推断物体移动。初始图时间null仅表示绝对时间未知，顺序在动作之前。\n先用初始/清晰图定位各指定目标，bindings给出外观、图内框和易混淆物。框为0到1000归一化[x1,y1,x2,y2]，须包围实际物体。按照goals中外观定义辨认，不能用同类或相似颜色的另一物体替代。已绑定目标需用相同参照物核对，目标名称相同不证明是同一实物。\n比较初态、各次松手和当前：逐个核对什么物体从哪里去了哪里。目标只露局部时可结合初态与过程核对身份，不要求每张都看清标签；不能把看不到标签说成容器空置。仅从源位置消失不能证明到达目的地，还需目的地/过程对应。\ncurrent只描述当前图可见事实。history单独重审review_requests指定的旧capture，即使旧回答Unknown/False也可纠正。历史图里的放置不能填成当前看得到。历史结论必须引用该旧capture的图；identity_refs可以引用初始、过程或当前，用comparison说明为什么是同一目标。\n放置state=at_destination/outside/unknown；supported表示视觉上在目的地受支撑。编码器仅证明对应时刻开口，不能证明位置。当前仍夹持不妨碍到位判断，收尾另行执行。门/抽屉/开关state=open/closed/on/off/unknown，仅用当前图；侧面可辨门板相对机身即可，不要求正面。\n已有放置证据遇遮挡时current可unknown；若称同一目标outside，必须核对身份和原图。change=removed/moved/dropped需要当前明确同物移出证据，否则none。不要把桌上另一个目标/瓶/盒当成已放入目标的反证。每件目标分别定位，不能把同一件实物计两次。\n只输出JSON。bindings可为空（沿用已有绑定）；首次或之前身份未知时应补充。所有matched=true必须有features和anchors。current按goals顺序；history按review_requests逐条，不能漏项。身份清楚但关系看不清填state=unknown、same_target=true；身份也不清才填same_target=null。说明缺失信息，不抄模板。\nsame_target是身份判断：true=图中证据确为指定目标；false=确定是别的物体；null=身份无法确认。它不是固定默认值。state是指定目标的状态，只有same_target=true时才可填写明确状态；false/null时state必须unknown。不要一边写“确认为同一目标”一边填写null。\n结构：{\"bindings\":[{\"target_id\":\"目标ID\",\"matched\":true,\"anchors\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}],\"features\":\"实际可见特征\",\"distractors\":[{\"frame\":整数,\"box\":[x1,y1,x2,y2],\"features\":\"不同物体的可见差异\"}]}],\"current\":[{\"id\":\"goal_0\",\"state\":\"unknown\",\"same_target\":null,\"evidence\":[],\"identity_refs\":[],\"supported\":null,\"change\":\"none\",\"comparison\":\"初态与当前实际对比\"}],\"history\":[{\"id\":\"goal_0\",\"capture_id\":\"指定旧capture_id\",\"state\":\"unknown\",\"same_target\":null,\"evidence\":[],\"identity_refs\":[],\"supported\":null,\"change\":\"none\",\"comparison\":\"初态、旧过程图与后来图的身份和位置对应\"}]}。evidence与identity_refs均为[{\"frame\":整数,\"box\":[x1,y1,x2,y2]}]；明确事实必须填写evidence，明确目标身份必须引用bindings参照图的identity_refs。\nmode=initial时输出bindings和regions，bindings逐一包含所有goals的target_id和destination_id（含门/装置），看不清可matched=false，不能漏目标；regions逐一确认放置目的地区域。current=[]、history=[]。从实际最清楚的视角定位，遮挡图里不能按物体清单猜位置或抄外观定义。mode=history_page时current=[]，仅审核该页history。旧判断是可修订意见，不是真值。\n若旧bindings认错实物，可输出同target_id的新bindings并加corrects_previous=true、correction_reason说明新旧图的具体区别；旧身份所建放置证据必须重新确认，不能凭改名称直接继承。\n若bindings来自规划初态清单，features是从原始三视图生成并复核的外观描述；仍须对照附带初始原图，不能盲信。目标名称及资产外观提示不能覆盖图中实际物体。初始相对位置只用于初态定位，不要求后续仍在原位。可补充新视角参照或纠正目标/目的地绑定，但必须说明视觉依据并重新审核受影响的历史关系。\n{\"protocol\":\"xvla_subtask_review_v9.3\",\"scope\":{\"session_id\":\"local\",\"logical_subtask_id\":\"c12c735866574acb8cbcb01b6ceea361\",\"attempt_id\":\"1\"},\"task\":\"pick up the book and place it in the back compartment of the caddy\",\"goals\":[{\"id\":\"goal_0\",\"description\":\"put the book in the back compartment of the caddy\",\"relation\":\"in\",\"target_id\":\"black_book_1\",\"destination_id\":\"desk_caddy_1_back_contain_region\",\"target_visual_identity\":\"扁平书本，不是杯子或食品盒。\"}],\"mode\":\"current\",\"reviewed_at\":15.75000000000193,\"initial_capture_id\":\"4b1106dbf3abdc26/capture_000001\",\"current_capture_id\":\"4b1106dbf3abdc26/capture_000062\",\"observations\":[{\"capture_id\":\"4b1106dbf3abdc26/capture_000001\",\"captured_at\":0.5000000000000003,\"sequence_index\":0,\"role\":\"initial\",\"frames\":[0,1,2],\"encoder\":{\"timestamp\":0.5000000000000003,\"finger_qpos\":[0.03873169905567224,-0.038726646754486296],\"standard_open_finger_qpos\":[0.03873169905567224,-0.038726646754486296],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":0.0,\"at_standard_open\":true},\"motion\":{\"timestamp\":0.5000000000000003,\"max_abs_arm_qvel\":0.02686417906113891,\"unit\":\"rad/s\"}},{\"capture_id\":\"4b1106dbf3abdc26/capture_000061\",\"captured_at\":15.500000000001846,\"sequence_index\":60,\"role\":\"process\",\"frames\":[3,4,5],\"encoder\":{\"timestamp\":15.500000000001846,\"finger_qpos\":[0.0111677871941285,-0.02411293413309135],\"standard_open_finger_qpos\":[0.03873169905567224,-0.038726646754486296],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":27.56391186154374,\"at_standard_open\":false},\"motion\":{\"timestamp\":15.500000000001846,\"max_abs_arm_qvel\":0.05959523142405943,\"unit\":\"rad/s\"}},{\"capture_id\":\"4b1106dbf3abdc26/capture_000062\",\"captured_at\":15.75000000000193,\"sequence_index\":61,\"role\":\"current\",\"frames\":[6,7,8],\"encoder\":{\"timestamp\":15.75000000000193,\"finger_qpos\":[0.011572272362953273,-0.02384195459767334],\"standard_open_finger_qpos\":[0.03873169905567224,-0.038726646754486296],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":27.159426692718966,\"at_standard_open\":false},\"motion\":{\"timestamp\":15.75000000000193,\"max_abs_arm_qvel\":0.06739513909276401,\"unit\":\"rad/s\"}}],\"bindings\":[{\"target_id\":\"black_book_1\",\"anchors\":[{\"frame\":0,\"box\":[0,258,318,537]},{\"frame\":1,\"box\":[566,390,604,510]},{\"frame\":2,\"box\":[566,490,670,608]}],\"features\":\"书本：黑色封面硬壳书，顶边露出白色书页；竖立微倾放在桌面中部，紧挨杯子（frame1在杯子后侧，frame2在杯子右侧，frame0腕视中位于杯子左侧）\",\"distractors\":[]},{\"target_id\":\"desk_caddy_1_back_contain_region\",\"anchors\":[{\"frame\":0,\"box\":[318,600,998,840]},{\"frame\":1,\"box\":[150,348,486,602]},{\"frame\":2,\"box\":[380,302,664,508]},{\"frame\":1,\"box\":[352,352,482,428]},{\"frame\":2,\"box\":[390,305,500,395]}],\"features\":\"桌面收纳盒（归位容器）：红棕色长方体敞口盒，内部隔板分成三个格口，无可见文字；位于桌面中后部、机械臂底座前方\",\"distractors\":[]}],\"regions\":[{\"destination_id\":\"desk_caddy_1_back_contain_region\",\"confirmed\":true,\"description\":\"收纳盒三格中靠近机械臂底座/后侧的那一格内部空间（frame1中盒体右后格、frame2中盒体左后格）\",\"boundary\":\"由盒体后壁、侧壁与内部隔板围成的敞口格口；frame1可见该格口黑色内腔与相邻隔板边沿，frame2同格口位于盒体靠臂一侧\",\"request_sha256\":\"1f8dd1b5b3ad2d933d69faa5160a9a95b10ebdef596ac95dd9a186e702e234df\",\"response_sha256\":\"d7664e9bc18a18c58c572d575707c3560810a5600a0dbaa478a5acb9674a882a\",\"anchors\":[{\"frame\":1,\"box\":[352,352,482,428]},{\"frame\":2,\"box\":[390,305,500,395]}]}],\"review_requests\":[],\"previous_reviews\":[{\"review_id\":\"4b1106dbf3abdc26/review_00001\",\"reviewed_at\":0.5000000000000003,\"opinions\":[]}],\"window\":{\"core_capture_ids\":[\"4b1106dbf3abdc26/capture_000062\",\"4b1106dbf3abdc26/capture_000061\"],\"expanded\":false,\"policy\":\"current_and_nearest_prior_with_required_identity_and_release_evidence\"},\"coverage\":{\"page\":1,\"pages\":1,\"all_event_ids\":[],\"included_event_ids\":[]}}",
+  "context": {
+    "user_request": "帮我整理一下桌子，把书本归位",
+    "current_subtask": {
+      "operation": "place",
+      "target": "black_book_1",
+      "destination": "desk_caddy_1_back_contain_region",
+      "phase": "executing"
+    },
+    "criteria": {
+      "must_release": true,
+      "must_stabilize": true,
+      "must_clear": true,
+      "must_preserve_target": true,
+      "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+      "task_description": "put the book in the back compartment of the caddy",
+      "skill_description": "pick up the book and place it in the back compartment of the caddy",
+      "success_checks": [
+        {
+          "id": "goal_0",
+          "description": "put the book in the back compartment of the caddy",
+          "relation": "in",
+          "target_id": "black_book_1",
+          "destination_id": "desk_caddy_1_back_contain_region",
+          "target_visual_identity": "扁平书本，不是杯子或食品盒。"
+        }
+      ]
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": 0.5000000000000003
+      },
+      {
+        "frame": 3,
+        "view": "wrist",
+        "timestamp": 15.500000000001846
+      },
+      {
+        "frame": 4,
+        "view": "agentview",
+        "timestamp": 15.500000000001846
+      },
+      {
+        "frame": 5,
+        "view": "sideview",
+        "timestamp": 15.500000000001846
+      },
+      {
+        "frame": 6,
+        "view": "wrist",
+        "timestamp": 15.75000000000193
+      },
+      {
+        "frame": 7,
+        "view": "agentview",
+        "timestamp": 15.75000000000193
+      },
+      {
+        "frame": 8,
+        "view": "sideview",
+        "timestamp": 15.75000000000193
+      }
+    ],
+    "actuator_measurements": {
+      "timestamp": 15.75000000000193,
+      "finger_qpos": [
+        0.011572272362953273,
+        -0.02384195459767334
+      ],
+      "standard_open_finger_qpos": [
+        0.03873169905567224,
+        -0.038726646754486296
+      ],
+      "max_abs_arm_qvel": 0.06739513909276401
+    }
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 1024,
+    "max_tokens": 4096
+  },
+  "timeout_seconds": 90,
+  "request_sha256": "7cac5453d8567230112fc96ff027acce47b17c8c7df199407ded095f749a5150",
+  "requested_model": "qwen3.8-max",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist.png",
+      "sha256": "403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "sha256": "f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "sha256": "285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/cap_01_xvla_book_caddy_72552d6b/finish/sensors/cap000185_wrist.png",
+      "sha256": "74f33ca744a59acceabf39e4cd04d3f7ace5bcc71ab23729184ac859155800fe"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/cap_01_xvla_book_caddy_72552d6b/finish/sensors/cap000185_wrist_checker_agentview.png",
+      "sha256": "0a246e45786a2379c01372021e9a7b9699908752f2689e94b3699de06c396128"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/cap_01_xvla_book_caddy_72552d6b/finish/sensors/cap000185_wrist_checker_sideview.png",
+      "sha256": "a91a285aed623a8c661bc0f73950ca0b783d0d93c3d789013331d761a8a33a9b"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/cap_01_xvla_book_caddy_72552d6b/finish/sensors/cap000188_wrist.png",
+      "sha256": "574a68ba381fa5c00f19b0b9288c4d88623f8e112ed9ef7024834adde69bedf5"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/cap_01_xvla_book_caddy_72552d6b/finish/sensors/cap000188_wrist_checker_agentview.png",
+      "sha256": "e0340a9d9cb0671cbe71e004f90cd3f280b228115c6d2c9fa595780956190364"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T072117Z_book_caddy_6e418042/cap_01_xvla_book_caddy_72552d6b/finish/sensors/cap000188_wrist_checker_sideview.png",
+      "sha256": "0b9d6df26ef450871df091f39bebbf8b3b6c6780b3d913ea939c2c1c4130c85a"
+    }
+  ]
+}

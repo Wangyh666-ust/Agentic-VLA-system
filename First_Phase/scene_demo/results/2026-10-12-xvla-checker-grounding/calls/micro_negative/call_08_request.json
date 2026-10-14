@@ -1,0 +1,116 @@
+{
+  "prompt": "只判断当前单项任务的指定目标。静态外观定义不声明当前位置。\n先识别target_visual_identity对应物品；其他相似物不能替代。身份无法辨认时target_matches_definition=null，目标关系也返回null。\non只判断物品在目的地顶面，不要求进入内部；in判断进入容器，不附加后续关门。turnon/turnoff/open/close按静态状态定义判断。\n不要求已经开爪、退离或归位才允许移交。同步编码器只确定开口，不证明物品到位或是否持物。\n三图按标签为wrist、agentview、sideview，同一采样时刻。一个明确视角足够；其他视角遮挡、看不清或显示不同物品不是反证。\nfalse仅用于已识别指定物品且画面明确证明它不满足目标关系；身份或关系未辨认返回null，不用其他物品位置推断false。\n仅输出唯一JSONschema：{\"target_matches_definition\":true/false/null,\"goal_achieved\":true/false/null,\"reason\":\"指定目标外观及当前位置/关系的画面依据\"}。\n{\"task_description\": \"put the yellow and white mug in the microwave\", \"goal_relation\": \"in\", \"target_category\": \"white_yellow_mug\", \"target_visual_identity\": \"浅色杯身带黄色区域、黄色把手的黄白杯；不是灰黑色花纹杯或红白花纹咖啡杯。\", \"destination_definition\": \"微波炉炉腔内部；放入杯子不附加门关闭条件。\", \"desired_state\": null, \"visual_state_definition\": null, \"sensor_frames\": [{\"frame\": 0, \"timestamp\": 1.0000000000000007, \"view\": \"wrist\"}, {\"frame\": 1, \"timestamp\": 1.0000000000000007, \"view\": \"agentview\"}, {\"frame\": 2, \"timestamp\": 1.0000000000000007, \"view\": \"sideview\"}], \"actuator_measurements\": {\"timestamp\": 1.0000000000000007, \"finger_qpos\": [0.03904191591353, -0.03903313598872844], \"standard_open_finger_qpos\": [0.038728906188908195, -0.0387294158813959], \"position_unit\": \"m\", \"standard_open_tolerance_m\": 0.002, \"max_standard_open_error_mm\": 0.31300972462180304, \"at_standard_open\": true}}",
+  "context": {
+    "actuator_measurements": {
+      "finger_qpos": [
+        0.03904191591353,
+        -0.03903313598872844
+      ],
+      "max_abs_arm_qvel": 0.16363153744511694,
+      "stage": "executing",
+      "standard_open_finger_qpos": [
+        0.038728906188908195,
+        -0.0387294158813959
+      ],
+      "timestamp": 1.0000000000000007
+    },
+    "criteria": {
+      "must_clear": true,
+      "must_preserve_target": true,
+      "must_release": true,
+      "must_stabilize": true,
+      "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+      "task_description": "put the yellow and white mug in the microwave"
+    },
+    "current_subtask": {
+      "destination": "microwave_1_heating_region",
+      "operation": "place",
+      "phase": "executing",
+      "target": "white_yellow_mug_1"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "timestamp": 1.0000000000000007,
+        "view": "wrist"
+      },
+      {
+        "frame": 1,
+        "timestamp": 1.0000000000000007,
+        "view": "agentview"
+      },
+      {
+        "frame": 2,
+        "timestamp": 1.0000000000000007,
+        "view": "sideview"
+      }
+    ],
+    "user_request": "先把黄白杯放进微波炉，再关闭微波炉门。"
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 1024
+  },
+  "request_sha256": "75b2f4115482d8fc5d9ac80ce69f4fa05982af77f9fef4cd4a4eb40410c9a83f",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000002_wrist.png",
+      "sha256": "48d0a64d027a5d16b771a12d2c62c546df4ffd0a1ce05d18c0a4a9101f936f4e"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000001_agentview.png",
+      "sha256": "1c57459df31d7364fda6bcb75a51b573c507cf751faf51d54986c28e3fe2b6c3"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000003_sideview.png",
+      "sha256": "a9853f508c6f7c32708ca2df94f0f84310594f93e9699b7681bb5b60505943f8"
+    }
+  ],
+  "source_context": {
+    "actuator_measurements": {
+      "finger_qpos": [
+        0.03904191591353,
+        -0.03903313598872844
+      ],
+      "max_abs_arm_qvel": 0.16363153744511694,
+      "stage": "executing",
+      "standard_open_finger_qpos": [
+        0.038728906188908195,
+        -0.0387294158813959
+      ],
+      "timestamp": 1.0000000000000007
+    },
+    "criteria": {
+      "must_clear": true,
+      "must_preserve_target": true,
+      "must_release": true,
+      "must_stabilize": true,
+      "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+      "task_description": "put the yellow and white mug in the microwave"
+    },
+    "current_subtask": {
+      "destination": "microwave_1_heating_region",
+      "operation": "place",
+      "phase": "executing",
+      "target": "white_yellow_mug_1"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "timestamp": 1.0000000000000007,
+        "view": "wrist"
+      },
+      {
+        "frame": 1,
+        "timestamp": 1.0000000000000007,
+        "view": "agentview"
+      }
+    ],
+    "user_request": "先把黄白杯放进微波炉，再关闭微波炉门。"
+  },
+  "source_image_paths": [
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000002_wrist.png",
+    "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000001_agentview.png"
+  ]
+}

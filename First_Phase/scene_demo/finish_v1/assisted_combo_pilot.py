@@ -47,7 +47,7 @@ def prepare():
         repeat={'needed':False,'reason':'new bounded visual pregrasp and concurrent turn withdrawal interventions'})
     proposal['configuration'].update(source_sha256={s:pilot.sha(ROOT/s) for s in SOURCES},
         wine_helper='collision_grasp unchanged validated three-waypoint side grasp',
-        pregrasp='qwen3-vl-plus, temperature0, thinking false, max1 call; no simulator pose in prompt; projected association tolerance .03 normalized',
+        pregrasp='qwen3.8-max, temperature0, thinking false, max1 call; no simulator pose in prompt; projected association tolerance .03 normalized',
         geometry_source='precise pose, orientation and contact protection remain simulator geometry; real RGBD estimation deferred',
         grasp_budget_per_subgoal=200, physical_policy_loop_budget_per_subgoal=500,
         vla_budget_per_subgoal=300, check_schedule='actual VLA150/300; local grasp counted separately',

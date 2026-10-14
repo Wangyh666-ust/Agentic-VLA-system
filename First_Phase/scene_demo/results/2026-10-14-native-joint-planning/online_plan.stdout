@@ -1,0 +1,19 @@
+{"elapsed": 0.0, "stage": "idle", "message": "选择历史示例，或开始自己的仿真。"}
+{"elapsed": 2.0, "stage": "loading", "message": "正在载入场景并拍摄三视图；不启动模型、不执行任务。"}
+{"elapsed": 8.0, "stage": "ready", "message": "三视图已就绪。请先看看场景，再在下方填写你想做的任务。"}
+Traceback (most recent call last):
+  File "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online.py", line 33, in <module>
+    started=time.time();post('/api/plan',{'request':'收拾桌面，将碗和瓶子归位'})
+  File "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-native-joint-planning/online.py", line 13, in post
+    with opener.open(req,timeout=15) as r:return json.load(r)
+  File "/home/yhwang/fyp/xvla_native/uv_python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/urllib/request.py", line 525, in open
+    response = meth(req, response)
+  File "/home/yhwang/fyp/xvla_native/uv_python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/urllib/request.py", line 634, in http_response
+    response = self.parent.error(
+  File "/home/yhwang/fyp/xvla_native/uv_python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/urllib/request.py", line 563, in error
+    return self._call_chain(*args)
+  File "/home/yhwang/fyp/xvla_native/uv_python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+  File "/home/yhwang/fyp/xvla_native/uv_python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/urllib/request.py", line 643, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 400: Bad Request

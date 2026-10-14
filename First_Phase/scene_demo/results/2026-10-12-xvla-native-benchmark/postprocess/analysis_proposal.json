@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "20261012-xvla-native-offline-archive",
+  "intent": "analyze_existing",
+  "question_key": "benchmark-success-rate",
+  "purpose": "按用户固定判据离线核验既有X-VLA 200次结果并归档，零新增模型与环境动作。",
+  "prior_evidence": [
+    "20261011-native-benchmark"
+  ],
+  "history_review": [
+    {
+      "experiment_id": "20261011-native-benchmark",
+      "disposition": "reuse",
+      "reason": "复用旧SmolVLA原生benchmark作非配对历史背景；本次核验已完成X-VLA原始记录，不新跑实验。"
+    }
+  ],
+  "new_physical_actions": 0,
+  "analysis_steps": [
+    "解析200唯一slot及全部steps/calls/response",
+    "原作者动作数值转换与float32发送字节比对",
+    "完整解码200原视频到null统计帧数",
+    "冻结来源与报告证据哈希归档"
+  ]
+}

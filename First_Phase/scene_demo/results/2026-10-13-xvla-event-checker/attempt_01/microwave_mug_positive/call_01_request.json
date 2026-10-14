@@ -1,0 +1,283 @@
+{
+  "prompt": "你是视觉事实观察员，程序根据事实汇总完整任务。不要直接输出整体完成与否。\n先用reference和before照片辨认任务目标与干扰物，再看每个release/after，最后看current。reference只用于身份对应，不能证明当前位置。time=-1表示旧身份参考照片采样时间未记录，不用于时间顺序或编码器判断。\nwrist是腕部第一人称，agentview与sideview是两个外部视角；照片不裁剪、不镜像。每张照片的frame唯一。每个实测开口事件可能只是空手张开，不表示成功持物或放置。before/release/after只描述采样顺序，不能据标签猜测动作成功。\n对每个events中的event_id，必须逐项返回全部goal的observations；不相关或看不清也要返回unknown并说明。再对current逐项返回全部goal。不能跳过过程照片，也不能用旧检查True/False/Null替代图像；previous_checks仅供对照纠错。\n一项观察格式：{\"id\":\"goal_0\",\"identity\":\"matched|uncertain|distractor\",\"object_key\":\"视觉跟踪的同一实物标识或null\",\"relation\":\"satisfied|violated|occluded|unknown\",\"frames\":[关系证据frame整数],\"identity_frames\":[身份或连续对应证据frame整数],\"supported\":true或false或null,\"continuity\":\"intact|broken|unknown\",\"reason\":\"具体画面依据\"}。\nobject_key根据参考图的外观和位置给实际物体稳定命名（例如yellow_handle_mug），跨事件与当前保持同一标识，不是复制目标ID。不同目标物必须对应不同实物；同一物体的放置与开关等多个要求可共用标识。相同类别的两件实物也须区分，不能凭事件序号分配。\nidentity=matched须由外观或连续视觉对应确认指定目标；标签文字、花纹无需每帧可读。桌上其他杯或其他罐不能当作指定目标的反证。uncertain/distractor均不可确证目标关系。\nrelation描述这组图对指定目标关系的证据：satisfied=明确满足；violated=明确同一目标未满足；occluded=目标被容器/门/机械臂遮住；unknown=其他证据不足。frames必须引用本组release或after（current则引用当前组）确切照片，identity_frames可引用参考和更早图片。不能用before位置证明release之后已放好。\n历史放置satisfied还须supported=true，即放在目的地得到支撑，不是正在落下或入口外；同步实测开口只证明已张开，不证明放对。当前到位可仍夹持，松手、退离、归位由后续收尾完成，勿添加这些完成条件。\ncurrent看不到目标时可返回occluded。continuity=intact表示结合这次原过程图与当前场景，同一目标的身份和所在容器对应仍成立且无取出、移位或掉落反证；broken表示有明确变化，unknown表示对应无法建立。当前被门遮住不等于历史放置证据失效，关着门也不能独自证明物品放入。\n门/抽屉/开关及preserved状态只用当前图判断；侧面或斜视可辨门板与机身关系即可，不要求正面。只检查goals要求的条件；on盘为盘面，in容器为内部，right_of为指定物旁的区域，不额外要求进入盘内部。只在目标含close时要求关门。\n只输出JSON：{\"events\":[{\"event_id\":\"release_0001\",\"observations\":[上述观察]}],\"current\":[上述观察],\"reason\":\"简短说明\"}。release_review时current仍是本次最新图，事件分类不会直接触发收尾。\n{\"protocol\":\"xvla_event_facts_v4\",\"role\":\"current_review\",\"goals\":[{\"description\":\"put the yellow and white mug in the microwave\",\"destination_id\":\"microwave_1_heating_region\",\"id\":\"goal_0\",\"relation\":\"in\",\"target_id\":\"white_yellow_mug_1\",\"target_visual_identity\":\"浅色杯身与黄色区域/黄色把手。\"},{\"description\":\"close the microwave\",\"destination_id\":null,\"id\":\"goal_1\",\"relation\":\"close\",\"target_id\":\"microwave_1\",\"visual_state_definition\":{\"closed\":\"微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。\",\"open\":\"微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。\"}}],\"groups\":[{\"kind\":\"reference\",\"event_id\":null,\"time\":-1,\"frames\":[0,1,2],\"time_known\":false},{\"kind\":\"before\",\"event_id\":\"release_0001\",\"time\":8.249999999999424,\"frames\":[3,4,5],\"encoder\":{\"timestamp\":8.249999999999424,\"finger_qpos\":[0.009420021638946974,-0.009669898684783492],\"standard_open_finger_qpos\":[0.03872905725468913,-0.03872928166924487],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":29.309035615742157,\"at_standard_open\":false}},{\"kind\":\"release\",\"event_id\":\"release_0001\",\"time\":8.949999999999658,\"frames\":[6,7,8],\"encoder\":{\"timestamp\":8.949999999999658,\"finger_qpos\":[0.038316846411817,-0.03777253025922477],\"standard_open_finger_qpos\":[0.03872905725468913,-0.03872928166924487],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":0.9567514100201,\"at_standard_open\":true}},{\"kind\":\"after\",\"event_id\":\"release_0001\",\"time\":15.75000000000193,\"frames\":[9,10,11],\"encoder\":{\"timestamp\":15.75000000000193,\"finger_qpos\":[0.04000869080506398,-0.01623525043575098],\"standard_open_finger_qpos\":[0.03872905725468913,-0.03872928166924487],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":22.494031233493892,\"at_standard_open\":false}},{\"kind\":\"before\",\"event_id\":\"release_0002\",\"time\":8.249999999999424,\"frames\":[12,13,14],\"encoder\":{\"timestamp\":8.249999999999424,\"finger_qpos\":[0.009420021638946974,-0.009669898684783492],\"standard_open_finger_qpos\":[0.03872905725468913,-0.03872928166924487],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":29.309035615742157,\"at_standard_open\":false}},{\"kind\":\"release\",\"event_id\":\"release_0002\",\"time\":26.24999999999633,\"frames\":[15,16,17],\"encoder\":{\"timestamp\":26.24999999999633,\"finger_qpos\":[0.04001468186334194,-0.037840819242109795],\"standard_open_finger_qpos\":[0.03872905725468913,-0.03872928166924487],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":1.2856246086528147,\"at_standard_open\":true}},{\"kind\":\"after\",\"event_id\":\"release_0002\",\"time\":30.749999999993836,\"frames\":[18,19,20],\"encoder\":{\"timestamp\":30.749999999993836,\"finger_qpos\":[0.040012906995097644,-0.040239563405857076],\"standard_open_finger_qpos\":[0.03872905725468913,-0.03872928166924487],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":1.510281736612204,\"at_standard_open\":true}},{\"kind\":\"current\",\"event_id\":null,\"time\":45.75000000000995,\"frames\":[21,22,23],\"encoder\":{\"timestamp\":45.75000000000995,\"finger_qpos\":[0.03329571623791428,-0.03998572633061355],\"standard_open_finger_qpos\":[0.03872905725468913,-0.03872928166924487],\"position_unit\":\"m\",\"standard_open_tolerance_m\":0.002,\"max_standard_open_error_mm\":5.433341016774847,\"at_standard_open\":false}}],\"events\":[{\"event_id\":\"release_0001\",\"time\":8.949999999999658,\"identity_frames\":[3,4,5,6,7,8,9,10,11],\"relation_frames\":[6,7,8,9,10,11],\"status\":\"pending\"},{\"event_id\":\"release_0002\",\"time\":26.24999999999633,\"identity_frames\":[12,13,14,15,16,17,18,19,20],\"relation_frames\":[15,16,17,18,19,20],\"status\":\"pending\"}],\"previous_checks\":[{\"time\":8.249999999999424,\"source\":\"historical_checker_unverified\",\"goals\":[{\"id\":\"goal_0\",\"achieved\":null,\"evidence_event_ids\":[]},{\"id\":\"goal_1\",\"achieved\":true,\"evidence_event_ids\":[]}]},{\"time\":15.75000000000193,\"source\":\"historical_checker_unverified\",\"goals\":[{\"id\":\"goal_0\",\"achieved\":null,\"evidence_event_ids\":[]},{\"id\":\"goal_1\",\"achieved\":false,\"evidence_event_ids\":[]}]},{\"time\":23.249999999997993,\"source\":\"historical_checker_unverified\",\"goals\":[{\"id\":\"goal_0\",\"achieved\":null,\"evidence_event_ids\":[]},{\"id\":\"goal_1\",\"achieved\":false,\"evidence_event_ids\":[]}]},{\"time\":30.749999999993836,\"source\":\"historical_checker_unverified\",\"goals\":[{\"id\":\"goal_0\",\"achieved\":null,\"evidence_event_ids\":[]},{\"id\":\"goal_1\",\"achieved\":false,\"evidence_event_ids\":[]}]},{\"time\":38.25000000000078,\"source\":\"historical_checker_unverified\",\"goals\":[{\"id\":\"goal_0\",\"achieved\":null,\"evidence_event_ids\":[]},{\"id\":\"goal_1\",\"achieved\":false,\"evidence_event_ids\":[]}]}],\"omitted_events\":[],\"current_frames\":[21,22,23],\"sensor_frames\":[{\"frame\":0,\"view\":\"wrist\",\"timestamp\":-1},{\"frame\":1,\"view\":\"agentview\",\"timestamp\":-1},{\"frame\":2,\"view\":\"sideview\",\"timestamp\":-1},{\"frame\":3,\"timestamp\":8.249999999999424,\"view\":\"wrist\"},{\"frame\":4,\"timestamp\":8.249999999999424,\"view\":\"agentview\"},{\"frame\":5,\"timestamp\":8.249999999999424,\"view\":\"sideview\"},{\"frame\":6,\"view\":\"wrist\",\"timestamp\":8.949999999999658},{\"frame\":7,\"view\":\"agentview\",\"timestamp\":8.949999999999658},{\"frame\":8,\"view\":\"sideview\",\"timestamp\":8.949999999999658},{\"frame\":9,\"timestamp\":15.75000000000193,\"view\":\"wrist\"},{\"frame\":10,\"timestamp\":15.75000000000193,\"view\":\"agentview\"},{\"frame\":11,\"timestamp\":15.75000000000193,\"view\":\"sideview\"},{\"frame\":12,\"timestamp\":8.249999999999424,\"view\":\"wrist\"},{\"frame\":13,\"timestamp\":8.249999999999424,\"view\":\"agentview\"},{\"frame\":14,\"timestamp\":8.249999999999424,\"view\":\"sideview\"},{\"frame\":15,\"view\":\"wrist\",\"timestamp\":26.24999999999633},{\"frame\":16,\"view\":\"agentview\",\"timestamp\":26.24999999999633},{\"frame\":17,\"view\":\"sideview\",\"timestamp\":26.24999999999633},{\"frame\":18,\"timestamp\":30.749999999993836,\"view\":\"wrist\"},{\"frame\":19,\"timestamp\":30.749999999993836,\"view\":\"agentview\"},{\"frame\":20,\"timestamp\":30.749999999993836,\"view\":\"sideview\"},{\"frame\":21,\"timestamp\":45.75000000000995,\"view\":\"wrist\"},{\"frame\":22,\"timestamp\":45.75000000000995,\"view\":\"agentview\"},{\"frame\":23,\"timestamp\":45.75000000000995,\"view\":\"sideview\"}]}",
+  "context": {
+    "actuator_measurements": {
+      "finger_qpos": [
+        0.03329571623791428,
+        -0.03998572633061355
+      ],
+      "max_abs_arm_qvel": 0.1851405210706259,
+      "stage": "executing",
+      "standard_open_finger_qpos": [
+        0.03872905725468913,
+        -0.03872928166924487
+      ],
+      "timestamp": 45.75000000000995
+    },
+    "criteria": {
+      "desired_state": "closed",
+      "must_clear": true,
+      "must_preserve_target": true,
+      "must_release": true,
+      "must_stabilize": true,
+      "operation_semantics": "move the articulated door to its requested open or closed state; then release contact and retreat without changing that state",
+      "skill_description": "put the yellow and white mug in the microwave and close it",
+      "success_checks": [
+        {
+          "description": "put the yellow and white mug in the microwave",
+          "destination_id": "microwave_1_heating_region",
+          "id": "goal_0",
+          "relation": "in",
+          "target_id": "white_yellow_mug_1",
+          "target_visual_identity": "浅色杯身与黄色区域/黄色把手。"
+        },
+        {
+          "description": "close the microwave",
+          "destination_id": null,
+          "id": "goal_1",
+          "relation": "close",
+          "target_id": "microwave_1",
+          "visual_state_definition": {
+            "closed": "微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。",
+            "open": "微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。"
+          }
+        }
+      ],
+      "task_description": "close the microwave"
+    },
+    "current_subtask": {
+      "destination": null,
+      "operation": "articulate",
+      "phase": "executing",
+      "target": "microwave_1"
+    },
+    "sensor_frames": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "timestamp": -1
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "timestamp": -1
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "timestamp": -1
+      },
+      {
+        "frame": 3,
+        "timestamp": 8.249999999999424,
+        "view": "wrist"
+      },
+      {
+        "frame": 4,
+        "timestamp": 8.249999999999424,
+        "view": "agentview"
+      },
+      {
+        "frame": 5,
+        "timestamp": 8.249999999999424,
+        "view": "sideview"
+      },
+      {
+        "frame": 6,
+        "view": "wrist",
+        "timestamp": 8.949999999999658
+      },
+      {
+        "frame": 7,
+        "view": "agentview",
+        "timestamp": 8.949999999999658
+      },
+      {
+        "frame": 8,
+        "view": "sideview",
+        "timestamp": 8.949999999999658
+      },
+      {
+        "frame": 9,
+        "timestamp": 15.75000000000193,
+        "view": "wrist"
+      },
+      {
+        "frame": 10,
+        "timestamp": 15.75000000000193,
+        "view": "agentview"
+      },
+      {
+        "frame": 11,
+        "timestamp": 15.75000000000193,
+        "view": "sideview"
+      },
+      {
+        "frame": 12,
+        "timestamp": 8.249999999999424,
+        "view": "wrist"
+      },
+      {
+        "frame": 13,
+        "timestamp": 8.249999999999424,
+        "view": "agentview"
+      },
+      {
+        "frame": 14,
+        "timestamp": 8.249999999999424,
+        "view": "sideview"
+      },
+      {
+        "frame": 15,
+        "view": "wrist",
+        "timestamp": 26.24999999999633
+      },
+      {
+        "frame": 16,
+        "view": "agentview",
+        "timestamp": 26.24999999999633
+      },
+      {
+        "frame": 17,
+        "view": "sideview",
+        "timestamp": 26.24999999999633
+      },
+      {
+        "frame": 18,
+        "timestamp": 30.749999999993836,
+        "view": "wrist"
+      },
+      {
+        "frame": 19,
+        "timestamp": 30.749999999993836,
+        "view": "agentview"
+      },
+      {
+        "frame": 20,
+        "timestamp": 30.749999999993836,
+        "view": "sideview"
+      },
+      {
+        "frame": 21,
+        "timestamp": 45.75000000000995,
+        "view": "wrist"
+      },
+      {
+        "frame": 22,
+        "timestamp": 45.75000000000995,
+        "view": "agentview"
+      },
+      {
+        "frame": 23,
+        "timestamp": 45.75000000000995,
+        "view": "sideview"
+      }
+    ],
+    "user_request": "先把黄白杯放进微波炉，再关闭微波炉门。"
+  },
+  "http_status": 200,
+  "request_options": {
+    "enable_thinking": true,
+    "thinking_budget": 1024,
+    "max_tokens": 4096
+  },
+  "request_sha256": "e965a3f8675e12e63cd6353c0f1704f11975e7eebdccf4fb2d9df239efd0b776",
+  "images": [
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000002_wrist.png",
+      "sha256": "a564ae2c7af3324024f4fb9ccf601e80750fc05fec0abba00709b92f0caedea6"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000001_agentview.png",
+      "sha256": "68dee8bf539e871280abef68b7885104715177bf691aa35d45bb65ff4858718e"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000003_sideview.png",
+      "sha256": "1cfd9507d6fe8c2981bd78699ffe153a4a09aa6abb49adbca720aa3b3a5fa307"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000092_wrist.png",
+      "sha256": "e642cc398940ce3d21cb649d1bb5a638f01790647c6bc45cf70924a8e34a204f"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000091_agentview.png",
+      "sha256": "229c543d57711553b0748056f838856a34ec32660133fb945aad1c2b64da329f"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000093_sideview.png",
+      "sha256": "fc726dd4dc73ac5db4fc580a6bc2c2883e37f4d6f89bbb30c7fc055a1c2b51c0"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000101_wrist.png",
+      "sha256": "eedfe36bc0db2980340ec4e9db7560692725edf16b95878e52089e0bc4ac0931"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000100_agentview.png",
+      "sha256": "7bea69274cf4bf2ba4ba196cc35b36aa35a7fc86b62f6768adb7a569eaa27553"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000102_sideview.png",
+      "sha256": "bffce3943b07c2a07813bdc6139b3c6d19331f38955ce659d2f836ca24d9225a"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000188_wrist.png",
+      "sha256": "c17abeb632593fb6b3c39a90441ebd0259815f9e684f50160674e2c2e485c61f"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000187_agentview.png",
+      "sha256": "ff188106d03f24b2e9cdbefcde5f3d204a96c2059c6928868797680061ec9a9a"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000189_sideview.png",
+      "sha256": "fe55640ebe441290c6f34c82362cfe6cf2673c7fc8271b81cf181de0bcfdc17b"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000092_wrist.png",
+      "sha256": "e642cc398940ce3d21cb649d1bb5a638f01790647c6bc45cf70924a8e34a204f"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000091_agentview.png",
+      "sha256": "229c543d57711553b0748056f838856a34ec32660133fb945aad1c2b64da329f"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000093_sideview.png",
+      "sha256": "fc726dd4dc73ac5db4fc580a6bc2c2883e37f4d6f89bbb30c7fc055a1c2b51c0"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000317_wrist.png",
+      "sha256": "675874f55ce9e8f16489c0a3969adbbb1e29bf1ea472075042f04d0d9e1f1a8e"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000316_agentview.png",
+      "sha256": "ce9dd6fe7036ad92cb7059af5d99c8acdeac75d5a617514b13b3ab9a2c0b908e"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000318_sideview.png",
+      "sha256": "54f810204eb6eddb45403f8198a4021e71440c899b1680cca411640d57afe252"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000377_wrist.png",
+      "sha256": "a2f205f02aa577c2f64311357962754b2247a47ef06acfb2e011a08842502205"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000376_agentview.png",
+      "sha256": "f0aa19c04e924dc6a98fdaae86a45341febc17ae23f138e5027fdecb75c8ee41"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000378_sideview.png",
+      "sha256": "19fef412e436983ed2c2b4a19dcb1870b86dda50c3fa5112469719f07d36a013"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000563_wrist.png",
+      "sha256": "a11d12491acef974324598aaee2dd09646a8bae781a1376395c01e76132015be"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000562_agentview.png",
+      "sha256": "507df753556d340ecc722121ed705a3512bac5a94aa4588e1a57cf10c5045d40"
+    },
+    {
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000564_sideview.png",
+      "sha256": "1d2a7b5ba9e192d2e2307a0fce72e0904a583abf8652f63f224a4479d8752ccd"
+    }
+  ]
+}

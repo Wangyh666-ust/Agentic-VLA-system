@@ -1,0 +1,26 @@
+{
+  "request_id": "console-48903e8111d521ebf0506e62",
+  "session_id": "1060c3a0b4a44aa4a9bf4425aa0d9de3",
+  "scene_version": 0,
+  "decision": "execute",
+  "capability_ids": [
+    "xvla_book_caddy"
+  ],
+  "rationale": "用户动作词为「整理一下，放好」，属收纳意图。公开 storage_policy 仅规定 black_book_1 → desk_caddy_1_back_contain_region，与画面核对：书为 obj_2（黑封面带白页边、立于杯旁，区别于平铺无页边的垫板 obj_5），目的地收纳盒为 obj_3（棕色三隔间盒，后隔间即 back compartment）。该可执行部分（把书放入收纳盒后隔间）与原生长程技能 xvla_book_caddy 的动作、对象、目的地完全匹配，故优先单次调用该技能。杯子(obj_1)在公开 storage_policy 中无目的地、能力库中也无对应能力，该部分不执行，保持 partial 覆盖。",
+  "request_scope": {
+    "coverage": "partial",
+    "executable_outcomes": [
+      "书(black_book_1=obj_2)被放入桌面收纳盒后隔间(desk_caddy_1_back_contain_region=obj_3)"
+    ],
+    "unmet_outcomes": [
+      "杯子(obj_1)的收纳/放好：公开 storage_policy 未给出杯子的目的地，能力库中也没有针对杯子的可执行能力，本次不执行"
+    ],
+    "reason": "原需求为「书和杯子」两件物品的整理放好；公开存储规则与能力库只覆盖书的归位（收纳盒后隔间），杯子无任何公开目的地或能力，故仅执行书的部分，杯子部分为缺口，不臆造目的地。"
+  },
+  "target_bindings": {
+    "black_book_1": "obj_2",
+    "desk_caddy_1_back_contain_region": "obj_3"
+  },
+  "audit": false,
+  "budget_per_subgoal": 900
+}

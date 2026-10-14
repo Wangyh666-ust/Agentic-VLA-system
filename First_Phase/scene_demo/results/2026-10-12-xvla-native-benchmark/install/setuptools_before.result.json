@@ -1,0 +1,24 @@
+{
+  "name": "setuptools_before",
+  "argv": [
+    "wsl.exe",
+    "-d",
+    "Ubuntu",
+    "--exec",
+    "env",
+    "PYTHONPATH=/mnt/d/FYP/First_Phase/libero_demo:/home/yhwang/fyp/xvla_native/LIBERO:/home/yhwang/fyp/xvla_native/upstream",
+    "LIBERO_CONFIG_PATH=/home/yhwang/fyp/xvla_native/libero_config",
+    "MUJOCO_GL=egl",
+    "PYOPENGL_PLATFORM=egl",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+    "-c",
+    "import importlib.metadata as m, importlib.util as u, json; print(json.dumps({'setuptools':[d.version for d in m.distributions() if d.metadata['Name'].lower()=='setuptools'],'pkg_resources_available':u.find_spec('pkg_resources') is not None}))"
+  ],
+  "cwd": "D:\\FYP",
+  "started_utc": "2026-10-12T06:25:05.376147+00:00",
+  "finished_utc": "2026-10-12T06:25:09.396418+00:00",
+  "exit_code": 0,
+  "stdout": "install/setuptools_before.stdout.log",
+  "stderr": "install/setuptools_before.stderr.log"
+}

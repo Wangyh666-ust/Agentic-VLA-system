@@ -1,0 +1,558 @@
+{
+  "purpose": "修复通用退离接口；在刚才完整关抽屉的例子上确认实际退离通过，再完整重跑记录总耗时。",
+  "implementation": {
+    "policy": "legacy_first_then_current_geometry_v1",
+    "task_specific_conditions": false,
+    "new_auxiliary_grasp_helpers": false,
+    "protected_sources_unchanged": {
+      "finish_v1/control.py": true,
+      "finish_v1/sensors.py": true,
+      "finish_v1/runtime.py": true,
+      "finish_v1/feedback_retreat.py": true,
+      "finish_v1/simple_checker.py": true,
+      "joint_home.py": true,
+      "xvla_backend.py": true,
+      "xvla_service.py": true
+    },
+    "current_vs_online_geometry_AST_identical": true,
+    "subagents": 0,
+    "implementation_agent_model": "not exposed in runtime metadata; no delegated model calls"
+  },
+  "software": "348 passed, 53 subtests passed",
+  "historical_replay": {
+    "new_VLA_calls": 0,
+    "new_VLM_calls": 0,
+    "final_visual_acceptance": "not_run_unknown",
+    "replay_source": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb",
+    "success": true,
+    "initial_state_max_abs_error": 0.0,
+    "prepare_max_joint_error": 0.0,
+    "last_replayed_step": 240,
+    "last_encoder_error": 3.574174810283548e-11,
+    "vla_replay_actions": 240,
+    "vla_max_encoder_error": 5.990381580535387e-10,
+    "counts": {
+      "release": 2,
+      "movement": 84,
+      "confirm": 5,
+      "home": 135
+    },
+    "finish_reason": "final visual failed",
+    "home_streak": 5,
+    "final_metrics": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.00022635085187303755,
+        0.0012893679679109038,
+        0.0007747718146019211,
+        0.002029393581380212,
+        0.0018179228296243263,
+        0.002082513652068574,
+        0.003375595685800592
+      ],
+      "arm_speed_rad_s": [
+        3.2274695783189056e-05,
+        0.004222214282045128,
+        9.258426325265648e-05,
+        0.004247615301000311,
+        0.0024016070247363562,
+        0.0006276878347211684,
+        0.006572314946107285
+      ],
+      "max_joint_error_rad": 0.003375595685800592,
+      "max_joint_speed_rad_s": 0.006572314946107285,
+      "finger_error_m": [
+        2.137031534579087e-05,
+        2.1033236020560897e-05
+      ],
+      "finger_speed_m_s": [
+        1.7172794842201088e-05,
+        1.687792469191897e-05
+      ],
+      "max_finger_error_m": 2.137031534579087e-05,
+      "max_finger_speed_m_s": 1.7172794842201088e-05,
+      "ready": true,
+      "eef_position_error_m": 0.0006807262555308582,
+      "eef_orientation_error_rad": 0.00396553634898797
+    },
+    "final_clearance": {
+      "ok": true,
+      "reason": "clear",
+      "min_distance": -0.011792031461041574,
+      "endpoint_hand_clear": true,
+      "limitation": "mesh OBB is conservative approximation; not exact mesh collision",
+      "diagnostic": {
+        "self_mask_policy": "sensor robot CAD surface matching only; no OBB point deletion"
+      }
+    },
+    "native_preserved": true,
+    "actual_retreat_actions": 84,
+    "native_success": true,
+    "home_contacts": [],
+    "wall_seconds": 71.16779112699805
+  },
+  "replay_setup_failure": {
+    "new_VLA_calls": 0,
+    "new_VLM_calls": 0,
+    "final_visual_acceptance": "not_run_unknown",
+    "replay_source": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb",
+    "success": false,
+    "initial_state_max_abs_error": 0.0,
+    "prepare_max_joint_error": 0.0,
+    "error": "Traceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay.py\", line 67, in <module>\n    assert errors[-1]<1e-7,'historical action replay mismatch'\nAssertionError: historical action replay mismatch\n",
+    "wall_seconds": 6.888585007000074
+  },
+  "online": {
+    "console": "First_Phase\\scene_demo\\results\\interactive-console\\20261014-205853-fbe2e2ca",
+    "job": "First_Phase\\scene_demo\\results\\interactive-console\\runs\\20261014T125912Z_bowl_drawer_60008460\\cap_01_xvla_bowl_drawer_close_03f4dea1",
+    "stage": "blocked",
+    "plan_success": null,
+    "request_fulfilled": false,
+    "request_scope": {
+      "coverage": "partial",
+      "executable_outcomes": [
+        "将碗放入柜子底层抽屉",
+        "关闭柜子底层抽屉"
+      ],
+      "unmet_outcomes": [
+        "瓶子归位"
+      ],
+      "reason": "当前场景无瓶子归位技能，仅能执行碗的完整收纳。瓶子仍需留在桌面或等待后续能力支持。"
+    },
+    "timing": {
+      "started_unix": 1791982733.0764875,
+      "request": "收拾桌面，将碗和瓶子归位",
+      "scene": "bowl_drawer",
+      "human_wait_seconds": 0,
+      "helpers": false,
+      "finish_streak": 5,
+      "completed": false,
+      "load_scene_seconds": 6.044073287001083,
+      "prepare_and_plan_seconds": 66.51161428900014,
+      "execution_seconds": 379.74466318099803,
+      "total_seconds": 452.30035075699925,
+      "stage": "blocked",
+      "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-205853-fbe2e2ca",
+      "ended_unix": 1791983193.281314
+    },
+    "planning_timing": {
+      "first_call_with_startup_seconds": 24.31151921300261,
+      "independent_review_seconds": 21.818138597998768,
+      "total_seconds": 46.12965864900252,
+      "normal_model_calls": 2,
+      "planner": "installed Hermes SDK",
+      "model": "qwen3.8-max"
+    },
+    "vla_actions": 240,
+    "first_native_success_step": 228,
+    "last_native_success_step": 240,
+    "finish_counts": {
+      "release": 0,
+      "movement": 0,
+      "confirm": 0,
+      "home": 0
+    },
+    "finish_reason": null,
+    "job_error": "Traceback (most recent call last):\n  File \"/mnt/d/FYP/First_Phase/scene_demo/service.py\", line 2882, in _run_capability\n    outcome = finish_monitor.poll(\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/runtime.py\", line 449, in poll\n    verdict = self._check(self.context, [])\n  File \"/mnt/d/FYP/First_Phase/scene_demo/xvla_monitor.py\", line 117, in _check\n    return super()._check(context, observations)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/runtime.py\", line 358, in _check\n    meta = self.call_client.analyze(ctx, paths)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/xvla_subtask_review.py\", line 487, in analyze\n    return self._inspect(context,image_paths)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/xvla_subtask_review.py\", line 443, in _inspect\n    page=self._call_page(packet,ctx,images);pages.append(page)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/xvla_subtask_review.py\", line 378, in _call_page\n    retry_meta=self._request(context,paths,retry_prompt);fixed=copy.deepcopy(self.last_review)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/xvla_subtask_review.py\", line 32, in _request\n    try:return super()._request(context,image_paths,prompt)\n  File \"/mnt/d/FYP/First_Phase/scene_demo/finish_v1/vision.py\", line 836, in _request\n    raise RuntimeError(transport_error(exc, 'awaiting_response')) from None\nRuntimeError: Qwen request timed out after 90s (awaiting_response)\n",
+    "home_streak": null,
+    "finish_status": {
+      "phase": "visual_check",
+      "calls": 2,
+      "prechecks": 0,
+      "helper_counts": {
+        "release": 0,
+        "movement": 0,
+        "confirm": 0,
+        "home": 0
+      },
+      "last_decision": null,
+      "terminal": null,
+      "independent_streak": 0,
+      "current_view_calls": 1,
+      "release_evidence_calls": 1,
+      "release_events": 1,
+      "process_evidence": [
+        {
+          "proof_id": "a2faedc1da0fa129/review_00001/goal_0",
+          "goal_key": "[\"akita_black_bowl_1\", \"in\", \"white_cabinet_1_bottom_region\", false]",
+          "target_id": "akita_black_bowl_1",
+          "destination_id": "white_cabinet_1_bottom_region",
+          "capture_id": "a2faedc1da0fa129/capture_000037",
+          "observed_at": 9.749999999999925,
+          "reviewed_at": 10.050000000000026,
+          "review_id": "a2faedc1da0fa129/review_00001",
+          "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/release_0001",
+          "status": "confirmed",
+          "kind": "historical_review",
+          "supersedes_review_id": null,
+          "evidence": [
+            {
+              "capture_id": "a2faedc1da0fa129/capture_000037",
+              "view": "agentview",
+              "box": [
+                520,
+                450,
+                585,
+                500
+              ]
+            },
+            {
+              "capture_id": "a2faedc1da0fa129/capture_000037",
+              "view": "sideview",
+              "box": [
+                540,
+                520,
+                590,
+                575
+              ]
+            }
+          ],
+          "identity_refs": [
+            {
+              "capture_id": "a2faedc1da0fa129/capture_000001",
+              "view": "agentview",
+              "box": [
+                435,
+                535,
+                535,
+                615
+              ]
+            },
+            {
+              "capture_id": "a2faedc1da0fa129/capture_000001",
+              "view": "sideview",
+              "box": [
+                385,
+                505,
+                485,
+                575
+              ]
+            }
+          ],
+          "comparison": "该旧时刻纹理碗已坐于下层抽屉内底面，夹爪指张开于碗上方，与随后 9.80 及当前 10.05 为同一碗同一位置，release_0001 的松手即发生在此状态",
+          "placement": {
+            "region_confirmed": true,
+            "region_description": "柜子下层抽屉内部空间",
+            "destination_evidence": [
+              {
+                "frame": 7,
+                "box": [
+                  495,
+                  450,
+                  610,
+                  520
+                ]
+              },
+              {
+                "frame": 8,
+                "box": [
+                  480,
+                  520,
+                  600,
+                  610
+                ]
+              }
+            ],
+            "boundary_observation": "碗整体在抽屉前板上沿之下、侧板围合之内",
+            "relation_evidence": [
+              {
+                "frame": 7,
+                "box": [
+                  520,
+                  450,
+                  585,
+                  500
+                ]
+              },
+              {
+                "frame": 8,
+                "box": [
+                  540,
+                  520,
+                  590,
+                  575
+                ]
+              }
+            ],
+            "support_observation": "碗底接触抽屉底板，由抽屉承接；夹爪张开不承托",
+            "needs_motion": false,
+            "contradiction": false,
+            "views": [
+              {
+                "frame": 6,
+                "relation": "satisfied",
+                "reason": "腕视见纹理碗在抽屉前板内侧，夹爪指张开于两侧"
+              },
+              {
+                "frame": 7,
+                "relation": "satisfied",
+                "reason": "主视见碗坐在拉开的下层抽屉内"
+              },
+              {
+                "frame": 8,
+                "relation": "satisfied",
+                "reason": "侧视见碗在抽屉腔内低于侧板上沿"
+              }
+            ],
+            "support_contact": {
+              "visible": true,
+              "observation": "frame7/8 可见碗底与抽屉底板接触",
+              "evidence": [
+                {
+                  "frame": 7,
+                  "box": [
+                    520,
+                    480,
+                    585,
+                    500
+                  ]
+                },
+                {
+                  "frame": 8,
+                  "box": [
+                    540,
+                    550,
+                    590,
+                    575
+                  ]
+                }
+              ]
+            },
+            "support_inference": {
+              "depth_sufficient": true,
+              "spatial_observation": "碗整体越过抽屉前板上沿并被侧板包围，露出部分仅为碗口以上正常高度，无悬空",
+              "temporal_observation": "9.55 夹持碗进入抽屉上方并下降，9.75 碗已落底且夹爪张开，碗相对抽屉位置不再变化",
+              "evidence": [
+                {
+                  "frame": 7,
+                  "box": [
+                    520,
+                    450,
+                    585,
+                    500
+                  ]
+                },
+                {
+                  "frame": 4,
+                  "box": [
+                    520,
+                    445,
+                    585,
+                    500
+                  ]
+                },
+                {
+                  "frame": 6,
+                  "box": [
+                    100,
+                    135,
+                    240,
+                    280
+                  ]
+                }
+              ]
+            },
+            "supplemental_context_evidence": {
+              "destination_evidence": [],
+              "relation_evidence": []
+            },
+            "_geometry_sequence_validated": true,
+            "_inferred_motion_settled": false
+          },
+          "region": {
+            "destination_id": "white_cabinet_1_bottom_region",
+            "confirmed": true,
+            "description": "柜子下层抽屉内部空间",
+            "boundary": "抽屉底板及四周侧板围成的区域",
+            "anchors": [
+              {
+                "capture_id": "a2faedc1da0fa129/capture_000001",
+                "view": "agentview",
+                "box": [
+                  510,
+                  460,
+                  700,
+                  540
+                ]
+              },
+              {
+                "capture_id": "a2faedc1da0fa129/capture_000001",
+                "view": "sideview",
+                "box": [
+                  500,
+                  560,
+                  680,
+                  640
+                ]
+              }
+            ],
+            "reviewed_at": 0.5000000000000003,
+            "request_sha256": "512ba27635ed9337d415a94f7676e31f242a14f6aa4f8a6e892f97665cf3d6c3",
+            "response_sha256": "a30f6f4a9c50c492c9f5b9e2665660417e7b2908a41be23346f7c7c970e7f39e"
+          },
+          "source_sha256": [
+            "05f3304a5a69572b25e45548fc88dae94bec709986cd27474c054ce9c84b11fd",
+            "994a77649b4b1eb2fdaf5e45211aef0cf66cad142fb061fc9ca87f822224f95f",
+            "55aea921edd6c62c1e80ff9d235f9c7220a3df4fa60162c9166449e5222aade9"
+          ],
+          "encoder": {
+            "timestamp": 9.749999999999925,
+            "finger_qpos": [
+              0.03790583220370782,
+              -0.03814113434537489
+            ],
+            "standard_open_finger_qpos": [
+              0.03873049022112575,
+              -0.03872787911458244
+            ],
+            "position_unit": "m",
+            "standard_open_tolerance_m": 0.002,
+            "max_standard_open_error_mm": 0.8246580174179272,
+            "at_standard_open": true
+          },
+          "request_sha256": "6c12f00b85cbaf92b3062f9ef3412c28d470ea053cc913e68cf3ead8464dc489",
+          "response_sha256": "045d12b41c1a7660103d8019be17bab2b5b27f5a9ac5dd2ca4daeb17f8f79bba"
+        }
+      ],
+      "check_schedule": {
+        "suite": "libero_10",
+        "task_id": 3,
+        "instruction": "put the black bowl in the bottom drawer of the cabinet and close it",
+        "samples": 5,
+        "successes": 4,
+        "earliest_success_step": 224,
+        "first_check_step": 240,
+        "source_sha256": "bc6a9f925847a4c7694599e30c3b17dafdb696a2dde46a1391c1411b7ec07469"
+      },
+      "schedule_skips": 0,
+      "actual_visual_requests": 4
+    },
+    "actual_final_metrics": {
+      "joint_names": [
+        "robot0_joint1",
+        "robot0_joint2",
+        "robot0_joint3",
+        "robot0_joint4",
+        "robot0_joint5",
+        "robot0_joint6",
+        "robot0_joint7"
+      ],
+      "joint_indexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "arm_error_rad": [
+        0.09209256870255046,
+        1.3036786428812872,
+        0.15361240448224778,
+        1.319463440313216,
+        0.416044285638537,
+        0.23351134958389075,
+        1.1681846882600213
+      ],
+      "arm_speed_rad_s": [
+        0.005347327933291847,
+        4.780005628734996e-05,
+        0.007340935317072525,
+        0.0027910554400561046,
+        0.0005058931161236506,
+        0.003723987492344071,
+        1.1805389190234889e-06
+      ],
+      "max_joint_error_rad": 1.319463440313216,
+      "max_joint_speed_rad_s": 0.007340935317072525,
+      "finger_error_m": [
+        0.0011832970092785985,
+        0.0012767342984247448
+      ],
+      "finger_speed_m_s": [
+        2.9072072792418474e-05,
+        6.152766461826031e-08
+      ],
+      "max_finger_error_m": 0.0012767342984247448,
+      "max_finger_speed_m_s": 2.9072072792418474e-05,
+      "ready": false,
+      "eef_position_error_m": 0.4045602329995632,
+      "eef_orientation_error_rad": 1.2892632766063394
+    },
+    "selected_retreat": null,
+    "retreat_replans": null,
+    "movement_screen_count": 0,
+    "movement_screen_failures": 0,
+    "home_entry": null,
+    "home_screen": null,
+    "independent_final": null,
+    "model_calls": [
+      {
+        "request": "First_Phase\\scene_demo\\results\\interactive-console\\runs\\20261014T125912Z_bowl_drawer_60008460\\cap_01_xvla_bowl_drawer_close_03f4dea1\\finish\\model_requests\\call_01_request.json",
+        "image_count": 15,
+        "requested_model": "qwen3.8-max",
+        "http_status": 200,
+        "response_model": "qwen3.8-max",
+        "wall_seconds_approx": 67.65817856788635
+      },
+      {
+        "request": "First_Phase\\scene_demo\\results\\interactive-console\\runs\\20261014T125912Z_bowl_drawer_60008460\\cap_01_xvla_bowl_drawer_close_03f4dea1\\finish\\model_requests\\call_02_request.json",
+        "image_count": 15,
+        "requested_model": "qwen3.8-max",
+        "http_status": 200,
+        "response_model": "qwen3.8-max",
+        "wall_seconds_approx": 88.29184293746948
+      },
+      {
+        "request": "First_Phase\\scene_demo\\results\\interactive-console\\runs\\20261014T125912Z_bowl_drawer_60008460\\cap_01_xvla_bowl_drawer_close_03f4dea1\\finish\\model_requests\\call_03_request.json",
+        "image_count": 18,
+        "requested_model": "qwen3.8-max",
+        "http_status": 200,
+        "response_model": "qwen3.8-max",
+        "wall_seconds_approx": 66.64691495895386
+      },
+      {
+        "request": "First_Phase\\scene_demo\\results\\interactive-console\\runs\\20261014T125912Z_bowl_drawer_60008460\\cap_01_xvla_bowl_drawer_close_03f4dea1\\finish\\model_requests\\call_04_request.json",
+        "image_count": 18,
+        "requested_model": "qwen3.8-max",
+        "http_status": null,
+        "transport_error": {
+          "stage": "awaiting_response",
+          "error_type": "TimeoutError",
+          "reason_type": "TimeoutError",
+          "errno": null,
+          "http_status": "unknown",
+          "timeout_seconds": 90,
+          "elapsed_seconds": 93.428
+        },
+        "wall_seconds_approx": 93.428
+      }
+    ],
+    "visual_wait_seconds_approx": 316.0249364643097
+  },
+  "limits": [
+    "一例完整在线与一例旧动作重放，不代表全部任务成功率；通用实现无任务名称分支。",
+    "重放最终视觉未调用，明确unknown；只以真实运动、原净空、独立任务状态及原home判据验退离。",
+    "旧首次重放因工具漏还原prepare后的夹爪hold，在第1个历史动作不匹配时停止，未测试退离；修正后完整240步最大编码器误差<1e-9。",
+    "总耗时含场景加载和冷模型准备，不含代码修改/重放验证和人为确认等待；轮询误差约2秒。",
+    "瓶子归位不在当前场景原生能力库内，计划仍为partial，不以碗任务完成声称整个自然语言需求实现。"
+  ]
+}

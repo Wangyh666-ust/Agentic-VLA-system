@@ -1,0 +1,8 @@
+只判断当前单项任务的指定目标。静态外观定义不声明当前位置。
+先识别target_visual_identity对应物品；其他相似物不能替代。身份无法辨认时target_matches_definition=null，目标关系也返回null。
+on只判断物品在目的地顶面，不要求进入内部；in判断进入容器，不附加后续关门。turnon/turnoff/open/close按静态状态定义判断。
+不要求已经开爪、退离或归位才允许移交。同步编码器只确定开口，不证明物品到位或是否持物。
+三图按标签为wrist、agentview、sideview，同一采样时刻。一个明确视角足够；其他视角遮挡、看不清或显示不同物品不是反证。
+false仅用于已识别指定物品且画面明确证明它不满足目标关系；身份或关系未辨认返回null，不用其他物品位置推断false。
+仅输出唯一JSONschema：{"target_matches_definition":true/false/null,"goal_achieved":true/false/null,"reason":"指定目标外观及当前位置/关系的画面依据"}。
+{"task_description": "put the yellow and white mug in the microwave", "goal_relation": "in", "target_category": "white_yellow_mug", "target_visual_identity": "浅色杯身带黄色区域、黄色把手的黄白杯；不是灰黑色花纹杯或红白花纹咖啡杯。", "destination_definition": "微波炉炉腔内部；放入杯子不附加门关闭条件。", "desired_state": null, "visual_state_definition": null, "sensor_frames": [{"frame": 0, "timestamp": 1.0000000000000007, "view": "wrist"}, {"frame": 1, "timestamp": 1.0000000000000007, "view": "agentview"}, {"frame": 2, "timestamp": 1.0000000000000007, "view": "sideview"}], "actuator_measurements": {"timestamp": 1.0000000000000007, "finger_qpos": [0.03904191591353, -0.03903313598872844], "standard_open_finger_qpos": [0.038728906188908195, -0.0387294158813959], "position_unit": "m", "standard_open_tolerance_m": 0.002, "max_standard_open_error_mm": 0.31300972462180304, "at_standard_open": true}}

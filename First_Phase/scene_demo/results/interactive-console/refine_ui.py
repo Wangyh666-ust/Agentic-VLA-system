@@ -1,0 +1,13 @@
+from pathlib import Path
+p=Path('First_Phase/scene_demo/xvla_console.html')
+s=p.read_text(encoding='utf-8')
+s=s.replace("const stageNames=", "const sceneLabels={goal_table:'桌面：碗、酒瓶与灶台',goal_table_shifted:'桌面：物品位置偏移',basket_two:'两个罐头与篮子',microwave_mug:'黄杯与微波炉',mugs_two:'两个杯子与盘子',basket_cheese_butter:'奶酪、黄油与篮子',stove_moka:'摩卡壶与灶台',bowl_drawer:'黑碗与抽屉',book_caddy:'书与收纳架',mug_pudding:'白杯、布丁与盘子',basket_soup_cheese:'汤罐、奶酪与篮子',moka_two:'两个摩卡壶'};\nconst taskLabels={bowl_to_plate:'将碗放到盘面',wine_to_rack:'将酒瓶放到酒架',stove_on:'打开灶台',xvla_microwave_place_close:'将黄白杯放入微波炉，再关门',xvla_basket_both:'将汤罐与番茄酱罐放入篮子',xvla_mugs_both:'白杯放左盘，黄白杯放右盘',xvla_basket_cheese_butter:'将奶酪盒与黄油放入篮子',xvla_stove_moka:'打开灶台并放上摩卡壶',xvla_bowl_drawer_close:'黑碗放入底层抽屉，再关闭抽屉',xvla_book_caddy:'将书放入收纳架后格',xvla_mug_pudding:'白杯放到盘面，布丁放到盘子右侧',xvla_basket_soup_cheese:'将汤罐与奶酪盒放入篮子',xvla_moka_both:'将两个摩卡壶放到灶台'};\nconst stageNames=")
+s=s.replace("esc(c.instruction||id)", "esc(taskLabels[id]||c.instruction||id)")
+s=s.replace("esc(s.label||s.id)", "esc(sceneLabels[s.id]||s.label||s.id)")
+s=s.replace("const e=row.event, fs=allImages(e),", "const e=row.event, fs=e.images?.length?e.images.map(f=>({...f,timestamp:e.capture?.timestamp})):allImages(e),")
+s=s.replace("e.timestamp??e.observed_at??'见原始记录'", "e.capture?.timestamp??e.timestamp??e.observed_at??'见原始记录'")
+s=s.replace("action('/api/stop');", "action('/api/stop',{request_id:data.request_id});")
+s=s.replace("<div class=\"muted\" id=\"runPath\"></div>", "<div class=\"muted\" id=\"runPath\"></div><button id=\"unload\" style=\"margin-top:12px\">释放模型与仿真资源</button>")
+s=s.replace("$('export').disabled=!data.mode", "$('unload').disabled=busy;$('export').disabled=!data.mode")
+s=s.replace("$('load').onclick=", "$('unload').onclick=()=>action('/api/unload');$('load').onclick=")
+p.write_text(s,encoding='utf-8')

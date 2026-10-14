@@ -1,0 +1,1858 @@
+{
+  "protocol": "xvla_evidence_memory_v5",
+  "complete": false,
+  "passed": false,
+  "results": [
+    {
+      "case": "microwave_mug",
+      "mode": "positive",
+      "passed": false,
+      "goal": true,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": false,
+          "evidence_event_ids": [
+            "release_0001"
+          ],
+          "object_key": "white_yellow_mug_1",
+          "reason": "current frames中微波炉门关闭且内部遮挡，无法辨认目标杯；桌上灰色杯无黄色把手，非目标；保留已确认放置证据 release_0001",
+          "history_event_id": "release_0001",
+          "history_event_ids": [
+            "release_0001"
+          ],
+          "history_mode": "confirmed_memory"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "agentview和sideview显示门板遮住炉腔入口，门关闭位置明确"
+        }
+      ],
+      "error": {
+        "type": "RuntimeError",
+        "message": "Qwen response parse failure",
+        "actual_Qwen_calls": 8
+      }
+    },
+    {
+      "case": "microwave_mug",
+      "mode": "negative",
+      "passed": false,
+      "goal": true,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "release_0001"
+          ],
+          "object_key": "white_yellow_mug_1",
+          "reason": "wrist view frame 6显示黄色把手杯在微波炉内部，与reference中黄色把手特征匹配；保留已确认放置证据 release_0001",
+          "history_event_id": "release_0001",
+          "history_event_ids": [
+            "release_0001"
+          ],
+          "history_mode": "confirmed_memory"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "agentview frame 7和sideview frame 8显示微波炉门板遮住炉腔入口，符合关闭状态定义"
+        }
+      ],
+      "error": {
+        "type": "RuntimeError",
+        "message": "Qwen response parse failure",
+        "actual_Qwen_calls": 8
+      }
+    },
+    {
+      "case": "basket_two",
+      "mode": "positive",
+      "passed": false,
+      "goal": false,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "release_0001"
+          ],
+          "object_key": "alphabet_soup_1",
+          "reason": "memory确认放置且当前篮内可见目标位置；保留已确认放置证据 release_0001",
+          "history_event_id": "release_0001",
+          "history_event_ids": [
+            "release_0001"
+          ],
+          "history_mode": "confirmed_memory"
+        },
+        {
+          "id": "goal_1",
+          "achieved": false,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "tomato_sauce_1",
+          "reason": "当前agentview显示红色标签罐头在桌面未入篮"
+        }
+      ],
+      "error": null
+    },
+    {
+      "case": "basket_two",
+      "mode": "negative",
+      "passed": true,
+      "goal": false,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "release_0001"
+          ],
+          "object_key": "alphabet_soup_1",
+          "reason": "current帧7显示篮子内有橙色标签圆柱罐，与reference帧1/2中目标特征匹配，且在篮子内部支撑放置；保留已确认放置证据 release_0001",
+          "history_event_id": "release_0001",
+          "history_event_ids": [
+            "release_0001"
+          ],
+          "history_mode": "confirmed_memory"
+        },
+        {
+          "id": "goal_1",
+          "achieved": false,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "tomato_sauce_1",
+          "reason": "current帧7显示红绿标签Tomato Sauce罐仍在桌面，未进入篮子区域"
+        }
+      ],
+      "error": null
+    },
+    {
+      "case": "microwave_mug",
+      "mode": "no_history",
+      "passed": true,
+      "goal": null,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": null,
+          "target_matches_definition": true,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "object_key": "white_yellow_mug_1",
+          "reason": "微波炉门关闭，无法确认杯子是否在内部"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "microwave_1",
+          "reason": "门板遮住炉腔入口，显示关闭状态"
+        }
+      ]
+    }
+  ],
+  "cases": {
+    "microwave_mug": {
+      "complete": false,
+      "checkpoints": 5,
+      "release_checks": 2,
+      "actual_Qwen_calls": 8,
+      "false_positives": [
+        {
+          "kind": "current",
+          "time": 8.249999999999424,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/microwave_mug/01_current.json",
+          "goal": true,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "white_yellow_mug_1",
+              "reason": "wrist视角(frame3)清晰显示黄色把手杯在微波炉腔内，符合目标特征"
+            },
+            {
+              "id": "goal_1",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "microwave_1",
+              "reason": "agentview(frame4)和sideview(frame5)显示门板遮挡炉腔入口，门处于关闭位置"
+            }
+          ],
+          "memory": [],
+          "call_index": 1,
+          "actual_Qwen_calls": 1,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 150,
+            "native_success": false,
+            "predicates": {
+              "in|white_yellow_mug_1|microwave_1_heating_region": true,
+              "close|microwave_1": false
+            }
+          }
+        },
+        {
+          "kind": "release",
+          "time": 8.949999999999658,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/microwave_mug/02_release.json",
+          "goal": true,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "white_yellow_mug_1",
+              "reason": "wrist view frame 6显示黄色把手杯在微波炉内部，与reference中黄色把手特征匹配；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "microwave_1",
+              "reason": "agentview frame 7和sideview frame 8显示微波炉门板遮住炉腔入口，符合关闭状态定义"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.949999999999658,
+              "status": "confirmed",
+              "object_key": "white_yellow_mug_1"
+            }
+          ],
+          "call_index": 2,
+          "actual_Qwen_calls": 2,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 164,
+            "native_success": false,
+            "predicates": {
+              "in|white_yellow_mug_1|microwave_1_heating_region": true,
+              "close|microwave_1": false
+            }
+          }
+        }
+      ],
+      "confirmed_goals": [
+        "goal_0"
+      ],
+      "final_memory": [
+        {
+          "id": "goal_0",
+          "target_id": "white_yellow_mug_1",
+          "destination_id": "microwave_1_heating_region",
+          "object_key": "white_yellow_mug_1",
+          "event_id": "release_0001",
+          "timestamp": 8.949999999999658,
+          "status": "confirmed",
+          "observation": {
+            "id": "goal_0",
+            "identity": "matched",
+            "object_key": "white_yellow_mug_1",
+            "relation": "at_destination",
+            "observed_state": "unknown",
+            "supported": true,
+            "frames": [
+              6
+            ],
+            "identity_frames": [
+              0,
+              1,
+              2,
+              6
+            ],
+            "change": {
+              "kind": "none",
+              "same_object": true,
+              "frames": [],
+              "reason": ""
+            },
+            "reason": "wrist view frame 6显示黄色把手杯在微波炉内部，与reference中黄色把手特征匹配"
+          },
+          "provenance": {
+            "sources": [
+              {
+                "context": {
+                  "actuator_measurements": {
+                    "finger_qpos": [
+                      0.009420021638946974,
+                      -0.009669898684783492
+                    ],
+                    "max_abs_arm_qvel": 0.2505406630738011,
+                    "stage": "executing",
+                    "standard_open_finger_qpos": [
+                      0.03872905725468913,
+                      -0.03872928166924487
+                    ],
+                    "timestamp": 8.249999999999424
+                  },
+                  "criteria": {
+                    "desired_state": "closed",
+                    "must_clear": true,
+                    "must_preserve_target": true,
+                    "must_release": true,
+                    "must_stabilize": true,
+                    "operation_semantics": "move the articulated door to its requested open or closed state; then release contact and retreat without changing that state",
+                    "skill_description": "put the yellow and white mug in the microwave and close it",
+                    "success_checks": [
+                      {
+                        "description": "put the yellow and white mug in the microwave",
+                        "destination_id": "microwave_1_heating_region",
+                        "id": "goal_0",
+                        "relation": "in",
+                        "target_id": "white_yellow_mug_1",
+                        "target_visual_identity": "浅色杯身与黄色区域/黄色把手。"
+                      },
+                      {
+                        "description": "close the microwave",
+                        "destination_id": null,
+                        "id": "goal_1",
+                        "relation": "close",
+                        "target_id": "microwave_1",
+                        "visual_state_definition": {
+                          "closed": "微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。",
+                          "open": "微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。"
+                        }
+                      }
+                    ],
+                    "task_description": "close the microwave"
+                  },
+                  "current_subtask": {
+                    "destination": null,
+                    "operation": "articulate",
+                    "phase": "executing",
+                    "target": "microwave_1"
+                  },
+                  "sensor_frames": [
+                    {
+                      "frame": 0,
+                      "timestamp": 8.249999999999424,
+                      "view": "wrist"
+                    },
+                    {
+                      "frame": 1,
+                      "timestamp": 8.249999999999424,
+                      "view": "agentview"
+                    },
+                    {
+                      "frame": 2,
+                      "timestamp": 8.249999999999424,
+                      "view": "sideview"
+                    }
+                  ],
+                  "user_request": "先把黄白杯放进微波炉，再关闭微波炉门。"
+                },
+                "paths": [
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000092_wrist.png",
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000091_agentview.png",
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000093_sideview.png"
+                ],
+                "sha256": [
+                  "e642cc398940ce3d21cb649d1bb5a638f01790647c6bc45cf70924a8e34a204f",
+                  "229c543d57711553b0748056f838856a34ec32660133fb945aad1c2b64da329f",
+                  "fc726dd4dc73ac5db4fc580a6bc2c2883e37f4d6f89bbb30c7fc055a1c2b51c0"
+                ]
+              },
+              {
+                "context": {
+                  "user_request": "先把黄白杯放进微波炉，再关闭微波炉门。",
+                  "current_subtask": {
+                    "operation": "articulate",
+                    "target": "microwave_1",
+                    "destination": null,
+                    "phase": "executing"
+                  },
+                  "criteria": {
+                    "must_release": true,
+                    "must_stabilize": true,
+                    "must_clear": true,
+                    "must_preserve_target": true,
+                    "desired_state": "closed",
+                    "operation_semantics": "move the articulated door to its requested open or closed state; then release contact and retreat without changing that state",
+                    "task_description": "close the microwave",
+                    "skill_description": "put the yellow and white mug in the microwave and close it",
+                    "success_checks": [
+                      {
+                        "id": "goal_0",
+                        "description": "put the yellow and white mug in the microwave",
+                        "relation": "in",
+                        "target_id": "white_yellow_mug_1",
+                        "destination_id": "microwave_1_heating_region",
+                        "target_visual_identity": "浅色杯身与黄色区域/黄色把手。"
+                      },
+                      {
+                        "id": "goal_1",
+                        "description": "close the microwave",
+                        "relation": "close",
+                        "target_id": "microwave_1",
+                        "destination_id": null,
+                        "visual_state_definition": {
+                          "closed": "微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。",
+                          "open": "微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。"
+                        }
+                      }
+                    ]
+                  },
+                  "sensor_frames": [
+                    {
+                      "frame": 0,
+                      "view": "wrist",
+                      "timestamp": 8.949999999999658
+                    },
+                    {
+                      "frame": 1,
+                      "view": "agentview",
+                      "timestamp": 8.949999999999658
+                    },
+                    {
+                      "frame": 2,
+                      "view": "sideview",
+                      "timestamp": 8.949999999999658
+                    }
+                  ],
+                  "actuator_measurements": {
+                    "timestamp": 8.949999999999658,
+                    "finger_qpos": [
+                      0.038316846411817,
+                      -0.03777253025922477
+                    ],
+                    "standard_open_finger_qpos": [
+                      0.03872905725468913,
+                      -0.03872928166924487
+                    ],
+                    "max_abs_arm_qvel": 0.3960218758181867
+                  }
+                },
+                "paths": [
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000101_wrist.png",
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000100_agentview.png",
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/microwave_mug/runs/20261013T071938Z_microwave_mug_1b637b05/cap_01_xvla_microwave_place_close_b844a1f4/finish/sensors/cap000102_sideview.png"
+                ],
+                "sha256": [
+                  "eedfe36bc0db2980340ec4e9db7560692725edf16b95878e52089e0bc4ac0931",
+                  "7bea69274cf4bf2ba4ba196cc35b36aa35a7fc86b62f6768adb7a569eaa27553",
+                  "bffce3943b07c2a07813bdc6139b3c6d19331f38955ce659d2f836ca24d9225a"
+                ]
+              }
+            ],
+            "request_sha256": "64aca572dc888e3d333e6c8d36dae3253150ab310665404bb6fee80d5166771f",
+            "response_sha256": "5640156bedddd262cff86cdd44e2caaa2a4ac0a939d4424be397da5526a04789",
+            "call_index": 2,
+            "packet": {
+              "protocol": "xvla_evidence_memory_v5",
+              "role": "release_review",
+              "event_id": "release_0001",
+              "goals": [
+                {
+                  "id": "goal_0",
+                  "description": "put the yellow and white mug in the microwave",
+                  "relation": "in",
+                  "target_id": "white_yellow_mug_1",
+                  "destination_id": "microwave_1_heating_region",
+                  "target_visual_identity": "浅色杯身与黄色区域/黄色把手。"
+                },
+                {
+                  "id": "goal_1",
+                  "description": "close the microwave",
+                  "relation": "close",
+                  "target_id": "microwave_1",
+                  "destination_id": null,
+                  "visual_state_definition": {
+                    "closed": "微波炉门回到机身前面的关闭位置，门板遮住炉腔入口，表示门已关闭；门仍明显向外打开表示未关闭。只解释门的外观，不声明当前门状态。",
+                    "open": "微波炉门向外打开、炉腔入口可见表示门打开；遮挡不能作为开关状态证据。"
+                  }
+                }
+              ],
+              "groups": [
+                {
+                  "kind": "reference",
+                  "event_id": null,
+                  "time": -1,
+                  "frames": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "time_known": false
+                },
+                {
+                  "kind": "before",
+                  "event_id": "release_0001",
+                  "time": 8.249999999999424,
+                  "frames": [
+                    3,
+                    4,
+                    5
+                  ],
+                  "encoder": {
+                    "timestamp": 8.249999999999424,
+                    "finger_qpos": [
+                      0.009420021638946974,
+                      -0.009669898684783492
+                    ],
+                    "standard_open_finger_qpos": [
+                      0.03872905725468913,
+                      -0.03872928166924487
+                    ],
+                    "position_unit": "m",
+                    "standard_open_tolerance_m": 0.002,
+                    "max_standard_open_error_mm": 29.309035615742157,
+                    "at_standard_open": false
+                  }
+                },
+                {
+                  "kind": "release",
+                  "event_id": "release_0001",
+                  "time": 8.949999999999658,
+                  "frames": [
+                    6,
+                    7,
+                    8
+                  ],
+                  "encoder": {
+                    "timestamp": 8.949999999999658,
+                    "finger_qpos": [
+                      0.038316846411817,
+                      -0.03777253025922477
+                    ],
+                    "standard_open_finger_qpos": [
+                      0.03872905725468913,
+                      -0.03872928166924487
+                    ],
+                    "position_unit": "m",
+                    "standard_open_tolerance_m": 0.002,
+                    "max_standard_open_error_mm": 0.9567514100201,
+                    "at_standard_open": true
+                  }
+                },
+                {
+                  "kind": "current",
+                  "event_id": null,
+                  "time": 8.949999999999658,
+                  "frames": [
+                    6,
+                    7,
+                    8
+                  ],
+                  "encoder": {
+                    "timestamp": 8.949999999999658,
+                    "finger_qpos": [
+                      0.038316846411817,
+                      -0.03777253025922477
+                    ],
+                    "standard_open_finger_qpos": [
+                      0.03872905725468913,
+                      -0.03872928166924487
+                    ],
+                    "position_unit": "m",
+                    "standard_open_tolerance_m": 0.002,
+                    "max_standard_open_error_mm": 0.9567514100201,
+                    "at_standard_open": true
+                  }
+                }
+              ],
+              "memory": [],
+              "previous_checks": [
+                {
+                  "time": 8.249999999999424,
+                  "role": "current_review",
+                  "event_id": null,
+                  "goals": [
+                    {
+                      "id": "goal_0",
+                      "achieved": true,
+                      "object_key": "white_yellow_mug_1",
+                      "evidence_event_ids": []
+                    },
+                    {
+                      "id": "goal_1",
+                      "achieved": true,
+                      "object_key": "microwave_1",
+                      "evidence_event_ids": []
+                    }
+                  ]
+                }
+              ],
+              "window": {
+                "max_gap_seconds": 1.0,
+                "before_available": true,
+                "after_available": false
+              },
+              "current_frames": [
+                6,
+                7,
+                8
+              ],
+              "relation_frames": [
+                6,
+                7,
+                8
+              ],
+              "sensor_frames": [
+                {
+                  "frame": 0,
+                  "view": "wrist",
+                  "timestamp": -1
+                },
+                {
+                  "frame": 1,
+                  "view": "agentview",
+                  "timestamp": -1
+                },
+                {
+                  "frame": 2,
+                  "view": "sideview",
+                  "timestamp": -1
+                },
+                {
+                  "frame": 3,
+                  "timestamp": 8.249999999999424,
+                  "view": "wrist"
+                },
+                {
+                  "frame": 4,
+                  "timestamp": 8.249999999999424,
+                  "view": "agentview"
+                },
+                {
+                  "frame": 5,
+                  "timestamp": 8.249999999999424,
+                  "view": "sideview"
+                },
+                {
+                  "frame": 6,
+                  "view": "wrist",
+                  "timestamp": 8.949999999999658
+                },
+                {
+                  "frame": 7,
+                  "view": "agentview",
+                  "timestamp": 8.949999999999658
+                },
+                {
+                  "frame": 8,
+                  "view": "sideview",
+                  "timestamp": 8.949999999999658
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "records": [
+        {
+          "kind": "current",
+          "time": 8.249999999999424,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/microwave_mug/01_current.json",
+          "goal": true,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "white_yellow_mug_1",
+              "reason": "wrist视角(frame3)清晰显示黄色把手杯在微波炉腔内，符合目标特征"
+            },
+            {
+              "id": "goal_1",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "microwave_1",
+              "reason": "agentview(frame4)和sideview(frame5)显示门板遮挡炉腔入口，门处于关闭位置"
+            }
+          ],
+          "memory": [],
+          "call_index": 1,
+          "actual_Qwen_calls": 1,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 150,
+            "native_success": false,
+            "predicates": {
+              "in|white_yellow_mug_1|microwave_1_heating_region": true,
+              "close|microwave_1": false
+            }
+          }
+        },
+        {
+          "kind": "release",
+          "time": 8.949999999999658,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/microwave_mug/02_release.json",
+          "goal": true,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "white_yellow_mug_1",
+              "reason": "wrist view frame 6显示黄色把手杯在微波炉内部，与reference中黄色把手特征匹配；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "microwave_1",
+              "reason": "agentview frame 7和sideview frame 8显示微波炉门板遮住炉腔入口，符合关闭状态定义"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.949999999999658,
+              "status": "confirmed",
+              "object_key": "white_yellow_mug_1"
+            }
+          ],
+          "call_index": 2,
+          "actual_Qwen_calls": 2,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 164,
+            "native_success": false,
+            "predicates": {
+              "in|white_yellow_mug_1|microwave_1_heating_region": true,
+              "close|microwave_1": false
+            }
+          }
+        },
+        {
+          "kind": "current",
+          "time": 15.75000000000193,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/microwave_mug/03_current.json",
+          "goal": true,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "white_yellow_mug_1",
+              "reason": "frame 9中微波炉内部可见黄色杯身和把手，与reference及memory目标特征一致；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "microwave_1",
+              "reason": "frame 10/11中微波炉门板遮住炉腔入口，符合关闭定义"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.949999999999658,
+              "status": "confirmed",
+              "object_key": "white_yellow_mug_1"
+            }
+          ],
+          "call_index": 3,
+          "actual_Qwen_calls": 3,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 300,
+            "native_success": true,
+            "predicates": {
+              "in|white_yellow_mug_1|microwave_1_heating_region": true,
+              "close|microwave_1": true
+            }
+          }
+        },
+        {
+          "kind": "current",
+          "time": 23.249999999997993,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/microwave_mug/04_current.json",
+          "goal": false,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "white_yellow_mug_1",
+              "reason": "腕部视角显示黄色把手杯在微波炉加热区域内部，得到支撑；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "microwave_1",
+              "reason": "agentview和sideview均显示微波炉门向外打开，炉腔入口可见"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.949999999999658,
+              "status": "confirmed",
+              "object_key": "white_yellow_mug_1"
+            }
+          ],
+          "call_index": 4,
+          "actual_Qwen_calls": 4,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 450,
+            "native_success": true,
+            "predicates": {
+              "in|white_yellow_mug_1|microwave_1_heating_region": true,
+              "close|microwave_1": true
+            }
+          }
+        },
+        {
+          "kind": "release",
+          "time": 26.24999999999633,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/microwave_mug/05_release.json",
+          "goal": true,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "white_yellow_mug_1",
+              "reason": "frame 9 wrist view shows yellow-handled mug inside microwave heating region with clear support；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "microwave_1",
+              "reason": "frames 10-11 show microwave door fully closed with door panel covering cavity entrance"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.949999999999658,
+              "status": "confirmed",
+              "object_key": "white_yellow_mug_1"
+            }
+          ],
+          "call_index": 5,
+          "actual_Qwen_calls": 5,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 510,
+            "native_success": true,
+            "predicates": {
+              "in|white_yellow_mug_1|microwave_1_heating_region": true,
+              "close|microwave_1": true
+            }
+          }
+        },
+        {
+          "kind": "current",
+          "time": 30.749999999993836,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/microwave_mug/06_current.json",
+          "goal": true,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": false,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "white_yellow_mug_1",
+              "reason": "微波炉门关闭，内部遮挡无法辨认目标位置；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "microwave_1",
+              "reason": "门板遮住炉腔入口，符合关闭外观定义"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.949999999999658,
+              "status": "confirmed",
+              "object_key": "white_yellow_mug_1"
+            }
+          ],
+          "call_index": 6,
+          "actual_Qwen_calls": 6,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 600,
+            "native_success": true,
+            "predicates": {
+              "in|white_yellow_mug_1|microwave_1_heating_region": true,
+              "close|microwave_1": true
+            }
+          }
+        },
+        {
+          "kind": "current",
+          "time": 38.25000000000078,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/microwave_mug/07_current.json",
+          "goal": true,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": false,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "white_yellow_mug_1",
+              "reason": "current frames中微波炉门关闭且内部遮挡，无法辨认目标杯；桌上灰色杯无黄色把手，非目标；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "microwave_1",
+              "reason": "agentview和sideview显示门板遮住炉腔入口，门关闭位置明确"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.949999999999658,
+              "status": "confirmed",
+              "object_key": "white_yellow_mug_1"
+            }
+          ],
+          "call_index": 7,
+          "actual_Qwen_calls": 7,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 750,
+            "native_success": true,
+            "predicates": {
+              "in|white_yellow_mug_1|microwave_1_heating_region": true,
+              "close|microwave_1": true
+            }
+          }
+        }
+      ]
+    },
+    "basket_two": {
+      "complete": true,
+      "checkpoints": 6,
+      "release_checks": 2,
+      "actual_Qwen_calls": 7,
+      "false_positives": [],
+      "confirmed_goals": [
+        "goal_0"
+      ],
+      "final_memory": [
+        {
+          "id": "goal_0",
+          "target_id": "alphabet_soup_1",
+          "destination_id": "basket_1_contain_region",
+          "object_key": "alphabet_soup_1",
+          "event_id": "release_0001",
+          "timestamp": 8.799999999999608,
+          "status": "confirmed",
+          "observation": {
+            "id": "goal_0",
+            "identity": "matched",
+            "object_key": "alphabet_soup_1",
+            "relation": "at_destination",
+            "observed_state": "unknown",
+            "supported": true,
+            "frames": [
+              6,
+              7,
+              8
+            ],
+            "identity_frames": [
+              1,
+              2,
+              7
+            ],
+            "change": {
+              "kind": "none",
+              "same_object": true,
+              "frames": [],
+              "reason": ""
+            },
+            "reason": "current帧7显示篮子内有橙色标签圆柱罐，与reference帧1/2中目标特征匹配，且在篮子内部支撑放置"
+          },
+          "provenance": {
+            "sources": [
+              {
+                "context": {
+                  "user_request": "先把字母汤罐放进篮子，再把番茄酱罐放进篮子。",
+                  "current_subtask": {
+                    "operation": "place",
+                    "target": "tomato_sauce_1",
+                    "destination": "basket_1_contain_region",
+                    "phase": "executing"
+                  },
+                  "criteria": {
+                    "must_release": true,
+                    "must_stabilize": true,
+                    "must_clear": true,
+                    "must_preserve_target": true,
+                    "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+                    "task_description": "put the tomato sauce in the basket",
+                    "skill_description": "put both the alphabet soup and the tomato sauce in the basket",
+                    "success_checks": [
+                      {
+                        "id": "goal_0",
+                        "description": "put the alphabet soup in the basket",
+                        "relation": "in",
+                        "target_id": "alphabet_soup_1",
+                        "destination_id": "basket_1_contain_region",
+                        "target_visual_identity": "圆柱罐、银盖、蓝色/橙色标签；与Milk盒及Tomato Sauce罐区分。"
+                      },
+                      {
+                        "id": "goal_1",
+                        "description": "put the tomato sauce in the basket",
+                        "relation": "in",
+                        "target_id": "tomato_sauce_1",
+                        "destination_id": "basket_1_contain_region",
+                        "target_visual_identity": "圆柱形罐头，红绿标签及Tomato Sauce文字；不同于Milk纸盒，也不同于Tomato Ketchup挤压瓶。"
+                      }
+                    ]
+                  },
+                  "sensor_frames": [
+                    {
+                      "frame": 0,
+                      "view": "wrist",
+                      "timestamp": 8.149999999999391
+                    },
+                    {
+                      "frame": 1,
+                      "view": "agentview",
+                      "timestamp": 8.149999999999391
+                    },
+                    {
+                      "frame": 2,
+                      "view": "sideview",
+                      "timestamp": 8.149999999999391
+                    }
+                  ],
+                  "actuator_measurements": {
+                    "timestamp": 8.149999999999391,
+                    "finger_qpos": [
+                      0.03811193286619192,
+                      -0.038172133105702895
+                    ],
+                    "standard_open_finger_qpos": [
+                      0.03872987809408042,
+                      -0.03872846551387219
+                    ],
+                    "max_abs_arm_qvel": 0.31790779522412127
+                  }
+                },
+                "paths": [
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000083_wrist.png",
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000082_agentview.png",
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000084_sideview.png"
+                ],
+                "sha256": [
+                  "a155c533963282964be27d80d192693c6f9086985d09e8be006a904e0189e4dc",
+                  "0c2e6a6ee34d83e2f8d7736e0484c4f0b81e787d86629336cabcee3adbe7479d",
+                  "7524209bd6ac1a50f6041d726bb6dfb956dfed0ae8b427b2460258625e279ecc"
+                ]
+              },
+              {
+                "context": {
+                  "actuator_measurements": {
+                    "finger_qpos": [
+                      0.03916749489361998,
+                      -0.039382688989570994
+                    ],
+                    "max_abs_arm_qvel": 0.5548693379754099,
+                    "stage": "executing",
+                    "standard_open_finger_qpos": [
+                      0.03872987809408042,
+                      -0.03872846551387219
+                    ],
+                    "timestamp": 8.799999999999608
+                  },
+                  "criteria": {
+                    "must_clear": true,
+                    "must_preserve_target": true,
+                    "must_release": true,
+                    "must_stabilize": true,
+                    "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+                    "skill_description": "put both the alphabet soup and the tomato sauce in the basket",
+                    "success_checks": [
+                      {
+                        "description": "put the alphabet soup in the basket",
+                        "destination_id": "basket_1_contain_region",
+                        "id": "goal_0",
+                        "relation": "in",
+                        "target_id": "alphabet_soup_1",
+                        "target_visual_identity": "圆柱罐、银盖、蓝色/橙色标签；与Milk盒及Tomato Sauce罐区分。"
+                      },
+                      {
+                        "description": "put the tomato sauce in the basket",
+                        "destination_id": "basket_1_contain_region",
+                        "id": "goal_1",
+                        "relation": "in",
+                        "target_id": "tomato_sauce_1",
+                        "target_visual_identity": "圆柱形罐头，红绿标签及Tomato Sauce文字；不同于Milk纸盒，也不同于Tomato Ketchup挤压瓶。"
+                      }
+                    ],
+                    "task_description": "put the tomato sauce in the basket"
+                  },
+                  "current_subtask": {
+                    "destination": "basket_1_contain_region",
+                    "operation": "place",
+                    "phase": "executing",
+                    "target": "tomato_sauce_1"
+                  },
+                  "sensor_frames": [
+                    {
+                      "frame": 0,
+                      "timestamp": 8.799999999999608,
+                      "view": "wrist"
+                    },
+                    {
+                      "frame": 1,
+                      "timestamp": 8.799999999999608,
+                      "view": "agentview"
+                    },
+                    {
+                      "frame": 2,
+                      "timestamp": 8.799999999999608,
+                      "view": "sideview"
+                    }
+                  ],
+                  "user_request": "先把字母汤罐放进篮子，再把番茄酱罐放进篮子。"
+                },
+                "paths": [
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000095_wrist.png",
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000094_agentview.png",
+                  "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/finish/sensors/cap000096_sideview.png"
+                ],
+                "sha256": [
+                  "8fac74a1e2ae030a9c99b1eaaf5084810f4deb43a5a19af9919ed24159d87ccf",
+                  "09e6cf879cc8daf985a6fdcec7a2deb3d3ac6565466106f97af76cf06ed5fb54",
+                  "9ac814f5617792c63a4b326e8d19f9f8c51b639e889928b1f9ce81d4f29453bf"
+                ]
+              }
+            ],
+            "request_sha256": "c39fad4825419c14485cebc14c3021c37e44096563b3fa31eb4804b793c82a13",
+            "response_sha256": "b37b4642a1dc8fd0d2427661355cca9c4940d512a16efd0dbc89a98fdcb5b751",
+            "call_index": 1,
+            "packet": {
+              "protocol": "xvla_evidence_memory_v5",
+              "role": "release_review",
+              "event_id": "release_0001",
+              "goals": [
+                {
+                  "description": "put the alphabet soup in the basket",
+                  "destination_id": "basket_1_contain_region",
+                  "id": "goal_0",
+                  "relation": "in",
+                  "target_id": "alphabet_soup_1",
+                  "target_visual_identity": "圆柱罐、银盖、蓝色/橙色标签；与Milk盒及Tomato Sauce罐区分。"
+                },
+                {
+                  "description": "put the tomato sauce in the basket",
+                  "destination_id": "basket_1_contain_region",
+                  "id": "goal_1",
+                  "relation": "in",
+                  "target_id": "tomato_sauce_1",
+                  "target_visual_identity": "圆柱形罐头，红绿标签及Tomato Sauce文字；不同于Milk纸盒，也不同于Tomato Ketchup挤压瓶。"
+                }
+              ],
+              "groups": [
+                {
+                  "kind": "reference",
+                  "event_id": null,
+                  "time": -1,
+                  "frames": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "time_known": false
+                },
+                {
+                  "kind": "release",
+                  "event_id": "release_0001",
+                  "time": 8.149999999999391,
+                  "frames": [
+                    3,
+                    4,
+                    5
+                  ],
+                  "encoder": {
+                    "timestamp": 8.149999999999391,
+                    "finger_qpos": [
+                      0.03811193286619192,
+                      -0.038172133105702895
+                    ],
+                    "standard_open_finger_qpos": [
+                      0.03872987809408042,
+                      -0.03872846551387219
+                    ],
+                    "position_unit": "m",
+                    "standard_open_tolerance_m": 0.002,
+                    "max_standard_open_error_mm": 0.6179452278885014,
+                    "at_standard_open": true
+                  }
+                },
+                {
+                  "kind": "after",
+                  "event_id": "release_0001",
+                  "time": 8.799999999999608,
+                  "frames": [
+                    6,
+                    7,
+                    8
+                  ],
+                  "encoder": {
+                    "timestamp": 8.799999999999608,
+                    "finger_qpos": [
+                      0.03916749489361998,
+                      -0.039382688989570994
+                    ],
+                    "standard_open_finger_qpos": [
+                      0.03872987809408042,
+                      -0.03872846551387219
+                    ],
+                    "position_unit": "m",
+                    "standard_open_tolerance_m": 0.002,
+                    "max_standard_open_error_mm": 0.6542234756988021,
+                    "at_standard_open": true
+                  }
+                },
+                {
+                  "kind": "current",
+                  "event_id": null,
+                  "time": 8.799999999999608,
+                  "frames": [
+                    6,
+                    7,
+                    8
+                  ],
+                  "encoder": {
+                    "timestamp": 8.799999999999608,
+                    "finger_qpos": [
+                      0.03916749489361998,
+                      -0.039382688989570994
+                    ],
+                    "standard_open_finger_qpos": [
+                      0.03872987809408042,
+                      -0.03872846551387219
+                    ],
+                    "position_unit": "m",
+                    "standard_open_tolerance_m": 0.002,
+                    "max_standard_open_error_mm": 0.6542234756988021,
+                    "at_standard_open": true
+                  }
+                }
+              ],
+              "memory": [],
+              "previous_checks": [],
+              "window": {
+                "max_gap_seconds": 1.0,
+                "before_available": false,
+                "after_available": true
+              },
+              "current_frames": [
+                6,
+                7,
+                8
+              ],
+              "relation_frames": [
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "sensor_frames": [
+                {
+                  "frame": 0,
+                  "view": "wrist",
+                  "timestamp": -1
+                },
+                {
+                  "frame": 1,
+                  "view": "agentview",
+                  "timestamp": -1
+                },
+                {
+                  "frame": 2,
+                  "view": "sideview",
+                  "timestamp": -1
+                },
+                {
+                  "frame": 3,
+                  "view": "wrist",
+                  "timestamp": 8.149999999999391
+                },
+                {
+                  "frame": 4,
+                  "view": "agentview",
+                  "timestamp": 8.149999999999391
+                },
+                {
+                  "frame": 5,
+                  "view": "sideview",
+                  "timestamp": 8.149999999999391
+                },
+                {
+                  "frame": 6,
+                  "timestamp": 8.799999999999608,
+                  "view": "wrist"
+                },
+                {
+                  "frame": 7,
+                  "timestamp": 8.799999999999608,
+                  "view": "agentview"
+                },
+                {
+                  "frame": 8,
+                  "timestamp": 8.799999999999608,
+                  "view": "sideview"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "records": [
+        {
+          "kind": "release",
+          "time": 8.799999999999608,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/basket_two/01_release.json",
+          "goal": false,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "alphabet_soup_1",
+              "reason": "current帧7显示篮子内有橙色标签圆柱罐，与reference帧1/2中目标特征匹配，且在篮子内部支撑放置；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "tomato_sauce_1",
+              "reason": "current帧7显示红绿标签Tomato Sauce罐仍在桌面，未进入篮子区域"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.799999999999608,
+              "status": "confirmed",
+              "object_key": "alphabet_soup_1"
+            }
+          ],
+          "call_index": 1,
+          "actual_Qwen_calls": 1,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 150,
+            "native_success": false,
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": true,
+              "in|tomato_sauce_1|basket_1_contain_region": false
+            }
+          }
+        },
+        {
+          "kind": "current",
+          "time": 8.799999999999608,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/basket_two/02_current.json",
+          "goal": false,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "alphabet_soup_1",
+              "reason": "current帧7显示篮子内有橙色标签圆柱罐，与reference帧1/2中目标特征匹配，且在篮子内部支撑放置；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "tomato_sauce_1",
+              "reason": "current帧7显示红绿标签Tomato Sauce罐仍在桌面，未进入篮子区域"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.799999999999608,
+              "status": "confirmed",
+              "object_key": "alphabet_soup_1"
+            }
+          ],
+          "call_index": 1,
+          "actual_Qwen_calls": 1,
+          "same_capture_reused": true,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 150,
+            "native_success": false,
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": true,
+              "in|tomato_sauce_1|basket_1_contain_region": false
+            }
+          }
+        },
+        {
+          "kind": "release",
+          "time": 14.200000000001411,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/basket_two/03_release.json",
+          "goal": null,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "alphabet_soup_1",
+              "reason": "agentview显示篮子内有蓝色/橙色标签圆柱罐，符合目标特征；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": null,
+              "target_matches_definition": null,
+              "current_evidence": false,
+              "evidence_event_ids": [],
+              "object_key": "tomato_sauce_1",
+              "reason": "agentview显示红绿标签Tomato Sauce罐在桌面，未放入篮子"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.799999999999608,
+              "status": "confirmed",
+              "object_key": "alphabet_soup_1"
+            }
+          ],
+          "call_index": 2,
+          "actual_Qwen_calls": 2,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 258,
+            "native_success": true,
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": true,
+              "in|tomato_sauce_1|basket_1_contain_region": true
+            }
+          }
+        },
+        {
+          "kind": "current",
+          "time": 16.300000000001845,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/basket_two/04_current.json",
+          "goal": false,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "alphabet_soup_1",
+              "reason": "current frame 9/10 显示篮子内有蓝色/橙色标签圆柱罐（与reference区分Milk/Tomato Sauce），符合alphabet_soup_1特征且稳定放置；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "tomato_sauce_1",
+              "reason": "current frame 10 显示红绿标签Tomato Sauce罐仍在桌面，未进入篮子"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.799999999999608,
+              "status": "confirmed",
+              "object_key": "alphabet_soup_1"
+            }
+          ],
+          "call_index": 3,
+          "actual_Qwen_calls": 3,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 300,
+            "native_success": true,
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": true,
+              "in|tomato_sauce_1|basket_1_contain_region": true
+            }
+          }
+        },
+        {
+          "kind": "current",
+          "time": 23.799999999997688,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/basket_two/05_current.json",
+          "goal": false,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "alphabet_soup_1",
+              "reason": "agentview显示篮子内有蓝色/橙色标签圆柱罐，与memory中已确认放置的alphabet_soup_1一致；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "tomato_sauce_1",
+              "reason": "agentview显示红绿标签番茄酱罐在桌面，未进入篮子区域"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.799999999999608,
+              "status": "confirmed",
+              "object_key": "alphabet_soup_1"
+            }
+          ],
+          "call_index": 4,
+          "actual_Qwen_calls": 4,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 450,
+            "native_success": true,
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": true,
+              "in|tomato_sauce_1|basket_1_contain_region": true
+            }
+          }
+        },
+        {
+          "kind": "current",
+          "time": 31.29999999999353,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/basket_two/06_current.json",
+          "goal": false,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "alphabet_soup_1",
+              "reason": "agentview显示篮内有圆柱罐（银盖、蓝橙标签）符合目标特征；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "tomato_sauce_1",
+              "reason": "agentview显示红绿标签Tomato Sauce罐头在桌面未入篮"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.799999999999608,
+              "status": "confirmed",
+              "object_key": "alphabet_soup_1"
+            }
+          ],
+          "call_index": 5,
+          "actual_Qwen_calls": 5,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 600,
+            "native_success": true,
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": true,
+              "in|tomato_sauce_1|basket_1_contain_region": true
+            }
+          }
+        },
+        {
+          "kind": "current",
+          "time": 38.800000000001454,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/basket_two/07_current.json",
+          "goal": false,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "alphabet_soup_1",
+              "reason": "篮子内可见银盖蓝橙标签圆柱罐，与memory中放置证据一致；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "tomato_sauce_1",
+              "reason": "agentview中红绿标签Tomato Sauce罐位于桌面，未在篮内"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.799999999999608,
+              "status": "confirmed",
+              "object_key": "alphabet_soup_1"
+            }
+          ],
+          "call_index": 6,
+          "actual_Qwen_calls": 6,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 750,
+            "native_success": true,
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": true,
+              "in|tomato_sauce_1|basket_1_contain_region": true
+            }
+          }
+        },
+        {
+          "kind": "current",
+          "time": 46.30000000001062,
+          "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-memory/attempt_01/basket_two/08_current.json",
+          "goal": false,
+          "checks": [
+            {
+              "id": "goal_0",
+              "achieved": true,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [
+                "release_0001"
+              ],
+              "object_key": "alphabet_soup_1",
+              "reason": "memory确认放置且当前篮内可见目标位置；保留已确认放置证据 release_0001",
+              "history_event_id": "release_0001",
+              "history_event_ids": [
+                "release_0001"
+              ],
+              "history_mode": "confirmed_memory"
+            },
+            {
+              "id": "goal_1",
+              "achieved": false,
+              "target_matches_definition": true,
+              "current_evidence": true,
+              "evidence_event_ids": [],
+              "object_key": "tomato_sauce_1",
+              "reason": "当前agentview显示红色标签罐头在桌面未入篮"
+            }
+          ],
+          "memory": [
+            {
+              "id": "goal_0",
+              "event_id": "release_0001",
+              "timestamp": 8.799999999999608,
+              "status": "confirmed",
+              "object_key": "alphabet_soup_1"
+            }
+          ],
+          "call_index": 7,
+          "actual_Qwen_calls": 7,
+          "same_capture_reused": false,
+          "evaluation_only_truth_not_sent": {
+            "vla_step": 900,
+            "native_success": true,
+            "predicates": {
+              "in|alphabet_soup_1|basket_1_contain_region": true,
+              "in|tomato_sauce_1|basket_1_contain_region": true
+            }
+          }
+        }
+      ]
+    }
+  },
+  "actual_Qwen_requests": 16,
+  "new_environment_actions": 0,
+  "old_model_verdicts_imported": 0,
+  "subagents": 0
+}

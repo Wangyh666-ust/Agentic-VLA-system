@@ -1,0 +1,19 @@
+[
+  {
+    "request_id": "7ac1230869fe48b1859fa3bc47fde9cd",
+    "session_id": "f72d0ae6aded4096ad503f3492643b2d",
+    "scene_version": 0,
+    "decision": "unsupported",
+    "capability_ids": [],
+    "rationale": "用户动作词为「扔」（帮我扔一下桌面上的两个罐头），属丢弃意图，目标为桌面两个罐头（obj_1 蓝灰罐、obj_2 红绿标签罐，三视角均可辨认）。当前场景没有垃圾桶：唯一容器是右侧编织篮 obj_3，公开 storage_policy 将其 basket_1_contain_region 定为这两个罐头的收纳目的地，而非垃圾桶；把罐头放入收纳篮不等于丢弃，也没有证据表明篮子是垃圾桶，故不能把入篮当作丢弃或其准备步骤。公开 capabilities 仅有 soup_to_basket / sauce_to_basket / xvla_basket_both 三个「放入篮中」的收纳类能力，没有丢弃/扔进垃圾桶的能力。请求中也没有其他独立可执行子目标，因此整体不支持，提交空能力列表。",
+    "request_scope": {
+      "coverage": "none",
+      "executable_outcomes": [],
+      "unmet_outcomes": [
+        "把桌面上的两个罐头丢弃/扔掉（场景内无垃圾桶，公开能力库也无丢弃类能力）"
+      ],
+      "reason": "用户意图为丢弃（动作词「扔」），而场景仅有收纳篮（storage_policy 目的地 basket_1_contain_region）与收纳类能力；入篮不等于丢弃且无证据篮子是垃圾桶，故不存在可执行部分，coverage=none。"
+    },
+    "target_bindings": null
+  }
+]

@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "id": "20261013-xvla-release-trial",
+  "purpose": "实际验证原生黄白杯入微波炉再关门：VLA中途松手三同期图确实采集、入炉证据确实分类、关门后raw遮挡未知经该证据复用通过且完整任务/原收尾归位独立验收；仅此gate通过才运行双罐入篮，不加抓取/运输辅助",
+  "gate_ok": false,
+  "complete": false,
+  "ended_reason": "budget_exhausted",
+  "scope": "一次真实LIBERO仿真首例，非实体机器人",
+  "counts": {
+    "native_rows": 915,
+    "job_steps": 900,
+    "source_actions": {
+      "settling": 10,
+      "prepare": 5,
+      "vla": 900
+    },
+    "vla_calls_completed": 30,
+    "vla_http_200": 30,
+    "Hermes_invocations": 1,
+    "Hermes_usage": {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    },
+    "Qwen_requests": 8,
+    "Qwen_current": 6,
+    "Qwen_release": 2,
+    "release_events": 2,
+    "reuse_checks": 0,
+    "reused_items": 0,
+    "predicate_first_true_steps": {
+      "in|white_yellow_mug_1|microwave_1_heating_region": 142,
+      "close|microwave_1": 256
+    },
+    "predicate_true_step_counts": {
+      "in|white_yellow_mug_1|microwave_1_heating_region": 759,
+      "close|microwave_1": 645
+    },
+    "native_success_first_true": 256,
+    "native_success_true_steps": 645,
+    "complete_AND_first_true": 256,
+    "complete_AND_true_steps": 645,
+    "last_step": {
+      "step": 900,
+      "action": [
+        -0.08036496490240097,
+        0.2626502811908722,
+        1.0441898107528687,
+        0.20584259927272797,
+        -2.972465991973877,
+        -0.07014326006174088,
+        -1.0
+      ],
+      "total_steps": 905,
+      "native_success": true,
+      "declared_predicates": {
+        "in|white_yellow_mug_1|microwave_1_heating_region": true,
+        "close|microwave_1": true
+      },
+      "completion_mode": "release_verified",
+      "completion_ready": true,
+      "completion_phase": "not_holding",
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0
+    },
+    "basket_launches": 0
+  },
+  "event_outcomes": [
+    {
+      "event_id": "release_0001",
+      "step": 164,
+      "native_predicates": {
+        "in|white_yellow_mug_1|microwave_1_heating_region": true,
+        "close|microwave_1": false
+      },
+      "model_checks": [
+        {
+          "id": "goal_0",
+          "achieved": false,
+          "reason": "agentview明确显示浅色杯身mug在微波炉外桌面，未进入内部；wrist和sideview无内部证据"
+        },
+        {
+          "id": "goal_1",
+          "achieved": false,
+          "reason": "agentview显示微波炉门打开且炉腔入口可见，未关闭"
+        }
+      ],
+      "ledger": []
+    },
+    {
+      "event_id": "release_0002",
+      "step": 534,
+      "native_predicates": {
+        "in|white_yellow_mug_1|microwave_1_heating_region": true,
+        "close|microwave_1": true
+      },
+      "model_checks": [
+        {
+          "id": "goal_0",
+          "achieved": false,
+          "reason": "所有视角显示杯子在微波炉外部桌面，未进入内部"
+        },
+        {
+          "id": "goal_1",
+          "achieved": false,
+          "reason": "agentview和sideview均显示微波炉门打开，未关闭"
+        }
+      ],
+      "ledger": []
+    }
+  ],
+  "protocol": "2个松手三视图采样来源/encoder/HTTP核验通过；8/8原body SHA重构一致，仅传输构造资格，不证明供应商识别正确",
+  "model_original_answers": "两release的goal_0/goal_1均False，明确目标在外/门打开；所有current原回答与effective逐项见audit",
+  "main_visual_inference": "主Agent直接看过首event和450步三图：桌面灰白porcelain干扰杯被原回答当目标；wrist可见黄色目标杯部分，两外部视角遮挡；sideview多为炉体背面，门正面信息弱。此为视觉推断，不证明door状态或唯一根因。",
+  "simulation_predicates": "逐步原生in/close/native_success与900步完整AND原值见counts；不能当视觉模型输入或取代视觉结束判定",
+  "finish_retreat_home": "均未启动；finish动作0，原模块效果未验证",
+  "basket": "gateFalse，严格未启动，launches0",
+  "cleanup": "runtime/cleanup.json确认owned已结束/两ports关闭；shutdown stderr EGL_NOT_INITIALIZED为原清理输出，不替代budget_exhausted原因",
+  "models": {
+    "implementation_executor": "既有executor_finish gpt-6.1-sol low显式派发沿用",
+    "root_model": "unknown",
+    "root_effort": "unknown",
+    "experimental_policy": "X-VLA实际30次HTTP200日志",
+    "experimental_checker": "qwen3-vl-plus实际8次HTTP200，6current+2release",
+    "Hermes_invocations": 1,
+    "Hermes_API_usage": "unknown"
+  },
+  "limits": [
+    "只执行1次真实仿真，非实体机器人；无抓取/运输辅助器，无重试",
+    "模型两次release分类False/False，空ledger；原生in/close判据与视觉模型回答不能互相替代",
+    "复用效果未验证，不据0复用宣称机制无效",
+    "收尾、退离、home动作0为未启动，不是模块失败",
+    "主Agent视觉推断不是唯一根因证明，不能据背面视角断言门视觉状态",
+    "Hermes invocation1，但API调用数和tokens未知；RNG来源未知，root实际模型/档位未知"
+  ],
+  "next_step_suggestion": "先明确黄白目标杯与porcelain干扰杯身份、检查炉门正面可见性后再验证；此处不运行或修改。",
+  "new_calls_for_audit": 0,
+  "new_actions_for_audit": 0
+}

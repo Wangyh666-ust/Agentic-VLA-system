@@ -1,0 +1,130 @@
+{
+  "triggered": true,
+  "actual_Qwen_calls": 2,
+  "error": null,
+  "records": [
+    {
+      "kind": "current",
+      "time": 16.300000000001845,
+      "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-recovery/recovery_probe/01_current.json",
+      "goal": false,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": false,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "alphabet_soup_1",
+          "reason": "frame 10 agentview中可见橙色标签圆柱罐在桌面，符合蓝色/橙色标签特征且与Milk盒区分"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "observation_0001"
+          ],
+          "object_key": "tomato_sauce_1",
+          "reason": "frame 9 wrist和frame 10 agentview中篮子内可见红绿标签圆柱罐，符合Tomato Sauce文字特征且与Milk盒区分；保留已确认放置证据 observation_0001",
+          "history_event_id": "observation_0001",
+          "history_event_ids": [
+            "observation_0001"
+          ],
+          "history_mode": "confirmed_memory",
+          "history_evidence_kind": "current_observation",
+          "history_release_event_id": null
+        }
+      ],
+      "memory": [
+        {
+          "id": "goal_1",
+          "evidence_id": "observation_0001",
+          "event_id": null,
+          "confirmation_kind": "current_observation",
+          "timestamp": 16.300000000001845,
+          "status": "confirmed",
+          "object_key": "tomato_sauce_1"
+        }
+      ],
+      "current_new_proofs": 1,
+      "all_release_originals_verified": true,
+      "retained_release_events": 2,
+      "request_images": 12,
+      "actual_Qwen_calls": 1,
+      "same_capture_reused": false,
+      "evaluation_only_truth_not_sent": {
+        "vla_step": 300,
+        "native_success": true,
+        "predicates": {
+          "in|alphabet_soup_1|basket_1_contain_region": true,
+          "in|tomato_sauce_1|basket_1_contain_region": true
+        }
+      }
+    },
+    {
+      "kind": "occlusion_followup",
+      "time": 46.30000000001062,
+      "metadata": "First_Phase/scene_demo/results/2026-10-13-xvla-evidence-recovery/recovery_probe/02_occlusion_followup.json",
+      "goal": null,
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": null,
+          "target_matches_definition": null,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "object_key": null,
+          "reason": "current frames show basket with indistinct contents; no clear cylindrical can with silver lid and blue/orange label visible in basket or on table"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "observation_0001"
+          ],
+          "object_key": "tomato_sauce_1",
+          "reason": "cylindrical can with red/green label visible in basket at frame 13; matches memory object_key and visual identity；保留已确认放置证据 observation_0001",
+          "history_event_id": "observation_0001",
+          "history_event_ids": [
+            "observation_0001"
+          ],
+          "history_mode": "confirmed_memory",
+          "history_evidence_kind": "current_observation",
+          "history_release_event_id": null
+        }
+      ],
+      "memory": [
+        {
+          "id": "goal_1",
+          "evidence_id": "observation_0001",
+          "event_id": null,
+          "confirmation_kind": "current_observation",
+          "timestamp": 16.300000000001845,
+          "status": "confirmed",
+          "object_key": "tomato_sauce_1"
+        }
+      ],
+      "current_new_proofs": 0,
+      "all_release_originals_verified": true,
+      "retained_release_events": 2,
+      "request_images": 15,
+      "actual_Qwen_calls": 2,
+      "same_capture_reused": false,
+      "evaluation_only_truth_not_sent": {
+        "vla_step": 900,
+        "native_success": true,
+        "predicates": {
+          "in|alphabet_soup_1|basket_1_contain_region": true,
+          "in|tomato_sauce_1|basket_1_contain_region": true
+        }
+      }
+    }
+  ],
+  "classification_missing_control": true,
+  "old_answers_imported": 0,
+  "new_environment_actions": 0
+}

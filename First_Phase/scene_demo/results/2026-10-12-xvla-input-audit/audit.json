@@ -1,0 +1,3554 @@
+{
+  "real_model_calls": 0,
+  "physical_actions": 0,
+  "mock_http_serializations": 33,
+  "frozen_serializer_matches": {
+    "v4/First_Phase/scene_demo/finish_v1/vision.py": true,
+    "v4/First_Phase/scene_demo/finish_v1/simple_checker.py": true,
+    "v5/First_Phase/scene_demo/finish_v1/vision.py": true,
+    "v5/First_Phase/scene_demo/finish_v1/simple_checker.py": true,
+    "xvla_checker.py": true
+  },
+  "groups": {
+    "online": {
+      "count": 18,
+      "matched": 18,
+      "feedback_unknown": 0
+    },
+    "offline_old": {
+      "count": 6,
+      "matched": 6,
+      "feedback_unknown": 6
+    },
+    "offline_grounding": {
+      "count": 9,
+      "matched": 9,
+      "feedback_unknown": 0
+    }
+  },
+  "rows": [
+    {
+      "kind": "offline_grounding",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/micro_arrived/call_09_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/micro_arrived/call_09_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "4ddac35336d3e85e9935a0c9e0b31fbf52ec36beedee8ee07aac101bd200c4aa",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/00_offline_grounding_micro_arrived_call_09_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000464_wrist.png",
+          "actual_png_sha256": "550997cb0045a237d9a4569e5277aa0b5e743f4c627422681e06eb5188fded2b",
+          "record_sha256": "550997cb0045a237d9a4569e5277aa0b5e743f4c627422681e06eb5188fded2b",
+          "disk_sha256": "550997cb0045a237d9a4569e5277aa0b5e743f4c627422681e06eb5188fded2b",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=38.25000000000078",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "timestamp": 38.25000000000078,
+            "view": "wrist"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000463_agentview.png",
+          "actual_png_sha256": "c38f7b2924b8329fc9468ffa675c59353fe09a7cf9362eb4cedcabf63d2ea407",
+          "record_sha256": "c38f7b2924b8329fc9468ffa675c59353fe09a7cf9362eb4cedcabf63d2ea407",
+          "disk_sha256": "c38f7b2924b8329fc9468ffa675c59353fe09a7cf9362eb4cedcabf63d2ea407",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=38.25000000000078",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "timestamp": 38.25000000000078,
+            "view": "agentview"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000465_sideview.png",
+          "actual_png_sha256": "d80edcfadb4d6bcb9c8edd1d20fa54e280aad52c66724ae2f289788fabe1940d",
+          "record_sha256": "d80edcfadb4d6bcb9c8edd1d20fa54e280aad52c66724ae2f289788fabe1940d",
+          "disk_sha256": "d80edcfadb4d6bcb9c8edd1d20fa54e280aad52c66724ae2f289788fabe1940d",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=2; view=sideview; timestamp=38.25000000000078",
+          "label_matches": true,
+          "frame": {
+            "frame": 2,
+            "timestamp": 38.25000000000078,
+            "view": "sideview"
+          }
+        }
+      ],
+      "image_encoder_timestamp": 38.25000000000078,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "prepared source_context from original first check standard_open reference",
+      "measurements": {
+        "finger_qpos": [
+          0.04001115136044819,
+          -0.040172875616659436
+        ],
+        "max_abs_arm_qvel": 0.04484591435801457,
+        "stage": "executing",
+        "standard_open_finger_qpos": [
+          0.038728906188908195,
+          -0.0387294158813959
+        ],
+        "timestamp": 38.25000000000078
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "desired_state",
+        "destination_definition",
+        "finger_qpos",
+        "frame",
+        "goal_relation",
+        "max_standard_open_error_mm",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "target_category",
+        "target_visual_identity",
+        "task_description",
+        "timestamp",
+        "view",
+        "visual_state_definition"
+      ],
+      "full_chain_user_request_sent": false,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": {
+        "actuator_measurements": {
+          "finger_qpos": [
+            0.04001115136044819,
+            -0.040172875616659436
+          ],
+          "max_abs_arm_qvel": 0.04484591435801457,
+          "stage": "executing",
+          "standard_open_finger_qpos": [
+            0.038728906188908195,
+            -0.0387294158813959
+          ],
+          "timestamp": 38.25000000000078
+        },
+        "criteria": {
+          "must_clear": true,
+          "must_preserve_target": true,
+          "must_release": true,
+          "must_stabilize": true,
+          "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+          "task_description": "put the yellow and white mug in the microwave"
+        },
+        "current_subtask": {
+          "destination": "microwave_1_heating_region",
+          "operation": "place",
+          "phase": "executing",
+          "target": "white_yellow_mug_1"
+        },
+        "sensor_frames": [
+          {
+            "frame": 0,
+            "timestamp": 38.25000000000078,
+            "view": "wrist"
+          },
+          {
+            "frame": 1,
+            "timestamp": 38.25000000000078,
+            "view": "agentview"
+          }
+        ],
+        "user_request": "先把黄白杯放进微波炉，再关闭微波炉门。"
+      }
+    },
+    {
+      "kind": "offline_grounding",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/micro_negative/call_08_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/micro_negative/call_08_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "75b2f4115482d8fc5d9ac80ce69f4fa05982af77f9fef4cd4a4eb40410c9a83f",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/01_offline_grounding_micro_negative_call_08_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000002_wrist.png",
+          "actual_png_sha256": "48d0a64d027a5d16b771a12d2c62c546df4ffd0a1ce05d18c0a4a9101f936f4e",
+          "record_sha256": "48d0a64d027a5d16b771a12d2c62c546df4ffd0a1ce05d18c0a4a9101f936f4e",
+          "disk_sha256": "48d0a64d027a5d16b771a12d2c62c546df4ffd0a1ce05d18c0a4a9101f936f4e",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=1.0000000000000007",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "timestamp": 1.0000000000000007,
+            "view": "wrist"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000001_agentview.png",
+          "actual_png_sha256": "1c57459df31d7364fda6bcb75a51b573c507cf751faf51d54986c28e3fe2b6c3",
+          "record_sha256": "1c57459df31d7364fda6bcb75a51b573c507cf751faf51d54986c28e3fe2b6c3",
+          "disk_sha256": "1c57459df31d7364fda6bcb75a51b573c507cf751faf51d54986c28e3fe2b6c3",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=1.0000000000000007",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "timestamp": 1.0000000000000007,
+            "view": "agentview"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000003_sideview.png",
+          "actual_png_sha256": "a9853f508c6f7c32708ca2df94f0f84310594f93e9699b7681bb5b60505943f8",
+          "record_sha256": "a9853f508c6f7c32708ca2df94f0f84310594f93e9699b7681bb5b60505943f8",
+          "disk_sha256": "a9853f508c6f7c32708ca2df94f0f84310594f93e9699b7681bb5b60505943f8",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=2; view=sideview; timestamp=1.0000000000000007",
+          "label_matches": true,
+          "frame": {
+            "frame": 2,
+            "timestamp": 1.0000000000000007,
+            "view": "sideview"
+          }
+        }
+      ],
+      "image_encoder_timestamp": 1.0000000000000007,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "prepared source_context from original first check standard_open reference",
+      "measurements": {
+        "finger_qpos": [
+          0.03904191591353,
+          -0.03903313598872844
+        ],
+        "max_abs_arm_qvel": 0.16363153744511694,
+        "stage": "executing",
+        "standard_open_finger_qpos": [
+          0.038728906188908195,
+          -0.0387294158813959
+        ],
+        "timestamp": 1.0000000000000007
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "desired_state",
+        "destination_definition",
+        "finger_qpos",
+        "frame",
+        "goal_relation",
+        "max_standard_open_error_mm",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "target_category",
+        "target_visual_identity",
+        "task_description",
+        "timestamp",
+        "view",
+        "visual_state_definition"
+      ],
+      "full_chain_user_request_sent": false,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": {
+        "actuator_measurements": {
+          "finger_qpos": [
+            0.03904191591353,
+            -0.03903313598872844
+          ],
+          "max_abs_arm_qvel": 0.16363153744511694,
+          "stage": "executing",
+          "standard_open_finger_qpos": [
+            0.038728906188908195,
+            -0.0387294158813959
+          ],
+          "timestamp": 1.0000000000000007
+        },
+        "criteria": {
+          "must_clear": true,
+          "must_preserve_target": true,
+          "must_release": true,
+          "must_stabilize": true,
+          "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+          "task_description": "put the yellow and white mug in the microwave"
+        },
+        "current_subtask": {
+          "destination": "microwave_1_heating_region",
+          "operation": "place",
+          "phase": "executing",
+          "target": "white_yellow_mug_1"
+        },
+        "sensor_frames": [
+          {
+            "frame": 0,
+            "timestamp": 1.0000000000000007,
+            "view": "wrist"
+          },
+          {
+            "frame": 1,
+            "timestamp": 1.0000000000000007,
+            "view": "agentview"
+          }
+        ],
+        "user_request": "先把黄白杯放进微波炉，再关闭微波炉门。"
+      }
+    },
+    {
+      "kind": "offline_grounding",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/soup_final/call_05_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/soup_final/call_05_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "7ce157319eb2bfb37c4454878a293cb47b3571d472831e5404a4c12de46044e3",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/02_offline_grounding_soup_final_call_05_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000647_wrist.png",
+          "actual_png_sha256": "d0924104fcb170a31c9d4c4c23f16426b800c1181fe85ed103c7b3f6ffb5757b",
+          "record_sha256": "d0924104fcb170a31c9d4c4c23f16426b800c1181fe85ed103c7b3f6ffb5757b",
+          "disk_sha256": "d0924104fcb170a31c9d4c4c23f16426b800c1181fe85ed103c7b3f6ffb5757b",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=49.90000000001502",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "timestamp": 49.90000000001502,
+            "view": "wrist"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000646_agentview.png",
+          "actual_png_sha256": "8bf3109b9ae8c7f08e9dcfa9983363486fb218b7b90196fb0a5526d4bd69e91b",
+          "record_sha256": "8bf3109b9ae8c7f08e9dcfa9983363486fb218b7b90196fb0a5526d4bd69e91b",
+          "disk_sha256": "8bf3109b9ae8c7f08e9dcfa9983363486fb218b7b90196fb0a5526d4bd69e91b",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=49.90000000001502",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "timestamp": 49.90000000001502,
+            "view": "agentview"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000648_sideview.png",
+          "actual_png_sha256": "95a88b1bdda8d74cfaed82f092e46bccfd4cbbf3585cb3dfcb45be5f5bef534c",
+          "record_sha256": "95a88b1bdda8d74cfaed82f092e46bccfd4cbbf3585cb3dfcb45be5f5bef534c",
+          "disk_sha256": "95a88b1bdda8d74cfaed82f092e46bccfd4cbbf3585cb3dfcb45be5f5bef534c",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=2; view=sideview; timestamp=49.90000000001502",
+          "label_matches": true,
+          "frame": {
+            "frame": 2,
+            "timestamp": 49.90000000001502,
+            "view": "sideview"
+          }
+        }
+      ],
+      "image_encoder_timestamp": 49.90000000001502,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "prepared source_context from original first check standard_open reference",
+      "measurements": {
+        "finger_qpos": [
+          0.03867563158853928,
+          -0.03878286280924501
+        ],
+        "max_abs_arm_qvel": 0.0056082910056190404,
+        "stage": "home",
+        "standard_open_finger_qpos": [
+          0.03872955881216562,
+          -0.038728775049055544
+        ],
+        "timestamp": 49.90000000001502
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "desired_state",
+        "destination_definition",
+        "finger_qpos",
+        "frame",
+        "goal_relation",
+        "max_standard_open_error_mm",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "target_category",
+        "target_visual_identity",
+        "task_description",
+        "timestamp",
+        "view",
+        "visual_state_definition"
+      ],
+      "full_chain_user_request_sent": false,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": {
+        "actuator_measurements": {
+          "finger_qpos": [
+            0.03867563158853928,
+            -0.03878286280924501
+          ],
+          "max_abs_arm_qvel": 0.0056082910056190404,
+          "stage": "home",
+          "standard_open_finger_qpos": [
+            0.03872955881216562,
+            -0.038728775049055544
+          ],
+          "timestamp": 49.90000000001502
+        },
+        "criteria": {
+          "must_clear": true,
+          "must_preserve_target": true,
+          "must_release": true,
+          "must_stabilize": true,
+          "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+          "task_description": "put the alphabet soup in the basket"
+        },
+        "current_subtask": {
+          "destination": "basket_1_contain_region",
+          "operation": "place",
+          "phase": "home",
+          "target": "alphabet_soup_1"
+        },
+        "sensor_frames": [
+          {
+            "frame": 0,
+            "timestamp": 49.90000000001502,
+            "view": "wrist"
+          },
+          {
+            "frame": 1,
+            "timestamp": 49.90000000001502,
+            "view": "agentview"
+          }
+        ],
+        "user_request": "先把字母汤罐放进篮子，再把番茄酱罐放进篮子。"
+      }
+    },
+    {
+      "kind": "offline_grounding",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/soup_negative/call_04_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/soup_negative/call_04_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "f3979e563cf327cb3272401b69cb8321020053fb8578cba0b10a2c7f6e07ded1",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/03_offline_grounding_soup_negative_call_04_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000002_wrist.png",
+          "actual_png_sha256": "245bb4f24043e4710f946a44cd6cb09f1d95a52eadd10a500e10db92c9e643b7",
+          "record_sha256": "245bb4f24043e4710f946a44cd6cb09f1d95a52eadd10a500e10db92c9e643b7",
+          "disk_sha256": "245bb4f24043e4710f946a44cd6cb09f1d95a52eadd10a500e10db92c9e643b7",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=1.5500000000000012",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "timestamp": 1.5500000000000012,
+            "view": "wrist"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000001_agentview.png",
+          "actual_png_sha256": "01f0f5229bf40b93aacef64329653b7b12e8d54de06bbca2af0c0ba43486d0ed",
+          "record_sha256": "01f0f5229bf40b93aacef64329653b7b12e8d54de06bbca2af0c0ba43486d0ed",
+          "disk_sha256": "01f0f5229bf40b93aacef64329653b7b12e8d54de06bbca2af0c0ba43486d0ed",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=1.5500000000000012",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "timestamp": 1.5500000000000012,
+            "view": "agentview"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000003_sideview.png",
+          "actual_png_sha256": "d6a600b8a6fe9b780027b81977a6b9f905e4aac08b2569361cc0b47661a9ead3",
+          "record_sha256": "d6a600b8a6fe9b780027b81977a6b9f905e4aac08b2569361cc0b47661a9ead3",
+          "disk_sha256": "d6a600b8a6fe9b780027b81977a6b9f905e4aac08b2569361cc0b47661a9ead3",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=2; view=sideview; timestamp=1.5500000000000012",
+          "label_matches": true,
+          "frame": {
+            "frame": 2,
+            "timestamp": 1.5500000000000012,
+            "view": "sideview"
+          }
+        }
+      ],
+      "image_encoder_timestamp": 1.5500000000000012,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "prepared source_context from original first check standard_open reference",
+      "measurements": {
+        "finger_qpos": [
+          0.03903187062676031,
+          -0.0390390519157154
+        ],
+        "max_abs_arm_qvel": 0.0992627845113809,
+        "stage": "executing",
+        "standard_open_finger_qpos": [
+          0.03872955881216562,
+          -0.038728775049055544
+        ],
+        "timestamp": 1.5500000000000012
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "desired_state",
+        "destination_definition",
+        "finger_qpos",
+        "frame",
+        "goal_relation",
+        "max_standard_open_error_mm",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "target_category",
+        "target_visual_identity",
+        "task_description",
+        "timestamp",
+        "view",
+        "visual_state_definition"
+      ],
+      "full_chain_user_request_sent": false,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": {
+        "actuator_measurements": {
+          "finger_qpos": [
+            0.03903187062676031,
+            -0.0390390519157154
+          ],
+          "max_abs_arm_qvel": 0.0992627845113809,
+          "stage": "executing",
+          "standard_open_finger_qpos": [
+            0.03872955881216562,
+            -0.038728775049055544
+          ],
+          "timestamp": 1.5500000000000012
+        },
+        "criteria": {
+          "must_clear": true,
+          "must_preserve_target": true,
+          "must_release": true,
+          "must_stabilize": true,
+          "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+          "task_description": "put the alphabet soup in the basket"
+        },
+        "current_subtask": {
+          "destination": "basket_1_contain_region",
+          "operation": "place",
+          "phase": "executing",
+          "target": "alphabet_soup_1"
+        },
+        "sensor_frames": [
+          {
+            "frame": 0,
+            "timestamp": 1.5500000000000012,
+            "view": "wrist"
+          },
+          {
+            "frame": 1,
+            "timestamp": 1.5500000000000012,
+            "view": "agentview"
+          }
+        ],
+        "user_request": "先把字母汤罐放进篮子，再把番茄酱罐放进篮子。"
+      }
+    },
+    {
+      "kind": "offline_grounding",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/white_arrived/call_07_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/white_arrived/call_07_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "2d538d3408dd2fd7289483d361d23e39cd6aecae375f51813d61e5cd79700d35",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/04_offline_grounding_white_arrived_call_07_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000464_wrist.png",
+          "actual_png_sha256": "5c8a7e9758df208a8959efd57c0ce91c233bc5470b929241605838777807123d",
+          "record_sha256": "5c8a7e9758df208a8959efd57c0ce91c233bc5470b929241605838777807123d",
+          "disk_sha256": "5c8a7e9758df208a8959efd57c0ce91c233bc5470b929241605838777807123d",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=38.25000000000078",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "timestamp": 38.25000000000078,
+            "view": "wrist"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000463_agentview.png",
+          "actual_png_sha256": "5a305b2f7da78da1acd93f9b2f9510096ebaa9d835c7e4640867e874c6d8d0e5",
+          "record_sha256": "5a305b2f7da78da1acd93f9b2f9510096ebaa9d835c7e4640867e874c6d8d0e5",
+          "disk_sha256": "5a305b2f7da78da1acd93f9b2f9510096ebaa9d835c7e4640867e874c6d8d0e5",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=38.25000000000078",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "timestamp": 38.25000000000078,
+            "view": "agentview"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000465_sideview.png",
+          "actual_png_sha256": "59dda43cd5597e4b8c11ea92f287c69f7b5fe07a636e2bf4e5358069e942e78c",
+          "record_sha256": "59dda43cd5597e4b8c11ea92f287c69f7b5fe07a636e2bf4e5358069e942e78c",
+          "disk_sha256": "59dda43cd5597e4b8c11ea92f287c69f7b5fe07a636e2bf4e5358069e942e78c",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=2; view=sideview; timestamp=38.25000000000078",
+          "label_matches": true,
+          "frame": {
+            "frame": 2,
+            "timestamp": 38.25000000000078,
+            "view": "sideview"
+          }
+        }
+      ],
+      "image_encoder_timestamp": 38.25000000000078,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "prepared source_context from original first check standard_open reference",
+      "measurements": {
+        "finger_qpos": [
+          0.039964305738151774,
+          -0.04000143878054754
+        ],
+        "max_abs_arm_qvel": 0.05181123556590959,
+        "stage": "executing",
+        "standard_open_finger_qpos": [
+          0.03873062763389544,
+          -0.03872769533488731
+        ],
+        "timestamp": 38.25000000000078
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "desired_state",
+        "destination_definition",
+        "finger_qpos",
+        "frame",
+        "goal_relation",
+        "max_standard_open_error_mm",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "target_category",
+        "target_visual_identity",
+        "task_description",
+        "timestamp",
+        "view",
+        "visual_state_definition"
+      ],
+      "full_chain_user_request_sent": false,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": {
+        "actuator_measurements": {
+          "finger_qpos": [
+            0.039964305738151774,
+            -0.04000143878054754
+          ],
+          "max_abs_arm_qvel": 0.05181123556590959,
+          "stage": "executing",
+          "standard_open_finger_qpos": [
+            0.03873062763389544,
+            -0.03872769533488731
+          ],
+          "timestamp": 38.25000000000078
+        },
+        "criteria": {
+          "must_clear": true,
+          "must_preserve_target": true,
+          "must_release": true,
+          "must_stabilize": true,
+          "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+          "task_description": "put the white mug on the left plate"
+        },
+        "current_subtask": {
+          "destination": "plate_1",
+          "operation": "place",
+          "phase": "executing",
+          "target": "porcelain_mug_1"
+        },
+        "sensor_frames": [
+          {
+            "frame": 0,
+            "timestamp": 38.25000000000078,
+            "view": "wrist"
+          },
+          {
+            "frame": 1,
+            "timestamp": 38.25000000000078,
+            "view": "agentview"
+          }
+        ],
+        "user_request": "先把白杯放到左边盘子，再把黄白杯放到右边盘子。"
+      }
+    },
+    {
+      "kind": "offline_grounding",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/white_negative/call_06_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/white_negative/call_06_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "41c9bee61d5eaf12b45f85036fc620ff2af68af697ae4595037af182c86ab76e",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/05_offline_grounding_white_negative_call_06_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000002_wrist.png",
+          "actual_png_sha256": "9c36278365bbfca49f3e1cf037a4abfb3aadec70dd09e9c49e591bba85f9c0e4",
+          "record_sha256": "9c36278365bbfca49f3e1cf037a4abfb3aadec70dd09e9c49e591bba85f9c0e4",
+          "disk_sha256": "9c36278365bbfca49f3e1cf037a4abfb3aadec70dd09e9c49e591bba85f9c0e4",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=1.0000000000000007",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "timestamp": 1.0000000000000007,
+            "view": "wrist"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000001_agentview.png",
+          "actual_png_sha256": "d551596e78f4f94b376fd9ec16312139782dbc0d2d44eb4715eec6e077426458",
+          "record_sha256": "d551596e78f4f94b376fd9ec16312139782dbc0d2d44eb4715eec6e077426458",
+          "disk_sha256": "d551596e78f4f94b376fd9ec16312139782dbc0d2d44eb4715eec6e077426458",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=1.0000000000000007",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "timestamp": 1.0000000000000007,
+            "view": "agentview"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000003_sideview.png",
+          "actual_png_sha256": "8413745f6f5c13f55940dbcbcbcce779bea2f29e6bb089d6a3ddff2e836a9453",
+          "record_sha256": "8413745f6f5c13f55940dbcbcbcce779bea2f29e6bb089d6a3ddff2e836a9453",
+          "disk_sha256": "8413745f6f5c13f55940dbcbcbcce779bea2f29e6bb089d6a3ddff2e836a9453",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=2; view=sideview; timestamp=1.0000000000000007",
+          "label_matches": true,
+          "frame": {
+            "frame": 2,
+            "timestamp": 1.0000000000000007,
+            "view": "sideview"
+          }
+        }
+      ],
+      "image_encoder_timestamp": 1.0000000000000007,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "prepared source_context from original first check standard_open reference",
+      "measurements": {
+        "finger_qpos": [
+          0.03900505578711388,
+          -0.0390781214955443
+        ],
+        "max_abs_arm_qvel": 0.18473518289304877,
+        "stage": "executing",
+        "standard_open_finger_qpos": [
+          0.03873062763389544,
+          -0.03872769533488731
+        ],
+        "timestamp": 1.0000000000000007
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "desired_state",
+        "destination_definition",
+        "finger_qpos",
+        "frame",
+        "goal_relation",
+        "max_standard_open_error_mm",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "target_category",
+        "target_visual_identity",
+        "task_description",
+        "timestamp",
+        "view",
+        "visual_state_definition"
+      ],
+      "full_chain_user_request_sent": false,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": {
+        "actuator_measurements": {
+          "finger_qpos": [
+            0.03900505578711388,
+            -0.0390781214955443
+          ],
+          "max_abs_arm_qvel": 0.18473518289304877,
+          "stage": "executing",
+          "standard_open_finger_qpos": [
+            0.03873062763389544,
+            -0.03872769533488731
+          ],
+          "timestamp": 1.0000000000000007
+        },
+        "criteria": {
+          "must_clear": true,
+          "must_preserve_target": true,
+          "must_release": true,
+          "must_stabilize": true,
+          "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+          "task_description": "put the white mug on the left plate"
+        },
+        "current_subtask": {
+          "destination": "plate_1",
+          "operation": "place",
+          "phase": "executing",
+          "target": "porcelain_mug_1"
+        },
+        "sensor_frames": [
+          {
+            "frame": 0,
+            "timestamp": 1.0000000000000007,
+            "view": "wrist"
+          },
+          {
+            "frame": 1,
+            "timestamp": 1.0000000000000007,
+            "view": "agentview"
+          }
+        ],
+        "user_request": "先把白杯放到左边盘子，再把黄白杯放到右边盘子。"
+      }
+    },
+    {
+      "kind": "offline_grounding",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/wine_arrived/call_02_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/wine_arrived/call_02_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "50c6896998b1e5eb5ee32eb934e548de0afda046c6acf552173d46f36ee3d792",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/06_offline_grounding_wine_arrived_call_02_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000092_wrist.png",
+          "actual_png_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "record_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "disk_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=8.749999999999591",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "timestamp": 8.749999999999591,
+            "view": "wrist"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000091_agentview.png",
+          "actual_png_sha256": "0495ff4dd82d3c444ebf504813e299dc3c5ad675ffd8ea07e3c9fa1e9c8c8c33",
+          "record_sha256": "0495ff4dd82d3c444ebf504813e299dc3c5ad675ffd8ea07e3c9fa1e9c8c8c33",
+          "disk_sha256": "0495ff4dd82d3c444ebf504813e299dc3c5ad675ffd8ea07e3c9fa1e9c8c8c33",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=8.749999999999591",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "timestamp": 8.749999999999591,
+            "view": "agentview"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000093_sideview.png",
+          "actual_png_sha256": "edce5551c106983463f5361c00cfc4f64860b943e59c3c749e2478f19cf4f40a",
+          "record_sha256": "edce5551c106983463f5361c00cfc4f64860b943e59c3c749e2478f19cf4f40a",
+          "disk_sha256": "edce5551c106983463f5361c00cfc4f64860b943e59c3c749e2478f19cf4f40a",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=2; view=sideview; timestamp=8.749999999999591",
+          "label_matches": true,
+          "frame": {
+            "frame": 2,
+            "timestamp": 8.749999999999591,
+            "view": "sideview"
+          }
+        }
+      ],
+      "image_encoder_timestamp": 8.749999999999591,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "prepared source_context from original first check standard_open reference",
+      "measurements": {
+        "finger_qpos": [
+          0.020413136182790174,
+          -0.022746974162754025
+        ],
+        "max_abs_arm_qvel": 0.2571237807465888,
+        "stage": "executing",
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ],
+        "timestamp": 8.749999999999591
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "desired_state",
+        "destination_definition",
+        "finger_qpos",
+        "frame",
+        "goal_relation",
+        "max_standard_open_error_mm",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "target_category",
+        "target_visual_identity",
+        "task_description",
+        "timestamp",
+        "view",
+        "visual_state_definition"
+      ],
+      "full_chain_user_request_sent": false,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": {
+        "actuator_measurements": {
+          "finger_qpos": [
+            0.020413136182790174,
+            -0.022746974162754025
+          ],
+          "max_abs_arm_qvel": 0.2571237807465888,
+          "stage": "executing",
+          "standard_open_finger_qpos": [
+            0.03873057586502897,
+            -0.03872776397868675
+          ],
+          "timestamp": 8.749999999999591
+        },
+        "criteria": {
+          "must_clear": true,
+          "must_preserve_target": true,
+          "must_release": true,
+          "must_stabilize": true,
+          "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+          "task_description": "put the wine bottle on the rack"
+        },
+        "current_subtask": {
+          "destination": "wine_rack_1_top_region",
+          "operation": "place",
+          "phase": "executing",
+          "target": "wine_bottle_1"
+        },
+        "sensor_frames": [
+          {
+            "frame": 0,
+            "timestamp": 8.749999999999591,
+            "view": "wrist"
+          },
+          {
+            "frame": 1,
+            "timestamp": 8.749999999999591,
+            "view": "sideview"
+          }
+        ],
+        "user_request": "先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台。"
+      }
+    },
+    {
+      "kind": "offline_grounding",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/wine_final/call_03_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/wine_final/call_03_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "628c1b95466c4d09d803987a882998a7b1ccd50267b84ba03de9767bc18250d2",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/07_offline_grounding_wine_final_call_03_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000263_wrist.png",
+          "actual_png_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "record_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "disk_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=21.44999999999899",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "timestamp": 21.44999999999899,
+            "view": "wrist"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000262_agentview.png",
+          "actual_png_sha256": "e92b77231b25ca52708c1574eeaba1a7537d24c20ac09501941f03861700d1f2",
+          "record_sha256": "e92b77231b25ca52708c1574eeaba1a7537d24c20ac09501941f03861700d1f2",
+          "disk_sha256": "e92b77231b25ca52708c1574eeaba1a7537d24c20ac09501941f03861700d1f2",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=21.44999999999899",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "timestamp": 21.44999999999899,
+            "view": "agentview"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000264_sideview.png",
+          "actual_png_sha256": "5e95edcbe95ab40ea837bf052b1b3f715ed56823ac90b268361184eb626e6591",
+          "record_sha256": "5e95edcbe95ab40ea837bf052b1b3f715ed56823ac90b268361184eb626e6591",
+          "disk_sha256": "5e95edcbe95ab40ea837bf052b1b3f715ed56823ac90b268361184eb626e6591",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=2; view=sideview; timestamp=21.44999999999899",
+          "label_matches": true,
+          "frame": {
+            "frame": 2,
+            "timestamp": 21.44999999999899,
+            "view": "sideview"
+          }
+        }
+      ],
+      "image_encoder_timestamp": 21.44999999999899,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "prepared source_context from original first check standard_open reference",
+      "measurements": {
+        "finger_qpos": [
+          0.038728764139988096,
+          -0.03872966395281477
+        ],
+        "max_abs_arm_qvel": 0.005807712812297226,
+        "stage": "home",
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ],
+        "timestamp": 21.44999999999899
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "desired_state",
+        "destination_definition",
+        "finger_qpos",
+        "frame",
+        "goal_relation",
+        "max_standard_open_error_mm",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "target_category",
+        "target_visual_identity",
+        "task_description",
+        "timestamp",
+        "view",
+        "visual_state_definition"
+      ],
+      "full_chain_user_request_sent": false,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": {
+        "actuator_measurements": {
+          "finger_qpos": [
+            0.038728764139988096,
+            -0.03872966395281477
+          ],
+          "max_abs_arm_qvel": 0.005807712812297226,
+          "stage": "home",
+          "standard_open_finger_qpos": [
+            0.03873057586502897,
+            -0.03872776397868675
+          ],
+          "timestamp": 21.44999999999899
+        },
+        "criteria": {
+          "must_clear": true,
+          "must_preserve_target": true,
+          "must_release": true,
+          "must_stabilize": true,
+          "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+          "task_description": "put the wine bottle on the rack"
+        },
+        "current_subtask": {
+          "destination": "wine_rack_1_top_region",
+          "operation": "place",
+          "phase": "home",
+          "target": "wine_bottle_1"
+        },
+        "sensor_frames": [
+          {
+            "frame": 0,
+            "timestamp": 21.44999999999899,
+            "view": "wrist"
+          },
+          {
+            "frame": 1,
+            "timestamp": 21.44999999999899,
+            "view": "sideview"
+          }
+        ],
+        "user_request": "先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台。"
+      }
+    },
+    {
+      "kind": "offline_grounding",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/wine_negative/call_01_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-checker-grounding/calls/wine_negative/call_01_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "98acd3c1693a0345d712b6ebbbba1827f48b9c99f7431f4779c0b0397a2c34a4",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/08_offline_grounding_wine_negative_call_01_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000002_wrist.png",
+          "actual_png_sha256": "c427acc01165e252ed054b91107daa521a04f3fbe65174394e722db06c88c76a",
+          "record_sha256": "c427acc01165e252ed054b91107daa521a04f3fbe65174394e722db06c88c76a",
+          "disk_sha256": "c427acc01165e252ed054b91107daa521a04f3fbe65174394e722db06c88c76a",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=1.500000000000001",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "timestamp": 1.500000000000001,
+            "view": "wrist"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000001_agentview.png",
+          "actual_png_sha256": "9c0956f0543add7224aa698e5b8a1d0fcf6d20d2b6518ef44b1fdddaccac6f47",
+          "record_sha256": "9c0956f0543add7224aa698e5b8a1d0fcf6d20d2b6518ef44b1fdddaccac6f47",
+          "disk_sha256": "9c0956f0543add7224aa698e5b8a1d0fcf6d20d2b6518ef44b1fdddaccac6f47",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=1.500000000000001",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "timestamp": 1.500000000000001,
+            "view": "agentview"
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000003_sideview.png",
+          "actual_png_sha256": "8271dd01219e2007e6c0118648cc752eb4f1c5186a9fd656181f4ba3cfc1308b",
+          "record_sha256": "8271dd01219e2007e6c0118648cc752eb4f1c5186a9fd656181f4ba3cfc1308b",
+          "disk_sha256": "8271dd01219e2007e6c0118648cc752eb4f1c5186a9fd656181f4ba3cfc1308b",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=2; view=sideview; timestamp=1.500000000000001",
+          "label_matches": true,
+          "frame": {
+            "frame": 2,
+            "timestamp": 1.500000000000001,
+            "view": "sideview"
+          }
+        }
+      ],
+      "image_encoder_timestamp": 1.500000000000001,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "prepared source_context from original first check standard_open reference",
+      "measurements": {
+        "finger_qpos": [
+          0.039044103490947356,
+          -0.03902692813860159
+        ],
+        "max_abs_arm_qvel": 0.28265147215649244,
+        "stage": "executing",
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ],
+        "timestamp": 1.500000000000001
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "desired_state",
+        "destination_definition",
+        "finger_qpos",
+        "frame",
+        "goal_relation",
+        "max_standard_open_error_mm",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "target_category",
+        "target_visual_identity",
+        "task_description",
+        "timestamp",
+        "view",
+        "visual_state_definition"
+      ],
+      "full_chain_user_request_sent": false,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": {
+        "actuator_measurements": {
+          "finger_qpos": [
+            0.039044103490947356,
+            -0.03902692813860159
+          ],
+          "max_abs_arm_qvel": 0.28265147215649244,
+          "stage": "executing",
+          "standard_open_finger_qpos": [
+            0.03873057586502897,
+            -0.03872776397868675
+          ],
+          "timestamp": 1.500000000000001
+        },
+        "criteria": {
+          "must_clear": true,
+          "must_preserve_target": true,
+          "must_release": true,
+          "must_stabilize": true,
+          "operation_semantics": "place target at destination; if the destination is a container, place the target inside it, then open the fingers and retreat away without disturbing it",
+          "task_description": "put the wine bottle on the rack"
+        },
+        "current_subtask": {
+          "destination": "wine_rack_1_top_region",
+          "operation": "place",
+          "phase": "executing",
+          "target": "wine_bottle_1"
+        },
+        "sensor_frames": [
+          {
+            "frame": 0,
+            "timestamp": 1.500000000000001,
+            "view": "wrist"
+          },
+          {
+            "frame": 1,
+            "timestamp": 1.500000000000001,
+            "view": "agentview"
+          }
+        ],
+        "user_request": "先把酒瓶放到架子上，再把碗放到盘子上，最后打开灶台。"
+      }
+    },
+    {
+      "kind": "offline_old",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_agentview/calls/call_01_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_agentview/calls/call_01_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "f697fd663f3886e18aa797823863587fac7af323cc6b0f3f5fc74711de22c0b1",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/09_offline_old_calls_call_01_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000002_wrist.png",
+          "actual_png_sha256": "c427acc01165e252ed054b91107daa521a04f3fbe65174394e722db06c88c76a",
+          "record_sha256": "c427acc01165e252ed054b91107daa521a04f3fbe65174394e722db06c88c76a",
+          "disk_sha256": "c427acc01165e252ed054b91107daa521a04f3fbe65174394e722db06c88c76a",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=1.500000000000001",
+          "label_matches": true,
+          "frame": {
+            "timestamp": 1.500000000000001,
+            "view": "wrist",
+            "frame": 0
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000001_agentview.png",
+          "actual_png_sha256": "9c0956f0543add7224aa698e5b8a1d0fcf6d20d2b6518ef44b1fdddaccac6f47",
+          "record_sha256": "9c0956f0543add7224aa698e5b8a1d0fcf6d20d2b6518ef44b1fdddaccac6f47",
+          "disk_sha256": "9c0956f0543add7224aa698e5b8a1d0fcf6d20d2b6518ef44b1fdddaccac6f47",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=1.500000000000001",
+          "label_matches": true,
+          "frame": {
+            "timestamp": 1.500000000000001,
+            "view": "agentview",
+            "frame": 1
+          }
+        }
+      ],
+      "image_encoder_timestamp": 1.500000000000001,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": null,
+      "speed_matches_source": null,
+      "standard_open_source": null,
+      "measurements": {
+        "timestamp": 1.500000000000001,
+        "stage": "executing",
+        "finger_qpos": [
+          0.039044103490947356,
+          -0.03902692813860159
+        ],
+        "max_abs_arm_qvel": 0.28265147215649244,
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": true,
+      "context_source": null
+    },
+    {
+      "kind": "offline_old",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_agentview/calls/call_02_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_agentview/calls/call_02_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "b64e872d13ed6249990ab990a00bfa75573aa205f3ed541588ed3f693e9277f1",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/10_offline_old_calls_call_02_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000092_wrist.png",
+          "actual_png_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "record_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "disk_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=8.749999999999591",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 8.749999999999591
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000091_agentview.png",
+          "actual_png_sha256": "0495ff4dd82d3c444ebf504813e299dc3c5ad675ffd8ea07e3c9fa1e9c8c8c33",
+          "record_sha256": "0495ff4dd82d3c444ebf504813e299dc3c5ad675ffd8ea07e3c9fa1e9c8c8c33",
+          "disk_sha256": "0495ff4dd82d3c444ebf504813e299dc3c5ad675ffd8ea07e3c9fa1e9c8c8c33",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=8.749999999999591",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 8.749999999999591
+          }
+        }
+      ],
+      "image_encoder_timestamp": 8.749999999999591,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": null,
+      "speed_matches_source": null,
+      "standard_open_source": null,
+      "measurements": {
+        "timestamp": 8.749999999999591,
+        "stage": "executing",
+        "finger_qpos": [
+          0.020413136182790174,
+          -0.022746974162754025
+        ],
+        "max_abs_arm_qvel": 0.2571237807465888,
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": true,
+      "context_source": null
+    },
+    {
+      "kind": "offline_old",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_agentview/calls/call_03_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_agentview/calls/call_03_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "c2e19e2430ed861e7481122387115f5bd5194db12c6a8fc4c0a9e3cc2bbec6c3",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/11_offline_old_calls_call_03_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000263_wrist.png",
+          "actual_png_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "record_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "disk_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=21.44999999999899",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 21.44999999999899
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000262_agentview.png",
+          "actual_png_sha256": "e92b77231b25ca52708c1574eeaba1a7537d24c20ac09501941f03861700d1f2",
+          "record_sha256": "e92b77231b25ca52708c1574eeaba1a7537d24c20ac09501941f03861700d1f2",
+          "disk_sha256": "e92b77231b25ca52708c1574eeaba1a7537d24c20ac09501941f03861700d1f2",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=21.44999999999899",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 21.44999999999899
+          }
+        }
+      ],
+      "image_encoder_timestamp": 21.44999999999899,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": null,
+      "speed_matches_source": null,
+      "standard_open_source": null,
+      "measurements": {
+        "timestamp": 21.44999999999899,
+        "stage": "home",
+        "finger_qpos": [
+          0.038728764139988096,
+          -0.03872966395281477
+        ],
+        "max_abs_arm_qvel": 0.005807712812297226,
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": true,
+      "context_source": null
+    },
+    {
+      "kind": "offline_old",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_rack_description/calls/call_01_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_rack_description/calls/call_01_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "391536872d25bd80bb53d355d62970673eb77d32ab81a32f23ef204cd11d6232",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/12_offline_old_calls_call_01_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000002_wrist.png",
+          "actual_png_sha256": "c427acc01165e252ed054b91107daa521a04f3fbe65174394e722db06c88c76a",
+          "record_sha256": "c427acc01165e252ed054b91107daa521a04f3fbe65174394e722db06c88c76a",
+          "disk_sha256": "c427acc01165e252ed054b91107daa521a04f3fbe65174394e722db06c88c76a",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=1.500000000000001",
+          "label_matches": true,
+          "frame": {
+            "timestamp": 1.500000000000001,
+            "view": "wrist",
+            "frame": 0
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000001_agentview.png",
+          "actual_png_sha256": "9c0956f0543add7224aa698e5b8a1d0fcf6d20d2b6518ef44b1fdddaccac6f47",
+          "record_sha256": "9c0956f0543add7224aa698e5b8a1d0fcf6d20d2b6518ef44b1fdddaccac6f47",
+          "disk_sha256": "9c0956f0543add7224aa698e5b8a1d0fcf6d20d2b6518ef44b1fdddaccac6f47",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=1.500000000000001",
+          "label_matches": true,
+          "frame": {
+            "timestamp": 1.500000000000001,
+            "view": "agentview",
+            "frame": 1
+          }
+        }
+      ],
+      "image_encoder_timestamp": 1.500000000000001,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": null,
+      "speed_matches_source": null,
+      "standard_open_source": null,
+      "measurements": {
+        "timestamp": 1.500000000000001,
+        "stage": "executing",
+        "finger_qpos": [
+          0.039044103490947356,
+          -0.03902692813860159
+        ],
+        "max_abs_arm_qvel": 0.28265147215649244,
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": true,
+      "context_source": null
+    },
+    {
+      "kind": "offline_old",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_rack_description/calls/call_02_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_rack_description/calls/call_02_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "597c50234d18bb14c2da3b13a3a256d5f85448be2802454a12d5d517c74e6af7",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/13_offline_old_calls_call_02_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000092_wrist.png",
+          "actual_png_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "record_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "disk_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=8.749999999999591",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 8.749999999999591
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000091_agentview.png",
+          "actual_png_sha256": "0495ff4dd82d3c444ebf504813e299dc3c5ad675ffd8ea07e3c9fa1e9c8c8c33",
+          "record_sha256": "0495ff4dd82d3c444ebf504813e299dc3c5ad675ffd8ea07e3c9fa1e9c8c8c33",
+          "disk_sha256": "0495ff4dd82d3c444ebf504813e299dc3c5ad675ffd8ea07e3c9fa1e9c8c8c33",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=8.749999999999591",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 8.749999999999591
+          }
+        }
+      ],
+      "image_encoder_timestamp": 8.749999999999591,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": null,
+      "speed_matches_source": null,
+      "standard_open_source": null,
+      "measurements": {
+        "timestamp": 8.749999999999591,
+        "stage": "executing",
+        "finger_qpos": [
+          0.020413136182790174,
+          -0.022746974162754025
+        ],
+        "max_abs_arm_qvel": 0.2571237807465888,
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": true,
+      "context_source": null
+    },
+    {
+      "kind": "offline_old",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_rack_description/calls/call_03_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/checker_rack_description/calls/call_03_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "de573da0542a0849e058fef619e86b9ff4736b008aa74ebb61bdc9a4b7928628",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/14_offline_old_calls_call_03_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000263_wrist.png",
+          "actual_png_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "record_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "disk_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=21.44999999999899",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 21.44999999999899
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000262_agentview.png",
+          "actual_png_sha256": "e92b77231b25ca52708c1574eeaba1a7537d24c20ac09501941f03861700d1f2",
+          "record_sha256": "e92b77231b25ca52708c1574eeaba1a7537d24c20ac09501941f03861700d1f2",
+          "disk_sha256": "e92b77231b25ca52708c1574eeaba1a7537d24c20ac09501941f03861700d1f2",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=21.44999999999899",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 21.44999999999899
+          }
+        }
+      ],
+      "image_encoder_timestamp": 21.44999999999899,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": null,
+      "speed_matches_source": null,
+      "standard_open_source": null,
+      "measurements": {
+        "timestamp": 21.44999999999899,
+        "stage": "home",
+        "finger_qpos": [
+          0.038728764139988096,
+          -0.03872966395281477
+        ],
+        "max_abs_arm_qvel": 0.005807712812297226,
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": true,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/model_requests/call_01_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/model_requests/call_01_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "4cc167082aa0c62fa09b4604299d70233a8175c0fe13f7884947882e9b1d0f52",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/15_online_model_requests_call_01_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000092_wrist.png",
+          "actual_png_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "record_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "disk_sha256": "471cc690626b3e4cd7f9005b32c7d8bb6e8d884d3ce845685a768112db4d4331",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=8.749999999999591",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 8.749999999999591
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000093_sideview.png",
+          "actual_png_sha256": "edce5551c106983463f5361c00cfc4f64860b943e59c3c749e2478f19cf4f40a",
+          "record_sha256": "edce5551c106983463f5361c00cfc4f64860b943e59c3c749e2478f19cf4f40a",
+          "disk_sha256": "edce5551c106983463f5361c00cfc4f64860b943e59c3c749e2478f19cf4f40a",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=1; view=sideview; timestamp=8.749999999999591",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "sideview",
+            "timestamp": 8.749999999999591
+          }
+        }
+      ],
+      "image_encoder_timestamp": 8.749999999999591,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 8.749999999999591,
+        "stage": "executing",
+        "finger_qpos": [
+          0.020413136182790174,
+          -0.022746974162754025
+        ],
+        "max_abs_arm_qvel": 0.2571237807465888,
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/model_requests/call_02_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/model_requests/call_02_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "5d55ce10dc7a818b738f3eb58c8ab7dd4db9f11ce8d50b42a96777e57f6ad891",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/16_online_model_requests_call_02_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000263_wrist.png",
+          "actual_png_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "record_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "disk_sha256": "1729b97f2eb974a21e77c80b0309f631e3aa6fb49d09af2b3b0f011274c33dab",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=21.44999999999899",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 21.44999999999899
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v4/wine_bowl_stove/runs/20261012T135129Z_goal_table_4359e1a2/cap_01_wine_to_rack_c51276c4/finish/sensors/cap000264_sideview.png",
+          "actual_png_sha256": "5e95edcbe95ab40ea837bf052b1b3f715ed56823ac90b268361184eb626e6591",
+          "record_sha256": "5e95edcbe95ab40ea837bf052b1b3f715ed56823ac90b268361184eb626e6591",
+          "disk_sha256": "5e95edcbe95ab40ea837bf052b1b3f715ed56823ac90b268361184eb626e6591",
+          "bytes_match": true,
+          "dimensions": [
+            512,
+            512
+          ],
+          "camera_label": "Image frame=1; view=sideview; timestamp=21.44999999999899",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "sideview",
+            "timestamp": 21.44999999999899
+          }
+        }
+      ],
+      "image_encoder_timestamp": 21.44999999999899,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 21.44999999999899,
+        "stage": "home",
+        "finger_qpos": [
+          0.038728764139988096,
+          -0.03872966395281477
+        ],
+        "max_abs_arm_qvel": 0.005807712812297226,
+        "standard_open_finger_qpos": [
+          0.03873057586502897,
+          -0.03872776397868675
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_01_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_01_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "c2b35376c676d6249b43e0d9d553a46ad98490b0c34dc2565a19d5ff2c383f0d",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/17_online_model_requests_call_01_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000092_wrist.png",
+          "actual_png_sha256": "c9d8626fcb39ad1ff62d29919b07b0c1554f163e319c0b9efb1dce3b23faea52",
+          "record_sha256": "c9d8626fcb39ad1ff62d29919b07b0c1554f163e319c0b9efb1dce3b23faea52",
+          "disk_sha256": "c9d8626fcb39ad1ff62d29919b07b0c1554f163e319c0b9efb1dce3b23faea52",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=8.799999999999608",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 8.799999999999608
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000091_agentview.png",
+          "actual_png_sha256": "a429b847dbc8b53762e61d53e2fc45965a4058e528b5f849db0a6508a26ab412",
+          "record_sha256": "a429b847dbc8b53762e61d53e2fc45965a4058e528b5f849db0a6508a26ab412",
+          "disk_sha256": "a429b847dbc8b53762e61d53e2fc45965a4058e528b5f849db0a6508a26ab412",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=8.799999999999608",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 8.799999999999608
+          }
+        }
+      ],
+      "image_encoder_timestamp": 8.799999999999608,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 8.799999999999608,
+        "stage": "executing",
+        "finger_qpos": [
+          0.004469299509724662,
+          -0.004382811557001222
+        ],
+        "max_abs_arm_qvel": 0.49684590497175796,
+        "standard_open_finger_qpos": [
+          0.03872955881216562,
+          -0.038728775049055544
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_02_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_02_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "216894f6dc3869b2f19b7f9995d43eaae014230cc22d8bbf912c511a905257b1",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/18_online_model_requests_call_02_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000185_wrist.png",
+          "actual_png_sha256": "981791add38fb540ecb820bacdade12fd94159dbc8ce61de218da5693b6497b0",
+          "record_sha256": "981791add38fb540ecb820bacdade12fd94159dbc8ce61de218da5693b6497b0",
+          "disk_sha256": "981791add38fb540ecb820bacdade12fd94159dbc8ce61de218da5693b6497b0",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=16.300000000001845",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 16.300000000001845
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000184_agentview.png",
+          "actual_png_sha256": "21fac599ba5d7184ae8917e547d204667909b21fce69256215a2be83f0997e58",
+          "record_sha256": "21fac599ba5d7184ae8917e547d204667909b21fce69256215a2be83f0997e58",
+          "disk_sha256": "21fac599ba5d7184ae8917e547d204667909b21fce69256215a2be83f0997e58",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=16.300000000001845",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 16.300000000001845
+          }
+        }
+      ],
+      "image_encoder_timestamp": 16.300000000001845,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 16.300000000001845,
+        "stage": "executing",
+        "finger_qpos": [
+          0.0397879369268912,
+          -0.039821120224691496
+        ],
+        "max_abs_arm_qvel": 0.05439944874517021,
+        "standard_open_finger_qpos": [
+          0.03872955881216562,
+          -0.038728775049055544
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_03_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_03_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "54ab780c3538481430f974807c9897f69a6cfa12633457366f9776c827975fd4",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/19_online_model_requests_call_03_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000278_wrist.png",
+          "actual_png_sha256": "6f5376894af191bfae3e4abfe6f22dc8e4d1765b26f7adad4abac6282458c2f1",
+          "record_sha256": "6f5376894af191bfae3e4abfe6f22dc8e4d1765b26f7adad4abac6282458c2f1",
+          "disk_sha256": "6f5376894af191bfae3e4abfe6f22dc8e4d1765b26f7adad4abac6282458c2f1",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=23.799999999997688",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 23.799999999997688
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000277_agentview.png",
+          "actual_png_sha256": "cea8c7bdb6232fd14bd8797e35d72a1973be6e00eb0de6c4fc908932cd074e8e",
+          "record_sha256": "cea8c7bdb6232fd14bd8797e35d72a1973be6e00eb0de6c4fc908932cd074e8e",
+          "disk_sha256": "cea8c7bdb6232fd14bd8797e35d72a1973be6e00eb0de6c4fc908932cd074e8e",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=23.799999999997688",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 23.799999999997688
+          }
+        }
+      ],
+      "image_encoder_timestamp": 23.799999999997688,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 23.799999999997688,
+        "stage": "executing",
+        "finger_qpos": [
+          0.03991800723586313,
+          -0.040003555889798065
+        ],
+        "max_abs_arm_qvel": 0.09486495096435765,
+        "standard_open_finger_qpos": [
+          0.03872955881216562,
+          -0.038728775049055544
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_04_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_04_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "447c47579267f31a95a62aa4bee74f06800beb1e206b4af2727a59013954cd15",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/20_online_model_requests_call_04_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000371_wrist.png",
+          "actual_png_sha256": "d61fa6a5498ceca4a09b0da54237a4b5bea3d038de08f6af071b9fda8955f03e",
+          "record_sha256": "d61fa6a5498ceca4a09b0da54237a4b5bea3d038de08f6af071b9fda8955f03e",
+          "disk_sha256": "d61fa6a5498ceca4a09b0da54237a4b5bea3d038de08f6af071b9fda8955f03e",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=31.29999999999353",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 31.29999999999353
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000370_agentview.png",
+          "actual_png_sha256": "755474e0275e45137bd7cbbbf678dcaeab584eaf3156750550b0ef7a32c19f64",
+          "record_sha256": "755474e0275e45137bd7cbbbf678dcaeab584eaf3156750550b0ef7a32c19f64",
+          "disk_sha256": "755474e0275e45137bd7cbbbf678dcaeab584eaf3156750550b0ef7a32c19f64",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=31.29999999999353",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 31.29999999999353
+          }
+        }
+      ],
+      "image_encoder_timestamp": 31.29999999999353,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 31.29999999999353,
+        "stage": "executing",
+        "finger_qpos": [
+          0.039905686885971715,
+          -0.04000380039359066
+        ],
+        "max_abs_arm_qvel": 0.0999944994295119,
+        "standard_open_finger_qpos": [
+          0.03872955881216562,
+          -0.038728775049055544
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_05_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_05_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "798d8cc293a70e2652fa688e6c687e86bbf43f45a4670261f4340389b602c1d6",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/21_online_model_requests_call_05_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000464_wrist.png",
+          "actual_png_sha256": "200b666f7bc4f5745271ca3ff9ac13d1beb322462bdddf138436c8bfb40fa027",
+          "record_sha256": "200b666f7bc4f5745271ca3ff9ac13d1beb322462bdddf138436c8bfb40fa027",
+          "disk_sha256": "200b666f7bc4f5745271ca3ff9ac13d1beb322462bdddf138436c8bfb40fa027",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=38.800000000001454",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 38.800000000001454
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000463_agentview.png",
+          "actual_png_sha256": "ba898b5b96a2bbb4836f38e7ad57e55eea5ced0d8659eac04298c4b6befe18bf",
+          "record_sha256": "ba898b5b96a2bbb4836f38e7ad57e55eea5ced0d8659eac04298c4b6befe18bf",
+          "disk_sha256": "ba898b5b96a2bbb4836f38e7ad57e55eea5ced0d8659eac04298c4b6befe18bf",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=38.800000000001454",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 38.800000000001454
+          }
+        }
+      ],
+      "image_encoder_timestamp": 38.800000000001454,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 38.800000000001454,
+        "stage": "executing",
+        "finger_qpos": [
+          0.03990108907205989,
+          -0.040003960039179026
+        ],
+        "max_abs_arm_qvel": 0.1319571075926711,
+        "standard_open_finger_qpos": [
+          0.03872955881216562,
+          -0.038728775049055544
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_06_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/model_requests/call_06_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "9ca4c3b972614d793a58430f71ad11968c437e9945637d5847758f3320cd6b0a",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/22_online_model_requests_call_06_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000647_wrist.png",
+          "actual_png_sha256": "d0924104fcb170a31c9d4c4c23f16426b800c1181fe85ed103c7b3f6ffb5757b",
+          "record_sha256": "d0924104fcb170a31c9d4c4c23f16426b800c1181fe85ed103c7b3f6ffb5757b",
+          "disk_sha256": "d0924104fcb170a31c9d4c4c23f16426b800c1181fe85ed103c7b3f6ffb5757b",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=49.90000000001502",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 49.90000000001502
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/basket_two/runs/20261012T141538Z_basket_two_b5fdc461/cap_01_soup_to_basket_c2e42f33/finish/sensors/cap000646_agentview.png",
+          "actual_png_sha256": "8bf3109b9ae8c7f08e9dcfa9983363486fb218b7b90196fb0a5526d4bd69e91b",
+          "record_sha256": "8bf3109b9ae8c7f08e9dcfa9983363486fb218b7b90196fb0a5526d4bd69e91b",
+          "disk_sha256": "8bf3109b9ae8c7f08e9dcfa9983363486fb218b7b90196fb0a5526d4bd69e91b",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=49.90000000001502",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 49.90000000001502
+          }
+        }
+      ],
+      "image_encoder_timestamp": 49.90000000001502,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 49.90000000001502,
+        "stage": "home",
+        "finger_qpos": [
+          0.03867563158853928,
+          -0.03878286280924501
+        ],
+        "max_abs_arm_qvel": 0.0056082910056190404,
+        "standard_open_finger_qpos": [
+          0.03872955881216562,
+          -0.038728775049055544
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/model_requests/call_01_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/model_requests/call_01_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "8d5890ed9004db13c1aac4dbb2c3be5266873fd952c3f7d2009ae14b247273d6",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/23_online_model_requests_call_01_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000092_wrist.png",
+          "actual_png_sha256": "971b6e5f793ced33af275c8cf1c50bd77b96a09aa0f526918d243e2c3a22054e",
+          "record_sha256": "971b6e5f793ced33af275c8cf1c50bd77b96a09aa0f526918d243e2c3a22054e",
+          "disk_sha256": "971b6e5f793ced33af275c8cf1c50bd77b96a09aa0f526918d243e2c3a22054e",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=8.249999999999424",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 8.249999999999424
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000091_agentview.png",
+          "actual_png_sha256": "90ad882725af979893d0ce6b9e831766ab60cb208e8685c5e9d82cd541fd0652",
+          "record_sha256": "90ad882725af979893d0ce6b9e831766ab60cb208e8685c5e9d82cd541fd0652",
+          "disk_sha256": "90ad882725af979893d0ce6b9e831766ab60cb208e8685c5e9d82cd541fd0652",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=8.249999999999424",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 8.249999999999424
+          }
+        }
+      ],
+      "image_encoder_timestamp": 8.249999999999424,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 8.249999999999424,
+        "stage": "executing",
+        "finger_qpos": [
+          0.009944356060390446,
+          -0.009741747397817954
+        ],
+        "max_abs_arm_qvel": 0.22488089708832662,
+        "standard_open_finger_qpos": [
+          0.038728906188908195,
+          -0.0387294158813959
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/model_requests/call_02_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/model_requests/call_02_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "3572e430c853798030c0bbe2f1440851a6b532a2625d04f32675c294c809dac0",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/24_online_model_requests_call_02_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000185_wrist.png",
+          "actual_png_sha256": "f6629249b9e446d0d33729c6d216f4adf628c9eb28a1bf826d0a94d95ec8c700",
+          "record_sha256": "f6629249b9e446d0d33729c6d216f4adf628c9eb28a1bf826d0a94d95ec8c700",
+          "disk_sha256": "f6629249b9e446d0d33729c6d216f4adf628c9eb28a1bf826d0a94d95ec8c700",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=15.75000000000193",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 15.75000000000193
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000184_agentview.png",
+          "actual_png_sha256": "d14f6d5b98db80421d657472b5bc057833b067e011f20748a7953f2eb891af71",
+          "record_sha256": "d14f6d5b98db80421d657472b5bc057833b067e011f20748a7953f2eb891af71",
+          "disk_sha256": "d14f6d5b98db80421d657472b5bc057833b067e011f20748a7953f2eb891af71",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=15.75000000000193",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 15.75000000000193
+          }
+        }
+      ],
+      "image_encoder_timestamp": 15.75000000000193,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 15.75000000000193,
+        "stage": "executing",
+        "finger_qpos": [
+          0.04000986633782769,
+          -0.016717303603985267
+        ],
+        "max_abs_arm_qvel": 0.15048952336286345,
+        "standard_open_finger_qpos": [
+          0.038728906188908195,
+          -0.0387294158813959
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/model_requests/call_03_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/model_requests/call_03_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "131ec436b3671639e6556909202d102756ffce4c088d8fda4a334d7e32c3fb85",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/25_online_model_requests_call_03_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000278_wrist.png",
+          "actual_png_sha256": "fb10682344dc0fb336be49f0c4f3b633f382e3e28984a4c2ff49c536b589b671",
+          "record_sha256": "fb10682344dc0fb336be49f0c4f3b633f382e3e28984a4c2ff49c536b589b671",
+          "disk_sha256": "fb10682344dc0fb336be49f0c4f3b633f382e3e28984a4c2ff49c536b589b671",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=23.249999999997993",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 23.249999999997993
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000277_agentview.png",
+          "actual_png_sha256": "92721baac71e74c871b22dd8b91a5980be1b6cc5f4f88c9cab70cf3f356cd27f",
+          "record_sha256": "92721baac71e74c871b22dd8b91a5980be1b6cc5f4f88c9cab70cf3f356cd27f",
+          "disk_sha256": "92721baac71e74c871b22dd8b91a5980be1b6cc5f4f88c9cab70cf3f356cd27f",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=23.249999999997993",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 23.249999999997993
+          }
+        }
+      ],
+      "image_encoder_timestamp": 23.249999999997993,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 23.249999999997993,
+        "stage": "executing",
+        "finger_qpos": [
+          0.04001484365367701,
+          -0.03354615808793822
+        ],
+        "max_abs_arm_qvel": 0.059526510574641096,
+        "standard_open_finger_qpos": [
+          0.038728906188908195,
+          -0.0387294158813959
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/model_requests/call_04_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/model_requests/call_04_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "0f30e589ce3b792b042797b74da1a4775df2a918cdd14c1ad65f91ca521e1a62",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/26_online_model_requests_call_04_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000371_wrist.png",
+          "actual_png_sha256": "b1541f1e4cec3a4b925afac5d64fbf4490641df1b3701f4723793ce8df419db5",
+          "record_sha256": "b1541f1e4cec3a4b925afac5d64fbf4490641df1b3701f4723793ce8df419db5",
+          "disk_sha256": "b1541f1e4cec3a4b925afac5d64fbf4490641df1b3701f4723793ce8df419db5",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=30.749999999993836",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 30.749999999993836
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000370_agentview.png",
+          "actual_png_sha256": "57bfefbd45c00b69c8c1a5a72164e3dc5f2bffbf3097c7973f1b59c38c553684",
+          "record_sha256": "57bfefbd45c00b69c8c1a5a72164e3dc5f2bffbf3097c7973f1b59c38c553684",
+          "disk_sha256": "57bfefbd45c00b69c8c1a5a72164e3dc5f2bffbf3097c7973f1b59c38c553684",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=30.749999999993836",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 30.749999999993836
+          }
+        }
+      ],
+      "image_encoder_timestamp": 30.749999999993836,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 30.749999999993836,
+        "stage": "executing",
+        "finger_qpos": [
+          0.04001347391784481,
+          -0.03958269867933557
+        ],
+        "max_abs_arm_qvel": 0.10717186605458245,
+        "standard_open_finger_qpos": [
+          0.038728906188908195,
+          -0.0387294158813959
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/model_requests/call_05_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/model_requests/call_05_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "5ed34f485e5a1e93a14f0673d7fe534c8aa1cf9ca2ed1abd3fe65fdde083b6fe",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/27_online_model_requests_call_05_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000464_wrist.png",
+          "actual_png_sha256": "550997cb0045a237d9a4569e5277aa0b5e743f4c627422681e06eb5188fded2b",
+          "record_sha256": "550997cb0045a237d9a4569e5277aa0b5e743f4c627422681e06eb5188fded2b",
+          "disk_sha256": "550997cb0045a237d9a4569e5277aa0b5e743f4c627422681e06eb5188fded2b",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=38.25000000000078",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 38.25000000000078
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/finish/sensors/cap000463_agentview.png",
+          "actual_png_sha256": "c38f7b2924b8329fc9468ffa675c59353fe09a7cf9362eb4cedcabf63d2ea407",
+          "record_sha256": "c38f7b2924b8329fc9468ffa675c59353fe09a7cf9362eb4cedcabf63d2ea407",
+          "disk_sha256": "c38f7b2924b8329fc9468ffa675c59353fe09a7cf9362eb4cedcabf63d2ea407",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=38.25000000000078",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 38.25000000000078
+          }
+        }
+      ],
+      "image_encoder_timestamp": 38.25000000000078,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 38.25000000000078,
+        "stage": "executing",
+        "finger_qpos": [
+          0.04001115136044819,
+          -0.040172875616659436
+        ],
+        "max_abs_arm_qvel": 0.04484591435801457,
+        "standard_open_finger_qpos": [
+          0.038728906188908195,
+          -0.0387294158813959
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/model_requests/call_01_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/model_requests/call_01_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "41fd4353522dcce7be8ab83b53c9f90427cb1774ff7e3dbf1acf76e031b94f81",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/28_online_model_requests_call_01_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000092_wrist.png",
+          "actual_png_sha256": "c63b7ab014e282832235ef97a3e4bec8047afaa29dc62b6835511355bbcc16a2",
+          "record_sha256": "c63b7ab014e282832235ef97a3e4bec8047afaa29dc62b6835511355bbcc16a2",
+          "disk_sha256": "c63b7ab014e282832235ef97a3e4bec8047afaa29dc62b6835511355bbcc16a2",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=8.249999999999424",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 8.249999999999424
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000091_agentview.png",
+          "actual_png_sha256": "946030a1af72d3404725f81a8e63643f31f5a81dd5c591d5c16fe4c73fa9a613",
+          "record_sha256": "946030a1af72d3404725f81a8e63643f31f5a81dd5c591d5c16fe4c73fa9a613",
+          "disk_sha256": "946030a1af72d3404725f81a8e63643f31f5a81dd5c591d5c16fe4c73fa9a613",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=8.249999999999424",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 8.249999999999424
+          }
+        }
+      ],
+      "image_encoder_timestamp": 8.249999999999424,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 8.249999999999424,
+        "stage": "executing",
+        "finger_qpos": [
+          0.03980035651173289,
+          -0.039837127986596124
+        ],
+        "max_abs_arm_qvel": 0.17386234532660225,
+        "standard_open_finger_qpos": [
+          0.03873062763389544,
+          -0.03872769533488731
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/model_requests/call_02_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/model_requests/call_02_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "a07ccbde2ce626dbab5f6bb203dc4469952879cb207f8b4234e462ad5b2981ae",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/29_online_model_requests_call_02_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000185_wrist.png",
+          "actual_png_sha256": "ab627aaf166a29674aac74be08e5636a64d7c9021928ffbab2f2b22c1db8de65",
+          "record_sha256": "ab627aaf166a29674aac74be08e5636a64d7c9021928ffbab2f2b22c1db8de65",
+          "disk_sha256": "ab627aaf166a29674aac74be08e5636a64d7c9021928ffbab2f2b22c1db8de65",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=15.75000000000193",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 15.75000000000193
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000184_agentview.png",
+          "actual_png_sha256": "2bd1ae2ad9a4d4aa8eb0d7539c59963bcaffa32c30dab6c6142de76253fc2fd9",
+          "record_sha256": "2bd1ae2ad9a4d4aa8eb0d7539c59963bcaffa32c30dab6c6142de76253fc2fd9",
+          "disk_sha256": "2bd1ae2ad9a4d4aa8eb0d7539c59963bcaffa32c30dab6c6142de76253fc2fd9",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=15.75000000000193",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 15.75000000000193
+          }
+        }
+      ],
+      "image_encoder_timestamp": 15.75000000000193,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 15.75000000000193,
+        "stage": "executing",
+        "finger_qpos": [
+          0.03997550932214479,
+          -0.040001078228240915
+        ],
+        "max_abs_arm_qvel": 0.041098793403218474,
+        "standard_open_finger_qpos": [
+          0.03873062763389544,
+          -0.03872769533488731
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/model_requests/call_03_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/model_requests/call_03_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "99e22aaca76a7c9559bc6a0635eaa7a2c0fda25644d959ef516ffcea355d594e",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/30_online_model_requests_call_03_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000278_wrist.png",
+          "actual_png_sha256": "8b1bbb228a2eaefc114e3dbdce2667f322663b4bcd6412c8d2684113ca9733ae",
+          "record_sha256": "8b1bbb228a2eaefc114e3dbdce2667f322663b4bcd6412c8d2684113ca9733ae",
+          "disk_sha256": "8b1bbb228a2eaefc114e3dbdce2667f322663b4bcd6412c8d2684113ca9733ae",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=23.249999999997993",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 23.249999999997993
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000277_agentview.png",
+          "actual_png_sha256": "c23939595583e8e672124e95d45d7905320f14dc157fd06e5bcab2e18a4d4a69",
+          "record_sha256": "c23939595583e8e672124e95d45d7905320f14dc157fd06e5bcab2e18a4d4a69",
+          "disk_sha256": "c23939595583e8e672124e95d45d7905320f14dc157fd06e5bcab2e18a4d4a69",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=23.249999999997993",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 23.249999999997993
+          }
+        }
+      ],
+      "image_encoder_timestamp": 23.249999999997993,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 23.249999999997993,
+        "stage": "executing",
+        "finger_qpos": [
+          0.039979412965796185,
+          -0.04000085986736308
+        ],
+        "max_abs_arm_qvel": 0.05489095300859802,
+        "standard_open_finger_qpos": [
+          0.03873062763389544,
+          -0.03872769533488731
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/model_requests/call_04_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/model_requests/call_04_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "e290b9c8351019f52af03d9e8dd3064a2d0a9b3a2a0f9271493ba95fbc5a9c82",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/31_online_model_requests_call_04_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000371_wrist.png",
+          "actual_png_sha256": "e60906f4fd84b75754afcec053438d0708ada4d442bbe840b9940a0b9c29a382",
+          "record_sha256": "e60906f4fd84b75754afcec053438d0708ada4d442bbe840b9940a0b9c29a382",
+          "disk_sha256": "e60906f4fd84b75754afcec053438d0708ada4d442bbe840b9940a0b9c29a382",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=30.749999999993836",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 30.749999999993836
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000370_agentview.png",
+          "actual_png_sha256": "1cfcfd0b35629fa0d474fd5a3a7ccd4da8cc500b72513bd4c932bdee337704ee",
+          "record_sha256": "1cfcfd0b35629fa0d474fd5a3a7ccd4da8cc500b72513bd4c932bdee337704ee",
+          "disk_sha256": "1cfcfd0b35629fa0d474fd5a3a7ccd4da8cc500b72513bd4c932bdee337704ee",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=30.749999999993836",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 30.749999999993836
+          }
+        }
+      ],
+      "image_encoder_timestamp": 30.749999999993836,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 30.749999999993836,
+        "stage": "executing",
+        "finger_qpos": [
+          0.03996258859396726,
+          -0.040001518478227055
+        ],
+        "max_abs_arm_qvel": 0.053461865542925806,
+        "standard_open_finger_qpos": [
+          0.03873062763389544,
+          -0.03872769533488731
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    },
+    {
+      "kind": "online",
+      "request_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/model_requests/call_05_request.json",
+      "response_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/model_requests/call_05_response.json",
+      "body_sha_matches": true,
+      "body_sha256": "4c9cf47118e317ce2638c11a25c37ae1809362f5970372f5f1e3a9b399c0a2e5",
+      "prompt_exact": true,
+      "prompt_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-input-audit/actual_prompts/32_online_model_requests_call_05_request.txt",
+      "message_count": 1,
+      "prior_assistant_messages": false,
+      "images": [
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000464_wrist.png",
+          "actual_png_sha256": "5c8a7e9758df208a8959efd57c0ce91c233bc5470b929241605838777807123d",
+          "record_sha256": "5c8a7e9758df208a8959efd57c0ce91c233bc5470b929241605838777807123d",
+          "disk_sha256": "5c8a7e9758df208a8959efd57c0ce91c233bc5470b929241605838777807123d",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=0; view=wrist; timestamp=38.25000000000078",
+          "label_matches": true,
+          "frame": {
+            "frame": 0,
+            "view": "wrist",
+            "timestamp": 38.25000000000078
+          }
+        },
+        {
+          "path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/mugs_two/runs/20261012T142339Z_mugs_two_56230ab5/cap_01_white_mug_left_d507c75a/finish/sensors/cap000463_agentview.png",
+          "actual_png_sha256": "5a305b2f7da78da1acd93f9b2f9510096ebaa9d835c7e4640867e874c6d8d0e5",
+          "record_sha256": "5a305b2f7da78da1acd93f9b2f9510096ebaa9d835c7e4640867e874c6d8d0e5",
+          "disk_sha256": "5a305b2f7da78da1acd93f9b2f9510096ebaa9d835c7e4640867e874c6d8d0e5",
+          "bytes_match": true,
+          "dimensions": [
+            256,
+            256
+          ],
+          "camera_label": "Image frame=1; view=agentview; timestamp=38.25000000000078",
+          "label_matches": true,
+          "frame": {
+            "frame": 1,
+            "view": "agentview",
+            "timestamp": 38.25000000000078
+          }
+        }
+      ],
+      "image_encoder_timestamp": 38.25000000000078,
+      "timestamps_exact": true,
+      "encoder_finger_matches_source": true,
+      "speed_matches_source": true,
+      "standard_open_source": "original checks.ctx actuator_measurements.standard_open_finger_qpos",
+      "measurements": {
+        "timestamp": 38.25000000000078,
+        "stage": "executing",
+        "finger_qpos": [
+          0.039964305738151774,
+          -0.04000143878054754
+        ],
+        "max_abs_arm_qvel": 0.05181123556590959,
+        "standard_open_finger_qpos": [
+          0.03873062763389544,
+          -0.03872769533488731
+        ]
+      },
+      "input_json_fields": [
+        "actuator_measurements",
+        "at_standard_open",
+        "current_subtask",
+        "description",
+        "desired_state",
+        "finger_qpos",
+        "frame",
+        "max_standard_open_error_mm",
+        "operation",
+        "position_unit",
+        "sensor_frames",
+        "standard_open_finger_qpos",
+        "standard_open_tolerance_m",
+        "timestamp",
+        "user_request",
+        "view"
+      ],
+      "full_chain_user_request_sent": true,
+      "risk_fields": [],
+      "serialized_input_matches": true,
+      "feedback_source_unknown": false,
+      "context_source": null
+    }
+  ],
+  "limits": [
+    "Historical bytes match establishes local input provenance only; provider internal image processing and model error causes remain unknown.",
+    "Old offline source feedback provenance not inferred from filename; missing source audit remains unknown."
+  ]
+}

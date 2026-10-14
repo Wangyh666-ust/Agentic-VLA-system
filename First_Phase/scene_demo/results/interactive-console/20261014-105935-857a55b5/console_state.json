@@ -1,0 +1,1070 @@
+{
+  "mode": "live",
+  "stage": "blocked",
+  "request": "请帮我把书和杯子整理一下，放好",
+  "scene": "book_caddy",
+  "request_id": "console-fb54c5c61bcc7a69ca3a3a05",
+  "events": [
+    {
+      "time": "10:59:35",
+      "text": "正在载入场景并拍摄三视图；不启动模型、不执行任务。"
+    },
+    {
+      "time": "10:59:43",
+      "text": "三视图已就绪。请先看看场景，再在下方填写你想做的任务。"
+    },
+    {
+      "time": "11:00:48",
+      "text": "核对实验历史与本次范围（首次读取证据可能需要数分钟）。"
+    },
+    {
+      "time": "11:04:47",
+      "text": "正在加载 X-VLA；尚未创建场景。"
+    },
+    {
+      "time": "11:05:06",
+      "text": "任务已提交，开始三视图联合识别与复核；此阶段不执行任务动作。"
+    },
+    {
+      "time": "11:07:52",
+      "text": "Hermes 正在查看三视图与物品记录，选择动作；提交的计划只保存为草稿。"
+    },
+    {
+      "time": "11:10:05",
+      "text": "规划完成，尚未执行。请核对目标与能力范围，再点击执行。"
+    },
+    {
+      "time": "11:36:33",
+      "text": "用户已确认，正在将同一计划交给原 X-VLA 流程。"
+    },
+    {
+      "time": "11:41:22",
+      "text": "流程被检查器或复位验收阻断。"
+    }
+  ],
+  "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-105935-857a55b5",
+  "message": "流程被检查器或复位验收阻断。",
+  "session_id": "274c55f358ff4a91a887359c392d7ad4",
+  "capabilities": [
+    {
+      "instruction": "put the book in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "atomic_candidate",
+      "audit_only": false,
+      "exclusive_target": true,
+      "object_id": "black_book_1",
+      "target_id": "desk_caddy_1_back_contain_region",
+      "evidence": "Candidate atomic prompt; untested integration, not evidence of native single-task training",
+      "capability_id": "xvla_t05_book_to_caddy"
+    },
+    {
+      "instruction": "pick up the book and place it in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 5
+      },
+      "component_capability_ids": [
+        "xvla_t05_book_to_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_book_caddy"
+    }
+  ],
+  "frames": [
+    {
+      "view": "wrist",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/planning_grounding/cap000002_wrist.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "agentview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "sideview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "timestamp": 0.5000000000000003
+    }
+  ],
+  "preview_only": false,
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "圆柱形马克杯，灰白色杯身，黄色侧把手，杯口敞开、内壁浅色偏黄；初始直立于桌面中部，收纳盒右前方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              365,
+              30,
+              675,
+              295
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              497,
+              487,
+              597,
+              584
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              418,
+              498,
+              513,
+              597
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视近距离俯看杯口，见圆形杯口、浅色内壁与右侧黄色把手"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "主视见灰白杯身与黄色把手，直立于桌面，把手朝左"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视见同杯，黄色把手与浅色内壁对应一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "黑色封面书本，顶缘/侧缘可见白色书页线，呈立放状态；初始位于杯子旁（杯子的左后方/右侧随视角变化）",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              255,
+              320,
+              540
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              565,
+              393,
+              602,
+              502
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              568,
+              495,
+              668,
+              605
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视左侧见倾斜黑色块体，边缘露白色书页，为立放书的近景"
+          },
+          {
+            "frame": 1,
+            "visibility": "partial",
+            "reason": "主视中书立于杯后，仅露黑色窄侧边与顶部书页线，下部被杯遮挡"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视见黑色封面立放书，顶缘白色书页清晰，位置与杯相邻吻合"
+          }
+        ],
+        "confusable_with": [
+          "obj_4"
+        ],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "红棕色长方形收纳盒（桌面容器），顶部开放并带多个可见隔间（约三格），无文字标识；初始位于桌面靠机器人一侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              320,
+              600,
+              1000,
+              840
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              150,
+              350,
+              485,
+              602
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              378,
+              300,
+              665,
+              508
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视下缘仅见收纳盒顶部与隔间开口，盒身被画面裁切"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "主视完整见红棕色盒体与三个空隔间"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视见同一多隔间盒体，颜色与结构一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "黑色平贴桌面的长方形薄板/垫状物，无厚度感、无书页边；主视中位于桌面右侧，侧视中位于桌面左中（同一块），侧视右下另见同类第二块黑板",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              795,
+              378,
+              998,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              0,
+              378,
+              205,
+              510
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视朝向桌面中部，该黑板位于视场之外"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "主视右侧见平贴桌面的黑色长方形，无立放厚度"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视左中黑板与主视右侧黑板为桌面同一固定标记，位置对应；右下另有一块同类黑板（未单列）"
+          }
+        ],
+        "confusable_with": [
+          "obj_2"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_5",
+        "description": "黑色台灯装置：黑色圆罩灯头加斜向长支撑臂，跨于桌面前上方，为固定装置非操作对象",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              0,
+              0,
+              950,
+              995
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视贴近桌面，灯臂未入镜"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "主视见黑色灯罩与斜穿画面的支撑臂及左下关节/底座"
+          },
+          {
+            "frame": 2,
+            "visibility": "occluded",
+            "reason": "侧视角度下台灯位于视场外"
+          }
+        ],
+        "confusable_with": [
+          "obj_2"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_6",
+        "description": "灰白色多关节机器人臂，带黑色关节盖，固定于桌后基座，为背景装置",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              180,
+              0,
+              530,
+              400
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              485,
+              0,
+              820,
+              400
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视即来自该臂末端，臂身不入镜"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "主视背景见灰白臂段与黑色关节顶盖"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视见同一机器人臂与基座，形态一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      }
+    ],
+    "coverage": {
+      "targets_identifiable": true,
+      "destination_visible": true,
+      "state_change_visible": false,
+      "reason": "书(obj_2)与杯子(obj_1)在三帧中均至少两帧清晰可见且跨视角特征一致；收纳盒(obj_3)在主视与侧视完整可见、腕视部分可见，可作为放置目的地；三帧均为同一初始时刻(0.5s)的同步视角，未包含整理动作前后对比，故状态变化不可见"
+    },
+    "corrections": [
+      "复核obj_1各帧框：frame0框含杯身与黄色把手、frame1/2框含杯身与把手，框内确有杯子，保留",
+      "复核obj_2：frame1中[565,393,602,502]为杯后立放黑书的窄侧边（顶部见书页线），非空桌面；frame0/2框内均为带白页边的黑书，跨视角对应一致，保留",
+      "复核obj_3：三帧框内均为红棕色多隔间收纳盒实体，frame0仅顶部入镜属部分可见，保留",
+      "修订obj_4描述：初稿称侧视'两块同类黑板分居左中与右下'易致重复计数；核对后左中黑板[0,378,205,510]与主视右侧黑板[795,378,998,510]为桌面同一固定标记（相对收纳盒/杯的位置一致），右下[约710,795,1000,995]为第二块同类黑板，未单列对象；obj_4仍指代该主标记，confirmed维持true",
+      "复核obj_5：frame1框[0,0,950,995]覆盖灯罩、斜臂与左下关节底座，确为台灯装置而非书或黑板；frame0/2确在视场外，保留",
+      "复核obj_6：frame1/2框内均为灰白机器人臂与黑色关节盖，非目标物，保留",
+      "全表无同一实物重复编号：obj_2(立放书)与obj_4(平贴黑板)经厚度/书页边特征区分，未合并也未重复"
+    ],
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ],
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/planning_grounding/cap000002_wrist.png",
+        "sha256": "403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45"
+      }
+    ]
+  },
+  "draft": {
+    "request_id": "console-fb54c5c61bcc7a69ca3a3a05",
+    "session_id": "274c55f358ff4a91a887359c392d7ad4",
+    "scene_version": 0,
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_book_caddy"
+    ],
+    "rationale": "用户动作词为「整理一下，放好」，属收纳意图。公开 storage_policy 仅规定 black_book_1 → desk_caddy_1_back_contain_region，故可执行部分为把立放黑书(obj_2)放入红棕收纳盒(obj_3)的后隔间；该范围的动作、物体、目的地与顺序完全匹配原生长程技能 xvla_book_caddy（pick up the book and place it in the back compartment of the caddy），故优先调用该 native 技能而非 atomic candidate。杯子(obj_1)在公开 storage_policy 中无目的地、能力库中也无杯子相关能力，该部分不执行、不臆造目的地。身份核对：obj_2 为带白页边的立放黑书（非平贴黑板 obj_4），obj_3 为三隔间收纳盒。",
+    "request_scope": {
+      "coverage": "partial",
+      "executable_outcomes": [
+        "黑书 obj_2 被拿起并放入收纳盒 obj_3 的后隔间 desk_caddy_1_back_contain_region（对应公开 storage_policy 中 black_book_1 的目的地）"
+      ],
+      "unmet_outcomes": [
+        "杯子 obj_1 的整理/放好：公开 storage_policy 未给杯子指定目的地，能力库也没有任何杯子相关能力，本场景无法执行该部分"
+      ],
+      "reason": "原需求含书与杯子两个收纳子目标；书的目标与公开 storage_policy 及 native 技能 xvla_book_caddy 完全匹配，可执行；杯子缺少公开目的地与对应能力，属能力缺口，故为 partial 而非 full。"
+    },
+    "target_bindings": {
+      "black_book_1": "obj_2",
+      "desk_caddy_1_back_contain_region": "obj_3"
+    },
+    "audit": false,
+    "budget_per_subgoal": 900
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "console-fb54c5c61bcc7a69ca3a3a05",
+    "session_id": "274c55f358ff4a91a887359c392d7ad4",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_book_caddy"
+    ],
+    "original_capability_ids": [
+      "xvla_book_caddy"
+    ],
+    "rationale": "用户动作词为「整理一下，放好」，属收纳意图。公开 storage_policy 仅规定 black_book_1 → desk_caddy_1_back_contain_region，故可执行部分为把立放黑书(obj_2)放入红棕收纳盒(obj_3)的后隔间；该范围的动作、物体、目的地与顺序完全匹配原生长程技能 xvla_book_caddy（pick up the book and place it in the back compartment of the caddy），故优先调用该 native 技能而非 atomic candidate。杯子(obj_1)在公开 storage_policy 中无目的地、能力库中也无杯子相关能力，该部分不执行、不臆造目的地。身份核对：obj_2 为带白页边的立放黑书（非平贴黑板 obj_4），obj_3 为三隔间收纳盒。",
+    "request_scope": {
+      "coverage": "partial",
+      "executable_outcomes": [
+        "黑书 obj_2 被拿起并放入收纳盒 obj_3 的后隔间 desk_caddy_1_back_contain_region（对应公开 storage_policy 中 black_book_1 的目的地）"
+      ],
+      "unmet_outcomes": [
+        "杯子 obj_1 的整理/放好：公开 storage_policy 未给杯子指定目的地，能力库也没有任何杯子相关能力，本场景无法执行该部分"
+      ],
+      "reason": "原需求含书与杯子两个收纳子目标；书的目标与公开 storage_policy 及 native 技能 xvla_book_caddy 完全匹配，可执行；杯子缺少公开目的地与对应能力，属能力缺口，故为 partial 而非 full。"
+    },
+    "request_fulfilled": false,
+    "target_bindings": {
+      "black_book_1": "obj_2",
+      "desk_caddy_1_back_contain_region": "obj_3"
+    },
+    "job_ids": [
+      "b6725ed9eec64ecc92206ce201fa8136"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "independent_finish_failed",
+    "repair_history": [],
+    "scene_version": 1,
+    "native_skill_route": {
+      "requested_capability_ids": [
+        "xvla_book_caddy"
+      ],
+      "executed_capability_ids": [
+        "xvla_book_caddy"
+      ],
+      "replacements": []
+    }
+  },
+  "jobs": [
+    {
+      "job_id": "b6725ed9eec64ecc92206ce201fa8136",
+      "request_id": "console-fb54c5c61bcc7a69ca3a3a05",
+      "session_id": "274c55f358ff4a91a887359c392d7ad4",
+      "capability_id": "xvla_book_caddy",
+      "state": "completed",
+      "steps": 150,
+      "total_steps": 445,
+      "success": false,
+      "ended_reason": "independent_finish_failed",
+      "error": null,
+      "instruction": "pick up the book and place it in the back compartment of the caddy",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "69aca49369432d7c4000ef79b8e4336d3b6a1eaf75641b85eb66b9e8a23d1fdb",
+      "state_after_sha": "a8b98e1333a763dc39ee139015e413e410df537010126c49f3a0368d62804a57",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "holding_target_outside_goal",
+      "held_objects": [
+        "black_book_1"
+      ],
+      "grasp_observation_complete": true,
+      "completion_ready": false,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 3,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 9,
+          "movement": 135,
+          "confirm": 5,
+          "home": 141
+        },
+        "last_decision": {
+          "state": "complete",
+          "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "independent_finish_failed",
+          "checks": 2
+        },
+        "independent_streak": 0,
+        "current_view_calls": 2,
+        "release_evidence_calls": 1,
+        "release_events": 1,
+        "process_evidence": [
+          {
+            "proof_id": "eefb0099632f104c/review_00002/goal_0",
+            "goal_key": "[\"black_book_1\", \"in\", \"desk_caddy_1_back_contain_region\", false]",
+            "target_id": "black_book_1",
+            "destination_id": "desk_caddy_1_back_contain_region",
+            "capture_id": "eefb0099632f104c/capture_000033",
+            "observed_at": 8.649999999999558,
+            "reviewed_at": 8.649999999999558,
+            "review_id": "eefb0099632f104c/review_00002",
+            "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/release_0001",
+            "status": "confirmed",
+            "kind": "historical_review",
+            "supersedes_review_id": null,
+            "evidence": [
+              {
+                "capture_id": "eefb0099632f104c/capture_000033",
+                "view": "agentview",
+                "box": [
+                  325,
+                  450,
+                  440,
+                  550
+                ]
+              },
+              {
+                "capture_id": "eefb0099632f104c/capture_000033",
+                "view": "sideview",
+                "box": [
+                  420,
+                  420,
+                  480,
+                  520
+                ]
+              }
+            ],
+            "identity_refs": [
+              {
+                "capture_id": "eefb0099632f104c/capture_000001",
+                "view": "wrist",
+                "box": [
+                  0,
+                  255,
+                  320,
+                  540
+                ]
+              }
+            ],
+            "comparison": "初态书本在capture_000033中位于收纳盒后部隔间（frame 7/8），与初态特征一致；当前图确认书本仍在目的地且受支撑，历史放置证据有效",
+            "source_sha256": [
+              "2b8491e7fc721320718b119c2acc62bb800bbc67a17f6d80c8bb65c5619af5d7",
+              "15e4dfc32b49b71262a7c062a330940febbaa7ddd9001eb36bfa8e22558a3702",
+              "d8142271e19a579353c7bd10291339d65f6761a6f380f25141589f129d5f5c67"
+            ],
+            "encoder": {
+              "timestamp": 8.649999999999558,
+              "finger_qpos": [
+                0.03710453949337623,
+                -0.0378039904542922
+              ],
+              "standard_open_finger_qpos": [
+                0.03873169905567224,
+                -0.038726646754486296
+              ],
+              "position_unit": "m",
+              "standard_open_tolerance_m": 0.002,
+              "max_standard_open_error_mm": 1.6271595622960113,
+              "at_standard_open": true
+            },
+            "request_sha256": "50f61d8ad7da78942008e472cb11ebb45d1ace62eac958fe5ee3b1dda5a5d545",
+            "response_sha256": "fb74a069b49b1f34e9f3e89474da4f4eafffacf0eda5a3b387dfe9e7e0228c29"
+          }
+        ],
+        "actual_visual_requests": 4
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/rollout.mp4",
+      "wall_s": 226.19
+    }
+  ],
+  "evidence": [
+    {
+      "capability": "xvla_book_caddy",
+      "event": {
+        "event_id": "release_0001",
+        "capture": {
+          "timestamp": 8.649999999999558,
+          "frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000103_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000103_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.4586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000104_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000104_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -0.9449408433095668,
+                  0.09080719351279652,
+                  -0.31438965671875096,
+                  -0.33303640474834284
+                ],
+                [
+                  0.041193017062053736,
+                  0.9860930135037591,
+                  0.16100839749652945,
+                  -0.2232342486965578
+                ],
+                [
+                  0.32463816471685814,
+                  0.1391927524169438,
+                  -0.9355401860336441,
+                  1.266820602700364
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            }
+          ],
+          "verification_frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000103_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000103_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.4586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "sideview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000105_sideview.png"
+            }
+          ],
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              -0.09207823495662677,
+              -0.09460967868050989,
+              -0.2993592020133101,
+              -2.3000041404670766,
+              0.003384451272547469,
+              1.8498676343962792,
+              2.03830412544499
+            ],
+            "arm_qvel": [
+              0.002405731047495192,
+              0.005931815610520588,
+              0.00449653018654507,
+              0.039495632968333236,
+              -3.194765446784934e-05,
+              -0.028808827317429647,
+              -0.007378153314786841
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.03710453949337623,
+              -0.0378039904542922
+            ],
+            "finger_qvel": [
+              0.0032401308868499627,
+              -0.003230156969854413
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef_position": [
+            -0.3589918417744219,
+            -0.1583117834642065,
+            1.1830328422759475
+          ],
+          "eef_rotation": [
+            [
+              0.9449408433095667,
+              -0.09080719351279652,
+              -0.31438965671875096
+            ],
+            [
+              -0.041193017062053736,
+              -0.9860930135037591,
+              0.16100839749652945
+            ],
+            [
+              -0.32463816471685814,
+              -0.1391927524169438,
+              -0.9355401860336441
+            ]
+          ],
+          "checker_frames": [
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000104_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000104_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -0.9449408433095668,
+                  0.09080719351279652,
+                  -0.31438965671875096,
+                  -0.33303640474834284
+                ],
+                [
+                  0.041193017062053736,
+                  0.9860930135037591,
+                  0.16100839749652945,
+                  -0.2232342486965578
+                ],
+                [
+                  0.32463816471685814,
+                  0.1391927524169438,
+                  -0.9355401860336441,
+                  1.266820602700364
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000104_wrist_checker_agentview.png",
+              "timestamp": 8.649999999999558,
+              "camera_position": [
+                0.6000000000000001,
+                -0.65,
+                1.717
+              ],
+              "camera_target": [
+                -0.2,
+                0.0,
+                0.967
+              ],
+              "camera_fovy": 55.0,
+              "camera_role": "checker_only"
+            },
+            {
+              "view": "sideview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000104_wrist_checker_sideview.png",
+              "timestamp": 8.649999999999558,
+              "camera_position": [
+                0.6000000000000001,
+                0.65,
+                1.717
+              ],
+              "camera_target": [
+                -0.2,
+                0.0,
+                0.967
+              ],
+              "camera_fovy": 55.0,
+              "camera_role": "checker_only"
+            }
+          ]
+        },
+        "detector": "measured_open_transition",
+        "images": [
+          {
+            "view": "wrist",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000104_wrist.png",
+            "sha256": "2b8491e7fc721320718b119c2acc62bb800bbc67a17f6d80c8bb65c5619af5d7"
+          },
+          {
+            "view": "agentview",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000104_wrist_checker_agentview.png",
+            "sha256": "15e4dfc32b49b71262a7c062a330940febbaa7ddd9001eb36bfa8e22558a3702"
+          },
+          {
+            "view": "sideview",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T030501Z_book_caddy_274c55f3/cap_01_xvla_book_caddy_b6725ed9/finish/sensors/cap000104_wrist_checker_sideview.png",
+            "sha256": "d8142271e19a579353c7bd10291339d65f6761a6f380f25141589f129d5f5c67"
+          }
+        ]
+      }
+    }
+  ]
+}

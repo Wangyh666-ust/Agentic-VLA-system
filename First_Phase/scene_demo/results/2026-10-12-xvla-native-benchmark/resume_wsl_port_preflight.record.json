@@ -1,0 +1,20 @@
+{
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--cd",
+    "/mnt/d/FYP",
+    "--exec",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/home/yhwang/fyp/xvla_native/sim_venv/bin/python",
+    "-"
+  ],
+  "stdin_source": "import json, socket\nwith socket.socket() as sock:\n    sock.bind(('127.0.0.1', 8794))\nprint(json.dumps({'address_space': 'WSL Ubuntu', 'address': '127.0.0.1', 'port': 8794, 'bind_available': True}))\n",
+  "started_utc": "2026-10-12T06:35:40.848596+00:00",
+  "finished_utc": "2026-10-12T06:35:44.840562+00:00",
+  "exit_code": 0,
+  "stdout": "{\"address_space\": \"WSL Ubuntu\", \"address\": \"127.0.0.1\", \"port\": 8794, \"bind_available\": true}\n",
+  "stderr": ""
+}

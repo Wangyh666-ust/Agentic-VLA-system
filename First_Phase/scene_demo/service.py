@@ -30,6 +30,7 @@ same-named modules can coexist.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import importlib.util
 import json
@@ -59,6 +60,7 @@ import catalog  # noqa: E402
 import grasp_guard  # noqa: E402
 import oracle  # noqa: E402
 import placement_completion  # noqa: E402
+from planning_scope import validate_request_scope, request_fulfilled  # noqa: E402
 
 
 # --- v1 bridge ---------------------------------------------------------------
@@ -329,11 +331,12 @@ def status_for_reason(reason: str) -> int:
 # tested without a GPU, a policy or a simulator.
 
 
-def validate_capability_list(scene_id: str, capability_ids: Any, audit: bool) -> dict[str, Any] | None:
+def validate_capability_list(scene_id: str, capability_ids: Any, audit: bool, *, backend: str = "smolvla") -> dict[str, Any] | None:
     """Validate a capability id list against the catalog and the scene."""
 
     if not isinstance(capability_ids, list) or any(not isinstance(c, str) for c in capability_ids):
         return _err("invalid_capabilities", "capability_ids must be a list of strings")
+
     if not capability_ids:
         return _err("invalid_capabilities", "at least one capability is required")
     if len(capability_ids) > MAX_CAPABILITIES:
@@ -344,11 +347,15 @@ def validate_capability_list(scene_id: str, capability_ids: Any, audit: bool) ->
         capability = catalog.CAPABILITIES.get(capability_id)
         if capability is None:
             return _err("unknown_capability", "unknown capability %r" % capability_id)
+        if backend == 'xvla' and capability_id not in catalog.XVLA_NATIVE_IDS:
+            return _err('non_native_capability', 'X-VLA accepts only complete registered native skills')
         if scene_id not in capability["scene_ids"]:
             return _err(
                 "cross_scene",
                 "capability %r is not supported in scene %r" % (capability_id, scene_id),
             )
+        if "backends" in capability and backend not in capability["backends"]:
+            return _err("unsupported_backend", "capability %r is not supported by backend %r" % (capability_id, backend))
         if capability["audit_only"] and not audit:
             return _err(
                 "audit_required",
@@ -381,6 +388,11 @@ def validate_plan_request(
     decision = payload.get("decision")
     if decision not in DECISIONS:
         return _err("invalid_decision", "decision must be one of %s" % (list(DECISIONS),))
+
+    try:
+        validate_request_scope(payload.get('request_scope'), decision)
+    except ValueError as exc:
+        return _err('invalid_request_scope', str(exc))
 
     capability_ids = payload.get("capability_ids")
     if not isinstance(capability_ids, list) or any(not isinstance(c, str) for c in capability_ids):
@@ -420,7 +432,9 @@ def validate_plan_request(
         )
 
     audit = bool(payload.get("audit", False))
-    return validate_capability_list(session.get("scene_id"), capability_ids, audit)
+    if session.get('capability_backend') == 'xvla' and any(c not in catalog.XVLA_NATIVE_IDS for c in capability_ids):
+        return _err('non_native_capability', 'X-VLA accepts only complete registered native skills')
+    return validate_capability_list(session.get("scene_id"), capability_ids, audit, backend=session.get("capability_backend", "smolvla"))
 
 
 def validate_resume_request(
@@ -469,7 +483,7 @@ def validate_resume_request(
     # The existing capability-list gate keeps its current error priority: an
     # unknown/cross-scene/audit-gated/duplicate repair payload is reported
     # exactly as before, before any scope reasoning runs.
-    error = validate_capability_list(session.get("scene_id"), capability_ids, audit)
+    error = validate_capability_list(session.get("scene_id"), capability_ids, audit, backend=session.get("capability_backend", "smolvla"))
     if error is not None:
         return error
 
@@ -910,6 +924,7 @@ class SessionRecord:
                  init_state_index: int, run_dir: Path) -> None:
         self.session_id = session_id
         self.scene_id = scene_id
+        self.capability_backend = "smolvla"
         self.scene = scene
         self.seed = seed
         self.init_state_index = init_state_index
@@ -935,13 +950,14 @@ class SessionRecord:
         self.camera_names: list[str] = []
 
     def capability_ids(self) -> list[str]:
-        return [c["capability_id"] for c in catalog.scene_capabilities(self.scene_id)]
+        return [c["capability_id"] for c in catalog.scene_capabilities(self.scene_id, backend=self.capability_backend)]
 
     def public(self) -> dict[str, Any]:
         return {
             "ok": True,
             "session_id": self.session_id,
             "scene_id": self.scene_id,
+            "capability_backend": self.capability_backend,
             "state": self.state,
             "scene_version": self.scene_version,
             "env_instance_id": self.env_instance_id,
@@ -958,13 +974,15 @@ class SessionRecord:
             # already deep-copies each record and excludes audit-only entries by
             # default, so callers cannot mutate the catalog or see hidden
             # fixture/coordinate state.
-            "capabilities": catalog.scene_capabilities(self.scene_id),
+            "capabilities": catalog.scene_capabilities(self.scene_id, backend=self.capability_backend),
             "images": [dict(image) for image in self.images],
             "latest_png": self.latest_png,
             "run_dir": str(self.run_dir),
             "active_request_id": self.active_request_id,
             "error": self.error,
             "finish_mode": self.finish_mode,
+            **({"scene_inventory": copy.deepcopy(self.scene_inventory),
+                "planning_image": self.planning_image} if hasattr(self, 'scene_inventory') else {}),
         }
 
 
@@ -974,6 +992,8 @@ class PlanRecord:
     def __init__(self, request_id: str, session_id: str, payload: dict[str, Any]) -> None:
         self.request_id = request_id
         self.session_id = session_id
+        if "_xvla_native_route" in payload:
+            self.native_skill_route = copy.deepcopy(payload["_xvla_native_route"])
         self.decision = payload.get("decision")
         self.capability_ids = list(payload.get("capability_ids") or [])
         # The goals declared by the *original* request are snapshotted here, as
@@ -984,6 +1004,8 @@ class PlanRecord:
         self.pending_capability_ids = list(self.capability_ids)
         self.completed_capability_ids: list[str] = []
         self.rationale = str(payload.get("rationale") or "")
+        self.request_scope = validate_request_scope(payload.get('request_scope'), self.decision)
+        self.target_bindings = copy.deepcopy(payload.get('target_bindings') or {})
         self.audit = bool(payload.get("audit", False))
         self.budget_per_subgoal = int(payload.get("budget_per_subgoal", DEFAULT_BUDGET))
         self.scene_version = payload.get("scene_version")
@@ -998,7 +1020,7 @@ class PlanRecord:
         self.finished_utc: str | None = None
 
     def public(self) -> dict[str, Any]:
-        return {
+        result = {
             "ok": True,
             "request_id": self.request_id,
             "session_id": self.session_id,
@@ -1007,6 +1029,9 @@ class PlanRecord:
             "capability_ids": list(self.capability_ids),
             "original_capability_ids": list(self.original_capability_ids),
             "rationale": self.rationale,
+            "request_scope": copy.deepcopy(self.request_scope),
+            "request_fulfilled": request_fulfilled(self.request_scope, self.state, self.plan_success),
+            "target_bindings": copy.deepcopy(self.target_bindings),
             "job_ids": list(self.job_ids),
             "completed_capability_ids": list(self.completed_capability_ids),
             "pending_capability_ids": list(self.pending_capability_ids),
@@ -1016,6 +1041,9 @@ class PlanRecord:
             "repair_history": [dict(entry) for entry in self.repair_history],
             "scene_version": self.scene_version,
         }
+        if hasattr(self, "native_skill_route"):
+            result["native_skill_route"] = copy.deepcopy(self.native_skill_route)
+        return result
 
 
 class JobRecord:
@@ -1267,6 +1295,8 @@ class SceneService:
     def scenes(self) -> dict[str, Any]:
         entries: list[dict[str, Any]] = []
         for scene_id, scene in catalog.SCENES.items():
+            if "backends" in scene and getattr(self, "capability_backend", "smolvla") not in scene["backends"]:
+                continue
             entries.append(
                 {
                     "scene_id": scene_id,
@@ -1276,7 +1306,7 @@ class SceneService:
                     "variant": scene.get("variant"),
                     "description": scene.get("description"),
                     "storage_policy": dict(scene.get("storage_policy") or {}),
-                    "capabilities": [c["capability_id"] for c in catalog.scene_capabilities(scene_id)],
+                    "capabilities": [c["capability_id"] for c in catalog.scene_capabilities(scene_id, backend=getattr(self, "capability_backend", "smolvla"))],
                 }
             )
         return {"ok": True, "workflow": WORKFLOW_NAME, "n_scenes": len(entries), "scenes": entries}
@@ -1906,6 +1936,9 @@ class SceneService:
             return _err("invalid_body", "scene_id must be a non-empty string")
         if scene_id not in catalog.SCENES:
             return _err("unknown_scene", "unknown scene_id %r" % (scene_id,))
+        scene_backends = catalog.SCENES[scene_id].get("backends")
+        if scene_backends is not None and getattr(self, "capability_backend", "smolvla") not in scene_backends:
+            return _err("unsupported_backend", "scene is not supported by this backend")
         if isinstance(seed, bool) or not isinstance(seed, int):
             return _err("invalid_body", "seed must be an integer")
         if isinstance(init_state_index, bool) or not isinstance(init_state_index, int) or init_state_index < 0:
@@ -1919,6 +1952,7 @@ class SceneService:
             record = SessionRecord(
                 session_id, scene_id, catalog.SCENES[scene_id], seed, init_state_index, run_dir
             )
+            record.capability_backend = getattr(self, "capability_backend", "smolvla")
             record.finish_mode = self.finish_mode
             self._sessions[session_id] = record
             self._session_order.append(session_id)
@@ -2355,7 +2389,7 @@ class SceneService:
                 # Worker-side re-validation of scene support + version + budget.
                 worker_error = None
                 if plan.decision == "execute":
-                    worker_error = validate_capability_list(record.scene_id, plan.capability_ids, plan.audit)
+                    worker_error = validate_capability_list(record.scene_id, plan.capability_ids, plan.audit, backend=record.capability_backend)
                 if (
                     worker_error is None
                     and isinstance(plan.scene_version, int)
@@ -2525,15 +2559,22 @@ class SceneService:
         except Exception as exc:  # noqa: BLE001
             log("frame save failed (%s): %s" % (path, exc))
 
+    def _build_finish_context(self, capability: dict, user_request: str) -> dict:
+        from scene_demo.finish_v1.runtime import build_context
+        return build_context(capability, user_request)
+
+    def _finish_monitor_class(self):
+        from scene_demo.finish_v1.runtime import FinishMonitor
+        return FinishMonitor
+
     def _make_finish_monitor(self, session, plan, job, env, capability, budget, frames, latest_png):
         reference = session.home_reference
         if reference is None:
             raise SceneError('finish_reference_failed', 'home reference unavailable')
         if str(_HERE.parent) not in sys.path:
             sys.path.insert(0, str(_HERE.parent))
-        from scene_demo.finish_v1.runtime import build_context, FinishMonitor
         from scene_demo import joint_home, safe_exit_contacts
-        context = build_context(capability, plan.user_request)
+        context = self._build_finish_context(capability, plan.user_request)
         outputdir = job.run_dir / 'finish'
         helper_index = 0
         self_ref = self
@@ -2582,7 +2623,7 @@ class SceneService:
                 and safe_exit_contacts.contacts(env) == []
             )
 
-        monitor = FinishMonitor(
+        monitor = self._finish_monitor_class()(
             env,
             reference,
             outputdir,

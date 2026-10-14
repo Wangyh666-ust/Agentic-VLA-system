@@ -1,0 +1,136 @@
+{
+  "request_id": "xvla-basket_two",
+  "session_id": "405c2b7739964c27b6333fa60e79b3e0",
+  "request": "先把字母汤罐放进篮子，再把番茄酱罐放进篮子。",
+  "run_ok": true,
+  "chain_ok": false,
+  "plan_success": null,
+  "task_success": null,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-basket_two",
+    "session_id": "405c2b7739964c27b6333fa60e79b3e0",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_basket_both"
+    ],
+    "original_capability_ids": [
+      "xvla_basket_both"
+    ],
+    "rationale": "用户要求‘先把字母汤罐放进篮子，再把番茄酱罐放进篮子’，动作词‘放进’+明确目的地‘篮子’，意图是有序收纳；为严格遵守先后顺序,选用两个原子能力按序执行，而非不可控内部顺序的native long-horizon技能。",
+    "job_ids": [
+      "7ef2a1b97e8d459c83c5784c81e7184e"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "visual_unknown",
+    "repair_history": [],
+    "scene_version": 1,
+    "native_skill_route": {
+      "requested_capability_ids": [
+        "soup_to_basket",
+        "sauce_to_basket"
+      ],
+      "executed_capability_ids": [
+        "xvla_basket_both"
+      ],
+      "replacements": [
+        {
+          "native_capability_id": "xvla_basket_both",
+          "component_capability_ids": [
+            "soup_to_basket",
+            "sauce_to_basket"
+          ],
+          "start_index": 0
+        }
+      ]
+    }
+  },
+  "jobs": [
+    {
+      "job_id": "7ef2a1b97e8d459c83c5784c81e7184e",
+      "request_id": "xvla-basket_two",
+      "session_id": "405c2b7739964c27b6333fa60e79b3e0",
+      "capability_id": "xvla_basket_both",
+      "state": "completed",
+      "steps": 900,
+      "total_steps": 916,
+      "success": false,
+      "ended_reason": "visual_unknown",
+      "error": null,
+      "instruction": "put both the alphabet soup and the tomato sauce in the basket",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "38744d9c93f11fac1452e392ca4a0e1deb22848fc6cdc9512efcedd922258d6a",
+      "state_after_sha": "80418e90892d924f9461a6ab28b07103d40cb6e55f4061bf3c1fb94e3937ec2f",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 8,
+        "prechecks": 6,
+        "helper_counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "last_decision": {
+          "state": "unknown",
+          "reason": "subtask purpose unknown",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "visual_unknown",
+          "checks": 6
+        },
+        "independent_streak": 0,
+        "current_view_calls": 6,
+        "release_evidence_calls": 2,
+        "release_events": 2,
+        "process_evidence": []
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/basket_independent/basket_two/runs/20261013T074733Z_basket_two_405c2b77/cap_01_xvla_basket_both_7ef2a1b9/rollout.mp4",
+      "wall_s": 369.685
+    }
+  ],
+  "evaluation": null,
+  "hermes_invocations": 1,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "cancelled_by_user": false,
+  "cancellation_pending": false,
+  "wall_s": 392.248,
+  "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+  "hermes_output": "计划已提交。\n\nsession_id: 20261013_154742_4d9a65\n"
+}

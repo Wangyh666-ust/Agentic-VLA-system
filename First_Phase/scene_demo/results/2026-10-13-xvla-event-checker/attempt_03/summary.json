@@ -1,0 +1,240 @@
+{
+  "passed": false,
+  "complete": true,
+  "results": [
+    {
+      "case": "microwave_mug",
+      "mode": "positive",
+      "passed": false,
+      "goal": null,
+      "reuse": [],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": null,
+          "target_matches_definition": true,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "object_key": "yellow_handle_mug",
+          "reason": "wrist视角(18)显示微波炉门关闭遮挡内部，agentview(19)和sideview(20)显示机械臂退离且无其他杯具，结合历史连续证据确认目标物仍在微波炉内"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "black_microwave",
+          "reason": "Current frames 3-5 show microwave door plate fully covering cavity entrance from all views; reference frames 0-2 established consistent black microwave identity at right table position"
+        }
+      ],
+      "image_count": 21,
+      "event_count": 2,
+      "usage": {
+        "prompt_tokens": 6796,
+        "completion_tokens": 1544,
+        "total_tokens": 8340,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 519
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 2730,
+          "text_tokens": 4066,
+          "cached_tokens": 0
+        }
+      }
+    },
+    {
+      "case": "microwave_mug",
+      "mode": "negative",
+      "passed": false,
+      "goal": true,
+      "reuse": [
+        "goal_0"
+      ],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "release_0001"
+          ],
+          "object_key": "yellow_handle_mug",
+          "reason": "wrist view (frame 6) 显示黄色把手杯在微波炉内部；agentview (frame 7) 和 sideview (frame 8) 与release阶段一致，微波炉门打开但目标杯不在桌上，身份连续且in关系明确；原图事件确认 release_0001",
+          "history_event_id": "release_0001",
+          "history_event_ids": [
+            "release_0001"
+          ],
+          "history_mode": "corroborating"
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "black_microwave",
+          "reason": "agentview (frame 4) shows microwave door closed with no visible cavity entrance; sideview (frame 5) confirms door plate aligned with main body,遮住炉腔入口. wrist view (frame 3) is internal but consistent with closed state"
+        }
+      ],
+      "image_count": 9,
+      "event_count": 1,
+      "usage": {
+        "prompt_tokens": 3312,
+        "completion_tokens": 1344,
+        "total_tokens": 4656,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 319
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 1170,
+          "text_tokens": 2142,
+          "cached_tokens": 0
+        }
+      }
+    },
+    {
+      "case": "basket_two",
+      "mode": "positive",
+      "passed": false,
+      "goal": null,
+      "reuse": [
+        "goal_0"
+      ],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [
+            "release_0002"
+          ],
+          "object_key": "orange_small_can",
+          "reason": "wrist frame 15 shows orange can inside basket; agentview frame 16 confirms can resting in basket; sideview frame 17 shows basket containing can; stable placement confirmed；原图事件确认 release_0002",
+          "history_event_id": "release_0002",
+          "history_event_ids": [
+            "release_0002"
+          ],
+          "history_mode": "corroborating"
+        },
+        {
+          "id": "goal_1",
+          "achieved": null,
+          "target_matches_definition": true,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "object_key": "red_green_tomato_sauce_can",
+          "reason": "tomato sauce can visible on table in reference frames but not in current frames; agentview frame 16 shows table area where can should be but no clear view; wrist frame 15 shows basket contents only; sideview frame 17 shows empty table area where can was previously located"
+        }
+      ],
+      "image_count": 18,
+      "event_count": 2,
+      "usage": {
+        "prompt_tokens": 6105,
+        "completion_tokens": 1877,
+        "total_tokens": 7982,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 852
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 2340,
+          "text_tokens": 3765,
+          "cached_tokens": 0
+        }
+      }
+    },
+    {
+      "case": "basket_two",
+      "mode": "negative",
+      "passed": true,
+      "goal": false,
+      "reuse": [],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": false,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "alphabet_soup_can",
+          "reason": "frame 1和4中可辨认圆柱罐（银盖、蓝橙标签）为指定目标；frame 4显示篮子内部空，目标未放入"
+        },
+        {
+          "id": "goal_1",
+          "achieved": false,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "tomato_sauce_can",
+          "reason": "frame 1和4中可辨认红绿标签罐头为指定目标；frame 4显示篮子内部空，目标未放入"
+        }
+      ],
+      "image_count": 6,
+      "event_count": 1,
+      "usage": {
+        "prompt_tokens": 2567,
+        "completion_tokens": 1557,
+        "total_tokens": 4124,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 532
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 780,
+          "text_tokens": 1787,
+          "cached_tokens": 0
+        }
+      }
+    },
+    {
+      "case": "microwave_mug",
+      "mode": "no_history",
+      "passed": true,
+      "goal": null,
+      "reuse": [],
+      "checks": [
+        {
+          "id": "goal_0",
+          "achieved": null,
+          "target_matches_definition": false,
+          "current_evidence": false,
+          "evidence_event_ids": [],
+          "object_key": "yellow_handle_mug",
+          "reason": "current wrist view (frame 3) shows closed microwave door with no internal visibility; agentview (frame 4) shows only gray mug on table with yellow_handle_mug absent; sideview (frame 5) shows microwave closed with arm near but no mug visible. Reference frames 0-2 confirm yellow_handle_mug identity, but current frames lack visual evidence of its presence or position. Continuity intact as no evidence of removal or displacement from microwave context."
+        },
+        {
+          "id": "goal_1",
+          "achieved": true,
+          "target_matches_definition": true,
+          "current_evidence": true,
+          "evidence_event_ids": [],
+          "object_key": "black_microwave",
+          "reason": "current agentview (frame 4) 显示微波炉门板完全遮住炉腔入口，sideview (frame 5) 显示门板与机身齐平关闭；reference agentview (frame 1) 和 sideview (frame 2) 确认黑色微波炉身份，current 视角延续同一物体位置与外观"
+        }
+      ],
+      "image_count": 6,
+      "event_count": 0,
+      "usage": {
+        "prompt_tokens": 2562,
+        "completion_tokens": 1216,
+        "total_tokens": 3778,
+        "completion_tokens_details": {
+          "reasoning_tokens": 1025,
+          "text_tokens": 191
+        },
+        "prompt_tokens_details": {
+          "image_tokens": 780,
+          "text_tokens": 1782,
+          "cached_tokens": 0
+        }
+      }
+    }
+  ],
+  "environment_actions": 0
+}

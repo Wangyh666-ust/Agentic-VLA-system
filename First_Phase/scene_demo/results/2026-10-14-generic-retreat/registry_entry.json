@@ -1,0 +1,925 @@
+{
+  "id": "20261014-generic-retreat",
+  "date": "2026-10-14",
+  "title": "同刻RGBD通用退离候选与完整碗抽屉在线复测",
+  "question_keys": [
+    "xvla-drawer-retreat-block",
+    "xvla-interactive-latency"
+  ],
+  "tags": [
+    "xvla",
+    "retreat",
+    "current-geometry",
+    "qwen3.8",
+    "bowl_drawer"
+  ],
+  "conditions": [
+    "默认退离保留原候选，失败后补充同刻RGBD/机器人几何方向；原收尾控制/深度/净空阈值/home/5/5未改。",
+    "一例历史动作重放验证，一例正常交互完整在线；无辅助器，无子agent。"
+  ],
+  "findings": [
+    "旧240步重放误差小于1e-9；旧上移失败，新斜向4cm实际退离84步、home135步、5/5，任务全程保持。",
+    "在线第228至240步碗入抽屉和抽屉关闭同时达标；第4次Qwen证据引用修复请求90秒超时，收尾未启动，release/movement/confirm/home均为0，整链blocked。",
+    "从场景加载至终态452.30秒；规划46.13秒；执行379.74秒。",
+    "348项软件测试与53子测试通过；保留首次重放入口不匹配和测试入口缺路径的原失败记录。"
+  ],
+  "limits": [
+    "一例完整在线与一例旧动作重放，不代表全部任务成功率；通用实现无任务名称分支。",
+    "重放最终视觉未调用，明确unknown；只以真实运动、原净空、独立任务状态及原home判据验退离。",
+    "旧首次重放因工具漏还原prepare后的夹爪hold，在第1个历史动作不匹配时停止，未测试退离；修正后完整240步最大编码器误差<1e-9。",
+    "总耗时含场景加载和冷模型准备，不含代码修改/重放验证和人为确认等待；轮询误差约2秒。",
+    "瓶子归位不在当前场景原生能力库内，计划仍为partial，不以碗任务完成声称整个自然语言需求实现。"
+  ],
+  "evidence": [
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/archive.py",
+      "sha256": "984e5e6de37a98a0c13c09d05ac0aa929841a7088acd3ca66b873918d7bf0d33"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/before/finish_v1/control.py",
+      "sha256": "5252588fb0cbd296df9f2248243853f2c74c2de6c0bb2b89957af0840d50878d"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/before/finish_v1/feedback_retreat.py",
+      "sha256": "5379b57fc1ab0086034fc2d2f8cf09e600d76a20342ed02601a38a7d3c0100f2"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/before/finish_v1/geometry.py",
+      "sha256": "d4a5bb664760e3ee39027caac9a51b23a13eaee4b9ef8c55854dfd9f935f61b9"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/before/finish_v1/runtime.py",
+      "sha256": "4861c5dc18530b2ddf324a0dc653c9b1ea1cb3708679f25fd180b392f6f0690d"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/before/finish_v1/sensors.py",
+      "sha256": "c086c4d9d0a2e283ea182d1740e2b4a4c06b2fd83f311892a15bc0175bca459b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/before/finish_v1/simple_checker.py",
+      "sha256": "5e5286e2532bfc843ecc86bf6c43d07f93bef0930be50e79f054202beae6aa72"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/before/joint_home.py",
+      "sha256": "c34d223b957eebc8650a911e2bf14569fda73b6cdb84fa976d787a3781ad123e"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/before/xvla_backend.py",
+      "sha256": "ce86494c3273909dadd408bf96b0b94f223b5f5ec9c26912878fe6ca8f336fd1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/before/xvla_service.py",
+      "sha256": "575236247bfe6e2d18b562eb8e19910ff7a4b888ad72328be8c15bdf7d8cfcf0"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/console_before_refresh.json",
+      "sha256": "5ea638890fef0341d7ed6b03b903eaf807d3d881114f827c56069aff605b7e31"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/normalize_source.py",
+      "sha256": "4de2831fbd4711041014616cfd0a13d49e6029404f913af36e1725baeaae0936"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/online.py",
+      "sha256": "28f9811a0e623d2ecfa244260cd16667b17d641f30df1663e09802a1cf311326"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/online.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/online.stdout",
+      "sha256": "4ba73650e6ed21881d4ffa554b25dd8c74a16f75aa64a466e23e4244c130d4ba"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/online_draft_state.json",
+      "sha256": "efee95c58608f867a2cbeddb34172f9a13b52adddac7e052fbcbfeb158261737"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/online_final_state.json",
+      "sha256": "e07ed0097f317a59787c66107eb62cdd105deef86b0894c5b67cc782e238f42b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/online_latest.json",
+      "sha256": "e07ed0097f317a59787c66107eb62cdd105deef86b0894c5b67cc782e238f42b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/online_proposal.json",
+      "sha256": "183f8c92711a6257a985efad6efcd2cc48a96db34b10ff4788a34458f0028793"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/online_review.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/online_review.stdout",
+      "sha256": "44a7205c0e82ca5b1be503215a92cc4d0b7c88883d426707478a8f8e3f8ce657"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/online_timing.json",
+      "sha256": "c9c6cc2fe4c4b869ca8699a3a19ba392ebf7dc76eaedaa02731654d86f21d12a"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/prepare.py",
+      "sha256": "537fcf1be5060709049cf3ec41eddfb0592c3737556ae16422d6bed772128ccc"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/protected_controls.json",
+      "sha256": "acea8744058e57a608b0fbd9b61f6b95c5541096434d886c16b87c3ebbc5195f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay/summary.json",
+      "sha256": "0208458a05761239366a7933bbac8555fb7beff1666f382b8f98aedcc5ff0c2a"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay.py",
+      "sha256": "c661af46d049c7be77a250cb23463a57da6cd14fe0e0c9c8c03c7973a363d69b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_proposal.json",
+      "sha256": "cd75eafe2342e7e4bf4eaece986d3f77c90e2ee6244b3c01ced28d2f368da752"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_review.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_review.stdout",
+      "sha256": "44a7205c0e82ca5b1be503215a92cc4d0b7c88883d426707478a8f8e3f8ce657"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/after.json",
+      "sha256": "8022cb3bb86c234108c1354d241261e1acc12f12855d41e94e3ab22f868228c2"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/before.json",
+      "sha256": "034b5f2c89925f47f2600ab3828153d6388737ad50db8cdfb29b52b7d0fac9a9"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/finish_actions.jsonl",
+      "sha256": "5486ff43d5d0c4761fa8fb9795bb5141d21b0446cb23a65741921fd4f017361f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/finish_result.json",
+      "sha256": "a4630f690f5e65879122b14dba2b7c04d7aca4e1a2a436735cc9c1a5565bccb0"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/matching.json",
+      "sha256": "2498512f92fa94d82ea24ed5cc25d276edd29d71d61a7c8fc6434cb07cac32b2"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/native/native_steps.jsonl",
+      "sha256": "73f007150544ab2697eed25137233b07c0de0ac26dddb1693f341e40fbcd816d"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/new_plan.json",
+      "sha256": "0358acc4cc6adb67f86dbdc356910c122022c56bca313a135283799e8dcd3b4c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/old_plan.json",
+      "sha256": "a2ab6d6899acd78e25c583810d200b8ea41f2e8310e777478093155835923bdc"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/plan_observation.json",
+      "sha256": "247bb22527de2b5f21d7a784ef50376d3b39dc8ac9a7b8f4fba333cca3b4a6c7"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000001_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000001_agentview.npy",
+      "sha256": "32760b6954fdf1bf6e756ee3ab7729ee1f49a5ff49708dfe0c5a6e20baf26236"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000001_agentview.png",
+      "sha256": "05a2550cfa63f9613cd8b5ad9595469f33106534b57af2a5f594d1d8f4e5d8bb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000002_wrist.json",
+      "sha256": "920de2ca1913fc9ab5a8fcf137d6fb1b7ffa96f909a53a852617abebbc878e4f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000002_wrist.npy",
+      "sha256": "3098246b6418d113036094a8519c9d9bdc4f1a262af010fea3e1b9262c48a41c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000002_wrist.png",
+      "sha256": "a63832b58806b8fff2f2d97b097d774018f6733b8cb4554619906784fc5d3389"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000002_wrist_checker_agentview.png",
+      "sha256": "77cbb93bc4596bc116a84d980c563d8465579d1227829b8930292d01919270bb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000002_wrist_checker_sideview.png",
+      "sha256": "c7b44356a979949fc012808736d42654f977cbad848c71a426e2907263803d64"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000003_sideview.png",
+      "sha256": "474ced82b10db9ee1951826b56f0fbf38467e7c2b359bedd815348447e2e90b1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000004_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000004_agentview.npy",
+      "sha256": "20451d4309118e0c5ec2c28e1fcbfca81447202e681b953f4a4236bcd7abf11c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000004_agentview.png",
+      "sha256": "f9dd292f9a95b1344a065f51264ffa1e54c7dce3ca88faada5af03f825333ca1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000005_wrist.json",
+      "sha256": "73fcbc3c4d8645e1af0785ce3f7778e3bc418f3ab1fa916f8717a5cd84c83bfa"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000005_wrist.npy",
+      "sha256": "dc10066c2703374869a7cf663fc8b7837dfde9c41b517b3420672b81d2155ca6"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000005_wrist.png",
+      "sha256": "eccc8df48bd4a6b2344c5b5ee176e60333f95739878fdacc5aba479cfa9c85d3"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000005_wrist_checker_agentview.png",
+      "sha256": "de2208bde572e5217aab9b1330ce88c3ab685a796a29c3dfa57e25832ffa15e9"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000005_wrist_checker_sideview.png",
+      "sha256": "b999bf0c99ac404d0f2b1cea419609f19a38047bf61e26b4718fe3dedac6faa5"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000006_sideview.png",
+      "sha256": "7ab79e9e88592b1c1fb405b7bb82c40b1645e84027d606be413a0a335bdfd5d2"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000007_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000007_agentview.npy",
+      "sha256": "ede10faec56d997b5f75cdcd75519400595c824a7f733cf7dc6642fb94f5a13f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000007_agentview.png",
+      "sha256": "5864f51fad63a95875c2c137e119d429044219ce7f2a38c4d028100da893a1c0"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000008_wrist.json",
+      "sha256": "025ff824eb5809f4378340536bcd4852b807a6e49f2d69c0bda9bd1cca5ecd78"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000008_wrist.npy",
+      "sha256": "c0b6cfabdc999a4c29845175718e4d32bfdbf773b60c2885bacadde5c8b3c086"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000008_wrist.png",
+      "sha256": "9b0588b337c68a9087534bee1e0f3f9924981267c444513a2256c711e9ad927e"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000008_wrist_checker_agentview.png",
+      "sha256": "efa68cd8387a8e6e8d9d93f0c3c04e9b97e87c6ecaaea54db4d66eb1e0bea9b9"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000008_wrist_checker_sideview.png",
+      "sha256": "e03c94a32dfb01e5aeed9c643bb06712e7438377a2637a93ab9a0917151ac3a1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000009_sideview.png",
+      "sha256": "e9659d8ad0f475400593695ac37c12afb6cc59ed2b869c012c719b176fb7dfb3"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000010_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000010_agentview.npy",
+      "sha256": "fc50746c9b90f1b3f83ba338c072c52794b48cc35f43e1f02eee169f4f329197"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000010_agentview.png",
+      "sha256": "bcce10117bef79b807f971df9fd006d4eca7561f1cb52e5bc2a0cceb619bc992"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000011_wrist.json",
+      "sha256": "f3a0243871dcba1f37d53bbcf48183fa7039fe2308ae0201837d3a6cc31253f8"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000011_wrist.npy",
+      "sha256": "25dfcbc44cd90bf49448d5d4478bbb537ee540c468c0918a7bdfeab8d9486a48"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000011_wrist.png",
+      "sha256": "a34ce1b1bb23f7eb2a0863ce5f68340dd5af8bd45c4da98935acd292c1ac88ed"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000011_wrist_checker_agentview.png",
+      "sha256": "492ef9bd4ba4e60487c197278dba0ca27e33a9d132c7bf5facc184c6b9775aa8"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000011_wrist_checker_sideview.png",
+      "sha256": "112b59f57c8b0fe0de87200f3a623521e02d84df5bf0d979bf2543e11e827216"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000012_sideview.png",
+      "sha256": "ae321c3d034ae5127688cd3bdb24e27923619b37a7ed39aa8389dbed83b1c783"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000013_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000013_agentview.npy",
+      "sha256": "2d2b382bfc0093bd0050824bd060c2089e2acc079e19143a67b1146e97c70498"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000013_agentview.png",
+      "sha256": "f3d9815fc55d722ee0db79ae6e35cd05c017ab73f4c4e8fb2d852db4d5efca07"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000014_wrist.json",
+      "sha256": "af771f2fd92bc07d2cf8a3a1c7f957436d8d96679ce47759c186a532fd0ca2e0"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000014_wrist.npy",
+      "sha256": "896b440793ce034accfc364bb29f5c27f4888b89907d893a9675f9594d433638"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000014_wrist.png",
+      "sha256": "09be31422cee31ea4ca981d2b3c40f640b9c65e6d148f9d321bf00f7f20af636"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000014_wrist_checker_agentview.png",
+      "sha256": "364fa307ad2f51ec0ce8b193408eb35bee40fba5dd040e5c07865287f1f1d5be"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000014_wrist_checker_sideview.png",
+      "sha256": "08a430dc9524148a5d74e36405c7d6789c54d6c95d8feeee4cd006fbbeb4575e"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000015_sideview.png",
+      "sha256": "1faa29d4dfa047c66811d572329aa71da825e6472ccfd0c7c46820aec06112a2"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000016_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000016_agentview.npy",
+      "sha256": "5a900b42ee96a8b0fec7830cf39eb54ec586230251f9e75fe55eefac8547f2fa"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000016_agentview.png",
+      "sha256": "a697a640b01f3e45029f8975fac21715ddff9cfe907027eb9e1f6afcd81489a1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000017_wrist.json",
+      "sha256": "be685f9b4570a762047623173fd00f24386222b853014b8963023947d5e34d6c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000017_wrist.npy",
+      "sha256": "df1255ab5c249bb1c84b1557ec032b809e7ea56676e4e243c890fb00f02a467f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000017_wrist.png",
+      "sha256": "44ce54070f6baed010b170606dbc9b0bb32fc22a0e3b54c6b3e2ba6d7cf6840f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000017_wrist_checker_agentview.png",
+      "sha256": "af2f0dae2adea8a6f3387f2cb2ea10256d0a02a166c2fa767818ddee44e4281f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000017_wrist_checker_sideview.png",
+      "sha256": "3c56d8d90edce209b9a3c4e97893c8be38fd4c3bbb62d71b5d75569878d95f34"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000018_sideview.png",
+      "sha256": "9270433886defa8bdaf7bf835595c89921473baa9ade567a3726df5ba08d9dc2"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000019_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000019_agentview.npy",
+      "sha256": "3a8aaa2dafe4ee8cba71d9f0b4db7dd63ec8e1e21f00476bea91f54eadb24f42"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000019_agentview.png",
+      "sha256": "a6a856afa4d66740639e364a1c2d22da32b5b2d8ddbcfa4619f958789e27e0bd"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000020_wrist.json",
+      "sha256": "a2610525311d41c9287221d4917d23d68f378a9589a750e1fe335526a13e68db"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000020_wrist.npy",
+      "sha256": "c776659f52b9ecad63d9868900f123fa0a69d6e8375622618a1b26496146c3b4"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000020_wrist.png",
+      "sha256": "cf61cdaf82a98c23e124c01b83a4fe01c7c0b5f978d26617363237ea0a92d11b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000020_wrist_checker_agentview.png",
+      "sha256": "58cebb67b8ad812db80204ad226c431af42509836d740893faf1c9cdb7e543fb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000020_wrist_checker_sideview.png",
+      "sha256": "2af72c8ae55e7a6dd30c8aab5e0f187e3741b322b6024fdaa4c92b4e2ccab7bd"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000021_sideview.png",
+      "sha256": "6a6188f6341e68580dd2eacf269670c7f472aa98e5e823f3b793537aca200163"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000022_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000022_agentview.npy",
+      "sha256": "c6ae5820823d8cb8a2c4d34336c3a665a7a2f8c7ca8719300f63111e36f31aba"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000022_agentview.png",
+      "sha256": "d5d75055bf3951d3e63c0d1ccb9e40b1538930d22f69f90dbae4edd2054a21c2"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000023_wrist.json",
+      "sha256": "a8ff8c08c0027615ae605f03e985effc805f4a334989ef65aea08c4239275aad"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000023_wrist.npy",
+      "sha256": "70eb9d4d914983ab9cc519e546a82b2c75b0fdb454b64be2fdf6c7e69f017c41"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000023_wrist.png",
+      "sha256": "8421649adf233e0ef3767f2ae2eedc132f860e15881eb5c6344ab0ce5d30aa3a"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000023_wrist_checker_agentview.png",
+      "sha256": "183fcface8965afe3dda46bbddd377cbabb3113a80f562a4fa5cd0d6736f7ead"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000023_wrist_checker_sideview.png",
+      "sha256": "23473c820a3912f00fa2ea2ec79431c7f7f9687a4b392aa02e15b79d0c49c319"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000024_sideview.png",
+      "sha256": "6e486ba585fecb9768f6914dbea6a8365bace098d17a359f60d4f8379dc07b40"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000025_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000025_agentview.npy",
+      "sha256": "fbc2eea57bbe69a3c90389a74977d65befc218ae0d770a876311df06379568bb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000025_agentview.png",
+      "sha256": "2949006111fc070cc1d65bc9f3f2a4f35bfa9f650facb31c19baabfbda9c475d"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000026_wrist.json",
+      "sha256": "887a2ddfd5acd968525455c080f2cc816adf7912ab09366f6cd3893f722a4948"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000026_wrist.npy",
+      "sha256": "b26bcceb877b123cd0f2ffe12b1e46b4a12d0f9238f27b90da01a5b9fcfd59ff"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000026_wrist.png",
+      "sha256": "cd0a399fa14a72cb4a2e5cee6feb387ed52b1f601b1e38d5fce5387e7fe75c78"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000026_wrist_checker_agentview.png",
+      "sha256": "9018844dfbacee7a230c594595e55f384682d35de15562014104b3ec4cdefcbb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000026_wrist_checker_sideview.png",
+      "sha256": "e023409bf08f4a0dd5a7feb5f555a23ad1e1caa0d1580ba23a7903162fcca1d0"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000027_sideview.png",
+      "sha256": "000aa0cf11bef05e411555ba2eb0cc74ad32cd13b2a36c7e78ee493f610801b7"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000028_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000028_agentview.npy",
+      "sha256": "f448d3c325777e7428800b8b9ebfd28d4c8a06562cb96de2c496b84ad6785490"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000028_agentview.png",
+      "sha256": "14c47bd143891d7218991e8b0c0fc754f375ac3b7a24e923a90e7f6ab6e616a7"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000029_wrist.json",
+      "sha256": "5b17caaee402423b063eb87cfac8c1c6fd5bf962d4b58f1241d9365858118c07"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000029_wrist.npy",
+      "sha256": "307a5b71dd08a4513e11b9c899410fb93c750c5f050b6d90cf4f742a58f97c7e"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000029_wrist.png",
+      "sha256": "5c7b2655ecc4e965fc7892edeba419bb2c670747f50f4549fd9dfc252fb39df6"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000029_wrist_checker_agentview.png",
+      "sha256": "85c7a1f7a9fc44f8aacbcba7b7a70af4a63b3c071d1e5ddc5628187705fd6021"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000029_wrist_checker_sideview.png",
+      "sha256": "280085f3e681087c5494315a5d2e17ba74376fcdd400823f4b7e620a4515dfa2"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000030_sideview.png",
+      "sha256": "5ea9ec6816aa922170feb5ba7284f148fbaaf9b82409d7f8800a675b283a6912"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000031_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000031_agentview.npy",
+      "sha256": "c7226f4fe5e97f63824c1fe80433e66d252a00aa900cb5e0d6d4fdcd5aaad372"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000031_agentview.png",
+      "sha256": "8825c16b3050e517ac9d04b9a90c477c6691cde0db5cb6a38b330c7a04ac161c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000032_wrist.json",
+      "sha256": "5a6a631a370123b0ce21477395558ec60b0e892b16b0fc2a7a7011d734cb9a12"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000032_wrist.npy",
+      "sha256": "cf6f23469f372bd92c2dae6c0bbb0202dd7ac750d6cf055c7cc24d42127342ef"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000032_wrist.png",
+      "sha256": "206d554d9b34bc6cd6364ae6bd7fb57c9e14d7684775b23840d696229fab81f0"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000032_wrist_checker_agentview.png",
+      "sha256": "08c5374e7baf46f962b8ed3d2beac7aeadd633451423d056d769bba282311450"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000032_wrist_checker_sideview.png",
+      "sha256": "d90b58cea8ffca1d0d138a078d8996947b88b634abdd2d99db34ce735df063ec"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000033_sideview.png",
+      "sha256": "72be092df9dc786f5024ac524f6dbbfb149130c385c9fcfc2754552aca8b15ba"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000034_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000034_agentview.npy",
+      "sha256": "32f390ece7c47b087d6f07cd0b785385990e1b5b5d4e9270d2bb93abc403f13b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000034_agentview.png",
+      "sha256": "d17cfbc42ccf7e1a1f939e5585b05a9fe19ecebcc0b5f7e180ffc0bcc4237a96"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000035_wrist.json",
+      "sha256": "ebeefe5f107b3ac1845f71a2b790f57669ba7f6c8703a98f25aa96f797ee090a"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000035_wrist.npy",
+      "sha256": "d38562d64136ddc515205431e2efc5f8357f2a6af7ac77541044259abd36a2f9"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000035_wrist.png",
+      "sha256": "527260f4fc25af53fc25ae1f400f32162b1bc8d1285f30cb7a2ebc3a5bd342bc"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000035_wrist_checker_agentview.png",
+      "sha256": "caf5f309a9d13790c7d7ccbf6540e0a152101c42c7ccf1de5f33920d58b7f12c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000035_wrist_checker_sideview.png",
+      "sha256": "115877d50bc145677526f11342857d5e7d7533d973c85298a10e9b758fb5d9c4"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000036_sideview.png",
+      "sha256": "badeb1fcabc59aef31ac0bb60f4c2bd597f65e20de68439e5fa9caa672021dc1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000037_agentview.json",
+      "sha256": "a8a6af00830e8158b77c01b94d0ca930d788454b3a3ebb355287a1cf60b08540"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000037_agentview.npy",
+      "sha256": "32f390ece7c47b087d6f07cd0b785385990e1b5b5d4e9270d2bb93abc403f13b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000037_agentview.png",
+      "sha256": "d17cfbc42ccf7e1a1f939e5585b05a9fe19ecebcc0b5f7e180ffc0bcc4237a96"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000038_wrist.json",
+      "sha256": "ebeefe5f107b3ac1845f71a2b790f57669ba7f6c8703a98f25aa96f797ee090a"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000038_wrist.npy",
+      "sha256": "d38562d64136ddc515205431e2efc5f8357f2a6af7ac77541044259abd36a2f9"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000038_wrist.png",
+      "sha256": "527260f4fc25af53fc25ae1f400f32162b1bc8d1285f30cb7a2ebc3a5bd342bc"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000038_wrist_checker_agentview.png",
+      "sha256": "caf5f309a9d13790c7d7ccbf6540e0a152101c42c7ccf1de5f33920d58b7f12c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000038_wrist_checker_sideview.png",
+      "sha256": "115877d50bc145677526f11342857d5e7d7533d973c85298a10e9b758fb5d9c4"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/cap000039_sideview.png",
+      "sha256": "badeb1fcabc59aef31ac0bb60f4c2bd597f65e20de68439e5fa9caa672021dc1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/sensors/controller_modes.jsonl",
+      "sha256": "1cd36a1440246ba1bfac726e81b3c290c8dbdd177013eb9dc95d755c9c9d9844"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2/summary.json",
+      "sha256": "ef416976b5422163c3e6f68dfc39be94ad549b56221d3fbce0d45682f1bec842"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2.stderr",
+      "sha256": "9892d04f5454e157754654050c33c9a9465636cf75b069f8a668ec3019696101"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2.stdout",
+      "sha256": "ff0f6c1f20605aa9668891fa10e88c40459f5ed875c446a9b4e8e9616f966e92"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2_proposal.json",
+      "sha256": "4dd4a9414d64a716d038398dbe1850da54753d5ad4439e25d69f7ad7a6803df2"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2_review.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/replay_v2_review.stdout",
+      "sha256": "44a7205c0e82ca5b1be503215a92cc4d0b7c88883d426707478a8f8e3f8ce657"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/software.stderr",
+      "sha256": "67fa42da03ffb8982f64d0d52c3304ecf429434ac84175796f9c82a4a9adbccc"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/software.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/software_final.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/software_final.stdout",
+      "sha256": "ddf56a900692f3d2b2853576f6f6b5f0fe6f41013d682db9c6f4ebc99996cfed"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/software_fixed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/software_fixed.stdout",
+      "sha256": "7fd667c512255978f6b119189166ab7629336099e644642bbad3b28fd45721eb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/software_pytest.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/software_pytest.stdout",
+      "sha256": "fae8d75e1a77c0018f9a7ea9c5b747481f944d4d018774aca324daeace1df234"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/source_format_proof.json",
+      "sha256": "6e6b498f3ce496de464e58c4294d6bafecda3d5fa636cd261e952d4d6d1e7a44"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/source_snapshot/finish_v1/geometry.py",
+      "sha256": "5c70d4906c2a74e3a653af81e89051771fb8f8297eb148d443f0965e83557acc"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/source_snapshot/finish_v1/tests/test_generic_retreat.py",
+      "sha256": "64103176d74e79e0230d978aa672e323681a3ad5377737534ee9b7c6051c8897"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/source_snapshot/finish_v1/tests/test_shape_screen.py",
+      "sha256": "992d410260a189ec7099033ccc626f45999c7832de204255b9c87e25c3242368"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/summary.json",
+      "sha256": "b86f7ba4a0c92de7cd5ae4af08087b218f139c80b3b34851ca797f15b4bf8996"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/ui_launch.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/ui_launch.stdout",
+      "sha256": "cee1ec0bf8730cb6d082fbf58651c18bc8b1aa08fe58d7f815e8a6ee4d676626"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/2026-10-14-generic-retreat/ui_refresh.json",
+      "sha256": "6efb091d4f70ccc813fb67115e33b7d710976fc5c24c5af272e435de815e2885"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/20261014-205853-fbe2e2ca/draft.json",
+      "sha256": "3d39619859f50afe61ae43b00ad60ab1a3bb9aef0b923b9025746e4da1b24af9"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/20261014-205853-fbe2e2ca/planning_timing.json",
+      "sha256": "1011f9d643f23f5610075f1c32aeb30744da74ab299d3aa2a92d2e043941f718"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/20261014-205853-fbe2e2ca/run_setup.json",
+      "sha256": "56d3e63fe7e5d020ab109f27e08d97649e2a122dbf14e023156633195db0f08a"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/events.jsonl",
+      "sha256": "7a57893ef8902096b5d3f189c518f597a7501712b5921f455687ed8eab0213bd"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/model_requests/call_01_request.json",
+      "sha256": "13571949fd6b6abb3053d72e7883ff6fe163886e551c65db7f1080d92ec295b1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/model_requests/call_01_response.json",
+      "sha256": "c54b137fc407536f824ba2eba61e38539e1741edf68d0921dc1ab06d6400274e"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/model_requests/call_02_request.json",
+      "sha256": "a05f02d093984b7bff800da9937376edb66125121510b719fc82f070452f66eb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/model_requests/call_02_response.json",
+      "sha256": "045d12b41c1a7660103d8019be17bab2b5b27f5a9ac5dd2ca4daeb17f8f79bba"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/model_requests/call_03_request.json",
+      "sha256": "d0e77994b03b8b550caeee69d89908b2da6253a02c5cce0dc384299de3cbadb6"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/model_requests/call_03_response.json",
+      "sha256": "8e89c930183e60b2859fbc4621d9989ea78ed4e9596a386debc516bb42dd1fa1"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/model_requests/call_04_failure.json",
+      "sha256": "4e5c00d62a7cdb43bbeef07c838a5cb1a354f52551b4ce6d60260fc3432986df"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/model_requests/call_04_request.json",
+      "sha256": "aa20ab47d629fda42226a1cfbe0beb6b2b29817aa0ba285a7a1d023c5e849c5d"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/model_requests/call_04_transport_error.json",
+      "sha256": "c34327f01cfb0e7f199d9cec88159fdfcf29f7ff65e706fbb552bd266f320338"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/process_events.jsonl",
+      "sha256": "c5a8f74c033af8aa0ae4dbc01688fe6ed7f9094c0750779d49755c157de9c248"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000107_wrist.png",
+      "sha256": "b0bc10432dd369520e94ecf7f2e49d8253cba720349546bc0531f4542d575dbb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000107_wrist_checker_agentview.png",
+      "sha256": "f56302516ed6648b64cd9dfeb47586a05248dd7fb93cf4eab0e423e054054e76"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000107_wrist_checker_sideview.png",
+      "sha256": "3668a81f99d54d1bc44ab20c1264e7d80c2b8617314877b60bd6e91a4237177c"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000110_wrist.png",
+      "sha256": "05f3304a5a69572b25e45548fc88dae94bec709986cd27474c054ce9c84b11fd"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000110_wrist_checker_agentview.png",
+      "sha256": "994a77649b4b1eb2fdaf5e45211aef0cf66cad142fb061fc9ca87f822224f95f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000110_wrist_checker_sideview.png",
+      "sha256": "55aea921edd6c62c1e80ff9d235f9c7220a3df4fa60162c9166449e5222aade9"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000113_wrist.png",
+      "sha256": "e3d2aec56a3e581b90b80795cf12441b9a408c21e9c70c686f15d31519be880e"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000113_wrist_checker_agentview.png",
+      "sha256": "a6a74854773c338f7b3ad9eb4ed0db0211a4323676366db7d2a1957086035cd8"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000113_wrist_checker_sideview.png",
+      "sha256": "e9edc973f445eaebb48e221b323fffc4702342cbc7387c4d94396ea089d17452"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000116_wrist.png",
+      "sha256": "4514569c15cba6aeae873e19b2f89b878b91f5b06a738cdfea62b4a707f8fb9e"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000116_wrist_checker_agentview.png",
+      "sha256": "4e3d57fe2cfb4af7eddf3ce541c78398fddc21b6fc8acb74a594d02df4cdf8d7"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000116_wrist_checker_sideview.png",
+      "sha256": "7648021f21c7c7d76ce08d90663e35124f37deaac2be4b752c4315ccc5eb05fd"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000149_wrist.png",
+      "sha256": "e0d2f9f4d85f114ca631017242188b66be24305f2d5b56993e113af5457a4969"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000149_wrist_checker_agentview.png",
+      "sha256": "918267e38fd8b5ee53a6647cce4fa1544f2c721d5c28f6cfb24885a42286334f"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000149_wrist_checker_sideview.png",
+      "sha256": "fca5c62c3ba90da81542392509441165aa32ee78086c1ed4c3e7cd66ab4df837"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000152_wrist.png",
+      "sha256": "6d9cd4d19425521703d00d6e4d1aed1d280bf0863010a7371db6c538dce7ab0a"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000152_wrist_checker_agentview.png",
+      "sha256": "bcb3baa0d67884b373207059e5d9fca525298e0dc1501a80f26660e7dfdca7ab"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/finish/sensors/cap000152_wrist_checker_sideview.png",
+      "sha256": "42996358500ca07a1c089d5032e2f80f0d5e69271152a6fed3083a21917d8a2b"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/handoff_reference.json",
+      "sha256": "6b069f8d55f4efd418f4409631b1ee3ce33d273425122260385020bf68359c83"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/cap_01_xvla_bowl_drawer_close_03f4dea1/pilot_result.json",
+      "sha256": "7fdb91e5fe40996b0ad3852461dbabf140b24f2ef003653025450fad260838c8"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/native/native_reset.json",
+      "sha256": "b9d25f9cd157979c362f06e5ab0b1a29180f2cb9ca9cb505845de255cedaaeec"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/native/native_steps.jsonl",
+      "sha256": "38a1ffbc718b0513d1371789114b43ec2fdd4c4385cd4ab567dfe951ee5fd9d5"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/planning_grounding/cap000002_wrist.png",
+      "sha256": "8f901dff03c994dda17eb4012e715f452a5832299d317cb5d36e6e087b409257"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "sha256": "5cc2b2af91494cb92d9b6f07e8f56b484654ac88e0cd8880398d1dceaecaf0cb"
+    },
+    {
+      "path": "First_Phase/scene_demo/results/interactive-console/runs/20261014T125912Z_bowl_drawer_60008460/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "sha256": "44a540009036103c28d36f26f3a08ecb4d0e69e75725f0f853058eb96f9d302b"
+    }
+  ],
+  "configuration": {
+    "scene": "bowl_drawer",
+    "seed": 142,
+    "init_state_index": 0,
+    "native_capability": "xvla_bowl_drawer_close",
+    "request": "收拾桌面，将碗和瓶子归位",
+    "entry": "xvla_console.py normal load/plan/execute APIs",
+    "vlm_model": "qwen3.8-max",
+    "planner": "Hermes installed SDK one turn + independent Qwen review",
+    "planner_thinking": false,
+    "checker_thinking_budget": 1024,
+    "vla_budget": 900,
+    "session_action_limit": 8000,
+    "helpers": false,
+    "finish_success_streak": 5,
+    "policy_launch_reference": "First_Phase/scene_demo/results/2026-10-13-xvla-timeline-trial/ready.json future_server",
+    "controls_hashes": "protected_controls.json",
+    "instructions": "original complete skill instruction, all original goals",
+    "retreat": "legacy_first_then_current_geometry_v1",
+    "stage": "online"
+  },
+  "configuration_complete": true
+}

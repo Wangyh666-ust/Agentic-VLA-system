@@ -1,0 +1,32 @@
+{
+  "pid": 3465,
+  "spec": {
+    "argv": [
+      "/home/yhwang/fyp/xvla_native/venv/bin/python",
+      "-u",
+      "-m",
+      "deploy",
+      "--model_path",
+      "/home/yhwang/fyp/xvla_native/model",
+      "--port",
+      "8794",
+      "--host",
+      "127.0.0.1",
+      "--disable_slurm",
+      "--output_dir",
+      "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/model_output"
+    ],
+    "cwd": "/home/yhwang/fyp/xvla_native/upstream",
+    "env": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "/home/yhwang/fyp/xvla_native/upstream",
+      "HF_HUB_OFFLINE": "1",
+      "TRANSFORMERS_OFFLINE": "1",
+      "HF_HUB_DISABLE_IMPLICIT_TOKEN": "1",
+      "TOKENIZERS_PARALLELISM": "false",
+      "HF_HOME": "/home/yhwang/fyp/xvla_native/cache/huggingface",
+      "XDG_CACHE_HOME": "/home/yhwang/fyp/xvla_native/cache"
+    },
+    "readiness": "GET /openapi.json; schema POST /act; no request performed"
+  }
+}

@@ -65,7 +65,7 @@ def main():
         'fixed_factors': {'fixtures': 'exact five old input fixtures, select wine/bowl/sauce/stove; same full state SHA',
                          'homing': 'unchanged joint_home.py, original streaming loop/config/path screening',
                          'retreat': 'unchanged geometry.py, RGBD path screening and action budgets',
-                         'model': 'qwen3-vl-plus temperature=0, actual photos and synchronous encoders; no oracle inputs'},
+                         'model': 'qwen3.8-max temperature=0, actual photos and synchronous encoders; no oracle inputs'},
         'scope': {'max_cases': 4, 'max_vla_actions_per_case': 0, 'max_helper_actions_per_case': 900,
                   'stop_rule': '每个独立任务只运行一次，当前例未触发/失败立即停止本例，不继续任何依赖组合；其余独立任务可继续。零新VLA，历史动作恢复末态。不开新agent，不扩大任务、不训练、不自动开启UI。'},
         'configuration': {'inputs_sha256': sha(inputs), 'source_sha256': {rel: sha(ROOT / rel) for rel in source_paths},

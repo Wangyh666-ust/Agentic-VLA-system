@@ -1,0 +1,118 @@
+{
+  "request": "整理桌面，包括碗、酒瓶，并且打开灶台",
+  "physical_actions": 0,
+  "vla_calls": 0,
+  "simulator_instances": 0,
+  "hermes": {
+    "exit_code": 0,
+    "timed_out": false,
+    "error": null
+  },
+  "plans": [
+    {
+      "request_id": "6e5579d199754a9cbda68e312f8e6afc",
+      "session_id": "48fd356ff6e44d38b43867b2abcb2ce2",
+      "scene_version": 0,
+      "decision": "execute",
+      "capability_ids": [
+        "bowl_to_plate",
+        "wine_to_rack",
+        "stove_on"
+      ],
+      "rationale": "用户动作词为「整理」（收纳意图，对象为碗与酒瓶）并明确点名「打开灶台」。收纳部分按公开 storage_policy 执行：akita_black_bowl_1→plate_1、wine_bottle_1→wine_rack_1_top_region；开灶是用户显式请求而非自动触发。三视角图像核对：碗=obj_1（银灰磨砂碗）、盘=obj_2（白底红边盘）、酒瓶=obj_3（深色直立瓶带橙黄塞）、灶台=obj_4（同心圆加热盘面板）、酒架=obj_7（木条板架），两件操作物不同体。执行顺序按用户列举：先碗、再酒瓶、最后开灶。wine_to_rack 与 stove_on 的 evidence 为 candidate，bowl_to_plate 仅单任务验证、序列可靠性未验证，均不作可靠性保证。",
+      "request_scope": {
+        "coverage": "full",
+        "executable_outcomes": [
+          "整理碗：把碗放到盘子上（bowl_to_plate，符合 storage_policy）",
+          "整理酒瓶：把酒瓶放到酒架顶部区域（wine_to_rack，符合 storage_policy）",
+          "打开灶台（stove_on，用户显式请求）"
+        ],
+        "unmet_outcomes": [],
+        "reason": "需求三部分（整理碗、整理酒瓶、打开灶台）均有对应公开能力，目的地全部来自公开 storage_policy 或用户显式点名，无能力缺口；注意 wine_to_rack/stove_on 为 candidate 证据、序列可靠性未验证，提交不等于执行完成。"
+      },
+      "target_bindings": {
+        "akita_black_bowl_1": "obj_1",
+        "plate_1": "obj_2",
+        "wine_bottle_1": "obj_3",
+        "wine_rack_1_top_region": "obj_7",
+        "flat_stove_1": "obj_4"
+      }
+    }
+  ],
+  "protocol_errors": [],
+  "forwarded": [],
+  "route": {
+    "requested_capability_ids": [
+      "bowl_to_plate",
+      "wine_to_rack",
+      "stove_on"
+    ],
+    "executed_capability_ids": [
+      "bowl_to_plate",
+      "wine_to_rack",
+      "stove_on"
+    ],
+    "replacements": []
+  },
+  "selection_review": {
+    "passed": true,
+    "response": {
+      "checks": [
+        {
+          "target_id": "akita_black_bowl_1",
+          "matches_request": true,
+          "reason": "frame0俯视中央为银灰磨砂圆碗[obj_1框]，frame1在黑柜右缘露出银色碗边，frame2侧视见完整银灰碗形；与红边白盘(obj_2)区分清楚，确为用户要整理的碗"
+        },
+        {
+          "target_id": "plate_1",
+          "matches_request": true,
+          "reason": "frame0上方白心红边圆盘、frame1与frame2中黑柜右前方粉红边浅盘均为同一obj_2，作为碗的目的地盘子与请求一致，非碗本体"
+        },
+        {
+          "target_id": "wine_bottle_1",
+          "matches_request": true,
+          "reason": "frame0俯视黑色椭圆瓶身带橙黄塞、frame1黑柜后露出带浅色尖的瓶颈、frame2侧视直立深色酒瓶，三视角身份一致，确为用户要整理的酒瓶"
+        },
+        {
+          "target_id": "wine_rack_1_top_region",
+          "matches_request": true,
+          "reason": "frame0右缘木色板条、frame1与frame2斜置木条架带红棕小片为同一obj_7，是场景中唯一架状物，可作酒瓶目的地（区域绑定装置整体），与红棕平板obj_8不混"
+        },
+        {
+          "target_id": "flat_stove_1",
+          "matches_request": true,
+          "reason": "frame0左下同心圆加热盘、frame1白板黑炉盘旁带黑色旋钮、frame2银灰方板同心圆炉盘均为同一灶台obj_4，当前未开启，确为用户点名要打开的灶台"
+        }
+      ]
+    },
+    "metadata": {
+      "model": "qwen3.8-max",
+      "usage": {
+        "completion_tokens": 2388,
+        "completion_tokens_details": {
+          "reasoning_tokens": 2048,
+          "text_tokens": 339
+        },
+        "prompt_tokens": 4031,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "image_tokens": 582,
+          "text_tokens": 3449
+        },
+        "total_tokens": 6419
+      },
+      "wall_s": 47.23008898099988,
+      "http_status": 200,
+      "request_sha256": "637e30720f647ac9e2ac93a99b465ff15733f5ea2f950cffb02835527be04171",
+      "response_sha256": "e0fa96c1b330509bff695edcd4afb4b1d675aec6782a7064ca5e66c656c4ba9d"
+    },
+    "selection": {
+      "akita_black_bowl_1": "obj_1",
+      "plate_1": "obj_2",
+      "wine_bottle_1": "obj_3",
+      "wine_rack_1_top_region": "obj_7",
+      "flat_stove_1": "obj_4"
+    }
+  },
+  "status": "captured"
+}

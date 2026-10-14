@@ -1,0 +1,1153 @@
+{
+  "mode": "live",
+  "stage": "blocked",
+  "request": "收拾桌面，将碗和瓶子归位",
+  "scene": "bowl_drawer",
+  "request_id": "console-09f67a9a4b046462644e3aa6",
+  "events": [
+    {
+      "time": "20:20:34",
+      "text": "正在载入场景并拍摄三视图；不启动模型、不执行任务。"
+    },
+    {
+      "time": "20:20:41",
+      "text": "三视图已就绪。请先看看场景，再在下方填写你想做的任务。"
+    },
+    {
+      "time": "20:21:02",
+      "text": "正在准备当前任务。"
+    },
+    {
+      "time": "20:21:03",
+      "text": "正在加载 X-VLA；尚未创建场景。"
+    },
+    {
+      "time": "20:21:20",
+      "text": "Hermes 正在联合识别三视图并规划完整原生技能，随后进行一次独立复核。"
+    },
+    {
+      "time": "20:22:05",
+      "text": "规划完成，尚未执行。请核对目标与能力范围，再点击执行。"
+    },
+    {
+      "time": "20:22:36",
+      "text": "用户已确认，正在将同一计划交给原 X-VLA 流程。"
+    },
+    {
+      "time": "20:29:01",
+      "text": "流程被检查器或复位验收阻断。"
+    }
+  ],
+  "run_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-202034-53dfb001",
+  "message": "流程被检查器或复位验收阻断。",
+  "session_id": "647bf4cb6e354895b07086ee50eafd65",
+  "capabilities": [
+    {
+      "instruction": "put the black bowl in the bottom drawer of the cabinet and close it",
+      "goals": [
+        [
+          "close",
+          "white_cabinet_1_bottom_region"
+        ],
+        [
+          "in",
+          "akita_black_bowl_1",
+          "white_cabinet_1_bottom_region"
+        ]
+      ],
+      "scene_ids": [
+        "bowl_drawer"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 3
+      },
+      "component_capability_ids": [
+        "xvla_t03_bowl_to_drawer",
+        "xvla_t03_drawer_close"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_bowl_drawer_close"
+    }
+  ],
+  "frames": [
+    {
+      "view": "wrist",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000002_wrist.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "agentview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000002_wrist_checker_agentview.png",
+      "timestamp": 0.5000000000000003
+    },
+    {
+      "view": "sideview",
+      "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000002_wrist_checker_sideview.png",
+      "timestamp": 0.5000000000000003
+    }
+  ],
+  "preview_only": false,
+  "model_runtime": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-202034-53dfb001/model-20261014-202104-5c13af63",
+  "model_log": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/20261014-202034-53dfb001/model-20261014-202104-5c13af63/model.log",
+  "inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "银灰色带斑点纹理的圆形碗，位于桌面中央偏左",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              430,
+              0,
+              620,
+              110
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              435,
+              535,
+              535,
+              615
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              385,
+              505,
+              485,
+              575
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕部视角顶部边缘可见碗口及部分内壁"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "正面清晰可见完整碗体及斑点纹理"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧面清晰可见碗体轮廓"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "深绿色/黑色细长瓶子，带浅色瓶盖，位于碗后方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              230,
+              390,
+              330,
+              490
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              455,
+              425,
+              485,
+              515
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              575,
+              435,
+              605,
+              525
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "俯视可见瓶身及浅色瓶盖"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "正面清晰可见完整瓶身"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧面清晰可见瓶身轮廓"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "浅灰色双层抽屉柜，下层抽屉处于拉开状态，位于桌面右侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              0,
+              280,
+              320
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              495,
+              325,
+              785,
+              585
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              485,
+              445,
+              845,
+              715
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕部视角左侧可见柜体顶部及把手结构"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "正面清晰可见双层结构及拉开的下层抽屉"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧面清晰可见柜体及拉开的抽屉内部"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "木质双层置物架，带深红色底座，位于桌面左侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              125,
+              395,
+              425,
+              645
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              265,
+              285,
+              515,
+              535
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕部视角未覆盖该区域"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "正面清晰可见木质层板及底座"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧面清晰可见置物架结构"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      }
+    ],
+    "coverage": "碗与抽屉柜身份及位置经三视图核对无误；瓶子(obj_2)与置物架(obj_4)可见但非本次执行目标，保留在目录中。",
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000002_wrist.png",
+        "sha256": "8f901dff03c994dda17eb4012e715f452a5832299d317cb5d36e6e087b409257"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "5cc2b2af91494cb92d9b6f07e8f56b484654ac88e0cd8880398d1dceaecaf0cb"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "44a540009036103c28d36f26f3a08ecb4d0e69e75725f0f853058eb96f9d302b"
+      }
+    ],
+    "corrections": "无修正，原描述与框选坐标经独立复核均准确对应实物。",
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ]
+  },
+  "draft": {
+    "request_id": "console-09f67a9a4b046462644e3aa6",
+    "session_id": "647bf4cb6e354895b07086ee50eafd65",
+    "scene_version": 0,
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_bowl_drawer_close"
+    ],
+    "rationale": "用户要求收拾桌面并将碗和瓶子归位。当前技能库仅支持将黑碗放入底层抽屉并关闭的完整收纳技能，可执行碗的归位及抽屉关闭。瓶子归位缺乏对应原生技能支持，无法执行。",
+    "request_scope": {
+      "coverage": "partial",
+      "executable_outcomes": [
+        "将银灰色斑点碗放入浅灰色抽屉柜下层",
+        "关闭浅灰色抽屉柜下层抽屉"
+      ],
+      "unmet_outcomes": [
+        "深色细长瓶子的归位操作"
+      ],
+      "reason": "技能库中仅有碗入抽屉并关门的完整能力，可覆盖碗的收纳需求；缺少瓶子归位或通用放置技能，瓶子部分无法执行，需澄清或等待后续能力支持。"
+    },
+    "target_bindings": {
+      "akita_black_bowl_1": "obj_1",
+      "white_cabinet_1_bottom_region": "obj_3"
+    },
+    "audit": false,
+    "budget_per_subgoal": 900
+  },
+  "plan": {
+    "ok": true,
+    "request_id": "console-09f67a9a4b046462644e3aa6",
+    "session_id": "647bf4cb6e354895b07086ee50eafd65",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "xvla_bowl_drawer_close"
+    ],
+    "original_capability_ids": [
+      "xvla_bowl_drawer_close"
+    ],
+    "rationale": "用户要求收拾桌面并将碗和瓶子归位。当前技能库仅支持将黑碗放入底层抽屉并关闭的完整收纳技能，可执行碗的归位及抽屉关闭。瓶子归位缺乏对应原生技能支持，无法执行。",
+    "request_scope": {
+      "coverage": "partial",
+      "executable_outcomes": [
+        "将银灰色斑点碗放入浅灰色抽屉柜下层",
+        "关闭浅灰色抽屉柜下层抽屉"
+      ],
+      "unmet_outcomes": [
+        "深色细长瓶子的归位操作"
+      ],
+      "reason": "技能库中仅有碗入抽屉并关门的完整能力，可覆盖碗的收纳需求；缺少瓶子归位或通用放置技能，瓶子部分无法执行，需澄清或等待后续能力支持。"
+    },
+    "request_fulfilled": false,
+    "target_bindings": {
+      "akita_black_bowl_1": "obj_1",
+      "white_cabinet_1_bottom_region": "obj_3"
+    },
+    "job_ids": [
+      "8e6a690cef66416eabb34019026b3925"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [],
+    "plan_success": null,
+    "regressions": [],
+    "error": "retreat plan blocked",
+    "repair_history": [],
+    "scene_version": 1,
+    "native_skill_route": {
+      "requested_capability_ids": [
+        "xvla_bowl_drawer_close"
+      ],
+      "executed_capability_ids": [
+        "xvla_bowl_drawer_close"
+      ],
+      "replacements": []
+    }
+  },
+  "jobs": [
+    {
+      "job_id": "8e6a690cef66416eabb34019026b3925",
+      "request_id": "console-09f67a9a4b046462644e3aa6",
+      "session_id": "647bf4cb6e354895b07086ee50eafd65",
+      "capability_id": "xvla_bowl_drawer_close",
+      "state": "completed",
+      "steps": 240,
+      "total_steps": 253,
+      "success": false,
+      "ended_reason": "retreat plan blocked",
+      "error": null,
+      "instruction": "put the black bowl in the bottom drawer of the cabinet and close it",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "2330c3526972813357c0d8ac53094b650ba8e81143ddf7ed9c21bcf35496ba73",
+      "state_after_sha": "02fd57b646b690cfdfcc8beb5d4ef6c5d36938d65a53c53e700757d4a223cf65",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "blocked",
+        "calls": 2,
+        "prechecks": 1,
+        "helper_counts": {
+          "release": 2,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "last_decision": {
+          "state": "complete",
+          "reason": "purpose achieved and encoder confirms open; controller verifies retreat/home",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": {
+          "ok": false,
+          "reason": "retreat plan blocked",
+          "checks": 1
+        },
+        "independent_streak": 0,
+        "current_view_calls": 1,
+        "release_evidence_calls": 1,
+        "release_events": 1,
+        "process_evidence": [
+          {
+            "proof_id": "0faadb5e02c1cc05/review_00001/goal_0",
+            "goal_key": "[\"akita_black_bowl_1\", \"in\", \"white_cabinet_1_bottom_region\", false]",
+            "target_id": "akita_black_bowl_1",
+            "destination_id": "white_cabinet_1_bottom_region",
+            "capture_id": "0faadb5e02c1cc05/capture_000037",
+            "observed_at": 9.699999999999909,
+            "reviewed_at": 10.050000000000026,
+            "review_id": "0faadb5e02c1cc05/review_00001",
+            "event_id": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/release_0001",
+            "status": "confirmed",
+            "kind": "historical_review",
+            "supersedes_review_id": null,
+            "evidence": [
+              {
+                "capture_id": "0faadb5e02c1cc05/capture_000037",
+                "view": "wrist",
+                "box": [
+                  55,
+                  140,
+                  220,
+                  275
+                ]
+              },
+              {
+                "capture_id": "0faadb5e02c1cc05/capture_000037",
+                "view": "agentview",
+                "box": [
+                  520,
+                  225,
+                  600,
+                  255
+                ]
+              },
+              {
+                "capture_id": "0faadb5e02c1cc05/capture_000037",
+                "view": "sideview",
+                "box": [
+                  535,
+                  260,
+                  590,
+                  295
+                ]
+              }
+            ],
+            "identity_refs": [
+              {
+                "capture_id": "0faadb5e02c1cc05/capture_000001",
+                "view": "agentview",
+                "box": [
+                  435,
+                  535,
+                  535,
+                  615
+                ]
+              },
+              {
+                "capture_id": "0faadb5e02c1cc05/capture_000039",
+                "view": "agentview",
+                "box": [
+                  520,
+                  225,
+                  600,
+                  255
+                ]
+              }
+            ],
+            "comparison": "该时刻斑点纹碗已在下层抽屉内且夹爪张开脱手，与当前capture_000039中抽屉内的碗为同一目标",
+            "placement": {
+              "region_confirmed": true,
+              "region_description": "下层拉开抽屉的内部容纳空间",
+              "destination_evidence": [
+                {
+                  "frame": 7,
+                  "box": [
+                    490,
+                    220,
+                    620,
+                    275
+                  ]
+                },
+                {
+                  "frame": 8,
+                  "box": [
+                    480,
+                    255,
+                    610,
+                    320
+                  ]
+                }
+              ],
+              "boundary_observation": "碗口低于抽屉侧板上沿，碗体被抽屉内壁包围",
+              "relation_evidence": [
+                {
+                  "frame": 7,
+                  "box": [
+                    520,
+                    225,
+                    600,
+                    255
+                  ]
+                },
+                {
+                  "frame": 8,
+                  "box": [
+                    535,
+                    260,
+                    590,
+                    295
+                  ]
+                }
+              ],
+              "support_observation": "碗坐于抽屉底板，夹爪张开在碗上方未接触",
+              "needs_motion": false,
+              "contradiction": false,
+              "views": [
+                {
+                  "frame": 6,
+                  "relation": "satisfied",
+                  "reason": "腕视见碗已在抽屉前板内侧且低于口沿"
+                },
+                {
+                  "frame": 7,
+                  "relation": "satisfied",
+                  "reason": "agentview见碗在抽屉内、夹爪张开"
+                },
+                {
+                  "frame": 8,
+                  "relation": "satisfied",
+                  "reason": "sideview见碗在抽屉腔体内"
+                }
+              ],
+              "support_contact": {
+                "visible": false,
+                "observation": "碗底与抽屉底板接触处被抽屉前板遮挡",
+                "evidence": [
+                  {
+                    "frame": 7,
+                    "box": [
+                      520,
+                      240,
+                      600,
+                      258
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "box": [
+                      535,
+                      278,
+                      590,
+                      296
+                    ]
+                  }
+                ]
+              },
+              "support_inference": {
+                "depth_sufficient": true,
+                "spatial_observation": "碗整体尺度与初态一致，露出部分仅为口沿以上少量，已越过抽屉口沿进入内腔，无悬空",
+                "temporal_observation": "9.55s夹持碗位于抽屉口上方偏外，9.70s碗已落入抽屉内且夹爪张开，位置关系延续到随后近邻图",
+                "evidence": [
+                  {
+                    "frame": 7,
+                    "box": [
+                      520,
+                      225,
+                      600,
+                      255
+                    ]
+                  },
+                  {
+                    "frame": 8,
+                    "box": [
+                      535,
+                      260,
+                      590,
+                      295
+                    ]
+                  },
+                  {
+                    "frame": 4,
+                    "box": [
+                      520,
+                      222,
+                      600,
+                      252
+                    ]
+                  },
+                  {
+                    "frame": 5,
+                    "box": [
+                      535,
+                      255,
+                      590,
+                      290
+                    ]
+                  }
+                ]
+              },
+              "supplemental_context_evidence": {
+                "destination_evidence": [],
+                "relation_evidence": []
+              },
+              "_geometry_sequence_validated": true,
+              "_inferred_motion_settled": false
+            },
+            "region": {
+              "destination_id": "white_cabinet_1_bottom_region",
+              "confirmed": true,
+              "description": "浅灰色抽屉柜下层拉开的抽屉内部空间",
+              "boundary": "抽屉前板内侧、左右侧板及底板围成的容纳区域",
+              "anchors": [
+                {
+                  "capture_id": "0faadb5e02c1cc05/capture_000001",
+                  "view": "agentview",
+                  "box": [
+                    535,
+                    465,
+                    715,
+                    545
+                  ]
+                },
+                {
+                  "capture_id": "0faadb5e02c1cc05/capture_000001",
+                  "view": "sideview",
+                  "box": [
+                    495,
+                    565,
+                    685,
+                    665
+                  ]
+                }
+              ],
+              "reviewed_at": 0.5000000000000003,
+              "request_sha256": "c3c9f0bd35ef8c1bd3ea94121c67d26ffd63329bc4075e8b4c5e2a137fa9372f",
+              "response_sha256": "a25e1f2c493c0a08a65ec7d99433f3d89273745517d469cbb75dc9cfb53facf2"
+            },
+            "source_sha256": [
+              "3e97bebcbdb2a360ede0b65c64d01d6bd89fc270bf24867c068dc66b3edc9698",
+              "ffeaa0a3181c710351963b397badd1f672e820947a8496b72f2ab35e0ab1f047",
+              "05817f0a579dc5d0df03f16b10e8d944e6d869e939a7d76f839ccd9abbc05c85"
+            ],
+            "encoder": {
+              "timestamp": 9.699999999999909,
+              "finger_qpos": [
+                0.0379115139949132,
+                -0.03813611950421912
+              ],
+              "standard_open_finger_qpos": [
+                0.03873049022112575,
+                -0.03872787911458244
+              ],
+              "position_unit": "m",
+              "standard_open_tolerance_m": 0.002,
+              "max_standard_open_error_mm": 0.8189762262125477,
+              "at_standard_open": true
+            },
+            "request_sha256": "dd8575b3c18f7e923af5e379a5bdfdc2310d18134c3019ae7d268dbcf556ef0a",
+            "response_sha256": "98b2d10b9090e263c8cf23f44477e8e884d43a7da8fa8e5361fddc33f4664b4c"
+          }
+        ],
+        "check_schedule": {
+          "suite": "libero_10",
+          "task_id": 3,
+          "instruction": "put the black bowl in the bottom drawer of the cabinet and close it",
+          "samples": 5,
+          "successes": 4,
+          "earliest_success_step": 224,
+          "first_check_step": 240,
+          "source_sha256": "bc6a9f925847a4c7694599e30c3b17dafdb696a2dde46a1391c1411b7ec07469"
+        },
+        "schedule_skips": 0,
+        "actual_visual_requests": 4
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/rollout.mp4",
+      "wall_s": 377.75
+    }
+  ],
+  "evidence": [
+    {
+      "capability": "xvla_bowl_drawer_close",
+      "event": {
+        "event_id": "release_0001",
+        "capture": {
+          "timestamp": 9.699999999999909,
+          "frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000109_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000109_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -0.9652332864422136,
+                  -0.22601978196501718,
+                  -0.13130027000905145,
+                  -0.005848621116658872
+                ],
+                [
+                  -0.2283258885913916,
+                  0.9735813362874571,
+                  0.002582679167248742,
+                  0.06946213176071536
+                ],
+                [
+                  0.12724775574804906,
+                  0.03247213872253566,
+                  -0.9913392803999392,
+                  1.1219301280073788
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            }
+          ],
+          "verification_frames": [
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000109_agentview.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000109_agentview.npy",
+              "K": [
+                [
+                  309.01933598375615,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  309.01933598375615,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -7.268184498698815e-08,
+                  0.6282664504107425,
+                  -0.7779982437565529,
+                  0.6586131746834771
+                ],
+                [
+                  0.9999999999999858,
+                  -7.268184498698815e-08,
+                  -1.521152659944569e-07,
+                  0.0
+                ],
+                [
+                  -1.521152659944569e-07,
+                  -0.7779982437565529,
+                  -0.6282664504107283,
+                  1.6103500240372424
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "sideview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000111_sideview.png"
+            }
+          ],
+          "robot": {
+            "robot_name": "MountedPanda",
+            "joint_names": [
+              "robot0_joint1",
+              "robot0_joint2",
+              "robot0_joint3",
+              "robot0_joint4",
+              "robot0_joint5",
+              "robot0_joint6",
+              "robot0_joint7"
+            ],
+            "joint_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qpos_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "qvel_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "joint_limits_low": [
+              -2.8973,
+              -1.7628,
+              -2.8973,
+              -3.0718,
+              -2.8973,
+              -0.0175,
+              -2.8973
+            ],
+            "joint_limits_high": [
+              2.8973,
+              1.7628,
+              2.8973,
+              -0.0698,
+              2.8973,
+              3.7525,
+              2.8973
+            ],
+            "arm_qpos": [
+              0.13865242953805093,
+              0.620059952083519,
+              0.0468274987413628,
+              -1.7388220637320932,
+              -0.0016975495078777765,
+              2.229203820893297,
+              2.306155774816882
+            ],
+            "arm_qvel": [
+              -0.03777672527227622,
+              0.04493656016488797,
+              -0.03586321067005367,
+              0.35039137761855,
+              0.08819749365867603,
+              -0.45100957868919256,
+              -0.011184541461255283
+            ],
+            "finger_qpos_indexes": [
+              7,
+              8
+            ],
+            "finger_qvel_indexes": [
+              7,
+              8
+            ],
+            "finger_qpos": [
+              0.0379115139949132,
+              -0.03813611950421912
+            ],
+            "finger_qvel": [
+              0.011309517696681499,
+              -0.011607557559861184
+            ],
+            "torque_limits_low": [
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -80.0,
+              -12.0,
+              -12.0
+            ],
+            "torque_limits_high": [
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              80.0,
+              12.0,
+              12.0
+            ]
+          },
+          "eef_position": [
+            -0.02988573640578772,
+            0.11839171845431135,
+            1.0273938247447116
+          ],
+          "eef_rotation": [
+            [
+              0.9652332864422136,
+              0.22601978196501718,
+              -0.13130027000905145
+            ],
+            [
+              0.2283258885913916,
+              -0.9735813362874571,
+              0.002582679167248742
+            ],
+            [
+              -0.12724775574804906,
+              -0.03247213872253566,
+              -0.9913392803999391
+            ]
+          ],
+          "checker_frames": [
+            {
+              "view": "wrist",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist.png",
+              "depth_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist.npy",
+              "K": [
+                [
+                  166.81284772367434,
+                  0.0,
+                  128.0
+                ],
+                [
+                  0.0,
+                  166.81284772367434,
+                  128.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "T_world_camera": [
+                [
+                  -0.9652332864422136,
+                  -0.22601978196501718,
+                  -0.13130027000905145,
+                  -0.005848621116658872
+                ],
+                [
+                  -0.2283258885913916,
+                  0.9735813362874571,
+                  0.002582679167248742,
+                  0.06946213176071536
+                ],
+                [
+                  0.12724775574804906,
+                  0.03247213872253566,
+                  -0.9913392803999392,
+                  1.1219301280073788
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pixel_center_offset": 0.5
+            },
+            {
+              "view": "agentview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist_checker_agentview.png",
+              "timestamp": 9.699999999999909,
+              "camera_position": [
+                0.8,
+                -0.65,
+                1.75
+              ],
+              "camera_target": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "camera_fovy": 55.0,
+              "camera_role": "checker_only"
+            },
+            {
+              "view": "sideview",
+              "rgb_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist_checker_sideview.png",
+              "timestamp": 9.699999999999909,
+              "camera_position": [
+                0.8,
+                0.65,
+                1.75
+              ],
+              "camera_target": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "camera_fovy": 55.0,
+              "camera_role": "checker_only"
+            }
+          ]
+        },
+        "detector": "measured_open_transition",
+        "images": [
+          {
+            "view": "wrist",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist.png",
+            "sha256": "3e97bebcbdb2a360ede0b65c64d01d6bd89fc270bf24867c068dc66b3edc9698"
+          },
+          {
+            "view": "agentview",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist_checker_agentview.png",
+            "sha256": "ffeaa0a3181c710351963b397badd1f672e820947a8496b72f2ab35e0ab1f047"
+          },
+          {
+            "view": "sideview",
+            "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T122115Z_bowl_drawer_647bf4cb/cap_01_xvla_bowl_drawer_close_8e6a690c/finish/sensors/cap000110_wrist_checker_sideview.png",
+            "sha256": "05817f0a579dc5d0df03f16b10e8d944e6d869e939a7d76f839ccd9abbc05c85"
+          }
+        ]
+      }
+    }
+  ],
+  "busy": false
+}

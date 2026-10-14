@@ -1,0 +1,113 @@
+{
+  "request_id": "xvla-microwave_mug",
+  "session_id": "0959aa4a71004c85aee21c12f7ce530f",
+  "request": "先把黄白杯放进微波炉，再关闭微波炉门。",
+  "run_ok": true,
+  "chain_ok": false,
+  "plan_success": null,
+  "task_success": null,
+  "decision": "execute",
+  "plan": {
+    "ok": true,
+    "request_id": "xvla-microwave_mug",
+    "session_id": "0959aa4a71004c85aee21c12f7ce530f",
+    "state": "blocked",
+    "decision": "execute",
+    "capability_ids": [
+      "mug_to_microwave",
+      "microwave_close"
+    ],
+    "original_capability_ids": [
+      "mug_to_microwave",
+      "microwave_close"
+    ],
+    "rationale": "用户明确要求‘先把黄白杯放进微波炉，再关闭微波炉门’，对应两个原子能力：mug_to_microwave（放杯入微波炉）与 microwave_close（关门）；按顺序执行。",
+    "job_ids": [
+      "b778a47faa0c408f8b54efccc93786d1"
+    ],
+    "completed_capability_ids": [],
+    "pending_capability_ids": [
+      "microwave_close"
+    ],
+    "plan_success": null,
+    "regressions": [],
+    "error": "budget_exhausted",
+    "repair_history": [],
+    "scene_version": 1
+  },
+  "jobs": [
+    {
+      "job_id": "b778a47faa0c408f8b54efccc93786d1",
+      "request_id": "xvla-microwave_mug",
+      "session_id": "0959aa4a71004c85aee21c12f7ce530f",
+      "capability_id": "mug_to_microwave",
+      "state": "completed",
+      "steps": 800,
+      "total_steps": 805,
+      "success": false,
+      "ended_reason": "budget_exhausted",
+      "error": null,
+      "instruction": "put the yellow and white mug in the microwave",
+      "scene_version_before": 0,
+      "scene_version_after": 1,
+      "state_before_sha": "a65c520dda99aed635e861a5e7fde855fedd2cffa117031dbdf3f0a5a3a0078f",
+      "state_after_sha": "f9f083223fa24bb775d74fb9f4bb1325ffb76477da065ace15faeb85b93df7dd",
+      "env_instance_id": 1,
+      "episode_resets": 1,
+      "completion_mode": "release_verified",
+      "phase": "not_holding",
+      "held_objects": [],
+      "grasp_observation_complete": true,
+      "completion_ready": true,
+      "grasp_guard_mode": null,
+      "grasp_stage": null,
+      "grasp_guard_status": null,
+      "semantic_spec_id": null,
+      "semantic_state": null,
+      "semantic_candidate_streak": null,
+      "semantic_success": null,
+      "native_wine_predicate": null,
+      "semantic_observation_samples": 0,
+      "finish_status": {
+        "phase": "observing",
+        "calls": 5,
+        "prechecks": 5,
+        "helper_counts": {
+          "release": 0,
+          "movement": 0,
+          "confirm": 0,
+          "home": 0
+        },
+        "last_decision": {
+          "state": "incomplete",
+          "reason": "subtask purpose not achieved",
+          "allow_release": false,
+          "allow_retreat": false
+        },
+        "terminal": null,
+        "independent_streak": 0
+      },
+      "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f",
+      "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/latest.png",
+      "rollout_path": "/mnt/d/FYP/First_Phase/scene_demo/results/2026-10-12-xvla-persistent-pilot/v5/microwave_mug/runs/20261012T142927Z_microwave_mug_0959aa4a/cap_01_mug_to_microwave_b778a47f/rollout.mp4",
+      "wall_s": 237.277
+    }
+  ],
+  "evaluation": null,
+  "hermes_invocations": 1,
+  "usage": [
+    {
+      "available": false,
+      "reason": "installed Hermes chat native-image path did not export usage",
+      "api_calls": null,
+      "input_tokens": null,
+      "output_tokens": null
+    }
+  ],
+  "execution_timeout": false,
+  "cancelled_by_user": false,
+  "cancellation_pending": false,
+  "wall_s": 256.83,
+  "error": "计划被阻塞且无法继续修复，如实返回 blocked（不再空转）",
+  "hermes_output": "计划已提交。\n\nsession_id: 20261012_222934_dbd712\n"
+}

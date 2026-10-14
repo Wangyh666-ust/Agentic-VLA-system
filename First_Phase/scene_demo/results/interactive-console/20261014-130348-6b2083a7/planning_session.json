@@ -1,0 +1,430 @@
+{
+  "ok": true,
+  "session_id": "1060c3a0b4a44aa4a9bf4425aa0d9de3",
+  "scene_id": "book_caddy",
+  "capability_backend": "xvla",
+  "state": "ready",
+  "scene_version": 0,
+  "env_instance_id": 1,
+  "episode_resets": 1,
+  "policy_resets": 0,
+  "total_steps": 0,
+  "seed": 142,
+  "init_state_index": 0,
+  "description": "pick up the book and place it in the back compartment of the caddy",
+  "storage_policy": {
+    "black_book_1": "desk_caddy_1_back_contain_region"
+  },
+  "capabilities": [
+    {
+      "instruction": "put the book in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "atomic_candidate",
+      "audit_only": false,
+      "exclusive_target": true,
+      "object_id": "black_book_1",
+      "target_id": "desk_caddy_1_back_contain_region",
+      "evidence": "Candidate atomic prompt; untested integration, not evidence of native single-task training",
+      "capability_id": "xvla_t05_book_to_caddy"
+    },
+    {
+      "instruction": "pick up the book and place it in the back compartment of the caddy",
+      "goals": [
+        [
+          "in",
+          "black_book_1",
+          "desk_caddy_1_back_contain_region"
+        ]
+      ],
+      "scene_ids": [
+        "book_caddy"
+      ],
+      "native_task": {
+        "suite": "libero_10",
+        "task_id": 5
+      },
+      "component_capability_ids": [
+        "xvla_t05_book_to_caddy"
+      ],
+      "backends": [
+        "xvla"
+      ],
+      "skill_kind": "native_long_horizon",
+      "audit_only": false,
+      "exclusive_target": false,
+      "object_id": null,
+      "target_id": null,
+      "evidence": "X-VLA native benchmark evidence exists; Hermes composite integration not yet physically verified",
+      "capability_id": "xvla_book_caddy"
+    }
+  ],
+  "images": [
+    {
+      "view": "agentview",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/agentview.png",
+      "sha256": "a21bf0e81933ae9bbf604d5583ac8a91c1a77704e8f221d2ad3eb186fbe242bf",
+      "kind": "vla_observation"
+    },
+    {
+      "view": "wrist",
+      "image_path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/wrist.png",
+      "sha256": "014d57a0d6d27a2653374844adeda83dbe562d25ea2a284482559ff2aed32829",
+      "kind": "vla_observation"
+    }
+  ],
+  "latest_png": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/latest.png",
+  "run_dir": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0",
+  "active_request_id": null,
+  "error": null,
+  "finish_mode": "visual",
+  "scene_inventory": {
+    "objects": [
+      {
+        "object_id": "obj_1",
+        "description": "杯子：白色/浅灰杯身，口部敞开可见浅色内壁，侧面带黄色把手；初始位于桌面中部、收纳盒右前方",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              366,
+              31,
+              676,
+              296
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              497,
+              487,
+              597,
+              584
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              415,
+              497,
+              513,
+              597
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视俯看杯口，见白色内壁与右侧黄色把手"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agent视见白杯身与左侧黄色把手，形状颜色一致"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视见同款白杯与黄色把手，与收纳盒相对关系一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_2",
+        "description": "书：黑色硬封面长方体，顶面/页边露白色书页；初始竖立或斜靠在杯子旁",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              256,
+              320,
+              540
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              565,
+              393,
+              602,
+              508
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              568,
+              495,
+              668,
+              605
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "visible",
+            "reason": "腕视近距见黑色封面与白色页边的倾斜长方体"
+          },
+          {
+            "frame": 1,
+            "visibility": "partial",
+            "reason": "被杯子部分遮挡，仅见杯后竖立的黑色薄板侧边"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视见立放的黑色书块，顶面白色书页清晰"
+          }
+        ],
+        "confusable_with": [
+          "obj_5"
+        ],
+        "role": "target"
+      },
+      {
+        "object_id": "obj_3",
+        "description": "桌面收纳盒：棕色长方体容器，顶部开口并带多个隔间（可见左大格、中格、右格），无活动门/抽屉部件；初始位于桌面靠墙侧",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              316,
+              601,
+              998,
+              843
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              150,
+              348,
+              485,
+              602
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              378,
+              300,
+              665,
+              508
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视仅见收纳盒顶部与隔间开口，下部出画"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agent视完整见棕色三隔间收纳盒"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视见同一棕色隔间盒，隔间布局与frame 1一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "destination"
+      },
+      {
+        "object_id": "obj_4",
+        "description": "黑色台灯装置：细长黑色灯臂斜跨画面，端部为黑色椭圆灯头，立于桌面边缘",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              0,
+              0,
+              948,
+              998
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视朝向桌面，灯臂不在视场内"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agent视见完整黑色灯臂与灯头横跨桌面"
+          },
+          {
+            "frame": 2,
+            "visibility": "occluded",
+            "reason": "侧视角度下灯体位于画面外或被裁切，仅边缘疑似黑色部件"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_5",
+        "description": "黑色扁平长方形垫板/贴片：平铺于木纹桌面，无书页白边，厚度极薄",
+        "confirmed": false,
+        "anchors": [
+          {
+            "frame": 1,
+            "box": [
+              795,
+              375,
+              998,
+              510
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              0,
+              378,
+              205,
+              512
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "occluded",
+            "reason": "腕视范围仅覆盖杯、书与收纳盒附近，垫板不在视场"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agent视桌面右侧见平铺黑色长方形"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视桌面远端见同形状黑色平铺长方形，但画面中另有一块近端黑垫，跨视角唯一对应存疑"
+          }
+        ],
+        "confusable_with": [
+          "obj_2"
+        ],
+        "role": "distractor"
+      },
+      {
+        "object_id": "obj_6",
+        "description": "白色多关节机械臂装置：带黑色关节盖与银灰末端执行器，固定于桌面后方黑色底座上",
+        "confirmed": true,
+        "anchors": [
+          {
+            "frame": 0,
+            "box": [
+              0,
+              750,
+              1000,
+              1000
+            ]
+          },
+          {
+            "frame": 1,
+            "box": [
+              183,
+              0,
+              532,
+              402
+            ]
+          },
+          {
+            "frame": 2,
+            "box": [
+              488,
+              0,
+              815,
+              400
+            ]
+          }
+        ],
+        "view_observations": [
+          {
+            "frame": 0,
+            "visibility": "partial",
+            "reason": "腕视底缘灰色带与黑色夹块为臂端抓手局部，主体不在视场"
+          },
+          {
+            "frame": 1,
+            "visibility": "visible",
+            "reason": "agent视见白色臂身、黑色关节顶盖与末端夹爪"
+          },
+          {
+            "frame": 2,
+            "visibility": "visible",
+            "reason": "侧视见同一机械臂与黑色底座，形态一致"
+          }
+        ],
+        "confusable_with": [],
+        "role": "distractor"
+      }
+    ],
+    "coverage": {
+      "targets_identifiable": true,
+      "destination_visible": true,
+      "state_change_visible": true,
+      "reason": "书(obj_2)与杯子(obj_1)在frame 0/2清晰、frame 1部分可见且跨视角特征一致；目的地收纳盒(obj_3)在三帧均可见且隔间结构清楚；三帧为同一初始时刻同步视图，物体均处于未整理初始状态，整理前后的状态变化可由该初始清单与后续检查帧对比得到，画面覆盖充分"
+    },
+    "corrections": [
+      "obj_6：初稿仅登记frame 1/2锚点，但frame 0底缘的灰色横带与黑色夹块确为该机械臂末端执行器局部，遂补登frame 0锚点[0,750,1000,1000]，使三帧观察与锚点一致，confirmed维持true。",
+      "obj_5：复核frame 2可见多块同形黑色平铺垫板（远端、近端及左缘局部），无法与frame 1右侧垫板建立无歧义的唯一对应，维持confirmed=false，锚点仅作候选记录。",
+      "其余物体（obj_1杯子、obj_2书、obj_3收纳盒、obj_4台灯）逐帧复核框内确有对应实物：frame 0杯口与黄把手、左侧黑书块、收纳盒顶面隔间均在框内；frame 1/2坐标与像素位置吻合，无空框、无重复计数，描述与框均保留原稿。"
+    ],
+    "version": 1,
+    "captured_at": 0.5000000000000003,
+    "reviewed_from_views": [
+      "wrist",
+      "agentview",
+      "sideview"
+    ],
+    "source_images": [
+      {
+        "frame": 0,
+        "view": "wrist",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/planning_grounding/cap000002_wrist.png",
+        "sha256": "403d5923e9aeaa97c2c7e4931f5fe6241df3bd58c6f0807bccd7e163fdc09201"
+      },
+      {
+        "frame": 1,
+        "view": "agentview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/planning_grounding/cap000002_wrist_checker_agentview.png",
+        "sha256": "f24bc59dcb68006264c7ddde29755b522ee8ac1be53990954452c13c59d13e32"
+      },
+      {
+        "frame": 2,
+        "view": "sideview",
+        "path": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/planning_grounding/cap000002_wrist_checker_sideview.png",
+        "sha256": "285e0efcb850dcc9e106dbd272ec56e8798bdd4baae93f3d18f62264086d3d45"
+      }
+    ]
+  },
+  "planning_image": "/mnt/d/FYP/First_Phase/scene_demo/results/interactive-console/runs/20261014T050837Z_book_caddy_1060c3a0/planning_grounding/planning_three_views.png"
+}

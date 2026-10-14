@@ -1,0 +1,381 @@
+{
+  "cases": {
+    "table_tidy_stove": {
+      "request": "整理桌面，包括碗、酒瓶，并且打开灶台",
+      "plan": {
+        "request_id": "6e5579d199754a9cbda68e312f8e6afc",
+        "session_id": "48fd356ff6e44d38b43867b2abcb2ce2",
+        "scene_version": 0,
+        "decision": "execute",
+        "capability_ids": [
+          "bowl_to_plate",
+          "wine_to_rack",
+          "stove_on"
+        ],
+        "rationale": "用户动作词为「整理」（收纳意图，对象为碗与酒瓶）并明确点名「打开灶台」。收纳部分按公开 storage_policy 执行：akita_black_bowl_1→plate_1、wine_bottle_1→wine_rack_1_top_region；开灶是用户显式请求而非自动触发。三视角图像核对：碗=obj_1（银灰磨砂碗）、盘=obj_2（白底红边盘）、酒瓶=obj_3（深色直立瓶带橙黄塞）、灶台=obj_4（同心圆加热盘面板）、酒架=obj_7（木条板架），两件操作物不同体。执行顺序按用户列举：先碗、再酒瓶、最后开灶。wine_to_rack 与 stove_on 的 evidence 为 candidate，bowl_to_plate 仅单任务验证、序列可靠性未验证，均不作可靠性保证。",
+        "request_scope": {
+          "coverage": "full",
+          "executable_outcomes": [
+            "整理碗：把碗放到盘子上（bowl_to_plate，符合 storage_policy）",
+            "整理酒瓶：把酒瓶放到酒架顶部区域（wine_to_rack，符合 storage_policy）",
+            "打开灶台（stove_on，用户显式请求）"
+          ],
+          "unmet_outcomes": [],
+          "reason": "需求三部分（整理碗、整理酒瓶、打开灶台）均有对应公开能力，目的地全部来自公开 storage_policy 或用户显式点名，无能力缺口；注意 wine_to_rack/stove_on 为 candidate 证据、序列可靠性未验证，提交不等于执行完成。"
+        },
+        "target_bindings": {
+          "akita_black_bowl_1": "obj_1",
+          "plate_1": "obj_2",
+          "wine_bottle_1": "obj_3",
+          "wine_rack_1_top_region": "obj_7",
+          "flat_stove_1": "obj_4"
+        }
+      },
+      "planning_pass": true,
+      "selection_review_pass": true,
+      "direct_qwen": [
+        {
+          "model": "qwen3.8-max",
+          "usage": {
+            "completion_tokens": 4415,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2048,
+              "text_tokens": 2366
+            },
+            "prompt_tokens": 1001,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "image_tokens": 582,
+              "text_tokens": 419
+            },
+            "total_tokens": 5416
+          },
+          "wall_s": 83.10690078199991,
+          "http_status": 200,
+          "request_sha256": "e5b11739abcfa83cf09f9b50aaa8ccc1663e618b59d04246f87a22b8f054d030",
+          "response_sha256": "045bcb3873c75d487876d65d1b5509fc5c3758171aff2a4ee738b6b2d7ef7e1c"
+        },
+        {
+          "model": "qwen3.8-max",
+          "usage": {
+            "completion_tokens": 4353,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2048,
+              "text_tokens": 2304
+            },
+            "prompt_tokens": 3126,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "image_tokens": 582,
+              "text_tokens": 2544
+            },
+            "total_tokens": 7479
+          },
+          "wall_s": 70.71067392999998,
+          "http_status": 200,
+          "request_sha256": "0a498d29cdcb350946f4fc712b36f60c01deaf2258815ed446d4a76f72d16999",
+          "response_sha256": "4b3aae7c8e77ae9bfca45dc3ada04fa4cd4aa8e6cb47792683611eaa52b06123"
+        },
+        {
+          "model": "qwen3.8-max",
+          "usage": {
+            "completion_tokens": 2388,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2048,
+              "text_tokens": 339
+            },
+            "prompt_tokens": 4031,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "image_tokens": 582,
+              "text_tokens": 3449
+            },
+            "total_tokens": 6419
+          },
+          "wall_s": 47.23008898099988,
+          "http_status": 200,
+          "request_sha256": "637e30720f647ac9e2ac93a99b465ff15733f5ea2f950cffb02835527be04171",
+          "response_sha256": "e0fa96c1b330509bff695edcd4afb4b1d675aec6782a7064ca5e66c656c4ba9d"
+        }
+      ],
+      "hermes_main_api": [
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 13904,
+          "output_tokens": 4108,
+          "total_tokens": 18012
+        },
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 14661,
+          "output_tokens": 147,
+          "total_tokens": 14808
+        },
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 20779,
+          "output_tokens": 2112,
+          "total_tokens": 22891
+        },
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 22298,
+          "output_tokens": 445,
+          "total_tokens": 22743
+        }
+      ],
+      "physical_actions": 0
+    },
+    "heat_yellow_mug": {
+      "request": "帮我将黄杯子加热一下",
+      "plan": {
+        "request_id": "e5347b0f80924a68b03cee3ea40656d6",
+        "session_id": "48fbebc2b4984c1aa39b44b465541250",
+        "scene_version": 0,
+        "decision": "execute",
+        "capability_ids": [
+          "xvla_microwave_place_close"
+        ],
+        "rationale": "用户动作词为「加热」黄杯子：意图是让黄杯(white_yellow_mug_1, 对应画面 obj_1 黄色马克杯)进入微波炉(obj_3)被加热。公开能力库中没有启动加热的能力，按覆盖规则只提交加热所需的准备步骤：入炉(in white_yellow_mug_1 -> microwave_1_heating_region)与关门(close microwave_1)。该可执行范围的动作、物体、目的地与顺序与原生长期技能 xvla_microwave_place_close 完全匹配，故单次调用该技能而非拆成两个原子能力。不声称已完成加热。",
+        "request_scope": {
+          "coverage": "partial",
+          "executable_outcomes": [
+            "黄杯(white_yellow_mug_1)被放入微波炉加热区域(microwave_1_heating_region)",
+            "微波炉门(microwave_1)被关闭"
+          ],
+          "unmet_outcomes": [
+            "启动微波炉实际加热：公开能力库中不存在开启/启动加热的能力，本计划不执行也不会自动开炉"
+          ],
+          "reason": "原需求为加热黄杯；入炉+关门是加热必需的准备步骤且与原生技能 xvla_microwave_place_close 完全匹配，故执行该部分；缺少启动加热能力，剩余加热启动步骤无法完成，coverage 为 partial。"
+        },
+        "target_bindings": {
+          "white_yellow_mug_1": "obj_1",
+          "microwave_1_heating_region": "obj_3",
+          "microwave_1": "obj_3"
+        }
+      },
+      "planning_pass": true,
+      "selection_review_pass": true,
+      "direct_qwen": [
+        {
+          "model": "qwen3.8-max",
+          "usage": {
+            "completion_tokens": 3025,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2048,
+              "text_tokens": 976
+            },
+            "prompt_tokens": 995,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "image_tokens": 582,
+              "text_tokens": 413
+            },
+            "total_tokens": 4020
+          },
+          "wall_s": 82.64332322500002,
+          "http_status": 200,
+          "request_sha256": "c09772873d5acbfe945fc40182deb5f3328589540fa1c2230e16f08b0952df40",
+          "response_sha256": "1d774ccdade007810e4e68d688ce37a0150f18246f9b64be804a5f457b46fcf4"
+        },
+        {
+          "model": "qwen3.8-max",
+          "usage": {
+            "completion_tokens": 3174,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2048,
+              "text_tokens": 1125
+            },
+            "prompt_tokens": 1920,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "image_tokens": 582,
+              "text_tokens": 1338
+            },
+            "total_tokens": 5094
+          },
+          "wall_s": 59.13444025499996,
+          "http_status": 200,
+          "request_sha256": "aeafefacf7019d4a8aba2d6268b2118ca60ef0cec3f972ec1e92c5c59a590d7b",
+          "response_sha256": "ac7fe134557abb4e0c451d9825f7ce966c7b2423079db4140a091a947226cee6"
+        },
+        {
+          "model": "qwen3.8-max",
+          "usage": {
+            "completion_tokens": 1939,
+            "completion_tokens_details": {
+              "reasoning_tokens": 1652,
+              "text_tokens": 286
+            },
+            "prompt_tokens": 2777,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "image_tokens": 582,
+              "text_tokens": 2195
+            },
+            "total_tokens": 4716
+          },
+          "wall_s": 40.21422708199998,
+          "http_status": 200,
+          "request_sha256": "e55b2d8eb4c9dbd10cf0f3817eee6db3821c585eefb72ecf02f6135b50e660db",
+          "response_sha256": "1f0501249e1c163695437a957b20a1e73333fb3cf7bd1569a3fc78a5fac27754"
+        }
+      ],
+      "hermes_main_api": [
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 12746,
+          "output_tokens": 1477,
+          "total_tokens": 14223
+        },
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 13362,
+          "output_tokens": 96,
+          "total_tokens": 13458
+        },
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 16854,
+          "output_tokens": 1861,
+          "total_tokens": 18715
+        },
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 18117,
+          "output_tokens": 341,
+          "total_tokens": 18458
+        }
+      ],
+      "physical_actions": 0
+    },
+    "discard_two_cans": {
+      "request": "帮我扔一下桌面上的两个罐头",
+      "plan": {
+        "request_id": "7ac1230869fe48b1859fa3bc47fde9cd",
+        "session_id": "f72d0ae6aded4096ad503f3492643b2d",
+        "scene_version": 0,
+        "decision": "unsupported",
+        "capability_ids": [],
+        "rationale": "用户动作词为「扔」（帮我扔一下桌面上的两个罐头），属丢弃意图，目标为桌面两个罐头（obj_1 蓝灰罐、obj_2 红绿标签罐，三视角均可辨认）。当前场景没有垃圾桶：唯一容器是右侧编织篮 obj_3，公开 storage_policy 将其 basket_1_contain_region 定为这两个罐头的收纳目的地，而非垃圾桶；把罐头放入收纳篮不等于丢弃，也没有证据表明篮子是垃圾桶，故不能把入篮当作丢弃或其准备步骤。公开 capabilities 仅有 soup_to_basket / sauce_to_basket / xvla_basket_both 三个「放入篮中」的收纳类能力，没有丢弃/扔进垃圾桶的能力。请求中也没有其他独立可执行子目标，因此整体不支持，提交空能力列表。",
+        "request_scope": {
+          "coverage": "none",
+          "executable_outcomes": [],
+          "unmet_outcomes": [
+            "把桌面上的两个罐头丢弃/扔掉（场景内无垃圾桶，公开能力库也无丢弃类能力）"
+          ],
+          "reason": "用户意图为丢弃（动作词「扔」），而场景仅有收纳篮（storage_policy 目的地 basket_1_contain_region）与收纳类能力；入篮不等于丢弃且无证据篮子是垃圾桶，故不存在可执行部分，coverage=none。"
+        },
+        "target_bindings": null
+      },
+      "planning_pass": true,
+      "selection_review_pass": null,
+      "direct_qwen": [
+        {
+          "model": "qwen3.8-max",
+          "usage": {
+            "completion_tokens": 4515,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2048,
+              "text_tokens": 2466
+            },
+            "prompt_tokens": 996,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "image_tokens": 582,
+              "text_tokens": 414
+            },
+            "total_tokens": 5511
+          },
+          "wall_s": 83.36486375800007,
+          "http_status": 200,
+          "request_sha256": "a0dfe1ec476d3c76fd8c26f8c95043f00d38661efbde72dbc871e58bd8e8a403",
+          "response_sha256": "4921639e0ae37a536055d108d46bef36be1bb9dd0c303d9e911d365a4b07ec43"
+        },
+        {
+          "model": "qwen3.8-max",
+          "usage": {
+            "completion_tokens": 4388,
+            "completion_tokens_details": {
+              "reasoning_tokens": 2048,
+              "text_tokens": 2339
+            },
+            "prompt_tokens": 3197,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "image_tokens": 582,
+              "text_tokens": 2615
+            },
+            "total_tokens": 7585
+          },
+          "wall_s": 75.38412361199994,
+          "http_status": 200,
+          "request_sha256": "a1ff421c48013d3ff2217508363be973da31bc9c14a8bc6f53f8fe2ceeb97fa5",
+          "response_sha256": "38811d5d2eedb9b958774e0e0caf8be55f4197e912896d33d89f1270ab003673"
+        }
+      ],
+      "hermes_main_api": [
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 14401,
+          "output_tokens": 4443,
+          "total_tokens": 18844
+        },
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 15017,
+          "output_tokens": 95,
+          "total_tokens": 15112
+        },
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 21008,
+          "output_tokens": 2552,
+          "total_tokens": 23560
+        },
+        {
+          "model": "qwen3.8-max",
+          "input_tokens": 22299,
+          "output_tokens": 409,
+          "total_tokens": 22708
+        }
+      ],
+      "physical_actions": 0
+    }
+  },
+  "scope_branch_observed": true,
+  "initial_original_images": 9,
+  "all_request_image_hashes_matched": true,
+  "protected_source_unchanged": {
+    "joint_home.py": true,
+    "safe_exit.py": true,
+    "safe_exit_contacts.py": true,
+    "xvla_finish.py": true,
+    "xvla_backend.py": true,
+    "finish_v1/runtime.py": true,
+    "finish_v1/control.py": true,
+    "finish_v1/vision.py": true,
+    "xvla_subtask_review.py": true
+  },
+  "listening_ports_after_completion": {
+    "8778": false,
+    "8779": false,
+    "8780": false,
+    "8769": false,
+    "8794": false
+  },
+  "direct_qwen_responses": 8,
+  "hermes_main_api_calls": 12,
+  "known_tokens": 269772,
+  "usage_limit": "Hermes title-generation activity appears in logs; its separate usage is unavailable, not counted as zero.",
+  "manual_image_review": {
+    "heat": "Yellow-handle mug separate from grey speckled mug; external anchors match original pixels.",
+    "table": "Bowl/plate, wine/rack and stove distinct in original side image; selected bindings corroborated.",
+    "cans": "Both external-view anchors locate the two cylinders, not cartons. Wrist anchors still swap the two cans. No execution/bindings were submitted for unsupported disposal; this does NOT validate can manipulation or full three-view identity consistency."
+  },
+  "physical_actions": 0,
+  "subagents": 0,
+  "new_grasp_transport_helpers": false,
+  "online_started": false,
+  "authoring_model": "Actual root model/reasoning not evidenced; no delegated implementation model."
+}

@@ -1,0 +1,142 @@
+........................................................................ [  4%]
+........................................................................ [  9%]
+............................................................. [ 14%]
+......................................................................................................................................... [ 23%]
+........................................................................ [ 28%]
+........................................................................ [ 33%]
+........................................................................ [ 38%]
+........................................................................ [ 43%]
+........................................................................ [ 47%]
+....................................................................................................................................... [ 57%]
+......F................................................................. [ 62%]
+.......................................... [ 64%]
+............................................F........................... [ 69%]
+........................................................................ [ 74%]
+........................................................................ [ 79%]
+........................................................................ [ 84%]
+........................................................................ [ 89%]
+..........................................................F............. [ 94%]
+........................................................................ [ 99%]
+.........                                                                [100%]
+=================================== FAILURES ===================================
+__________ test_load_without_task_shows_triplet_before_any_grounding ___________
+
+console = (<scene_demo.xvla_console.Console object at 0x76fcd1e988e0>, {'request_id': 'e5347b0f80924a68b03cee3ea40656d6', 'session_id': '48fbebc2b4984c1aa39b44b465541250', 'scene_version': 0, 'decision': 'execute', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76fcd1e9aec0>
+
+    def test_load_without_task_shows_triplet_before_any_grounding(console, monkeypatch):
+        c, _ = console
+        monkeypatch.setattr(c, 'preflight', Mock())
+        monkeypatch.setattr(c, 'ensure_runtime', Mock())
+        preview = ui.frames(ui.read(ui.OFFLINE / 'heat_yellow_mug/grounding/capture.json'))
+        monkeypatch.setattr(c, 'preview_scene', Mock(return_value=preview))
+        c.svc.create_session.return_value = {'ok': True, 'session': c.session}
+        c.load('microwave_mug')
+        assert c.state['stage'] == 'ready'
+        assert c.state['request'] == ''
+        assert c.state['frames'] == preview and len(preview) == 3
+        assert c.state['preview_only'] is True
+        c.preflight.assert_not_called()
+        c.ensure_runtime.assert_not_called()
+        c.svc.create_session.assert_not_called()
+        c.svc.bind_request_context.assert_not_called()
+        c.svc.submit_plan.assert_not_called()
+        assert not (c.directory / 'task_request.json').exists()
+        with pytest.raises(ValueError):
+            c.plan('   ')
+        assert c.state['stage'] == 'ready'
+        c.svc.bind_request_context.assert_not_called()
+        c.session.pop('preview_only')  # Test task text binding after promotion separately.
+        c.svc.bind_request_context.side_effect = RuntimeError('stop before real models')
+        with pytest.raises(RuntimeError, match='stop before real models'):
+            c.plan('  把黄杯放进微波炉  ')
+>       c.svc.bind_request_context.assert_called_once_with(c.state['request_id'], c.session['session_id'], '把黄杯放进微波炉')
+
+First_Phase/scene_demo/tests/test_xvla_console.py:164: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/home/yhwang/fyp/xvla_native/uv_python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock name='mock.bind_request_context' id='130826056189120'>
+args = ('console-f64ddc7fed591d9464609143', 'preview-96f443d655bd835c9c9504d3', '把黄杯放进微波炉')
+kwargs = {}
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: bind_request_context('console-f64ddc7fed591d9464609143', 'preview-96f443d655bd835c9c9504d3', '把黄杯放进微波炉')
+E           Actual: bind_request_context('console-f64ddc7fed591d9464609143', 'preview-96f443d655bd835c9c9504d3', '把黄杯放进微波炉', combined_planner=<function Console.plan.<locals>.combined at 0x76fcd1c1b760>)
+
+/home/yhwang/fyp/xvla_native/uv_python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/unittest/mock.py:929: AssertionError
+_____________________ test_partial_wine_and_invalid_bodies _____________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76fc5097d840>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-26/test_partial_wine_and_invalid_0')
+
+    def test_partial_wine_and_invalid_bodies(monkeypatch, tmp_path):
+        svc = object.__new__(x.XvlaSceneService)
+        svc.expected_capabilities = None
+        rec = service.SessionRecord('s','basket_two',catalog.SCENES['basket_two'],0,0,tmp_path)
+        rec.capability_backend = 'xvla'
+        svc._sessions = {'s':rec}
+        parent = Mock(return_value={'ok':True})
+        monkeypatch.setattr(service.SceneService,'submit_plan',parent)
+        for body in (None, [], 'bad'):
+            svc.submit_plan(body)
+            assert parent.call_args.args[0] is body
+        base = {'session_id':'s','decision':'execute','capability_ids':['soup_to_basket']}
+        svc.submit_plan(base)
+>       assert parent.call_args.args[0]['capability_ids'] == ['soup_to_basket']
+E       TypeError: string indices must be integers
+
+First_Phase/scene_demo/tests/test_xvla_integration.py:128: TypeError
+_____________________________ test_submit_routing ______________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76fcd21be020>
+tmp_path = PosixPath('/tmp/pytest-of-yhwang/pytest-26/test_submit_routing0')
+
+    def test_submit_routing(monkeypatch, tmp_path):
+        svc = object.__new__(xvla_service.XvlaSceneService)
+        record = service.SessionRecord('s', 'basket_two', catalog.SCENES['basket_two'], 0, 0, tmp_path)
+        record.capability_backend = 'xvla'
+        svc._sessions = {'s': record}
+        svc.expected_capabilities = ['xvla_basket_both']
+        parent = Mock(return_value={'ok':True})
+        monkeypatch.setattr(service.SceneService, 'submit_plan', parent)
+        payload = {'session_id':'s', 'decision':'execute', 'capability_ids':['soup_to_basket','sauce_to_basket']}
+        original = copy.deepcopy(payload)
+>       assert svc.submit_plan(payload) == {'ok':True}
+E       AssertionError: assert {'ok': False,...ative skills'} == {'ok': True}
+E         
+E         Differing items:
+E         {'ok': False} != {'ok': True}
+E         Left contains 2 more items:
+E         {'detail': 'X-VLA accepts only complete registered native skills',
+E          'reason': 'non_native_capability'}
+E         Use -v to get more diff
+
+First_Phase/scene_demo/tests/test_xvla_skills.py:76: AssertionError
+=========================== short test summary info ============================
+FAILED First_Phase/scene_demo/tests/test_xvla_console.py::test_load_without_task_shows_triplet_before_any_grounding
+FAILED First_Phase/scene_demo/tests/test_xvla_integration.py::test_partial_wine_and_invalid_bodies
+FAILED First_Phase/scene_demo/tests/test_xvla_skills.py::test_submit_routing
+3 failed, 1461 passed, 57 subtests passed in 74.33s (0:01:14)
